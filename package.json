@@ -19,6 +19,7 @@
 		"format": "biome check --write .",
 		"test": "bun test",
 		"dev": "bun run --filter @edmi-ui/docs dev",
+		"release:notes": "bun run scripts/release-notes.ts",
 		"release": "bun run gen:strict && bun run build:registry && bun run pack:registries && bunx changeset publish"
 	},
 	"devDependencies": {

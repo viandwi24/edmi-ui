@@ -6,8 +6,11 @@ Zero repository secrets: only `GITHUB_TOKEN` and npm Trusted Publishing (OIDC).
 1. Merge PRs that contain changesets into `main`.
 2. `release.yml` opens/updates the "Version Packages" PR.
 3. Merge it: the workflow runs `gen:strict`, `build:registry`, `pack:registries`, `changeset publish`
-   (4 packages: `@edmi-ui/tokens`, `@edmi-ui/registry-{react,vue,svelte}`, with provenance), tags `v<version>` and
-   creates a GitHub Release. `pages.yml` redeploys the docs and latest registries.
+   (4 packages: `@edmi-ui/tokens`, `@edmi-ui/registry-{react,vue,svelte}`, with provenance), then creates ONE GitHub
+   Release `v<version>` (tag + title `v<version>`, body from `bun run release:notes <version> <file>`, which merges the
+   four CHANGELOGs). Changesets' per-package tags/releases are disabled (`create-github-releases: false`,
+   `push-git-tags: false`). Old per-package releases/tags (`@edmi-ui/registry-*@0.1.0`, tokens) can be deleted
+   manually in the GitHub UI. `pages.yml` redeploys the docs and latest registries.
 
 Registries via CDN: `https://cdn.jsdelivr.net/npm/@edmi-ui/registry-<fw>@<major>/r/<name>.json`.
 
