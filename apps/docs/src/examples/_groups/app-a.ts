@@ -50,4 +50,26 @@ export const examples: ExampleMeta[] = [
 			"Badge",
 		],
 	},
+	{
+		slug: "leaderboard",
+		title: "Leaderboard",
+		tag: "App",
+		description:
+			"Stockbreak leaderboard: Indexes/Creators tabs, period and Human/AI segmented filters, the top-three podium with allocation bars and the ranked index table.",
+		board: "Stockbreak · Leaderboard",
+		thumb: "leaderboard",
+		frameworks: ALL,
+		height: 900,
+		uses: [
+			"AppHeader",
+			"Tabs",
+			"ToggleGroup",
+			"AllocationBar",
+			"Sparkline",
+			"IndexRow",
+			"Table",
+			"Card",
+			"Badge",
+		],
+	},
 ];
