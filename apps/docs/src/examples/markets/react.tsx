@@ -97,7 +97,7 @@ export default function MarketsExample() {
 						</TableHeader>
 						<TableBody>
 							{indexes.map((index) => (
-								<IndexRow key={index.symbol} index={index} />
+								<IndexRow key={index.symbol} index={index} delta="pill" />
 							))}
 						</TableBody>
 					</Table>

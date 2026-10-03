@@ -25,11 +25,20 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 | Prop | Type | Default |
 | --- | --- | --- |
 | `IndexRow index` | `{ name, symbol, tokens, tags?, creator, price, change, aum, holders, spark?, href? }` | required |
+| `IndexRow rank` ✦ | `number \| string` | none (no rank column) |
+| `IndexRow delta` ✦ | `"text" \| "pill"` | `"text"` |
 | `IndexRowHeader` | `TableRow` props | |
+| `IndexRowHeader rank` ✦ | `boolean` | `false` |
 | `Sparkline data` | `number[]` | required |
 | `Sparkline tone` | `"up" \| "down"` | last vs first |
 
 Place `IndexRowHeader` in `TableHeader` and `IndexRow` in `TableBody`; numeric columns are mono and right-aligned (§4.10).
+
+## Ranked, pill delta ✦
+
+Leaderboard style: a leading mono rank column and the 7d delta as a soft tinted pill.
+
+<ComponentDemo name="index-row" demo="index-row-ranked" />
 
 ## ✦ Edmi additions
 - `Sparkline` is exported on its own.

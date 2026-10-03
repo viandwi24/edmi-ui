@@ -72,7 +72,7 @@
 			</TableHeader>
 			<TableBody>
 				{#each indexes as index (index.symbol)}
-					<IndexRow {index} />
+					<IndexRow {index} delta="pill" />
 				{/each}
 			</TableBody>
 		</Table>

@@ -51,7 +51,7 @@ import { activity, creators, humanVsAi, indexes, nav, tickers } from "./data";
 					<IndexRowHeader />
 				</TableHeader>
 				<TableBody>
-					<IndexRow v-for="index in indexes" :key="index.symbol" :index="index" />
+					<IndexRow v-for="index in indexes" :key="index.symbol" :index="index" delta="pill" />
 				</TableBody>
 			</Table>
 		</Card>
