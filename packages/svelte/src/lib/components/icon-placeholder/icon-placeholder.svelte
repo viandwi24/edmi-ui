@@ -5,18 +5,17 @@
 	// rendered with phosphor-svelte (the Edmi default), one lazy chunk per icon, resolved on mount.
 	import type { Component } from "svelte";
 	import type { SVGAttributes } from "svelte/elements";
+	// Vite plugin `phosphorIcons()` (packages/svelte/phosphor-icons-plugin.mjs): per-icon lazy loader.
+	import loadIcon from "virtual:edmi-phosphor-icons";
 
-	const loaders = import.meta.glob("/node_modules/phosphor-svelte/lib/*Icon.svelte") as Record<
-		string,
-		() => Promise<{ default: Component<Record<string, unknown>> }>
-	>;
 	const cache = new Map<string, Promise<Component<Record<string, unknown>> | null>>();
 
 	function load(name: string) {
 		let hit = cache.get(name);
 		if (!hit) {
-			const key = `/node_modules/phosphor-svelte/lib/${name}.svelte`;
-			hit = loaders[key]?.().then((m) => m.default) ?? Promise.resolve(null);
+			hit = Promise.resolve(loadIcon(name))
+				.then((m) => (m?.default as Component<Record<string, unknown>>) ?? null)
+				.catch(() => null);
 			cache.set(name, hit);
 		}
 		return hit;

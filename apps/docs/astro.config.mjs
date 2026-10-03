@@ -8,6 +8,7 @@ import svelte from "@astrojs/svelte";
 import vue from "@astrojs/vue";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
+import { phosphorIcons } from "../../packages/svelte/phosphor-icons-plugin.mjs";
 import { edmiResolve } from "./plugins/edmi-resolve.mjs";
 import { genIslands } from "./plugins/gen-islands.mjs";
 import { vueNoReactRefresh } from "./plugins/vue-no-react-refresh.mjs";
@@ -189,7 +190,12 @@ export default defineConfig({
 		svelte(),
 	],
 	vite: {
-		plugins: [edmiResolve(repoRoot), tailwindcss(), vueNoReactRefresh()],
+		plugins: [
+			edmiResolve(repoRoot),
+			phosphorIcons(),
+			tailwindcss(),
+			vueNoReactRefresh(),
+		],
 		resolve: {
 			dedupe: [
 				"react",

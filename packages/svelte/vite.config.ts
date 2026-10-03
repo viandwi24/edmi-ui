@@ -3,6 +3,7 @@ import adapter from "@sveltejs/adapter-auto";
 import { sveltekit } from "@sveltejs/kit/vite";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
+import { phosphorIcons } from "./phosphor-icons-plugin.mjs";
 
 const pkg = fileURLToPath(new URL(".", import.meta.url)).replace(/\/$/, "");
 const lib = `${pkg}/src/lib`;
@@ -25,6 +26,7 @@ export default defineConfig({
 	// The preview route renders demos that live in apps/docs (outside this package).
 	server: { fs: { allow: ["../.."] } },
 	plugins: [
+		phosphorIcons(),
 		tailwindcss(),
 		sveltekit({
 			compilerOptions: {
