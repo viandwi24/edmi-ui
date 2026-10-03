@@ -17,7 +17,9 @@ describe("changesets", () => {
 	)) {
 		test(`${file} bumps a published package`, () => {
 			const front = readFileSync(join(dir, file), "utf8").split("---")[1] ?? "";
-			const names = [...front.matchAll(/^\s*"([^"]+)"\s*:/gm)].map((m) => m[1]);
+			const names = [...front.matchAll(/^\s*"([^"]+)"\s*:/gm)].flatMap((m) =>
+				m[1] ? [m[1]] : [],
+			);
 			expect(names.length).toBeGreaterThan(0);
 			for (const name of names) expect(config.ignore).not.toContain(name);
 			expect(names.some((n) => releasable.has(n))).toBe(true);
