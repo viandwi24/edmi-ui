@@ -83,6 +83,10 @@ Use the CSS route instead when your app lets end users switch base, theme, radiu
 @import "@edmi-ui/tokens/theme.css";
 ```
 
+The defaults are also available as explicit rules, only needed to switch a nested scope back (see Scoped theming):
+`@edmi-ui/tokens/base/stone.css` (`[data-base="stone"]`) and `@edmi-ui/tokens/themes/green.css` (`[data-theme="green"]`).
+Load them in the same slots: the base before the themes.
+
 Every base and theme ships light **and** dark blocks. Keys a file does not set fall back to the default.
 
 **2. Switch with attributes on `<html>`.** Persist the choice in **cookies** and render the attributes on the server
@@ -157,10 +161,15 @@ app use the inline script above.
 
 **Scoped theming.** Any subtree can carry its own attributes and `class="dark"`, for example an always-dark sidebar
 inside a light app. Put `class="dark" data-base="slate"` on that element; its tokens (and `dark:` styles) resolve inside it only.
+To switch a scope back to the defaults inside a Slate · Ocean app, set `data-base="stone" data-theme="green"` on it (with
+`base/stone.css` and `themes/green.css` loaded). The Stone file also resets `primary`; the Green file leaves `primary` to the base.
 
 ### Create your own base or theme
 
 Copy a file, change the values, keep the selectors:
+
+Run `bun scripts/gen-default-scopes.ts` after changing `tokens.css` or adding a base or theme: it regenerates
+`base/stone.css` and `themes/green.css` (a test fails when they are stale).
 
 1. New base: copy `packages/tokens/src/base/slate.css` to `base/<name>.css` and change the neutrals (`[data-base="<name>"]` and `.dark[data-base="<name>"]`).
 2. New theme: copy `themes/ocean.css` to `themes/<name>.css` and change the accent keys (`[data-theme="<name>"]` and `.dark[data-theme="<name>"]`).

@@ -1,6 +1,8 @@
 import { describe, expect, test } from "bun:test";
+import { readFileSync } from "node:fs";
 import {
 	composeCssVars,
+	defaultScopeCss,
 	getCssVars,
 	listBases,
 	listThemes,
@@ -174,5 +176,32 @@ describe("base x theme composition", () => {
 		expect(css).toStartWith(":root {\n  --radius: 0.75rem;");
 		expect(css).toContain("\n.dark {\n");
 		expect(css.match(/--primary:/g)?.length).toBe(2);
+	});
+});
+
+describe("explicit default scopes", () => {
+	const read = (f: string) =>
+		readFileSync(new URL(`./${f}`, import.meta.url), "utf8");
+
+	test("base/stone.css and themes/green.css are up to date (bun scripts/gen-default-scopes.ts)", () => {
+		expect(read("base/stone.css")).toBe(defaultScopeCss("base"));
+		expect(read("themes/green.css")).toBe(defaultScopeCss("theme"));
+	});
+
+	test("they carry the tokens.css values; green leaves primary to the base", () => {
+		const t = getCssVars();
+		const stone = read("base/stone.css");
+		expect(stone).toContain('[data-base="stone"] {');
+		expect(stone).toContain('.dark[data-base="stone"] {');
+		expect(stone).toContain(`--primary: ${t.light.primary};`);
+		expect(stone).toContain(`--primary: ${t.dark.primary};`);
+		const green = read("themes/green.css");
+		expect(green).toContain(`--brand: ${t.light.brand};`);
+		expect(green).not.toContain("--primary:");
+	});
+
+	test("listBases / listThemes do not duplicate the defaults", () => {
+		expect(new Set(listBases()).size).toBe(listBases().length);
+		expect(new Set(listThemes()).size).toBe(listThemes().length);
 	});
 });
