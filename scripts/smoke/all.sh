@@ -3,7 +3,7 @@
 cd "$(dirname "${BASH_SOURCE[0]}")" || exit 1
 declare -a results
 fail=0
-for s in react vue svelte example-react; do
+for s in react vue svelte theme example-react; do
 	[ -f "$s.sh" ] || continue
 	echo "######## smoke: $s"
 	if bash "$s.sh"; then results+=("PASS $s"); else results+=("FAIL $s"); fail=1; fi
