@@ -36,7 +36,7 @@ export const Node = ({
 		data-slot="ai-node"
 		data-selected={selected ? "" : undefined}
 		className={cn(
-			"relative size-full h-auto w-60 gap-0 rounded-[calc(var(--radius)*1.2)] py-0",
+			"relative size-full h-auto w-60 gap-0 overflow-visible rounded-[calc(var(--radius)*1.2)] py-0",
 			"data-[selected]:border-ring data-[selected]:shadow-ring [.selected_&]:border-ring [.selected_&]:shadow-ring",
 			className,
 		)}
