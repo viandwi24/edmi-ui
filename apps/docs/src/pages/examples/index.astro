@@ -25,7 +25,7 @@ const tags = EXAMPLE_TAGS.filter((t) => EXAMPLES.some((e) => e.tag === t));
 				EXAMPLES.map((e) => (
 					<li data-card data-tag={e.tag}>
 						<a href={`${BASE}/examples/${e.slug}/`} class="edmi-exi-card">
-							<div class="edmi-exi-thumb">
+							<div class="edmi-exi-thumb" data-force={e.defaultMode}>
 								<img class="edmi-exi-light" src={`${BASE}/examples/${e.thumb}-light.png`} alt={`${e.title}, light`} loading="lazy" />
 								<img class="edmi-exi-dark" src={`${BASE}/examples/${e.thumb}-dark.png`} alt={`${e.title}, dark`} loading="lazy" />
 							</div>
@@ -59,6 +59,11 @@ const tags = EXAMPLE_TAGS.filter((t) => EXAMPLES.some((e) => e.tag === t));
 	.edmi-exi-dark { display: none !important; }
 	:root.dark .edmi-exi-dark { display: block !important; }
 	:root.dark .edmi-exi-light { display: none !important; }
+	/* examples with a fixed default mode always show that thumbnail */
+	.edmi-exi-thumb[data-force="dark"] .edmi-exi-dark { display: block !important; }
+	.edmi-exi-thumb[data-force="dark"] .edmi-exi-light { display: none !important; }
+	.edmi-exi-thumb[data-force="light"] .edmi-exi-light { display: block !important; }
+	.edmi-exi-thumb[data-force="light"] .edmi-exi-dark { display: none !important; }
 	.edmi-exi-body { padding: .875rem 1rem 1rem; }
 	.edmi-exi-title { display: flex; align-items: center; justify-content: space-between; gap: .5rem; font-weight: 500; font-size: 1rem; color: var(--foreground); }
 	.edmi-exi-tag { font: 500 10.5px/1 var(--sl-font-mono); letter-spacing: .05em; text-transform: uppercase; padding: .25rem .45rem; border-radius: 999px; border: 1px solid var(--border); color: var(--muted-foreground); }

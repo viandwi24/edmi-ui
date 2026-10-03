@@ -50,6 +50,9 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 	data-example
 	data-render-base={renderBase}
 	data-frameworks={example.frameworks.join(" ")}
+	data-default-mode={example.defaultMode}
+	data-default-base={example.defaultBase}
+	data-default-theme={example.defaultTheme}
 	style={`--ex-h:${frame}px`}
 >
 	<div class="edmi-ex-card">
@@ -222,9 +225,10 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 		const renderBase = root.dataset.renderBase!;
 
 		const state: State = {
-			mode: document.documentElement.classList.contains("dark") ? "dark" : "light",
-			base: "stone",
-			theme: "green",
+			mode:
+				root.dataset.defaultMode ?? (document.documentElement.classList.contains("dark") ? "dark" : "light"),
+			base: root.dataset.defaultBase ?? "stone",
+			theme: root.dataset.defaultTheme ?? "green",
 			radius: "0.625",
 		};
 

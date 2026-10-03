@@ -12,6 +12,8 @@ export const examples: ExampleMeta[] = [
 			"Layerbeat Create a BeatVPS: always-dark navy sidebar scoped inside a light app, step tabs, location and image choice cards, a plan table with radio selection, billing segmented control and a raised summary card.",
 		board: "Layerbeat Example",
 		thumb: "layerbeat-create",
+		defaultBase: "slate",
+		defaultTheme: "ocean",
 		frameworks: ALL,
 		height: 900,
 		uses: [

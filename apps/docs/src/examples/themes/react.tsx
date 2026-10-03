@@ -67,7 +67,7 @@ export default function ThemesExample() {
 					data-base={s.base}
 					data-theme={s.theme}
 					style={{ "--radius": `${s.radius}rem` } as CSSProperties}
-					className={`${s.mode === "dark" ? "dark " : ""}rounded-xl border border-border bg-background p-4 text-foreground sm:p-6`}
+					className={`${s.mode === "dark" ? "dark " : "edmi-light "}rounded-xl border border-border bg-background p-4 text-foreground sm:p-6`}
 				>
 					<div className="grid gap-4 md:grid-cols-2">
 						<Card raised={raised} className="gap-4 px-5">

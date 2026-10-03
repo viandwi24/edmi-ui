@@ -54,7 +54,7 @@
 			data-base={s.base}
 			data-theme={s.theme}
 			style="--radius: {s.radius}rem"
-			class="{s.mode === 'dark' ? 'dark ' : ''}rounded-xl border border-border bg-background p-4 text-foreground sm:p-6"
+			class="{s.mode === 'dark' ? 'dark ' : 'edmi-light '}rounded-xl border border-border bg-background p-4 text-foreground sm:p-6"
 		>
 			<div class="grid gap-4 md:grid-cols-2">
 				<Card {raised} class="gap-4 px-5">

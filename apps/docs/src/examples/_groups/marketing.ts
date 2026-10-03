@@ -57,6 +57,7 @@ export const examples: ExampleMeta[] = [
 			"Claude-style dark editorial page: navigation menu with a product mega menu, centered hero with sign-in card and a live index card, plan comparison with a segmented switch, FAQ accordion and footer.",
 		board: "Claude Clone",
 		thumb: "editorial-dark",
+		defaultMode: "dark",
 		frameworks: ALL,
 		height: 900,
 		uses: [

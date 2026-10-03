@@ -27,6 +27,12 @@ export interface ExampleMeta {
 	frameworks: readonly Framework[];
 	/** Iframe height of the preview frame in px (default 760). */
 	height?: number;
+	/** Initial mode of the viewer and the thumbnail shown on the index (default: follows the site mode). */
+	defaultMode?: "light" | "dark";
+	/** Initial base color of the viewer (default `stone`). */
+	defaultBase?: string;
+	/** Initial accent theme of the viewer (default `green`). */
+	defaultTheme?: string;
 	/** Registry items the example is built from (shown on the page). */
 	uses: readonly string[];
 }
