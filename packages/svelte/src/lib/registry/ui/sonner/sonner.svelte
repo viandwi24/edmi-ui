@@ -25,10 +25,10 @@
 			toast: cn("cn-toast text-[13.5px] font-sans", raised && "border-b-lip! shadow-[0_3px_0_var(--lip)]!"),
 			title: "font-medium",
 			description: "text-muted-foreground!",
-			success: "bg-success-soft! border-success/40!",
-			info: "bg-info-soft! border-info/40!",
-			warning: "bg-warning-soft! border-warning/40!",
-			error: "bg-destructive-soft! border-destructive/40!",
+			success: "bg-success-soft! border-[color-mix(in_srgb,var(--success)_40%,var(--popover))]!",
+			info: "bg-info-soft! border-[color-mix(in_srgb,var(--info)_40%,var(--popover))]!",
+			warning: "bg-warning-soft! border-[color-mix(in_srgb,var(--warning)_40%,var(--popover))]!",
+			error: "bg-destructive-soft! border-[color-mix(in_srgb,var(--destructive)_40%,var(--popover))]!",
 		},
 	}}
 	{...restProps}

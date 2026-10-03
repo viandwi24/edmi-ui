@@ -113,7 +113,7 @@ export function SummaryCard({
 				<Row label="Image" value={`${image.name} ${version}`} />
 				<Row label="Billing term" value={termLabel} />
 				<Row label="Location" value={`${location.city}, ${location.country}`} />
-				<div className="rounded-xl border border-brand/25 bg-brand-soft px-4 py-3.5">
+				<div className="rounded-xl border border-[color-mix(in_srgb,var(--brand)_25%,var(--popover))] bg-brand-soft px-4 py-3.5">
 					<div className="text-[13px] text-foreground-2">Purchase total</div>
 					<div className="mt-1 font-mono text-[30px] tracking-[-0.5px]">
 						{formatUsd(total)}

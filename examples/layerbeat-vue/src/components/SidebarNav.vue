@@ -37,7 +37,7 @@ const workspace = [
 	{ label: "Team", icon: PhUsersThree },
 ];
 const activeClass =
-	"data-[active=true]:bg-white/9 data-[active=true]:shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--brand)_55%,transparent)]";
+	"data-[active=true]:bg-[color-mix(in_srgb,white_9%,var(--sidebar))] data-[active=true]:shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--brand)_55%,var(--sidebar))]";
 </script>
 
 <template>

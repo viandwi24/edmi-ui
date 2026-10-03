@@ -42,7 +42,7 @@
 						<Sidebar.MenuItem>
 							<Sidebar.MenuButton
 								isActive={item.active}
-								class="h-9 data-[active=true]:bg-white/9 data-[active=true]:shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--brand)_55%,transparent)]"
+								class="h-9 data-[active=true]:bg-[color-mix(in_srgb,white_9%,var(--sidebar))] data-[active=true]:shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--brand)_55%,var(--sidebar))]"
 							>
 								{#snippet child({ props })}
 									<a href="#{item.label}" {...props}>

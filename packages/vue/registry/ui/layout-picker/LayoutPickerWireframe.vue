@@ -3,7 +3,7 @@ import type { Layout } from './layout'
 
 defineProps<{ layout: Layout }>()
 
-const bar = 'block rounded-sm bg-muted-foreground/20'
+const bar = 'block rounded-sm bg-[color-mix(in_srgb,var(--muted-foreground)_20%,var(--card))]'
 </script>
 
 <template>

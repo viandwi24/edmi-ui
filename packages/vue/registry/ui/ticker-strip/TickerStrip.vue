@@ -24,7 +24,7 @@ const cell = 'block min-w-[150px] flex-1 px-[18px] py-3.5 not-first:border-l not
       v-for="item in items"
       :key="item.symbol"
       :href="item.href"
-      :class="item.href ? cn(cell, 'hover:bg-accent/50') : cell"
+      :class="item.href ? cn(cell, 'hover:bg-[color-mix(in_srgb,var(--accent)_50%,var(--background))]') : cell"
     >
       <div class="flex items-center gap-2">
         <Avatar class="size-[22px]">

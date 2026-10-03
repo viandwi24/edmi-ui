@@ -47,7 +47,7 @@
 
 <Card data-slot="code-block" class={cn("gap-0 overflow-hidden p-0", className)} {...restProps}>
 	{#if title || copyable}
-		<div class="flex items-center justify-between border-b border-border py-2 pr-2 pl-3.5">
+		<div class="flex items-center justify-between border-b border-border bg-muted py-2 pr-2 pl-3.5">
 			<span class="font-mono text-[11.5px] text-muted-foreground">{title}</span>
 			{#if copyable}
 				<Button variant="ghost" size="icon-xs" aria-label={copied ? "Copied" : "Copy code"} onclick={copy}>
@@ -73,7 +73,7 @@
 		</div>
 	{/if}
 	<pre
-		class="m-0 overflow-x-auto py-3.5 font-mono text-[12.5px] leading-[1.65] whitespace-pre-wrap text-foreground-2"><code
+		class="m-0 overflow-x-auto bg-card py-3.5 font-mono text-[12.5px] leading-[1.65] whitespace-pre-wrap text-foreground-2"><code
 			>{#each lines as line, i (i)}<span
 					data-highlighted={highlightLines?.includes(i + 1) ? "" : undefined}
 					class="block border-l-2 border-transparent px-3.5 data-[highlighted]:border-brand data-[highlighted]:bg-accent"

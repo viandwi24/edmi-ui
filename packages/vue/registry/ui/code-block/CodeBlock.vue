@@ -45,7 +45,7 @@ const lines = computed(() => props.code.split('\n'))
   <Card :raised="raised" data-slot="code-block" :class="cn('gap-0 overflow-hidden p-0', props.class)">
     <div
       v-if="title || copyable"
-      class="flex items-center justify-between border-b border-border py-2 pr-2 pl-3.5"
+      class="flex items-center justify-between border-b border-border bg-muted py-2 pr-2 pl-3.5"
     >
       <span class="font-mono text-[11.5px] text-muted-foreground">{{ title }}</span>
       <Button
@@ -59,7 +59,7 @@ const lines = computed(() => props.code.split('\n'))
         <Copy v-else />
       </Button>
     </div>
-    <pre class="m-0 overflow-x-auto py-3.5 font-mono text-[12.5px] leading-[1.65] whitespace-pre-wrap text-foreground-2"><code><span
+    <pre class="m-0 overflow-x-auto bg-card py-3.5 font-mono text-[12.5px] leading-[1.65] whitespace-pre-wrap text-foreground-2"><code><span
       v-for="(line, i) in lines"
       :key="i"
       :data-highlighted="highlightLines?.includes(i + 1) ? '' : undefined"

@@ -24,7 +24,8 @@ function setLayoutCookie(layout: Layout) {
 	document.cookie = `${LAYOUT_COOKIE}=${layout}; path=/; max-age=31536000; samesite=lax`;
 }
 
-const bar = "block rounded-sm bg-muted-foreground/20";
+const bar =
+	"block rounded-sm bg-[color-mix(in_srgb,var(--muted-foreground)_20%,var(--card))]";
 
 function Wireframe({ layout }: { layout: Layout }) {
 	return (

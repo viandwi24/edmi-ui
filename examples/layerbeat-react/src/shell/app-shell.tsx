@@ -75,7 +75,7 @@ function AppSidebar() {
 						<LogoMark />
 						Layerbeat
 					</a>
-					<SidebarTrigger className="text-muted-foreground hover:bg-white/10 hover:text-foreground" />
+					<SidebarTrigger className="text-muted-foreground hover:bg-[color-mix(in_srgb,white_10%,var(--sidebar))] hover:text-foreground" />
 				</SidebarHeader>
 				<SidebarContent className="px-2">
 					{[
@@ -92,7 +92,7 @@ function AppSidebar() {
 										<SidebarMenuItem key={item.label}>
 											<SidebarMenuButton
 												isActive={item.active}
-												className="h-9 text-muted-foreground hover:bg-white/5 data-[active]:bg-white/[0.09] data-[active]:text-foreground data-[active]:shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--brand)_55%,transparent)]"
+												className="h-9 text-muted-foreground hover:bg-[color-mix(in_srgb,white_5%,var(--sidebar))] data-[active]:bg-[color-mix(in_srgb,white_9%,var(--sidebar))] data-[active]:text-foreground data-[active]:shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--brand)_55%,var(--sidebar))]"
 												render={<a href="#/" />}
 											>
 												<item.icon />
@@ -114,7 +114,7 @@ function AppSidebar() {
 					<SidebarMenu>
 						<SidebarMenuItem>
 							<SidebarMenuButton
-								className="h-9 text-muted-foreground hover:bg-white/5"
+								className="h-9 text-muted-foreground hover:bg-[color-mix(in_srgb,white_5%,var(--sidebar))]"
 								render={<a href="#/api" />}
 							>
 								<FileTextIcon />

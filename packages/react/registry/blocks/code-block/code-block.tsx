@@ -54,7 +54,7 @@ function CodeBlock({
 			{...props}
 		>
 			{title || copyable ? (
-				<div className="flex items-center justify-between border-b border-border py-2 pr-2 pl-3.5">
+				<div className="flex items-center justify-between border-b border-border bg-muted py-2 pr-2 pl-3.5">
 					<span className="font-mono text-[11.5px] text-muted-foreground">
 						{title}
 					</span>
@@ -86,7 +86,7 @@ function CodeBlock({
 					) : null}
 				</div>
 			) : null}
-			<pre className="m-0 overflow-x-auto py-3.5 font-mono text-[12.5px] leading-[1.65] whitespace-pre-wrap text-foreground-2">
+			<pre className="m-0 overflow-x-auto bg-card py-3.5 font-mono text-[12.5px] leading-[1.65] whitespace-pre-wrap text-foreground-2">
 				<code>
 					{lines.map((line, i) => (
 						<span

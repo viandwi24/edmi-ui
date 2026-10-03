@@ -13,20 +13,20 @@ export const bubbleVariants = cva(
 		variants: {
 			variant: {
 				default:
-					"*:data-[slot=bubble-content]:bg-primary *:data-[slot=bubble-content]:text-primary-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:bg-primary/85",
+					"*:data-[slot=bubble-content]:bg-primary *:data-[slot=bubble-content]:text-primary-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:bg-[color-mix(in_srgb,var(--primary)_85%,var(--background))]",
 				secondary:
 					"*:data-[slot=bubble-content]:border-border *:data-[slot=bubble-content]:bg-secondary *:data-[slot=bubble-content]:text-secondary-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:bg-accent",
 				muted:
 					"*:data-[slot=bubble-content]:bg-muted *:data-[slot=bubble-content]:text-muted-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:bg-accent",
 				tinted:
-					"*:data-[slot=bubble-content]:border-brand/25 *:data-[slot=bubble-content]:bg-brand-soft *:data-[slot=bubble-content]:text-foreground",
+					"*:data-[slot=bubble-content]:border-[color-mix(in_srgb,var(--brand)_25%,var(--popover))] *:data-[slot=bubble-content]:bg-brand-soft *:data-[slot=bubble-content]:text-foreground",
 				outline:
 					"*:data-[slot=bubble-content]:border-input *:data-[slot=bubble-content]:bg-transparent [&>[data-slot=bubble-content]:is(button,a):hover]:bg-accent",
 				// Ghost keeps its vertical padding so avatars line up with the first line.
 				ghost:
 					"*:data-[slot=bubble-content]:rounded-none *:data-[slot=bubble-content]:bg-transparent *:data-[slot=bubble-content]:px-0 [&>[data-slot=bubble-content]:is(button,a):hover]:bg-accent",
 				destructive:
-					"*:data-[slot=bubble-content]:border-destructive/30 *:data-[slot=bubble-content]:bg-destructive-soft *:data-[slot=bubble-content]:text-destructive-text",
+					"*:data-[slot=bubble-content]:border-[color-mix(in_srgb,var(--destructive)_30%,var(--popover))] *:data-[slot=bubble-content]:bg-destructive-soft *:data-[slot=bubble-content]:text-destructive-text",
 			},
 		},
 		defaultVariants: {

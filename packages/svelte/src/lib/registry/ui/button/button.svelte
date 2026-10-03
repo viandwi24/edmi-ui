@@ -11,14 +11,14 @@
 		base: "group/button relative inline-flex shrink-0 items-center justify-center gap-2 font-medium whitespace-nowrap transition-[filter,transform,box-shadow] outline-none select-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
 		variants: {
 			variant: {
-				default: "border border-transparent bg-primary text-primary-foreground hover:bg-primary/90 active:brightness-95",
+				default: "border border-transparent bg-primary text-primary-foreground hover:bg-[color-mix(in_srgb,var(--primary)_90%,var(--background))] active:brightness-95",
 				secondary: "border border-transparent bg-secondary text-secondary-foreground hover:bg-accent data-[state=open]:bg-accent",
 				outline: "border border-input bg-background text-foreground hover:bg-accent data-[state=open]:bg-accent",
 				ghost: "text-foreground hover:bg-accent data-[state=open]:bg-accent",
-				destructive: "border border-transparent bg-destructive text-white hover:bg-destructive/90",
+				destructive: "border border-transparent bg-destructive text-white hover:bg-[color-mix(in_srgb,var(--destructive)_90%,var(--background))]",
 				link: "px-1 text-foreground underline underline-offset-4",
 				// ✦ Edmi addition
-				brand: "border border-transparent bg-brand text-brand-foreground hover:bg-brand/90",
+				brand: "border border-transparent bg-brand text-brand-foreground hover:bg-[color-mix(in_srgb,var(--brand)_90%,var(--background))]",
 			},
 			// ✦ opt-in one-step 3D look
 			raised: { false: "", true: "active:translate-y-[2px]" },

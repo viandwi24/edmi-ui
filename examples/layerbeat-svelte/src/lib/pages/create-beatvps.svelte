@@ -331,7 +331,7 @@
 						</div>
 					{/each}
 				</dl>
-				<div class="rounded-[calc(var(--radius)*1.2)] border border-brand/25 bg-brand-soft px-4 py-3.5">
+				<div class="rounded-[calc(var(--radius)*1.2)] border border-[color-mix(in_srgb,var(--brand)_25%,var(--popover))] bg-brand-soft px-4 py-3.5">
 					<div class="text-[13px] text-foreground-2">Purchase total</div>
 					<div class="mt-1 font-mono text-[30px] tracking-[-0.5px]">{usd(total)}</div>
 					<div class="mt-0.5 text-[12.5px] text-muted-foreground">Full term · USD</div>

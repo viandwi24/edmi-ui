@@ -13,18 +13,18 @@ export const buttonVariants = cva(
 		variants: {
 			variant: {
 				default:
-					"border border-transparent bg-primary text-primary-foreground hover:bg-primary/90 active:brightness-95",
+					"border border-transparent bg-primary text-primary-foreground hover:bg-[color-mix(in_srgb,var(--primary)_90%,var(--background))] active:brightness-95",
 				secondary:
 					"border border-transparent bg-secondary text-secondary-foreground hover:bg-accent data-[state=open]:bg-accent",
 				outline:
 					"border border-input bg-background text-foreground hover:bg-accent data-[state=open]:bg-accent",
 				ghost: "text-foreground hover:bg-accent data-[state=open]:bg-accent",
 				destructive:
-					"border border-transparent bg-destructive text-white hover:bg-destructive/90",
+					"border border-transparent bg-destructive text-white hover:bg-[color-mix(in_srgb,var(--destructive)_90%,var(--background))]",
 				link: "px-1 text-foreground underline underline-offset-4",
 				// ✦ Edmi addition
 				brand:
-					"border border-transparent bg-brand text-brand-foreground hover:bg-brand/90",
+					"border border-transparent bg-brand text-brand-foreground hover:bg-[color-mix(in_srgb,var(--brand)_90%,var(--background))]",
 			},
 			// ✦ opt-in one-step 3D look
 			raised: { false: "", true: "active:translate-y-[2px]" },

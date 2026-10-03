@@ -45,7 +45,7 @@
 <Card bind:ref data-slot="ticker-strip" class={cn("flex-row gap-0 overflow-x-auto p-0", className)} {...restProps}>
 	{#each items as item (item.symbol)}
 		{#if item.href}
-			<a href={item.href} class={cn(cell, "hover:bg-accent/50")}>{@render content(item)}</a>
+			<a href={item.href} class={cn(cell, "hover:bg-[color-mix(in_srgb,var(--accent)_50%,var(--background))]")}>{@render content(item)}</a>
 		{:else}
 			<div class={cell}>{@render content(item)}</div>
 		{/if}

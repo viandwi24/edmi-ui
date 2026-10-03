@@ -3,7 +3,7 @@
 
 	let { layout }: { layout: Layout } = $props();
 
-	const bar = "block rounded-sm bg-muted-foreground/20";
+	const bar = "block rounded-sm bg-[color-mix(in_srgb,var(--muted-foreground)_20%,var(--card))]";
 </script>
 
 <div class="flex h-24 w-full overflow-hidden rounded-lg border border-border-2 bg-muted shadow-sunk">
