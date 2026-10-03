@@ -38,7 +38,7 @@
 		"flex h-10 items-center gap-2.5 rounded-lg px-2.5 text-[13.5px] text-sidebar-foreground outline-none hover:bg-sidebar-accent focus-visible:outline-2 focus-visible:outline-ring",
 		"data-[active]:bg-sidebar-accent data-[active]:font-medium data-[active]:shadow-[inset_0_0_0_1px_var(--sidebar-border)]",
 		raised &&
-			"border border-transparent data-[active]:border-sidebar-border data-[active]:border-b-lip data-[active]:shadow-btn-outline",
+			"border border-transparent data-[active]:border-sidebar-border data-[active]:border-b-lip data-[active]:shadow-[0_2px_0_var(--lip)]",
 		className
 	)}
 	{...restProps}
@@ -49,5 +49,5 @@
 	>
 	<span class="min-w-0 flex-1 truncate">{symbol}</span>
 	<span class="font-mono text-[11.5px] text-muted-foreground">{price}</span>
-	<span class={cn("font-mono text-[11.5px]", down ? "text-destructive-text" : "text-brand-text")}>{change}</span>
+	<span class={cn("font-mono text-[11.5px]", down ? "text-destructive-text" : "text-success-text")}>{change}</span>
 </a>

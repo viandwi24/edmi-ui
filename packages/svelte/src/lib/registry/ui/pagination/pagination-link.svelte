@@ -38,7 +38,7 @@
 		buttonVariants({ size, variant: isActive ? "outline" : "ghost" }),
 		// paginationActive: flat outline, raised ✦ adds the lip
 		isActive && "bg-card font-semibold",
-		isActive && isRaised && "border-b-lip shadow-btn-outline",
+		isActive && isRaised && "border-b-lip shadow-[0_2px_0_var(--lip)]",
 		className
 	)}
 	{...restProps}

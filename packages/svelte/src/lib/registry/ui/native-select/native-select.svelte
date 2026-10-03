@@ -35,7 +35,7 @@
 		data-size={size}
 		class={cn(
 			"h-9 w-full min-w-0 appearance-none rounded-md border border-input bg-card pr-8 pl-3 text-sm text-foreground outline-none select-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:shadow-ring disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-muted aria-invalid:border-destructive aria-invalid:shadow-ring-error data-[size=sm]:h-8 data-[size=sm]:rounded-[7px]",
-			raised && "border-b-lip shadow-btn-outline"
+			raised && "border-b-lip shadow-[0_2px_0_var(--lip)]"
 		)}
 		{...restProps}
 	>

@@ -23,7 +23,7 @@
 	data-numeric={numeric ? "" : undefined}
 	data-trend={trend}
 	class={cn(
-		"p-3 align-middle whitespace-nowrap data-[numeric]:text-right data-[numeric]:font-mono data-[numeric]:tabular-nums data-[trend=down]:text-destructive-text data-[trend=up]:text-brand-text [&:has([role=checkbox])]:pr-0",
+		"p-3 align-middle whitespace-nowrap data-[numeric]:text-right data-[numeric]:font-mono data-[numeric]:tabular-nums data-[trend=down]:text-destructive-text data-[trend=up]:text-success-text [&:has([role=checkbox])]:pr-0",
 		className
 	)}
 	{...restProps}

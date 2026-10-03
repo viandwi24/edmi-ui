@@ -25,7 +25,7 @@
 			toast: cn("cn-toast text-[13.5px] font-sans", raised && "border-b-lip! shadow-[0_3px_0_var(--lip)]!"),
 			title: "font-medium",
 			description: "text-muted-foreground!",
-			success: "bg-brand-soft! border-brand/40!",
+			success: "bg-success-soft! border-success/40!",
 			info: "bg-info-soft! border-info/40!",
 			warning: "bg-warning-soft! border-warning/40!",
 			error: "bg-destructive-soft! border-destructive/40!",
@@ -50,7 +50,7 @@
 			hugeicons="CheckmarkCircle02Icon"
 			phosphor="CheckCircleIcon"
 			remixicon="RiCheckboxCircleLine"
-			class="size-4 text-brand-text"
+			class="size-4 text-success-text"
 		/>
 	{/snippet}
 	{#snippet errorIcon()}
