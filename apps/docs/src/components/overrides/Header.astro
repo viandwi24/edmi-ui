@@ -24,7 +24,7 @@ const isActive = (n: (typeof nav)[number]) =>
 		<span class="edmi-mark" aria-hidden="true">
 			<svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><rect x="2" y="9" width="2.6" height="5" rx="1"></rect><rect x="6.7" y="5" width="2.6" height="9" rx="1"></rect><rect x="11.4" y="2" width="2.6" height="12" rx="1"></rect></svg>
 		</span>
-		<span class="edmi-wordmark font-brand">edmi</span>
+		<span class="edmi-wordmark font-brand">edmi-ui</span>
 	</a>
 	<nav class="edmi-nav" aria-label="Main">
 		{nav.map((n) => <a href={n.href} aria-current={isActive(n) ? "page" : undefined}>{n.label}</a>)}
