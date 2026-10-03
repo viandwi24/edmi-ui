@@ -61,7 +61,7 @@ function AgentIdenticon({
 
 type AgentCardStat = { label: string; value: React.ReactNode };
 
-type AgentCardProps = Omit<React.ComponentProps<typeof Card>, "children"> & {
+type AgentCardProps = React.ComponentProps<typeof Card> & {
 	name: string;
 	/** Mono sub line, usually a shortened address. */
 	address?: string;
@@ -72,6 +72,7 @@ type AgentCardProps = Omit<React.ComponentProps<typeof Card>, "children"> & {
 	stats?: AgentCardStat[];
 	/** Identicon seed; defaults to `name`. */
 	seed?: string;
+	// ✦ `children` render in a footer under the stats (a note, an action row).
 };
 
 function AgentCard({
@@ -82,6 +83,7 @@ function AgentCard({
 	autopilot,
 	stats,
 	seed,
+	children,
 	...props
 }: AgentCardProps) {
 	return (
@@ -118,6 +120,14 @@ function AgentCard({
 							<div className="mt-1 font-mono text-[19px]">{s.value}</div>
 						</div>
 					))}
+				</div>
+			) : null}
+			{children ? (
+				<div
+					data-slot="agent-card-footer"
+					className="mt-4 border-t border-border pt-3.5 text-[13px] text-muted-foreground"
+				>
+					{children}
 				</div>
 			) : null}
 		</Card>

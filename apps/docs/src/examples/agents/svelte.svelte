@@ -62,10 +62,9 @@
 					</h2>
 					<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
 						{#each agents as a (a.name)}
-							<div class="flex flex-col gap-2">
-								<AgentCard raised name={a.name} address={a.address} tag={a.tag} stats={a.stats} />
-								<p class="px-1 text-[13px] text-muted-foreground">{a.note}</p>
-							</div>
+							<AgentCard raised name={a.name} address={a.address} tag={a.tag} stats={a.stats}>
+								{a.note}
+							</AgentCard>
 						{/each}
 					</div>
 				</section>

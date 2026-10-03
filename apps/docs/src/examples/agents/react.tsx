@@ -89,18 +89,16 @@ export default function AgentsExample() {
 							</h2>
 							<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
 								{agents.map((a) => (
-									<div key={a.name} className="flex flex-col gap-2">
-										<AgentCard
-											raised
-											name={a.name}
-											address={a.address}
-											tag={a.tag}
-											stats={a.stats}
-										/>
-										<p className="px-1 text-[13px] text-muted-foreground">
-											{a.note}
-										</p>
-									</div>
+									<AgentCard
+										key={a.name}
+										raised
+										name={a.name}
+										address={a.address}
+										tag={a.tag}
+										stats={a.stats}
+									>
+										{a.note}
+									</AgentCard>
 								))}
 							</div>
 						</section>

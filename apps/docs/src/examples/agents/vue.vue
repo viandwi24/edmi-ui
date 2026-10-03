@@ -52,10 +52,9 @@ const copy = (text: string) => navigator.clipboard?.writeText(text);
 							All agents <span class="text-muted-foreground">·</span> {{ agents.length }}
 						</h2>
 						<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-							<div v-for="a in agents" :key="a.name" class="flex flex-col gap-2">
-								<AgentCard raised :name="a.name" :address="a.address" :tag="a.tag" :stats="a.stats" />
-								<p class="px-1 text-[13px] text-muted-foreground">{{ a.note }}</p>
-							</div>
+							<AgentCard v-for="a in agents" :key="a.name" raised :name="a.name" :address="a.address" :tag="a.tag" :stats="a.stats">
+								{{ a.note }}
+							</AgentCard>
 						</div>
 					</section>
 

@@ -7,7 +7,7 @@
 	import { Badge } from "$lib/registry/ui/badge/index.js";
 	import { Card } from "$lib/registry/ui/card/index.js";
 	import AgentIdenticon from "./agent-identicon.svelte";
-	import type { ComponentProps } from "svelte";
+	import type { ComponentProps, Snippet } from "svelte";
 
 	let {
 		class: className,
@@ -17,8 +17,11 @@
 		autopilot,
 		stats,
 		seed,
+		children,
 		...restProps
 	}: Omit<ComponentProps<typeof Card>, "children"> & {
+		/** ✦ Footer under the stats (a note, an action row). */
+		children?: Snippet;
 		name: string;
 		/** Mono sub line, usually a shortened address. */
 		address?: string;
@@ -59,6 +62,11 @@
 					<div class="mt-1 font-mono text-[19px]">{s.value}</div>
 				</div>
 			{/each}
+		</div>
+	{/if}
+	{#if children}
+		<div data-slot="agent-card-footer" class="mt-4 border-t border-border pt-3.5 text-[13px] text-muted-foreground">
+			{@render children()}
 		</div>
 	{/if}
 </Card>

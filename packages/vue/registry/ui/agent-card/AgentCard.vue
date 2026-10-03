@@ -47,5 +47,9 @@ const props = defineProps<{
         <div class="mt-1 font-mono text-[19px]">{{ s.value }}</div>
       </div>
     </div>
+    <!-- ✦ default slot: footer under the stats (a note, an action row) -->
+    <div v-if="$slots.default" data-slot="agent-card-footer" class="mt-4 border-t border-border pt-3.5 text-[13px] text-muted-foreground">
+      <slot />
+    </div>
   </Card>
 </template>

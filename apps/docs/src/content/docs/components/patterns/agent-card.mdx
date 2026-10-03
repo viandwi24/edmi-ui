@@ -33,6 +33,13 @@ Flat by default. Pass `raised` for the one-step 3D look.
 | `AgentCard` | `name, address?, tag?, autopilot?, stats?, seed?` | Card with identicon, secondary tag badge, brand Autopilot badge and stats. |
 | `AgentIdenticon` | `seed, size=44` | Token-colored 5x5 grid, deterministic per seed. |
 | `raised` | `boolean` | `false` |
+| `children` ✦ | React children, Vue default slot, Svelte `children` snippet | footer under the stats |
+
+## Footer ✦
+
+Children render in a footer under the stats: a note, an action row.
+
+<ComponentDemo name="agent-card" demo="agent-card-footer" />
 
 ## ✦ Edmi additions
 - Whole block is an Edmi addition (DESIGN §5 Patterns, board 12). Composed from: card, badge.
