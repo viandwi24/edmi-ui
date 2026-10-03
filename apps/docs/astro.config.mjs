@@ -104,11 +104,14 @@ export default defineConfig({
 				},
 				{
 					label: "Components",
-					items: groups.map(([dir, label]) => ({
-						label,
-						collapsed: true,
-						items: [{ autogenerate: { directory: `components/${dir}` } }],
-					})),
+					items: [
+						{ label: "Overview", link: "/components/" },
+						...groups.map(([dir, label]) => ({
+							label,
+							collapsed: true,
+							items: [{ autogenerate: { directory: `components/${dir}` } }],
+						})),
+					],
 				},
 				{ label: "Theming", slug: "theming" },
 				{ label: "Rules", slug: "rules" },

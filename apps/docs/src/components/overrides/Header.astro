@@ -9,7 +9,7 @@ const path = Astro.url.pathname;
 const p = (s: string) => `${BASE}${s}`;
 const nav = [
 	{ label: "Docs", href: p("/getting-started/react/"), match: "/getting-started" },
-	{ label: "Components", href: p("/components/actions/button/"), match: "/components/" , not: "/components/patterns" },
+	{ label: "Components", href: p("/components/"), match: "/components/", not: "/components/patterns" },
 	{ label: "Patterns", href: p("/components/patterns/stat-tile/"), match: "/components/patterns" },
 	{ label: "Theming", href: p("/theming/"), match: "/theming" },
 	{ label: "Rules", href: p("/rules/"), match: "/rules" },

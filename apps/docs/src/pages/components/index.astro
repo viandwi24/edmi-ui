@@ -1,0 +1,192 @@
+---
+// Components index: one card per documented item, grouped like the sidebar. Each card shows a live,
+// server-rendered (no hydration) preview of the primary React demo; overlay-style items use a static
+// open-state thumbnail from src/components/thumbs. Items whose demo cannot SSR fall back to an icon tile.
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import { getCollection } from "astro:content";
+import { createElement } from "react";
+import { renderToString } from "react-dom/server";
+import { thumbs } from "../../components/thumbs";
+import { BASE, COMPONENT_GROUPS } from "../../config";
+import { loadManifest } from "../../lib/manifest";
+
+const manifest = await loadManifest();
+const byName = new Map(manifest.map((i) => [i.name, i]));
+const docs = (await getCollection("docs")).filter((d) => d.id.startsWith("components/"));
+const demos = import.meta.glob("../../demos/react/*.tsx");
+
+/** Edmi additions worth a spotlight (hand-picked; everything else is generated). */
+const NEW = ["questionnaire", "inset-panel", "message-scroller", "kanban-column", "layout-picker", "ticker-strip"];
+
+type Card = {
+	name: string;
+	title: string;
+	description: string;
+	href: string;
+	html: string | null;
+	via: "demo" | "thumb" | "fallback";
+};
+
+const fallbacks: string[] = [];
+
+function render(name: string, node: unknown): string | null {
+	try {
+		const html = renderToString(node as never, { identifierPrefix: `p-${name}-` });
+		return html.trim() ? html : null;
+	} catch (e) {
+		console.warn(`[components-index] SSR failed for "${name}": ${(e as Error).message.split("\n")[0]}`);
+		return null;
+	}
+}
+
+async function build(group: string, id: string): Promise<Card> {
+	const name = id.split("/").pop() as string;
+	const doc = docs.find((d) => d.id === id);
+	const item = byName.get(name);
+	const base = {
+		name,
+		title: item?.title ?? doc?.data.title ?? name,
+		description: (item?.description ?? doc?.data.description ?? "").replaceAll("`", ""),
+		href: `${BASE}/components/${group}/${name}/`,
+	};
+	let html: string | null = null;
+	let via: Card["via"] = "demo";
+	if (thumbs[name]) {
+		html = render(name, thumbs[name]());
+		via = "thumb";
+	}
+	if (!html) {
+		const key = `../../demos/react/${name}.tsx`;
+		if (demos[key]) {
+			const mod = (await demos[key]()) as { default: () => unknown };
+			html = render(name, createElement(mod.default as never));
+			via = "demo";
+		}
+	}
+	if (!html) {
+		via = "fallback";
+		fallbacks.push(name);
+	}
+	return { ...base, html, via };
+}
+
+const sections: { dir: string; label: string; cards: Card[] }[] = [];
+for (const g of COMPONENT_GROUPS) {
+	const ids = docs.filter((d) => d.id.startsWith(`components/${g.dir}/`)).map((d) => d.id).sort();
+	if (!ids.length) continue;
+	sections.push({
+		dir: g.dir,
+		label: g.dir === "patterns" ? "✦ Patterns" : g.label,
+		cards: await Promise.all(ids.map((id) => build(g.dir, id))),
+	});
+}
+const all = new Map(sections.flatMap((s) => s.cards).map((c) => [c.name, c]));
+const fresh = NEW.map((n) => all.get(n)).filter((c): c is Card => !!c);
+const groups = [
+	...(fresh.length ? [{ dir: "new", label: "New", cards: fresh }] : []),
+	...sections,
+];
+const count = all.size;
+if (fallbacks.length) console.warn(`[components-index] icon-tile fallbacks: ${fallbacks.join(", ")}`);
+---
+
+<StarlightPage
+	frontmatter={{
+		title: "Components",
+		description: `${count} components and patterns for React, Vue and Svelte. Flat by default; add the raised prop for the 3D look.`,
+	}}
+	headings={groups.map((g) => ({ depth: 2, slug: `group-${g.dir}`, text: g.label }))}
+>
+	<div class="cx not-content">
+		<label class="cx-filter">
+			<span class="sr-only">Filter components</span>
+			<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+			<input type="search" placeholder={`Filter ${count} components…`} autocomplete="off" data-cx-filter />
+		</label>
+
+		{
+			groups.map((g) => (
+				<section class="cx-group" data-cx-group id={`group-${g.dir}`}>
+					<h2 class="cx-h">{g.label} <span class="cx-n">{g.cards.length}</span></h2>
+					<div class="cx-grid">
+						{g.cards.map((c) => (
+							<div class="cx-card" data-cx-card data-q={`${c.name} ${c.title} ${c.description}`.toLowerCase()}>
+								<div class="cx-stage" aria-hidden="true">
+									{c.html ? (
+										<div class="cx-pv">
+											<div class="cx-in edmi-preview" inert set:html={c.html} />
+										</div>
+									) : (
+										<span class="cx-tile">{c.title.slice(0, 1)}</span>
+									)}
+								</div>
+								<div class="cx-meta">
+									<a class="cx-title" href={c.href}>{c.title}</a>
+									<div class="cx-desc">{c.description}</div>
+								</div>
+							</div>
+						))}
+					</div>
+				</section>
+			))
+		}
+		<p class="cx-empty" data-cx-empty hidden>No components match your filter.</p>
+	</div>
+</StarlightPage>
+
+<style is:global>
+	.cx { margin-top: 1.25rem; }
+	.cx-filter { position: sticky; top: calc(var(--sl-nav-height, 3.5rem) + .5rem); z-index: 5; display: flex; align-items: center; gap: .5rem; height: 2.25rem; padding: 0 .75rem; border: 1px solid var(--border); border-radius: 8px; background: var(--card); color: var(--muted-foreground); max-width: 24rem; }
+	.cx-filter:focus-within { border-color: var(--ring); }
+	.cx-filter input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--foreground); font: inherit; font-size: .875rem; }
+	.cx-h { display: flex; align-items: baseline; gap: .5rem; margin: 2rem 0 .75rem; font-size: 1.125rem; font-weight: 600; letter-spacing: -.01em; color: var(--foreground); }
+	.cx-n { font: 400 .75rem var(--font-mono, ui-monospace, monospace); color: var(--muted-foreground); }
+	.cx-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); gap: .875rem; }
+	.cx-card { position: relative; display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--border); border-radius: 12px; background: var(--card); color: var(--foreground); text-decoration: none; transition: border-color .12s; }
+	.cx-card:hover { border-color: var(--border-2, var(--ring)); }
+	.cx-card:has(.cx-title:focus-visible) { border-color: var(--ring); }
+	.cx-card[hidden], .cx-group[hidden] { display: none; }
+	.cx-stage { position: relative; height: 11.25rem; overflow: hidden; border-bottom: 1px solid var(--border); background-color: var(--background); background-image: radial-gradient(var(--grid-dot) 1px, transparent 1px); background-size: 14px 14px; }
+	.cx-pv { position: absolute; inset: 0; }
+	.cx-in { position: absolute; top: 50%; left: 50%; width: max-content; max-width: 600px; max-height: 440px; overflow: hidden; background: transparent !important; pointer-events: none; user-select: none; transform-origin: center; transform: translate(-50%, -50%) scale(var(--s, .55)); }
+	.cx-tile { position: absolute; inset: 0; display: grid; place-items: center; font: 600 2rem var(--font-brand, inherit); color: var(--muted-foreground); }
+	.cx-meta { padding: .75rem .875rem .875rem; }
+	.cx-title { font-size: .875rem; font-weight: 600; color: var(--foreground); text-decoration: none; outline: 0; }
+	.cx-title::after { content: ""; position: absolute; inset: 0; z-index: 2; }
+	.cx-desc { margin-top: .125rem; font-size: .8125rem; line-height: 1.4; color: var(--muted-foreground); display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+	.cx-empty { margin-top: 2rem; color: var(--muted-foreground); }
+</style>
+
+<script>
+	const stages = [...document.querySelectorAll<HTMLElement>(".cx-pv")];
+	function fit() {
+		for (const pv of stages) {
+			const el = pv.firstElementChild as HTMLElement | null;
+			if (!el || !pv.clientWidth) continue;
+			const w = el.offsetWidth || 1;
+			const h = el.offsetHeight || 1;
+			const s = Math.min((pv.clientWidth - 24) / w, (pv.clientHeight - 24) / h, 1);
+			el.style.setProperty("--s", String(Math.max(s, 0.3)));
+		}
+	}
+	fit();
+	document.fonts?.ready.then(fit);
+	new ResizeObserver(fit).observe(document.querySelector(".cx-grid") ?? document.body);
+
+	const input = document.querySelector<HTMLInputElement>("[data-cx-filter]");
+	const cards = [...document.querySelectorAll<HTMLElement>("[data-cx-card]")];
+	const groups = [...document.querySelectorAll<HTMLElement>("[data-cx-group]")];
+	const empty = document.querySelector<HTMLElement>("[data-cx-empty]");
+	input?.addEventListener("input", () => {
+		const q = input.value.trim().toLowerCase();
+		for (const c of cards) c.hidden = !!q && !(c.dataset.q ?? "").includes(q);
+		let any = false;
+		for (const g of groups) {
+			const vis = g.querySelector("[data-cx-card]:not([hidden])") !== null;
+			g.hidden = !vis;
+			any ||= vis;
+		}
+		if (empty) empty.hidden = any;
+		fit();
+	});
+</script>
