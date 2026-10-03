@@ -1,0 +1,35 @@
+---
+title: Sources
+description: "Collapsible list of the sources a response used."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-sources" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/sources) (Apache-2.0), restyled for Edmi UI. Built on `collapsible`.
+
+## Installation
+
+<ComponentInstall name="ai-sources" />
+
+## Usage
+
+<ComponentUsage name="ai-sources" />
+
+## Component source
+
+<ComponentSource name="ai-sources" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| Sources | `open`, `defaultOpen`, `onOpenChange` | collapsible state | closed |
+| SourcesTrigger | `count` | `number` | |
+| Source | `href`, `title` | link props | |
+
+## ✦ Edmi additions
+- `Source` shows the host (`reuters.com`) in mono next to the underlined title, derived from `href`.
+- The trigger spans the row with the chevron on the right, like the other agent-output disclosures.

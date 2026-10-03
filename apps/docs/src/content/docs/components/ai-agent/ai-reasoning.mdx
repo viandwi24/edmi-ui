@@ -1,0 +1,38 @@
+---
+title: Reasoning
+description: "Collapsible thinking block that streams while the model reasons and closes itself when done."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-reasoning" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/reasoning) (Apache-2.0), restyled for Edmi UI. Built on `collapsible` and `ai-shimmer`. The content renders markdown with Streamdown; React consumers add the `@source` line described on the `ai-message` page.
+
+## Installation
+
+<ComponentInstall name="ai-reasoning" />
+
+## Usage
+
+<ComponentUsage name="ai-reasoning" />
+
+## Component source
+
+<ComponentSource name="ai-reasoning" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| Reasoning | `isStreaming` | `boolean` | `false` |
+| Reasoning | `open`, `defaultOpen`, `onOpenChange` | controlled / uncontrolled open state | `defaultOpen = isStreaming` |
+| Reasoning | `duration` | `number` (seconds; measured automatically while `isStreaming` flips) | |
+| ReasoningTrigger | `getThinkingMessage` | `(isStreaming, duration) => ReactNode` | shimmer `Thinking…`, then `Thought for N seconds` |
+| ReasoningContent | `children` | `string` (rendered as markdown) | |
+
+## ✦ Edmi additions
+- Opens on its own while `isStreaming`, closes one second after streaming ends and keeps the measured duration as the label.
+- The content sits behind a 2px `--border` rule; the label is muted until hovered.
+- The shimmer sweep is a `--foreground` highlight over `--muted-foreground`, so it reads in light and dark.

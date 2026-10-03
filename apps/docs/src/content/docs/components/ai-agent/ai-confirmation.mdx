@@ -1,0 +1,46 @@
+---
+title: Confirmation
+description: "Tool approval request with request, accepted and rejected states."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-confirmation" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/confirmation) (Apache-2.0), restyled for Edmi UI. Built on `alert` and `button`.
+
+## Installation
+
+<ComponentInstall name="ai-confirmation" />
+
+## Usage
+
+<ComponentUsage name="ai-confirmation" />
+
+## Component source
+
+<ComponentSource name="ai-confirmation" />
+
+## Raised ✦
+
+Flat by default. `raised` gives the one-step 3D look.
+
+<ComponentDemo name="ai-confirmation" demo="ai-confirmation-raised" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| Confirmation | `approval`, `state` | AI SDK tool approval and `ToolUIPart["state"]` | |
+| Confirmation | `raised` | `boolean` (the action buttons inherit it) | `false` |
+| Confirmation | `icon` | `ReactNode` | shield |
+| ConfirmationTitle | | request title (put `ConfirmationRequest` / `Accepted` / `Rejected` inside) | |
+| ConfirmationDescription | | muted second line, only while the request is open | |
+| ConfirmationActions | | row of actions, only while the request is open | |
+| ConfirmationAction | `raised`, `variant`, `size` | Button props | `size="sm"` |
+
+## ✦ Edmi additions
+- The open request is a `warning` alert; once answered it collapses to a plain status line (green check when approved, muted cross when rejected).
+- `ConfirmationDescription` ✦ is the muted line under the title.
+- `raised` ✦ is passed to every `ConfirmationAction` (each can override it).

@@ -1,0 +1,38 @@
+---
+title: Inline Citation
+description: "Inline source chip with a hover card that pages through the sources."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-inline-citation" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/inline-citation) (Apache-2.0), restyled for Edmi UI. Built on `badge`, `button`, `carousel` and `hover-card`.
+
+## Installation
+
+<ComponentInstall name="ai-inline-citation" />
+
+## Usage
+
+<ComponentUsage name="ai-inline-citation" />
+
+## Component source
+
+<ComponentSource name="ai-inline-citation" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| InlineCitationCardTrigger | `sources` | `string[]` (URLs; shows the first host and `+N`) | |
+| InlineCitationCarousel | Carousel props | | |
+| InlineCitationCarouselHeader | | arrows left, index right | |
+| InlineCitationSource | `title`, `url`, `description` | `string` | |
+| InlineCitationQuote | | `blockquote` | |
+
+## ✦ Edmi additions
+- The hover card opens instantly (no delay) like the stock component and is a solid `--popover` surface.
+- Header arrows are ghost `icon-xs` buttons; the page index is mono.
+- The quote is a 2px `--border` rule, not italic.

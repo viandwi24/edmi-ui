@@ -1,0 +1,40 @@
+---
+title: Chain of Thought
+description: "Step-by-step reasoning timeline with search results and images per step."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-chain-of-thought" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/chain-of-thought) (Apache-2.0), restyled for Edmi UI. Built on `badge` and `collapsible`.
+
+## Installation
+
+<ComponentInstall name="ai-chain-of-thought" />
+
+## Usage
+
+<ComponentUsage name="ai-chain-of-thought" />
+
+## Component source
+
+<ComponentSource name="ai-chain-of-thought" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| ChainOfThought | `open`, `defaultOpen`, `onOpenChange` | controlled / uncontrolled open state | `defaultOpen = false` |
+| ChainOfThoughtHeader | `children` | label | `Chain of thought` |
+| ChainOfThoughtStep | `icon` | `ReactNode` (an `IconPlaceholder` or svg) | small dot |
+| ChainOfThoughtStep | `label`, `description` | `ReactNode` | |
+| ChainOfThoughtStep | `status` | `complete \| active \| pending` | `complete` |
+| ChainOfThoughtSearchResult | Badge props | secondary pill | |
+| ChainOfThoughtImage | `caption` | `string` | |
+
+## ✦ Edmi additions
+- `icon` takes an element instead of an icon component, so it follows the consumer's `iconLibrary`.
+- Statuses: `active` shows a `--brand` icon and a foreground label (pair it with `Shimmer`), `pending` is faint.
+- A 1px `--border` line joins the step icons and stops after the last step.

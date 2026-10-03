@@ -1,4 +1,4 @@
-import { aiItem, AI_CATEGORIES as C } from "./ai-shared.ts";
+import { aiItem, aiReact, AI_CATEGORIES as C } from "./ai-shared.ts";
 import type { Item } from "./types.ts";
 
 /** AI · Agent: board AI 02 agent output (Reasoning, Chain of Thought, Tool, Confirmation, Sources, Inline Citation, Plan, Task, Queue, Checkpoint). */
@@ -11,6 +11,14 @@ export const items: Item[] = [
 		category: C.agent,
 		deps: ["collapsible", "ai-shimmer"],
 		optionalDeps: ["ai-use-controllable-state"],
+		react: aiReact("reasoning", [
+			"cn",
+			"streamdown",
+			"@streamdown/cjk",
+			"@streamdown/code",
+			"@streamdown/math",
+			"@streamdown/mermaid",
+		]),
 	}),
 	aiItem({
 		name: "chain-of-thought",
@@ -20,6 +28,7 @@ export const items: Item[] = [
 		category: C.agent,
 		deps: ["badge", "collapsible"],
 		optionalDeps: ["ai-use-controllable-state"],
+		react: aiReact("chain-of-thought", ["cn"]),
 	}),
 	aiItem({
 		name: "tool",
@@ -27,7 +36,8 @@ export const items: Item[] = [
 		description:
 			"Tool call card with a state badge, collapsible input parameters and output or error.",
 		category: C.agent,
-		deps: ["badge", "collapsible", "ai-code-block"],
+		deps: ["badge", "collapsible"],
+		react: aiReact("tool", ["ai", "cn"]),
 	}),
 	aiItem({
 		name: "confirmation",
@@ -36,6 +46,7 @@ export const items: Item[] = [
 			"Tool approval request with request, accepted and rejected states.",
 		category: C.agent,
 		deps: ["alert", "button"],
+		react: aiReact("confirmation", ["ai", "cn"]),
 	}),
 	aiItem({
 		name: "sources",
@@ -43,6 +54,7 @@ export const items: Item[] = [
 		description: "Collapsible list of the sources a response used.",
 		category: C.agent,
 		deps: ["collapsible"],
+		react: aiReact("sources", ["cn"]),
 	}),
 	aiItem({
 		name: "inline-citation",
@@ -50,7 +62,8 @@ export const items: Item[] = [
 		description:
 			"Inline source chip with a hover card that pages through the sources.",
 		category: C.agent,
-		deps: ["badge", "carousel", "hover-card"],
+		deps: ["badge", "button", "carousel", "hover-card"],
+		react: aiReact("inline-citation", ["cn"]),
 	}),
 	aiItem({
 		name: "plan",
@@ -59,6 +72,7 @@ export const items: Item[] = [
 			"Plan card with streaming title and description and collapsible steps.",
 		category: C.agent,
 		deps: ["button", "card", "collapsible", "ai-shimmer"],
+		react: aiReact("plan", ["cn"]),
 	}),
 	aiItem({
 		name: "task",
@@ -66,6 +80,7 @@ export const items: Item[] = [
 		description: "Collapsible task row with file chips.",
 		category: C.agent,
 		deps: ["collapsible"],
+		react: aiReact("task", ["cn"]),
 	}),
 	aiItem({
 		name: "queue",
@@ -73,7 +88,8 @@ export const items: Item[] = [
 		description:
 			"Queued messages and todos in collapsible sections with status dots.",
 		category: C.agent,
-		deps: ["button", "collapsible", "scroll-area"],
+		deps: ["badge", "button", "collapsible", "scroll-area"],
+		react: aiReact("queue", ["cn"]),
 	}),
 	aiItem({
 		name: "checkpoint",
@@ -81,5 +97,6 @@ export const items: Item[] = [
 		description: "Marks a point in the conversation with a restore action.",
 		category: C.agent,
 		deps: ["button", "separator", "tooltip"],
+		react: aiReact("checkpoint", ["cn"]),
 	}),
 ];

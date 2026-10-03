@@ -1,0 +1,35 @@
+---
+title: Checkpoint
+description: "Marks a point in the conversation with a restore action."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-checkpoint" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/checkpoint) (Apache-2.0), restyled for Edmi UI. Built on `button`, `separator` and `tooltip`.
+
+## Installation
+
+<ComponentInstall name="ai-checkpoint" />
+
+## Usage
+
+<ComponentUsage name="ai-checkpoint" />
+
+## Component source
+
+<ComponentSource name="ai-checkpoint" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| Checkpoint | `time` | `ReactNode` (mono label after the line) | |
+| CheckpointIcon | `children` | custom icon | bookmark |
+| CheckpointTrigger | `tooltip`, `variant`, `size` | Button props | `ghost`, `xs` |
+
+## ✦ Edmi additions
+- `time` ✦ puts a mono timestamp after the line.
+- The trigger defaults to a ghost `xs` button with a tooltip.

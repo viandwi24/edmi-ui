@@ -1,0 +1,38 @@
+---
+title: Queue
+description: "Queued messages and todos in collapsible sections with status dots."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-queue" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/queue) (Apache-2.0), restyled for Edmi UI. Built on `badge`, `button`, `collapsible` and `scroll-area`.
+
+## Installation
+
+<ComponentInstall name="ai-queue" />
+
+## Usage
+
+<ComponentUsage name="ai-queue" />
+
+## Component source
+
+<ComponentSource name="ai-queue" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| QueueSection | `open`, `defaultOpen` | collapsible state | `defaultOpen = true` |
+| QueueSectionLabel | `label`, `count`, `icon` | label, number badge, optional icon | |
+| QueueItemIndicator, QueueItemContent, QueueItemDescription | `completed` | `boolean` | `false` |
+| QueueItemAction | Button props | ghost `icon-xs`, revealed on hover or focus | |
+| QueueItemImage, QueueItemFile | | attachment thumbnails | |
+
+## ✦ Edmi additions
+- The count is a number badge next to the label, and a section that follows another gets a divider.
+- Item actions appear on hover and keyboard focus.
+- The types `QueueMessage` and `QueueTodo` are exported for AI SDK data.
