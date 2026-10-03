@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CopyIcon, DownloadIcon, ExternalLinkIcon } from "@lucide/vue";
+import { CopyIcon, DownloadIcon, ArrowUpRightIcon } from "@lucide/vue";
 import {
   Artifact,
   ArtifactAction,
@@ -32,7 +32,7 @@ export async function run(index: string) {
       <ArtifactActions>
         <ArtifactAction tooltip="Copy"><CopyIcon class="size-4" /></ArtifactAction>
         <ArtifactAction tooltip="Download"><DownloadIcon class="size-4" /></ArtifactAction>
-        <ArtifactAction tooltip="Open"><ExternalLinkIcon class="size-4" /></ArtifactAction>
+        <ArtifactAction tooltip="Open"><ArrowUpRightIcon class="size-4" /></ArtifactAction>
         <ArtifactClose />
       </ArtifactActions>
     </ArtifactHeader>

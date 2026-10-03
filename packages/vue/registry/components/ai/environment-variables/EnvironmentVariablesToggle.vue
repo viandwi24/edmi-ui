@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
 import type { HTMLAttributes } from "vue"
-import { EyeIcon, EyeOffIcon } from "@lucide/vue"
+import { EyeIcon, LockIcon } from "@lucide/vue"
 import { cn } from "@/registry/edmi/lib/utils"
 import { Switch } from "@/registry/edmi/ui/switch"
 import { useEnvironmentVariablesContext } from "./context"
@@ -15,7 +15,7 @@ const { showValues, setShowValues } = useEnvironmentVariablesContext()
   <div :class="cn('flex items-center gap-2 text-[12.5px]', props.class)">
     <span class="text-muted-foreground">
       <EyeIcon v-if="showValues" class="size-3.5" />
-      <EyeOffIcon v-else class="size-3.5" />
+      <LockIcon v-else class="size-3.5" />
     </span>
     <span>Show values</span>
     <Switch

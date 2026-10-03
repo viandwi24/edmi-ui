@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
 import type { HTMLAttributes } from "vue"
-import { Settings2Icon } from "@lucide/vue"
+import { Settings } from "@lucide/vue"
 import { computed } from "vue"
 import { cn } from "@/registry/edmi/lib/utils"
 import { AccordionContent, AccordionItem, AccordionTrigger } from "@/registry/edmi/ui/accordion"
@@ -29,7 +29,7 @@ const code = computed(() => (isString.value ? (schema.value as string) : JSON.st
     :class="cn('border-t-0 border-b border-border-2', props.class)"
   >
     <AccordionTrigger class="gap-2 py-[9px] text-[13px] font-normal">
-      <Settings2Icon class="size-3.5 shrink-0 text-muted-foreground" />
+      <Settings class="size-3.5 shrink-0 text-muted-foreground" />
       <span class="font-mono text-[12.5px]">{{ props.name ?? props.value }}</span>
       <span class="min-w-0 flex-1 truncate text-[13px] font-normal text-muted-foreground">
         {{ props.tool.description ?? "No description" }}
