@@ -84,7 +84,9 @@ export default function EditorialDarkExample() {
 							<Button raised variant="secondary" size="lg">
 								{hero.wallet}
 							</Button>
-							<span className="text-[11px] text-muted-foreground">{hero.or}</span>
+							<span className="text-[11px] text-muted-foreground">
+								{hero.or}
+							</span>
 							<Button raised size="lg">
 								{hero.email}
 							</Button>
@@ -96,7 +98,10 @@ export default function EditorialDarkExample() {
 							{hero.devnet}
 						</Button>
 					</div>
-					<Card raised className="items-center justify-center p-6 sm:p-12 lg:min-h-[620px]">
+					<Card
+						raised
+						className="items-center justify-center p-6 sm:p-12 lg:min-h-[620px]"
+					>
 						<Card className="w-full max-w-[420px] gap-4 p-7">
 							<div className="font-mono text-[11px] text-muted-foreground">
 								{index.label}

@@ -52,7 +52,10 @@ export const controls: Control[] = [
 		key: "radius",
 		label: "Radius",
 		hint: "--radius",
-		options: ["0.3", "0.5", "0.625", "0.75", "1"].map((v) => ({ value: v, label: v })),
+		options: ["0.3", "0.5", "0.625", "0.75", "1"].map((v) => ({
+			value: v,
+			label: v,
+		})),
 	},
 	{
 		key: "raised",
@@ -82,7 +85,13 @@ export const preview = {
 	join: "Join",
 	details: "Details",
 	keeper: "Keeper on",
-	variants: ["default", "secondary", "outline", "destructive", "brand"] as const,
+	variants: [
+		"default",
+		"secondary",
+		"outline",
+		"destructive",
+		"brand",
+	] as const,
 	badges: ["secondary", "brand", "success", "destructive"] as const,
 	mandate: "Accept mandate",
 	placeholder: "Search indexes",

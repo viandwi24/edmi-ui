@@ -6,7 +6,10 @@ import {
 	SiteHeader,
 	SiteHeaderBrand,
 } from "@edmi-react/blocks/site-header/site-header";
-import { StatStrip, StatStripItem } from "@edmi-react/blocks/stat-tile/stat-tile";
+import {
+	StatStrip,
+	StatStripItem,
+} from "@edmi-react/blocks/stat-tile/stat-tile";
 import { StepCard } from "@edmi-react/blocks/step-card/step-card";
 import { Badge } from "@edmi-react/ui/badge";
 import { Button } from "@edmi-react/ui/button";
@@ -258,7 +261,10 @@ export default function LandingExample() {
 					</div>
 				</section>
 
-				<Card raised className="flex-col gap-6 p-8 md:flex-row md:items-center md:justify-between md:p-12">
+				<Card
+					raised
+					className="flex-col gap-6 p-8 md:flex-row md:items-center md:justify-between md:p-12"
+				>
 					<div className="flex flex-col gap-3">
 						<h2 className="text-[34px] leading-tight font-normal tracking-[-1.2px] md:text-[44px]">
 							{cta.title}

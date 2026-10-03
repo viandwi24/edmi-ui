@@ -95,14 +95,24 @@ export const plans = {
 			tagline: "Launch your own index",
 			price: "1% fee to you",
 			note: "Earn the management fee on every holder's share.",
-			features: ["Custom weights and mandate", "Pre-IPO sleeve", "Share cards and Blinks", "Research agent"],
+			features: [
+				"Custom weights and mandate",
+				"Pre-IPO sleeve",
+				"Share cards and Blinks",
+				"Research agent",
+			],
 		},
 		{
 			name: "Keeper",
 			tagline: "Automate rebalancing",
 			price: "5% drift trigger",
 			note: "Keeper rebalances when weights drift past your limit.",
-			features: ["Scheduled rebalances", "Agent wallet and MCP", "Priority execution", "Fee analytics"],
+			features: [
+				"Scheduled rebalances",
+				"Agent wallet and MCP",
+				"Priority execution",
+				"Fee analytics",
+			],
 		},
 	],
 	cta: "Launch an index",
@@ -130,19 +140,39 @@ export const footer = {
 	columns: [
 		{
 			title: "Product",
-			links: ["Stockbreak", "Explore", "Leaderboard", "Create index", "Feeds", "Portfolio", "Faucet"].map((label) => ({ label, href: `#${label.toLowerCase().replace(" ", "-")}` })),
+			links: [
+				"Stockbreak",
+				"Explore",
+				"Leaderboard",
+				"Create index",
+				"Feeds",
+				"Portfolio",
+				"Faucet",
+			].map((label) => ({
+				label,
+				href: `#${label.toLowerCase().replace(" ", "-")}`,
+			})),
 		},
 		{
 			title: "Capabilities",
-			links: ["Research agent", "Vault", "Keeper", "Blinks"].map((label) => ({ label, href: `#${label.toLowerCase().replace(" ", "-")}` })),
+			links: ["Research agent", "Vault", "Keeper", "Blinks"].map((label) => ({
+				label,
+				href: `#${label.toLowerCase().replace(" ", "-")}`,
+			})),
 		},
 		{
 			title: "Developers",
-			links: ["Docs", "API", "MCP server", "Community"].map((label) => ({ label, href: `#${label.toLowerCase().replace(" ", "-")}` })),
+			links: ["Docs", "API", "MCP server", "Community"].map((label) => ({
+				label,
+				href: `#${label.toLowerCase().replace(" ", "-")}`,
+			})),
 		},
 		{
 			title: "Company",
-			links: ["About", "Careers", "Research", "News"].map((label) => ({ label, href: `#${label.toLowerCase()}` })),
+			links: ["About", "Careers", "Research", "News"].map((label) => ({
+				label,
+				href: `#${label.toLowerCase()}`,
+			})),
 		},
 	],
 	description: "Ask the research agent anything about your thesis.",

@@ -20,7 +20,8 @@ export const hero = {
 	eyebrow: "The index launchpad for tokenized stocks, on Solana",
 	title: "Turn your stock thesis into an index token.",
 	lead: "Pick up to 10 tokenized stocks and pre-IPO names, set the weights and the rules. Others join with USDC in one click or one Blink. A Solana vault program enforces the rebalancing — not us.",
-	facts: "Self-custodied · Redeem anytime · Rules enforced on-chain · PreStocks pre-IPO",
+	facts:
+		"Self-custodied · Redeem anytime · Rules enforced on-chain · PreStocks pre-IPO",
 	disclaimer:
 		"Live on Solana devnet. Assets are simulated; prices follow real market data. Not investment advice.",
 };
@@ -42,8 +43,7 @@ export const index = {
 	] satisfies Segment[],
 	// viewBox 0 0 400 120 paths (index line + dashed benchmark)
 	line: "M0 92 C30 92 50 94 80 86 C110 78 130 70 160 66 C190 62 210 66 240 56 C270 46 300 38 330 34 C360 30 380 26 400 22",
-	benchmarkLine:
-		"M0 94 C60 92 120 88 180 84 C240 80 300 74 400 66",
+	benchmarkLine: "M0 94 C60 92 120 88 180 84 C240 80 300 74 400 66",
 };
 
 export const joinRows = [{ label: "Estimated shares", value: "982.09" }];
@@ -57,7 +57,10 @@ export const stats: Stat[] = [
 export const statsNote =
 	"Market data placeholders — fill with sourced figures before publishing.";
 
-export const problemTitle = { lead: "Tokenized stocks are here.", muted: "Portfolios aren't." };
+export const problemTitle = {
+	lead: "Tokenized stocks are here.",
+	muted: "Portfolios aren't.",
+};
 export const problems: Feature[] = [
 	{
 		index: "01",
@@ -76,17 +79,22 @@ export const problems: Feature[] = [
 	},
 ];
 
-export const stepsTitle = { lead: "From thesis to token", muted: "in four steps." };
+export const stepsTitle = {
+	lead: "From thesis to token",
+	muted: "in four steps.",
+};
 export const steps: Step[] = [
 	{
 		index: "01",
 		title: "Create",
-		description: "Pick up to 10 assets, set weights, choose a strategy and your fees.",
+		description:
+			"Pick up to 10 assets, set weights, choose a strategy and your fees.",
 	},
 	{
 		index: "02",
 		title: "Share",
-		description: "Every index gets a link, an OG image, a feed card and a Solana Blink.",
+		description:
+			"Every index gets a link, an OG image, a feed card and a Solana Blink.",
 	},
 	{
 		index: "03",
@@ -113,21 +121,33 @@ export const pricing = [
 		tagline: "Join any index",
 		price: "0% to join",
 		note: "Plus the 1% management fee set by each creator.",
-		features: ["Browse and join every index", "Live NAV and feeds", "Leaderboard and portfolio"],
+		features: [
+			"Browse and join every index",
+			"Live NAV and feeds",
+			"Leaderboard and portfolio",
+		],
 	},
 	{
 		name: "Creator",
 		tagline: "Launch your own index",
 		price: "1% fee to you",
 		note: "Earn the management fee on every holder's share.",
-		features: ["Custom weights and mandate", "Pre-IPO sleeve", "Share cards and Blinks"],
+		features: [
+			"Custom weights and mandate",
+			"Pre-IPO sleeve",
+			"Share cards and Blinks",
+		],
 	},
 	{
 		name: "Keeper",
 		tagline: "Automate rebalancing",
 		price: "5% drift trigger",
 		note: "Keeper rebalances when weights drift past your limit.",
-		features: ["Scheduled rebalances", "Agent wallet and MCP", "Priority execution"],
+		features: [
+			"Scheduled rebalances",
+			"Agent wallet and MCP",
+			"Priority execution",
+		],
 	},
 ];
 

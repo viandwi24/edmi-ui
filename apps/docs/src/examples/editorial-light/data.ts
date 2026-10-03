@@ -35,7 +35,8 @@ export const hero = {
 			body: "Connect over MCP, bring your own agent wallet, or drive it from Claude, ChatGPT or your own script.",
 		},
 	],
-	closing: "Bring your thesis into the index launchpad and start with the next concrete step.",
+	closing:
+		"Bring your thesis into the index launchpad and start with the next concrete step.",
 	closingCta: "Start in Stockbreak",
 };
 
@@ -43,18 +44,40 @@ export const workspace = {
 	project: "Magnificent Four",
 	zoom: "Z 60%",
 	path: "stockbreak/indexes/magnificent-four",
-	nodes: ["Research", "Fees", "Index", "Keeper", "Vault", "Social", "Pre-IPO", "Rebalance"],
+	nodes: [
+		"Research",
+		"Fees",
+		"Index",
+		"Keeper",
+		"Vault",
+		"Social",
+		"Pre-IPO",
+		"Rebalance",
+	],
 	tabs: ["Home", "Index", "Vault", "Agents", "Context"],
 	thread: [
 		{
 			role: "assistant",
 			text: "That's a great way to check the thesis. I'm screening the megacaps against your mandate — drift, liquidity on Jupiter, and whether a pre-IPO sleeve fits.",
 		},
-		{ role: "user", text: "The thesis is ready. Can you turn it into an index and share it?" },
+		{
+			role: "user",
+			text: "The thesis is ready. Can you turn it into an index and share it?",
+		},
 	],
 	tasks: [
-		{ name: "Research agent", detail: "Screening AAPLx, NVDAx, T…", status: "Running", tone: "running" as Tone },
-		{ name: "Vault", detail: "Preparing join transaction for 50 USDC", status: "Queued", tone: "queued" as Tone },
+		{
+			name: "Research agent",
+			detail: "Screening AAPLx, NVDAx, T…",
+			status: "Running",
+			tone: "running" as Tone,
+		},
+		{
+			name: "Vault",
+			detail: "Preparing join transaction for 50 USDC",
+			status: "Queued",
+			tone: "queued" as Tone,
+		},
 	],
 	prompt: "How are the megacaps doing vs SPYx",
 };
@@ -82,10 +105,26 @@ export const launch: Section = {
 	muted: "an index with you",
 	body: "Give Stockbreak the thesis you built. It turns that context into the mandate, weights, token and launch materials you need to go to market.",
 	rows: [
-		{ index: "1.1", title: "Thesis and weights", body: "Paste your notes or pick tokens; the research agent proposes weights." },
-		{ index: "1.2", title: "Index identity", body: "Name, ticker, avatar and a short mandate for holders." },
-		{ index: "1.3", title: "Vault deployment", body: "The vault program is deployed once you sign the transaction." },
-		{ index: "1.4", title: "Launch content", body: "Feed card, OG image and a Solana Blink ready to share." },
+		{
+			index: "1.1",
+			title: "Thesis and weights",
+			body: "Paste your notes or pick tokens; the research agent proposes weights.",
+		},
+		{
+			index: "1.2",
+			title: "Index identity",
+			body: "Name, ticker, avatar and a short mandate for holders.",
+		},
+		{
+			index: "1.3",
+			title: "Vault deployment",
+			body: "The vault program is deployed once you sign the transaction.",
+		},
+		{
+			index: "1.4",
+			title: "Launch content",
+			body: "Feed card, OG image and a Solana Blink ready to share.",
+		},
 	],
 };
 
@@ -123,10 +162,26 @@ export const operate: Section = {
 	muted: "after launch",
 	body: "Bring rebalancing, analytics, holder support and recurring keeper work into Stockbreak without giving up control. The same mandate keeps every part of the index moving together.",
 	rows: [
-		{ index: "3.1", title: "Vault incorporation", body: "Bring an existing vault under the same mandate." },
-		{ index: "3.2", title: "Index analytics", body: "Joins, daily active holders and AUM, updated live." },
-		{ index: "3.3", title: "Holder support", body: "The support agent answers holders from your docs." },
-		{ index: "3.4", title: "Recurring rebalances", body: "The keeper rebalances when weights drift past your limit." },
+		{
+			index: "3.1",
+			title: "Vault incorporation",
+			body: "Bring an existing vault under the same mandate.",
+		},
+		{
+			index: "3.2",
+			title: "Index analytics",
+			body: "Joins, daily active holders and AUM, updated live.",
+		},
+		{
+			index: "3.3",
+			title: "Holder support",
+			body: "The support agent answers holders from your docs.",
+		},
+		{
+			index: "3.4",
+			title: "Recurring rebalances",
+			body: "The keeper rebalances when weights drift past your limit.",
+		},
 	],
 };
 
@@ -142,7 +197,10 @@ export const joiners = [
 	{ name: "Sarah Chen", place: "Singapore, SG", initials: "SC" },
 	{ name: "Jordan Brown", place: "Denver, CO", initials: "JB" },
 ];
-export const joinersFooter = { count: "2,846", text: "people joined an index this week" };
+export const joinersFooter = {
+	count: "2,846",
+	text: "people joined an index this week",
+};
 
 export const guide = {
 	title: "Learn how to launch an index",
@@ -181,7 +239,10 @@ export const footer = {
 			],
 		},
 	],
-	card: { text: "Stockbreak is an index launchpad designed to run an entire fund.", cta: "Create an index" },
+	card: {
+		text: "Stockbreak is an index launchpad designed to run an entire fund.",
+		cta: "Create an index",
+	},
 	legal: "Copyright © 2026 Stockbreak",
 	note: "Built on Solana devnet",
 };

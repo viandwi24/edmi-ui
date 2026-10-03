@@ -163,7 +163,9 @@ export default function EditorialLightExample() {
 										<span className="min-w-0 flex-1 truncate text-xs text-muted-foreground">
 											{t.detail}
 										</span>
-										<Badge variant={t.tone === "running" ? "brand" : "secondary"}>
+										<Badge
+											variant={t.tone === "running" ? "brand" : "secondary"}
+										>
 											{t.status}
 										</Badge>
 									</div>
@@ -206,7 +208,10 @@ export default function EditorialLightExample() {
 					</p>
 				</section>
 
-				<section id="launch" className="grid items-start gap-12 lg:grid-cols-[480px_1fr]">
+				<section
+					id="launch"
+					className="grid items-start gap-12 lg:grid-cols-[480px_1fr]"
+				>
 					<SectionCopy section={launch} />
 					<Card raised className="gap-0 p-0 md:flex-row">
 						{board.map((col) => (
@@ -219,7 +224,12 @@ export default function EditorialLightExample() {
 									<span>{col.count}</span>
 								</div>
 								{col.cards.map((c) => (
-									<Card key={c.name} raised size="sm" className="gap-0 px-3 py-2.5">
+									<Card
+										key={c.name}
+										raised
+										size="sm"
+										className="gap-0 px-3 py-2.5"
+									>
 										<div className="text-[13px]">{c.name}</div>
 										<div className="text-[11px] text-muted-foreground">
 											{c.sub}
@@ -231,7 +241,10 @@ export default function EditorialLightExample() {
 					</Card>
 				</section>
 
-				<section id="operate" className="grid items-start gap-12 lg:grid-cols-[480px_1fr]">
+				<section
+					id="operate"
+					className="grid items-start gap-12 lg:grid-cols-[480px_1fr]"
+				>
 					<SectionCopy section={operate} />
 					<div className="relative flex flex-col gap-4 lg:pb-32">
 						<Card raised className="gap-4 p-5 lg:mr-24">
