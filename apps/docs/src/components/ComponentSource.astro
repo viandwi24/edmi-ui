@@ -1,0 +1,79 @@
+---
+import { Code } from "@astrojs/starlight/components";
+import { CODE_LANG, FRAMEWORK_LABEL, FRAMEWORKS } from "../config";
+import { itemFrameworks, sourcesFor } from "../lib/demo";
+
+interface Props {
+	/** Registry item name, e.g. "button". */
+	name: string;
+}
+const { name } = Astro.props;
+const has = await itemFrameworks(name);
+const LONG = 28; // lines before the block collapses behind "Expand"
+---
+
+<div class="edmi-source not-content">
+	{
+		await Promise.all(
+			FRAMEWORKS.map(async (fw) => {
+				const sources = has.includes(fw) ? await sourcesFor(name, fw) : [];
+				if (sources.length === 0) {
+					return (
+						<p class="edmi-fw-note edmi-fw-note-inline" data-fw-note={fw}>
+							Not available in {FRAMEWORK_LABEL[fw]} yet.
+						</p>
+					);
+				}
+				const lines = sources.reduce((n, s) => n + s.code.split("\n").length, 0);
+				const collapsible = lines > LONG;
+				return (
+					<div data-fw-panel={fw}>
+						<div class="edmi-collapse" data-collapsible={collapsible ? "" : undefined} data-collapsed={collapsible ? "true" : undefined}>
+							<div class="edmi-collapse-body">
+								{sources.map((s) => (
+									<Code code={s.code} lang={CODE_LANG[fw]} title={s.path} />
+								))}
+							</div>
+							{collapsible && (
+								<div class="edmi-collapse-foot">
+									<button type="button" data-collapse-toggle>Expand</button>
+								</div>
+							)}
+						</div>
+					</div>
+				);
+			}),
+		)
+	}
+</div>
+
+<style is:global>
+	.edmi-source { margin: 1rem 0 1.5rem; }
+	.edmi-source .expressive-code { margin: 0; }
+	.edmi-source .expressive-code + .expressive-code { margin-top: .75rem; }
+	.edmi-collapse { position: relative; }
+	.edmi-collapse[data-collapsed="true"] .edmi-collapse-body { max-height: 26rem; overflow: hidden; }
+	.edmi-collapse-foot { display: none; }
+	.edmi-collapse[data-collapsible] .edmi-collapse-foot { display: flex; justify-content: center; }
+	.edmi-collapse[data-collapsed="true"] .edmi-collapse-foot {
+		position: absolute; inset: auto 0 0 0; height: 7rem; align-items: flex-end; padding-bottom: .75rem;
+		background: linear-gradient(to bottom, transparent, var(--sl-color-bg, var(--background)) 85%);
+	}
+	.edmi-collapse[data-collapsible]:not([data-collapsed="true"]) .edmi-collapse-foot { margin-top: .5rem; }
+	.edmi-collapse-foot button {
+		font: 500 12.5px/1 var(--sl-font); height: 30px; padding: 0 .85rem; cursor: pointer;
+		border-radius: 8px; border: 1px solid var(--input); background: var(--secondary); color: var(--foreground);
+	}
+	.edmi-collapse-foot button:hover { background: var(--accent); }
+</style>
+
+<script>
+	for (const btn of document.querySelectorAll<HTMLElement>("[data-collapse-toggle]")) {
+		btn.addEventListener("click", () => {
+			const box = btn.closest<HTMLElement>(".edmi-collapse")!;
+			const collapsed = box.dataset.collapsed === "true";
+			box.dataset.collapsed = collapsed ? "false" : "true";
+			btn.textContent = collapsed ? "Collapse" : "Expand";
+		});
+	}
+</script>

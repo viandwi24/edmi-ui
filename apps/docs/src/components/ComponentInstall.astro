@@ -1,0 +1,105 @@
+---
+import { Code } from "@astrojs/starlight/components";
+import { BASE, FRAMEWORK_LABEL, FRAMEWORKS, installCommand } from "../config";
+import { getItem, itemFrameworks } from "../lib/demo";
+
+interface Props {
+	/** Registry item name, e.g. "button". */
+	name: string;
+}
+const { name } = Astro.props;
+const item = await getItem(name);
+const has = await itemFrameworks(name);
+
+const manual = FRAMEWORKS.filter((fw) => has.includes(fw)).map((fw) => {
+	const entry = item!.frameworks[fw]!;
+	const deps = [...(entry.dependencies ?? [])].filter((d) => d !== "cn");
+	const reg = (entry.registryDependencies ?? item!.registryDependencies ?? []) as string[];
+	const regNames = reg.map((r) => (r.startsWith("http") ? r.replace(/^.*\/([^/]+)\.json$/, "$1") : r.replace(/^@edmi\//, "")));
+	return { fw, deps, regNames };
+});
+const pm = (fw: string, deps: string[]) => (fw === "svelte" ? `bun add ${deps.join(" ")}` : `bun add ${deps.join(" ")}`);
+---
+
+<div class="edmi-install not-content" data-edmi-install>
+	{
+		FRAMEWORKS.map((fw) =>
+			has.includes(fw) ? (
+				<div data-fw-panel={fw}>
+					<div class="edmi-seg" role="tablist" aria-label="Installation method">
+						<button type="button" role="tab" data-install-tab="cli">CLI</button>
+						<button type="button" role="tab" data-install-tab="manual">Manual</button>
+					</div>
+					<div data-install-panel="cli">
+						<Code code={installCommand(fw, name)} lang="bash" />
+						<p class="edmi-install-note">
+							Swap <code>bunx</code> for <code>npx</code> or <code>pnpm dlx</code> as needed. Add the <code>@edmi</code> registry first, see <a href={`${BASE}/getting-started/${fw}/`}>Getting started</a>.
+						</p>
+					</div>
+					<div data-install-panel="manual" hidden>
+						<ol class="edmi-steps">
+							{(() => {
+								const m = manual.find((x) => x.fw === fw)!;
+								return (
+									<>
+										{m.deps.length > 0 && (
+											<li>
+												<p>Install the dependencies:</p>
+												<Code code={pm(fw, m.deps)} lang="bash" />
+											</li>
+										)}
+										{m.regNames.length > 0 && (
+											<li>
+												<p>Add the Edmi components this one builds on: {m.regNames.map((r, i) => <>{i > 0 && ", "}<code>{r}</code></>)}.</p>
+											</li>
+										)}
+										<li>
+											<p>Copy the code from <a href="#component-source">Component source</a> into your project and update the import paths to match your aliases.</p>
+										</li>
+									</>
+								);
+							})()}
+						</ol>
+					</div>
+				</div>
+			) : (
+				<p class="edmi-fw-note edmi-fw-note-inline" data-fw-note={fw}>
+					Not available in {FRAMEWORK_LABEL[fw]} yet.
+				</p>
+			),
+		)
+	}
+</div>
+
+<style is:global>
+	.edmi-install { margin: 1rem 0 1.5rem; }
+	.edmi-install .edmi-seg { margin-bottom: .75rem; }
+	.edmi-install .expressive-code { margin: 0; }
+	.edmi-install-note { margin: .5rem 0 0; font-size: .8125rem; color: var(--muted-foreground); }
+	.edmi-steps { list-style: none; margin: 0; padding: 0; counter-reset: step; display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+	.edmi-steps li { min-width: 0; counter-increment: step; position: relative; padding-left: 2rem; }
+	.edmi-steps li::before {
+		content: counter(step); position: absolute; left: 0; top: 0; display: grid; place-items: center; width: 1.375rem; height: 1.375rem;
+		border-radius: 999px; border: 1px solid var(--border); background: var(--muted); font: 500 11px/1 var(--sl-font-mono); color: var(--muted-foreground);
+	}
+	.edmi-steps p { margin: 0 0 .5rem; font-size: .875rem; }
+	.edmi-fw-note-inline { border: 1px dashed var(--border); border-radius: 10px; padding: 1.25rem; background: transparent; }
+</style>
+
+<script>
+	const KEY = "edmi-install-mode";
+	let mode = "cli";
+	try { mode = localStorage.getItem(KEY) ?? "cli"; } catch {}
+	const paint = () => {
+		for (const t of document.querySelectorAll<HTMLElement>("[data-install-tab]")) t.setAttribute("aria-selected", String(t.dataset.installTab === mode));
+		for (const p of document.querySelectorAll<HTMLElement>("[data-install-panel]")) p.hidden = p.dataset.installPanel !== mode;
+	};
+	for (const t of document.querySelectorAll<HTMLElement>("[data-install-tab]")) {
+		t.addEventListener("click", () => {
+			mode = t.dataset.installTab!;
+			try { localStorage.setItem(KEY, mode); } catch {}
+			paint();
+		});
+	}
+	paint();
+</script>

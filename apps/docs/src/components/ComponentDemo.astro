@@ -1,14 +1,13 @@
 ---
 import { Code } from "@astrojs/starlight/components";
 import { existsSync, readFileSync } from "node:fs";
-import { resolve } from "node:path";
 import { loadManifest } from "../lib/manifest";
+import { demoPath, rewriteImports } from "../lib/demo";
 import {
 	CODE_LANG,
 	DEMO_EXT,
 	FRAMEWORK_LABEL,
 	FRAMEWORKS,
-	installCommand,
 	type Framework,
 } from "../config";
 import OpenInStackBlitz from "./OpenInStackBlitz.astro";
@@ -16,13 +15,11 @@ import OpenInStackBlitz from "./OpenInStackBlitz.astro";
 interface Props {
 	/** Registry item name, e.g. "button". */
 	name: string;
-	/** Demo file basename (default: `name`), e.g. "button-sizes". */
+	/** Demo file basename (default: `name`), e.g. "button-raised". */
 	demo?: string;
 }
 const { name, demo = name } = Astro.props;
 
-const repoRoot = resolve(process.cwd(), "../..");
-const docsRoot = process.cwd();
 const item = (await loadManifest()).find((i) => i.name === name);
 
 // Island modules (lazy: only the demos used on this page are loaded).
@@ -32,60 +29,19 @@ const loaders: Record<Framework, Record<string, () => Promise<any>>> = {
 	svelte: import.meta.glob("./islands/svelte/*.astro"),
 };
 
-function rewriteImports(fw: Framework, src: string): string {
-	switch (fw) {
-		case "react":
-			return src
-				.replaceAll("@edmi-react/ui/", "@/components/ui/")
-				.replaceAll("@edmi-react/hooks/", "@/hooks/")
-				.replaceAll("@edmi-react/lib/", "@/lib/")
-				.replaceAll("@edmi-react/blocks/", "@/components/");
-		case "vue":
-			return src
-				.replaceAll("@edmi-vue/ui/", "@/components/ui/")
-				.replaceAll("@edmi-vue/hooks/", "@/composables/")
-				.replaceAll("@edmi-vue/lib/", "@/lib/")
-				.replaceAll("@edmi-vue/blocks/", "@/components/");
-		case "svelte":
-			return src
-				.replaceAll("@edmi-svelte/ui/", "$lib/components/ui/")
-				.replaceAll("@edmi-svelte/hooks/", "$lib/hooks/")
-				.replaceAll("@edmi-svelte/lib/", "$lib/")
-				.replaceAll("@edmi-svelte/blocks/", "$lib/components/");
-	}
-}
-
-type Panel = {
-	fw: Framework;
-	Demo: any;
-	usage: string;
-	sources: { path: string; code: string }[];
-	install: string;
-};
+type Panel = { fw: Framework; Demo: any; code: string };
 const panels: Panel[] = [];
 for (const fw of FRAMEWORKS) {
 	const entry = item?.frameworks[fw];
 	if (item && (!entry || entry.skip)) continue;
-	const rel = `src/demos/${fw}/${demo}.${DEMO_EXT[fw]}`;
-	const abs = resolve(docsRoot, rel);
+	const abs = demoPath(fw, demo);
 	const key = `./islands/${fw}/${demo}.astro`;
 	if (!existsSync(abs) || !loaders[fw][key]) continue;
 	const Demo = (await loaders[fw][key]()).default;
-	const sources = (entry?.files ?? [])
-		.filter((f) => !f.type || f.type !== "registry:file")
-		.map((f) => {
-			const p = resolve(repoRoot, "packages", fw, f.path);
-			return { path: f.path, code: existsSync(p) ? readFileSync(p, "utf8") : "" };
-		})
-		.filter((s) => s.code);
-	panels.push({
-		fw,
-		Demo,
-		usage: rewriteImports(fw, readFileSync(abs, "utf8")),
-		sources,
-		install: installCommand(fw, name),
-	});
+	panels.push({ fw, Demo, code: rewriteImports(fw, readFileSync(abs, "utf8")) });
 }
+const has = panels.map((p) => p.fw);
+const missing = FRAMEWORKS.filter((fw) => !has.includes(fw));
 ---
 
 {
@@ -94,64 +50,63 @@ for (const fw of FRAMEWORKS) {
 			<em>No live demo for this component yet.</em>
 		</p>
 	) : (
-		<div class="edmi-demo not-content" data-edmi-demo>
-			<div class="edmi-seg edmi-demo-fw" role="tablist" aria-label="Framework">
-				{panels.map((p) => (
-					<button type="button" role="tab" data-fw-tab={p.fw}>
-						{FRAMEWORK_LABEL[p.fw]}
-					</button>
+		<div class="edmi-demo not-content" data-edmi-demo data-has={has.join(" ")}>
+			<div class="edmi-demo-card">
+				<div class="edmi-demo-bar">
+					<div class="edmi-seg" role="tablist" aria-label="View">
+						<button type="button" role="tab" data-view-tab="preview">Preview</button>
+						<button type="button" role="tab" data-view-tab="code">Code</button>
+					</div>
+					<div class="edmi-demo-tools">
+						<label class="edmi-fw-select edmi-fw-select-sm" title="Framework (shared across the site)">
+							<span class="sr-only">Framework</span>
+							<select data-framework-select aria-label="Framework">
+								{FRAMEWORKS.map((fw) => <option value={fw}>{FRAMEWORK_LABEL[fw]}</option>)}
+							</select>
+							<svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+						</label>
+						<button type="button" class="edmi-demo-tool" data-theme-switch aria-label="Toggle preview theme" title="Toggle preview theme">
+							<svg data-sun viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+							<svg data-moon viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg>
+							<span data-theme-switch-label>Light</span>
+						</button>
+						{panels.map((p) => (
+							<span data-fw-panel={p.fw}><OpenInStackBlitz framework={p.fw} /></span>
+						))}
+					</div>
+				</div>
+				{missing.map((fw) => (
+					<p class="edmi-fw-note" data-fw-note={fw}>
+						Not available in {FRAMEWORK_LABEL[fw]} yet. Switch to{" "}
+						{has.map((h, i) => (
+							<>
+								{i > 0 && " or "}
+								<button type="button" data-fw-set={h}>{FRAMEWORK_LABEL[h]}</button>
+							</>
+						))}
+						.
+					</p>
 				))}
-			</div>
-			{panels.map((p) => (
-				<section class="edmi-demo-panel" data-fw-panel={p.fw} hidden>
-					<div class="edmi-demo-card">
-						<div class="edmi-demo-bar">
-							<div class="edmi-seg" role="tablist" aria-label="View">
-								<button type="button" role="tab" data-view-tab="preview">Preview</button>
-								<button type="button" role="tab" data-view-tab="code">Code</button>
-							</div>
-							<div class="edmi-demo-tools">
-								<button type="button" class="edmi-demo-tool" data-theme-switch aria-label="Toggle preview theme" title="Toggle preview theme">
-									<svg data-sun viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
-									<svg data-moon viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg>
-									<span data-theme-switch-label>Light</span>
-								</button>
-								<OpenInStackBlitz framework={p.fw} />
-							</div>
-						</div>
-						<div data-view="preview">
+				<div data-view="preview">
+					{panels.map((p) => (
+						<div data-fw-panel={p.fw}>
 							<div class="edmi-preview edmi-preview-stage" data-preview-stage>
 								<p.Demo />
 							</div>
-							<p class="edmi-icon-note">
-								Icons are rewritten to your <code>iconLibrary</code> on install (Edmi default: Phosphor).
-							</p>
 						</div>
-						<div data-view="code" hidden>
-							<div class="edmi-code-tabs" role="tablist" aria-label="Code">
-								<button type="button" role="tab" data-code-tab="usage">Usage</button>
-								{p.sources.length > 0 && (
-									<button type="button" role="tab" data-code-tab="source">Component source</button>
-								)}
-								<button type="button" role="tab" data-code-tab="install">Install</button>
-							</div>
-							<div data-code-panel="usage">
-								<Code code={p.usage} lang={CODE_LANG[p.fw]} title={`${demo}.${DEMO_EXT[p.fw]}`} />
-							</div>
-							{p.sources.length > 0 && (
-								<div data-code-panel="source" hidden>
-									{p.sources.map((s) => (
-										<Code code={s.code} lang={CODE_LANG[p.fw]} title={s.path} />
-									))}
-								</div>
-							)}
-							<div data-code-panel="install" hidden>
-								<Code code={p.install} lang="bash" />
-							</div>
+					))}
+					<p class="edmi-icon-note">
+						Icons are rewritten to your <code>iconLibrary</code> on install (Edmi default: Phosphor).
+					</p>
+				</div>
+				<div data-view="code" hidden>
+					{panels.map((p) => (
+						<div data-fw-panel={p.fw}>
+							<Code code={p.code} lang={CODE_LANG[p.fw]} title={`${demo}.${DEMO_EXT[p.fw]}`} />
 						</div>
-					</div>
-				</section>
-			))}
+					))}
+				</div>
+			</div>
 		</div>
 	)
 }
@@ -166,7 +121,6 @@ for (const fw of FRAMEWORKS) {
 	}
 	.edmi-seg button:hover { color: var(--foreground); }
 	.edmi-seg button[aria-selected="true"] { background: var(--tab-active); border-color: var(--border); color: var(--foreground); }
-	.edmi-demo-fw { margin-bottom: .75rem; }
 
 	.edmi-demo-card { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: var(--card); }
 	.edmi-demo-bar {
@@ -194,85 +148,50 @@ for (const fw of FRAMEWORKS) {
 	.edmi-icon-note { margin: 0; padding: .5rem .875rem; font-size: .75rem; color: var(--muted-foreground); border-top: 1px solid var(--border); background: var(--card); }
 	.edmi-icon-note code { font-size: .7rem; }
 
-	.edmi-code-tabs { display: flex; gap: .125rem; align-items: center; flex-wrap: wrap; padding: .375rem .625rem 0; background: var(--card); border-bottom: 1px solid var(--border); }
-	.edmi-code-tabs button {
-		font: 500 12.5px/1 var(--sl-font); padding: .5rem .625rem .625rem; cursor: pointer; border: 0; background: transparent;
-		color: var(--muted-foreground); border-bottom: 2px solid transparent; margin-bottom: -1px;
-	}
-	.edmi-code-tabs button:hover { color: var(--foreground); }
-	.edmi-code-tabs button[aria-selected="true"] { color: var(--foreground); border-bottom-color: var(--foreground); }
 	.edmi-demo-card .expressive-code { margin: 0; }
 	.edmi-demo-card .expressive-code .frame { border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
 	.edmi-demo-card .expressive-code .frame pre { border: 0 !important; border-radius: 0 !important; }
-	.edmi-demo-card [data-code-panel] > .expressive-code + .expressive-code { border-top: 1px solid var(--border); }
 	.edmi-demo-card .expressive-code .frame .header { border-radius: 0 !important; }
+
+	.edmi-demo-tools .edmi-fw-select-sm { display: flex; }
+	.edmi-demo-tools .edmi-fw-select-sm select { height: 28px; padding: 0 1.3rem 0 .5rem; font-size: 12px; border-radius: 7px; background: transparent; border-color: transparent; }
+	.edmi-demo-tools .edmi-fw-select-sm select:hover { background: var(--accent); }
+	.edmi-demo-tools .edmi-fw-select-sm svg { right: .45rem; }
+	.edmi-fw-note { display: none; margin: 0; padding: 2.5rem 1.5rem; text-align: center; font-size: .8125rem; color: var(--muted-foreground); background: var(--stage); }
+	.edmi-fw-note button { all: unset; cursor: pointer; font-weight: 500; color: var(--foreground); text-decoration: underline; text-underline-offset: 2px; }
+	.edmi-demo[data-has] [data-view] .edmi-icon-note { display: block; }
 </style>
 
 <script>
-	const KEY = "edmi-framework";
-	const demos = () => document.querySelectorAll<HTMLElement>("[data-edmi-demo]");
-	let current: string | null = null;
-	try { current = localStorage.getItem(KEY); } catch {}
+	// Framework is global (header select -> localStorage "edmi-framework" + <html data-fw> + event).
+	// Panel visibility is pure CSS on html[data-fw]; this only handles the view and theme toggles.
+	for (const demo of document.querySelectorAll<HTMLElement>("[data-edmi-demo]")) {
+		const views = [...demo.querySelectorAll<HTMLElement>("[data-view-tab]")];
+		const showView = (id: string) => {
+			for (const t of views) t.setAttribute("aria-selected", String(t.dataset.viewTab === id));
+			for (const c of demo.querySelectorAll<HTMLElement>("[data-view]")) c.hidden = c.dataset.view !== id;
+		};
+		for (const t of views) t.addEventListener("click", () => showView(t.dataset.viewTab!));
+		showView("preview");
 
-	function applyFramework(fw: string) {
-		current = fw;
-		for (const demo of demos()) {
-			const tabs = [...demo.querySelectorAll<HTMLElement>("[data-fw-tab]")];
-			const has = tabs.some((t) => t.dataset.fwTab === fw);
-			const active = has ? fw : tabs[0]?.dataset.fwTab;
-			for (const t of tabs) t.setAttribute("aria-selected", String(t.dataset.fwTab === active));
-			for (const p of demo.querySelectorAll<HTMLElement>("[data-fw-panel]")) p.hidden = p.dataset.fwPanel !== active;
-		}
-	}
-
-	for (const demo of demos()) {
-		for (const t of demo.querySelectorAll<HTMLElement>("[data-fw-tab]")) {
-			t.addEventListener("click", () => {
-				const fw = t.dataset.fwTab!;
-				try { localStorage.setItem(KEY, fw); } catch {}
-				applyFramework(fw);
-				window.dispatchEvent(new CustomEvent(KEY, { detail: fw }));
-			});
-		}
-		for (const panel of demo.querySelectorAll<HTMLElement>("[data-fw-panel]")) {
-			// Preview | Code
-			const views = [...panel.querySelectorAll<HTMLElement>("[data-view-tab]")];
-			const showView = (id: string) => {
-				for (const t of views) t.setAttribute("aria-selected", String(t.dataset.viewTab === id));
-				for (const c of panel.querySelectorAll<HTMLElement>("[data-view]")) c.hidden = c.dataset.view !== id;
-			};
-			for (const t of views) t.addEventListener("click", () => showView(t.dataset.viewTab!));
-			showView("preview");
-
-			// Usage | Component source | Install
-			const tabs = [...panel.querySelectorAll<HTMLElement>("[data-code-tab]")];
-			const show = (id: string) => {
-				for (const t of tabs) t.setAttribute("aria-selected", String(t.dataset.codeTab === id));
-				for (const c of panel.querySelectorAll<HTMLElement>("[data-code-panel]")) c.hidden = c.dataset.codePanel !== id;
-			};
-			for (const t of tabs) t.addEventListener("click", () => show(t.dataset.codeTab!));
-			show("usage");
-
-			const stage = panel.querySelector<HTMLElement>("[data-preview-stage]")!;
-			const sw = panel.querySelector<HTMLElement>("[data-theme-switch]")!;
-			const label = panel.querySelector<HTMLElement>("[data-theme-switch-label]")!;
-			let mode: "light" | "dark" = document.documentElement.classList.contains("dark") ? "dark" : "light";
-			const paint = () => {
+		const stages = [...demo.querySelectorAll<HTMLElement>("[data-preview-stage]")];
+		const sw = demo.querySelector<HTMLElement>("[data-theme-switch]")!;
+		const label = demo.querySelector<HTMLElement>("[data-theme-switch-label]")!;
+		let mode: "light" | "dark" = document.documentElement.classList.contains("dark") ? "dark" : "light";
+		const paint = () => {
+			for (const stage of stages) {
 				stage.classList.toggle("dark", mode === "dark");
 				stage.classList.toggle("edmi-light", mode === "light");
-				label.textContent = mode === "dark" ? "Dark" : "Light";
-				sw.dataset.mode = mode;
-			};
+			}
+			label.textContent = mode === "dark" ? "Dark" : "Light";
+			sw.dataset.mode = mode;
+		};
+		paint();
+		sw.addEventListener("click", () => { mode = mode === "dark" ? "light" : "dark"; paint(); });
+		// follow the site theme when it changes
+		new MutationObserver(() => {
+			mode = document.documentElement.classList.contains("dark") ? "dark" : "light";
 			paint();
-			sw.addEventListener("click", () => { mode = mode === "dark" ? "light" : "dark"; paint(); });
-			// follow the site theme when it changes
-			new MutationObserver(() => {
-				mode = document.documentElement.classList.contains("dark") ? "dark" : "light";
-				paint();
-			}).observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
-		}
+		}).observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
 	}
-	// Header select / install tabs / other demos announce a change with this event.
-	window.addEventListener(KEY, (e) => applyFramework((e as CustomEvent<string>).detail));
-	applyFramework(current ?? "react");
 </script>

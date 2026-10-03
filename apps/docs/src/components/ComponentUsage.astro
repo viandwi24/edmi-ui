@@ -1,0 +1,37 @@
+---
+import { Code } from "@astrojs/starlight/components";
+import { readFileSync, existsSync } from "node:fs";
+import { CODE_LANG, DEMO_EXT, FRAMEWORK_LABEL, FRAMEWORKS } from "../config";
+import { demoPath, itemFrameworks, usageSnippet } from "../lib/demo";
+
+interface Props {
+	/** Registry item name; the usage is derived from its primary demo. */
+	name: string;
+	/** Demo to derive from (default: `name`). */
+	demo?: string;
+}
+const { name, demo = name } = Astro.props;
+const has = await itemFrameworks(name);
+---
+
+<div class="edmi-usage not-content">
+	{
+		FRAMEWORKS.map((fw) => {
+			const abs = demoPath(fw, demo);
+			return has.includes(fw) && existsSync(abs) ? (
+				<div data-fw-panel={fw}>
+					<Code code={usageSnippet(fw, readFileSync(abs, "utf8"), name)} lang={CODE_LANG[fw]} />
+				</div>
+			) : (
+				<p class="edmi-fw-note edmi-fw-note-inline" data-fw-note={fw}>
+					Not available in {FRAMEWORK_LABEL[fw]} yet.
+				</p>
+			);
+		})
+	}
+</div>
+
+<style is:global>
+	.edmi-usage { margin: 1rem 0 1.5rem; }
+	.edmi-usage .expressive-code { margin: 0; }
+</style>

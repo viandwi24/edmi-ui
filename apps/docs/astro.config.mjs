@@ -51,6 +51,9 @@ const groups = [
 
 const darkSync = `(function(){var d=document.documentElement;function s(){d.classList.toggle('dark',d.dataset.theme==='dark')}s();new MutationObserver(s).observe(d,{attributes:true,attributeFilter:['data-theme']})})();`;
 
+// Global framework choice: set <html data-fw> before paint, keep it in sync with the header select / demos.
+const fwSync = `(function(){var d=document.documentElement,K='edmi-framework',v='react';try{v=localStorage.getItem(K)||v}catch(e){}if(['react','vue','svelte'].indexOf(v)<0)v='react';d.dataset.fw=v;window.addEventListener(K,function(e){d.dataset.fw=e.detail});document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-fw-set]');if(b){var f=b.getAttribute('data-fw-set');try{localStorage.setItem(K,f)}catch(x){}window.dispatchEvent(new CustomEvent(K,{detail:f}))}})})();`;
+
 // https://astro.build/config
 export default defineConfig({
 	site: "https://viandwi24.github.io",
@@ -88,6 +91,7 @@ export default defineConfig({
 					},
 				},
 				{ tag: "script", content: darkSync },
+				{ tag: "script", content: fwSync },
 			],
 			sidebar: [
 				{
