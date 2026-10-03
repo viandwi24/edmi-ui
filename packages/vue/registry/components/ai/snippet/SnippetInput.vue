@@ -1,0 +1,21 @@
+<script setup lang="ts">
+// Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
+import type { HTMLAttributes } from "vue"
+import { cn } from "@/registry/edmi/lib/utils"
+import { InputGroupInput } from "@/registry/edmi/ui/input-group"
+import { useSnippetContext } from "./context"
+
+const props = defineProps<{
+  class?: HTMLAttributes["class"]
+}>()
+
+const { code } = useSnippetContext("SnippetInput")
+</script>
+
+<template>
+  <InputGroupInput
+    :class="cn('font-mono text-xs text-foreground', props.class)"
+    readonly
+    :model-value="code"
+  />
+</template>

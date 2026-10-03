@@ -1,7 +1,127 @@
+import { aiVue } from "./ai-shared.ts";
 import type { FrameworkEntry } from "./types.ts";
 
 /**
  * `frameworks.vue` entries for items in ./ai-runtime.ts, keyed by item name (`ai-<name>`).
- * Empty until the item is ported; see AGENTS.md "AI pack" and scripts/ai-pending.json.
+ * Files live in `registry/components/ai/<name>/` and install to `components/ai/<name>/`.
  */
-export const entries: Record<string, FrameworkEntry> = {};
+export const entries: Record<string, FrameworkEntry> = {
+	"ai-sandbox": aiVue(
+		"sandbox",
+		[
+			"Sandbox.vue",
+			"SandboxContent.vue",
+			"SandboxHeader.vue",
+			"SandboxStatusBadge.vue",
+			"SandboxTabContent.vue",
+			"SandboxTabs.vue",
+			"SandboxTabsBar.vue",
+			"SandboxTabsList.vue",
+			"SandboxTabsTrigger.vue",
+		],
+		["ai", "@lucide/vue", "@vueuse/core"],
+	),
+	"ai-schema-display": aiVue(
+		"schema-display",
+		[
+			"SchemaDisplay.vue",
+			"SchemaDisplayBody.vue",
+			"SchemaDisplayContent.vue",
+			"SchemaDisplayDescription.vue",
+			"SchemaDisplayExample.vue",
+			"SchemaDisplayHeader.vue",
+			"SchemaDisplayMethod.vue",
+			"SchemaDisplayParameter.vue",
+			"SchemaDisplayParameters.vue",
+			"SchemaDisplayPath.vue",
+			"SchemaDisplayProperty.vue",
+			"SchemaDisplayRequest.vue",
+			"SchemaDisplayResponse.vue",
+			"SchemaDisplaySection.vue",
+			"context.ts",
+		],
+		["@lucide/vue"],
+	),
+	"ai-snippet": aiVue(
+		"snippet",
+		[
+			"Snippet.vue",
+			"SnippetAddon.vue",
+			"SnippetCopyButton.vue",
+			"SnippetInput.vue",
+			"SnippetText.vue",
+			"context.ts",
+		],
+		["@lucide/vue"],
+	),
+	"ai-stack-trace": aiVue(
+		"stack-trace",
+		[
+			"StackTrace.vue",
+			"StackTraceActions.vue",
+			"StackTraceContent.vue",
+			"StackTraceCopyButton.vue",
+			"StackTraceError.vue",
+			"StackTraceErrorMessage.vue",
+			"StackTraceErrorType.vue",
+			"StackTraceExpandButton.vue",
+			"StackTraceFrames.vue",
+			"StackTraceHeader.vue",
+			"context.ts",
+			"utils.ts",
+		],
+		["@lucide/vue", "@vueuse/core"],
+	),
+	"ai-terminal": aiVue(
+		"terminal",
+		[
+			"Terminal.vue",
+			"TerminalActions.vue",
+			"TerminalClearButton.vue",
+			"TerminalContent.vue",
+			"TerminalCopyButton.vue",
+			"TerminalHeader.vue",
+			"TerminalStatus.vue",
+			"TerminalTitle.vue",
+			"context.ts",
+		],
+		["@lucide/vue", "ansi-to-vue3"],
+	),
+	"ai-test-results": aiVue(
+		"test-results",
+		[
+			"Test.vue",
+			"TestDuration.vue",
+			"TestError.vue",
+			"TestErrorMessage.vue",
+			"TestErrorStack.vue",
+			"TestName.vue",
+			"TestResults.vue",
+			"TestResultsContent.vue",
+			"TestResultsDuration.vue",
+			"TestResultsHeader.vue",
+			"TestResultsProgress.vue",
+			"TestResultsSummary.vue",
+			"TestStatus.vue",
+			"TestSuite.vue",
+			"TestSuiteContent.vue",
+			"TestSuiteName.vue",
+			"TestSuiteStats.vue",
+			"context.ts",
+		],
+		["@lucide/vue", "@vueuse/core"],
+	),
+	"ai-web-preview": aiVue(
+		"web-preview",
+		[
+			"WebPreview.vue",
+			"WebPreviewBody.vue",
+			"WebPreviewConsole.vue",
+			"WebPreviewNavigation.vue",
+			"WebPreviewNavigationButton.vue",
+			"WebPreviewUrl.vue",
+			"context.ts",
+		],
+		["@lucide/vue"],
+	),
+};
