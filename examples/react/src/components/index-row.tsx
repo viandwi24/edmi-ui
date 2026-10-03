@@ -48,7 +48,7 @@ function Sparkline({
 			aria-hidden="true"
 			className={cn(
 				"inline-block",
-				down ? "text-destructive-text" : "text-brand-text",
+				down ? "text-destructive-text" : "text-success-text",
 				className,
 			)}
 			{...props}
@@ -160,7 +160,7 @@ function IndexRow({
 			<TableCell
 				className={cn(
 					"text-right font-mono text-[12.5px]",
-					down ? "text-destructive-text" : "text-brand-text",
+					down ? "text-destructive-text" : "text-success-text",
 				)}
 			>
 				{index.change}

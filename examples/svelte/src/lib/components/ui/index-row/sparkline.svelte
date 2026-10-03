@@ -45,7 +45,7 @@
 		viewBox="0 0 {width} {height}"
 		fill="none"
 		aria-hidden="true"
-		class={cn("inline-block", down ? "text-destructive-text" : "text-brand-text", className)}
+		class={cn("inline-block", down ? "text-destructive-text" : "text-success-text", className)}
 		{...restProps}
 	>
 		<polyline {points} stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />

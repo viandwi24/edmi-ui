@@ -36,7 +36,7 @@
 		compoundVariants: [
 			{ raised: true, variant: "default", class: `${raised} from-primary-hi to-primary border-primary-edge border-b-primary-lip shadow-btn-primary hover:brightness-105 active:shadow-pressed active:border-b-primary-edge` },
 			{ raised: true, variant: "secondary", class: `${raised} from-secondary-hi to-secondary border-input border-b-secondary-lip shadow-btn-secondary hover:from-accent hover:to-accent data-[state=open]:from-accent data-[state=open]:to-accent active:shadow-pressed` },
-			{ raised: true, variant: "outline", class: "border-b-lip shadow-btn-outline active:shadow-none" },
+			{ raised: true, variant: "outline", class: "bg-linear-to-b from-outline-hi to-outline-face [background-origin:border-box] border-b-outline-lip shadow-btn-outline hover:from-accent hover:to-accent data-[state=open]:from-accent data-[state=open]:to-accent active:shadow-none active:bg-none active:bg-outline-face" },
 			{ raised: true, variant: "destructive", class: `${raised} from-destructive-hi to-destructive border-destructive-edge border-b-destructive-lip shadow-btn-destructive hover:brightness-105 active:shadow-pressed` },
 			{ raised: true, variant: "brand", class: `${raised} from-brand-hi to-brand border-brand-edge border-b-brand-lip shadow-btn-brand hover:brightness-105 active:shadow-pressed` },
 			// ghost & link are never raised

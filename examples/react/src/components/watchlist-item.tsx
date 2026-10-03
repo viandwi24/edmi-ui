@@ -34,7 +34,7 @@ function WatchlistItem({
 				"flex h-10 items-center gap-2.5 rounded-lg px-2.5 text-[13.5px] text-sidebar-foreground outline-none hover:bg-sidebar-accent focus-visible:outline-2 focus-visible:outline-ring",
 				"data-[active]:bg-sidebar-accent data-[active]:font-medium data-[active]:shadow-[inset_0_0_0_1px_var(--sidebar-border)]",
 				raised &&
-					"border border-transparent data-[active]:border-sidebar-border data-[active]:border-b-lip data-[active]:shadow-btn-outline",
+					"border border-transparent data-[active]:border-sidebar-border data-[active]:border-b-lip data-[active]:shadow-[0_2px_0_var(--lip)]",
 				className,
 			)}
 			{...props}
@@ -52,7 +52,7 @@ function WatchlistItem({
 			<span
 				className={cn(
 					"font-mono text-[11.5px]",
-					isDown(change) ? "text-destructive-text" : "text-brand-text",
+					isDown(change) ? "text-destructive-text" : "text-success-text",
 				)}
 			>
 				{change}

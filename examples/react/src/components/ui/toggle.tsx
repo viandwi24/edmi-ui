@@ -28,7 +28,8 @@ const toggleVariants = cva(
 			{
 				variant: "outline",
 				raised: true,
-				class: "border-b-lip shadow-btn-outline data-[pressed]:shadow-sunk",
+				class:
+					"bg-linear-to-b from-outline-hi to-outline-face [background-origin:border-box] border-b-outline-lip shadow-btn-outline data-[pressed]:bg-none data-[pressed]:bg-accent data-[pressed]:shadow-sunk",
 			},
 			{
 				variant: "segmented",

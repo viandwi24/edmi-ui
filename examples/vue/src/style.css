@@ -101,7 +101,7 @@
 		inset 0 1px 0 var(--primary-inset), 0 2px 0 var(--primary-lip);
 	--shadow-btn-secondary:
 		inset 0 1px 0 var(--secondary-inset), 0 2px 0 var(--secondary-lip);
-	--shadow-btn-outline: 0 2px 0 var(--lip);
+	--shadow-btn-outline: 0 2px 0 var(--outline-lip);
 	--shadow-btn-brand:
 		inset 0 1px 0 rgb(255 255 255 / 0.35), 0 2px 0 var(--brand-lip);
 	--shadow-btn-destructive:
@@ -109,6 +109,11 @@
 	--shadow-pressed: inset 0 2px 3px rgb(0 0 0 / 0.22);
 	--shadow-ring: 0 0 0 3px var(--ring-soft);
 	--shadow-ring-error: 0 0 0 3px var(--destructive-soft);
+	--color-success-soft: var(--success-soft);
+	--color-success-text: var(--success-text);
+	--color-outline-hi: var(--outline-hi);
+	--color-outline-face: var(--outline-face);
+	--color-outline-lip: var(--outline-lip);
 }
 
 :root {
@@ -184,6 +189,11 @@
 	--tab-active: oklch(1 0 0);
 	--muted-foreground-2: oklch(0.702 0.009 98.9);
 	--border-2: oklch(0.939 0.008 98.9);
+	--success-soft: oklch(0.953 0.022 151.6);
+	--success-text: oklch(0.526 0.122 147.7);
+	--outline-hi: oklch(0.964 0.005 95.1);
+	--outline-face: oklch(0.964 0.005 95.1);
+	--outline-lip: oklch(0.912 0.011 95.2);
 }
 
 .dark {
@@ -232,7 +242,7 @@
 	--secondary-hi: oklch(0.339 0.01 285.8);
 	--secondary-inset: rgba(255, 255, 255, 0.1);
 	--secondary-inset-b: rgba(0, 0, 0, 0.3);
-	--secondary-lip: oklch(0.123 0.003 286);
+	--secondary-lip: oklch(0.393 0.012 285.8);
 	--destructive-hi: oklch(0.724 0.15 12.8);
 	--destructive-edge: oklch(0.579 0.167 14.7);
 	--destructive-lip: oklch(0.398 0.119 14.2);
@@ -249,8 +259,8 @@
 	--info-text: oklch(0.764 0.12 265.9);
 	--ring-soft: rgba(62, 207, 142, 0.28);
 	--overlay: rgba(0, 0, 0, 0.6);
-	--lip: oklch(0.135 0.005 285.8);
-	--lip-strong: oklch(0.116 0.003 285.9);
+	--lip: oklch(0.335 0.01 285.8);
+	--lip-strong: oklch(0.37 0.01 285.9);
 	--card-hi: rgba(255, 255, 255, 0.035);
 	--grid-dot: oklch(0.257 0.006 286);
 	--stage: oklch(0.192 0.004 286);
@@ -258,6 +268,11 @@
 	--tab-active: oklch(0.287 0.009 285.8);
 	--muted-foreground-2: oklch(0.488 0.011 286);
 	--border-2: oklch(0.257 0.006 286);
+	--success-soft: rgba(62, 207, 142, 0.14);
+	--success-text: oklch(0.806 0.138 161.3);
+	--outline-hi: oklch(0.295 0.009 285.8);
+	--outline-face: oklch(0.249 0.007 285.8);
+	--outline-lip: oklch(0.393 0.012 285.8);
 }
 
 @layer base {

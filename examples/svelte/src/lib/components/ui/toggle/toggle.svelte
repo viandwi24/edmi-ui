@@ -26,7 +26,7 @@
 			},
 		},
 		compoundVariants: [
-			{ variant: "outline", raised: true, class: "border-b-lip shadow-btn-outline data-[state=on]:shadow-sunk" },
+			{ variant: "outline", raised: true, class: "bg-linear-to-b from-outline-hi to-outline-face [background-origin:border-box] border-b-outline-lip shadow-btn-outline data-[state=on]:bg-none data-[state=on]:bg-accent data-[state=on]:shadow-sunk" },
 			{
 				variant: "segmented",
 				class: "h-[30px] min-w-[30px] rounded-[7px] px-3 hover:bg-transparent data-[state=on]:border-border data-[state=on]:bg-tab-active data-[state=on]:text-foreground",

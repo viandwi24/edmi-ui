@@ -18,7 +18,7 @@ const toastClasses = computed(() => ({
   toast: cn('cn-toast shadow-none! text-[13.5px] font-sans', props.raised && 'border-b-lip! shadow-[0_3px_0_var(--lip)]!'),
   title: 'font-medium',
   description: 'text-muted-foreground!',
-  success: 'bg-brand-soft! border-brand/40!',
+  success: 'bg-success-soft! border-success/40!',
   info: 'bg-info-soft! border-info/40!',
   warning: 'bg-warning-soft! border-warning/40!',
   error: 'bg-destructive-soft! border-destructive/40!',
@@ -39,7 +39,7 @@ const toastClasses = computed(() => ({
     }"
   >
     <template #success-icon>
-      <PhCheckCircle class="size-4 text-brand-text" />
+      <PhCheckCircle class="size-4 text-success-text" />
     </template>
     <template #info-icon>
       <PhInfo class="size-4 text-info-text" />

@@ -65,7 +65,7 @@ function PaginationLink({
 				isActive && "border-input bg-card font-semibold",
 				isActive &&
 					(raised ?? context.raised) &&
-					"border-b-lip shadow-btn-outline",
+					"border-b-lip shadow-[0_2px_0_var(--lip)]",
 				className,
 			)}
 			nativeButton={false}

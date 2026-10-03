@@ -21,7 +21,7 @@
 {#snippet mini(m: { label: string; value: string; note: string })}
 	<div class="rounded-xl border border-border-2 bg-muted p-[18px] shadow-sunk">
 		<div class="text-[13px] text-muted-foreground">{m.label}</div>
-		<div class="my-2 text-[34px] leading-none font-light tracking-[-0.5px] text-brand-text">{m.value}</div>
+		<div class="my-2 text-[34px] leading-none font-light tracking-[-0.5px] text-success-text">{m.value}</div>
 		<div class="text-[13px] text-muted-foreground">{m.note}</div>
 	</div>
 {/snippet}
@@ -97,7 +97,7 @@
 			<ul>
 				{#each activity as a, i (i)}
 					<li class="flex items-center gap-2.5 border-b border-border-2 py-3 text-[13px] last:border-b-0">
-						<span class="size-1.5 rounded-full {a.tone === 'brand' ? 'bg-brand' : 'bg-warning'}"></span>
+						<span class="size-1.5 rounded-full {a.tone === 'brand' ? 'bg-success' : 'bg-warning'}"></span>
 						<span class="font-mono font-semibold">{a.symbol}</span>
 						<span class="min-w-0 flex-1 truncate text-foreground-2">{a.text}</span>
 						<span class="text-muted-foreground">{a.ago}</span>

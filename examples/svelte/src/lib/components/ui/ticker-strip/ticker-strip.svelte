@@ -36,7 +36,7 @@
 		<span class="font-mono text-xs text-muted-foreground">{item.symbol}</span>
 	</div>
 	<div class="mt-2.5 font-mono text-[17px]">{item.price}</div>
-	<div class={cn("mt-1 font-mono text-xs", isDown(item.change) ? "text-destructive-text" : "text-brand-text")}>
+	<div class={cn("mt-1 font-mono text-xs", isDown(item.change) ? "text-destructive-text" : "text-success-text")}>
 		{item.change}
 	</div>
 {/snippet}

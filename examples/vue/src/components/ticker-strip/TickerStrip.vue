@@ -38,7 +38,7 @@ const cell = 'block min-w-[150px] flex-1 px-[18px] py-3.5 not-first:border-l not
       <div class="mt-2.5 font-mono text-[17px]">
         {{ item.price }}
       </div>
-      <div :class="cn('mt-1 font-mono text-xs', isDown(item.change) ? 'text-destructive-text' : 'text-brand-text')">
+      <div :class="cn('mt-1 font-mono text-xs', isDown(item.change) ? 'text-destructive-text' : 'text-success-text')">
         {{ item.change }}
       </div>
     </component>

@@ -18,7 +18,7 @@
 	data-slot="menubar"
 	class={cn(
 		"flex items-center gap-0.5 rounded-[10px] border border-border bg-card p-[3px]",
-		raised && "border-b-lip shadow-btn-outline",
+		raised && "border-b-lip shadow-[0_2px_0_var(--lip)]",
 		className
 	)}
 	{...restProps}

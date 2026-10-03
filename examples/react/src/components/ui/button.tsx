@@ -55,7 +55,8 @@ const buttonVariants = cva(
 			{
 				raised: true,
 				variant: "outline",
-				class: "border-b-lip shadow-btn-outline active:shadow-none",
+				class:
+					"bg-linear-to-b from-outline-hi to-outline-face [background-origin:border-box] border-b-outline-lip shadow-btn-outline hover:from-accent hover:to-accent data-[popup-open]:from-accent data-[popup-open]:to-accent active:shadow-none active:bg-none active:bg-outline-face",
 			},
 			{
 				raised: true,

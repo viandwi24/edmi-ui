@@ -53,7 +53,7 @@ import { activity, creators, humanVsAi, indexes, tickers } from "@/data/markets"
 				<div class="grid gap-3 @[400px]:grid-cols-2">
 					<div v-for="m in [humanVsAi.human, humanVsAi.ai]" :key="m.label" class="rounded-xl border border-border-2 bg-muted p-[18px] shadow-sunk">
 						<div class="text-[13px] text-muted-foreground">{{ m.label }}</div>
-						<div class="my-2 text-[34px] leading-none font-light tracking-[-0.5px] text-brand-text">{{ m.value }}</div>
+						<div class="my-2 text-[34px] leading-none font-light tracking-[-0.5px] text-success-text">{{ m.value }}</div>
 						<div class="text-[13px] text-muted-foreground">{{ m.note }}</div>
 					</div>
 				</div>
@@ -85,7 +85,7 @@ import { activity, creators, humanVsAi, indexes, tickers } from "@/data/markets"
 				</div>
 				<ul>
 					<li v-for="(a, i) in activity" :key="i" class="flex items-center gap-2.5 border-b border-border-2 py-3 text-[13px] last:border-b-0">
-						<span :class="`size-1.5 rounded-full ${a.tone === 'brand' ? 'bg-brand' : 'bg-warning'}`" />
+						<span :class="`size-1.5 rounded-full ${a.tone === 'brand' ? 'bg-success' : 'bg-warning'}`" />
 						<span class="font-mono font-semibold">{{ a.symbol }}</span>
 						<span class="min-w-0 flex-1 truncate text-foreground-2">{{ a.text }}</span>
 						<span class="text-muted-foreground">{{ a.ago }}</span>

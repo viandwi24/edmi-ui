@@ -44,7 +44,7 @@ const down = computed(() =>
     :viewBox="`0 0 ${width} ${height}`"
     fill="none"
     aria-hidden="true"
-    :class="cn('inline-block', down ? 'text-destructive-text' : 'text-brand-text', props.class)"
+    :class="cn('inline-block', down ? 'text-destructive-text' : 'text-success-text', props.class)"
   >
     <polyline
       :points="points"

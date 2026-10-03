@@ -41,7 +41,7 @@ function Mini({
 	return (
 		<div className="rounded-xl border border-border-2 bg-muted p-[18px] shadow-sunk">
 			<div className="text-[13px] text-muted-foreground">{label}</div>
-			<div className="my-2 text-[34px] leading-none font-light tracking-[-0.5px] text-brand-text">
+			<div className="my-2 text-[34px] leading-none font-light tracking-[-0.5px] text-success-text">
 				{value}
 			</div>
 			<div className="text-[13px] text-muted-foreground">{note}</div>
@@ -137,7 +137,7 @@ export function MarketsPage() {
 								className="flex items-center gap-2.5 border-b border-border-2 py-3 text-[13px] last:border-b-0"
 							>
 								<span
-									className={`size-1.5 rounded-full ${a.tone === "brand" ? "bg-brand" : "bg-warning"}`}
+									className={`size-1.5 rounded-full ${a.tone === "brand" ? "bg-success" : "bg-warning"}`}
 								/>
 								<span className="font-mono font-semibold">{a.symbol}</span>
 								<span className="min-w-0 flex-1 truncate text-foreground-2">

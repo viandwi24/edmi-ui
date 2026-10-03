@@ -44,7 +44,7 @@
 	{/if}
 	{#if delta}
 		<div class="mt-2.5 flex items-center gap-2">
-			<Badge variant={down ? "destructive" : "brand"} shape="number" class="px-[7px]">{delta}</Badge>
+			<Badge variant={down ? "destructive" : "success"} shape="number" class="px-[7px]">{delta}</Badge>
 			{#if deltaLabel}<span class="text-xs text-muted-foreground">{deltaLabel}</span>{/if}
 		</div>
 	{/if}

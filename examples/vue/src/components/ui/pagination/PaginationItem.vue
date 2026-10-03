@@ -34,7 +34,7 @@ const delegatedProps = reactiveOmit(props, "class", "size", "isActive", "raised"
         size,
       }),
       isActive && 'bg-card font-semibold',
-      isActive && (props.raised ?? context?.raised) && 'border-b-lip shadow-btn-outline',
+      isActive && (props.raised ?? context?.raised) && 'border-b-lip shadow-[0_2px_0_var(--lip)]',
       props.class)"
   >
     <slot />

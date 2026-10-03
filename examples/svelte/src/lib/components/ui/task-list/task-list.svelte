@@ -17,10 +17,10 @@
 	import { Separator } from "#lib/components/ui/separator/index.js";
 	import type { ComponentProps } from "svelte";
 
-	const STATUS: Record<TaskStatus, { label: string; variant: "warning" | "info" | "brand" }> = {
+	const STATUS: Record<TaskStatus, { label: string; variant: "warning" | "info" | "success" }> = {
 		review: { label: "Ready to review", variant: "warning" },
 		running: { label: "Running", variant: "info" },
-		completed: { label: "Completed", variant: "brand" },
+		completed: { label: "Completed", variant: "success" },
 	};
 
 	let {
