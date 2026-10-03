@@ -1,0 +1,26 @@
+{
+	"$schema": "https://shadcn-vue.com/schema.json",
+	"style": "reka-nova",
+	"font": "inter",
+	"typescript": true,
+	"tailwind": {
+		"config": "",
+		"css": "src/style.css",
+		"baseColor": "neutral",
+		"cssVariables": true,
+		"prefix": ""
+	},
+	"iconLibrary": "phosphor",
+	"rtl": false,
+	"pointer": false,
+	"aliases": {
+		"components": "@/components",
+		"utils": "@/lib/utils",
+		"ui": "@/components/ui",
+		"lib": "@/lib",
+		"composables": "@/composables"
+	},
+	"registries": {
+		"@edmi-ui": "https://viandwi24.github.io/edmi-ui/r/vue/{name}.json"
+	}
+}
