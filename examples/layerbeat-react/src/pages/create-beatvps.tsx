@@ -163,7 +163,9 @@ export function CreateBeatVpsPage() {
 										className="items-center gap-2.5 px-3.5 py-3"
 									>
 										<Flag flag={l.flag} />
-										<span className="flex-1 text-sm font-medium whitespace-nowrap">{l.city}</span>
+										<span className="flex-1 text-sm font-medium whitespace-nowrap">
+											{l.city}
+										</span>
 										{l.id === locationId ? (
 											<CheckCircleIcon className="size-4 text-brand" />
 										) : (
