@@ -1,0 +1,98 @@
+# @edmi-ui/tokens
+
+## 0.1.0
+
+### Minor Changes
+
+- 6e0ab1e: Vue and Svelte ports of button-group, toggle, toggle-group and kbd.
+- 6e0ab1e: Svelte port of the conversation group: bubble, message, marker, message-scroller, questionnaire (built from the recipes on Svelte 5 runes; no shadcn-svelte equivalent).
+- 6e0ab1e: Vue port of the conversation group: bubble, message, marker, message-scroller, questionnaire.
+- 6e0ab1e: Vue and Svelte ports of table, chart and data-table.
+- 6e0ab1e: Vue and Svelte ports of skeleton, progress, aspect-ratio, avatar, item, empty and attachment.
+- 6e0ab1e: Vue and Svelte ports of separator and spinner.
+- 6e0ab1e: Vue and Svelte ports of checkbox, radio-group, switch, slider, calendar (with RangeCalendar) and date-picker (DatePicker, DateRangePicker).
+- 6e0ab1e: Vue and Svelte ports of the forms-text group: label, textarea, native-select, input-otp, input-group, field, select, combobox.
+- 6e0ab1e: Port the layout group (accordion, collapsible, resizable, scroll-area, carousel, direction) to Vue and Svelte.
+- 6e0ab1e: Port the navigation group to Vue and Svelte: breadcrumb, pagination, dropdown-menu, context-menu, menubar, navigation-menu, command, sidebar and the use-mobile hook (Svelte only; Vue uses `useMediaQuery` from @vueuse/core).
+- 6e0ab1e: Vue and Svelte ports of popover and dialog.
+- 6e0ab1e: Svelte ports of alert, alert-dialog, sheet, drawer (vaul-svelte), sonner, tooltip and hover-card.
+- 6e0ab1e: Vue ports of alert, alert-dialog, sheet, drawer (Reka), sonner, tooltip and hover-card.
+- 6e0ab1e: Vue and Svelte ports of the first patterns blocks: site-header, app-header, stat-tile, ticker-strip, index-row, watchlist-item, allocation-bar, join-panel, leaderboard-podium, layout-picker.
+- 6e0ab1e: React actions: button-group, toggle, toggle-group, kbd.
+- 6e0ab1e: React conversation: bubble, message, marker, message-scroller, questionnaire.
+- 6e0ab1e: React `table` and `chart` components (data group): mono right-aligned numeric cells with up/down trend colours, and a Recharts ChartContainer with Edmi tooltip/legend.
+- 6e0ab1e: React display: aspect-ratio.
+- 6e0ab1e: React display: attachment.
+- 6e0ab1e: React display: avatar.
+- 6e0ab1e: React display: card.
+- 6e0ab1e: React display: empty.
+- 6e0ab1e: React display: inset-panel.
+- 6e0ab1e: React display: item.
+- 6e0ab1e: React display: progress.
+- 6e0ab1e: React display: separator.
+- 6e0ab1e: React display: skeleton.
+- 6e0ab1e: React display: spinner.
+- 6e0ab1e: Add the React `calendar` component (forms-choice group).
+- 6e0ab1e: Add the React `checkbox` component (forms-choice group).
+- 6e0ab1e: Add the React `date-picker` block (DatePicker, DateRangePicker with presets).
+- 6e0ab1e: Add the React `radio-group` component (forms-choice group).
+- 6e0ab1e: Add the React `slider` component (forms-choice group).
+- 6e0ab1e: Add the React `switch` component (forms-choice group).
+- 6e0ab1e: React forms-text: combobox.
+- 6e0ab1e: React forms-text: field.
+- 6e0ab1e: React forms-text: input-group.
+- 6e0ab1e: React forms-text: input-otp.
+- 6e0ab1e: React forms-text: label.
+- 6e0ab1e: React forms-text: native-select.
+- 6e0ab1e: React forms-text: select.
+- 6e0ab1e: React forms-text: textarea.
+- 6e0ab1e: Add React layout components: accordion, collapsible, resizable, scroll-area, carousel, direction.
+- 6e0ab1e: React navigation: command (cmdk palette and dialog).
+- 6e0ab1e: React navigation: breadcrumb, pagination, dropdown-menu, context-menu, menubar, navigation-menu.
+- 6e0ab1e: React navigation: sidebar (variants sidebar, floating, inset; collapsible offcanvas, icon, none) and the use-mobile hook.
+- 6e0ab1e: React overlays: alert-dialog.
+- 6e0ab1e: React overlays: alert.
+- 6e0ab1e: React overlays: dialog.
+- 6e0ab1e: React overlays: drawer.
+- 6e0ab1e: React overlays: hover-card.
+- 6e0ab1e: React overlays: popover.
+- 6e0ab1e: React overlays: sheet.
+- 6e0ab1e: React overlays: sonner.
+- 6e0ab1e: React overlays: tooltip.
+- 6e0ab1e: React patterns: allocation-bar block.
+- 6e0ab1e: React patterns: app-header block.
+- 6e0ab1e: React patterns: index-row block.
+- 6e0ab1e: React patterns: join-panel block.
+- 6e0ab1e: React patterns: layout-picker block.
+- 6e0ab1e: React patterns: leaderboard-podium block.
+- 6e0ab1e: React patterns: site-header block.
+- 6e0ab1e: React patterns: stat-tile block.
+- 6e0ab1e: React patterns: ticker-strip block.
+- 6e0ab1e: React patterns: watchlist-item block.
+- 6e0ab1e: React patterns: agent-card block.
+- 6e0ab1e: React patterns: code-block block.
+- 6e0ab1e: React patterns: feature-row block.
+- 6e0ab1e: React patterns: feed-post block.
+- 6e0ab1e: React patterns: footer block.
+- 6e0ab1e: React patterns: kanban-column block.
+- 6e0ab1e: React patterns: pricing-plan block.
+- 6e0ab1e: React patterns: step-card block.
+- 6e0ab1e: React patterns: task-list block.
+- 6e0ab1e: React pilot components (button, badge, card, inset-panel, tabs, input), the `utils` lib item and the React registry build. Bumps `@edmi-ui/tokens` because it is the only published package until plan 10 adds the registry packages.
+- 6e0ab1e: Svelte registry pilot: button, badge, card, inset-panel, tabs and input for shadcn-svelte (Bits UI, tailwind-variants).
+- 6e0ab1e: Edmi UI spec v2: tokens, Tailwind theme, `recipes.ts` and `kit.css` now come from `refs/edmi-ui`. Breaking default look: every component recipe is flat by default (no gradient, lip or hard shadow) and the one-step 3D look is opt-in with a `raised` variant. `--shadow-btn-*` tokens lost the inner bottom shade, control height is 36px (`h-9`), and Tabs gained a `pills` list variant.
+- 6e0ab1e: Spec v2 finalize: WatchlistItem accepts `raised` in Vue and Svelte (parity with React), raised demos for every component.
+- 6e0ab1e: React registry v2: components are flat by default; `raised` opt-in adds the one-step 3D look (Button, Toggle, ToggleGroup, Kbd, Select, NativeSelect, Checkbox, Switch, Slider, Calendar, Card, InsetPanel, Empty, Dialog, AlertDialog, Popover, Toaster, Menubar, Pagination, Tabs incl. new `pills` list variant, Questionnaire, BubbleReactions, DataTable and patterns). Control height is now h-9.
+- 6e0ab1e: Svelte port follows Edmi UI spec v2: every component is flat by default and gains an opt-in `raised` prop (Button, Toggle, ToggleGroup, Kbd, Select/NativeSelect, Checkbox, Switch, Slider, Calendar/RangeCalendar, choice cards via FieldLabel/Questionnaire/LayoutPicker, Card, InsetPanel, Empty media, Dialog, AlertDialog, Popover, Toaster, Menubar, Pagination, Tabs (+ `TabsList variant="pills"`), Bubble reactions, and the ✦ patterns). Control height is now `h-9`.
+- 6e0ab1e: Vue port follows Edmi UI spec v2: every component is flat by default (h-9 controls, no gradients/lips/shadows) and gains an opt-in `raised` prop (Button, Toggle, ToggleGroup, Kbd, NativeSelect, SelectTrigger, Checkbox, Switch, Slider, Calendar/RangeCalendar, FieldLabel choice cards, Questionnaire, Card, InsetPanel, EmptyMedia, DialogContent, AlertDialogContent, PopoverContent, Toaster, Menubar, Pagination, TabsList/TabsTrigger, BubbleReactions and every pattern). `TabsList` gains `variant="pills"`.
+- 6e0ab1e: Vue pilot: button, badge, card, inset-panel, tabs, input and the Vue registry build.
+
+### Patch Changes
+
+- 6e0ab1e: QA pass: slider thumb gets `background-origin: border-box`; dropdown-menu and context-menu radio/checkbox indicators move to the left slot (as in menubar and the kit board).
+- 6e0ab1e: Svelte QA: sheet content styles (was empty, sheet rendered transparent), data-table page size always an option, slider thumb background-origin, lint cleanups.
+- 6e0ab1e: React v2 QA: DatePicker/DateRangePicker `raised`, FieldLabel choice-card v2 look and `raised`, raised header marks use a single lip colour.
+- 6e0ab1e: v2 QA: raised app-header / site-header logo mark uses the lip colour for its bottom border.
+- 6e0ab1e: Vue v2 QA: DatePicker/DateRangePicker forward `raised`, FieldLabel choice card follows the v2 recipe, Menubar trigger padding, DataTable `raised`, header marks use `shadow-btn-primary`.
+- 6e0ab1e: React forms-text: input docs demo and page.
+- 6e0ab1e: Vue: icon imports resolve in the shadcn-vue icon map for every iconLibrary (checked by `scripts/smoke/vue-icons.ts`); `LayoutPickerToast` opens on the first visit.
