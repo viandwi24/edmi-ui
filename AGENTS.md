@@ -252,6 +252,7 @@ Superseded and intentionally dropped: lucide as default icon set; raised-by-defa
 - Astro dev may log a `$RefreshSig$` quirk with React islands; a brand-new demo file needs an `astro dev` restart (islands generated at config load). Components using `client:visible` and portalled content in previews render outside the `.dark` wrapper (preview limitation, not a registry bug). Starlight `<Tabs>` break prerender.
 - The built-in browser only delivers real clicks to a fronted tab; low-resolution screenshots hide 1px issues, so audit computed styles.
 - The Vue data-table dropdown triggers could not be reproduced as not opening on click; `cmdk` parts crash without `<Command>` (fixed in `CommandDialog`).
+- A changeset that names only private/ignored packages (`@edmi-ui/react|vue|svelte|docs|example-*`) is never consumed: release.yml then reopens "Version Packages" forever and never publishes. Name `@edmi-ui/tokens` or `@edmi-ui/registry-<fw>`. Guarded by `scripts/changesets.test.ts`.
 - Radix/Reka/Bits `data-[state=…]` and Base UI attributes differ: copying class strings between React and the others without the swap silently breaks states. `peer-checked` cannot reach nested spans: use `group-has-[:checked]/name`.
 - Svelte/Vue `typecheck` runs through wrappers; if it fails after a CLI added files, check for untracked stock deps first.
 - This is a shared working tree in multi-agent sessions: never `git stash`, `reset --hard`, `checkout .`, `clean`, `rebase`; stage explicit paths only.
