@@ -1,0 +1,36 @@
+---
+title: Schema Display
+description: "API endpoint with method badge, path, parameters and nested request and response schemas."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-schema-display" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/schema-display) (Apache-2.0), restyled for Edmi UI. Built on `collapsible` and `badge`.
+
+## Installation
+
+<ComponentInstall name="ai-schema-display" />
+
+## Usage
+
+<ComponentUsage name="ai-schema-display" />
+
+## Component source
+
+<ComponentSource name="ai-schema-display" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| SchemaDisplay | `method`, `path`, `description` | `GET \| POST \| PUT \| PATCH \| DELETE`, `string`, `string` | |
+| SchemaDisplay | `parameters`, `requestBody`, `responseBody` | `SchemaParameter[]`, `SchemaProperty[]`, `SchemaProperty[]` | |
+| SchemaDisplayProperty | `name`, `type`, `required`, `properties`, `items`, `depth` | recursive | `0` |
+| SchemaDisplayHeader, Method, Path, Description, Content, Parameters, Parameter, Request, Response, Example | | | |
+
+## ✦ Edmi additions
+- Method colors use solid soft tokens: GET `--success`, POST `--info`, PUT and PATCH `--warning`, DELETE `--destructive`.
+- `{param}` segments of the path are highlighted in `--chart-2` (rendered as elements, not HTML).

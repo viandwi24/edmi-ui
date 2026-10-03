@@ -1,0 +1,35 @@
+---
+title: Snippet
+description: "One-line command or value with a copy button."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-snippet" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/snippet) (Apache-2.0), restyled for Edmi UI. Built on `input-group`.
+
+## Installation
+
+<ComponentInstall name="ai-snippet" />
+
+## Usage
+
+<ComponentUsage name="ai-snippet" />
+
+## Component source
+
+<ComponentSource name="ai-snippet" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| Snippet | `code` | `string` | |
+| SnippetAddon | `align` | `inline-start \| inline-end` | `inline-start` |
+| SnippetCopyButton | `timeout`, `onCopy`, `onError` | `number`, `() => void`, `(error) => void` | `2000` |
+| SnippetText, SnippetInput | | | |
+
+## ✦ Edmi additions
+- The input is read-only and mono at 12.5px; the prefix (`$`, `id`) sits in the muted addon.

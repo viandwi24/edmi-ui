@@ -1,0 +1,38 @@
+---
+title: Web Preview
+description: "Browser frame with navigation, URL bar, iframe body and console."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-web-preview" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/web-preview) (Apache-2.0), restyled for Edmi UI. Built on `button`, `input`, `tooltip` and `collapsible`.
+
+## Installation
+
+<ComponentInstall name="ai-web-preview" />
+
+## Usage
+
+<ComponentUsage name="ai-web-preview" />
+
+## Component source
+
+<ComponentSource name="ai-web-preview" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| WebPreview | `defaultUrl`, `onUrlChange`, `defaultConsoleOpen` | `string`, `(url) => void`, `boolean` | `""`, `false` |
+| WebPreviewNavigationButton | `tooltip` | `string` | |
+| WebPreviewBody | `loading` | `ReactNode` | |
+| WebPreviewConsole | `logs` | `{ level, message, timestamp }[]` | `[]` |
+| WebPreviewNavigation, Url | | | |
+
+## ✦ Edmi additions
+- The URL field is mono with a lock icon; navigation buttons are `ghost` icon buttons (open in new tab and fullscreen are yours to add as buttons).
+- `defaultConsoleOpen` starts the console expanded.
+- The body is a sandboxed `iframe`; pass `loading` to cover it while the preview is generated.

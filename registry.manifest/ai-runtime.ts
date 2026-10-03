@@ -1,4 +1,4 @@
-import { aiItem, AI_CATEGORIES as C } from "./ai-shared.ts";
+import { aiItem, aiReact, AI_CATEGORIES as C } from "./ai-shared.ts";
 import type { Item } from "./types.ts";
 
 /** AI · Runtime: board AI 06 (Sandbox, Schema Display, Snippet, Stack Trace, Terminal, Test Results, Web Preview). */
@@ -9,7 +9,8 @@ export const items: Item[] = [
 		description:
 			"Code execution sandbox: state header with tabs for code and output.",
 		category: C.runtime,
-		deps: ["collapsible", "tabs", "ai-tool"],
+		deps: ["badge", "collapsible", "tabs"],
+		react: aiReact("sandbox", ["ai", "cn"]),
 	}),
 	aiItem({
 		name: "schema-display",
@@ -18,6 +19,7 @@ export const items: Item[] = [
 			"API endpoint with method badge, path, parameters and nested request and response schemas.",
 		category: C.runtime,
 		deps: ["badge", "collapsible"],
+		react: aiReact("schema-display", ["cn"]),
 	}),
 	aiItem({
 		name: "snippet",
@@ -25,6 +27,7 @@ export const items: Item[] = [
 		description: "One-line command or value with a copy button.",
 		category: C.runtime,
 		deps: ["input-group"],
+		react: aiReact("snippet", ["cn"]),
 	}),
 	aiItem({
 		name: "stack-trace",
@@ -34,6 +37,7 @@ export const items: Item[] = [
 		category: C.runtime,
 		deps: ["button", "collapsible"],
 		optionalDeps: ["ai-use-controllable-state"],
+		react: aiReact("stack-trace", ["cn"]),
 	}),
 	aiItem({
 		name: "terminal",
@@ -42,6 +46,7 @@ export const items: Item[] = [
 			"Streaming terminal output with ANSI colors. Always dark, never themed.",
 		category: C.runtime,
 		deps: ["button"],
+		react: aiReact("terminal", ["ansi-to-react", "cn"]),
 	}),
 	aiItem({
 		name: "test-results",
@@ -50,6 +55,7 @@ export const items: Item[] = [
 			"Test run summary with progress, suites and failing test details.",
 		category: C.runtime,
 		deps: ["badge", "collapsible"],
+		react: aiReact("test-results", ["cn"]),
 	}),
 	aiItem({
 		name: "web-preview",
@@ -58,5 +64,6 @@ export const items: Item[] = [
 			"Browser frame with navigation, URL bar, iframe body and console.",
 		category: C.runtime,
 		deps: ["button", "collapsible", "input", "tooltip"],
+		react: aiReact("web-preview", ["cn"]),
 	}),
 ];

@@ -1,0 +1,37 @@
+---
+title: Stack Trace
+description: "Collapsible error stack with file links and internal frame filtering."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-stack-trace" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/stack-trace) (Apache-2.0), restyled for Edmi UI. Built on `collapsible` and `button`; open state uses the `ai-use-controllable-state` hook.
+
+## Installation
+
+<ComponentInstall name="ai-stack-trace" />
+
+## Usage
+
+<ComponentUsage name="ai-stack-trace" />
+
+## Component source
+
+<ComponentSource name="ai-stack-trace" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| StackTrace | `trace`, `open`, `defaultOpen`, `onOpenChange` | `string`, `boolean`, `boolean`, `(open) => void` | `false` |
+| StackTrace | `onFilePathClick` | `(file, line?, column?) => void` | |
+| StackTraceContent | `maxHeight` | `number` | `400` |
+| StackTraceFrames | `showInternalFrames` | `boolean` | `true` |
+| StackTraceHeader, Error, ErrorType, ErrorMessage, Actions, CopyButton, ExpandButton | | | |
+
+## ✦ Edmi additions
+- Frames outside your code (`node_modules`, `node:`, `internal/`) are dimmed; your files are underlined links when `onFilePathClick` is set.
+- The error type uses `--destructive-text` with a bug icon, as on the board.

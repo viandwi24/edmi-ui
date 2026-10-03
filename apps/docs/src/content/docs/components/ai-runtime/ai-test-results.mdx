@@ -1,0 +1,36 @@
+---
+title: Test Results
+description: "Test run summary with progress, suites and failing test details."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-test-results" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/test-results) (Apache-2.0), restyled for Edmi UI. Built on `collapsible` and `badge`.
+
+## Installation
+
+<ComponentInstall name="ai-test-results" />
+
+## Usage
+
+<ComponentUsage name="ai-test-results" />
+
+## Component source
+
+<ComponentSource name="ai-test-results" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| TestResults | `summary` | `{ passed, failed, skipped, total, duration? }` | |
+| TestSuite | `name`, `status` | `string`, `passed \| failed \| skipped \| running` | |
+| Test | `name`, `status`, `duration` | `string`, status, `number` | |
+| TestResultsHeader, Summary, Duration, Progress, Content, TestSuiteName, TestSuiteStats, TestSuiteContent, TestError, TestErrorMessage, TestErrorStack | | | |
+
+## ✦ Edmi additions
+- Summary badges and the progress bar use `--success`, `--destructive`, `--warning` and `--info`; a running test shows a spinner.
+- Durations are mono.

@@ -1,0 +1,34 @@
+---
+title: Terminal
+description: "Streaming terminal output with ANSI colors. Always dark, never themed."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-terminal" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/terminal) (Apache-2.0), restyled for Edmi UI. Uses [ansi-to-react](https://www.npmjs.com/package/ansi-to-react) for the colors and `button` for the actions.
+
+## Installation
+
+<ComponentInstall name="ai-terminal" />
+
+## Usage
+
+<ComponentUsage name="ai-terminal" />
+
+## Component source
+
+<ComponentSource name="ai-terminal" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| Terminal | `output`, `isStreaming`, `autoScroll`, `onClear` | `string`, `boolean`, `boolean`, `() => void` | `false`, `true` |
+| TerminalHeader, Title, Status, Actions, CopyButton, ClearButton, Content | | | |
+
+## ✦ Edmi additions
+- The terminal is always dark in every theme and mode: its colors are fixed `oklch` literals (not tokens), as DESIGN §5b requires.
+- ANSI foreground colors map to a small fixed palette; the streaming cursor is a block.
