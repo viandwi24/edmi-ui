@@ -1,5 +1,11 @@
 # @edmi-ui/registry-vue
 
+## 0.2.0
+
+### Minor Changes
+
+- 8679462: Add the `patterns` aggregate item (every pattern block). Docs and READMEs now show npm, pnpm, yarn and bun commands.
+
 ## 0.1.0
 
 ### Minor Changes
