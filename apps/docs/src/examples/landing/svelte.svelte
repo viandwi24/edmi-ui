@@ -206,6 +206,7 @@
 						tagline={p.tagline}
 						price={p.price}
 						priceNote={p.note}
+						featuresLead={p.lead}
 						features={p.features}
 						action={planAction}
 					/>

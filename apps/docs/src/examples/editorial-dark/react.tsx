@@ -165,6 +165,7 @@ export default function EditorialDarkExample() {
 										{plans.cta}
 									</Button>
 								}
+								featuresLead={p.lead}
 								features={p.features}
 							/>
 						))}

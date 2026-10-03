@@ -250,6 +250,7 @@ export default function LandingExample() {
 								tagline={p.tagline}
 								price={p.price}
 								priceNote={p.note}
+								featuresLead={p.lead}
 								features={p.features}
 								action={
 									<Button raised variant="outline">

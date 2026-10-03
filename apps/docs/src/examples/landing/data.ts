@@ -118,6 +118,7 @@ export const cta = {
 export const pricing = [
 	{
 		name: "Holder",
+		lead: "Included:",
 		tagline: "Join any index",
 		price: "0% to join",
 		note: "Plus the 1% management fee set by each creator.",
@@ -129,6 +130,7 @@ export const pricing = [
 	},
 	{
 		name: "Creator",
+		lead: "Everything in Holder, plus:",
 		tagline: "Launch your own index",
 		price: "1% fee to you",
 		note: "Earn the management fee on every holder's share.",
@@ -140,6 +142,7 @@ export const pricing = [
 	},
 	{
 		name: "Keeper",
+		lead: "Everything in Creator, plus:",
 		tagline: "Automate rebalancing",
 		price: "5% drift trigger",
 		note: "Keeper rebalances when weights drift past your limit.",

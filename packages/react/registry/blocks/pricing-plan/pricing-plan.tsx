@@ -14,6 +14,8 @@ type PricingPlanProps = Omit<React.ComponentProps<typeof Card>, "title"> & {
 	/** Call to action, usually a full-width `Button`. */
 	action?: React.ReactNode;
 	features?: React.ReactNode[];
+	/** ✦ Lead row above the features, e.g. "Included:" or "Everything in Holder, plus:". */
+	featuresLead?: React.ReactNode;
 };
 
 function PricingPlan({
@@ -24,6 +26,7 @@ function PricingPlan({
 	priceNote,
 	action,
 	features,
+	featuresLead,
 	...props
 }: PricingPlanProps) {
 	return (
@@ -52,6 +55,14 @@ function PricingPlan({
 			{features?.length ? (
 				<>
 					<Separator className="my-[18px]" />
+					{featuresLead ? (
+						<div
+							data-slot="pricing-plan-lead"
+							className="mb-3.5 text-[15px] font-semibold"
+						>
+							{featuresLead}
+						</div>
+					) : null}
 					<ul className="flex flex-col gap-2.5 text-[13.5px]">
 						{features.map((f, i) => (
 							// biome-ignore lint/suspicious/noArrayIndexKey: static list

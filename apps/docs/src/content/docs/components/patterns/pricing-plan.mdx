@@ -31,7 +31,13 @@ Flat by default. Pass `raised` for the one-step 3D look.
 | Part | Props | Notes |
 | --- | --- | --- |
 | `PricingPlan` | `name, tagline?, price?, priceNote?, action?, features?` | `action` is usually a `Button`; buttons placed there stretch full width. |
+| `featuresLead` ✦ | lead row above the features (`Included:`, `Everything in Holder, plus:`) | none |
+| `features` rich rows | React `ReactNode[]`; Vue scoped slot `feature` (`{ feature, index }`); Svelte `feature` snippet `(text, index)` | plain text |
 | `raised` | `boolean` | `false` |
+
+## Lead row and rich features ✦
+
+<ComponentDemo name="pricing-plan" demo="pricing-plan-lead" />
 
 ## ✦ Edmi additions
 - Whole block is an Edmi addition (DESIGN §5 Patterns, board 12). Composed from: card, separator.

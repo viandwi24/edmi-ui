@@ -98,6 +98,7 @@ function pickAudience(v: unknown) {
 						:tagline="p.tagline"
 						:price="p.price"
 						:price-note="p.note"
+						:features-lead="p.lead"
 						:features="p.features"
 					>
 						<template #action>
