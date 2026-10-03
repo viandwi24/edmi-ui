@@ -19,7 +19,7 @@ export interface AllocationSegment {
 }
 
 export interface PodiumEntry {
-	rank: number;
+	rank: 1 | 2 | 3;
 	name: string;
 	symbol: string;
 	creator: string;

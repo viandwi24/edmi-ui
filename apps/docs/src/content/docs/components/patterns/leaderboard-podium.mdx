@@ -32,8 +32,16 @@ Flat by default. Pass `raised` for the one-step 3D look.
 | --- | --- | --- |
 | `entries` | `{ rank: 1 \| 2 \| 3, name, meta, image?, initials?, href? }[]` | required |
 | `raised` | `boolean` | `false` |
+| `variant` ✦ | `"podium" \| "cards"` | `"podium"` |
+| `entries[].symbol, creator, change, spark, allocation, aum, holders` ✦ | `cards` variant fields | |
 
 Order is fixed visually (2, 1, 3) whatever the array order.
+
+## Cards ✦
+
+`variant="cards"` is the Stockbreak leaderboard top three: three equal cards in rank order with creator, name and ticker, headline change with sparkline, an allocation bar and AUM / holders. `meta` is not needed there.
+
+<ComponentDemo name="leaderboard-podium" demo="leaderboard-podium-cards" />
 
 ## ✦ Edmi additions
 - #1 gets the warning badge, #2/#3 the secondary badge.

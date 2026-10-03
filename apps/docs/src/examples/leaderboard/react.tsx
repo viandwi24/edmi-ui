@@ -1,20 +1,16 @@
-import { AllocationBar } from "@edmi-react/blocks/allocation-bar/allocation-bar";
 import { AppHeader } from "@edmi-react/blocks/app-header/app-header";
 import {
 	IndexRow,
 	IndexRowHeader,
-	Sparkline,
 } from "@edmi-react/blocks/index-row/index-row";
+import { LeaderboardPodium } from "@edmi-react/blocks/leaderboard-podium/leaderboard-podium";
 import { Badge } from "@edmi-react/ui/badge";
 import { Card } from "@edmi-react/ui/card";
 import { Table, TableBody, TableHeader } from "@edmi-react/ui/table";
 import { Tabs, TabsList, TabsTrigger } from "@edmi-react/ui/tabs";
 import { ToggleGroup, ToggleGroupItem } from "@edmi-react/ui/toggle-group";
 import { useState } from "react";
-import { IconPlaceholder } from "@/edmi/icon-placeholder";
 import { benchmark, indexes, kinds, nav, periods, podium, tabs } from "./data";
-
-const isDown = (s: string) => /^[-−–]/.test(s.trim());
 
 export default function LeaderboardExample() {
 	const [tab, setTab] = useState("indexes");
@@ -81,76 +77,21 @@ export default function LeaderboardExample() {
 				</div>
 				<p className="-mt-3 text-sm text-muted-foreground">{benchmark}</p>
 
-				<div className="grid gap-4 lg:grid-cols-3">
-					{podium.map((e) => {
-						const down = isDown(e.change);
-						return (
-							<Card key={e.rank} raised className="gap-0 p-6">
-								<div className="flex items-center justify-between text-[13px]">
-									<span className="font-medium">No. {e.rank}</span>
-									<span className="font-mono text-xs text-muted-foreground">
-										{e.creator}
-									</span>
-								</div>
-								<div className="mt-3 flex items-center gap-3">
-									<span className="inline-flex size-11 items-center justify-center rounded-xl border border-border bg-muted text-success-text">
-										<IconPlaceholder
-											lucide="ChartLineIcon"
-											tabler="IconChartLine"
-											hugeicons="ChartLineData01Icon"
-											phosphor="ChartLineUpIcon"
-											remixicon="RiLineChartLine"
-											className="size-5"
-										/>
-									</span>
-									<div>
-										<div className="text-lg font-medium">{e.name}</div>
-										<div className="font-mono text-xs text-muted-foreground">
-											{e.symbol}
-										</div>
-									</div>
-								</div>
-								<div className="mt-4 flex items-end justify-between gap-3">
-									<span
-										className={`text-[40px] leading-none font-light tracking-[-1px] ${down ? "text-destructive-text" : "text-success-text"}`}
-									>
-										{e.change}
-									</span>
-									<Sparkline
-										data={e.spark}
-										width={150}
-										height={34}
-										className="max-w-[45%]"
-									/>
-								</div>
-								<AllocationBar className="mt-4" segments={e.allocation} />
-								<div className="mt-4 flex items-center gap-4 border-t border-border-2 pt-4 text-[13px] text-muted-foreground">
-									<span>
-										AUM{" "}
-										<b className="font-mono font-medium text-foreground">
-											{e.aum}
-										</b>
-									</span>
-									<span>
-										Holders{" "}
-										<b className="font-mono font-medium text-foreground">
-											{e.holders}
-										</b>
-									</span>
-								</div>
-							</Card>
-						);
-					})}
-				</div>
+				<LeaderboardPodium variant="cards" raised entries={podium} />
 
 				<Card raised className="px-6 py-2">
 					<Table>
 						<TableHeader>
-							<IndexRowHeader />
+							<IndexRowHeader rank />
 						</TableHeader>
 						<TableBody>
-							{indexes.map((index) => (
-								<IndexRow key={index.symbol} index={index} />
+							{indexes.map((index, i) => (
+								<IndexRow
+									key={index.symbol}
+									index={index}
+									rank={i + 1}
+									delta="pill"
+								/>
 							))}
 						</TableBody>
 					</Table>
