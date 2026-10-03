@@ -2,6 +2,7 @@ import { describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { listBases, listThemes } from "../packages/tokens/src/css-vars.ts";
 import { manifest as realManifest } from "../registry.manifest/index.ts";
 import type { Item } from "../registry.manifest/types.ts";
 import {
@@ -251,6 +252,46 @@ describe("validation", () => {
 		const s = generate([mk("a"), mk("a")], { ...opts(), outDir: out });
 		expect(s.errors).toContain('duplicate item name "a"');
 		expect(s.written).toEqual([]);
+	});
+});
+
+describe("theme items (base x accent)", () => {
+	const bases = listBases();
+	const accents = listThemes();
+	test("one registry:theme item per combination in every framework", () => {
+		for (const fw of ["react", "vue", "svelte"] as const) {
+			const r = buildFramework(realManifest, fw, opts());
+			for (const b of bases)
+				for (const a of accents) {
+					const it = item(r, `theme-${b}-${a}`);
+					expect(it, `${fw} theme-${b}-${a}`).toBeDefined();
+					expect(it.type).toBe("registry:theme");
+					expect(it.registryDependencies).toEqual([]);
+					const cv = it.cssVars as {
+						light: Record<string, string>;
+						dark: Record<string, string>;
+					};
+					expect(cv.light.primary).toBeDefined();
+					expect(cv.dark.primary).toBeDefined();
+					expect(cv.light.radius).toBeUndefined();
+				}
+		}
+	});
+	test("slate-ocean replaces neutrals and accent; never part of all/edmi", () => {
+		const r = buildFramework(realManifest, "react", opts());
+		const cv = item(r, "theme-slate-ocean").cssVars as {
+			light: Record<string, string>;
+			dark: Record<string, string>;
+		};
+		expect(cv.light.primary).toBe("oklch(0.569 0.237 260.4)");
+		expect(cv.dark.primary).toBe("oklch(0.606 0.215 259.1)");
+		expect(cv.light.background).toBe("oklch(0.976 0.006 264.5)");
+		for (const n of ["all", "edmi"])
+			expect(
+				(item(r, n).registryDependencies as string[]).some((d) =>
+					d.includes("theme-"),
+				),
+			).toBe(false);
 	});
 });
 

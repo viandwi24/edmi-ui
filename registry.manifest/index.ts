@@ -34,6 +34,7 @@ import { entries as patternsVue } from "./patterns.vue.ts";
 import { entries as patterns2Svelte } from "./patterns-2.svelte.ts";
 import { items as patterns2 } from "./patterns-2.ts";
 import { entries as patterns2Vue } from "./patterns-2.vue.ts";
+import { items as themes } from "./themes.ts";
 import type { FrameworkEntry, Item } from "./types.ts";
 
 export type { Framework, Item } from "./types.ts";
@@ -86,4 +87,5 @@ export const manifest: Item[] = [
 	...group(conversation, conversationVue, conversationSvelte, "conversation"),
 	...group(patterns, patternsVue, patternsSvelte, "patterns"),
 	...group(patterns2, patterns2Vue, patterns2Svelte, "patterns-2"),
+	...themes,
 ];

@@ -1,5 +1,13 @@
 import { describe, expect, test } from "bun:test";
-import { getCssVars, parseTokensCss } from "./css-vars.ts";
+import {
+	composeCssVars,
+	getCssVars,
+	listBases,
+	listThemes,
+	parseTokensCss,
+	themeItemCssVars,
+	themeToCss,
+} from "./css-vars.ts";
 
 const shadcn = [
 	"background",
@@ -116,5 +124,55 @@ describe("parseTokensCss", () => {
 			light: { a: "oklch(1 0 0)" },
 			dark: { a: "rgba(0,0,0,.5)" },
 		});
+	});
+});
+
+describe("base x theme composition", () => {
+	test("auto-discovers bases and themes next to the defaults", () => {
+		expect(listBases()).toEqual(expect.arrayContaining(["stone", "slate"]));
+		expect(listThemes()).toEqual(expect.arrayContaining(["green", "ocean"]));
+	});
+
+	test("stone x green is tokens.css untouched", () => {
+		const v = composeCssVars("stone", "green");
+		const t = getCssVars();
+		expect(v.light.background).toBe(t.light.background);
+		expect(v.dark.primary).toBe(t.dark.primary);
+	});
+
+	test("base replaces neutrals, theme wins for primary, status colors never change", () => {
+		const stone = composeCssVars("stone", "green");
+		const slate = composeCssVars("slate", "green");
+		const ocean = composeCssVars("slate", "ocean");
+		expect(slate.light.background).not.toBe(stone.light.background);
+		expect(slate.light.primary).not.toBe(stone.light.primary);
+		expect(ocean.light.primary).toBe("oklch(0.569 0.237 260.4)");
+		expect(ocean.dark.brand).toBe("oklch(0.648 0.189 258.5)");
+		expect(ocean.dark.background).toBe(slate.dark.background);
+		for (const k of ["success", "success-text", "destructive", "warning"]) {
+			expect(ocean.light[k]).toBe(stone.light[k]);
+			expect(ocean.dark[k]).toBe(stone.dark[k]);
+		}
+	});
+
+	test("every combination covers the same keys in light and dark", () => {
+		const keys = Object.keys(composeCssVars("stone", "green").light).sort();
+		for (const b of listBases())
+			for (const t of listThemes()) {
+				const v = composeCssVars(b, t);
+				expect(Object.keys(v.light).sort()).toEqual(keys);
+				expect(Object.keys(v.dark).sort()).toEqual(
+					Object.keys(composeCssVars("stone", "green").dark).sort(),
+				);
+			}
+	});
+
+	test("theme item vars omit radius; themeToCss emits :root + .dark with radius", () => {
+		const v = themeItemCssVars("slate", "ocean");
+		expect(v.light.radius).toBeUndefined();
+		const css = themeToCss(v, "0.75rem");
+		expect(css).toStartWith(":root {\n  --radius: 0.75rem;");
+		expect(css).toContain("\n.dark {\n");
+		expect(css.match(/--primary:/g)?.length).toBe(2);
 	});
 });

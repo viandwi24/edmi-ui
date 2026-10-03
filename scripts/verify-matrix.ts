@@ -7,7 +7,9 @@
  */
 import { existsSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
+import { listBases, listThemes } from "../packages/tokens/src/css-vars.ts";
 import { manifest } from "../registry.manifest/index.ts";
+import { themeItemName } from "../registry.manifest/themes.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
 const FWS = ["react", "vue", "svelte"] as const;
@@ -214,6 +216,24 @@ for (const name of RAISED)
 		}
 	}
 
+// Theme items: every base x accent (auto-discovered from packages/tokens/src/{base,themes}) ships as a
+// registry:theme item for each framework, built to apps/docs/public/r/<fw>/.
+const themeNames: string[] = [];
+for (const b of listBases())
+	for (const a of listThemes()) themeNames.push(themeItemName(b, a));
+for (const name of themeNames)
+	for (const fw of FWS) {
+		const entry = byName.get(name)?.frameworks[fw];
+		const why: string[] = [];
+		if (!entry?.cssVars) why.push("manifest has no cssVars");
+		if (!existsSync(resolve(ROOT, `apps/docs/public/r/${fw}/${name}.json`)))
+			why.push("built JSON missing");
+		if (why.length) {
+			problems.push(`${name} [${fw}]: ${why.join(", ")}`);
+			failures++;
+		}
+	}
+
 const sym = { ok: "✓", skip: "–", fail: "✗" } as const;
 if (process.argv.includes("--markdown")) {
 	console.log(
@@ -252,5 +272,5 @@ if (failures) {
 	process.exit(1);
 }
 console.log(
-	`\nAll ${rows.length} items present in all frameworks; ${RAISED.length} raised demos x 3 frameworks present.`,
+	`\nAll ${rows.length} items present in all frameworks; ${RAISED.length} raised demos x 3 frameworks present; ${themeNames.length} theme items (${themeNames.join(", ")}) x 3 frameworks present.`,
 );

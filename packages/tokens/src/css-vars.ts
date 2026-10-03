@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 
 /** Shape of `cssVars` in a shadcn registry item. Keys have no leading `--`. */
 export type CssVars = {
@@ -67,7 +67,82 @@ export function parseTokensCss(css: string, themeCss?: string): CssVars {
 
 /** Read the bundled tokens.css + theme.css from disk and parse them. */
 export function getCssVars(): CssVars {
-	const read = (f: string) =>
-		readFileSync(new URL(`./${f}`, import.meta.url), "utf8");
 	return parseTokensCss(read("tokens.css"), read("theme.css"));
+}
+
+const read = (f: string) =>
+	readFileSync(new URL(`./${f}`, import.meta.url), "utf8");
+
+/** Names of the CSS files in `src/<dir>/`, sorted (`slate.css` -> `slate`). */
+function listCss(dir: string): string[] {
+	return readdirSync(new URL(`./${dir}/`, import.meta.url))
+		.filter((f) => f.endsWith(".css"))
+		.map((f) => f.slice(0, -4))
+		.sort();
+}
+
+/** Base colors: the default (`stone`, in tokens.css) plus every file in `src/base/`. */
+export const listBases = (): string[] => ["stone", ...listCss("base")];
+
+/** Accent themes: the default (`green`, in tokens.css) plus every file in `src/themes/`. */
+export const listThemes = (): string[] => ["green", ...listCss("themes")];
+
+export const DEFAULT_BASE = "stone";
+export const DEFAULT_THEME = "green";
+
+export type ModeVars = {
+	light: Record<string, string>;
+	dark: Record<string, string>;
+};
+
+/**
+ * Complete token sets (every var, `radius` included) for one base x theme pair:
+ * tokens.css, then `base/<base>.css`, then `themes/<theme>.css` (the theme wins over the base for `primary`).
+ * This mirrors what the browser computes for `<html data-base data-theme>` and `.dark` on top of it.
+ */
+export function composeCssVars(base: string, theme: string): ModeVars {
+	const tokens = stripComments(read("tokens.css"));
+	const light = declarations(blockBody(tokens, ":root"));
+	const dark = declarations(blockBody(tokens, ".dark"));
+	const layers: [string, string, string][] = [];
+	if (base !== DEFAULT_BASE) layers.push([`base/${base}.css`, "base", base]);
+	if (theme !== DEFAULT_THEME)
+		layers.push([`themes/${theme}.css`, "theme", theme]);
+	for (const [file, attr, name] of layers) {
+		const css = stripComments(read(file));
+		Object.assign(
+			light,
+			declarations(blockBody(css, `[data-${attr}="${name}"]`)),
+		);
+		Object.assign(
+			dark,
+			declarations(blockBody(css, `.dark[data-${attr}="${name}"]`)),
+		);
+	}
+	return { light, dark };
+}
+
+/**
+ * `cssVars` for a `registry:theme` item replacing the color tokens for `base` x `theme`.
+ * `radius` is left out so installing a theme never resets the app's own radius.
+ */
+export function themeItemCssVars(base: string, theme: string): ModeVars {
+	const { light, dark } = composeCssVars(base, theme);
+	delete light.radius;
+	delete dark.radius;
+	return { light, dark };
+}
+
+/** Same structure shadcn's "Copy code" gives: `:root` (light + radius) then `.dark`. */
+export function themeToCss(vars: ModeVars, radius = "0.625rem"): string {
+	const block = (sel: string, v: Record<string, string>) =>
+		`${sel} {\n${Object.entries(v)
+			.map(([k, val]) => `  --${k}: ${val};`)
+			.join("\n")}\n}`;
+	return `${block(":root", { radius, ...omitRadius(vars.light) })}\n\n${block(".dark", omitRadius(vars.dark))}\n`;
+}
+
+function omitRadius(v: Record<string, string>): Record<string, string> {
+	const { radius: _r, ...rest } = v;
+	return rest;
 }
