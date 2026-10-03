@@ -1,4 +1,125 @@
 import type { ExampleMeta } from "../index";
 
+const ALL = ["react", "vue", "svelte"] as const;
+
 /** Examples owned by the `app-b` worker group. Append entries; keep the order of EXAMPLES.md. */
-export const examples: ExampleMeta[] = [];
+export const examples: ExampleMeta[] = [
+	{
+		slug: "create-index",
+		title: "Create index",
+		tag: "App",
+		description:
+			"Stockbreak create-index wizard: step tabs, searchable asset list with checkboxes, weight sliders, strategy select and fee fields, plus a live summary card with an allocation bar.",
+		board: "Stockbreak · Create index",
+		thumb: "create-index",
+		frameworks: ALL,
+		height: 1000,
+		uses: [
+			"AppHeader",
+			"Tabs",
+			"InputGroup",
+			"Field",
+			"Input",
+			"Slider",
+			"Select",
+			"Checkbox",
+			"AllocationBar",
+			"Card",
+			"Badge",
+			"Button",
+		],
+	},
+	{
+		slug: "feed",
+		title: "Feed",
+		tag: "App",
+		description:
+			"Stockbreak feed: Following/All segmented control, post composer with character counter, creator posts with an attached index and reactions, and the on-chain activity list.",
+		board: "Stockbreak · Feed",
+		thumb: "feed",
+		frameworks: ALL,
+		height: 900,
+		uses: [
+			"AppHeader",
+			"ToggleGroup",
+			"Textarea",
+			"FeedPost",
+			"Avatar",
+			"Card",
+			"Button",
+		],
+	},
+	{
+		slug: "agents",
+		title: "AI agents",
+		tag: "App",
+		description:
+			"Stockbreak AI page: sign-in prompt, agent card with stats, empty states, and a Connect an agent card with MCP URL, client tabs and code snippets.",
+		board: "Stockbreak · AI agents",
+		thumb: "agents",
+		frameworks: ALL,
+		height: 960,
+		uses: ["AppHeader", "AgentCard", "InputGroup", "Tabs", "Card", "Button"],
+	},
+	{
+		slug: "portfolio",
+		title: "Portfolio",
+		tag: "App",
+		description:
+			"Stockbreak portfolio: total value and balance tiles, positions table with PnL and sparklines, loose assets and your indexes lists, all with raised cards.",
+		board: "Stockbreak · Portfolio",
+		thumb: "portfolio",
+		frameworks: ALL,
+		height: 1080,
+		uses: [
+			"AppHeader",
+			"Table",
+			"Sparkline",
+			"Avatar",
+			"Badge",
+			"Card",
+			"Button",
+		],
+	},
+	{
+		slug: "profile",
+		title: "User profile",
+		tag: "App",
+		description:
+			"Stockbreak profile: identicon header, level progress, badges, indexes created and positions tables.",
+		board: "Stockbreak · User profile",
+		thumb: "profile",
+		frameworks: ALL,
+		height: 960,
+		uses: [
+			"AppHeader",
+			"AgentIdenticon",
+			"Progress",
+			"Badge",
+			"Table",
+			"Sparkline",
+			"Avatar",
+			"Card",
+		],
+	},
+	{
+		slug: "faucet",
+		title: "Faucet",
+		tag: "App",
+		description:
+			"Stockbreak faucet: balance cards, an Alert pointing at the SOL faucet, amount segmented control and a mint button that fires a toast.",
+		board: "Stockbreak · Faucet",
+		thumb: "faucet",
+		frameworks: ALL,
+		height: 760,
+		uses: [
+			"AppHeader",
+			"Card",
+			"Alert",
+			"ToggleGroup",
+			"Sonner",
+			"Button",
+			"Badge",
+		],
+	},
+];
