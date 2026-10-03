@@ -31,6 +31,9 @@ Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/attachm
 | AttachmentInfo | `showMediaType` | `boolean` | `false` |
 | AttachmentPreview, AttachmentRemove, AttachmentHoverCard*, AttachmentEmpty | | | |
 
+## Vue and Svelte
+- Remove: React `onRemove` prop, Vue `@remove` listener, Svelte `onRemove` prop; the remove button only shows when it is set. The hover card trigger wraps an `Attachment` with `render` (React), `as-child` (Vue) or a `child` snippet (Svelte).
+
 ## ✦ Edmi additions
 - The grid shows the file name under the tile; the list meta line is `mediaType · size`.
 - The remove button on a grid tile is a solid `--popover` chip with a 1px border (no transparency).

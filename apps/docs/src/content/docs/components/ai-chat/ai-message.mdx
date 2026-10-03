@@ -46,6 +46,11 @@ Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/message
 
 `MessageResponse` uses [Streamdown](https://streamdown.ai); add `@source "../node_modules/streamdown/dist/*.js";` to your Tailwind CSS so its classes are generated.
 
+## Vue and Svelte
+- `MessageResponse` takes the markdown as `content` (Vue also accepts the default slot text, Svelte the `content` prop only). Vue renders with `vue-stream-markdown`, Svelte with `svelte-streamdown`; the typography above is applied through each library's own hooks, so code-block styling follows the library defaults.
+- `MessageBranchContent`: every direct child is one branch (React `children`, Vue slot children, Svelte `{#each}` children). Svelte counts the rendered children and hides all but the current one.
+- Branch change: React `onBranchChange`, Vue `@branch-change`, Svelte `onBranchChange`.
+
 ## ✦ Edmi additions
 - No assistant avatar by default: the response is full width on the left, the user turn is a secondary bubble on the right.
 - Status and shimmer text goes inside `MessageContent` (a ghost bubble) so its first line aligns like any message.

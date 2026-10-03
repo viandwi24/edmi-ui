@@ -41,6 +41,9 @@ Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/convers
 
 Wrap each turn in `ConversationItem` so the scroller can anchor it; the container needs a height.
 
+## Vue and Svelte
+- `ConversationEmptyState` icon: React `icon` prop, Vue `#icon` slot, Svelte `icon` snippet.
+
 ## ✦ Edmi additions
 - `ConversationEmptyState variant="home"`: greeting heading and subtitle with a `children` slot for the composer and suggestions.
 - The scroll button is a round outline icon button; the stick-to-bottom logic comes from `message-scroller`, not `use-stick-to-bottom`.

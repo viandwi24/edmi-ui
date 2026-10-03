@@ -41,6 +41,13 @@ Flat by default. `raised` gives the one-step 3D look.
 
 Hooks: `usePromptInputAttachments`, `usePromptInputController`, `useProviderAttachments`, `usePromptInputReferencedSources`.
 
+## Vue and Svelte
+- Events: Vue `@submit` / `@error` / `@stop` (on `PromptInputSubmit`); Svelte `onSubmit` / `onError` / `onStop`. `submit` may be async: the composer clears on success and keeps the text if it throws. Without a stop listener the submit button never turns into a stop button.
+- Initial text: `initialInput` (React demos use the textarea `defaultValue`).
+- To render the attached files, read the composer state: Vue passes slot props (`v-slot="{ files, remove }"`), Svelte passes snippet arguments (`{#snippet children({ files, remove })}`), React uses `usePromptInputAttachments()`. The hooks `usePromptInput`, `usePromptInputAttachments` and `usePromptInputReferencedSources` exist in all three ports (inside the composer or a `PromptInputProvider`).
+- Vue and Svelte `PromptInputButton` picks the square (`icon-sm`) or the labelled (`sm`) size from its content, like React; the tooltip takes `tooltip`, `shortcut` and `side` props.
+- Svelte `PromptInputSelect` needs `type="single"` like the Bits UI Select.
+
 ## ✦ Edmi additions
 - The send icon follows the chat status: arrow up (ready), spinner (submitted), stop (streaming, with `onStop`), x on destructive (error).
 - `raised` applies to the submit button only; the composer shell stays flat.
