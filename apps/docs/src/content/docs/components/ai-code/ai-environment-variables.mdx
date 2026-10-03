@@ -1,0 +1,36 @@
+---
+title: Environment Variables
+description: "Environment variable list with masked values, visibility switch and copy."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-environment-variables" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/environment-variables) (Apache-2.0), restyled for Edmi UI. Built on `badge`, `button` and `switch`.
+
+## Installation
+
+<ComponentInstall name="ai-environment-variables" />
+
+## Usage
+
+<ComponentUsage name="ai-environment-variables" />
+
+## Component source
+
+<ComponentSource name="ai-environment-variables" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| EnvironmentVariables | `showValues`, `defaultShowValues`, `onShowValuesChange` | `boolean`, `boolean`, `(show) => void` | `false` |
+| EnvironmentVariable | `name`, `value` | `string`, `string` | |
+| EnvironmentVariableCopyButton | `copyFormat` | `name \| value \| export` | `value` |
+| EnvironmentVariableRequired | `Badge` props | | `warning` |
+
+## ✦ Edmi additions
+- Masked values use a fixed length so the real length never leaks.
+- The toggle shows a "Show values" label next to the eye icon.

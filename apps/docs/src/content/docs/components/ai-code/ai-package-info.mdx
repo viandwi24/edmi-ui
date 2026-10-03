@@ -1,0 +1,35 @@
+---
+title: Package Info
+description: "Package name, version change and dependency list."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-package-info" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/package-info) (Apache-2.0), restyled for Edmi UI. Built on `badge`.
+
+## Installation
+
+<ComponentInstall name="ai-package-info" />
+
+## Usage
+
+<ComponentUsage name="ai-package-info" />
+
+## Component source
+
+<ComponentSource name="ai-package-info" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| PackageInfo | `name`, `currentVersion`, `newVersion` | `string` | |
+| PackageInfo | `changeType` | `major \| minor \| patch \| added \| removed` | |
+| PackageInfoDependency | `name`, `version` | `string` | |
+
+## ✦ Edmi additions
+- Change types map to badge variants: major `destructive`, minor `warning`, patch `success`, added `info`, removed `secondary`.
+- With only `newVersion` (added) the version reads `→ 6.0.30`.

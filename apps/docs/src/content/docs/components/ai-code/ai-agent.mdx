@@ -1,0 +1,45 @@
+---
+title: Agent
+description: "Agent configuration card: model, instructions, tools and output schema."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-agent" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/agent) (Apache-2.0), restyled for Edmi UI. Built on `card`, `accordion`, `badge` and `ai-code-block`.
+
+## Installation
+
+<ComponentInstall name="ai-agent" />
+
+## Usage
+
+<ComponentUsage name="ai-agent" />
+
+## Component source
+
+<ComponentSource name="ai-agent" />
+
+## Raised ✦
+
+Flat by default. `raised` gives the one-step 3D look.
+
+<ComponentDemo name="ai-agent" demo="ai-agent-raised" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| Agent | `raised` | `boolean` | `false` |
+| AgentHeader | `name`, `model` | `string`, `string` | |
+| AgentInstructions | `children` | `ReactNode` | |
+| AgentTools | `Accordion` props (`multiple`, `defaultValue`) | | |
+| AgentTool | `tool`, `value` | `{ description?, inputSchema?, jsonSchema? }`, `string` | |
+| AgentOutput | `schema` | `string` | |
+
+## ✦ Edmi additions
+- `raised`: the card gets the one-step 3D look.
+- `AgentTool` `name`: tool name shown in mono before the description (falls back to `value`).
+- A string `inputSchema` is shown as TypeScript; anything else as JSON.

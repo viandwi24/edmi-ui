@@ -1,0 +1,34 @@
+---
+title: JSX Preview
+description: "Live preview of streamed JSX or template markup that tolerates unclosed tags."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-jsx-preview" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/jsx-preview) (Apache-2.0), restyled for Edmi UI. Uses `react-jsx-parser` and renders the error through `alert`. Unclosed tags are closed while `isStreaming` is true, and the last good render stays on screen if a streaming chunk does not parse.
+
+## Installation
+
+<ComponentInstall name="ai-jsx-preview" />
+
+## Usage
+
+<ComponentUsage name="ai-jsx-preview" />
+
+## Component source
+
+<ComponentSource name="ai-jsx-preview" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| JSXPreview | `jsx`, `isStreaming` | `string`, `boolean` | `false` |
+| JSXPreview | `components`, `bindings`, `onError` | `react-jsx-parser` props | |
+| JSXPreviewError | `children` | `ReactNode \| (error) => ReactNode` | error message |
+
+## ✦ Edmi additions
+- The error state is the destructive `alert` with a "Could not render" title.

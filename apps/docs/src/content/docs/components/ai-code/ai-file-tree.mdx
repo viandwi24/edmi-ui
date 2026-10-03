@@ -1,0 +1,36 @@
+---
+title: File Tree
+description: "Expandable file and folder tree with selection."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-file-tree" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/file-tree) (Apache-2.0), restyled for Edmi UI. Built on `collapsible`.
+
+## Installation
+
+<ComponentInstall name="ai-file-tree" />
+
+## Usage
+
+<ComponentUsage name="ai-file-tree" />
+
+## Component source
+
+<ComponentSource name="ai-file-tree" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| FileTree | `expanded`, `defaultExpanded`, `onExpandedChange` | `Set<string>` | |
+| FileTree | `selectedPath`, `onSelect` | `string`, `(path) => void` | |
+| FileTreeFolder | `path`, `name` | `string` | |
+| FileTreeFile | `path`, `name`, `icon` | `string`, `ReactNode` | |
+| FileTreeActions | | stops click propagation | |
+
+## ✦ Edmi additions
+- Rows are 28px with an `accent` fill for the selected path; folder icons use `chart-3`; no connector lines.

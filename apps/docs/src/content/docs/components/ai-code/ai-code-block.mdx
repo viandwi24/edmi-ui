@@ -1,0 +1,34 @@
+---
+title: Code Block
+description: "Syntax-highlighted code with header, copy, language select and line numbers. The canonical code block for the kit."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-code-block" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/code-block) (Apache-2.0), restyled for Edmi UI. The canonical code block of the kit: the body sits on `card`, the header on `muted`. Built on `button` and `select`; highlighting uses Shiki's CSS-variables theme mapped onto chart tokens (keyword `chart-2`, string `success-text`, number `chart-3`, function `chart-4`, comment `muted-foreground`), so it follows mode, base and theme.
+
+## Installation
+
+<ComponentInstall name="ai-code-block" />
+
+## Usage
+
+<ComponentUsage name="ai-code-block" />
+
+## Component source
+
+<ComponentSource name="ai-code-block" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| CodeBlock | `code`, `language`, `showLineNumbers` | `string`, `BundledLanguage`, `boolean` | `false` |
+| CodeBlockCopyButton | `onCopy`, `onError`, `timeout` | | `2000` |
+| CodeBlockLanguageSelector | `Select` props (`items`, `value`, `onValueChange`) | | |
+
+## ✦ Edmi additions
+- Highlight colours come from chart tokens instead of a fixed Shiki theme.

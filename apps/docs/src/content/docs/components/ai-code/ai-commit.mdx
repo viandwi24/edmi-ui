@@ -1,0 +1,40 @@
+---
+title: Commit
+description: "Commit summary: message, hash, author, timestamp and changed files."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-commit" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/commit) (Apache-2.0), restyled for Edmi UI. Built on `avatar`, `badge`, `button` and `collapsible`.
+
+## Installation
+
+<ComponentInstall name="ai-commit" />
+
+## Usage
+
+<ComponentUsage name="ai-commit" />
+
+## Component source
+
+<ComponentSource name="ai-commit" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| Commit | `Collapsible` props (`defaultOpen`) | | |
+| CommitAuthorAvatar | `initials` | `string` | |
+| CommitTimestamp | `date` | `Date` | |
+| CommitCopyButton | `hash`, `onCopy`, `onError`, `timeout` | | `2000` |
+| CommitFilesToggle | `count` | `number` | |
+| CommitFileStatus | `status` | `added \| modified \| deleted \| renamed` | |
+| CommitFileAdditions / CommitFileDeletions | `count` | `number` | |
+
+## ✦ Edmi additions
+- `CommitFilesToggle`: the "N files changed" row that opens the file list (the header itself no longer toggles).
+- Relative timestamps resolve to minutes and hours, not only days.
+- Status badges use the soft success, warning, info and destructive variants; additions and deletions always render (`+0`, `−0`).

@@ -1,4 +1,4 @@
-import { aiItem, AI_CATEGORIES as C } from "./ai-shared.ts";
+import { aiItem, aiReact, AI_CATEGORIES as C } from "./ai-shared.ts";
 import type { Item } from "./types.ts";
 
 /** AI · Code: board AI 05 authoring (Agent, Artifact, Code Block, Commit, Environment Variables, File Tree, JSX Preview, Package Info). */
@@ -9,7 +9,8 @@ export const items: Item[] = [
 		description:
 			"Agent configuration card: model, instructions, tools and output schema.",
 		category: C.code,
-		deps: ["accordion", "badge", "ai-code-block"],
+		deps: ["accordion", "badge", "card", "ai-code-block"],
+		react: aiReact("agent", ["cn"]),
 	}),
 	aiItem({
 		name: "artifact",
@@ -17,7 +18,8 @@ export const items: Item[] = [
 		description:
 			"Container for generated output with a header, actions and scrollable content.",
 		category: C.code,
-		deps: ["button", "tooltip"],
+		deps: ["button", "card", "tooltip"],
+		react: aiReact("artifact", ["cn"]),
 	}),
 	aiItem({
 		name: "code-block",
@@ -26,6 +28,7 @@ export const items: Item[] = [
 			"Syntax-highlighted code with header, copy, language select and line numbers. The canonical code block for the kit.",
 		category: C.code,
 		deps: ["button", "select"],
+		react: aiReact("code-block", ["cn", "shiki"]),
 	}),
 	aiItem({
 		name: "commit",
@@ -33,7 +36,8 @@ export const items: Item[] = [
 		description:
 			"Commit summary: message, hash, author, timestamp and changed files.",
 		category: C.code,
-		deps: ["avatar", "button", "collapsible"],
+		deps: ["avatar", "badge", "button", "collapsible"],
+		react: aiReact("commit", ["cn"]),
 	}),
 	aiItem({
 		name: "environment-variables",
@@ -42,6 +46,7 @@ export const items: Item[] = [
 			"Environment variable list with masked values, visibility switch and copy.",
 		category: C.code,
 		deps: ["badge", "button", "switch"],
+		react: aiReact("environment-variables", ["cn"]),
 	}),
 	aiItem({
 		name: "file-tree",
@@ -49,6 +54,7 @@ export const items: Item[] = [
 		description: "Expandable file and folder tree with selection.",
 		category: C.code,
 		deps: ["collapsible"],
+		react: aiReact("file-tree", ["cn"]),
 	}),
 	aiItem({
 		name: "jsx-preview",
@@ -56,6 +62,8 @@ export const items: Item[] = [
 		description:
 			"Live preview of streamed JSX or template markup that tolerates unclosed tags.",
 		category: C.code,
+		deps: ["alert"],
+		react: aiReact("jsx-preview", ["cn", "react-jsx-parser"]),
 	}),
 	aiItem({
 		name: "package-info",
@@ -63,5 +71,6 @@ export const items: Item[] = [
 		description: "Package name, version change and dependency list.",
 		category: C.code,
 		deps: ["badge"],
+		react: aiReact("package-info", ["cn"]),
 	}),
 ];
