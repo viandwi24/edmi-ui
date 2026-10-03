@@ -70,4 +70,26 @@ export const examples: ExampleMeta[] = [
 			"SiteFooter",
 		],
 	},
+	{
+		slug: "themes",
+		title: "Theme playground",
+		tag: "Theme",
+		description:
+			"Customizer for base color, theme, mode, radius and depth with a live preview: change a knob and a small composite of Edmi components re-themes in place, plus the attributes it sets.",
+		board: "Edmi UI 02 · Themes",
+		thumb: "themes",
+		frameworks: ALL,
+		height: 900,
+		uses: [
+			"ToggleGroup",
+			"Card",
+			"Tabs",
+			"Button",
+			"Badge",
+			"Switch",
+			"Checkbox",
+			"Input",
+			"Label",
+		],
+	},
 ];
