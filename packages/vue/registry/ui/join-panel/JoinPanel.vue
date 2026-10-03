@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
-import type { JoinPanelRow } from '.'
-import { computed, useId } from 'vue'
+import type { JoinPanelQuickAmount, JoinPanelRow, JoinPanelTab } from '.'
+import { computed, ref, useId } from 'vue'
 import { cn } from '@/registry/edmi/lib/utils'
 import { Button } from '@/registry/edmi/ui/button'
 import { Card } from '@/registry/edmi/ui/card'
@@ -12,6 +12,7 @@ import {
   InputGroupInput,
   InputGroupText,
 } from '@/registry/edmi/ui/input-group'
+import { Tabs, TabsList, TabsTrigger } from '@/registry/edmi/ui/tabs'
 
 const props = withDefaults(defineProps<{
   /** ✦ one-step 3D look, forwarded to the card */
@@ -21,12 +22,24 @@ const props = withDefaults(defineProps<{
   defaultAmount?: string
   /** Summary rows (estimated shares, fee, …). Values render mono. */
   rows?: JoinPanelRow[]
+  /** ✦ Join / Redeem style mode tabs above the amount (the IndexDetail board). */
+  tabs?: JoinPanelTab[]
+  defaultTab?: string
+  /** ✦ Chips under the amount field, e.g. `[{ label: '$10', value: '10' }, { label: 'Max' }]`. */
+  quickAmounts?: JoinPanelQuickAmount[]
+  /** ✦ Small centred note under the action. */
+  footnote?: string
+  /** ✦ `lg`: taller field with a 26px mono amount (the IndexDetail board). */
+  amountSize?: 'default' | 'lg'
+  /** ✦ Plain muted text in the field (e.g. `Max 1,240`) instead of the Max button and currency. */
+  maxLabel?: string
   joinLabel?: string
   disabled?: boolean
   class?: HTMLAttributes['class']
 }>(), {
   label: 'Amount',
   currency: 'USDC',
+  amountSize: 'default',
   defaultAmount: '',
   rows: () => [],
   joinLabel: 'Join',
@@ -37,6 +50,17 @@ const emit = defineEmits<{
   (e: 'join'): void
 }>()
 
+// ✦ `v-model:tab` = controlled; without it the panel keeps its own tab.
+const tab = defineModel<string>('tab')
+const innerTab = ref(props.defaultTab ?? props.tabs?.[0]?.value ?? '')
+const tabValue = computed({
+  get: () => tab.value ?? innerTab.value,
+  set: (v: string) => {
+    innerTab.value = v
+    tab.value = v
+  },
+})
+
 // `v-model:amount` = controlled; without it the panel keeps its own value.
 const amount = defineModel<string>('amount')
 const value = computed(() => amount.value ?? props.defaultAmount)
@@ -46,28 +70,56 @@ const id = useId()
 <template>
   <!-- Amount field (mono, Max button, currency) + summary rows + one big action. -->
   <Card :raised="raised" data-slot="join-panel" size="sm" :class="cn('w-80 gap-0', props.class)">
+    <div v-if="tabs?.length" class="mb-5 px-(--card-spacing)">
+      <Tabs v-model="tabValue">
+        <TabsList :raised="raised" class="w-full">
+          <TabsTrigger v-for="t in tabs" :key="t.value" :value="t.value">
+            {{ t.label }}
+          </TabsTrigger>
+        </TabsList>
+      </Tabs>
+    </div>
     <label :for="id" class="px-(--card-spacing) text-xs text-muted-foreground">
       {{ label }} ({{ currency }})
     </label>
     <div class="px-(--card-spacing)">
-      <InputGroup class="mt-2 h-11">
+      <InputGroup :class="cn('mt-2', amountSize === 'lg' ? 'h-14' : 'h-11')">
         <InputGroupInput
           :id="id"
           inputmode="decimal"
           autocomplete="off"
           :model-value="value"
-          class="font-mono text-[17px]"
+          :class="cn('font-mono', amountSize === 'lg' ? 'text-[26px]' : 'text-[17px]')"
           @update:model-value="(v: string | number) => (amount = String(v))"
         />
         <InputGroupAddon align="inline-end">
-          <InputGroupButton variant="secondary" @click="emit('max')">
-            Max
-          </InputGroupButton>
-          <InputGroupText class="bg-transparent px-1.5 text-xs">
-            {{ currency }}
+          <InputGroupText v-if="maxLabel" class="bg-transparent text-xs">
+            {{ maxLabel }}
           </InputGroupText>
+          <template v-else>
+            <InputGroupButton variant="secondary" @click="emit('max')">
+              Max
+            </InputGroupButton>
+            <InputGroupText class="bg-transparent px-1.5 text-xs">
+              {{ currency }}
+            </InputGroupText>
+          </template>
         </InputGroupAddon>
       </InputGroup>
+    </div>
+    <div v-if="quickAmounts?.length" class="mt-3 flex gap-2 px-(--card-spacing)">
+      <Button
+        v-for="(q, i) in quickAmounts"
+        :key="i"
+        type="button"
+        variant="secondary"
+        size="sm"
+        :raised="raised"
+        class="flex-1 font-mono"
+        @click="q.value !== undefined ? (amount = q.value) : emit('max')"
+      >
+        {{ q.label }}
+      </Button>
     </div>
     <div
       v-for="(r, i) in rows"
@@ -81,6 +133,9 @@ const id = useId()
       <Button size="lg" class="w-full" :raised="raised" :disabled="disabled" @click="emit('join')">
         {{ joinLabel }}
       </Button>
+    </div>
+    <div v-if="footnote" class="mt-3 px-(--card-spacing) text-center text-xs text-muted-foreground-2">
+      {{ footnote }}
     </div>
   </Card>
 </template>

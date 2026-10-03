@@ -9,8 +9,13 @@ import {
 	InputGroupInput,
 	InputGroupText,
 } from "@/registry/edmi/ui/input-group";
+import { Tabs, TabsList, TabsTrigger } from "@/registry/edmi/ui/tabs";
 
 type JoinPanelRow = { label: React.ReactNode; value: React.ReactNode };
+/** ✦ Quick-amount chip: sets the amount to `value`; without `value` it calls `onMax`. */
+type JoinPanelQuickAmount = { label: React.ReactNode; value?: string };
+/** ✦ Mode tab, e.g. Join / Redeem. */
+type JoinPanelTab = { value: string; label: React.ReactNode };
 
 // Amount field (mono, Max button, currency) + summary rows + one big action.
 function JoinPanel({
@@ -22,6 +27,14 @@ function JoinPanel({
 	onAmountChange,
 	onMax,
 	rows = [],
+	tabs,
+	tab,
+	defaultTab,
+	onTabChange,
+	quickAmounts,
+	footnote,
+	amountSize = "default",
+	maxLabel,
 	joinLabel = "Join",
 	onJoin,
 	disabled,
@@ -37,6 +50,20 @@ function JoinPanel({
 	onMax?: () => void;
 	/** Summary rows (estimated shares, fee, …). Values render mono. */
 	rows?: JoinPanelRow[];
+	/** ✦ Join / Redeem style mode tabs above the amount (the IndexDetail board). */
+	tabs?: JoinPanelTab[];
+	/** ✦ Controlled tab value. */
+	tab?: string;
+	defaultTab?: string;
+	onTabChange?: (value: string) => void;
+	/** ✦ Chips under the amount field, e.g. `[{ label: "$10", value: "10" }, { label: "Max" }]`. */
+	quickAmounts?: JoinPanelQuickAmount[];
+	/** ✦ Small centred note under the action, e.g. `Self-custodied · Redeem anytime`. */
+	footnote?: React.ReactNode;
+	/** ✦ `lg`: taller field with a 26px mono amount (the IndexDetail board). */
+	amountSize?: "default" | "lg";
+	/** ✦ Plain muted text in the field (e.g. `Max 1,240`) instead of the Max button and currency. */
+	maxLabel?: React.ReactNode;
 	joinLabel?: React.ReactNode;
 	onJoin?: () => void;
 	disabled?: boolean;
@@ -46,6 +73,13 @@ function JoinPanel({
 	const id = React.useId();
 	const [inner, setInner] = React.useState(defaultAmount);
 	const value = amount ?? inner;
+	const [innerTab, setInnerTab] = React.useState(
+		defaultTab ?? tabs?.[0]?.value ?? "",
+	);
+	const setAmount = (v: string) => {
+		setInner(v);
+		onAmountChange?.(v);
+	};
 	return (
 		<Card
 			data-slot="join-panel"
@@ -54,6 +88,25 @@ function JoinPanel({
 			className={cn("w-80 gap-0", className)}
 			{...props}
 		>
+			{tabs?.length ? (
+				<div className="mb-5 px-(--card-spacing)">
+					<Tabs
+						value={tab ?? innerTab}
+						onValueChange={(v) => {
+							setInnerTab(v as string);
+							onTabChange?.(v as string);
+						}}
+					>
+						<TabsList raised={raised} className="w-full">
+							{tabs.map((t) => (
+								<TabsTrigger key={t.value} value={t.value}>
+									{t.label}
+								</TabsTrigger>
+							))}
+						</TabsList>
+					</Tabs>
+				</div>
+			) : null}
 			<label
 				htmlFor={id}
 				className="px-(--card-spacing) text-xs text-muted-foreground"
@@ -61,28 +114,58 @@ function JoinPanel({
 				{label} ({currency})
 			</label>
 			<div className="px-(--card-spacing)">
-				<InputGroup className="mt-2 h-11">
+				<InputGroup
+					className={cn("mt-2", amountSize === "lg" ? "h-14" : "h-11")}
+				>
 					<InputGroupInput
 						id={id}
 						inputMode="decimal"
 						autoComplete="off"
 						value={value}
-						onChange={(e) => {
-							setInner(e.target.value);
-							onAmountChange?.(e.target.value);
-						}}
-						className="font-mono text-[17px]"
+						onChange={(e) => setAmount(e.target.value)}
+						className={cn(
+							"font-mono",
+							amountSize === "lg" ? "text-[26px]" : "text-[17px]",
+						)}
 					/>
 					<InputGroupAddon align="inline-end">
-						<InputGroupButton variant="secondary" onClick={onMax}>
-							Max
-						</InputGroupButton>
-						<InputGroupText className="bg-transparent px-1.5 text-xs">
-							{currency}
-						</InputGroupText>
+						{maxLabel ? (
+							<InputGroupText className="bg-transparent text-xs">
+								{maxLabel}
+							</InputGroupText>
+						) : (
+							<>
+								<InputGroupButton variant="secondary" onClick={onMax}>
+									Max
+								</InputGroupButton>
+								<InputGroupText className="bg-transparent px-1.5 text-xs">
+									{currency}
+								</InputGroupText>
+							</>
+						)}
 					</InputGroupAddon>
 				</InputGroup>
 			</div>
+			{quickAmounts?.length ? (
+				<div className="mt-3 flex gap-2 px-(--card-spacing)">
+					{quickAmounts.map((q, i) => (
+						<Button
+							// biome-ignore lint/suspicious/noArrayIndexKey: static chips
+							key={i}
+							type="button"
+							variant="secondary"
+							size="sm"
+							raised={raised}
+							className="flex-1 font-mono"
+							onClick={() =>
+								q.value !== undefined ? setAmount(q.value) : onMax?.()
+							}
+						>
+							{q.label}
+						</Button>
+					))}
+				</div>
+			) : null}
 			{rows.map((r, i) => (
 				<div
 					// biome-ignore lint/suspicious/noArrayIndexKey: static summary rows
@@ -107,9 +190,14 @@ function JoinPanel({
 					{joinLabel}
 				</Button>
 			</div>
+			{footnote ? (
+				<div className="mt-3 px-(--card-spacing) text-center text-xs text-muted-foreground-2">
+					{footnote}
+				</div>
+			) : null}
 		</Card>
 	);
 }
 
-export type { JoinPanelRow };
+export type { JoinPanelQuickAmount, JoinPanelRow, JoinPanelTab };
 export { JoinPanel };

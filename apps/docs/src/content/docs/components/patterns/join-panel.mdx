@@ -39,6 +39,17 @@ Flat by default. Pass `raised` for the one-step 3D look.
 | `joinLabel` | `ReactNode` | `"Join"` |
 | `disabled` | `boolean` | `false` |
 | `raised` | `boolean` | `false` |
+| `tabs` ✦, `tab` / `defaultTab`, `onTabChange` | `{ value, label }[]` mode tabs (Join / Redeem) | none |
+| `quickAmounts` ✦ | `{ label, value? }[]` chips; no `value` calls `onMax` | none |
+| `footnote` ✦ | `ReactNode` small centred note under the action | none |
+| `amountSize` ✦ | `"default" \| "lg"` | `"default"` |
+| `maxLabel` ✦ | plain `Max 1,240` text instead of the Max button | none |
+
+## Tabs, chips and footnote ✦
+
+The IndexDetail board panel: Join / Redeem tabs, quick-amount chips, a large amount field and a footnote. Vue uses `v-model:tab`, Svelte `bind:tab`.
+
+<ComponentDemo name="join-panel" demo="join-panel-tabs" />
 
 ## ✦ Edmi additions
 - Estimates are the caller's job: compute `rows` from `amount`.

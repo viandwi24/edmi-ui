@@ -25,12 +25,6 @@ import {
 	componentToString,
 } from "@edmi-vue/ui/chart";
 import {
-	InputGroup,
-	InputGroupAddon,
-	InputGroupInput,
-	InputGroupText,
-} from "@edmi-vue/ui/input-group";
-import {
 	Table,
 	TableBody,
 	TableCell,
@@ -38,6 +32,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@edmi-vue/ui/table";
+import { JoinPanel } from "@edmi-vue/ui/join-panel";
 import { Tabs, TabsList, TabsTrigger } from "@edmi-vue/ui/tabs";
 import {
 	allocation,
@@ -217,34 +212,20 @@ const template = componentToString(config, ChartTooltipContent, {
 			</div>
 
 			<div class="flex flex-col gap-4">
-				<Card raised class="gap-4 px-5">
-					<Tabs :model-value="side" @update:model-value="(v) => (side = String(v))">
-						<TabsList class="w-full">
-							<TabsTrigger v-for="t in joinTabs" :key="t.value" :value="t.value" class="flex-1">{{ t.label }}</TabsTrigger>
-						</TabsList>
-					</Tabs>
-					<div>
-						<label for="join-amount" class="text-xs text-muted-foreground">Amount (USDC)</label>
-						<InputGroup class="mt-2 h-14">
-							<InputGroupInput id="join-amount" v-model="amount" inputmode="decimal" autocomplete="off" class="font-mono text-[26px]" />
-							<InputGroupAddon align="inline-end">
-								<InputGroupText class="bg-transparent text-xs">Max {{ maxAmount }}</InputGroupText>
-							</InputGroupAddon>
-						</InputGroup>
-					</div>
-					<div class="grid grid-cols-4 gap-2">
-						<Button v-for="q in quickAmounts" :key="q" variant="outline" raised size="sm" @click="amount = q">${{ q }}</Button>
-						<Button variant="outline" raised size="sm" @click="amount = maxAmount.replace(',', '')">Max</Button>
-					</div>
-					<div class="flex flex-col gap-2.5 text-[13px]">
-						<div v-for="r in joinRows" :key="r.label" class="flex items-center justify-between">
-							<span class="text-muted-foreground">{{ r.label }}</span>
-							<span class="font-mono">{{ r.value }}</span>
-						</div>
-					</div>
-					<Button raised size="lg" class="w-full">{{ side === "join" ? "Join" : "Redeem" }} with {{ amount || 0 }} USDC</Button>
-					<p class="text-center text-xs text-muted-foreground">Self-custodied · Redeem anytime</p>
-				</Card>
+				<JoinPanel
+					raised
+					class="w-full"
+					:tabs="joinTabs"
+					v-model:tab="side"
+					v-model:amount="amount"
+					amount-size="lg"
+					:max-label="`Max ${maxAmount}`"
+					:quick-amounts="quickAmounts"
+					:rows="joinRows"
+					:join-label="`${side === 'join' ? 'Join' : 'Redeem'} with ${amount || 0} USDC`"
+					footnote="Self-custodied · Redeem anytime"
+				\************
+				/>
 
 				<Card raised class="gap-3 px-5">
 					<h2 class="text-sm font-semibold">Share</h2>

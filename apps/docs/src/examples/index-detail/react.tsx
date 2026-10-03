@@ -1,5 +1,6 @@
 import { AllocationBar } from "@edmi-react/blocks/allocation-bar/allocation-bar";
 import { AppHeader } from "@edmi-react/blocks/app-header/app-header";
+import { JoinPanel } from "@edmi-react/blocks/join-panel/join-panel";
 import { Avatar, AvatarFallback } from "@edmi-react/ui/avatar";
 import { Badge } from "@edmi-react/ui/badge";
 import {
@@ -18,12 +19,6 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@edmi-react/ui/chart";
-import {
-	InputGroup,
-	InputGroupAddon,
-	InputGroupInput,
-	InputGroupText,
-} from "@edmi-react/ui/input-group";
 import {
 	Table,
 	TableBody,
@@ -281,78 +276,22 @@ export default function IndexDetailExample() {
 				</div>
 
 				<div className="flex flex-col gap-4">
-					<Card raised className="gap-4 px-5">
-						<Tabs value={side} onValueChange={(v) => setSide(v as string)}>
-							<TabsList className="w-full">
-								{joinTabs.map((t) => (
-									<TabsTrigger key={t.value} value={t.value} className="flex-1">
-										{t.label}
-									</TabsTrigger>
-								))}
-							</TabsList>
-						</Tabs>
-						<div>
-							<label
-								htmlFor="join-amount"
-								className="text-xs text-muted-foreground"
-							>
-								Amount (USDC)
-							</label>
-							<InputGroup className="mt-2 h-14">
-								<InputGroupInput
-									id="join-amount"
-									inputMode="decimal"
-									autoComplete="off"
-									value={amount}
-									onChange={(e) => setAmount(e.target.value)}
-									className="font-mono text-[26px]"
-								/>
-								<InputGroupAddon align="inline-end">
-									<InputGroupText className="bg-transparent text-xs">
-										Max {maxAmount}
-									</InputGroupText>
-								</InputGroupAddon>
-							</InputGroup>
-						</div>
-						<div className="grid grid-cols-4 gap-2">
-							{quickAmounts.map((q) => (
-								<Button
-									key={q}
-									variant="outline"
-									raised
-									size="sm"
-									onClick={() => setAmount(q)}
-								>
-									${q}
-								</Button>
-							))}
-							<Button
-								variant="outline"
-								raised
-								size="sm"
-								onClick={() => setAmount(maxAmount.replace(",", ""))}
-							>
-								Max
-							</Button>
-						</div>
-						<div className="flex flex-col gap-2.5 text-[13px]">
-							{joinRows.map((r) => (
-								<div
-									key={r.label}
-									className="flex items-center justify-between"
-								>
-									<span className="text-muted-foreground">{r.label}</span>
-									<span className="font-mono">{r.value}</span>
-								</div>
-							))}
-						</div>
-						<Button raised size="lg" className="w-full">
-							{side === "join" ? "Join" : "Redeem"} with {amount || 0} USDC
-						</Button>
-						<p className="text-center text-xs text-muted-foreground">
-							Self-custodied · Redeem anytime
-						</p>
-					</Card>
+					<JoinPanel
+						raised
+						className="w-full"
+						tabs={joinTabs}
+						tab={side}
+						onTabChange={setSide}
+						amount={amount}
+						onAmountChange={setAmount}
+						onMax={() => setAmount(maxAmount.replace(",", ""))}
+						amountSize="lg"
+						maxLabel={`Max ${maxAmount}`}
+						quickAmounts={quickAmounts}
+						rows={joinRows}
+						joinLabel={`${side === "join" ? "Join" : "Redeem"} with ${amount || 0} USDC`}
+						footnote="Self-custodied · Redeem anytime"
+					/>
 
 					<Card raised className="gap-3 px-5">
 						<h2 className="text-sm font-semibold">Share</h2>

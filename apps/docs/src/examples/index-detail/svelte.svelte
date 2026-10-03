@@ -8,12 +8,7 @@
 	import { Button } from "@edmi-svelte/ui/button";
 	import { Card } from "@edmi-svelte/ui/card";
 	import * as Chart from "@edmi-svelte/ui/chart";
-	import {
-		InputGroup,
-		InputGroupAddon,
-		InputGroupInput,
-		InputGroupText,
-	} from "@edmi-svelte/ui/input-group";
+	import { JoinPanel } from "@edmi-svelte/ui/join-panel";
 	import * as Table from "@edmi-svelte/ui/table";
 	import * as Tabs from "@edmi-svelte/ui/tabs";
 	import IconPlaceholder from "$lib/components/icon-placeholder/icon-placeholder.svelte";
@@ -202,40 +197,20 @@
 		</div>
 
 		<div class="flex flex-col gap-4">
-			<Card raised class="gap-4 px-5">
-				<Tabs.Root bind:value={side}>
-					<Tabs.List class="w-full">
-						{#each joinTabs as t (t.value)}
-							<Tabs.Trigger value={t.value} class="flex-1">{t.label}</Tabs.Trigger>
-						{/each}
-					</Tabs.List>
-				</Tabs.Root>
-				<div>
-					<label for="join-amount" class="text-xs text-muted-foreground">Amount (USDC)</label>
-					<InputGroup class="mt-2 h-14">
-						<InputGroupInput id="join-amount" bind:value={amount} inputmode="decimal" autocomplete="off" class="font-mono text-[26px]" />
-						<InputGroupAddon align="inline-end">
-							<InputGroupText class="bg-transparent text-xs">Max {maxAmount}</InputGroupText>
-						</InputGroupAddon>
-					</InputGroup>
-				</div>
-				<div class="grid grid-cols-4 gap-2">
-					{#each quickAmounts as q (q)}
-						<Button variant="outline" raised size="sm" onclick={() => (amount = q)}>${q}</Button>
-					{/each}
-					<Button variant="outline" raised size="sm" onclick={() => (amount = maxAmount.replace(",", ""))}>Max</Button>
-				</div>
-				<div class="flex flex-col gap-2.5 text-[13px]">
-					{#each joinRows as r (r.label)}
-						<div class="flex items-center justify-between">
-							<span class="text-muted-foreground">{r.label}</span>
-							<span class="font-mono">{r.value}</span>
-						</div>
-					{/each}
-				</div>
-				<Button raised size="lg" class="w-full">{side === "join" ? "Join" : "Redeem"} with {amount || 0} USDC</Button>
-				<p class="text-center text-xs text-muted-foreground">Self-custodied · Redeem anytime</p>
-			</Card>
+			<JoinPanel
+				raised
+				class="w-full"
+				tabs={joinTabs}
+				bind:tab={side}
+				bind:amount
+				onMax={() => (amount = maxAmount.replace(",", ""))}
+				amountSize="lg"
+				maxLabel="Max {maxAmount}"
+				{quickAmounts}
+				rows={joinRows}
+				joinLabel="{side === 'join' ? 'Join' : 'Redeem'} with {amount || 0} USDC"
+				footnote="Self-custodied · Redeem anytime"
+			/>
 
 			<Card raised class="gap-3 px-5">
 				<h2 class="text-sm font-semibold">Share</h2>

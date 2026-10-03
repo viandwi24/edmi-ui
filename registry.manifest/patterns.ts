@@ -120,7 +120,7 @@ export const items: Item[] = [
 			"Amount input with Max and currency, summary rows and a primary join action.",
 		type: "registry:block",
 		categories: ["Patterns"],
-		registryDependencies: ["card", "button", "input-group"],
+		registryDependencies: ["card", "button", "input-group", "tabs"],
 		docs: "Edmi pattern block: `shadcn add @edmi-ui/join-panel`.",
 		frameworks: {
 			react: {

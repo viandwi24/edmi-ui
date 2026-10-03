@@ -111,7 +111,12 @@ export const joinTabs = [
 	{ value: "redeem", label: "Redeem" },
 ];
 
-export const quickAmounts = ["10", "50", "100"];
+export const quickAmounts = [
+	{ label: "$10", value: "10" },
+	{ label: "$50", value: "50" },
+	{ label: "$100", value: "100" },
+	{ label: "Max", value: "1240" },
+];
 
 export const joinRows = [
 	{ label: "Estimated shares", value: "99.86" },
