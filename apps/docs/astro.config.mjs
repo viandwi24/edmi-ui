@@ -52,6 +52,9 @@ const repoRoot = resolve(here, "../..");
 
 genIslands(here);
 
+// Examples list (src/examples/index.ts) drives the sidebar group below.
+const { EXAMPLES } = await import("./src/examples/index.ts");
+
 const groups = [
 	["actions", "Actions"],
 	["forms-text", "Forms · Text"],
@@ -153,6 +156,17 @@ export default defineConfig({
 						items: [{ autogenerate: { directory: `components/${dir}` } }],
 					})),
 				},
+				{
+					label: "Examples",
+					collapsed: true,
+					items: [
+						{ label: "Overview", link: "/examples/" },
+						...EXAMPLES.map((e) => ({
+							label: e.title,
+							link: `/examples/${e.slug}/`,
+						})),
+					],
+				},
 				{ label: "Theming", slug: "theming" },
 				{ label: "Themes", slug: "themes" },
 				{ label: "Rules", slug: "rules" },
@@ -168,6 +182,7 @@ export default defineConfig({
 				"**/src/components/landing/**",
 				"**/src/components/thumbs/**",
 				"**/src/components/islands/react/**",
+				"**/src/examples/**/*.tsx",
 			],
 		}),
 		vue(),

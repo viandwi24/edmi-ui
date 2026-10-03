@@ -18,6 +18,7 @@
 @source "../../../../packages/svelte/registry";
 @source "../../../../packages/svelte/src/lib";
 @source "../demos";
+@source "../examples";
 /* AI pack: Streamdown (ai-message) ships Tailwind classes in its dist. */
 @source "../../node_modules/streamdown/dist/*.js";
 
@@ -843,4 +844,33 @@ html[data-pm="bun"] .edmi-pm-tabs [data-pm-set="bun"] {
 	display: block;
 	max-width: 100%;
 	overflow-x: auto;
+}
+
+/* Examples pages: segmented track (same look as ComponentDemo's `.edmi-seg`, whose styles load only with demos) */
+.edmi-ex .edmi-seg,
+.edmi-exi .edmi-seg {
+	display: inline-flex;
+	gap: 2px;
+	padding: 2px;
+	border-radius: 9px;
+	background: var(--muted);
+	border: 1px solid var(--border);
+}
+.edmi-ex .edmi-seg button,
+.edmi-exi .edmi-seg button {
+	font: 500 12.5px / 1 var(--sl-font);
+	border-radius: 6px;
+	cursor: pointer;
+	border: 1px solid transparent;
+	background: transparent;
+	color: var(--muted-foreground);
+}
+.edmi-ex .edmi-seg button:hover,
+.edmi-exi .edmi-seg button:hover {
+	color: var(--foreground);
+}
+.edmi-ex .edmi-seg button[aria-selected="true"] {
+	background: var(--tab-active);
+	border-color: var(--border);
+	color: var(--foreground);
 }

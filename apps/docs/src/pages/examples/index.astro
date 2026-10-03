@@ -1,0 +1,78 @@
+---
+// Examples index: card grid (screenshot thumbnail, title, tag) with a tag filter.
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import { BASE } from "../../config";
+import { EXAMPLE_TAGS, EXAMPLES } from "../../examples";
+
+const tags = EXAMPLE_TAGS.filter((t) => EXAMPLES.some((e) => e.tag === t));
+---
+
+<StarlightPage
+	frontmatter={{
+		title: "Examples",
+		description:
+			"Real pages built only from Edmi registry items, live in React, Vue and Svelte. Switch mode, base, theme and radius, resize the frame, read the code.",
+		tableOfContents: false,
+	}}
+>
+	<div class="edmi-exi not-content" data-examples>
+		<div class="edmi-seg" role="group" aria-label="Filter by tag">
+			<button type="button" data-tag="all" aria-pressed="true">All</button>
+			{tags.map((t) => <button type="button" data-tag={t} aria-pressed="false">{t}</button>)}
+		</div>
+		<ul class="edmi-exi-grid">
+			{
+				EXAMPLES.map((e) => (
+					<li data-card data-tag={e.tag}>
+						<a href={`${BASE}/examples/${e.slug}/`} class="edmi-exi-card">
+							<div class="edmi-exi-thumb">
+								<img class="edmi-exi-light" src={`${BASE}/examples/${e.thumb}-light.png`} alt={`${e.title}, light`} loading="lazy" />
+								<img class="edmi-exi-dark" src={`${BASE}/examples/${e.thumb}-dark.png`} alt={`${e.title}, dark`} loading="lazy" />
+							</div>
+							<div class="edmi-exi-body">
+								<div class="edmi-exi-title">
+									<span>{e.title}</span>
+									<span class="edmi-exi-tag">{e.tag}</span>
+								</div>
+								<p>{e.description}</p>
+							</div>
+						</a>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+</StarlightPage>
+
+<style is:global>
+	html:has(.edmi-exi) { --sl-content-width: 80rem; }
+	.edmi-exi { margin-top: 1rem; }
+	.edmi-exi .edmi-seg button { padding: .32rem .7rem; }
+	.edmi-exi .edmi-seg button[aria-pressed="true"] { background: var(--tab-active); border-color: var(--border); color: var(--foreground); }
+	.edmi-exi-grid { list-style: none; margin: 1.25rem 0 0; padding: 0; display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr)); }
+	.edmi-exi-grid li { margin: 0; }
+	.edmi-exi-grid li[hidden] { display: none; }
+	.edmi-exi-card { display: flex; flex-direction: column; height: 100%; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: var(--card); text-decoration: none; color: inherit; }
+	.edmi-exi-card:hover { border-color: var(--muted-foreground); }
+	.edmi-exi-thumb { aspect-ratio: 4 / 3; overflow: hidden; background: var(--stage); border-bottom: 1px solid var(--border); }
+	.edmi-exi-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+	.edmi-exi-dark { display: none !important; }
+	:root.dark .edmi-exi-dark { display: block !important; }
+	:root.dark .edmi-exi-light { display: none !important; }
+	.edmi-exi-body { padding: .875rem 1rem 1rem; }
+	.edmi-exi-title { display: flex; align-items: center; justify-content: space-between; gap: .5rem; font-weight: 500; font-size: 1rem; color: var(--foreground); }
+	.edmi-exi-tag { font: 500 10.5px/1 var(--sl-font-mono); letter-spacing: .05em; text-transform: uppercase; padding: .25rem .45rem; border-radius: 999px; border: 1px solid var(--border); color: var(--muted-foreground); }
+	.edmi-exi-body p { margin: .4rem 0 0; font-size: .8125rem; line-height: 1.5; color: var(--muted-foreground); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+</style>
+
+<script>
+	for (const root of document.querySelectorAll<HTMLElement>("[data-examples]")) {
+		const buttons = [...root.querySelectorAll<HTMLElement>("[data-tag]")].filter((b) => b.tagName === "BUTTON");
+		for (const b of buttons)
+			b.addEventListener("click", () => {
+				for (const o of buttons) o.setAttribute("aria-pressed", String(o === b));
+				for (const c of root.querySelectorAll<HTMLElement>("[data-card]"))
+					c.hidden = b.dataset.tag !== "all" && c.dataset.tag !== b.dataset.tag;
+			});
+	}
+</script>

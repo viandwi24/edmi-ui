@@ -73,7 +73,8 @@ export function edmiResolve(repoRoot) {
 			// Registry sources, and Svelte demos that import `$lib/...` paths of the installed layout.
 			const fwMatch =
 				imp.match(/\/packages\/(react|vue|svelte)\//) ||
-				imp.match(/\/apps\/docs\/src\/demos\/(svelte)\//);
+				imp.match(/\/apps\/docs\/src\/demos\/(svelte)\//) ||
+				imp.match(/\/apps\/docs\/src\/examples\/.+\.(svelte)$/);
 			if (!fwMatch) return null;
 			const root = pkg(fwMatch[1]);
 			const reg = (r) => [

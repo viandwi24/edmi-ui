@@ -1,0 +1,344 @@
+---
+// Example page body: toolbar (mode / base / theme / radius / framework / viewport), a resizable iframe that
+// loads the bare render route, and a Code tab (Shiki via Starlight <Code>) with the example's sources.
+import { Code } from "@astrojs/starlight/components";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import {
+	BASE,
+	CODE_LANG,
+	FRAMEWORK_LABEL,
+	FRAMEWORKS,
+	type Framework,
+} from "../config";
+import { EXAMPLE_FILE, type ExampleMeta } from "../examples";
+import { rewriteImports } from "../lib/demo";
+
+interface Props {
+	example: ExampleMeta;
+}
+const { example } = Astro.props;
+
+const BASES = ["stone", "slate"];
+const THEMES = ["green", "ocean"];
+const RADII = ["0", "0.3", "0.5", "0.625", "0.75", "1"];
+
+// Sources per framework: main file, then helper files in `<fw>/`, then the shared data.ts.
+const dir = resolve(process.cwd(), "src/examples", example.slug);
+type SourceFile = { name: string; code: string };
+const sources = {} as Record<Framework, SourceFile[]>;
+for (const fw of example.frameworks) {
+	const files: string[] = [EXAMPLE_FILE[fw]];
+	const sub = resolve(dir, fw);
+	if (existsSync(sub)) {
+		for (const f of readdirSync(sub).sort()) files.push(`${fw}/${f}`);
+	}
+	files.push("data.ts");
+	sources[fw] = files
+		.filter((f) => existsSync(resolve(dir, f)))
+		.map((f) => ({
+			name: f,
+			code: rewriteImports(fw, readFileSync(resolve(dir, f), "utf8")),
+		}));
+}
+const frame = example.height ?? 760;
+const renderBase = `${BASE}/examples/${example.slug}/render`;
+---
+
+<div
+	class="edmi-ex not-content"
+	data-example
+	data-render-base={renderBase}
+	data-frameworks={example.frameworks.join(" ")}
+	style={`--ex-h:${frame}px`}
+>
+	<div class="edmi-ex-card">
+		<div class="edmi-ex-bar">
+			<div class="edmi-seg" role="tablist" aria-label="View">
+				<button type="button" role="tab" data-view-tab="preview">Preview</button>
+				<button type="button" role="tab" data-view-tab="code">Code</button>
+			</div>
+			<div class="edmi-ex-knobs" data-preview-only>
+				<div class="edmi-seg edmi-seg-sm" role="group" aria-label="Mode">
+					<button type="button" data-knob="mode" data-value="light">Light</button>
+					<button type="button" data-knob="mode" data-value="dark">Dark</button>
+				</div>
+				<label class="edmi-ex-select">
+					<span>Base</span>
+					<select data-knob-select="base" aria-label="Base color">
+						{BASES.map((b) => <option value={b}>{b}</option>)}
+					</select>
+				</label>
+				<label class="edmi-ex-select">
+					<span>Theme</span>
+					<select data-knob-select="theme" aria-label="Theme">
+						{THEMES.map((t) => <option value={t}>{t}</option>)}
+					</select>
+				</label>
+				<label class="edmi-ex-select">
+					<span>Radius</span>
+					<select data-knob-select="radius" aria-label="Radius">
+						{RADII.map((r) => <option value={r} selected={r === "0.625"}>{r}</option>)}
+					</select>
+				</label>
+			</div>
+			<div class="edmi-ex-end">
+				<label class="edmi-ex-select" title="Framework (shared across the site)">
+					<span class="sr-only">Framework</span>
+					<select data-framework-select aria-label="Framework">
+						{FRAMEWORKS.filter((f) => example.frameworks.includes(f)).map((fw) => (
+							<option value={fw}>{FRAMEWORK_LABEL[fw]}</option>
+						))}
+					</select>
+				</label>
+				<div class="edmi-seg edmi-seg-sm" role="group" aria-label="Viewport" data-preview-only>
+					<button type="button" data-viewport="100%" aria-label="Desktop" title="Desktop">
+						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8M12 16v4"></path></svg>
+					</button>
+					<button type="button" data-viewport="820" aria-label="Tablet" title="Tablet (820px)">
+						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M11 18h2"></path></svg>
+					</button>
+					<button type="button" data-viewport="390" aria-label="Mobile" title="Mobile (390px)">
+						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"></rect><path d="M11 18h2"></path></svg>
+					</button>
+				</div>
+				<a class="edmi-ex-open" data-open href="#" target="_blank" rel="noopener" title="Open the bare render route in a new tab" data-preview-only>
+					Open ↗
+				</a>
+			</div>
+		</div>
+
+		<div data-view="preview">
+			<div class="edmi-ex-stage" data-stage>
+				<div class="edmi-ex-frame" data-frame style="width:100%">
+					<iframe data-iframe title={`${example.title} preview`} loading="lazy"></iframe>
+					<div class="edmi-ex-shield" data-shield></div>
+					<div class="edmi-ex-handle" data-handle role="separator" aria-orientation="vertical" aria-label="Resize preview" title="Drag to resize"></div>
+				</div>
+			</div>
+			<div class="edmi-ex-foot">
+				<span data-width-label>Responsive</span>
+				<span>Icons are rewritten to your <code>iconLibrary</code> on install (Edmi default: Phosphor).</span>
+			</div>
+		</div>
+
+		<div data-view="code" hidden>
+			{
+				example.frameworks.map((fw) => (
+					<div data-fw-panel={fw}>
+						<div class="edmi-ex-files" role="tablist" aria-label="Files">
+							{sources[fw].map((f, i) => (
+								<button type="button" role="tab" data-file-tab={`${fw}:${f.name}`} aria-selected={i === 0}>
+									{f.name}
+								</button>
+							))}
+						</div>
+						{sources[fw].map((f, i) => (
+							<div data-file={`${fw}:${f.name}`} hidden={i !== 0}>
+								<Code code={f.code} lang={f.name.endsWith(".ts") ? "ts" : CODE_LANG[fw]} title={f.name} />
+							</div>
+						))}
+					</div>
+				))
+			}
+		</div>
+	</div>
+</div>
+
+<style is:global>
+	/* wide content, no right TOC: the preview needs the room */
+	html:has(.edmi-ex) { --sl-content-width: 90rem; }
+	.edmi-ex { margin: 1rem 0 2rem; }
+	.edmi-ex-card { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: var(--card); }
+	.edmi-ex-bar {
+		display: flex; align-items: center; gap: .5rem .875rem; flex-wrap: wrap;
+		padding: .5rem .625rem; border-bottom: 1px solid var(--border); background: var(--card);
+	}
+	.edmi-ex-knobs { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+	.edmi-ex-end { display: flex; align-items: center; gap: .5rem; margin-left: auto; flex-wrap: wrap; }
+	.edmi-ex .edmi-seg button { padding: .32rem .7rem; display: inline-flex; align-items: center; justify-content: center; }
+	.edmi-ex .edmi-seg-sm button { padding: .32rem .55rem; font-size: 12px; }
+	.edmi-ex .edmi-seg button[aria-pressed="true"] { background: var(--tab-active); border-color: var(--border); color: var(--foreground); }
+
+	.edmi-ex-select { position: relative; display: inline-flex; align-items: center; gap: .375rem; font: 500 11px/1 var(--sl-font-mono); text-transform: uppercase; letter-spacing: .05em; color: var(--muted-foreground); }
+	.edmi-ex-select select {
+		appearance: auto; height: 28px; padding: 0 .4rem; font: 500 12.5px/1 var(--sl-font); text-transform: capitalize;
+		color: var(--foreground); background: var(--secondary); border: 1px solid var(--input); border-radius: 7px; cursor: pointer;
+	}
+	.edmi-ex-select select:hover { background: var(--accent); }
+	.edmi-ex-open {
+		display: inline-flex; align-items: center; height: 28px; padding: 0 .6rem; border-radius: 7px; text-decoration: none;
+		font: 500 12px/1 var(--sl-font); color: var(--muted-foreground); border: 1px solid transparent;
+	}
+	.edmi-ex-open:hover { background: var(--accent); color: var(--foreground); }
+
+	.edmi-ex-stage {
+		padding: 1rem; display: flex; justify-content: center; overflow: hidden; background-color: var(--stage);
+		background-image: radial-gradient(color-mix(in oklab, var(--foreground) 16%, transparent) 1px, transparent 1.2px); background-size: 16px 16px;
+	}
+	.edmi-ex-frame { position: relative; max-width: 100%; min-width: 280px; height: var(--ex-h); border: 1px solid var(--border); border-radius: 10px; background: var(--background); }
+	.edmi-ex-frame iframe { display: block; width: 100%; height: 100%; border: 0; border-radius: 9px; background: var(--background); }
+	.edmi-ex-shield { display: none; position: absolute; inset: 0; z-index: 2; }
+	.edmi-ex[data-dragging] .edmi-ex-shield { display: block; }
+	.edmi-ex[data-dragging] { user-select: none; cursor: ew-resize; }
+	.edmi-ex-handle {
+		position: absolute; top: 50%; right: -14px; width: 8px; height: 56px; margin-top: -28px; border-radius: 4px;
+		background: var(--border); cursor: ew-resize; touch-action: none; z-index: 3;
+	}
+	.edmi-ex-handle:hover, .edmi-ex[data-dragging] .edmi-ex-handle { background: var(--muted-foreground); }
+	.edmi-ex-foot { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding: .5rem .875rem; font-size: .75rem; color: var(--muted-foreground); border-top: 1px solid var(--border); background: var(--card); }
+	.edmi-ex-foot [data-width-label] { font-family: var(--sl-font-mono); }
+	.edmi-ex-foot code { font-size: .7rem; }
+
+	.edmi-ex-files { display: flex; gap: 2px; flex-wrap: wrap; padding: .375rem .5rem; border-bottom: 1px solid var(--border); background: var(--muted); }
+	.edmi-ex-files button {
+		font: 500 12px/1 var(--sl-font-mono); padding: .35rem .6rem; border-radius: 6px; cursor: pointer;
+		border: 1px solid transparent; background: transparent; color: var(--muted-foreground);
+	}
+	.edmi-ex-files button[aria-selected="true"] { background: var(--tab-active); border-color: var(--border); color: var(--foreground); }
+	.edmi-ex-card .expressive-code { margin: 0; }
+	.edmi-ex-card .expressive-code .frame { border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
+	.edmi-ex-card .expressive-code .frame pre { border: 0 !important; border-radius: 0 !important; max-height: 70vh; }
+	.edmi-ex-card .expressive-code .frame .header { border-radius: 0 !important; }
+	.edmi-ex [data-view][hidden] { display: none; }
+	.edmi-ex [data-preview-only][hidden] { display: none; }
+	@media (max-width: 40rem) {
+		.edmi-ex-end { margin-left: 0; }
+		.edmi-ex-handle { display: none; }
+	}
+</style>
+
+<script>
+	type State = { mode: string; base: string; theme: string; radius: string };
+
+	for (const root of document.querySelectorAll<HTMLElement>("[data-example]")) {
+		const q = <T extends HTMLElement>(s: string) => root.querySelector<T>(s)!;
+		const iframe = q<HTMLIFrameElement>("[data-iframe]");
+		const frame = q("[data-frame]");
+		const stage = q("[data-stage]");
+		const label = q("[data-width-label]");
+		const open = q<HTMLAnchorElement>("[data-open]");
+		const supported = (root.dataset.frameworks ?? "react").split(" ");
+		const renderBase = root.dataset.renderBase!;
+
+		const state: State = {
+			mode: document.documentElement.classList.contains("dark") ? "dark" : "light",
+			base: "stone",
+			theme: "green",
+			radius: "0.625",
+		};
+
+		// ---- view tabs (preview | code)
+		const views = [...root.querySelectorAll<HTMLElement>("[data-view-tab]")];
+		const showView = (id: string) => {
+			for (const t of views) t.setAttribute("aria-selected", String(t.dataset.viewTab === id));
+			for (const c of root.querySelectorAll<HTMLElement>("[data-view]")) c.hidden = c.dataset.view !== id;
+			for (const c of root.querySelectorAll<HTMLElement>("[data-preview-only]")) c.hidden = id !== "preview";
+		};
+		for (const t of views) t.addEventListener("click", () => showView(t.dataset.viewTab!));
+		showView("preview");
+
+		// ---- code file tabs
+		for (const tab of root.querySelectorAll<HTMLElement>("[data-file-tab]")) {
+			tab.addEventListener("click", () => {
+				const [fw] = tab.dataset.fileTab!.split(":");
+				for (const t of root.querySelectorAll<HTMLElement>(`[data-file-tab^="${fw}:"]`))
+					t.setAttribute("aria-selected", String(t === tab));
+				for (const f of root.querySelectorAll<HTMLElement>(`[data-file^="${fw}:"]`))
+					f.hidden = f.dataset.file !== tab.dataset.fileTab;
+			});
+		}
+
+		// ---- iframe: framework picks the route, the knobs travel as query + postMessage
+		const fw = () => {
+			const cur = document.documentElement.dataset.fw ?? "react";
+			return supported.includes(cur) ? cur : supported[0];
+		};
+		const query = () => new URLSearchParams({ ...state }).toString();
+		const post = () =>
+			iframe.contentWindow?.postMessage({ type: "edmi-example", state: { ...state } }, "*");
+		let loadedFw = "";
+		const load = () => {
+			const f = fw();
+			open.href = `${renderBase}/${f}/?${query()}`;
+			if (f === loadedFw) return;
+			loadedFw = f;
+			iframe.src = `${renderBase}/${f}/?${query()}`;
+		};
+		iframe.addEventListener("load", post);
+		window.addEventListener("message", (e) => {
+			if (e.source === iframe.contentWindow && e.data?.type === "edmi-example-ready") post();
+		});
+		window.addEventListener("edmi-framework", () => load());
+		new MutationObserver(load).observe(document.documentElement, { attributes: true, attributeFilter: ["data-fw"] });
+
+		// ---- knobs
+		const paintKnobs = () => {
+			for (const b of root.querySelectorAll<HTMLElement>("[data-knob]"))
+				b.setAttribute("aria-pressed", String(state[b.dataset.knob as keyof State] === b.dataset.value));
+			for (const s of root.querySelectorAll<HTMLSelectElement>("[data-knob-select]"))
+				s.value = state[s.dataset.knobSelect as keyof State];
+		};
+		const changed = () => {
+			paintKnobs();
+			post();
+			open.href = `${renderBase}/${fw()}/?${query()}`;
+		};
+		for (const b of root.querySelectorAll<HTMLElement>("[data-knob]"))
+			b.addEventListener("click", () => {
+				state[b.dataset.knob as keyof State] = b.dataset.value!;
+				changed();
+			});
+		for (const s of root.querySelectorAll<HTMLSelectElement>("[data-knob-select]"))
+			s.addEventListener("change", () => {
+				state[s.dataset.knobSelect as keyof State] = s.value;
+				changed();
+			});
+		paintKnobs();
+
+		// ---- viewport presets + drag handle (frame is centered, so the width changes by 2x the pointer delta)
+		const setWidth = (w: string) => {
+			frame.style.width = /^\d+(\.\d+)?$/.test(w) ? `${w}px` : w;
+		};
+		const readout = () => {
+			const px = Math.round(frame.getBoundingClientRect().width);
+			label.textContent = frame.style.width === "100%" ? `Responsive · ${px}px` : `${px}px`;
+		};
+		for (const b of root.querySelectorAll<HTMLElement>("[data-viewport]"))
+			b.addEventListener("click", () => {
+				setWidth(b.dataset.viewport!);
+				for (const o of root.querySelectorAll<HTMLElement>("[data-viewport]"))
+					o.setAttribute("aria-pressed", String(o === b));
+				readout();
+			});
+		root.querySelector("[data-viewport='100%']")?.setAttribute("aria-pressed", "true");
+		const handle = q("[data-handle]");
+		handle.addEventListener("pointerdown", (e) => {
+			e.preventDefault();
+			handle.setPointerCapture(e.pointerId);
+			const startX = e.clientX;
+			const startW = frame.getBoundingClientRect().width;
+			const max = stage.clientWidth - 32;
+			root.dataset.dragging = "";
+			for (const o of root.querySelectorAll<HTMLElement>("[data-viewport]")) o.removeAttribute("aria-pressed");
+			const move = (ev: PointerEvent) => {
+				const w = Math.max(280, Math.min(max, startW + (ev.clientX - startX) * 2));
+				frame.style.width = `${Math.round(w)}px`;
+				readout();
+			};
+			const up = () => {
+				delete root.dataset.dragging;
+				handle.removeEventListener("pointermove", move);
+				handle.removeEventListener("pointerup", up);
+				handle.removeEventListener("pointercancel", up);
+			};
+			handle.addEventListener("pointermove", move);
+			handle.addEventListener("pointerup", up);
+			handle.addEventListener("pointercancel", up);
+		});
+		new ResizeObserver(readout).observe(frame);
+		readout();
+
+		load();
+	}
+</script>

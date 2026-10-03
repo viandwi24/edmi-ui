@@ -1,0 +1,66 @@
+---
+// Bare render route: no Starlight chrome. Loaded in an iframe by the example page so the example gets a
+// real viewport (Sidebar / fixed layouts / media queries) and its own <html> (.dark, data-base, data-theme,
+// --radius). Knobs arrive as query params and, afterwards, as postMessage({ type: "edmi-example", state }).
+import "../../../../styles/example-render.css";
+import { EXAMPLES } from "../../../../examples";
+
+export function getStaticPaths() {
+	return EXAMPLES.flatMap((e) =>
+		e.frameworks.map((fw) => ({ params: { slug: e.slug, fw }, props: { title: e.title } })),
+	);
+}
+const { slug, fw } = Astro.params as { slug: string; fw: string };
+const { title } = Astro.props;
+const loaders = import.meta.glob("../../../../components/islands/examples/*/*.astro");
+const key = `../../../../components/islands/examples/${slug}/${fw}.astro`;
+const Example = ((await loaders[key]()) as { default: any }).default;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="robots" content="noindex" />
+		<title>{title} · {fw}</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Sora:wght@600&display=swap"
+		/>
+		<script is:inline>
+			(function () {
+				var d = document.documentElement;
+				var q = new URLSearchParams(location.search);
+				function apply(s) {
+					if (s.mode) {
+						d.classList.toggle("dark", s.mode === "dark");
+						d.style.colorScheme = s.mode;
+					}
+					if (s.base) d.setAttribute("data-base", s.base);
+					if (s.theme) d.setAttribute("data-theme", s.theme);
+					if (s.radius != null) d.style.setProperty("--radius", s.radius + "rem");
+				}
+				apply({
+					mode: q.get("mode") || "light",
+					base: q.get("base") || "stone",
+					theme: q.get("theme") || "green",
+					radius: q.get("radius") || "0.625",
+				});
+				window.addEventListener("message", function (e) {
+					if (e.data && e.data.type === "edmi-example") apply(e.data.state || {});
+				});
+				// tell the parent we are ready so it can push the current knobs
+				window.addEventListener("DOMContentLoaded", function () {
+					if (window.parent !== window) window.parent.postMessage({ type: "edmi-example-ready" }, "*");
+				});
+			})();
+		</script>
+	</head>
+	<body>
+		<div id="example-root" class="min-h-svh">
+			<Example />
+		</div>
+	</body>
+</html>

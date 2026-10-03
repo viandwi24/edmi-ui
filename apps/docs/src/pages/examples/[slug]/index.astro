@@ -1,0 +1,34 @@
+---
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import ExampleViewer from "../../../components/ExampleViewer.astro";
+import { BASE } from "../../../config";
+import { EXAMPLES } from "../../../examples";
+
+export function getStaticPaths() {
+	return EXAMPLES.map((example) => ({ params: { slug: example.slug }, props: { example } }));
+}
+const { example } = Astro.props;
+---
+
+<StarlightPage
+	frontmatter={{
+		title: example.title,
+		description: example.description,
+		tableOfContents: false,
+		pagefind: false,
+	}}
+>
+	<p class="edmi-ex-meta">
+		<a href={`${BASE}/examples/`}>Examples</a> · {example.tag} · board: {example.board}
+	</p>
+	<ExampleViewer example={example} />
+	<p class="edmi-ex-uses">
+		Built only from registry items: {example.uses.join(", ")}. Switch the framework in the toolbar
+		to see the same example in React, Vue or Svelte.
+	</p>
+</StarlightPage>
+
+<style is:global>
+	.edmi-ex-meta { margin: 0 0 .5rem; font-size: .8125rem; color: var(--muted-foreground); }
+	.edmi-ex-uses { font-size: .8125rem; color: var(--muted-foreground); }
+</style>
