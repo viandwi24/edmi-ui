@@ -123,7 +123,7 @@ const columns = col.columns([
 		header: "24h",
 		cell: ({ getValue }) => (
 			<Badge
-				variant={getValue() >= 0 ? "brand" : "destructive"}
+				variant={getValue() >= 0 ? "success" : "destructive"}
 				className="font-mono"
 			>
 				{getValue() >= 0 ? "+" : "−"}

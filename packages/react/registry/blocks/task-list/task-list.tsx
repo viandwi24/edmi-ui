@@ -16,11 +16,11 @@ type Task = {
 
 const STATUS: Record<
 	TaskStatus,
-	{ label: string; variant: "warning" | "info" | "brand" }
+	{ label: string; variant: "warning" | "info" | "success" }
 > = {
 	review: { label: "Ready to review", variant: "warning" },
 	running: { label: "Running", variant: "info" },
-	completed: { label: "Completed", variant: "brand" },
+	completed: { label: "Completed", variant: "success" },
 };
 
 type TaskListProps = React.ComponentProps<typeof Card> & {

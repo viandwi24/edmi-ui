@@ -96,7 +96,7 @@ function StatTile({
 			{delta ? (
 				<div className="mt-2.5 flex items-center gap-2">
 					<Badge
-						variant={down ? "destructive" : "brand"}
+						variant={down ? "destructive" : "success"}
 						shape="number"
 						className="px-[7px]"
 					>

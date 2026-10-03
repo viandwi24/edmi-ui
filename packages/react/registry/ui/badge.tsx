@@ -18,6 +18,7 @@ const badgeVariants = cva(
 				link: "text-foreground underline underline-offset-[3px] hover:opacity-80",
 				// ✦ Edmi additions: soft fill + tinted border, never solid
 				brand: "border-brand/30 bg-brand-soft text-brand-text",
+				success: "border-success/30 bg-success-soft text-success-text",
 				warning: "border-warning/30 bg-warning-soft text-warning-text",
 				info: "border-info/30 bg-info-soft text-info-text",
 			},

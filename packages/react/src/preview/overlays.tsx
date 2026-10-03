@@ -94,7 +94,7 @@ export default function OverlaysPreview() {
 					<AlertTitle>Transaction failed</AlertTitle>
 					<AlertDescription>Slippage was above 1%.</AlertDescription>
 				</Alert>
-				<Alert variant="brand">
+				<Alert variant="success">
 					<IconPlaceholder
 						lucide="CircleCheckIcon"
 						tabler="IconCircleCheck"

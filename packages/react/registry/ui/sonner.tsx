@@ -26,7 +26,7 @@ const Toaster = ({
 						hugeicons="CheckmarkCircle02Icon"
 						phosphor="CheckCircleIcon"
 						remixicon="RiCheckboxCircleLine"
-						className="size-4 text-brand-text"
+						className="size-4 text-success-text"
 					/>
 				),
 				info: (
@@ -86,7 +86,7 @@ const Toaster = ({
 						: "cn-toast shadow-none! text-[13.5px] font-sans",
 					title: "font-medium",
 					description: "text-muted-foreground!",
-					success: "bg-brand-soft! border-brand/40!",
+					success: "bg-success-soft! border-success/40!",
 					info: "bg-info-soft! border-info/40!",
 					warning: "bg-warning-soft! border-warning/40!",
 					error: "bg-destructive-soft! border-destructive/40!",

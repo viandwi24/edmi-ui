@@ -33,7 +33,7 @@ function TickerCell({ item }: { item: TickerItem }) {
 			<div
 				className={cn(
 					"mt-1 font-mono text-xs",
-					isDown(item.change) ? "text-destructive-text" : "text-brand-text",
+					isDown(item.change) ? "text-destructive-text" : "text-success-text",
 				)}
 			>
 				{item.change}

@@ -29,6 +29,7 @@ const badges = [
 	"ghost",
 	"link",
 	"brand",
+	"success",
 	"warning",
 	"info",
 ] as const;
