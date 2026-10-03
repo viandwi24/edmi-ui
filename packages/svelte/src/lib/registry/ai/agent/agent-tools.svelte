@@ -35,7 +35,6 @@
 	>
 	<Accordion
 		type="single"
-		collapsible
 		bind:value
 		class={cn("border-t border-border-2", className)}
 		{...restProps as object}

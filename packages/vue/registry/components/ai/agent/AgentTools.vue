@@ -1,10 +1,10 @@
 <script setup lang="ts">
 // Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
 import type { AccordionRootEmits, AccordionRootProps } from "reka-ui"
-import type { Comment, HTMLAttributes, VNode } from "vue"
+import type { HTMLAttributes, VNode } from "vue"
 import { reactiveOmit } from "@vueuse/core"
 import { useForwardPropsEmits } from "reka-ui"
-import { Fragment, useSlots } from "vue"
+import { Comment, Fragment, useSlots } from "vue"
 import { cn } from "@/registry/edmi/lib/utils"
 import { Accordion } from "@/registry/edmi/ui/accordion"
 

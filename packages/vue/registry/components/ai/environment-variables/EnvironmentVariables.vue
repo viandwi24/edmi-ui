@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
-import type { HTMLAttributes } from "vue"
+import type { HTMLAttributes, Ref } from "vue"
 import { useVModel } from "@vueuse/core"
 import { provide } from "vue"
 import { cn } from "@/registry/edmi/lib/utils"
@@ -19,10 +19,11 @@ const emit = defineEmits<{
   (e: "update:showValues", show: boolean): void
 }>()
 
+// defaultValue guarantees a boolean at runtime.
 const showValues = useVModel(props, "showValues", emit, {
   passive: true,
   defaultValue: props.defaultShowValues,
-})
+}) as Ref<boolean>
 
 provide(EnvironmentVariablesKey, {
   showValues,

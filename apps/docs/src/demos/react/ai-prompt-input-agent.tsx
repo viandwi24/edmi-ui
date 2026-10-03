@@ -23,7 +23,7 @@ const agents: PromptInputAgentOption[] = [
 	{ id: "analyst", name: "Analyst", scope: "research", color: "chart-2" },
 ];
 
-export default function Demo({ raised = false }: { raised?: boolean }) {
+export default function Demo() {
 	const [agent, setAgent] = useState(agents[0] as PromptInputAgentOption);
 	const [value, setValue] = useState("@");
 	const mention = useAgentMention({
@@ -38,7 +38,6 @@ export default function Demo({ raised = false }: { raised?: boolean }) {
 			<div className="relative">
 				{mention.open && <PromptInputAgentMentions {...mention.mentions} />}
 				<PromptInput
-					raised={raised}
 					onSubmit={() => setValue("")}
 					className="[&_[data-slot=input-group]]:bg-muted"
 				>

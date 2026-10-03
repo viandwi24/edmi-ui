@@ -188,7 +188,19 @@ const AI_REQUIRED: Record<string, string[]> = {
 };
 
 /** AI items with a `raised` prop: each needs `ai-<name>-raised` demos (same rule as RAISED). */
-const AI_RAISED = ["prompt-input", "suggestion"];
+const AI_RAISED = [
+	"prompt-input",
+	"suggestion",
+	"artifact-card",
+	"prompt-input-agent",
+	"node",
+	"speech-input",
+	"tool",
+	"confirmation",
+	"plan",
+	"agent",
+	"artifact",
+];
 
 /** AGENTS.md section 5: every item with a `raised` prop ships a `<name>-raised` demo in all three frameworks. */
 const RAISED = [

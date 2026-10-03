@@ -23,7 +23,7 @@ const slots = useSlots()
 // Every slot except the default one is handed to Vue Flow as is (#node-<type>, #edge-<type>, ...).
 const forwardedSlotNames = computed(() => Object.keys(slots).filter((n) => n !== "default"))
 // The FlowProps type is deep enough to hit TS2589 in the generic helper: widen it.
-const forwarded = useForwardPropsEmits(props as Record<string, unknown>, emits as (...args: any[]) => void)
+const forwarded = useForwardPropsEmits(props as Record<string, unknown>, emits as any)
 </script>
 
 <template>
