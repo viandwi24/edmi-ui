@@ -9,7 +9,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Forms"],
 		registryDependencies: [],
-		docs: "Replaces the stock checkbox: `shadcn add @edmi/checkbox --overwrite`.",
+		docs: "Replaces the stock checkbox: `shadcn add @edmi-ui/checkbox --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/checkbox.tsx" }],
@@ -24,7 +24,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Forms"],
 		registryDependencies: [],
-		docs: "Replaces the stock radio-group: `shadcn add @edmi/radio-group --overwrite`.",
+		docs: "Replaces the stock radio-group: `shadcn add @edmi-ui/radio-group --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/radio-group.tsx" }],
@@ -40,7 +40,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Forms"],
 		registryDependencies: [],
-		docs: "Replaces the stock switch: `shadcn add @edmi/switch --overwrite`.",
+		docs: "Replaces the stock switch: `shadcn add @edmi-ui/switch --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/switch.tsx" }],
@@ -56,7 +56,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Forms"],
 		registryDependencies: [],
-		docs: "Replaces the stock slider: `shadcn add @edmi/slider --overwrite`.",
+		docs: "Replaces the stock slider: `shadcn add @edmi-ui/slider --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/slider.tsx" }],
@@ -72,7 +72,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Forms"],
 		registryDependencies: ["button"],
-		docs: "Replaces the stock calendar: `shadcn add @edmi/calendar --overwrite`.",
+		docs: "Replaces the stock calendar: `shadcn add @edmi-ui/calendar --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/calendar.tsx" }],
@@ -88,7 +88,7 @@ export const items: Item[] = [
 		type: "registry:block",
 		categories: ["Forms"],
 		registryDependencies: ["button", "calendar", "popover"],
-		docs: "Composition block: `shadcn add @edmi/date-picker`.",
+		docs: "Composition block: `shadcn add @edmi-ui/date-picker`.",
 		frameworks: {
 			react: {
 				files: [

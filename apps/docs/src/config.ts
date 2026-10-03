@@ -28,9 +28,9 @@ export const CODE_LANG: Record<Framework, string> = {
 export function installCommand(fw: Framework, name: string): string {
 	switch (fw) {
 		case "react":
-			return `bunx shadcn@latest add @edmi/${name}`;
+			return `bunx shadcn@latest add @edmi-ui/${name}`;
 		case "vue":
-			return `bunx shadcn-vue@latest add @edmi/${name}`;
+			return `bunx shadcn-vue@latest add @edmi-ui/${name}`;
 		case "svelte":
 			return `bunx shadcn-svelte@latest add ${EDMI_URL}/r/svelte/${name}.json`;
 	}

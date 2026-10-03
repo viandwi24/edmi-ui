@@ -8,7 +8,7 @@ export const items: Item[] = [
 			"Plain styled HTML table. Numbers are mono and right-aligned (numeric, trend); the footer holds totals.",
 		type: "registry:ui",
 		categories: ["Data"],
-		docs: "Replaces the stock table: `shadcn add @edmi/table --overwrite`.",
+		docs: "Replaces the stock table: `shadcn add @edmi-ui/table --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/table.tsx" }],
@@ -23,7 +23,7 @@ export const items: Item[] = [
 			"Recharts wrapped in ChartContainer that maps series to --chart-1…5, with Edmi tooltip (dot, line, dashed) and legend.",
 		type: "registry:ui",
 		categories: ["Data"],
-		docs: "Replaces the stock chart: `shadcn add @edmi/chart --overwrite`.",
+		docs: "Replaces the stock chart: `shadcn add @edmi-ui/chart --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/chart.tsx" }],
@@ -47,7 +47,7 @@ export const items: Item[] = [
 			"select",
 			"dropdown-menu",
 		],
-		docs: "Edmi block built on the stock data-table recipe (TanStack Table v9): `shadcn add @edmi/data-table`. Build columns with `createColumnHelper<typeof features, Row>()`.",
+		docs: "Edmi block built on the stock data-table recipe (TanStack Table v9): `shadcn add @edmi-ui/data-table`. Build columns with `createColumnHelper<typeof features, Row>()`.",
 		frameworks: {
 			react: {
 				files: [

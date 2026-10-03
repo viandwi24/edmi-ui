@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Smoke test: install the built Vue registry into a fresh Vite + Vue project.
 #   1. official scaffold (`bun create vite --template vue-ts`) + tailwind + `shadcn-vue init`
-#   2. add `registries.@edmi` to components.json, `shadcn-vue add @edmi/theme @edmi/button ... --overwrite`
+#   2. add `registries.@edmi-ui` to components.json, `shadcn-vue add @edmi-ui/theme @edmi-ui/button ... --overwrite`
 #   3. type-check with vue-tsc (via packages/vue/scripts/vue-tsc.mjs: stock vue-tsc cannot patch tsc under Bun)
 # The registry is generated with EDMI_URL pointing at a local server and built into a temp dir, so
 # apps/docs/public and packages/vue/registry.json stay untouched.
@@ -93,28 +93,28 @@ APP="$A/app"
 (cd "$APP" && bunx shadcn-vue@latest init --template vite --base reka --preset nova --css-variables --name app --yes --no-reinstall </dev/null)
 (cd "$APP" && bun -e '
 	const c = await Bun.file("components.json").json();
-	c.registries = { ...c.registries, "@edmi": process.argv[1] + "/{name}.json" };
+	c.registries = { ...c.registries, "@edmi-ui": process.argv[1] + "/{name}.json" };
 	await Bun.write("components.json", JSON.stringify(c, null, 2) + "\n");
 ' "$URL")
-(cd "$APP" && bunx shadcn-vue@latest add @edmi/theme @edmi/button @edmi/badge @edmi/card @edmi/inset-panel @edmi/tabs @edmi/input --overwrite --yes </dev/null)
+(cd "$APP" && bunx shadcn-vue@latest add @edmi-ui/theme @edmi-ui/button @edmi-ui/badge @edmi-ui/card @edmi-ui/inset-panel @edmi-ui/tabs @edmi-ui/input --overwrite --yes </dev/null)
 check_files "$APP"
 typecheck "$APP"
 echo "   ok"
 
 # `shadcn-vue init <url>/edmi.json` is not usable with shadcn-vue 2.8.2 (see AGENTS.md section 11): it
-# ignores registry-item `config` (so `@edmi/*` dependencies cannot resolve) and writes registry:lib
+# ignores registry-item `config` (so `@edmi-ui/*` dependencies cannot resolve) and writes registry:lib
 # files to src/lib/registry/... . Vue's supported flow is init + registries + add.
-echo "== 2. add @edmi/edmi (base) + @edmi/all into another fresh project"
+echo "== 2. add @edmi-ui/edmi (base) + @edmi-ui/all into another fresh project"
 B="$WORK/base"
 new_project "$B"
 APP2="$B/app"
 (cd "$APP2" && bunx shadcn-vue@latest init --template vite --base reka --style nova --icon-library phosphor --base-color neutral --font inter --css-variables --name app --yes --no-reinstall </dev/null)
 (cd "$APP2" && bun -e '
 	const c = await Bun.file("components.json").json();
-	c.registries = { ...c.registries, "@edmi": process.argv[1] + "/{name}.json" };
+	c.registries = { ...c.registries, "@edmi-ui": process.argv[1] + "/{name}.json" };
 	await Bun.write("components.json", JSON.stringify(c, null, 2) + "\n");
 ' "$URL")
-(cd "$APP2" && bunx shadcn-vue@latest add @edmi/edmi @edmi/all --overwrite --yes </dev/null)
+(cd "$APP2" && bunx shadcn-vue@latest add @edmi-ui/edmi @edmi-ui/all --overwrite --yes </dev/null)
 check_files "$APP2"
 grep -q '"iconLibrary": "phosphor"' "$APP2/components.json" || { echo "iconLibrary phosphor not set"; exit 1; }
 grep -q "shadcn-vue/tailwind.css" "$APP2/src/style.css" || { echo "edmi base css imports missing"; exit 1; }

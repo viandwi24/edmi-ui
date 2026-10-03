@@ -28,7 +28,7 @@ Registries via CDN: `https://cdn.jsdelivr.net/npm/@edmi-ui/registry-<fw>@<major>
    (cd packages/registry-vue && bunx npm publish --access public)
    (cd packages/registry-svelte && bunx npm publish --access public)
    ```
-   The `@edmi-ui` npm org must exist and you must own it (the org `edmi` is taken; the shadcn registry namespace `@edmi` is unrelated to npm).
+   The `@edmi-ui` npm org must exist and you must own it (the org `edmi` is taken).
 4. **Trusted Publisher** for each of the 4 packages: npmjs.com, package, Settings, Trusted Publisher,
    GitHub Actions: owner `viandwi24`, repository `edmi-ui`, workflow `release.yml`. (4 packages, 4 forms, no tokens.)
 5. Verify Settings, Secrets stays empty, the packages show the provenance badge after the first CI release,

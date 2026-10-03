@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Smoke test: install the built React registry into fresh projects, both ways.
-#   1. existing shadcn project: registry add @edmi=... ; add @edmi/theme @edmi/button ... --overwrite
+#   1. existing shadcn project: registry add @edmi-ui=... ; add @edmi-ui/theme @edmi-ui/button ... --overwrite
 #   2. new project: init <url>/edmi.json
 # Both end with `tsc --noEmit` in the temp project. The registry is generated with EDMI_URL pointing at a
 # local server and built into a temp dir, so apps/docs/public and packages/react/registry.json stay untouched.
@@ -66,15 +66,15 @@ A="$WORK/ns"
 mkdir -p "$A"
 (cd "$A" && bunx shadcn@latest init --template vite --base base --preset nova --name app --no-monorepo --yes </dev/null)
 APP="$A/app"
-(cd "$APP" && bunx shadcn@latest registry add "@edmi=$URL/{name}.json" </dev/null)
-(cd "$APP" && bunx shadcn@latest add @edmi/theme @edmi/button @edmi/badge @edmi/card @edmi/inset-panel @edmi/tabs @edmi/input @edmi/dropdown-menu @edmi/sidebar @edmi/font-instrument-sans @edmi/font-jetbrains-mono @edmi/font-sora --overwrite --yes </dev/null)
+(cd "$APP" && bunx shadcn@latest registry add "@edmi-ui=$URL/{name}.json" </dev/null)
+(cd "$APP" && bunx shadcn@latest add @edmi-ui/theme @edmi-ui/button @edmi-ui/badge @edmi-ui/card @edmi-ui/inset-panel @edmi-ui/tabs @edmi-ui/input @edmi-ui/dropdown-menu @edmi-ui/sidebar @edmi-ui/font-instrument-sans @edmi-ui/font-jetbrains-mono @edmi-ui/font-sora --overwrite --yes </dev/null)
 check_files "$APP"
 check_icons "$APP" lucide
 typecheck "$APP"
 echo "   ok"
 
-echo "== 1b. add @edmi/all --overwrite into the same stock project (plan 09 step 4)"
-(cd "$APP" && bunx shadcn@latest add @edmi/all --overwrite --yes </dev/null)
+echo "== 1b. add @edmi-ui/all --overwrite into the same stock project (plan 09 step 4)"
+(cd "$APP" && bunx shadcn@latest add @edmi-ui/all --overwrite --yes </dev/null)
 check_files "$APP"
 typecheck "$APP"
 echo "   ok"

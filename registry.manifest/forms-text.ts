@@ -8,7 +8,7 @@ export const items: Item[] = [
 			"Single-line text field on the card surface with a sunken inner shadow, focus halo and aria-invalid state.",
 		type: "registry:ui",
 		categories: ["Forms"],
-		docs: "Replaces the stock input: `shadcn add @edmi/input --overwrite`.",
+		docs: "Replaces the stock input: `shadcn add @edmi-ui/input --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/input.tsx" }],
@@ -23,7 +23,7 @@ export const items: Item[] = [
 			"Accessible label tied to a control; dims with disabled peers and Field groups.",
 		type: "registry:ui",
 		categories: ["Forms"],
-		docs: "Replaces the stock label: `shadcn add @edmi/label --overwrite`.",
+		docs: "Replaces the stock label: `shadcn add @edmi-ui/label --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/label.tsx" }],
@@ -38,7 +38,7 @@ export const items: Item[] = [
 			"Multi-line text on the card surface with a sunken inner shadow, focus halo and aria-invalid state. Grows with content.",
 		type: "registry:ui",
 		categories: ["Forms"],
-		docs: "Replaces the stock textarea: `shadcn add @edmi/textarea --overwrite`.",
+		docs: "Replaces the stock textarea: `shadcn add @edmi-ui/textarea --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/textarea.tsx" }],
@@ -53,7 +53,7 @@ export const items: Item[] = [
 			"The browser select with an Edmi trigger skin, for mobile and long, simple lists.",
 		type: "registry:ui",
 		categories: ["Forms"],
-		docs: "Replaces the stock native-select: `shadcn add @edmi/native-select --overwrite`.",
+		docs: "Replaces the stock native-select: `shadcn add @edmi-ui/native-select --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/native-select.tsx" }],
@@ -68,7 +68,7 @@ export const items: Item[] = [
 			"One-time code entry with individual slots, caret and paste support.",
 		type: "registry:ui",
 		categories: ["Forms"],
-		docs: "Replaces the stock input-otp: `shadcn add @edmi/input-otp --overwrite`.",
+		docs: "Replaces the stock input-otp: `shadcn add @edmi-ui/input-otp --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/input-otp.tsx" }],
@@ -84,7 +84,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Forms"],
 		registryDependencies: ["button", "input", "textarea"],
-		docs: "Replaces the stock input-group: `shadcn add @edmi/input-group --overwrite`.",
+		docs: "Replaces the stock input-group: `shadcn add @edmi-ui/input-group --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/input-group.tsx" }],
@@ -100,7 +100,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Forms"],
 		registryDependencies: ["label", "separator"],
-		docs: "Replaces the stock field: `shadcn add @edmi/field --overwrite`.",
+		docs: "Replaces the stock field: `shadcn add @edmi-ui/field --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/field.tsx" }],
@@ -115,7 +115,7 @@ export const items: Item[] = [
 			"Custom select in a popover with groups, labels, separators, disabled items and a check on the chosen value.",
 		type: "registry:ui",
 		categories: ["Forms"],
-		docs: "Replaces the stock select: `shadcn add @edmi/select --overwrite`.",
+		docs: "Replaces the stock select: `shadcn add @edmi-ui/select --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/select.tsx" }],
@@ -131,7 +131,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Forms"],
 		registryDependencies: ["button", "input-group"],
-		docs: "Replaces the stock combobox: `shadcn add @edmi/combobox --overwrite`.",
+		docs: "Replaces the stock combobox: `shadcn add @edmi-ui/combobox --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/combobox.tsx" }],

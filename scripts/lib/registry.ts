@@ -76,7 +76,7 @@ export function rewriteDependency(
 ): string {
 	return fw === "svelte"
 		? `${registryBaseUrl(fw, edmiUrl, layout)}/${name}.json`
-		: `@edmi/${name}`;
+		: `@edmi-ui/${name}`;
 }
 
 const uniqSorted = (xs: string[]) => [...new Set(xs)].sort();
@@ -162,11 +162,11 @@ export function buildFramework(
 		// `config` only exists on registry:base items (Svelte's registry.json items reject it).
 		if (type === "registry:base" && fw === "react" && entry.config) {
 			// The CLI merges `config` into components.json before resolving registryDependencies,
-			// so `init <url>/edmi.json` can resolve `@edmi/*` and leaves the namespace configured.
+			// so `init <url>/edmi.json` can resolve `@edmi-ui/*` and leaves the namespace configured.
 			out.config = {
 				...entry.config,
 				registries: {
-					"@edmi": `${registryBaseUrl(fw, edmiUrl, layout)}/{name}.json`,
+					"@edmi-ui": `${registryBaseUrl(fw, edmiUrl, layout)}/{name}.json`,
 					...(entry.config.registries as object | undefined),
 				},
 			};

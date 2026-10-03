@@ -12,7 +12,7 @@ One file per group; each exports `items: Item[]`. Append entries only. Order is 
 	type: "registry:ui",
 	categories: ["Actions"],                   // DESIGN.md §5 group
 	registryDependencies: ["utils"],           // Edmi names only; rewritten per framework
-	docs: "Replaces the stock button: `shadcn add @edmi/button --overwrite`.",
+	docs: "Replaces the stock button: `shadcn add @edmi-ui/button --overwrite`.",
 	frameworks: {
 		react: {
 			files: [{ path: "registry/ui/button.tsx" }],   // relative to packages/react

@@ -21,6 +21,6 @@
 		"composables": "@/composables"
 	},
 	"registries": {
-		"@edmi": "https://viandwi24.github.io/edmi-ui/r/vue/{name}.json"
+		"@edmi-ui": "https://viandwi24.github.io/edmi-ui/r/vue/{name}.json"
 	}
 }

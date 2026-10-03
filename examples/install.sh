@@ -21,13 +21,13 @@ react)
 	bun -e '
 		const f = "components.json";
 		const c = await Bun.file(f).json();
-		delete c.registries?.["@edmi"];
+		delete c.registries?.["@edmi-ui"];
 		await Bun.write(f, JSON.stringify(c, null, 2) + "\n");
 	'
-	# Register the namespace (writes registries["@edmi"] into components.json), then install.
-	bunx shadcn@latest registry add "@edmi=$EDMI_URL/r/react/{name}.json" </dev/null
-	bunx shadcn@latest add @edmi/theme @edmi/all @edmi/font-instrument-sans @edmi/font-jetbrains-mono @edmi/font-sora \
-		$(for b in $BLOCKS; do printf '@edmi/%s ' "$b"; done) --overwrite --yes </dev/null
+	# Register the namespace (writes registries["@edmi-ui"] into components.json), then install.
+	bunx shadcn@latest registry add "@edmi-ui=$EDMI_URL/r/react/{name}.json" </dev/null
+	bunx shadcn@latest add @edmi-ui/theme @edmi-ui/all @edmi-ui/font-instrument-sans @edmi-ui/font-jetbrains-mono @edmi-ui/font-sora \
+		$(for b in $BLOCKS; do printf '@edmi-ui/%s ' "$b"; done) --overwrite --yes </dev/null
 	;;
 vue)
 	cd "$DIR"
@@ -35,11 +35,11 @@ vue)
 	EDMI_URL="$EDMI_URL" bun -e '
 		const f = "components.json";
 		const c = await Bun.file(f).json();
-		c.registries = { ...c.registries, "@edmi": `${process.env.EDMI_URL}/r/vue/{name}.json` };
+		c.registries = { ...c.registries, "@edmi-ui": `${process.env.EDMI_URL}/r/vue/{name}.json` };
 		await Bun.write(f, JSON.stringify(c, null, 2) + "\n");
 	'
-	bunx shadcn-vue@latest add @edmi/theme @edmi/all \
-		$(for b in $BLOCKS; do printf '@edmi/%s ' "$b"; done) --overwrite --yes </dev/null
+	bunx shadcn-vue@latest add @edmi-ui/theme @edmi-ui/all \
+		$(for b in $BLOCKS; do printf '@edmi-ui/%s ' "$b"; done) --overwrite --yes </dev/null
 	;;
 svelte)
 	cd "$DIR"

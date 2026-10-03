@@ -318,4 +318,10 @@
 	pre {
 		@apply font-mono;
 	}
+	code,
+	kbd,
+	samp,
+	pre {
+		@apply font-mono;
+	}
 }

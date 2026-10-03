@@ -8,7 +8,7 @@ export const items: Item[] = [
 			"Raised, pressable action control with hard-lip depth. Variants default, secondary, outline, ghost, destructive, link and brand.",
 		type: "registry:ui",
 		categories: ["Actions"],
-		docs: "Replaces the stock button: `shadcn add @edmi/button --overwrite`. Style links with `buttonVariants()` on a plain <a>.",
+		docs: "Replaces the stock button: `shadcn add @edmi-ui/button --overwrite`. Style links with `buttonVariants()` on a plain <a>.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/button.tsx" }],
@@ -23,7 +23,7 @@ export const items: Item[] = [
 			"Compact status label. Variants default, secondary, destructive, outline, ghost, link plus brand, warning and info, and pill/number shapes.",
 		type: "registry:ui",
 		categories: ["Actions"],
-		docs: "Replaces the stock badge: `shadcn add @edmi/badge --overwrite`.",
+		docs: "Replaces the stock badge: `shadcn add @edmi-ui/badge --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/badge.tsx" }],
@@ -39,7 +39,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Actions"],
 		registryDependencies: ["separator"],
-		docs: "Replaces the stock button-group: `shadcn add @edmi/button-group --overwrite`.",
+		docs: "Replaces the stock button-group: `shadcn add @edmi-ui/button-group --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/button-group.tsx" }],
@@ -54,7 +54,7 @@ export const items: Item[] = [
 			"Two-state button. The pressed state is an accent fill with an inner shadow and a 1px drop. Variants default and outline, sizes sm, default and lg.",
 		type: "registry:ui",
 		categories: ["Actions"],
-		docs: "Replaces the stock toggle: `shadcn add @edmi/toggle --overwrite`.",
+		docs: "Replaces the stock toggle: `shadcn add @edmi-ui/toggle --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/toggle.tsx" }],
@@ -70,7 +70,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Actions"],
 		registryDependencies: ["toggle"],
-		docs: 'Replaces the stock toggle-group: `shadcn add @edmi/toggle-group --overwrite`. Use `variant="segmented"` for the flat track.',
+		docs: 'Replaces the stock toggle-group: `shadcn add @edmi-ui/toggle-group --overwrite`. Use `variant="segmented"` for the flat track.',
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/toggle-group.tsx" }],
@@ -85,7 +85,7 @@ export const items: Item[] = [
 			"Raised keyboard key cap with a KbdGroup for combinations. Adapts inside tooltips.",
 		type: "registry:ui",
 		categories: ["Actions"],
-		docs: "Replaces the stock kbd: `shadcn add @edmi/kbd --overwrite`.",
+		docs: "Replaces the stock kbd: `shadcn add @edmi-ui/kbd --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/kbd.tsx" }],

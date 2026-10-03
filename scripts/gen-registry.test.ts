@@ -38,8 +38,8 @@ const item = (r: { registry: Record<string, unknown> }, n: string) =>
 
 describe("registryDependencies rewrite", () => {
 	test("helper", () => {
-		expect(rewriteDependency("button", "react", URL_)).toBe("@edmi/button");
-		expect(rewriteDependency("button", "vue", URL_)).toBe("@edmi/button");
+		expect(rewriteDependency("button", "react", URL_)).toBe("@edmi-ui/button");
+		expect(rewriteDependency("button", "vue", URL_)).toBe("@edmi-ui/button");
 		expect(rewriteDependency("button", "svelte", `${URL_}/`)).toBe(
 			`${URL_}/r/svelte/button.json`,
 		);
@@ -58,7 +58,7 @@ describe("registryDependencies rewrite", () => {
 		).toEqual([`${URL_}/r/button.json`]);
 		const edmi = item(buildFramework(realManifest, "react", flat), "edmi");
 		expect((edmi.config as { registries: unknown }).registries).toEqual({
-			"@edmi": `${URL_}/r/{name}.json`,
+			"@edmi-ui": `${URL_}/r/{name}.json`,
 		});
 	});
 	test("per framework in output, sorted and deduped", () => {
@@ -68,8 +68,8 @@ describe("registryDependencies rewrite", () => {
 			mk("dialog", { registryDependencies: ["card", "button", "card"] }),
 		];
 		const expected = {
-			react: ["@edmi/button", "@edmi/card"],
-			vue: ["@edmi/button", "@edmi/card"],
+			react: ["@edmi-ui/button", "@edmi-ui/card"],
+			vue: ["@edmi-ui/button", "@edmi-ui/card"],
 			svelte: [`${URL_}/r/svelte/button.json`, `${URL_}/r/svelte/card.json`],
 		} as const;
 		for (const fw of ["react", "vue", "svelte"] as const)
@@ -111,7 +111,7 @@ describe("skip handling", () => {
 		];
 		expect(
 			item(buildFramework(list, "react", opts()), "all").registryDependencies,
-		).toEqual(["@edmi/a", "@edmi/b"]);
+		).toEqual(["@edmi-ui/a", "@edmi-ui/b"]);
 		expect(
 			item(buildFramework(list, "svelte", opts()), "all").registryDependencies,
 		).toEqual([`${URL_}/r/svelte/a.json`]);
@@ -125,7 +125,7 @@ describe("skip handling", () => {
 		expect(
 			item(buildFramework(withUtils, "react", opts()), "x")
 				.registryDependencies,
-		).toEqual(["@edmi/utils"]);
+		).toEqual(["@edmi-ui/utils"]);
 	});
 });
 
@@ -145,16 +145,16 @@ describe("type mapping", () => {
 			style: "base-nova",
 			iconLibrary: "phosphor",
 			tailwind: { baseColor: "neutral" },
-			registries: { "@edmi": "https://example.test/r/react/{name}.json" },
+			registries: { "@edmi-ui": "https://example.test/r/react/{name}.json" },
 		});
 		expect(item(react, "edmi").extends).toBe("none");
 		expect(item(vue, "edmi").extends).toBeUndefined();
 		expect(item(react, "edmi").registryDependencies).toEqual(
 			expect.arrayContaining([
-				"@edmi/font-instrument-sans",
-				"@edmi/font-jetbrains-mono",
-				"@edmi/theme",
-				"@edmi/button",
+				"@edmi-ui/font-instrument-sans",
+				"@edmi-ui/font-jetbrains-mono",
+				"@edmi-ui/theme",
+				"@edmi-ui/button",
 			]),
 		);
 		expect(item(vue, "edmi").type).toBe("registry:block");

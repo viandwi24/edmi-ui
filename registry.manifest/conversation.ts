@@ -11,7 +11,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Conversation"],
 		registryDependencies: [],
-		docs: "Replaces the stock bubble: `shadcn add @edmi/bubble --overwrite`.",
+		docs: "Replaces the stock bubble: `shadcn add @edmi-ui/bubble --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/bubble.tsx" }],
@@ -27,7 +27,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Conversation"],
 		registryDependencies: [],
-		docs: "Replaces the stock message: `shadcn add @edmi/message --overwrite`.",
+		docs: "Replaces the stock message: `shadcn add @edmi-ui/message --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/message.tsx" }],
@@ -43,7 +43,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Conversation"],
 		registryDependencies: [],
-		docs: "Replaces the stock marker: `shadcn add @edmi/marker --overwrite`.",
+		docs: "Replaces the stock marker: `shadcn add @edmi-ui/marker --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/marker.tsx" }],
@@ -59,7 +59,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Conversation"],
 		registryDependencies: ["button"],
-		docs: "Replaces the stock message-scroller: `shadcn add @edmi/message-scroller --overwrite`.",
+		docs: "Replaces the stock message-scroller: `shadcn add @edmi-ui/message-scroller --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/message-scroller.tsx" }],
@@ -75,7 +75,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Conversation"],
 		registryDependencies: ["button"],
-		docs: "Replaces the stock questionnaire: `shadcn add @edmi/questionnaire --overwrite`.",
+		docs: "Replaces the stock questionnaire: `shadcn add @edmi-ui/questionnaire --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/questionnaire.tsx" }],

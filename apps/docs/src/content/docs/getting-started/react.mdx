@@ -20,7 +20,7 @@ Add the registry to `components.json`:
 ```json
 {
   "registries": {
-    "@edmi": "https://viandwi24.github.io/edmi-ui/r/react/{name}.json"
+    "@edmi-ui": "https://viandwi24.github.io/edmi-ui/r/react/{name}.json"
   }
 }
 ```
@@ -28,13 +28,13 @@ Add the registry to `components.json`:
 ## 3. Install the base (tokens, theme, fonts)
 
 ```bash
-bunx shadcn@latest add @edmi/edmi
+bunx shadcn@latest add @edmi-ui/edmi
 ```
 
 ## 4. Add components
 
 ```bash
-bunx shadcn@latest add @edmi/button @edmi/card
+bunx shadcn@latest add @edmi-ui/button @edmi-ui/card
 ```
 
 Components that exist in stock shadcn replace the stock file; use `--overwrite` when asked.

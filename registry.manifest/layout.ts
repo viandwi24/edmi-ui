@@ -11,7 +11,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Layout"],
 		registryDependencies: [],
-		docs: "Replaces the stock accordion: `shadcn add @edmi/accordion --overwrite`.",
+		docs: "Replaces the stock accordion: `shadcn add @edmi-ui/accordion --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/accordion.tsx" }],
@@ -26,7 +26,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Layout"],
 		registryDependencies: [],
-		docs: "Replaces the stock collapsible: `shadcn add @edmi/collapsible --overwrite`.",
+		docs: "Replaces the stock collapsible: `shadcn add @edmi-ui/collapsible --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/collapsible.tsx" }],
@@ -41,7 +41,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Layout"],
 		registryDependencies: [],
-		docs: "Replaces the stock resizable: `shadcn add @edmi/resizable --overwrite`.",
+		docs: "Replaces the stock resizable: `shadcn add @edmi-ui/resizable --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/resizable.tsx" }],
@@ -56,7 +56,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Layout"],
 		registryDependencies: [],
-		docs: "Replaces the stock scroll-area: `shadcn add @edmi/scroll-area --overwrite`.",
+		docs: "Replaces the stock scroll-area: `shadcn add @edmi-ui/scroll-area --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/scroll-area.tsx" }],
@@ -72,7 +72,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Layout"],
 		registryDependencies: ["button"],
-		docs: "Replaces the stock carousel: `shadcn add @edmi/carousel --overwrite`.",
+		docs: "Replaces the stock carousel: `shadcn add @edmi-ui/carousel --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/carousel.tsx" }],
@@ -87,7 +87,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Layout"],
 		registryDependencies: [],
-		docs: "Replaces the stock direction: `shadcn add @edmi/direction --overwrite`.",
+		docs: "Replaces the stock direction: `shadcn add @edmi-ui/direction --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/direction.tsx" }],

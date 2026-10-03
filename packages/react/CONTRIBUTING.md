@@ -26,7 +26,7 @@ Source: `registry/{ui,lib,hooks,blocks}/` (physical) imported as `@/registry/edm
 ```ts
 { name: "x", title: "X", description: "...", type: "registry:ui", categories: ["Display"],
   registryDependencies: ["button"],   // Edmi names only, never stock items
-  docs: "Replaces the stock x: `shadcn add @edmi/x --overwrite`.",
+  docs: "Replaces the stock x: `shadcn add @edmi-ui/x --overwrite`.",
   frameworks: { react: { files: [{ path: "registry/ui/x.tsx" }],
     dependencies: ["@base-ui/react", "class-variance-authority", "cn"] } } }
 ```

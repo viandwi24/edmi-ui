@@ -86,7 +86,7 @@ export const items: Item[] = [
 			"Edmi design tokens: light and dark CSS variables, Tailwind v4 theme map, raised-control base rule.",
 		type: "registry:theme",
 		categories: CAT,
-		docs: "Run `add @edmi/theme` first; it merges the Edmi tokens into your global CSS.",
+		docs: "Run `add @edmi-ui/theme` first; it merges the Edmi tokens into your global CSS.",
 		frameworks: {
 			react: { cssVars, css: baseRule },
 			vue: {
@@ -108,7 +108,7 @@ export const items: Item[] = [
 			"The `cn` class-merge helper, re-exported from lib/utils for projects that import `@/lib/utils`.",
 		type: "registry:lib",
 		categories: CAT,
-		docs: "Installed automatically with @edmi/edmi; components import `cn` directly from the `cn` package.",
+		docs: "Installed automatically with @edmi-ui/edmi; components import `cn` directly from the `cn` package.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/lib/utils.ts" }],
@@ -190,7 +190,7 @@ export const items: Item[] = [
 		type: "registry:block",
 		categories: CAT,
 		aggregate: "ui",
-		docs: "Run `add @edmi/theme @edmi/all --overwrite` to restyle every component.",
+		docs: "Run `add @edmi-ui/theme @edmi-ui/all --overwrite` to restyle every component.",
 		frameworks: {
 			react: { files: [] },
 			vue: { files: [] },

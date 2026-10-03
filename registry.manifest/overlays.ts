@@ -8,7 +8,7 @@ export const items: Item[] = [
 			"Rich content in a floating panel opened by a button. Hard 4px lip, no blur. PopoverHeader, PopoverTitle, PopoverDescription.",
 		type: "registry:ui",
 		categories: ["Overlays"],
-		docs: "Replaces the stock popover: `shadcn add @edmi/popover --overwrite`.",
+		docs: "Replaces the stock popover: `shadcn add @edmi-ui/popover --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/popover.tsx" }],
@@ -24,7 +24,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Overlays"],
 		registryDependencies: ["button"],
-		docs: "Replaces the stock dialog: `shadcn add @edmi/dialog --overwrite`.",
+		docs: "Replaces the stock dialog: `shadcn add @edmi-ui/dialog --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/dialog.tsx" }],
@@ -39,7 +39,7 @@ export const items: Item[] = [
 			"Inline message in the page flow. default, destructive plus brand, warning and info soft-fill variants.",
 		type: "registry:ui",
 		categories: ["Overlays"],
-		docs: "Replaces the stock alert: `shadcn add @edmi/alert --overwrite`.",
+		docs: "Replaces the stock alert: `shadcn add @edmi-ui/alert --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/alert.tsx" }],
@@ -55,7 +55,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Overlays"],
 		registryDependencies: ["button"],
-		docs: "Replaces the stock alert-dialog: `shadcn add @edmi/alert-dialog --overwrite`.",
+		docs: "Replaces the stock alert-dialog: `shadcn add @edmi-ui/alert-dialog --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/alert-dialog.tsx" }],
@@ -71,7 +71,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Overlays"],
 		registryDependencies: ["button"],
-		docs: "Replaces the stock sheet: `shadcn add @edmi/sheet --overwrite`.",
+		docs: "Replaces the stock sheet: `shadcn add @edmi-ui/sheet --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/sheet.tsx" }],
@@ -86,7 +86,7 @@ export const items: Item[] = [
 			"Base UI drawer: swipeDirection, snapPoints, DrawerSwipeHandle. Hard strong lip on the page-facing edge.",
 		type: "registry:ui",
 		categories: ["Overlays"],
-		docs: "Replaces the stock drawer (Base UI based, no vaul): `shadcn add @edmi/drawer --overwrite`.",
+		docs: "Replaces the stock drawer (Base UI based, no vaul): `shadcn add @edmi-ui/drawer --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/drawer.tsx" }],
@@ -101,7 +101,7 @@ export const items: Item[] = [
 			"Toast via Sonner: default, success, info, warning, error, loading, promise. Soft fill and tinted border per type.",
 		type: "registry:ui",
 		categories: ["Overlays"],
-		docs: "Replaces the stock sonner: `shadcn add @edmi/sonner --overwrite`.",
+		docs: "Replaces the stock sonner: `shadcn add @edmi-ui/sonner --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/sonner.tsx" }],
@@ -116,7 +116,7 @@ export const items: Item[] = [
 			"Short label on hover or focus. Solid primary chip with a small arrow.",
 		type: "registry:ui",
 		categories: ["Overlays"],
-		docs: "Replaces the stock tooltip: `shadcn add @edmi/tooltip --overwrite`.",
+		docs: "Replaces the stock tooltip: `shadcn add @edmi-ui/tooltip --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/tooltip.tsx" }],
@@ -131,7 +131,7 @@ export const items: Item[] = [
 			"Preview of what is behind a link, opened on hover after a short delay. Hard 4px lip.",
 		type: "registry:ui",
 		categories: ["Overlays"],
-		docs: "Replaces the stock hover-card: `shadcn add @edmi/hover-card --overwrite`.",
+		docs: "Replaces the stock hover-card: `shadcn add @edmi-ui/hover-card --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/hover-card.tsx" }],

@@ -9,7 +9,7 @@ export const items: Item[] = [
 		type: "registry:block",
 		categories: ["Patterns"],
 		registryDependencies: [],
-		docs: "Edmi pattern block: `shadcn add @edmi/site-header`.",
+		docs: "Edmi pattern block: `shadcn add @edmi-ui/site-header`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/blocks/site-header/site-header.tsx" }],
@@ -25,7 +25,7 @@ export const items: Item[] = [
 		type: "registry:block",
 		categories: ["Patterns"],
 		registryDependencies: ["button", "input-group", "kbd"],
-		docs: "Edmi pattern block: `shadcn add @edmi/app-header`.",
+		docs: "Edmi pattern block: `shadcn add @edmi-ui/app-header`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/blocks/app-header/app-header.tsx" }],
@@ -41,7 +41,7 @@ export const items: Item[] = [
 		type: "registry:block",
 		categories: ["Patterns"],
 		registryDependencies: ["card", "badge"],
-		docs: "Edmi pattern block: `shadcn add @edmi/stat-tile`.",
+		docs: "Edmi pattern block: `shadcn add @edmi-ui/stat-tile`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/blocks/stat-tile/stat-tile.tsx" }],
@@ -57,7 +57,7 @@ export const items: Item[] = [
 		type: "registry:block",
 		categories: ["Patterns"],
 		registryDependencies: ["card", "avatar"],
-		docs: "Edmi pattern block: `shadcn add @edmi/ticker-strip`.",
+		docs: "Edmi pattern block: `shadcn add @edmi-ui/ticker-strip`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/blocks/ticker-strip/ticker-strip.tsx" }],
@@ -73,7 +73,7 @@ export const items: Item[] = [
 		type: "registry:block",
 		categories: ["Patterns"],
 		registryDependencies: ["table", "avatar", "badge"],
-		docs: "Edmi pattern block: `shadcn add @edmi/index-row`.",
+		docs: "Edmi pattern block: `shadcn add @edmi-ui/index-row`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/blocks/index-row/index-row.tsx" }],
@@ -89,7 +89,7 @@ export const items: Item[] = [
 		type: "registry:block",
 		categories: ["Patterns"],
 		registryDependencies: [],
-		docs: "Edmi pattern block: `shadcn add @edmi/watchlist-item`.",
+		docs: "Edmi pattern block: `shadcn add @edmi-ui/watchlist-item`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/blocks/watchlist-item/watchlist-item.tsx" }],
@@ -105,7 +105,7 @@ export const items: Item[] = [
 		type: "registry:block",
 		categories: ["Patterns"],
 		registryDependencies: [],
-		docs: "Edmi pattern block: `shadcn add @edmi/allocation-bar`.",
+		docs: "Edmi pattern block: `shadcn add @edmi-ui/allocation-bar`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/blocks/allocation-bar/allocation-bar.tsx" }],
@@ -121,7 +121,7 @@ export const items: Item[] = [
 		type: "registry:block",
 		categories: ["Patterns"],
 		registryDependencies: ["card", "button", "input-group"],
-		docs: "Edmi pattern block: `shadcn add @edmi/join-panel`.",
+		docs: "Edmi pattern block: `shadcn add @edmi-ui/join-panel`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/blocks/join-panel/join-panel.tsx" }],
@@ -137,7 +137,7 @@ export const items: Item[] = [
 		type: "registry:block",
 		categories: ["Patterns"],
 		registryDependencies: ["card", "avatar", "badge"],
-		docs: "Edmi pattern block: `shadcn add @edmi/leaderboard-podium`.",
+		docs: "Edmi pattern block: `shadcn add @edmi-ui/leaderboard-podium`.",
 		frameworks: {
 			react: {
 				files: [
@@ -155,7 +155,7 @@ export const items: Item[] = [
 		type: "registry:block",
 		categories: ["Patterns"],
 		registryDependencies: ["button"],
-		docs: "Edmi pattern block: `shadcn add @edmi/layout-picker`.",
+		docs: "Edmi pattern block: `shadcn add @edmi-ui/layout-picker`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/blocks/layout-picker/layout-picker.tsx" }],

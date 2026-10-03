@@ -8,7 +8,7 @@ export const items: Item[] = [
 			"Surface with a hard 2px lip and a top highlight. Header, title, description, action, content and footer; size default or sm.",
 		type: "registry:ui",
 		categories: ["Display"],
-		docs: "Replaces the stock card: `shadcn add @edmi/card --overwrite`.",
+		docs: "Replaces the stock card: `shadcn add @edmi-ui/card --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/card.tsx" }],
@@ -23,7 +23,7 @@ export const items: Item[] = [
 			"Header and footer on a muted shell with a card body running edge to edge. Optional bottom fade.",
 		type: "registry:ui",
 		categories: ["Display"],
-		docs: "Edmi extra: `shadcn add @edmi/inset-panel`.",
+		docs: "Edmi extra: `shadcn add @edmi-ui/inset-panel`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/inset-panel.tsx" }],
@@ -38,7 +38,7 @@ export const items: Item[] = [
 			"A thin line between groups. Horizontal by default, vertical inside rows.",
 		type: "registry:ui",
 		categories: ["Display"],
-		docs: "Replaces the stock separator: `shadcn add @edmi/separator --overwrite`.",
+		docs: "Replaces the stock separator: `shadcn add @edmi-ui/separator --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/separator.tsx" }],
@@ -53,7 +53,7 @@ export const items: Item[] = [
 			"Shows that something is loading. Inherits color and sizes with the surrounding text.",
 		type: "registry:ui",
 		categories: ["Display"],
-		docs: "Replaces the stock spinner: `shadcn add @edmi/spinner --overwrite`.",
+		docs: "Replaces the stock spinner: `shadcn add @edmi-ui/spinner --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/spinner.tsx" }],
@@ -68,7 +68,7 @@ export const items: Item[] = [
 			"Placeholder in the shape of content while it loads. Match real sizes to avoid layout shift.",
 		type: "registry:ui",
 		categories: ["Display"],
-		docs: "Replaces the stock skeleton: `shadcn add @edmi/skeleton --overwrite`.",
+		docs: "Replaces the stock skeleton: `shadcn add @edmi-ui/skeleton --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/skeleton.tsx" }],
@@ -83,7 +83,7 @@ export const items: Item[] = [
 			"Shows how far a task is. Label and value parts; brand variant.",
 		type: "registry:ui",
 		categories: ["Display"],
-		docs: "Replaces the stock progress: `shadcn add @edmi/progress --overwrite`.",
+		docs: "Replaces the stock progress: `shadcn add @edmi-ui/progress --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/progress.tsx" }],
@@ -98,7 +98,7 @@ export const items: Item[] = [
 			"Locks content to a ratio so layouts do not jump while loading.",
 		type: "registry:ui",
 		categories: ["Display"],
-		docs: "Replaces the stock aspect-ratio: `shadcn add @edmi/aspect-ratio --overwrite`.",
+		docs: "Replaces the stock aspect-ratio: `shadcn add @edmi-ui/aspect-ratio --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/aspect-ratio.tsx" }],
@@ -113,7 +113,7 @@ export const items: Item[] = [
 			"Image with an initials fallback. Sizes sm, default, lg; badge, group and count.",
 		type: "registry:ui",
 		categories: ["Display"],
-		docs: "Replaces the stock avatar: `shadcn add @edmi/avatar --overwrite`.",
+		docs: "Replaces the stock avatar: `shadcn add @edmi-ui/avatar --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/avatar.tsx" }],
@@ -129,7 +129,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Display"],
 		registryDependencies: ["separator"],
-		docs: "Replaces the stock item: `shadcn add @edmi/item --overwrite`.",
+		docs: "Replaces the stock item: `shadcn add @edmi-ui/item --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/item.tsx" }],
@@ -144,7 +144,7 @@ export const items: Item[] = [
 			"What to show when there is nothing yet. Icon media, title, description and actions; dashed outline.",
 		type: "registry:ui",
 		categories: ["Display"],
-		docs: "Replaces the stock empty: `shadcn add @edmi/empty --overwrite`.",
+		docs: "Replaces the stock empty: `shadcn add @edmi-ui/empty --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/empty.tsx" }],
@@ -160,7 +160,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Display"],
 		registryDependencies: ["button"],
-		docs: "Replaces the stock attachment: `shadcn add @edmi/attachment --overwrite`.",
+		docs: "Replaces the stock attachment: `shadcn add @edmi-ui/attachment --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/attachment.tsx" }],

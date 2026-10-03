@@ -27,7 +27,7 @@ export const items: Item[] = listBases().flatMap((base) =>
 			description: `Edmi color tokens for base ${base} with the ${theme} accent (light + dark). Replaces the :root and .dark variables.`,
 			type: "registry:theme",
 			categories: ["Themes"],
-			docs: "Run after `@edmi/theme`; it replaces the color variables in your global CSS (radius is left alone).",
+			docs: "Run after `@edmi-ui/theme`; it replaces the color variables in your global CSS (radius is left alone).",
 			frameworks: {
 				react: { cssVars },
 				vue: { cssVars },

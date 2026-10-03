@@ -8,7 +8,7 @@ export const items: Item[] = [
 			"Tabs in a flat, sunken track (variant default) or underlined (variant line). Horizontal and vertical.",
 		type: "registry:ui",
 		categories: ["Navigation"],
-		docs: "Replaces the stock tabs: `shadcn add @edmi/tabs --overwrite`.",
+		docs: "Replaces the stock tabs: `shadcn add @edmi-ui/tabs --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/tabs.tsx" }],
@@ -23,7 +23,7 @@ export const items: Item[] = [
 			"Hierarchy trail: list, items, links, current page, separator and ellipsis.",
 		type: "registry:ui",
 		categories: ["Navigation"],
-		docs: "Replaces the stock breadcrumb: `shadcn add @edmi/breadcrumb --overwrite`.",
+		docs: "Replaces the stock breadcrumb: `shadcn add @edmi-ui/breadcrumb --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/breadcrumb.tsx" }],
@@ -39,7 +39,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Navigation"],
 		registryDependencies: ["button"],
-		docs: "Replaces the stock pagination: `shadcn add @edmi/pagination --overwrite`.",
+		docs: "Replaces the stock pagination: `shadcn add @edmi-ui/pagination --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/pagination.tsx" }],
@@ -54,7 +54,7 @@ export const items: Item[] = [
 			"Menu opened by a button: items (default, destructive), checkbox and radio items, labels, shortcuts and sub-menus. Hard 4px lip.",
 		type: "registry:ui",
 		categories: ["Navigation"],
-		docs: "Replaces the stock dropdown-menu: `shadcn add @edmi/dropdown-menu --overwrite`.",
+		docs: "Replaces the stock dropdown-menu: `shadcn add @edmi-ui/dropdown-menu --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/dropdown-menu.tsx" }],
@@ -69,7 +69,7 @@ export const items: Item[] = [
 			"Right-click menu with the same anatomy and recipe as the dropdown menu.",
 		type: "registry:ui",
 		categories: ["Navigation"],
-		docs: "Replaces the stock context-menu: `shadcn add @edmi/context-menu --overwrite`.",
+		docs: "Replaces the stock context-menu: `shadcn add @edmi-ui/context-menu --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/context-menu.tsx" }],
@@ -84,7 +84,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Navigation"],
 		registryDependencies: ["dropdown-menu"],
-		docs: "Replaces the stock menubar: `shadcn add @edmi/menubar --overwrite`.",
+		docs: "Replaces the stock menubar: `shadcn add @edmi-ui/menubar --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/menubar.tsx" }],
@@ -99,7 +99,7 @@ export const items: Item[] = [
 			"Top-level links with rich dropdown panels for the navbar layout.",
 		type: "registry:ui",
 		categories: ["Navigation"],
-		docs: "Replaces the stock navigation-menu: `shadcn add @edmi/navigation-menu --overwrite`.",
+		docs: "Replaces the stock navigation-menu: `shadcn add @edmi-ui/navigation-menu --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/navigation-menu.tsx" }],
@@ -115,7 +115,7 @@ export const items: Item[] = [
 		type: "registry:ui",
 		categories: ["Navigation"],
 		registryDependencies: ["dialog"],
-		docs: "Replaces the stock command: `shadcn add @edmi/command --overwrite`.",
+		docs: "Replaces the stock command: `shadcn add @edmi-ui/command --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/command.tsx" }],
@@ -130,7 +130,7 @@ export const items: Item[] = [
 			"Hook returning true below the 768px breakpoint. Used by the sidebar.",
 		type: "registry:hook",
 		categories: ["Navigation"],
-		docs: "Replaces the stock use-mobile hook: `shadcn add @edmi/use-mobile --overwrite`.",
+		docs: "Replaces the stock use-mobile hook: `shadcn add @edmi-ui/use-mobile --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/hooks/use-mobile.ts" }],
@@ -154,7 +154,7 @@ export const items: Item[] = [
 			"tooltip",
 			"use-mobile",
 		],
-		docs: "Replaces the stock sidebar: `shadcn add @edmi/sidebar --overwrite`.",
+		docs: "Replaces the stock sidebar: `shadcn add @edmi-ui/sidebar --overwrite`.",
 		frameworks: {
 			react: {
 				files: [{ path: "registry/ui/sidebar.tsx" }],

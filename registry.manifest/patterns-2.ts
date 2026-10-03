@@ -10,7 +10,7 @@ export const items: Item[] = [
 		type: "registry:block",
 		categories: ["Patterns"],
 		registryDependencies: ["avatar", "button", "card", "item"],
-		docs: "Composition block: `shadcn add @edmi/feed-post`.",
+		docs: "Composition block: `shadcn add @edmi-ui/feed-post`.",
 		frameworks: {
 			react: {
 				files: [
@@ -31,7 +31,7 @@ export const items: Item[] = [
 		type: "registry:block",
 		categories: ["Patterns"],
 		registryDependencies: ["badge", "card"],
-		docs: "Composition block: `shadcn add @edmi/agent-card`.",
+		docs: "Composition block: `shadcn add @edmi-ui/agent-card`.",
 		frameworks: {
 			react: {
 				files: [
@@ -52,7 +52,7 @@ export const items: Item[] = [
 		type: "registry:block",
 		categories: ["Patterns"],
 		registryDependencies: ["card", "collapsible"],
-		docs: "Composition block: `shadcn add @edmi/feature-row`.",
+		docs: "Composition block: `shadcn add @edmi-ui/feature-row`.",
 		frameworks: {
 			react: {
 				files: [
@@ -73,7 +73,7 @@ export const items: Item[] = [
 		type: "registry:block",
 		categories: ["Patterns"],
 		registryDependencies: ["card"],
-		docs: "Composition block: `shadcn add @edmi/step-card`.",
+		docs: "Composition block: `shadcn add @edmi-ui/step-card`.",
 		frameworks: {
 			react: {
 				files: [
@@ -94,7 +94,7 @@ export const items: Item[] = [
 		type: "registry:block",
 		categories: ["Patterns"],
 		registryDependencies: ["card", "separator"],
-		docs: "Composition block: `shadcn add @edmi/pricing-plan`.",
+		docs: "Composition block: `shadcn add @edmi-ui/pricing-plan`.",
 		frameworks: {
 			react: {
 				files: [
@@ -115,7 +115,7 @@ export const items: Item[] = [
 		type: "registry:block",
 		categories: ["Patterns"],
 		registryDependencies: ["badge", "card", "separator"],
-		docs: "Composition block: `shadcn add @edmi/task-list`.",
+		docs: "Composition block: `shadcn add @edmi-ui/task-list`.",
 		frameworks: {
 			react: {
 				files: [
@@ -135,7 +135,7 @@ export const items: Item[] = [
 		type: "registry:block",
 		categories: ["Patterns"],
 		registryDependencies: ["card"],
-		docs: "Composition block: `shadcn add @edmi/kanban-column`.",
+		docs: "Composition block: `shadcn add @edmi-ui/kanban-column`.",
 		frameworks: {
 			react: {
 				files: [
@@ -156,7 +156,7 @@ export const items: Item[] = [
 		type: "registry:block",
 		categories: ["Patterns"],
 		registryDependencies: ["button", "card"],
-		docs: "Composition block: `shadcn add @edmi/code-block`.",
+		docs: "Composition block: `shadcn add @edmi-ui/code-block`.",
 		frameworks: {
 			react: {
 				files: [
@@ -177,7 +177,7 @@ export const items: Item[] = [
 		type: "registry:block",
 		categories: ["Patterns"],
 		registryDependencies: ["card", "separator"],
-		docs: "Composition block: `shadcn add @edmi/footer`.",
+		docs: "Composition block: `shadcn add @edmi-ui/footer`.",
 		frameworks: {
 			react: {
 				files: [

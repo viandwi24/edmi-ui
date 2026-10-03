@@ -1,5 +1,14 @@
 <p align="center">
-  <img alt="Edmi UI: quiet, editorial interfaces for React, Vue and Svelte" src=".github/assets/hero.png" width="100%">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset=".github/assets/hero-dark.png">
+    <img alt="Edmi UI: quiet, editorial interfaces for React, Vue and Svelte" src=".github/assets/hero-light.png" width="100%">
+  </picture>
+</p>
+
+<p align="center">
+  <a href="https://viandwi24.github.io/edmi-ui/"><strong>Documentation &amp; live demos →</strong></a>
+  &nbsp;·&nbsp; <a href="https://viandwi24.github.io/edmi-ui/components/">Components</a>
+  &nbsp;·&nbsp; <a href="https://viandwi24.github.io/edmi-ui/themes/">Themes</a>
 </p>
 
 # Edmi UI
@@ -41,8 +50,8 @@ Registry base URL (latest): `https://viandwi24.github.io/edmi-ui/r/<framework>/{
 bunx shadcn@latest init https://viandwi24.github.io/edmi-ui/r/react/edmi.json
 
 # existing shadcn project
-bunx shadcn@latest registry add "@edmi=https://viandwi24.github.io/edmi-ui/r/react/{name}.json"
-bunx shadcn@latest add @edmi/theme @edmi/all --overwrite
+bunx shadcn@latest registry add "@edmi-ui=https://viandwi24.github.io/edmi-ui/r/react/{name}.json"
+bunx shadcn@latest add @edmi-ui/theme @edmi-ui/all --overwrite
 ```
 
 ### Vue (shadcn-vue)
@@ -50,11 +59,11 @@ bunx shadcn@latest add @edmi/theme @edmi/all --overwrite
 Add the namespace to `components.json`:
 
 ```json
-{ "registries": { "@edmi": "https://viandwi24.github.io/edmi-ui/r/vue/{name}.json" } }
+{ "registries": { "@edmi-ui": "https://viandwi24.github.io/edmi-ui/r/vue/{name}.json" } }
 ```
 
 ```bash
-bunx shadcn-vue@latest add @edmi/theme @edmi/all --overwrite
+bunx shadcn-vue@latest add @edmi-ui/theme @edmi-ui/all --overwrite
 ```
 
 ### Svelte (shadcn-svelte)
