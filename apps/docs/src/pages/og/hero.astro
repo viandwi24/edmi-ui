@@ -1,5 +1,6 @@
 ---
-// 1280x640 hero for the GitHub README. Render with ?theme=dark|light and screenshot at 1280x640 (see AGENTS.md notes).
+// 1280x640 hero for the GitHub README (.github/assets/hero.png, dark). Open /edmi-ui/og/hero/?theme=dark on the docs
+// dev server and export at 2x with modern-screenshot's domToPng (embed the Google Fonts CSS via `font.cssText`).
 import "../../styles/global.css";
 import HeroField from "../../components/og/HeroField";
 ---
@@ -29,17 +30,17 @@ import HeroField from "../../components/og/HeroField";
 			.hero { position: relative; width: 1280px; height: 640px; overflow: hidden; }
 			.hero, .hero *, .hero ::before, .hero ::after { box-sizing: border-box; border-color: var(--border); }
 			.hero :where(h1, h2, p) { margin: 0; }
-			.hero-stage { position: absolute; left: 0; top: 222px; width: 1280px; height: 520px; perspective: 1500px; perspective-origin: 50% 0%; }
+			.hero-stage { position: absolute; left: 0; top: 292px; width: 1280px; height: 450px; perspective: 1500px; perspective-origin: 50% 0%; }
 			.hero-field { position: absolute; left: 50%; top: 0; transform-origin: 50% 0; transform: translateX(-44%) rotateX(26deg) rotateZ(-8deg) scale(1); }
-			.hero-fade { position: absolute; inset: 0; pointer-events: none;
+			.hero-fade { position: absolute; inset: 0; z-index: 1; pointer-events: none;
 				background:
-					linear-gradient(to bottom, var(--background) 0%, transparent 20%),
-					linear-gradient(to top, var(--background) 0%, transparent 16%),
+					linear-gradient(to bottom, var(--background) 0%, var(--background) 40%, transparent 56%),
+					linear-gradient(to top, var(--background) 0%, transparent 22%),
 					linear-gradient(to right, var(--background) 0%, transparent 12%, transparent 88%, var(--background) 100%); }
 			.hero-copy { position: absolute; left: 0; right: 0; top: 40px; text-align: center; z-index: 2; }
 			.hero-eyebrow { font-size: 14px; letter-spacing: 0.04em; color: var(--muted-foreground); font-weight: 500; }
 			.hero h1 { margin-top: 14px !important; font-size: 50px; line-height: 1.04; letter-spacing: -0.035em; font-weight: 500; color: var(--ink-soft); }
-			.hero-sub { margin-top: 16px !important; font-size: 19px; color: var(--muted-foreground); }
+			.hero-sub { margin-top: 16px !important; font-size: 18px; line-height: 1.5; color: var(--muted-foreground); }
 		</style>
 	</head>
 	<body class="edmi-preview">
@@ -49,9 +50,9 @@ import HeroField from "../../components/og/HeroField";
 			</div>
 			<div class="hero-fade"></div>
 			<div class="hero-copy">
-				<div class="hero-eyebrow">Edmi UI · shadcn-compatible</div>
-				<h1>Editorial components for<br />React, Vue and Svelte</h1>
-				<p class="hero-sub">Flat by default, one-step 3D when you want it. Install with the shadcn CLI.</p>
+				<div class="hero-eyebrow">Edmi UI · Editorial Minimalist</div>
+				<h1>Quiet, editorial interfaces<br />for React, Vue and Svelte</h1>
+				<p class="hero-sub">A minimalist design system built on shadcn/ui. Warm neutrals, mono numbers,<br />one-step depth, inspired by Claude and Cofounder.</p>
 			</div>
 		</div>
 	</body>

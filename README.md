@@ -1,15 +1,22 @@
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset=".github/assets/hero-dark.png">
-    <img alt="Edmi UI — editorial components for React, Vue and Svelte" src=".github/assets/hero-light.png" width="100%">
-  </picture>
+  <img alt="Edmi UI: quiet, editorial interfaces for React, Vue and Svelte" src=".github/assets/hero.png" width="100%">
 </p>
 
 # Edmi UI
 
-Edmi (EDitorial MInimalist) is one monorepo that builds three shadcn-compatible component registries:
-React (shadcn/ui), Vue (shadcn-vue) and Svelte (shadcn-svelte). Same item names as shadcn, so
-installing with `--overwrite` replaces the stock components with the Edmi design.
+**Quiet, editorial interfaces for React, Vue and Svelte.** A minimalist design system built on shadcn/ui:
+warm neutrals, mono numbers and one-step depth, inspired by Claude and Cofounder.
+
+## Features
+
+- **shadcn-compatible.** Three registries, one per framework: React (shadcn/ui), Vue (shadcn-vue) and
+  Svelte (shadcn-svelte). Same item names as shadcn, so `add … --overwrite` restyles the stock components.
+- **Flat by default, raised on demand.** Every component ships the plain look; `raised` ✦ adds a one-step 3D face.
+- **Themeable.** Base colours, accents and radius as tokens; a Themes customizer with Copy CSS and installable theme items.
+- **Icons your way.** Phosphor by default, rewritten to your `iconLibrary` on install.
+- **86 components and patterns** in all three frameworks, plus chat, data and dashboard blocks.
+
+## Links
 
 - Docs and live demos: <https://viandwi24.github.io/edmi-ui/>
 - Examples (StackBlitz-ready): [`examples/react`](examples/react), [`examples/vue`](examples/vue), [`examples/svelte`](examples/svelte)
