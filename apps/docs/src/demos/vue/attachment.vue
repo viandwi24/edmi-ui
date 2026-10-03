@@ -55,7 +55,7 @@ import { Spinner } from "@edmi-vue/ui/spinner";
         <AttachmentDescription>PDF, 540 KB</AttachmentDescription>
       </AttachmentContent>
       <AttachmentActions>
-        <CheckIcon class="size-4 text-brand-text" />
+        <CheckIcon class="size-4 text-success-text" />
       </AttachmentActions>
     </Attachment>
   </div>

@@ -49,7 +49,7 @@ export default function Demo() {
 					Slippage was above 1%. Try a smaller order.
 				</AlertDescription>
 			</Alert>
-			<Alert variant="brand">
+			<Alert variant="success">
 				<CircleCheckIcon />
 				<AlertTitle>Index launched</AlertTitle>
 				<AlertDescription>MAG4 is live and accepting joins.</AlertDescription>
@@ -58,6 +58,18 @@ export default function Demo() {
 						View
 					</Button>
 				</AlertAction>
+			</Alert>
+			<Alert variant="brand">
+				<InfoIcon />
+				<AlertTitle>Autopilot is on</AlertTitle>
+				<AlertDescription>
+					Rebalances run automatically with the theme accent.
+				</AlertDescription>
+			</Alert>
+			<Alert variant="info">
+				<InfoIcon />
+				<AlertTitle>Oracle updated</AlertTitle>
+				<AlertDescription>Prices refresh every 15 seconds.</AlertDescription>
 			</Alert>
 			<Alert variant="warning">
 				<TriangleAlertIcon />

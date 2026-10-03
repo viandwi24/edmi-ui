@@ -11,6 +11,7 @@ import { Badge } from "@edmi-vue/ui/badge";
     <Badge variant="ghost">Draft</Badge>
     <Badge variant="link">Solscan</Badge>
     <Badge variant="brand">Live</Badge>
+    <Badge variant="success">Settled</Badge>
     <Badge variant="warning">Drift 6%</Badge>
     <Badge variant="info">Rebalancing</Badge>
     <Badge shape="pill" variant="brand">Pill</Badge>

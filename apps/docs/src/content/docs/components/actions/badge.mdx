@@ -24,10 +24,10 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 ## API
 | Prop | Type | Default |
 | --- | --- | --- |
-| variant | `default \| secondary \| destructive \| outline \| ghost \| link \| brand \| warning \| info` | `default` |
+| variant | `default \| secondary \| destructive \| outline \| ghost \| link \| brand \| success \| warning \| info` | `default` |
 | shape | `default \| pill \| number` | `default` |
 | render | `ReactElement` | none |
 
 ## ✦ Edmi additions
-- `brand`, `warning`, `info` variants: soft fill with a tinted border.
+- `brand`, `success`, `warning`, `info` variants: soft fill with a tinted border. Use `success` for positive deltas and done states (green in every theme); `brand` follows the theme accent.
 - `shape`: `pill` and `number` (mono, for counts).

@@ -166,7 +166,7 @@ const columns = col.columns([
 			return (
 				<div className="text-right">
 					<Badge
-						variant={v >= 0 ? "brand" : "destructive"}
+						variant={v >= 0 ? "success" : "destructive"}
 						className="font-mono"
 					>
 						{v >= 0 ? "+" : "−"}

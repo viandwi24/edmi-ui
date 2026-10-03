@@ -111,7 +111,7 @@
 {/snippet}
 {#snippet dayCell(v: number)}
 	<div class="text-right">
-		<Badge variant={v >= 0 ? "brand" : "destructive"} class="font-mono">
+		<Badge variant={v >= 0 ? "success" : "destructive"} class="font-mono">
 			{v >= 0 ? "+" : "−"}{Math.abs(v).toFixed(2)}%
 		</Badge>
 	</div>

@@ -23,13 +23,23 @@
 		<Alert.Title>Transaction failed</Alert.Title>
 		<Alert.Description>Slippage was above 1%. Try a smaller order.</Alert.Description>
 	</Alert.Root>
-	<Alert.Root variant="brand">
+	<Alert.Root variant="success">
 		{@render icon(check)}
 		<Alert.Title>Index launched</Alert.Title>
 		<Alert.Description>MAG4 is live and accepting joins.</Alert.Description>
 		<Alert.Action>
 			<Button size="xs" variant="outline">View</Button>
 		</Alert.Action>
+	</Alert.Root>
+	<Alert.Root variant="brand">
+		{@render icon(info)}
+		<Alert.Title>Autopilot is on</Alert.Title>
+		<Alert.Description>Rebalances run automatically with the theme accent.</Alert.Description>
+	</Alert.Root>
+	<Alert.Root variant="info">
+		{@render icon(info)}
+		<Alert.Title>Oracle updated</Alert.Title>
+		<Alert.Description>Prices refresh every 15 seconds.</Alert.Description>
 	</Alert.Root>
 	<Alert.Root variant="warning">
 		{@render icon(warn)}

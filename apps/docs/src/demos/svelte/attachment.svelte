@@ -45,6 +45,6 @@
 			<Attachment.Title>mandate.pdf</Attachment.Title>
 			<Attachment.Description>PDF, 540 KB</Attachment.Description>
 		</Attachment.Content>
-		<Attachment.Actions><IconPlaceholder lucide="CheckIcon" tabler="IconCheck" hugeicons="Tick02Icon" phosphor="CheckIcon" remixicon="RiCheckLine" class="size-4 text-brand-text" /></Attachment.Actions>
+		<Attachment.Actions><IconPlaceholder lucide="CheckIcon" tabler="IconCheck" hugeicons="Tick02Icon" phosphor="CheckIcon" remixicon="RiCheckLine" class="size-4 text-success-text" /></Attachment.Actions>
 	</Attachment.Root>
 </div>

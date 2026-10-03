@@ -59,7 +59,7 @@ scripts/                  gen-registry.ts (+ lib/registry.ts, tested), build-reg
 apps/docs                 Astro + Starlight site: src/demos/<fw>/<name>[-raised].*, src/content/docs/components/<group>/<name>.mdx, plugins/, templates/component.mdx
 examples/react|vue|svelte Stockbreak Markets app per framework + examples/install.sh
 .changeset/               changesets (fixed version group)
-refs/edmi-ui              BINDING design spec v2 (DESIGN.md, tokens, recipes, kit.css, reference boards, screens/)
+refs/edmi-ui              BINDING design spec v2.1 = v2 + REVISIONS.md (DESIGN.md, tokens incl. base/slate.css + themes/ocean.css, recipes, kit.css, reference boards, screens/ incl. layerbeat-example)
 refs/stockbreak-design    spec v1, history only; do not follow
 ```
 
@@ -78,7 +78,9 @@ Generated, gitignored, never hand-edited: every `registry.json`, `apps/docs/publ
 
 ## 5. Design rules and `raised`
 
-Binding spec: `refs/edmi-ui/DESIGN.md` (§1 stack, §4 rules, §5 components). **Read §4 before touching any component.** Classes come from `packages/tokens/src/recipes.ts` (inline the strings into each component; registry files cannot import `@edmi-ui/tokens`). Compare with the boards in `refs/edmi-ui/screens/edmi-ui-kit/<NN-board>-{light,dark}.png` (each board has a "Raised ✦" row) and `refs/edmi-ui/reference/*.dc.html` for exact values. Do not "improve" §4.
+Binding spec (v2.1, `refs/edmi-ui` incl. `REVISIONS.md`, the changelog of v1 → v2.1): `refs/edmi-ui/DESIGN.md` (§1 stack, §3 theming, §4 rules, §5 components). **Read §4 before touching any component.** Classes come from `packages/tokens/src/recipes.ts` (inline the strings into each component; registry files cannot import `@edmi-ui/tokens`). Compare with the boards in `refs/edmi-ui/screens/edmi-ui-kit/<NN-board>-{light,dark}.png` (each board has a "Raised ✦" row) and `refs/edmi-ui/reference/*.dc.html` for exact values. Do not "improve" §4.
+
+Theming (spec §3, v2.1): four knobs on `<html>`: mode `class="dark"`, `data-base` (stone default, slate), `data-theme` (green default, ocean), `--radius`. Load order tokens → base → themes. `@edmi-ui/tokens` ships `base/slate.css` and `themes/ocean.css` (exports `./base/slate.css`, `./themes/ocean.css`); distribution/customizer wiring is a separate task. Components use tokens only, never a theme name.
 
 Rules in short (§4):
 1. Flat by default; `raised` opt-in. `ghost`, `link` buttons and Tabs `line` are never raised.
@@ -90,6 +92,8 @@ Rules in short (§4):
 7. Floating chips over another surface are solid (`--popover`) with a 1px border; no transparency or outer ring.
 8. Inset panel: header on `--muted` shell; body `--card` edge to edge with top radius only; footer back on shell.
 9. Message rows: avatar top-aligned with the sender line. 10. One height per group. 11. Numbers are mono, right-aligned in tables; up = `--brand-text`, down = `--destructive-text`. 12. Marketing headings soft ink, weight 400–500. 13. Brand badges/alerts/toasts = soft fill + tinted 30–40% border.
+14. **Dark-mode lips are gray, never black.** Dark `lip`, `lip-strong`, `secondary-lip`, `outline-lip` are grays lighter than the canvas (like the white primary's gray lip). Never hard-code a near-black lip; use the tokens. Outline `raised` (Button, Toggle, toggle-group items) = gradient `from-outline-hi to-outline-face` + `border-b-outline-lip` + `shadow-btn-outline` (= `0 2px 0 var(--outline-lip)`) + `[background-origin:border-box]`; other raised surfaces (select, native select, pagination, menubar, watch item) use `border-b-lip` with `shadow-[0_2px_0_var(--lip)]` so border and shadow share one colour.
+15. **Positive = `success`.** Up deltas, done ticks/states, success toasts, `badge`/`alert` variant `success` use `success-soft` / `success-text` (always green). `brand` is the theme accent and turns blue under `data-theme="ocean"`: use it only for accent roles (brand button/badge, live state, switch, slider, progress, ring).
 
 Tokens/type: OKLCH tokens in `:root` (light) and `.dark`; theme and layout stored in a cookie (plain `document.cookie`, SSR-readable). Radius from `--radius: 0.625rem`. **Control height `h-9` (36px)**, `sm` 32px, `lg` 42px (Button, Input, Input Group, Select, Toggle; Textarea min-h-24). Inputs inside a ButtonGroup: `rounded-r-none shadow-none`. Fonts: Instrument Sans (UI), JetBrains Mono (every number), Sora 600 (wordmarks only).
 
@@ -201,7 +205,7 @@ bunx changeset status                      # a changeset exists for user-visible
 ```
 CI (`ci.yml`) runs: `bun install --frozen-lockfile`, `gen:strict`, `typecheck`, `lint`, `test`, `build:registry`, docs build, `scripts/smoke/all.sh` with `EDMI_URL=https://viandwi24.github.io/edmi-ui`.
 
-Visual QA (UI changes): run the port's preview (or `astro preview` for docs) and compare each affected board `refs/edmi-ui/screens/edmi-ui-kit/<NN>-*-{light,dark}.png` in light **and** dark, flat **and** raised. Also run computed-style audits: no non-inset blurred `box-shadow`; every gradient on a bordered raised control has `background-origin: border-box`; lip colour = bottom border colour; no `inset 0 -N` shade; flat demos contain no gradient/lip; control heights 36/32/42; table numbers mono and right-aligned. Grep the registry for leftovers (`h-[38px]`, `shadow-pop|dialog|card|btn-*` outside raised strings). Check real clicks on interactive demos (menus open, toast fires). Pressed/focus/open states and portalled popups in dark are easy to miss; verify or state that you did not. Examples vs `refs/edmi-ui/screens/stockbreak-example/markets-{light,dark}.png`. Not verifiable without a remote: StackBlitz links.
+Visual QA (UI changes): run the port's preview (or `astro preview` for docs) and compare each affected board `refs/edmi-ui/screens/edmi-ui-kit/<NN>-*-{light,dark}.png` (boards: 01 Foundations, 02 Themes, 03 Actions, 04 Forms text, 05 Forms choice, 06 Display, 07 Feedback/Overlays, 08 Menus/Navigation, 09 Layout/Disclosure, 10 Data, 11 Conversation, 12 Patterns; Layerbeat example in `screens/layerbeat-example/`) in light **and** dark, flat **and** raised. Also run computed-style audits: no non-inset blurred `box-shadow`; every gradient on a bordered raised control has `background-origin: border-box`; lip colour = bottom border colour; no `inset 0 -N` shade; flat demos contain no gradient/lip; control heights 36/32/42; table numbers mono and right-aligned. Grep the registry for leftovers (`h-[38px]`, `shadow-pop|dialog|card|btn-*` outside raised strings). Check real clicks on interactive demos (menus open, toast fires). Pressed/focus/open states and portalled popups in dark are easy to miss; verify or state that you did not. Examples vs `refs/edmi-ui/screens/stockbreak-example/markets-{light,dark}.png`. Not verifiable without a remote: StackBlitz links.
 
 ## 9. Versioning and release
 
@@ -222,11 +226,15 @@ Environment and process
 Spec and design
 - Binding spec is `refs/edmi-ui` v2 (flat by default, `raised` opt-in, control height `h-9`). Why: user replaced the spec; the new DESIGN.md has no distribution section, so the registry distribution below stays unchanged.
 - Flat default is a default-look change ⇒ minor while 0.x. Ghost/link/Tabs-line never raised.
-- Menubar raised has no recipe string: `border-b-lip shadow-btn-outline` derived from board 07; bar `rounded-[10px] p-[3px]`, triggers `h-[30px] px-3`. AlertDialog accepts `raised` like Dialog (it is a dialog); Sheet/Drawer/HoverCard/menus are flat only.
+- Menubar raised has no recipe string: `border-b-lip shadow-btn-outline` derived from board 08; bar `rounded-[10px] p-[3px]`, triggers `h-[30px] px-3`. AlertDialog accepts `raised` like Dialog (it is a dialog); Sheet/Drawer/HoverCard/menus are flat only.
 - Cross-port consistency: DatePicker/DateRangePicker forward `raised` to trigger + Calendar; choice card checked = `border-ring` + 1px ring in all ports; Message avatar is top-aligned (spec) not stock bottom-aligned; questionnaire shortcut key left of label, check indicator right (board); checkbox/radio indicators in menus sit in the left 16px slot (board, menubar).
 - Recipe classes are inlined per component; Base UI selectors are bracket attributes so components do not depend on `shadcn/tailwind.css`.
 - Inset panel is its own `registry:ui` item (`inset-panel`), not a Card variant. Badge has ✦ `shape` (default|pill|number). Toggle-group ✦ `variant="segmented"`; accordion ✦ `variant=card`; carousel ✦ `CarouselDots`.
 - Icons: default **Phosphor**, switchable. (Supersedes DESIGN.md v1's lucide.) React/Svelte via IconPlaceholder, Vue via init `--icon-library phosphor`.
+
+- Spec v2.1 (delta `refs/edmi-ui-update-2`, merged into `refs/edmi-ui`, gitignored): theming knobs, `success-*` tokens, gray dark lips, outline raised gradient, kit boards renumbered (Themes = 02, Patterns = 12). Why: user replaced the spec again; REVISIONS.md is the changelog.
+- Positive semantics use `success`, not `brand` (table `trend=up`, index-row/sparkline, ticker-strip, watchlist-item, stat-tile delta badge, task-list completed, Sonner success, attachment done tick, data-table deltas). Kept on `brand` (theme accent): brand button/badge/alert, agent-card Autopilot badge, faceted-filter count, slider, progress brand, switch, avatar badge, bubble tinted/active reaction, code-block highlight, sidebar menu badge, avatar gradients.
+- `shadow-btn-outline` is now `0 2px 0 var(--outline-lip)` (dark gray lip differs from `--lip`), so select/native-select/pagination/menubar/watchlist-item raised use `shadow-[0_2px_0_var(--lip)]` next to `border-b-lip` (recipes.ts still says `shadow-btn-outline` there; one lip colour per rule 3 wins). Alert `info` already existed; v2.1 adds `success` to Badge and Alert.
 
 Registry and tooling
 - Generator split: pure logic `scripts/lib/registry.ts` (tested) + CLI; manifest overlays `<group>.vue.ts`/`.svelte.ts` so ports never conflict; per-fw `skip`; `aggregate: "ui"` for `all`/`edmi`; `optionalRegistryDependencies`.

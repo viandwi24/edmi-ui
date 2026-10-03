@@ -98,7 +98,7 @@ export default function Demo() {
 						hugeicons="Tick02Icon"
 						phosphor="CheckIcon"
 						remixicon="RiCheckLine"
-						className="size-4 text-brand-text"
+						className="size-4 text-success-text"
 					/>
 				</AttachmentActions>
 			</Attachment>

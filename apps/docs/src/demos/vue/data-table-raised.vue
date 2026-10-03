@@ -91,7 +91,7 @@ const columns = col.columns([
       return h("div", { class: "text-right" }, [
         h(
           Badge,
-          { variant: v >= 0 ? "brand" : "destructive", class: "font-mono" },
+          { variant: v >= 0 ? "success" : "destructive", class: "font-mono" },
           () => `${v >= 0 ? "+" : "−"}${Math.abs(v).toFixed(2)}%`,
         ),
       ]);

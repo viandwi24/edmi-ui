@@ -24,10 +24,10 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 ## API
 | Prop | Type | Default |
 | --- | --- | --- |
-| `Alert variant` | `default \| destructive \| brand \| warning \| info` | `default` |
+| `Alert variant` | `default \| destructive \| brand \| success \| warning \| info` | `default` |
 | `AlertAction` | slot, placed in the last column | none |
 
 Parts: `Alert`, `AlertTitle`, `AlertDescription`, `AlertAction`. A direct `svg` child becomes the leading icon.
 
 ## ✦ Edmi additions
-- `brand`, `warning`, `info` variants: soft fill with a tinted 40% border (DESIGN §4.12), never solid.
+- `brand`, `success`, `warning`, `info` variants: soft fill with a tinted 40% border (DESIGN §4.12), never solid. `success` is always green (`--success-soft`/`--success-text`); `brand` follows the theme accent.

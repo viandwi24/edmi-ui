@@ -24,6 +24,8 @@
 			"!packages/tokens/src/tokens.json",
 			"!packages/tokens/src/recipes.ts",
 			"!packages/tokens/src/kit.css",
+			"!packages/tokens/src/base/slate.css",
+			"!packages/tokens/src/themes/ocean.css",
 			"!examples/svelte/.vscode",
 			"!examples/svelte/src/routes/layout.css",
 			"!examples/*/src/lib/utils.ts",

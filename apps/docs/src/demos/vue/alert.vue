@@ -20,13 +20,23 @@ const warn =
       <AlertTitle>Transaction failed</AlertTitle>
       <AlertDescription>Slippage was above 1%. Try a smaller order.</AlertDescription>
     </Alert>
-    <Alert variant="brand">
+    <Alert variant="success">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path :d="check" /></svg>
       <AlertTitle>Index launched</AlertTitle>
       <AlertDescription>MAG4 is live and accepting joins.</AlertDescription>
       <AlertAction>
         <Button size="xs" variant="outline">View</Button>
       </AlertAction>
+    </Alert>
+    <Alert variant="brand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path :d="info" /></svg>
+      <AlertTitle>Autopilot is on</AlertTitle>
+      <AlertDescription>Rebalances run automatically with the theme accent.</AlertDescription>
+    </Alert>
+    <Alert variant="info">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path :d="info" /></svg>
+      <AlertTitle>Oracle updated</AlertTitle>
+      <AlertDescription>Prices refresh every 15 seconds.</AlertDescription>
     </Alert>
     <Alert variant="warning">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path :d="warn" /></svg>
