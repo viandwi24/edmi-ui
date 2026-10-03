@@ -1,0 +1,24 @@
+<script setup lang="ts">
+// Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
+import type { HTMLAttributes } from "vue"
+import { ChevronDownIcon } from "@lucide/vue"
+import { cn } from "@/registry/edmi/lib/utils"
+import { Badge } from "@/registry/edmi/ui/badge"
+
+const props = defineProps<{
+  label: string
+  count?: number
+  class?: HTMLAttributes["class"]
+}>()
+</script>
+
+<template>
+  <span data-slot="ai-queue-section-label" :class="cn('flex items-center gap-2', props.class)">
+    <ChevronDownIcon
+      class="size-4 text-muted-foreground transition-transform group-data-[state=open]/queue-trigger:rotate-180"
+    />
+    <slot name="icon" />
+    <span>{{ label }}</span>
+    <Badge v-if="count !== undefined" shape="number" variant="secondary" class="h-5">{{ count }}</Badge>
+  </span>
+</template>
