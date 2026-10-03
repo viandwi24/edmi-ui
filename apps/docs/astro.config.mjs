@@ -10,6 +10,7 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import { edmiResolve } from "./plugins/edmi-resolve.mjs";
 import { genIslands } from "./plugins/gen-islands.mjs";
+import { vueNoReactRefresh } from "./plugins/vue-no-react-refresh.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(here, "../..");
@@ -118,12 +119,22 @@ export default defineConfig({
 				{ label: "Changelog", slug: "changelog" },
 			],
 		}),
-		react(),
+		// Scope React (and its Fast Refresh) to React files; the default filter matches every .ts/.tsx.
+		// Vue SFCs still receive `$RefreshSig$` through plugin-vue, see vueNoReactRefresh below.
+		react({
+			include: [
+				"**/packages/react/**",
+				"**/src/demos/react/**",
+				"**/src/components/landing/**",
+				"**/src/components/thumbs/**",
+				"**/src/components/islands/react/**",
+			],
+		}),
 		vue(),
 		svelte(),
 	],
 	vite: {
-		plugins: [edmiResolve(repoRoot), tailwindcss()],
+		plugins: [edmiResolve(repoRoot), tailwindcss(), vueNoReactRefresh()],
 		resolve: {
 			dedupe: [
 				"react",
