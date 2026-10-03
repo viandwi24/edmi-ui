@@ -27,10 +27,11 @@ jobs:
       - run: bun install --frozen-lockfile
       - uses: changesets/action@v2.1.2
         with:
-          version: bunx changeset version
+          version-script: bunx changeset version
+          # Runs via exec (no shell), so the chained steps live in the root `release` script.
           # gen:strict is rerun by pack:registries per framework with the CDN EDMI_URL.
-          publish: bun run gen:strict && bun run build:registry && bun run pack:registries && bunx changeset publish
-          createGithubReleases: true
+          publish-script: bun run release
+          create-github-releases: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           EDMI_URL: https://viandwi24.github.io/edmi-ui

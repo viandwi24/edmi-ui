@@ -28,6 +28,7 @@ bun run gen                 # generate packages/<fw>/registry.json from registry
 bun run gen:strict          # same, but missing files / unresolved deps are errors (CI uses this)
 bun run build:registry      # run each package's registry build -> apps/docs/public/r/<fw>/*.json
 bun run pack:registries     # build npm-publishable registries into packages/registry-<fw>/r (EDMI_URL = jsDelivr path)
+bun run release             # CI publish step (release.yml publish-script): gen:strict, build:registry, pack:registries, changeset publish
 bun run verify:matrix       # item x framework matrix (manifest + built JSON + docs page + demo + <name>-raised demos); exit 1 on gaps; --markdown prints the README table
 bun run typecheck           # root tsc + every workspace's typecheck (astro check, vue-tsc wrapper, svelte-check)
 bun run lint                # biome check .   (bun run format = biome check --write .)
