@@ -27,4 +27,26 @@ export const examples: ExampleMeta[] = [
 			"Button",
 		],
 	},
+	{
+		slug: "editorial-light",
+		title: "Editorial (light)",
+		tag: "Marketing",
+		description:
+			"Cofounder-style editorial marketing page: two-tone hero, agent workspace card, feature rows with a staged board, metric tiles with live joiners, guide chapter cards and footer.",
+		board: "Cofounder Clone",
+		thumb: "editorial-light",
+		frameworks: ALL,
+		height: 900,
+		uses: [
+			"SiteHeader",
+			"FeatureRow",
+			"Card",
+			"Tabs",
+			"StatTile",
+			"Avatar",
+			"Badge",
+			"Button",
+			"SiteFooter",
+		],
+	},
 ];
