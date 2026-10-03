@@ -49,4 +49,25 @@ export const examples: ExampleMeta[] = [
 			"SiteFooter",
 		],
 	},
+	{
+		slug: "editorial-dark",
+		title: "Editorial (dark)",
+		tag: "Marketing",
+		description:
+			"Claude-style dark editorial page: navigation menu with a product mega menu, centered hero with sign-in card and a live index card, plan comparison with a segmented switch, FAQ accordion and footer.",
+		board: "Claude Clone",
+		thumb: "editorial-dark",
+		frameworks: ALL,
+		height: 900,
+		uses: [
+			"NavigationMenu",
+			"Card",
+			"Button",
+			"ToggleGroup",
+			"PricingPlan",
+			"Accordion",
+			"SiteHeader",
+			"SiteFooter",
+		],
+	},
 ];
