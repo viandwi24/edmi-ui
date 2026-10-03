@@ -12,7 +12,7 @@
       },
     },
     "apps/docs": {
-      "name": "@edmi/docs",
+      "name": "@edmi-ui/docs",
       "version": "0.0.1",
       "dependencies": {
         "@astrojs/check": "^0.9.0",
@@ -22,7 +22,7 @@
         "@astrojs/svelte": "^9.0.1",
         "@astrojs/vue": "^7.0.3",
         "@base-ui/react": "^1.8.0",
-        "@edmi/tokens": "workspace:*",
+        "@edmi-ui/tokens": "workspace:*",
         "@internationalized/date": "^3.12.4",
         "@lucide/svelte": "^1.50.0",
         "@lucide/vue": "^1.50.0",
@@ -66,7 +66,7 @@
       },
     },
     "examples/react": {
-      "name": "@edmi/example-react",
+      "name": "@edmi-ui/example-react",
       "version": "0.0.0",
       "dependencies": {
         "@base-ui/react": "^1.8.0",
@@ -103,7 +103,7 @@
       },
     },
     "examples/svelte": {
-      "name": "@edmi/example-svelte",
+      "name": "@edmi-ui/example-svelte",
       "version": "0.0.0",
       "dependencies": {
         "@fontsource-variable/instrument-sans": "^5.3.0",
@@ -139,7 +139,7 @@
       },
     },
     "examples/vue": {
-      "name": "@edmi/example-vue",
+      "name": "@edmi-ui/example-vue",
       "version": "0.0.0",
       "dependencies": {
         "@fontsource-variable/instrument-sans": "^5.3.0",
@@ -173,11 +173,11 @@
       },
     },
     "packages/react": {
-      "name": "@edmi/react",
+      "name": "@edmi-ui/react",
       "version": "0.0.0",
       "dependencies": {
         "@base-ui/react": "^1.8.0",
-        "@edmi/tokens": "workspace:*",
+        "@edmi-ui/tokens": "workspace:*",
         "@fontsource/instrument-sans": "^5.3.0",
         "@fontsource/jetbrains-mono": "^5.3.0",
         "@phosphor-icons/react": "^2.1.10",
@@ -211,22 +211,22 @@
       },
     },
     "packages/registry-react": {
-      "name": "@edmi/registry-react",
+      "name": "@edmi-ui/registry-react",
       "version": "0.0.0",
     },
     "packages/registry-svelte": {
-      "name": "@edmi/registry-svelte",
+      "name": "@edmi-ui/registry-svelte",
       "version": "0.0.0",
     },
     "packages/registry-vue": {
-      "name": "@edmi/registry-vue",
+      "name": "@edmi-ui/registry-vue",
       "version": "0.0.0",
     },
     "packages/svelte": {
-      "name": "@edmi/svelte",
+      "name": "@edmi-ui/svelte",
       "version": "0.0.0",
       "devDependencies": {
-        "@edmi/tokens": "workspace:*",
+        "@edmi-ui/tokens": "workspace:*",
         "@fontsource-variable/geist": "^5.3.0",
         "@internationalized/date": "^3.12.4",
         "@sveltejs/adapter-auto": "^8.0.0",
@@ -257,17 +257,17 @@
       },
     },
     "packages/tokens": {
-      "name": "@edmi/tokens",
+      "name": "@edmi-ui/tokens",
       "version": "0.0.0",
       "dependencies": {
         "class-variance-authority": "^0.7.1",
       },
     },
     "packages/vue": {
-      "name": "@edmi/vue",
+      "name": "@edmi-ui/vue",
       "version": "0.0.0",
       "dependencies": {
-        "@edmi/tokens": "workspace:*",
+        "@edmi-ui/tokens": "workspace:*",
         "@internationalized/date": "^3.12.4",
         "@lucide/vue": "^1.50.0",
         "@tailwindcss/vite": "^4.3.3",
@@ -515,27 +515,27 @@
 
     "@dotenvx/tooling": ["@dotenvx/tooling@1.0.3", "", {}, "sha512-Gd6qQol/ICb4MPRWpiIH56y+pR9AVB7kPBkbhrLSGLtAiF4Qgy+k651/f2pze0Xbm3H5XewbPfIm4y9K+ic30Q=="],
 
-    "@edmi/docs": ["@edmi/docs@workspace:apps/docs"],
+    "@edmi-ui/docs": ["@edmi-ui/docs@workspace:apps/docs"],
 
-    "@edmi/example-react": ["@edmi/example-react@workspace:examples/react"],
+    "@edmi-ui/example-react": ["@edmi-ui/example-react@workspace:examples/react"],
 
-    "@edmi/example-svelte": ["@edmi/example-svelte@workspace:examples/svelte"],
+    "@edmi-ui/example-svelte": ["@edmi-ui/example-svelte@workspace:examples/svelte"],
 
-    "@edmi/example-vue": ["@edmi/example-vue@workspace:examples/vue"],
+    "@edmi-ui/example-vue": ["@edmi-ui/example-vue@workspace:examples/vue"],
 
-    "@edmi/react": ["@edmi/react@workspace:packages/react"],
+    "@edmi-ui/react": ["@edmi-ui/react@workspace:packages/react"],
 
-    "@edmi/registry-react": ["@edmi/registry-react@workspace:packages/registry-react"],
+    "@edmi-ui/registry-react": ["@edmi-ui/registry-react@workspace:packages/registry-react"],
 
-    "@edmi/registry-svelte": ["@edmi/registry-svelte@workspace:packages/registry-svelte"],
+    "@edmi-ui/registry-svelte": ["@edmi-ui/registry-svelte@workspace:packages/registry-svelte"],
 
-    "@edmi/registry-vue": ["@edmi/registry-vue@workspace:packages/registry-vue"],
+    "@edmi-ui/registry-vue": ["@edmi-ui/registry-vue@workspace:packages/registry-vue"],
 
-    "@edmi/svelte": ["@edmi/svelte@workspace:packages/svelte"],
+    "@edmi-ui/svelte": ["@edmi-ui/svelte@workspace:packages/svelte"],
 
-    "@edmi/tokens": ["@edmi/tokens@workspace:packages/tokens"],
+    "@edmi-ui/tokens": ["@edmi-ui/tokens@workspace:packages/tokens"],
 
-    "@edmi/vue": ["@edmi/vue@workspace:packages/vue"],
+    "@edmi-ui/vue": ["@edmi-ui/vue@workspace:packages/vue"],
 
     "@emmetio/abbreviation": ["@emmetio/abbreviation@2.3.3", "", { "dependencies": { "@emmetio/scanner": "^1.0.4" } }, "sha512-mgv58UrU3rh4YgbE/TzgLQwJ3pFsHHhCLqY20aJq+9comytTXUDNGG/SMtSeMJdkpxgXSXunBGLD8Boka3JyVA=="],
 
@@ -2775,21 +2775,21 @@
 
     "@dotenvx/dotenvx/open": ["open@8.4.2", "", { "dependencies": { "define-lazy-prop": "^2.0.0", "is-docker": "^2.1.1", "is-wsl": "^2.2.0" } }, "sha512-7x81NCL719oNbsq/3mh+hVrAWmFuEYUqrq/Iw3kUzH8ReypT9QQ0BLoJS7/G9k6N81XjW4qHWtjWwe/9eLy1EQ=="],
 
-    "@edmi/docs/typescript": ["typescript@6.0.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw=="],
+    "@edmi-ui/docs/typescript": ["typescript@6.0.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw=="],
 
-    "@edmi/example-react/typescript": ["typescript@6.0.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw=="],
+    "@edmi-ui/example-react/typescript": ["typescript@6.0.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw=="],
 
-    "@edmi/example-svelte/cn": ["cn@0.3.3", "", { "bin": { "cn": "bin/cn.mjs" } }, "sha512-OEiyJkSpYm2kOuNOKQ+c2wmzZRG8orrb9fnObtHTbCGNx/E9KLnGcmcocItOzREKk5KzQN5I2e3BUCj563KEpw=="],
+    "@edmi-ui/example-svelte/cn": ["cn@0.3.3", "", { "bin": { "cn": "bin/cn.mjs" } }, "sha512-OEiyJkSpYm2kOuNOKQ+c2wmzZRG8orrb9fnObtHTbCGNx/E9KLnGcmcocItOzREKk5KzQN5I2e3BUCj563KEpw=="],
 
-    "@edmi/example-svelte/typescript": ["typescript@6.0.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw=="],
+    "@edmi-ui/example-svelte/typescript": ["typescript@6.0.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw=="],
 
-    "@edmi/example-vue/typescript": ["typescript@6.0.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw=="],
+    "@edmi-ui/example-vue/typescript": ["typescript@6.0.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw=="],
 
-    "@edmi/react/typescript": ["typescript@6.0.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw=="],
+    "@edmi-ui/react/typescript": ["typescript@6.0.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw=="],
 
-    "@edmi/svelte/typescript": ["typescript@6.0.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw=="],
+    "@edmi-ui/svelte/typescript": ["typescript@6.0.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw=="],
 
-    "@edmi/vue/typescript": ["typescript@6.0.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw=="],
+    "@edmi-ui/vue/typescript": ["typescript@6.0.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw=="],
 
     "@emotion/babel-plugin/convert-source-map": ["convert-source-map@1.9.0", "", {}, "sha512-ASFBup0Mz1uyiIjANan1jzLQami9z1PoYSZCiiYW2FczPbenXc45FZdBZLzOT+r6+iciuEModtmCti+hjaAk0A=="],
 

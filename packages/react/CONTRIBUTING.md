@@ -1,4 +1,4 @@
-# Contributing to @edmi/react (registry)
+# Contributing to @edmi-ui/react (registry)
 
 Source: `registry/{ui,lib,hooks,blocks}/` (physical) imported as `@/registry/edmi/ui/<x>`; `cn` from `"cn"`. Deps are pre-installed: **never touch package.json / bun.lock / components.json / src/index.css** (ask the maintainer; see AGENTS.md section 12).
 

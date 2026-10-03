@@ -38,8 +38,8 @@ bunx changeset              # add a changeset (see 9)
 ```
 
 Per-package preview pages (light and dark side by side, one page per board group, auto-discovered `src/preview/<group>.*`):
-`bun run --filter @edmi/react dev -- --port <p>`, `bun run --filter @edmi/vue dev -- --port <p>`, `bun run --filter @edmi/svelte dev -- --port <p>` (Svelte route `/preview?group=*`).
-Docs: `bun run --filter @edmi/docs build|preview`.
+`bun run --filter @edmi-ui/react dev -- --port <p>`, `bun run --filter @edmi-ui/vue dev -- --port <p>`, `bun run --filter @edmi-ui/svelte dev -- --port <p>` (Svelte route `/preview?group=*`).
+Docs: `bun run --filter @edmi-ui/docs build|preview`.
 
 Smoke tests (install the built registry into a **fresh** project the way a user would, then typecheck/build; they build the registry into a temp dir with a local `EDMI_URL`, so `apps/docs/public` is untouched):
 `bash scripts/smoke/all.sh` (all) or `react.sh | vue.sh | svelte.sh | example-react.sh | example-vue.sh | example-svelte.sh`. `scripts/smoke/vue-icons.ts` (run by `vue.sh`) validates Vue icon names (see 6).
@@ -47,7 +47,7 @@ Smoke tests (install the built registry into a **fresh** project the way a user 
 ## 3. Repo map
 
 ```
-packages/tokens           @edmi/tokens (published): tokens.css, theme.css, tokens.json, fonts.css, recipes.ts, css-vars.ts. recipes.ts/kit.css are verbatim copies from refs/edmi-ui
+packages/tokens           @edmi-ui/tokens (published): tokens.css, theme.css, tokens.json, fonts.css, recipes.ts, css-vars.ts. recipes.ts/kit.css are verbatim copies from refs/edmi-ui
 packages/react|vue|svelte private registry SOURCES (never published): registry/{ui,lib,hooks,blocks}/… (svelte: src/lib/registry/…) + preview app + components.json
 packages/registry-<fw>    publish wrappers holding built r/*.json (generated, gitignored); versioned CDN registries
 registry.manifest/        single source of truth for items:
@@ -70,15 +70,15 @@ Generated, gitignored, never hand-edited: every `registry.json`, `apps/docs/publ
 1. Items are declared once in `registry.manifest/<group>.ts` (`name`, `title`, `description`, `type`, `categories`, `registryDependencies` as **Edmi names only**, `docs`, `frameworks.react`). Vue/Svelte file lists live in the `<group>.vue.ts` / `<group>.svelte.ts` overlays (separate files so ports never edit the same file). Per-framework `skip: true` omits an item (the only one today: `use-mobile` for Vue); depending on a skipped item is an error.
 2. `bun run gen` (`scripts/gen-registry.ts`, logic in `scripts/lib/registry.ts`) writes `packages/<fw>/registry.json`: deterministic, sorted, with `homepage = EDMI_URL`. It rewrites `registryDependencies`: React/Vue → `@edmi/<name>`, Svelte → `${EDMI_URL}/r/svelte/<name>.json` (shadcn-svelte has no namespaces). `--strict`/`CI=true` fails on missing files; `--out <dir>` writes all three elsewhere (smoke tests).
 3. The port's own CLI builds JSON: `shadcn build` (React), `shadcn-vue build`, `bunx --bun shadcn-svelte registry build`, into `apps/docs/public/r/<fw>/`. Pages serves them at `https://viandwi24.github.io/edmi-ui/r/<fw>/{name}.json` (CORS open).
-4. Entry items (`registry.manifest/meta.ts`): `theme` (registry:theme, cssVars from `@edmi/tokens`, `[data-raised]` base rule, border/body base layer), `all` (aggregate of every `registry:ui` item for that framework), `edmi` (React `registry:base` with `extends: "none"`, `config.style: "base-nova"`, `config.iconLibrary: phosphor`, `config.registries["@edmi"]` injected from `EDMI_URL`; Vue → `registry:block`; Svelte → `registry:style`), `font-instrument-sans|jetbrains-mono|sora` (React `registry:font`, `@fontsource-variable/*`; Vue/Svelte get the Google Fonts `@import` inside theme `css`).
+4. Entry items (`registry.manifest/meta.ts`): `theme` (registry:theme, cssVars from `@edmi-ui/tokens`, `[data-raised]` base rule, border/body base layer), `all` (aggregate of every `registry:ui` item for that framework), `edmi` (React `registry:base` with `extends: "none"`, `config.style: "base-nova"`, `config.iconLibrary: phosphor`, `config.registries["@edmi"]` injected from `EDMI_URL`; Vue → `registry:block`; Svelte → `registry:style`), `font-instrument-sans|jetbrains-mono|sora` (React `registry:font`, `@fontsource-variable/*`; Vue/Svelte get the Google Fonts `@import` inside theme `css`).
 5. Install flows: React `init <url>/edmi.json` (new) or `registry add "@edmi=<url>/r/react/{name}.json"` + `add @edmi/theme @edmi/all --overwrite`; Vue `registries.@edmi` in `components.json` + `add @edmi/theme @edmi/all --overwrite` (init-from-URL is unsupported, see 11); Svelte URL-only `add <url>/theme.json <url>/all.json --overwrite`.
 6. `registryDependencies` rules: Edmi names only, never stock shadcn items; every dependency must exist in the manifest; a dependency may not be skipped for that framework.
-7. Distribution: Pages = docs + latest registries (`EDMI_URL` = Pages URL). npm = `@edmi/tokens` and `@edmi/registry-{react,vue,svelte}`; `pack:registries` regenerates with `EDMI_URL=https://cdn.jsdelivr.net/npm/@edmi/registry-svelte@<major>` so Svelte URL deps pin the same major. Consumers: `https://cdn.jsdelivr.net/npm/@edmi/registry-<fw>@0/r/<name>.json`. `@edmi/{react,vue,svelte}` source packages are `"private": true`.
+7. Distribution: Pages = docs + latest registries (`EDMI_URL` = Pages URL). npm = `@edmi-ui/tokens` and `@edmi-ui/registry-{react,vue,svelte}`; `pack:registries` regenerates with `EDMI_URL=https://cdn.jsdelivr.net/npm/@edmi-ui/registry-svelte@<major>` so Svelte URL deps pin the same major. Consumers: `https://cdn.jsdelivr.net/npm/@edmi-ui/registry-<fw>@0/r/<name>.json`. `@edmi-ui/{react,vue,svelte}` source packages are `"private": true`.
 8. Schema notes: Svelte registry items are strict (no `docs`/`categories`/`config`; generator moves them into `meta`). `config` is honoured only on React `registry:base`. Every emitted item has `files` + `registryDependencies` (possibly empty).
 
 ## 5. Design rules and `raised`
 
-Binding spec: `refs/edmi-ui/DESIGN.md` (§1 stack, §4 rules, §5 components). **Read §4 before touching any component.** Classes come from `packages/tokens/src/recipes.ts` (inline the strings into each component; registry files cannot import `@edmi/tokens`). Compare with the boards in `refs/edmi-ui/screens/edmi-ui-kit/<NN-board>-{light,dark}.png` (each board has a "Raised ✦" row) and `refs/edmi-ui/reference/*.dc.html` for exact values. Do not "improve" §4.
+Binding spec: `refs/edmi-ui/DESIGN.md` (§1 stack, §4 rules, §5 components). **Read §4 before touching any component.** Classes come from `packages/tokens/src/recipes.ts` (inline the strings into each component; registry files cannot import `@edmi-ui/tokens`). Compare with the boards in `refs/edmi-ui/screens/edmi-ui-kit/<NN-board>-{light,dark}.png` (each board has a "Raised ✦" row) and `refs/edmi-ui/reference/*.dc.html` for exact values. Do not "improve" §4.
 
 Rules in short (§4):
 1. Flat by default; `raised` opt-in. `ghost`, `link` buttons and Tabs `line` are never raised.
@@ -177,7 +177,7 @@ Change React, then mirror the identical change in Vue and Svelte (diff class str
 - Demo islands: Astro only hydrates statically imported components, so `plugins/gen-islands.mjs` generates a wrapper per demo file into `src/components/islands/<fw>/` at config load (gitignored).
 - Resolution: `plugins/edmi-resolve.mjs` aliases (`@/registry/edmi/*`, `@/*`, `$lib/*` resolve inside the importing package; `@edmi-<fw>/*` anywhere); shared libs (react, vue, svelte, base-ui, reka-ui, bits-ui, sonner variants…) are `resolve.dedupe`d and listed as `apps/docs` dependencies so demo and registry file share one instance. The manifest is loaded natively at runtime (`src/lib/manifest.ts`).
 - Theme toggle: Starlight sets `data-theme`; a head script and `ThemeSelect` map it to `.dark` on `<html>`. Preview cards can be forced light with `.edmi-light`. Starlight overrides (Header/Sidebar/PageFrame/Hero/ThemeSelect) give a shadcn-like layout in Edmi tokens; the landing page has a Flat/Raised toggle. Registry previews get a scoped Tailwind-preflight subset in `global.css`. Fonts load via a Google Fonts `<link>` in Starlight `head`.
-- Do not use Starlight `<Tabs>`/`<Steps>`/`<FileTree>` (fail at prerender). `@edmi/docs` build goes under base `/edmi-ui/` and builds a Pagefind index.
+- Do not use Starlight `<Tabs>`/`<Steps>`/`<FileTree>` (fail at prerender). `@edmi-ui/docs` build goes under base `/edmi-ui/` and builds a Pagefind index.
 
 ### 7.5 Examples (`examples/<fw>`)
 Stockbreak Markets page + app shell (dashboard and navbar layouts, cookie layout picker, theme toggle). They install Edmi **only through the CLI** via `examples/install.sh <fw>` (default `EDMI_URL=http://localhost:4321/edmi-ui`, i.e. the docs dev server must serve `/r/<fw>`), and **never import `packages/*`**. Example pages "opt into raised" (CTA, ticker strip, cards, header pills, watchlist, layout picker). Biome ignores installed files (`src/components/ui`, installed blocks, `lib/utils.ts`, hooks). After a re-install restore `components.json` registry URLs to the GitHub Pages URL. Smoke: `bash scripts/smoke/example-<fw>.sh`.
@@ -191,7 +191,7 @@ bun run typecheck
 bun run lint
 bun test
 bun run build:registry && bun run verify:matrix
-bun run --filter @edmi/docs build          # docs + Pagefind under /edmi-ui/ (needs build:registry first)
+bun run --filter @edmi-ui/docs build          # docs + Pagefind under /edmi-ui/ (needs build:registry first)
 bash scripts/smoke/all.sh                  # or the single smoke script for the port you touched
 bun run pack:registries                    # when touching distribution/EDMI_URL logic
 bunx changeset status                      # a changeset exists for user-visible changes
@@ -202,7 +202,7 @@ Visual QA (UI changes): run the port's preview (or `astro preview` for docs) and
 
 ## 9. Versioning and release
 
-- Changesets, **one fixed group**: `@edmi/tokens`, `@edmi/registry-{react,vue,svelte}` always share a version. Private source packages, docs and examples are in the `ignore` list; name `@edmi/tokens` (or a registry package) in your changeset, not them. Add one `.changeset/<name>.md` per change (`bunx changeset`; if it spins at 100% CPU use `bunx --bun changeset`).
+- Changesets, **one fixed group**: `@edmi-ui/tokens`, `@edmi-ui/registry-{react,vue,svelte}` always share a version. Private source packages, docs and examples are in the `ignore` list; name `@edmi-ui/tokens` (or a registry package) in your changeset, not them. Add one `.changeset/<name>.md` per change (`bunx changeset`; if it spins at 100% CPU use `bunx --bun changeset`).
 - Bump: **patch** styling fix inside a component, docs, a ✦ variant that only adds a value; **minor** new component/token/prop/variant (and the v2 default-look change); **major** token renamed/removed, variant/prop removed, default look change breaking layouts, primitive library change. Pre-1.0 (`0.x`): minor may be breaking.
 - Flow and one-time setup (git remote, Pages = GitHub Actions, first local publish of the 4 packages, npm Trusted Publisher per package) are in [RELEASING.md](RELEASING.md). `release.yml` (changesets/action) opens the "Version Packages" PR; merging publishes with provenance, tags `v<version>`, creates a GitHub Release. Zero repository secrets: only `GITHUB_TOKEN` + OIDC. `pages.yml` deploys docs + latest registries (`withastro/action`, `deploy-pages`).
 - Open item needing user confirmation: `release.yml` keeps `actions/setup-node` (Node 22) + `npm i -g npm@latest` solely because npm Trusted Publishing needs real npm >= 11.5.1; everything else is bun. Pending release steps (remote, Pages, first publish, provenance and CDN verification) are listed in RELEASING.md.
@@ -210,6 +210,7 @@ Visual QA (UI changes): run the port's preview (or `astro preview` for docs) and
 ## 10. Decisions log (still binding, with why)
 
 Environment and process
+- npm scope is `@edmi-ui` (`@edmi-ui/tokens`, `@edmi-ui/registry-*`, private workspaces too) because the `edmi` npm org is unavailable. The shadcn registry namespace stays `@edmi` (`@edmi/<item>`, `registries["@edmi"]`); never confuse the two. Why: user decision.
 - Bun-only, no Node, no `gh`. Any CLI failing under bun: try `bunx --bun`, then report the exact command and error before switching approach. Why: user decision.
 - No git remote yet; commit locally on `main`. GitHub owner `viandwi24`, Pages `https://viandwi24.github.io`, base `/edmi-ui`.
 - Official scaffolders only; copy commands from the tool's current docs; hand-write only what no CLI generates. Why: flags drift, CLI output is the convention.

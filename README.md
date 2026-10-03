@@ -54,16 +54,16 @@ bunx shadcn-svelte@latest add https://viandwi24.github.io/edmi-ui/r/svelte/all.j
 
 ### Pinned versions via CDN
 
-Each release also publishes the registries to npm (`@edmi/registry-react`, `@edmi/registry-vue`,
-`@edmi/registry-svelte`), served by jsDelivr. Pin a major:
+Each release also publishes the registries to npm (`@edmi-ui/registry-react`, `@edmi-ui/registry-vue`,
+`@edmi-ui/registry-svelte`), served by jsDelivr. Pin a major:
 
 ```bash
-bunx shadcn@latest add https://cdn.jsdelivr.net/npm/@edmi/registry-react@0/r/button.json
-bunx shadcn-vue@latest add https://cdn.jsdelivr.net/npm/@edmi/registry-vue@0/r/button.json
-bunx shadcn-svelte@latest add https://cdn.jsdelivr.net/npm/@edmi/registry-svelte@0/r/button.json
+bunx shadcn@latest add https://cdn.jsdelivr.net/npm/@edmi-ui/registry-react@0/r/button.json
+bunx shadcn-vue@latest add https://cdn.jsdelivr.net/npm/@edmi-ui/registry-vue@0/r/button.json
+bunx shadcn-svelte@latest add https://cdn.jsdelivr.net/npm/@edmi-ui/registry-svelte@0/r/button.json
 ```
 
-(`npx` works the same as `bunx`.) Design tokens alone: `bun add @edmi/tokens`.
+(`npx` works the same as `bunx`.) Design tokens alone: `bun add @edmi-ui/tokens`.
 
 ## Components
 

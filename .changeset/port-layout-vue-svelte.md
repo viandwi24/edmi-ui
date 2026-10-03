@@ -1,5 +1,5 @@
 ---
-"@edmi/tokens": minor
+"@edmi-ui/tokens": minor
 ---
 
 Port the layout group (accordion, collapsible, resizable, scroll-area, carousel, direction) to Vue and Svelte.

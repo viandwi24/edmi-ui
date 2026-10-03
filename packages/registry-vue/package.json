@@ -1,5 +1,5 @@
 {
-	"name": "@edmi/registry-vue",
+	"name": "@edmi-ui/registry-vue",
 	"version": "0.0.0",
 	"description": "Edmi UI vue registry (built shadcn registry JSON, served via CDN)",
 	"license": "MIT",

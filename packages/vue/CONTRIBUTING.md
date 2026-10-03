@@ -1,4 +1,4 @@
-# Contributing to @edmi/vue (registry)
+# Contributing to @edmi-ui/vue (registry)
 
 Source: `registry/ui/<name>/{<Part>.vue,index.ts}` (physical), imported as `@/registry/edmi/ui/<name>` (barrel, e.g. `import { Button } from "@/registry/edmi/ui/button"`); `cn` from `@/registry/edmi/lib/utils`. The CLI rewrites both to the consumer's aliases on install. Deps are pre-installed: **never touch package.json / bun.lock / components.json / src/style.css** (ask the maintainer; see AGENTS.md section 12). Icons: import from `@lucide/vue` only (the CLI rewrites them to the consumer's `iconLibrary`; Edmi default is `phosphor`, see below).
 

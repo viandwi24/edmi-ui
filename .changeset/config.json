@@ -7,21 +7,21 @@
 	"commit": false,
 	"fixed": [
 		[
-			"@edmi/tokens",
-			"@edmi/registry-react",
-			"@edmi/registry-vue",
-			"@edmi/registry-svelte"
+			"@edmi-ui/tokens",
+			"@edmi-ui/registry-react",
+			"@edmi-ui/registry-vue",
+			"@edmi-ui/registry-svelte"
 		]
 	],
 	"linked": [],
 	"ignore": [
-		"@edmi/react",
-		"@edmi/vue",
-		"@edmi/svelte",
-		"@edmi/docs",
-		"@edmi/example-react",
-		"@edmi/example-vue",
-		"@edmi/example-svelte"
+		"@edmi-ui/react",
+		"@edmi-ui/vue",
+		"@edmi-ui/svelte",
+		"@edmi-ui/docs",
+		"@edmi-ui/example-react",
+		"@edmi-ui/example-vue",
+		"@edmi-ui/example-svelte"
 	],
 	"updateInternalDependencies": "patch"
 }

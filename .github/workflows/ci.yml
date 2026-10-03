@@ -31,7 +31,7 @@ jobs:
       - run: bun run test
       - run: bun run build:registry
       - name: Build docs
-        run: bun run --filter @edmi/docs build
+        run: bun run --filter @edmi-ui/docs build
       # Each smoke script installs the built registry into a fresh project and typechecks/builds it.
       - name: Smoke tests (react, vue, svelte, examples)
         run: bash scripts/smoke/all.sh

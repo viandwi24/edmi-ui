@@ -1,5 +1,5 @@
 ---
-"@edmi/tokens": minor
+"@edmi-ui/tokens": minor
 ---
 
 React overlays: popover.

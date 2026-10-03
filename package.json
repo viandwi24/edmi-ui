@@ -18,7 +18,7 @@
 		"lint": "biome check .",
 		"format": "biome check --write .",
 		"test": "bun test",
-		"dev": "bun run --filter @edmi/docs dev",
+		"dev": "bun run --filter @edmi-ui/docs dev",
 		"release": "bun run gen:strict && bun run build:registry && bun run pack:registries && bunx changeset publish"
 	},
 	"devDependencies": {

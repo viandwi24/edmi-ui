@@ -1,4 +1,4 @@
-# Contributing to @edmi/svelte (registry)
+# Contributing to @edmi-ui/svelte (registry)
 
 Source: `src/lib/registry/{ui,lib,hooks}/<name>/` (physical) + `src/lib/utils.ts` (stock). Imports use the shadcn-svelte defaults: `$lib/utils.js` and `$lib/registry/ui/<x>/index.js` (`registry build` turns them into `$UTILS$`/`$UI$` placeholders; `$lib` is mapped in tsconfig `paths`). Deps are pre-installed: **never touch package.json / bun.lock / components.json / layout.css / tsconfig** (ask the maintainer; see AGENTS.md section 12). Always `bunx --bun` (plain bunx spins at 100% CPU on prompts).
 

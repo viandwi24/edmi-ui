@@ -31,6 +31,6 @@ fixed group, so they always share a version. Pick the bump by impact:
   primitive library change (e.g. Radix to Base UI).
 
 Pre-1.0 (`0.x`): minor may be breaking. Private source packages, docs and examples are in the changeset
-`ignore` list; list `@edmi/tokens` (or a `@edmi/registry-*`) in your changeset, not those.
+`ignore` list; list `@edmi-ui/tokens` (or a `@edmi-ui/registry-*`) in your changeset, not those.
 
 Release process: see [RELEASING.md](RELEASING.md).

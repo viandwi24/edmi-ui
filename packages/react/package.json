@@ -1,5 +1,5 @@
 {
-	"name": "@edmi/react",
+	"name": "@edmi-ui/react",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
@@ -11,7 +11,7 @@
 	},
 	"dependencies": {
 		"@base-ui/react": "^1.8.0",
-		"@edmi/tokens": "workspace:*",
+		"@edmi-ui/tokens": "workspace:*",
 		"@fontsource/instrument-sans": "^5.3.0",
 		"@fontsource/jetbrains-mono": "^5.3.0",
 		"@phosphor-icons/react": "^2.1.10",

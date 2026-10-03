@@ -1,4 +1,4 @@
-// Builds the versioned registries that get published to npm as @edmi/registry-<fw>.
+// Builds the versioned registries that get published to npm as @edmi-ui/registry-<fw>.
 // For each framework: generate registry.json with EDMI_URL pointing at the jsDelivr CDN path of the
 // package (so URL dependencies, e.g. Svelte's, resolve to the pinned major), then run the port's
 // registry build into packages/registry-<fw>/r. The Pages build is separate (EDMI_URL = Pages URL).

@@ -1,5 +1,5 @@
 {
-	"name": "@edmi/example-svelte",
+	"name": "@edmi-ui/example-svelte",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",

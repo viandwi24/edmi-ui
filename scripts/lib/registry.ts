@@ -40,7 +40,7 @@ export type GenOptions = {
 	/**
 	 * URL layout of the registry JSON files the generated items point at:
 	 * `framework` (default, Pages) -> `<edmiUrl>/r/<fw>/<name>.json`;
-	 * `flat` (npm @edmi/registry-<fw> packages, one framework per package) -> `<edmiUrl>/r/<name>.json`.
+	 * `flat` (npm @edmi-ui/registry-<fw> packages, one framework per package) -> `<edmiUrl>/r/<name>.json`.
 	 */
 	urlLayout?: UrlLayout;
 };

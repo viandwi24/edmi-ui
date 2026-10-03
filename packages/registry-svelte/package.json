@@ -1,5 +1,5 @@
 {
-	"name": "@edmi/registry-svelte",
+	"name": "@edmi-ui/registry-svelte",
 	"version": "0.0.0",
 	"description": "Edmi UI svelte registry (built shadcn registry JSON, served via CDN)",
 	"license": "MIT",

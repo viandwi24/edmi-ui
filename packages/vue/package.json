@@ -1,5 +1,5 @@
 {
-	"name": "@edmi/vue",
+	"name": "@edmi-ui/vue",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
@@ -10,7 +10,7 @@
 		"registry:build": "shadcn-vue build --output ../../apps/docs/public/r/vue"
 	},
 	"dependencies": {
-		"@edmi/tokens": "workspace:*",
+		"@edmi-ui/tokens": "workspace:*",
 		"@internationalized/date": "^3.12.4",
 		"@lucide/vue": "^1.50.0",
 		"@tailwindcss/vite": "^4.3.3",
