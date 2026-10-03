@@ -7,3 +7,6 @@
 
 /* Registry sources live in registry/, outside src: tell Tailwind to scan them. */
 @source "../registry";
+
+/* AI pack: Streamdown (MessageResponse) ships Tailwind classes in its dist; tell Tailwind to scan them. */
+@source "../node_modules/streamdown/dist/*.js";
