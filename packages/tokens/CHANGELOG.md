@@ -1,5 +1,13 @@
 # @edmi-ui/tokens
 
+## 0.2.0
+
+### Minor Changes
+
+- 0027f42: The shadcn registry namespace is now `@edmi-ui` (was `@edmi`), matching the npm scope: `shadcn add @edmi-ui/button`, `registries: { "@edmi-ui": "…/r/react/{name}.json" }`. Breaking for existing installs: rename the `@edmi` key in your `components.json` registries to `@edmi-ui`.
+- 05abb58: Edmi UI spec v2.1. New tokens `outline-hi/face/lip` and `success-soft/text`; dark `lip`, `lip-strong`, `secondary-lip` are now visible grays instead of near-black. Outline `raised` (Button, Toggle, toggle-group) uses the outline gradient and gray lip. New `success` variant on Badge and Alert; positive values (table `trend="up"`, deltas, success toast, done states) use `success` instead of `brand`. New `base/slate.css` and `themes/ocean.css` (exports `@edmi-ui/tokens/base/slate.css`, `@edmi-ui/tokens/themes/ocean.css`).
+- 0b5a035: Registry themes for every base x accent: `theme-stone-green`, `theme-stone-ocean`, `theme-slate-green`, `theme-slate-ocean` (`registry:theme`, complete light + dark color tokens, replace `:root`/`.dark` on install; radius is left alone). Bases and accents are auto-discovered from `src/base/*.css` and `src/themes/*.css`. `@edmi-ui/tokens/css-vars` gains `listBases`, `listThemes`, `composeCssVars`, `themeItemCssVars` and `themeToCss`. Docs get a Themes customizer page and a runtime theming guide.
+
 ## 0.1.0
 
 ### Minor Changes
