@@ -21,6 +21,12 @@
 	"publishConfig": {
 		"access": "public"
 	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/viandwi24/edmi-ui.git",
+		"directory": "packages/tokens"
+	},
+	"homepage": "https://github.com/viandwi24/edmi-ui#readme",
 	"scripts": {
 		"typecheck": "tsc --noEmit",
 		"test": "bun test"

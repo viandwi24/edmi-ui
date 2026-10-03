@@ -26,3 +26,21 @@ describe("changesets", () => {
 		});
 	}
 });
+
+describe("published packages", () => {
+	// npm provenance rejects a publish (E422) unless repository.url matches the GitHub repo.
+	const root = join(import.meta.dir, "..", "packages");
+	for (const name of releasable) {
+		test(`${name} declares the GitHub repository`, () => {
+			const pkg = JSON.parse(
+				readFileSync(
+					join(root, name.replace("@edmi-ui/", ""), "package.json"),
+					"utf8",
+				),
+			) as { repository?: { url?: string } };
+			expect(pkg.repository?.url).toBe(
+				"git+https://github.com/viandwi24/edmi-ui.git",
+			);
+		});
+	}
+});
