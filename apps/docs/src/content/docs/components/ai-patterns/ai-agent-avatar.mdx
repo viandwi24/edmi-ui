@@ -1,0 +1,36 @@
+---
+title: Agent Avatar
+description: "5 by 5 pixel identicon generated from an agent id, tinted with a chart color."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-agent-avatar" />
+
+Edmi ✦ addition (not in Vercel AI Elements). Built on plain SVG; no other Edmi items.
+
+## Installation
+
+<ComponentInstall name="ai-agent-avatar" />
+
+## Usage
+
+<ComponentUsage name="ai-agent-avatar" />
+
+## Component source
+
+<ComponentSource name="ai-agent-avatar" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `seed` | `string` (agent id: same seed, same mark) | |
+| `color` | `chart-1` to `chart-5` or any CSS color | picked from the seed |
+| `size` | `number` (px) | `40` |
+| `tile` | `boolean` (muted rounded square behind the mark) | `true` |
+| `label` | `string` (accessible name; decorative when omitted) | |
+
+## ✦ Edmi additions
+- The mark is a 3 by 5 grid mirrored to 5 by 5, so it stays recognisable at 20px. Use it only where several agents appear.

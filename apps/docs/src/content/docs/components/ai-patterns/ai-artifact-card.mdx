@@ -1,0 +1,47 @@
+---
+title: Artifact Card
+description: "File card for generated output: paper thumbnail, format meta, split Download and a generating state."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-artifact-card" />
+
+Edmi ✦ addition (not in Vercel AI Elements). Built on `card`, `button`, `button-group`, `dropdown-menu` and `ai-shimmer`.
+
+## Installation
+
+<ComponentInstall name="ai-artifact-card" />
+
+## Usage
+
+<ComponentUsage name="ai-artifact-card" />
+
+## Component source
+
+<ComponentSource name="ai-artifact-card" />
+
+## Raised ✦
+
+Flat by default. `raised` gives the one-step 3D look.
+
+<ComponentDemo name="ai-artifact-card" demo="ai-artifact-card-raised" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| ArtifactCard | `state` | `ready \| generating` | `ready` |
+| ArtifactCard | `raised` | `boolean` | `false` |
+| ArtifactCardIcon | `kind` | `archive \| document \| code \| image \| slides \| file` | `document` |
+| ArtifactCardThumbnail | `variant` | `paper \| slide` | `paper` |
+| ArtifactCardTitle / Meta / Body | | `div` props | |
+| ArtifactCardActions | `label`, `onDownload` | `ReactNode`, `() => void` | `Download` |
+| ArtifactCardActions | `children` | `DropdownMenuItem`s of the chevron half; no chevron without them | |
+| ArtifactKindIcon | `kind`, `className` | helper, also used by Session Panel | |
+
+## ✦ Edmi additions
+- Split Download button; the chevron opens copy link, open and similar actions.
+- `state="generating"`: the title shimmers and the actions are hidden.
+- `ArtifactCardThumbnail`: the top of page 1 as paper (always light, also in dark mode); `variant="slide"` is dark. It sits flush with the card edges.

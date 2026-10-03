@@ -1,0 +1,37 @@
+---
+title: Chat Header
+description: "Conversation header: title, agent or model, share and more actions."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-chat-header" />
+
+Edmi ✦ addition (not in Vercel AI Elements). Built on `button` and `dropdown-menu`.
+
+## Installation
+
+<ComponentInstall name="ai-chat-header" />
+
+## Usage
+
+<ComponentUsage name="ai-chat-header" />
+
+## Component source
+
+<ComponentSource name="ai-chat-header" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| ChatHeader | `header` props | | |
+| ChatHeaderTitle | | title row | |
+| ChatHeaderProject | `status`, `icon` | `connected \| idle`, `ReactNode` | `connected` |
+| ChatHeaderMenu | DropdownMenuContent props | chevron with the `DropdownMenuItem`s as children | |
+| ChatHeaderActions | | right side | |
+| ChatHeaderShare | Button props | | `Share` |
+
+## ✦ Edmi additions
+- Title with a project indicator (dot = connected), a menu chevron, and actions on the right.

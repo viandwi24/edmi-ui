@@ -1,0 +1,37 @@
+---
+title: Artifact Viewer
+description: "Side panel that shows one artifact: title and format, open-in, download, expand and close; documents render as paper."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-artifact-viewer" />
+
+Edmi ✦ addition (not in Vercel AI Elements). Built on `card`, `button` and `tooltip`.
+
+## Installation
+
+<ComponentInstall name="ai-artifact-viewer" />
+
+## Usage
+
+<ComponentUsage name="ai-artifact-viewer" />
+
+## Component source
+
+<ComponentSource name="ai-artifact-viewer" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| ArtifactViewer | Card props | | |
+| ArtifactViewerTitle | `format` | `ReactNode` (shown after the title in mono) | |
+| ArtifactViewerAction | `label` | `string` (tooltip and accessible name) | |
+| ArtifactViewerOpenIn / Download / Expand / Close | `label`, Button props | `string` | |
+| ArtifactViewerContent | | scroll area on `--muted` | |
+| ArtifactViewerPaper | | white page, same in every mode | |
+
+## ✦ Edmi additions
+- Documents render as paper (white page) on the muted body in light and dark mode (DESIGN 5b rule 5).

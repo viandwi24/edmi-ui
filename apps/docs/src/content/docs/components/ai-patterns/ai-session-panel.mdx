@@ -1,0 +1,37 @@
+---
+title: Session Panel
+description: "Chat side panel: Progress, Outputs with preview and file list, and what was used in this session."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-session-panel" />
+
+Edmi ✦ addition (not in Vercel AI Elements). Built on `card`, `collapsible`, `progress`, `separator`, `button` and `ai-artifact-card` (file icons).
+
+## Installation
+
+<ComponentInstall name="ai-session-panel" />
+
+## Usage
+
+<ComponentUsage name="ai-session-panel" />
+
+## Component source
+
+<ComponentSource name="ai-session-panel" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| SessionProgress | `title`, `value`, `onClose`, Collapsible props | `ReactNode`, `0-100`, `() => void` | `Progress` |
+| SessionSection | `title` | `ReactNode` | |
+| SessionOutputPreview | | box for the large preview | |
+| SessionOutputTitle | `meta` | `ReactNode` | |
+| SessionFile | `name`, `format`, `kind` | `ReactNode`, `ReactNode`, `ArtifactKind` | `document` |
+| SessionSource | `icon`, `label`, `favicons`, `more`, `children` | web search, memory, tools row | |
+
+## ✦ Edmi additions
+- `SessionSource` favicons stack with a count after them (`+4`); the detail line (`Read · Career, Tech`) goes in `children`.

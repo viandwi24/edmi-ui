@@ -1,0 +1,41 @@
+---
+title: Prompt Input Agent
+description: "Agent composer: agent chip, @ mention list and raised send button."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-prompt-input-agent" />
+
+Edmi ✦ addition (not in Vercel AI Elements). Built on `ai-prompt-input`, `ai-agent-avatar` and `button`.
+
+## Installation
+
+<ComponentInstall name="ai-prompt-input-agent" />
+
+## Usage
+
+<ComponentUsage name="ai-prompt-input-agent" />
+
+## Component source
+
+<ComponentSource name="ai-prompt-input-agent" />
+
+## Raised ✦
+
+Flat by default. `raised` gives the one-step 3D look.
+
+<ComponentDemo name="ai-prompt-input-agent" demo="ai-prompt-input-agent-raised" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| PromptInputAgent | `agent` | `{ id, name, scope?, color? }` | |
+| PromptInputAgentMentions | `agents`, `activeIndex`, `onSelect`, `label` | list that opens above the nearest `relative` ancestor | |
+| useAgentMention | `agents`, `value`, `onValueChange`, `onAgentSelect` | returns `{ open, onKeyDown, mentions }` | |
+
+## ✦ Edmi additions
+- Put `PromptInputAgent` in `PromptInputHeader`. Typing `@` opens the mention list (arrows, Enter or Tab pick, Escape closes); render it next to `PromptInput`, not inside, because the input group clips overflow.
+- Pass `raised` to `PromptInput` for the raised send button; the muted shell is a class on the form (`[&_[data-slot=input-group]]:bg-muted`).

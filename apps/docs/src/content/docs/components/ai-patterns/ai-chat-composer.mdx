@@ -1,0 +1,38 @@
+---
+title: Chat Composer
+description: "Prompt input with the outside footer: attach, speech, disclaimer, model with effort, and mode."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-chat-composer" />
+
+Edmi ✦ addition (not in Vercel AI Elements). Built on `ai-prompt-input`, `button` and `dropdown-menu`.
+
+## Installation
+
+<ComponentInstall name="ai-chat-composer" />
+
+## Usage
+
+<ComponentUsage name="ai-chat-composer" />
+
+## Component source
+
+<ComponentSource name="ai-chat-composer" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `onSubmit` | `(message, event) => void` | required |
+| `placeholder`, `status`, `onStop` | `string`, `ChatStatus`, `() => void` | `Reply` |
+| `onAttach`, `onSpeech` | `() => void` (button hidden when omitted) | |
+| `disclaimer` | `ReactNode` | |
+| `models`, `model`, `defaultModel`, `onModelChange` | `{ id, label }[]`, ids | first option |
+| `efforts`, `effort`, `defaultEffort`, `onEffortChange` | same shape | first option |
+| `modes`, `mode`, `defaultMode`, `onModeChange` | same shape | first option |
+
+## ✦ Edmi additions
+- A one-line field with an enter hint, and a quiet footer row below it (not inside the field): attach, speech, disclaimer, model with effort, mode.
