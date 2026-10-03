@@ -32,3 +32,4 @@ Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/jsx-pre
 
 ## ✦ Edmi additions
 - The error state is the destructive `alert` with a "Could not render" title.
+- Vue and Svelte: AI Elements has no port, so these ship a small sandboxed renderer instead of `react-jsx-parser`. `jsx` is JSX-like markup (tags, quoted or `{braced}` attributes, `{binding}` text) that is parsed, never evaluated; only components in the `components` map render, event handlers and `javascript:` URLs are dropped, unknown capitalised tags report `Unknown component <X> on line N.`, and streamed markup has its unclosed tags closed. Use `class` (`className` also works) in the markup.
