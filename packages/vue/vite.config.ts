@@ -12,6 +12,10 @@ export default defineConfig({
 				replacement: resolve(import.meta.dirname, "./registry/ui"),
 			},
 			{
+				find: "@edmi-vue/components",
+				replacement: resolve(import.meta.dirname, "./registry/components"),
+			},
+			{
 				find: "@/registry/edmi",
 				replacement: resolve(import.meta.dirname, "./registry"),
 			},

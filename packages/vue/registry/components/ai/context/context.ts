@@ -1,0 +1,38 @@
+// Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
+import type { LanguageModelUsage } from "ai";
+import type { ComputedRef, InjectionKey } from "vue";
+import { inject } from "vue";
+
+export type ModelId = string;
+
+export interface ContextContextValue {
+	usedTokens: ComputedRef<number>;
+	maxTokens: ComputedRef<number>;
+	usage: ComputedRef<LanguageModelUsage | undefined>;
+	modelId: ComputedRef<ModelId | undefined>;
+}
+
+export const ContextKey: InjectionKey<ContextContextValue> =
+	Symbol("ContextContext");
+
+export function useContextValue(): ContextContextValue {
+	const context = inject<ContextContextValue>(ContextKey);
+	if (!context) {
+		throw new Error("Context components must be used within Context");
+	}
+	return context;
+}
+
+export const formatPercent = (value: number) =>
+	new Intl.NumberFormat("en-US", {
+		maximumFractionDigits: 1,
+		style: "percent",
+	}).format(value);
+
+export const formatCompact = (value: number) =>
+	new Intl.NumberFormat("en-US", { notation: "compact" }).format(value);
+
+export const formatUsd = (value: number) =>
+	new Intl.NumberFormat("en-US", { currency: "USD", style: "currency" }).format(
+		value,
+	);
