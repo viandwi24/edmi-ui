@@ -1,0 +1,58 @@
+---
+// 1280x640 hero for the GitHub README. Render with ?theme=dark|light and screenshot at 1280x640 (see AGENTS.md notes).
+import "../../styles/global.css";
+import HeroField from "../../components/og/HeroField";
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=1280" />
+		<meta name="robots" content="noindex" />
+		<title>Edmi UI hero</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Sora:wght@600&display=swap"
+		/>
+		<script is:inline>
+			(function () {
+				var t = new URLSearchParams(location.search).get("theme");
+				var d = document.documentElement;
+				d.classList.toggle("dark", t !== "light");
+				d.dataset.theme = t === "light" ? "light" : "dark";
+			})();
+		</script>
+		<style is:global>
+			html, body { margin: 0; padding: 0; width: 1280px; height: 640px; overflow: hidden; background: var(--background); }
+			.hero { position: relative; width: 1280px; height: 640px; overflow: hidden; }
+			.hero, .hero *, .hero ::before, .hero ::after { box-sizing: border-box; border-color: var(--border); }
+			.hero :where(h1, h2, p) { margin: 0; }
+			.hero-stage { position: absolute; left: 0; top: 222px; width: 1280px; height: 520px; perspective: 1500px; perspective-origin: 50% 0%; }
+			.hero-field { position: absolute; left: 50%; top: 0; transform-origin: 50% 0; transform: translateX(-44%) rotateX(26deg) rotateZ(-8deg) scale(1); }
+			.hero-fade { position: absolute; inset: 0; pointer-events: none;
+				background:
+					linear-gradient(to bottom, var(--background) 0%, transparent 20%),
+					linear-gradient(to top, var(--background) 0%, transparent 16%),
+					linear-gradient(to right, var(--background) 0%, transparent 12%, transparent 88%, var(--background) 100%); }
+			.hero-copy { position: absolute; left: 0; right: 0; top: 40px; text-align: center; z-index: 2; }
+			.hero-eyebrow { font-size: 14px; letter-spacing: 0.04em; color: var(--muted-foreground); font-weight: 500; }
+			.hero h1 { margin-top: 14px !important; font-size: 50px; line-height: 1.04; letter-spacing: -0.035em; font-weight: 500; color: var(--ink-soft); }
+			.hero-sub { margin-top: 16px !important; font-size: 19px; color: var(--muted-foreground); }
+		</style>
+	</head>
+	<body class="edmi-preview">
+		<div class="hero edmi-preview">
+			<div class="hero-stage">
+				<div class="hero-field"><HeroField /></div>
+			</div>
+			<div class="hero-fade"></div>
+			<div class="hero-copy">
+				<div class="hero-eyebrow">Edmi UI · shadcn-compatible</div>
+				<h1>Editorial components for<br />React, Vue and Svelte</h1>
+				<p class="hero-sub">Flat by default, one-step 3D when you want it. Install with the shadcn CLI.</p>
+			</div>
+		</div>
+	</body>
+</html>

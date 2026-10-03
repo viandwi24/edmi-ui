@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset=".github/assets/hero-dark.png">
+    <img alt="Edmi UI — editorial components for React, Vue and Svelte" src=".github/assets/hero-light.png" width="100%">
+  </picture>
+</p>
+
 # Edmi UI
 
 Edmi (EDitorial MInimalist) is one monorepo that builds three shadcn-compatible component registries:
