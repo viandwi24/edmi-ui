@@ -27,7 +27,7 @@ import {
 
 const variants = ["default", "secondary", "outline", "ghost", "destructive", "link", "brand"] as const;
 const sizes = ["xs", "sm", "default", "lg"] as const;
-const badges = ["default", "secondary", "destructive", "outline", "ghost", "link", "brand", "warning", "info"] as const;
+const badges = ["default", "secondary", "destructive", "outline", "ghost", "link", "brand", "success", "warning", "info"] as const;
 </script>
 
 <template>

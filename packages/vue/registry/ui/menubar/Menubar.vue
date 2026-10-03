@@ -24,7 +24,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     :class="
       cn(
       `flex items-center gap-0.5 rounded-[10px] border border-border bg-card p-[3px]`,
-        props.raised && 'border-b-lip shadow-btn-outline',
+        props.raised && 'border-b-lip shadow-[0_2px_0_var(--lip)]',
         props.class,
       )
     "

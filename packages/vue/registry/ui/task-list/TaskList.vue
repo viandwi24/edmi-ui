@@ -7,10 +7,10 @@ import { Separator } from '@/registry/edmi/ui/separator'
 import { cn } from '@/registry/edmi/lib/utils'
 import type { Task, TaskStatus } from './types'
 
-const STATUS: Record<TaskStatus, { label: string; variant: 'warning' | 'info' | 'brand' }> = {
+const STATUS: Record<TaskStatus, { label: string; variant: 'warning' | 'info' | 'success' }> = {
   review: { label: 'Ready to review', variant: 'warning' },
   running: { label: 'Running', variant: 'info' },
-  completed: { label: 'Completed', variant: 'brand' },
+  completed: { label: 'Completed', variant: 'success' },
 }
 
 const props = defineProps<{

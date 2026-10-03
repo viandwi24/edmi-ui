@@ -41,7 +41,7 @@ const down = computed(() =>
       :class="cn('mt-2.5', meter.class)"
     />
     <div v-if="delta" class="mt-2.5 flex items-center gap-2">
-      <Badge :variant="down ? 'destructive' : 'brand'" shape="number" class="px-[7px]">
+      <Badge :variant="down ? 'destructive' : 'success'" shape="number" class="px-[7px]">
         {{ delta }}
       </Badge>
       <span v-if="deltaLabel" class="text-xs text-muted-foreground">{{ deltaLabel }}</span>

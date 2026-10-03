@@ -49,7 +49,7 @@ const down = computed(() => /^[-−–]/.test(props.index.change.trim()))
     <TableCell class="text-right font-mono text-[12.5px] font-semibold">
       {{ index.price }}
     </TableCell>
-    <TableCell :class="cn('text-right font-mono text-[12.5px]', down ? 'text-destructive-text' : 'text-brand-text')">
+    <TableCell :class="cn('text-right font-mono text-[12.5px]', down ? 'text-destructive-text' : 'text-success-text')">
       {{ index.change }}
     </TableCell>
     <TableCell class="text-right font-mono text-[12.5px]">
