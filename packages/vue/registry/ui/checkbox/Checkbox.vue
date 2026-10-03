@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { CheckboxRootEmits, CheckboxRootProps } from "reka-ui"
 import type { HTMLAttributes } from "vue"
+import { computed } from "vue"
 import { Check, Minus } from "@lucide/vue"
 import { reactiveOmit } from "@vueuse/core"
 import { CheckboxIndicator, CheckboxRoot, useForwardPropsEmits } from "reka-ui"
@@ -14,6 +15,10 @@ const emits = defineEmits<CheckboxRootEmits>()
 const delegatedProps = reactiveOmit(props, "class", "raised")
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
+
+// A bare `default-value` attribute arrives as "" (Reka types it loosely, so Vue does not boolean-cast it);
+// read it as true so `<Checkbox default-value />` renders on, like `:default-value="true"`.
+const defaultValue = computed(() => ((props.defaultValue as unknown) === "" ? true : props.defaultValue))
 </script>
 
 <template>
@@ -21,6 +26,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     v-slot="slotProps"
     data-slot="checkbox"
     v-bind="forwarded"
+    :default-value="defaultValue"
     :class="
       cn(
         'peer relative flex size-[18px] shrink-0 items-center justify-center rounded-[5px] border border-input bg-card text-primary-foreground shadow-sunk transition-[box-shadow] outline-none after:absolute after:-inset-x-3 after:-inset-y-2 focus-visible:border-ring focus-visible:shadow-ring disabled:cursor-not-allowed disabled:opacity-50 data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50 aria-invalid:border-destructive aria-invalid:shadow-ring-error group-has-disabled/field:opacity-50',

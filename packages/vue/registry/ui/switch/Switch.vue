@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { SwitchRootEmits, SwitchRootProps } from "reka-ui"
 import type { HTMLAttributes } from "vue"
+import { computed } from "vue"
 import { reactiveOmit } from "@vueuse/core"
 import { SwitchRoot, SwitchThumb, useForwardPropsEmits } from "reka-ui"
 import { cn } from "@/registry/edmi/lib/utils"
@@ -15,6 +16,10 @@ const emits = defineEmits<SwitchRootEmits>()
 const delegatedProps = reactiveOmit(props, "class", "size", "raised")
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
+
+// A bare `default-value` attribute arrives as "" (Reka types it loosely, so Vue does not boolean-cast it);
+// read it as true so `<Switch default-value />` renders on, like `:default-value="true"`.
+const defaultValue = computed(() => ((props.defaultValue as unknown) === "" ? true : props.defaultValue))
 </script>
 
 <template>
@@ -23,6 +28,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     data-slot="switch"
     :data-size="size"
     v-bind="forwarded"
+    :default-value="defaultValue"
     :class="
       cn(
         'peer group/switch relative inline-flex shrink-0 items-center rounded-full bg-input shadow-[inset_0_1px_2px_rgb(0_0_0/0.12)] transition-colors outline-none after:absolute after:-inset-x-3 after:-inset-y-2 focus-visible:shadow-[inset_0_1px_2px_rgb(0_0_0/0.12),0_0_0_3px_var(--ring-soft)] aria-invalid:shadow-[inset_0_1px_2px_rgb(0_0_0/0.12),0_0_0_3px_var(--destructive-soft)] aria-invalid:outline aria-invalid:outline-1 aria-invalid:-outline-offset-1 aria-invalid:outline-destructive data-[state=checked]:bg-brand data-[size=default]:h-6 data-[size=default]:w-10 data-[size=sm]:h-[18px] data-[size=sm]:w-8 data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50',
