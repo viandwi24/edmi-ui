@@ -35,3 +35,6 @@ Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/audio-p
 - The player is a `--card` surface with a 1px border; play is a 36px round primary button, seek and mute are ghost icon buttons.
 - Times are mono and tabular; the time range fills with `--brand` over a `--muted` track.
 - Deviation from the board: the board draws a waveform for the time range; the real component uses the media-chrome range (a waveform needs decoded audio).
+
+## Framework notes
+- Vue and Svelte use the `<media-*>` custom elements directly (`seek-offset` / `seekOffset` prop on the seek buttons). In Svelte the root registers media-chrome on mount.

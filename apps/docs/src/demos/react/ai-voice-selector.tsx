@@ -90,7 +90,11 @@ export default function Demo() {
 								{voices
 									.filter((v) => v.group === group)
 									.map((v) => (
-										<VoiceSelectorItem key={v.id} value={v.id}>
+										<VoiceSelectorItem
+											key={v.id}
+											value={v.id}
+											keywords={[v.name, v.gender, v.accent]}
+										>
 											<VoiceSelectorPreview
 												onPlay={() =>
 													setPlaying((p) => (p === v.id ? undefined : v.id))

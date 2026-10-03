@@ -39,3 +39,6 @@ Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/mic-sel
 - `devices` prop, so a demo or a server-provided list needs no permission prompt.
 - `MicSelectorLabel` prints the `(1a2b:3c4d)` suffix as a muted mono id on the right; `MicSelectorValue` shows the name only.
 - The selected item shows the check; selecting closes the popover. The command highlight is no longer tied to the selected value, so arrow keys and hover do not change the selection.
+
+## Framework notes
+- Vue: `v-model:value` / `v-model:open`, `MicSelectorList` slot receives `{ devices }`. Svelte: `bind:value` / `bind:open`, the list `children` snippet receives `devices`. Items must live inside a command group in Vue (handled by `MicSelectorList`).

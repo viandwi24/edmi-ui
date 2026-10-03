@@ -34,3 +34,6 @@ Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/persona
 ## ✦ Edmi additions
 - Dynamic-color variants follow light and dark, including a scoped `.dark` subtree (not only `<html>`).
 - Deviation from the board: the board shows tinted static orbs in `--brand` / `--chart-*`; the Rive files are fixed artwork, so only the monochrome variants recolor.
+
+## Framework notes
+- Vue and Svelte use `@rive-app/webgl2` directly with the same artwork and states; callbacks are emits in Vue (`load`, `loadError`, `ready`, `play`, `pause`, `stop`) and `on*` props in Svelte.

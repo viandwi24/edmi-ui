@@ -33,3 +33,6 @@ Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/transcr
 
 ## ✦ Edmi additions
 - States use tokens: active = `--primary` fill with `--primary-foreground`, past = `--muted-foreground`, future = `--muted-foreground-2`.
+
+## Framework notes
+- Vue: `v-model:current-time`, `@seek`, default slot `{ segment, index }`; segments are clickable only when a listener is attached. Svelte: `bind:currentTime`, `onSeek`, `children` snippet `(segment, index)`.
