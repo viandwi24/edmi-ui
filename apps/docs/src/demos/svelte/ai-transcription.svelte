@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { Transcription, TranscriptionSegment } from "@edmi-svelte/ai/transcription";
-	import { onDestroy } from "svelte";
 
 	// Segments as the AI SDK `transcribe()` returns them.
 	const lines = [
@@ -28,7 +27,6 @@
 		raf = requestAnimationFrame(tick);
 		return () => cancelAnimationFrame(raf);
 	});
-	onDestroy(() => cancelAnimationFrame(raf));
 </script>
 
 <div class="flex w-full max-w-xl flex-col gap-3">
