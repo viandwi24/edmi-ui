@@ -16,7 +16,10 @@ import TestSuiteContent from "./test-suite-content.svelte";
 import TestSuiteName from "./test-suite-name.svelte";
 import TestSuiteStats from "./test-suite-stats.svelte";
 
-export type { TestResultsSummaryData, TestStatusType } from "./use-test-results.svelte.js";
+export type {
+	TestResultsSummaryData,
+	TestStatusType,
+} from "./use-test-results.svelte.js";
 export {
 	Test,
 	TestDuration,

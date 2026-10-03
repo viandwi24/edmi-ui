@@ -39,19 +39,18 @@ function make<T>(key: symbol, label: string, parent: string) {
 	] as const;
 }
 
-export const [setTestResultsContext, useTestResultsContext] = make<TestResultsContext>(
-	RESULTS,
-	"TestResults components",
-	"TestResults"
+export const [setTestResultsContext, useTestResultsContext] =
+	make<TestResultsContext>(RESULTS, "TestResults components", "TestResults");
+export const [setTestSuiteContext, useTestSuiteContext] =
+	make<TestSuiteContext>(SUITE, "TestSuite components", "TestSuite");
+export const [setTestContext, useTestContext] = make<TestContext>(
+	TEST,
+	"Test components",
+	"Test",
 );
-export const [setTestSuiteContext, useTestSuiteContext] = make<TestSuiteContext>(
-	SUITE,
-	"TestSuite components",
-	"TestSuite"
-);
-export const [setTestContext, useTestContext] = make<TestContext>(TEST, "Test components", "Test");
 
-export const formatDuration = (ms: number) => (ms < 1000 ? `${ms}ms` : `${(ms / 1000).toFixed(2)} s`);
+export const formatDuration = (ms: number) =>
+	ms < 1000 ? `${ms}ms` : `${(ms / 1000).toFixed(2)} s`;
 
 export const statusStyles: Record<TestStatusType, string> = {
 	failed: "text-destructive-text",

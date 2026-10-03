@@ -32,13 +32,12 @@ export function setStackTraceContext(ctx: StackTraceContext) {
 
 export function useStackTraceContext(): StackTraceContext {
 	const ctx = getContext<StackTraceContext | undefined>(KEY);
-	if (!ctx) throw new Error("StackTrace components must be used within StackTrace");
+	if (!ctx)
+		throw new Error("StackTrace components must be used within StackTrace");
 	return ctx;
 }
 
-
-const STACK_FRAME_WITH_PARENS_REGEX =
-	/^at\s+(.+?)\s+\((.+):(\d+):(\d+)\)$/;
+const STACK_FRAME_WITH_PARENS_REGEX = /^at\s+(.+?)\s+\((.+):(\d+):(\d+)\)$/;
 const STACK_FRAME_WITHOUT_FN_REGEX = /^at\s+(.+):(\d+):(\d+)$/;
 const ERROR_TYPE_REGEX = /^(\w+Error|Error):\s*(.*)$/;
 export const AT_PREFIX_REGEX = /^at\s+/;

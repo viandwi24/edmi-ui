@@ -37,6 +37,9 @@ export function setSchemaDisplayContext(ctx: SchemaDisplayContext) {
 
 export function useSchemaDisplayContext(): SchemaDisplayContext {
 	const ctx = getContext<SchemaDisplayContext | undefined>(KEY);
-	if (!ctx) throw new Error("SchemaDisplay components must be used within SchemaDisplay");
+	if (!ctx)
+		throw new Error(
+			"SchemaDisplay components must be used within SchemaDisplay",
+		);
 	return ctx;
 }

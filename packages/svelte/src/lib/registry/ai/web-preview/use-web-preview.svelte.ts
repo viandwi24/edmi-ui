@@ -14,6 +14,7 @@ export function setWebPreviewContext(ctx: WebPreviewContext) {
 
 export function useWebPreviewContext(): WebPreviewContext {
 	const ctx = getContext<WebPreviewContext | undefined>(KEY);
-	if (!ctx) throw new Error("WebPreview components must be used within WebPreview");
+	if (!ctx)
+		throw new Error("WebPreview components must be used within WebPreview");
 	return ctx;
 }
