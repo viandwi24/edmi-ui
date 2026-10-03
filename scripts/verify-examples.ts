@@ -66,7 +66,11 @@ for (const e of EXAMPLES) {
 }
 const listed = new Set(EXAMPLES.map((e) => e.slug));
 for (const d of readdirSync(DIR)) {
-	if (statSync(resolve(DIR, d)).isDirectory() && !listed.has(d))
+	if (
+		!d.startsWith("_") &&
+		statSync(resolve(DIR, d)).isDirectory() &&
+		!listed.has(d)
+	)
 		bad(`src/examples/${d}: folder not listed in src/examples/index.ts`);
 }
 const dup = EXAMPLES.map((e) => e.slug).filter((s, i, a) => a.indexOf(s) !== i);

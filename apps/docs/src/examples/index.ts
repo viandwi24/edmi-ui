@@ -1,4 +1,9 @@
 import type { Framework } from "../config";
+import { examples as aiA } from "./_groups/ai-a";
+import { examples as aiB } from "./_groups/ai-b";
+import { examples as appA } from "./_groups/app-a";
+import { examples as appB } from "./_groups/app-b";
+import { examples as marketing } from "./_groups/marketing";
 
 /**
  * Examples registry: the single list that drives the `/examples` index, the routes
@@ -26,9 +31,9 @@ export interface ExampleMeta {
 	uses: readonly string[];
 }
 
-const ALL = ["react", "vue", "svelte"] as const;
+export const ALL = ["react", "vue", "svelte"] as const;
 
-export const EXAMPLES: readonly ExampleMeta[] = [
+const PILOT: ExampleMeta[] = [
 	{
 		slug: "chat-thread",
 		title: "Chat thread",
@@ -70,6 +75,16 @@ export const EXAMPLES: readonly ExampleMeta[] = [
 			"Button",
 		],
 	},
+];
+
+/** Pilot entries + one file per worker group (src/examples/_groups/*.ts). */
+export const EXAMPLES: readonly ExampleMeta[] = [
+	...PILOT,
+	...aiA,
+	...aiB,
+	...appA,
+	...appB,
+	...marketing,
 ];
 
 export const getExample = (slug: string) =>
