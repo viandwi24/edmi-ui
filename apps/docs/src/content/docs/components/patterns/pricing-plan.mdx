@@ -1,0 +1,23 @@
+---
+title: Pricing plan
+description: "Plan card with title, price, call to action and a check list."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="pricing-plan" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look.
+
+<ComponentDemo name="pricing-plan" demo="pricing-plan-raised" />
+
+## API
+| Part | Props | Notes |
+| --- | --- | --- |
+| `PricingPlan` | `name, tagline?, price?, priceNote?, action?, features?` | `action` is usually a `Button`; buttons placed there stretch full width. |
+| `raised` | `boolean` | `false` |
+
+## ✦ Edmi additions
+- Whole block is an Edmi addition (DESIGN §5 Patterns, board 11). Composed from: card, separator.
+- Install: `shadcn add @edmi/pricing-plan`.

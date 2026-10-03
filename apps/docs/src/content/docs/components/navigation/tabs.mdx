@@ -1,0 +1,31 @@
+---
+title: Tabs
+description: Tabs in a flat sunken track (default), standalone pills, or underlined (line). Horizontal and vertical.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="tabs" />
+
+<ComponentDemo name="tabs" demo="tabs-line" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look. Set it on `TabsList`; it flows to the triggers and `line` ignores it.
+
+<ComponentDemo name="tabs" demo="tabs-raised" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `Tabs defaultValue` / `value` | `string` | none |
+| `Tabs orientation` | `horizontal \| vertical` | `horizontal` |
+| `TabsList variant` | `default \| line \| pills` | `default` |
+| `TabsTrigger disabled` | `boolean` | `false` |
+| `raised` | `boolean` | `false` |
+
+Parts: `Tabs`, `TabsList`, `TabsTrigger`, `TabsContent`.
+
+## ✦ Edmi additions
+- Inside a track the active tab is flat: `--tab-active` fill and a 1px border, no gradient, no lip.
+- `pills` variant (no track) is an inline row of pills; active = `--tab-active` + 1px border.
+- `line` variant underlines the active tab with the foreground colour.

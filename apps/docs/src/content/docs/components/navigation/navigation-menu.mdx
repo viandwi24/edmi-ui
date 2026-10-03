@@ -1,0 +1,19 @@
+---
+title: Navigation Menu
+description: Top-level site links with rich dropdown panels, for the navbar layout and landing page.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="navigation-menu" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `NavigationMenu align` | `start \| center \| end` | `start` |
+| `NavigationMenuLink href` / `render` | `string` / `ReactElement` | none |
+| `navigationMenuTriggerStyle()` | cva | trigger classes for plain links |
+
+Parts: `NavigationMenu`, `NavigationMenuList`, `NavigationMenuItem`, `NavigationMenuTrigger`, `NavigationMenuContent`, `NavigationMenuLink`, `NavigationMenuIndicator`, `NavigationMenuPositioner`.
+
+## ✦ Edmi additions
+- Panel is a solid `--popover` surface with a 1px border, flat.

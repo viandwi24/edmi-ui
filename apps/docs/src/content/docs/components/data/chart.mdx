@@ -1,0 +1,29 @@
+---
+title: Chart
+description: Recharts wrapped in a ChartContainer that maps series to --chart-N colors, with a shared tooltip and legend.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="chart" />
+
+## Bar
+<ComponentDemo name="chart" demo="chart-bar" />
+
+## Donut
+<ComponentDemo name="chart" demo="chart-donut" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `ChartContainer config` | `{ [key]: { label?, icon?, color? \| theme? } }` | required |
+| `ChartTooltipContent indicator` | `dot \| line \| dashed` | `dot` |
+| `ChartTooltipContent hideLabel / hideIndicator` | `boolean` | `false` |
+| `ChartTooltipContent nameKey / labelKey` | `string` | none |
+| `ChartLegendContent hideIcon / nameKey` | `boolean / string` | `false` |
+
+Series colour resolves to `var(--color-<key>)`. Install needs the `recharts` package.
+
+## ✦ Edmi additions
+- Series without `color`/`theme` fall back to `--chart-1…5` by order.
+- Tooltip is a solid `--popover` panel (flat, no shadow); values are mono.
+- Grid lines are dashed, axis ticks use the mono face.

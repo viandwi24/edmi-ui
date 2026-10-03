@@ -1,0 +1,20 @@
+<script setup lang="ts">
+import type { HTMLAttributes } from "vue"
+import { cn } from "@/registry/edmi/lib/utils"
+
+interface Props {
+  class?: HTMLAttributes["class"]
+}
+
+const props = defineProps<Props>()
+</script>
+
+<template>
+  <span
+    data-slot="marker-icon"
+    aria-hidden="true"
+    :class="cn(`inline-flex size-3.5 shrink-0 items-center justify-center [&_svg:not([class*='size-'])]:size-3.5`, props.class)"
+  >
+    <slot />
+  </span>
+</template>

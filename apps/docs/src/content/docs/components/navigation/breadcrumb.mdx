@@ -1,0 +1,18 @@
+---
+title: Breadcrumb
+description: Shows where a page sits in the hierarchy. The last item is the current page and is not a link.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="breadcrumb" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `BreadcrumbLink render` | `ReactElement` | `<a>` (Base UI, replaces `asChild`) |
+| `BreadcrumbSeparator children` | `ReactNode` | chevron icon |
+
+Parts: `Breadcrumb`, `BreadcrumbList`, `BreadcrumbItem`, `BreadcrumbLink`, `BreadcrumbPage`, `BreadcrumbSeparator`, `BreadcrumbEllipsis`.
+
+## ✦ Edmi additions
+- Muted links that darken to `--foreground` on hover; the current page uses `--foreground`.

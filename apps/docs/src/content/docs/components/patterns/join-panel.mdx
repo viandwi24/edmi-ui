@@ -1,0 +1,29 @@
+---
+title: Join Panel
+description: "Amount input with Max and currency, summary rows and a primary join action."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="join-panel" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look.
+
+<ComponentDemo name="join-panel" demo="join-panel-raised" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `label` | `ReactNode` | `"Amount"` |
+| `currency` | `string` | `"USDC"` |
+| `amount` / `defaultAmount` | `string` | `""` |
+| `onAmountChange` | `(value: string) => void` | none |
+| `onMax` / `onJoin` | `() => void` | none |
+| `rows` | `{ label, value }[]` (values mono) | `[]` |
+| `joinLabel` | `ReactNode` | `"Join"` |
+| `disabled` | `boolean` | `false` |
+| `raised` | `boolean` | `false` |
+
+## ✦ Edmi additions
+- Estimates are the caller's job: compute `rows` from `amount`.

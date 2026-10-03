@@ -1,0 +1,33 @@
+---
+title: Theming
+description: Edmi design tokens. Light is the default, dark is the .dark class on html.
+---
+
+import TokensTable from "../../components/TokensTable.astro";
+
+Tokens are CSS variables (OKLCH with a hex fallback) and share names with shadcn. Load them with
+`@edmi-ui/tokens/tokens.css` and map them to Tailwind v4 with `@edmi-ui/tokens/theme.css`.
+
+```css
+@import "tailwindcss";
+@import "@edmi-ui/tokens/tokens.css";
+@import "@edmi-ui/tokens/theme.css";
+```
+
+Type: **Instrument Sans** for UI text, **JetBrains Mono** for every number, **Sora 600** for the wordmark only.
+
+<TokensTable />
+
+## Flat by default, `raised` opt-in
+
+The shadow tokens (`shadow-btn-*`, `shadow-card`, `shadow-pop`, `shadow-dialog`) are only used when a component is rendered with `raised`. Without it every component is flat: a solid fill, a 1px border and no lip.
+
+Use it per component, never globally:
+
+```tsx
+<Button raised>Get started</Button>
+<TabsList raised variant="pills">…</TabsList>
+<Card raised>…</Card>
+```
+
+Vue and Svelte take the same boolean prop (`<Button raised>`, `<Tabs.List raised variant="pills">`). The landing page toggle flips every showcase component between flat and raised. See each framework's getting-started page for the full list of components that accept `raised`.

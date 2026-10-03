@@ -1,0 +1,27 @@
+---
+title: Toggle Group
+description: A set of toggles; spacing 2 by default, 0 joins them.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="toggle-group" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look (on the group, flows to every item).
+
+<ComponentDemo name="toggle-group" demo="toggle-group-raised" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| variant | `default \| outline \| segmented` | `default` |
+| size | `sm \| default \| lg` | `default` |
+| spacing | `number` | `2` |
+| orientation | `horizontal \| vertical` | `horizontal` |
+| multiple | `boolean` | `false` |
+| value / defaultValue | `string[]` | none |
+| `raised` | `boolean` | `false` |
+
+## ✦ Edmi additions
+- `variant="segmented"`: flat track with a tab-active fill (for single selection such as ranges).

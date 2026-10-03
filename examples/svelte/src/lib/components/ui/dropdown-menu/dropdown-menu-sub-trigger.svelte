@@ -1,0 +1,29 @@
+<script lang="ts">
+	import { DropdownMenu as DropdownMenuPrimitive } from "bits-ui";
+	import CaretRightIcon from 'phosphor-svelte/lib/CaretRight';
+	import { cn } from "#lib/utils.js";
+
+	let {
+		ref = $bindable(null),
+		class: className,
+		inset,
+		children,
+		...restProps
+	}: DropdownMenuPrimitive.SubTriggerProps & {
+		inset?: boolean;
+	} = $props();
+</script>
+
+<DropdownMenuPrimitive.SubTrigger
+	bind:ref
+	data-slot="dropdown-menu-sub-trigger"
+	data-inset={inset}
+	class={cn(
+		"relative flex h-8 cursor-default items-center gap-2.5 rounded-[7px] px-2 text-[13.5px] outline-none select-none data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground data-[inset]:pl-8 data-[disabled]:pointer-events-none data-[disabled]:opacity-45 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-[15px] [&_svg:not([class*='text-'])]:text-muted-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
+		className
+	)}
+	{...restProps}
+>
+	{@render children?.()}
+	<CaretRightIcon class="ml-auto rtl:rotate-180" />
+</DropdownMenuPrimitive.SubTrigger>

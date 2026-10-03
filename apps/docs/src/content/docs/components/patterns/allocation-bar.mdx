@@ -1,0 +1,18 @@
+---
+title: Allocation Bar
+description: "Proportional weights bar with a legend of labels and mono percentages."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="allocation-bar" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `segments` | `{ label, value, color? }[]` | required |
+| `showLegend` | `boolean` | `true` |
+
+Colors default to `--chart-1…5` in order.
+
+## ✦ Edmi additions
+- Bars are proportional to `value`; values need not sum to 100.

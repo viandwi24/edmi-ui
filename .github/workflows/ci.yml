@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  # Default registry base for the generated registry.json files (same as the Pages build).
+  EDMI_URL: https://viandwi24.github.io/edmi-ui
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      # Fail mode: every dependency must resolve and every manifest file must exist.
+      - run: bun run gen:strict
+      - run: bun run typecheck
+      - run: bun run lint
+      - run: bun run test
+      - run: bun run build:registry
+      - name: Build docs
+        run: bun run --filter @edmi-ui/docs build
+      # Each smoke script installs the built registry into a fresh project and typechecks/builds it.
+      - name: Smoke tests (react, vue, svelte, examples)
+        run: bash scripts/smoke/all.sh

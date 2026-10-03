@@ -1,0 +1,42 @@
+---
+title: Calendar
+description: Month grid for picking a date or a range. Today is tinted; the selected day is a primary fill (`raised` adds the lip).
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="calendar" />
+
+## Range
+<ComponentDemo name="calendar" demo="calendar-range" />
+
+## Dropdown caption
+<ComponentDemo name="calendar" demo="calendar-dropdown" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look (selected day and range ends).
+
+<ComponentDemo name="calendar" demo="calendar-raised" />
+
+## API
+Built on `react-day-picker` v10 (and `date-fns`). All DayPicker props are forwarded.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `mode` | `"single" \| "multiple" \| "range"` | - |
+| `selected` / `onSelect` | per mode | - |
+| `captionLayout` | `"label" \| "dropdown" \| "dropdown-months" \| "dropdown-years"` | `"label"` |
+| `showOutsideDays` | `boolean` | `true` |
+| `showWeekNumber` | `boolean` | `false` |
+| `buttonVariant` | Button `variant` | `"outline"` |
+| `--cell-size` (CSS var) | length | `36px` |
+| `raised` | `boolean` | `false` |
+
+Exports: `Calendar`, `CalendarDayButton`.
+
+## ✦ Edmi additions
+- Selected day and range endpoints are flat primary fills (`raised`: gradient + hard 2px lip); range middle is a flat `--accent` band.
+- Month/year dropdowns are bordered mini-buttons with a soft focus ring; nav buttons use the outline button recipe.
+
+## Vue / Svelte differences
+- **Vue** and **Svelte** ship `RangeCalendar` as a separate component. React selects a range with `mode="range"` on `Calendar`.

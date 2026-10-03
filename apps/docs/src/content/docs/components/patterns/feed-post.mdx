@@ -1,0 +1,27 @@
+---
+title: Feed post
+description: "Social post card: avatar header, body, attached index item and stat row."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="feed-post" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look.
+
+<ComponentDemo name="feed-post" demo="feed-post-raised" />
+
+## API
+| Part | Props | Notes |
+| --- | --- | --- |
+| `FeedPost` | `Card` props | Root card (18px padding). |
+| `FeedPostHeader` | `name, handle?, time?, avatarSrc?, initials?, actions?` | Avatar + name line; `actions` defaults to a ghost more button. |
+| `FeedPostContent` | `p` props | Post body. |
+| `FeedPostIndex` | `title, description?, icon?, action?` | Attached index as an outline sm Item. |
+| `FeedPostFooter / FeedPostStat` | div / span props | Muted stat row. |
+| `raised` | `boolean` | `false` |
+
+## ✦ Edmi additions
+- Whole block is an Edmi addition (DESIGN §5 Patterns, board 11). Composed from: card, avatar, button, item.
+- Install: `shadcn add @edmi/feed-post`.

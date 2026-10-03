@@ -1,0 +1,31 @@
+---
+title: App Header
+description: "App top bar for the navbar layout: brand, nav pills, search, network button and wallet connect."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="app-header" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look.
+
+<ComponentDemo name="app-header" demo="app-header-raised" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `items` | `{ label, href }[]` | `[]` |
+| `active` | `string` (`href` of the active pill) | none |
+| `search` | `boolean` | `true` |
+| `searchPlaceholder` / `shortcut` | `string` | `"Search"` / `"⌘K"` |
+| `network` | `string` (empty hides it) | `"Devnet"` |
+| `connectLabel` | `ReactNode` | `"Connect"` |
+| `onConnect` / `onNetworkClick` | `() => void` | none |
+| `logo` / `name` / `href` | as `SiteHeader` | |
+| `raised` | `boolean` | `false` |
+
+`AppHeaderNavItem` (`active`) is exported for custom navs.
+
+## ✦ Edmi additions
+- Nav pills stand alone (no track), active pill is `--tab-active` + 1px border (the `pills` look); with `raised` it becomes a 3D secondary button.

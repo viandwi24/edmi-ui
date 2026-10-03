@@ -1,0 +1,18 @@
+---
+title: Rules
+description: The design decisions behind Edmi UI. Do not "improve" them.
+---
+
+1. **Flat by default, raised is opt-in.** Every component renders flat: a solid fill or `--card`, a 1px border, no gradient, no lip, the plain shadcn look. Pass `raised` to get the one-step 3D look. It exists on Button, Toggle, Toggle Group, Tabs (on `TabsList`, passed down to the triggers), Kbd, Select and Native Select trigger, Checkbox, Choice card, Switch, Slider, Calendar (selected day), Pagination (active link), Card, Inset panel, Popover, Dialog, Toast, Menubar, Empty media and Reactions. `ghost`, `link` and Tabs `line` are never raised. Use `raised` for hero and primary CTAs and marketing pages; stay flat for dense app UI, forms, tables and dialog footers.
+2. **No blurred shadows anywhere.** When raised, depth is a hard lip: `0 2px 0 var(--lip)` for cards and controls, `0 4px 0 var(--lip-strong)` for dialogs and popovers. Only inset shadows may be soft (1-2px).
+3. **One step only.** A raised element has exactly two layers: the face and one lip under it. The bottom border and the hard shadow use the same lip color, so they read as one band. Never add an inner bottom shade (`inset 0 -2px 0`), and never let border, shade and lip be three different colors. Raised filled controls (primary, secondary, brand, destructive, checked checkbox, selected day) use a vertical gradient `-hi` to base, an `inset 0 1px 0` top highlight and the one lip, with `background-origin: border-box`.
+4. **Dark primary** is white with a gray lip and a transparent side border. Selected or active states that show a focus or selection ring drop the lip.
+5. **Pressed** (raised only) is `translateY(2px)` and the lip goes to 0. Flat pressed is a slightly darker fill.
+6. **Tabs and segmented controls**: the flat active item is the `--tab-active` fill plus a 1px border. With `raised` the active item becomes a 3D secondary button.
+7. **Floating chips over another surface** (reactions on a bubble, badges over a card edge) are solid (`--popover`, or `color-mix(brand 14%, popover)` when active) with a 1px border. No transparency, no outer ring.
+8. **Inset panel**: the header sits on the shell (`--muted`); the body is a `--card` panel edge to edge with radius on the top corners only and an optional bottom fade; the footer returns to the shell with a top border.
+9. **Message rows**: the avatar is top-aligned with the sender line, or with the first bubble line when there is no header. The footer sits under the bubble on the message side. Ghost bubbles keep their vertical padding.
+10. **One height per group.** Controls side by side share the control height (36px); option rows in one group (questionnaire choices, choice cards) share one height.
+11. **Numbers are mono and right-aligned** in tables. Up is `--brand-text`, down is `--destructive-text`.
+12. **Headings on marketing pages** use a soft ink (`#3d3c38` light) at weight 400-500, not black or bold.
+13. **Brand badges, alerts and toasts** use the soft fill plus a tinted 30-40% border, never solid fills, except the primary Badge.

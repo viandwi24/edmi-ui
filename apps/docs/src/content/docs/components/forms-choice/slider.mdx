@@ -1,0 +1,28 @@
+---
+title: Slider
+description: "Pick a value or a range by dragging. Array value: 1 = single, 2 = range, 3+ = multiple thumbs."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="slider" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look (on every thumb).
+
+<ComponentDemo name="slider" demo="slider-raised" />
+
+## API
+Built on Base UI `Slider`.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` / `defaultValue` | `number[]` | - |
+| `min` / `max` / `step` | `number` | `0` / `100` / `1` |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` |
+| `onValueChange` | `(value: number[], event) => void` | - |
+| `disabled` | `boolean` | `false` |
+| `raised` | `boolean` | `false` |
+
+## ✦ Edmi additions
+- Brand-colored range and a round thumb (`raised` adds a gradient and a hard brand lip); focus shows a soft ring.

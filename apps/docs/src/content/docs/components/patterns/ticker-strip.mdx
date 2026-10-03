@@ -1,0 +1,24 @@
+---
+title: Ticker Strip
+description: "Horizontal strip of price cells: avatar and symbol, mono price, up/down change."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="ticker-strip" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look.
+
+<ComponentDemo name="ticker-strip" demo="ticker-strip-raised" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `items` | `{ symbol, price, change, image?, href? }[]` | required |
+| `raised` | `boolean` | `false` |
+
+`change` is a signed string; a leading `-`/`−` renders `--destructive-text`, otherwise `--brand-text`.
+
+## ✦ Edmi additions
+- Scrolls horizontally when cells do not fit.

@@ -1,0 +1,23 @@
+---
+title: Step card
+description: "Numbered step card with a corner icon, title and description."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="step-card" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look.
+
+<ComponentDemo name="step-card" demo="step-card-raised" />
+
+## API
+| Part | Props | Notes |
+| --- | --- | --- |
+| `StepCard` | `index, title, description?, icon?` | Mono index, arrow icon (default up-right), title, muted description. |
+| `raised` | `boolean` | `false` |
+
+## ✦ Edmi additions
+- Whole block is an Edmi addition (DESIGN §5 Patterns, board 11). Composed from: card.
+- Install: `shadcn add @edmi/step-card`.

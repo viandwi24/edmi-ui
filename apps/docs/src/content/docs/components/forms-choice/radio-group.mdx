@@ -1,0 +1,26 @@
+---
+title: Radio Group
+description: Pick exactly one option from a short list.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="radio-group" />
+
+## Raised ✦
+
+Choice cards are `FieldLabel`s wrapping a `Field` and a radio. Flat by default; pass `raised` on the `FieldLabel` for the one-step 3D look.
+
+<ComponentDemo name="radio-group" demo="radio-group-raised" />
+
+## API
+Built on Base UI `RadioGroup` / `Radio`. Same anatomy as shadcn: `RadioGroup`, `RadioGroupItem`.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` / `defaultValue` | `string` | - |
+| `onValueChange` | `(value: string, event) => void` | - |
+| `disabled` | `boolean` | `false` |
+| `RadioGroupItem value` | `string` | required |
+
+## ✦ Edmi additions
+- Checked radio has a primary border and a 9px primary dot; pair with a bordered label for choice cards.

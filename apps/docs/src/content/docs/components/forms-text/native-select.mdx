@@ -1,0 +1,22 @@
+---
+title: Native Select
+description: The browser select with an Edmi skin. Use on mobile and for long, simple lists.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="native-select" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look (3D look: hard lip + soft top highlight).
+
+<ComponentDemo name="native-select" demo="native-select-raised" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| size | `sm \| default` | `default` |
+| `raised` | `boolean` | `false` |
+
+## ✦ Edmi additions
+- `NativeSelectOption` and `NativeSelectOptGroup` wrap the native elements.

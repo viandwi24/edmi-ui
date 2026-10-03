@@ -1,0 +1,20 @@
+---
+title: Item
+description: Flexible row with media, title, description and actions. Variants default, outline, muted; sizes default, sm, xs.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="item" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `Item variant` | `default \| outline \| muted` | `default` |
+| `Item size` | `default \| sm \| xs` | `default` |
+| `Item render` | `ReactElement` | none (Base UI, replaces `asChild`) |
+| `ItemMedia variant` | `default \| icon \| image` | `default` |
+
+Parts: `ItemGroup`, `ItemSeparator`, `Item`, `ItemMedia`, `ItemContent`, `ItemTitle`, `ItemDescription`, `ItemActions`, `ItemHeader`, `ItemFooter`.
+
+## ✦ Edmi additions
+- Icon media is a bordered 38px tile on `--muted`; outline items sit on `--card`.

@@ -1,0 +1,18 @@
+---
+title: Alert
+description: Inline message in the page flow. Not dismissed by time; use for state the user should notice before they act.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="alert" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `Alert variant` | `default \| destructive \| brand \| warning \| info` | `default` |
+| `AlertAction` | slot, placed in the last column | none |
+
+Parts: `Alert`, `AlertTitle`, `AlertDescription`, `AlertAction`. A direct `svg` child becomes the leading icon.
+
+## ✦ Edmi additions
+- `brand`, `warning`, `info` variants: soft fill with a tinted 40% border (DESIGN §4.12), never solid.

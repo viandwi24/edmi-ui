@@ -1,0 +1,26 @@
+---
+title: Pagination
+description: Page navigation with the current page clearly marked and long ranges collapsed with an ellipsis.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="pagination" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look (on `Pagination`, applies to the active link).
+
+<ComponentDemo name="pagination" demo="pagination-raised" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `PaginationLink isActive` | `boolean` | `false` |
+| `PaginationLink size` | Button sizes | `icon` |
+| `PaginationPrevious text` / `PaginationNext text` | `string` | `Previous` / `Next` |
+| `raised` | `boolean` | `false` |
+
+Parts: `Pagination`, `PaginationContent`, `PaginationItem`, `PaginationLink`, `PaginationPrevious`, `PaginationNext`, `PaginationEllipsis`.
+
+## ✦ Edmi additions
+- Links are Edmi Buttons: active page is `outline`, others `ghost`.

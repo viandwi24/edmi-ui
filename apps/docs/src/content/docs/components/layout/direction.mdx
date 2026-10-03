@@ -1,0 +1,20 @@
+---
+title: Direction
+description: DirectionProvider and useDirection for LTR / RTL layouts.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="direction" />
+
+## API
+| Export | Notes |
+| --- | --- |
+| `DirectionProvider direction` | `"ltr" \| "rtl"` — also set `dir` on `<html>` |
+| `useDirection()` | returns the current direction |
+
+## ✦ Edmi additions
+None — re-export of Base UI's direction provider.
+
+## Vue / Svelte differences
+- **Vue**: `DirectionProvider direction="rtl"`; `useDirection()` returns a `ComputedRef`.
+- **Svelte**: `DirectionProvider direction="rtl"`; `useDirection()` returns `{ current }`.

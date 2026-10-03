@@ -1,0 +1,34 @@
+---
+import { GITHUB, type Framework } from "../config";
+
+interface Props {
+	framework: Framework;
+	/** File to open inside the example app, e.g. "src/App.tsx". */
+	file?: string;
+}
+const { framework, file } = Astro.props;
+const defaults: Record<Framework, string> = {
+	react: "src/App.tsx",
+	vue: "src/App.vue",
+	svelte: "src/routes/+page.svelte",
+};
+const href = `https://stackblitz.com/github/${GITHUB}/tree/main/examples/${framework}?file=${encodeURIComponent(file ?? defaults[framework])}`;
+---
+
+<a class="edmi-stackblitz" href={href} target="_blank" rel="noopener noreferrer" title="Open the example app in StackBlitz">StackBlitz ↗</a>
+
+<style>
+	.edmi-stackblitz {
+		display: inline-flex;
+		align-items: center;
+		height: 28px;
+		padding: 0 0.55rem;
+		border-radius: 7px;
+		font: 500 11px/1 var(--sl-font-mono);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var(--muted-foreground);
+		text-decoration: none;
+	}
+	.edmi-stackblitz:hover { background: var(--accent); color: var(--foreground); }
+</style>

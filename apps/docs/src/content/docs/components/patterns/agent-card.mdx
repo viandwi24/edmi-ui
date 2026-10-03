@@ -1,0 +1,24 @@
+---
+title: Agent card
+description: "AI agent card with a deterministic 5x5 identicon, badges and a stat row."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="agent-card" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look.
+
+<ComponentDemo name="agent-card" demo="agent-card-raised" />
+
+## API
+| Part | Props | Notes |
+| --- | --- | --- |
+| `AgentCard` | `name, address?, tag?, autopilot?, stats?, seed?` | Card with identicon, secondary tag badge, brand Autopilot badge and stats. |
+| `AgentIdenticon` | `seed, size=44` | Token-colored 5x5 grid, deterministic per seed. |
+| `raised` | `boolean` | `false` |
+
+## ✦ Edmi additions
+- Whole block is an Edmi addition (DESIGN §5 Patterns, board 11). Composed from: card, badge.
+- Install: `shadcn add @edmi/agent-card`.

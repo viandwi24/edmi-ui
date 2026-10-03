@@ -1,0 +1,18 @@
+---
+title: Sheet
+description: A dialog that slides in from an edge. Use for filters, details and settings that relate to the page behind.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="sheet" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `SheetContent side` | `top \| right \| bottom \| left` | `right` |
+| `SheetContent showCloseButton` | `boolean` | `true` |
+
+Parts: `Sheet`, `SheetTrigger`, `SheetContent`, `SheetHeader`, `SheetTitle`, `SheetDescription`, `SheetFooter`, `SheetClose`.
+
+## ✦ Edmi additions
+- Hard 4px strong lip on the edge facing the page; `--overlay` scrim.

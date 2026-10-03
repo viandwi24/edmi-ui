@@ -1,0 +1,33 @@
+---
+import { FRAMEWORK_LABEL, FRAMEWORKS } from "../../config";
+---
+
+<label class="edmi-fw-select" title="Framework used in code samples">
+	<span class="sr-only">Framework</span>
+	<select data-framework-select aria-label="Framework">
+		{FRAMEWORKS.map((fw) => <option value={fw}>{FRAMEWORK_LABEL[fw]}</option>)}
+	</select>
+	<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+</label>
+
+<script>
+	// Shared with ComponentDemo / landing: localStorage "edmi-framework" + "edmi-framework" event.
+	const KEY = "edmi-framework";
+	const sync = (fw: string) => {
+		for (const s of document.querySelectorAll<HTMLSelectElement>("[data-framework-select]")) s.value = fw;
+	};
+	let current = "react";
+	try {
+		current = localStorage.getItem(KEY) ?? "react";
+	} catch {}
+	sync(current);
+	for (const s of document.querySelectorAll<HTMLSelectElement>("[data-framework-select]")) {
+		s.addEventListener("change", () => {
+			try {
+				localStorage.setItem(KEY, s.value);
+			} catch {}
+			window.dispatchEvent(new CustomEvent(KEY, { detail: s.value }));
+		});
+	}
+	window.addEventListener(KEY, (e) => sync((e as CustomEvent<string>).detail));
+</script>

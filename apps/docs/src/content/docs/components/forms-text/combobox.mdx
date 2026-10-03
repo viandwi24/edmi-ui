@@ -1,0 +1,24 @@
+---
+title: Combobox
+description: Searchable select with an input or chips trigger. Base UI Combobox.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="combobox" />
+
+<ComponentDemo name="combobox" demo="combobox-multiple" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| items | `T[]` | none |
+| multiple | `boolean` | `false` |
+| ComboboxInput showClear | `boolean` | `false` |
+| ComboboxInput showTrigger | `boolean` | `true` |
+
+## ✦ Edmi additions
+- Built on Input Group; chips use the secondary badge look.
+
+## Vue / Svelte differences
+- **Vue** (Reka UI) and **Svelte** (Bits UI) comboboxes are not built on the Base UI `items` / `render` API. Compose `Combobox`, `ComboboxInput`, `ComboboxList` and `ComboboxItem` parts with the framework's own model (`v-model` in Vue, `bind:value` in Svelte) instead of an `items` array.
+- **Svelte**: Bits UI does not filter, and `ComboboxEmpty` is manual. Render it yourself when your filtered list is empty.

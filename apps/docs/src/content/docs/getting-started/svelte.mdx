@@ -1,0 +1,63 @@
+---
+title: Getting started with Svelte
+description: Add Edmi components to a shadcn-svelte project.
+---
+
+Edmi UI for Svelte is a shadcn-svelte registry built on Bits UI, Svelte 5 runes and Tailwind v4.
+shadcn-svelte installs registry items by URL.
+
+## 1. Initialise shadcn-svelte
+
+```bash
+bunx shadcn-svelte@latest init
+```
+
+## 2. Install the base and components
+
+```bash
+bunx shadcn-svelte@latest add https://viandwi24.github.io/edmi-ui/r/svelte/edmi.json
+bunx shadcn-svelte@latest add https://viandwi24.github.io/edmi-ui/r/svelte/button.json
+```
+
+## Flat by default, raised ✦
+
+Every Edmi component renders flat out of the box: a solid fill, a 1px border and no lip. Pass `raised` for one step of 3D (gradient face, soft top highlight, one hard lip that sinks 2px on press).
+
+```svelte
+<script lang="ts">
+  import { Button } from "$lib/components/ui/button"
+  import * as Card from "$lib/components/ui/card"
+  import * as Tabs from "$lib/components/ui/tabs"
+</script>
+
+<Button raised>Get started</Button>
+
+<Tabs.Root value="overview">
+  <Tabs.List raised variant="pills">
+    <Tabs.Trigger value="overview">Overview</Tabs.Trigger>
+    <Tabs.Trigger value="holdings">Holdings</Tabs.Trigger>
+  </Tabs.List>
+</Tabs.Root>
+
+<Card.Root raised>…</Card.Root>
+```
+
+Components that accept `raised` (all default to `false`):
+
+- **Actions**: Button, Toggle, Toggle Group (on the root, flows to items), Kbd
+- **Forms**: Native Select, Select (trigger), Checkbox, Switch (thumb), Slider (thumb), Calendar (selected day), choice cards and Questionnaire options
+- **Display**: Card, Inset Panel, Empty (media)
+- **Overlays**: Dialog, Popover, Toast (`<Toaster raised />`)
+- **Navigation**: Menubar, Pagination (active link), Tabs (on `TabsList`; `line` and `ghost`/`link` are never raised)
+- **Conversation**: Reactions
+- **Patterns**: every pattern forwards `raised` to the primitives it renders
+
+Rule of thumb: raised for hero and primary CTAs and marketing pages, flat for dense app UI, forms, tables and dialog footers. The full list with demos lives on each component page under **Raised ✦**.
+
+## Icons
+
+Icons follow your project's `components.json` `iconLibrary`. Registry sources use `<IconPlaceholder lucide="…" phosphor="…" … />`, which shadcn-svelte rewrites to your library on install. Edmi's own default is **Phosphor**; an existing project keeps its own library.
+
+## Dark mode
+
+Add the `dark` class to `<html>`.

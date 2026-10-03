@@ -1,0 +1,24 @@
+---
+title: Field
+description: Composes label, control, description and error into one accessible unit.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="field" />
+
+## Raised ✦
+
+A `FieldLabel` that wraps a `Field` is a choice card. Flat by default; pass `raised` on the `FieldLabel` for the one-step 3D look.
+
+<ComponentDemo name="radio-group" demo="radio-group-raised" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| Field orientation | `vertical \| horizontal \| responsive` | `vertical` |
+| FieldLegend variant | `legend \| label` | `legend` |
+| FieldError errors | `Array<{ message?: string }>` | none |
+| FieldLabel raised ✦ | `boolean` | `false` |
+
+## ✦ Edmi additions
+- Choice-card labels (a FieldLabel wrapping a Field) highlight with the ring border when checked; `raised` adds the lip.

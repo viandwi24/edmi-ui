@@ -1,0 +1,23 @@
+---
+title: Feature row
+description: "Numbered feature row on a card with a trailing icon; expands when given content."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="feature-row" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look.
+
+<ComponentDemo name="feature-row" demo="feature-row-raised" />
+
+## API
+| Part | Props | Notes |
+| --- | --- | --- |
+| `FeatureRow` | `index, title, icon?, children?` | 56px row. With `children` it becomes a Collapsible and the plus rotates to a cross. |
+| `raised` | `boolean` | `false` |
+
+## ✦ Edmi additions
+- Whole block is an Edmi addition (DESIGN §5 Patterns, board 11). Composed from: card, collapsible.
+- Install: `shadcn add @edmi/feature-row`.

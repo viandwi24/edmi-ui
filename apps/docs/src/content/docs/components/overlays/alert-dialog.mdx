@@ -1,0 +1,26 @@
+---
+title: Alert Dialog
+description: A blocking confirm for destructive or irreversible actions. No close icon; clicking outside does nothing.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="alert-dialog" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look (on `AlertDialogContent`).
+
+<ComponentDemo name="alert-dialog" demo="alert-dialog-raised" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `AlertDialogContent size` | `default \| sm` | `default` |
+| `AlertDialogAction` | Button props | `default` variant |
+| `AlertDialogCancel variant / size` | Button props | `outline` / `default` |
+| `raised` | `boolean` | `false` |
+
+Parts: `AlertDialog`, `AlertDialogTrigger`, `AlertDialogContent`, `AlertDialogHeader`, `AlertDialogMedia`, `AlertDialogTitle`, `AlertDialogDescription`, `AlertDialogFooter`, `AlertDialogCancel`, `AlertDialogAction`.
+
+## ✦ Edmi additions
+- `--overlay` scrim without blur, hard 4px strong lip. Pass `variant="destructive"` to `AlertDialogAction` for the red confirm.

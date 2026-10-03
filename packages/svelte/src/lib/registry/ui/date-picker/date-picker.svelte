@@ -1,0 +1,58 @@
+<script lang="ts">
+	import { DateFormatter, getLocalTimeZone, type DateValue } from "@internationalized/date";
+	import IconPlaceholder from "$lib/components/icon-placeholder/icon-placeholder.svelte";
+	import { cn } from "$lib/utils.js";
+	import { Button } from "$lib/registry/ui/button/index.js";
+	import { Calendar } from "$lib/registry/ui/calendar/index.js";
+	import * as Popover from "$lib/registry/ui/popover/index.js";
+
+	// Date Picker = composition, not a component: Popover + outline Button + Calendar.
+	let {
+		value = $bindable(),
+		placeholder = "Pick a date",
+		locale = "en-US",
+		disabled = false,
+		raised = false,
+		class: className,
+	}: {
+		value?: DateValue;
+		placeholder?: string;
+		locale?: string;
+		disabled?: boolean;
+		/** ✦ opt-in one-step 3D look; forwarded to the trigger button and the calendar. */
+		raised?: boolean;
+		class?: string;
+	} = $props();
+
+	const formatter = $derived(new DateFormatter(locale, { dateStyle: "long" }));
+</script>
+
+<Popover.Root>
+	<Popover.Trigger>
+		{#snippet child({ props })}
+			<Button
+				variant="outline"
+				{raised}
+				{disabled}
+				data-empty={!value}
+				class={cn(
+					"w-[240px] justify-start text-left font-normal data-[empty=true]:text-muted-foreground",
+					className
+				)}
+				{...props}
+			>
+				<IconPlaceholder
+					lucide="CalendarIcon"
+					tabler="IconCalendar"
+					hugeicons="CalendarIcon"
+					phosphor="CalendarBlankIcon"
+					remixicon="RiCalendarLine"
+				/>
+				{value ? formatter.format(value.toDate(getLocalTimeZone())) : placeholder}
+			</Button>
+		{/snippet}
+	</Popover.Trigger>
+	<Popover.Content class="w-auto p-0" align="start">
+		<Calendar type="single" bind:value captionLayout="dropdown" {locale} {raised} />
+	</Popover.Content>
+</Popover.Root>

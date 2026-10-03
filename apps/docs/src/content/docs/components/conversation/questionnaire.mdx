@@ -1,0 +1,30 @@
+---
+title: Questionnaire
+description: Multi-step questions with single, multiple, freeform and skippable answers and keyboard shortcuts.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="questionnaire" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look (on `Questionnaire`, applies to every choice and input).
+
+<ComponentDemo name="questionnaire" demo="questionnaire-raised" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| Questionnaire | items | `{ name, choices?, required? }[]` | none |
+| Questionnaire | shortcuts | `letters \| numbers` | none |
+| Questionnaire | onSubmit | form event handler | none |
+| QuestionnaireItem | name, multiple, required, invalid | | |
+| QuestionnaireChoice | value | `string` | required |
+| QuestionnairePrevious, Skip, Next, Submit | size, variant | Button props | |
+| `raised` | `boolean` | `false` | One-step 3D look ✦ (on `Questionnaire`, applies to every choice and input) |
+
+Built on `@shadcn/react/questionnaire`.
+
+## ✦ Edmi additions
+- Choices and the freeform input share one 48px row height. The shortcut key sits on the left (brand when selected) and the selected row gets a ring.
+- Previous is a ghost button, matching the board.

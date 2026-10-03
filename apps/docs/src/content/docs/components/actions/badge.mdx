@@ -1,0 +1,18 @@
+---
+title: Badge
+description: Compact status label.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="badge" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| variant | `default \| secondary \| destructive \| outline \| ghost \| link \| brand \| warning \| info` | `default` |
+| shape | `default \| pill \| number` | `default` |
+| render | `ReactElement` | none |
+
+## ✦ Edmi additions
+- `brand`, `warning`, `info` variants: soft fill with a tinted border.
+- `shape`: `pill` and `number` (mono, for counts).

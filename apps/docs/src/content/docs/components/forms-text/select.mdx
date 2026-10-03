@@ -1,0 +1,27 @@
+---
+title: Select
+description: Custom select in a popover with groups, labels, separators and a check on the chosen item.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="select" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look (on `SelectTrigger` (the popup stays flat)).
+
+<ComponentDemo name="select" demo="select-raised" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| SelectTrigger size | `sm \| default` | `default` |
+| SelectContent alignItemWithTrigger | `boolean` | `true` |
+| value / defaultValue | `string` | none |
+| `raised` | `boolean` | `false` |
+
+## ✦ Edmi additions
+- Flat popover surface; `raised` affects only the trigger; highlighted item uses the accent fill.
+
+## Vue / Svelte differences
+- **Svelte**: the root requires `type="single"` (or `"multiple"`); React and Vue infer single selection.

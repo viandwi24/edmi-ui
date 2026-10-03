@@ -1,0 +1,21 @@
+{
+	"extends": "astro/tsconfigs/strict",
+	"include": [
+		".astro/types.d.ts",
+		"src/**/*",
+		"plugins/**/*",
+		"astro.config.mjs"
+	],
+	"exclude": ["dist"],
+	"compilerOptions": {
+		"jsx": "react-jsx",
+		"jsxImportSource": "react",
+		"paths": {
+			"@/registry/edmi/*": ["../../packages/react/registry/*"],
+			"@/edmi/*": ["../../packages/react/src/edmi/*"],
+			"@edmi-react/*": ["../../packages/react/registry/*"],
+			"@edmi-vue/*": ["../../packages/vue/registry/*"],
+			"@edmi-svelte/*": ["../../packages/svelte/src/lib/registry/*"]
+		}
+	}
+}

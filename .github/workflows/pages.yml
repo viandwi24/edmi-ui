@@ -1,0 +1,42 @@
+name: Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      # Latest registries are served from Pages itself, so EDMI_URL is the Pages URL.
+      - name: Generate and build registries into apps/docs/public/r
+        env:
+          EDMI_URL: https://viandwi24.github.io/edmi-ui
+        run: bun run gen:strict && bun run build:registry
+      - uses: withastro/action@v6
+        with:
+          path: apps/docs
+          package-manager: bun
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

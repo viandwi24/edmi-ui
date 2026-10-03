@@ -1,0 +1,26 @@
+---
+title: Button
+description: Pressable action control; flat by default, `raised` adds one-step 3D depth.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="button" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look (3D look: hard lip + soft top highlight).
+
+<ComponentDemo name="button" demo="button-raised" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| variant | `default \| secondary \| outline \| ghost \| destructive \| link \| brand` | `default` |
+| size | `xs \| sm \| default \| lg \| icon-xs \| icon-sm \| icon \| icon-lg` | `default` |
+| render | `ReactElement` | none |
+| `raised` | `boolean` | `false` |
+
+## ✦ Edmi additions
+- `brand` variant (green).
+- `raised` prop: gradient face plus a hard lip that sinks 2px on press. `ghost` and `link` ignore it.
+- Style links with `buttonVariants()` on a plain `<a>`.

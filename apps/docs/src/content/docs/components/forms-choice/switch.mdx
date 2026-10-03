@@ -1,0 +1,27 @@
+---
+title: Switch
+description: Instant on/off for a setting. On state uses the brand color.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="switch" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look (on the thumb).
+
+<ComponentDemo name="switch" demo="switch-raised" />
+
+## API
+Built on Base UI `Switch`.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `size` | `"sm" \| "default"` | `"default"` |
+| `checked` / `defaultChecked` | `boolean` | `false` |
+| `onCheckedChange` | `(checked: boolean, event) => void` | - |
+| `disabled` | `boolean` | `false` |
+| `raised` | `boolean` | `false` |
+
+## ✦ Edmi additions
+- Checked track uses `--brand` (not `--primary`) so live settings read as active.

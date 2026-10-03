@@ -1,0 +1,58 @@
+---
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+
+const tokens = JSON.parse(
+	readFileSync(resolve(process.cwd(), "../../packages/tokens/src/tokens.json"), "utf8"),
+);
+type Row = { light: { oklch: string; hex: string }; dark: { oklch: string; hex: string }; group?: string };
+const colors = tokens.color as Record<string, Row>;
+const groups = new Map<string, [string, Row][]>();
+for (const [name, row] of Object.entries(colors)) {
+	const g = row.group ?? "other";
+	if (!groups.has(g)) groups.set(g, []);
+	groups.get(g)!.push([name, row]);
+}
+const radius = tokens.radius as Record<string, string>;
+---
+
+<div class="not-content edmi-tokens">
+	{
+		[...groups].map(([group, rows]) => (
+			<>
+				<h3>{group}</h3>
+				<table>
+					<thead>
+						<tr><th>Token</th><th>Light</th><th>Dark</th></tr>
+					</thead>
+					<tbody>
+						{rows.map(([name, r]) => (
+							<tr>
+								<td><code>--{name}</code></td>
+								<td><span class="sw" style={`background:${r.light.hex}`} /> <code>{r.light.hex}</code></td>
+								<td><span class="sw" style={`background:${r.dark.hex}`} /> <code>{r.dark.hex}</code></td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</>
+		))
+	}
+	<h3>radius</h3>
+	<table>
+		<thead><tr><th>Token</th><th>Value</th></tr></thead>
+		<tbody>
+			{Object.entries(radius).map(([k, v]) => (
+				<tr><td><code>--radius-{k}</code></td><td><code>{v}</code></td></tr>
+			))}
+		</tbody>
+	</table>
+</div>
+
+<style>
+	.edmi-tokens h3 { margin: 1.5rem 0 .5rem; font-size: 1rem; text-transform: capitalize; }
+	table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+	th, td { text-align: left; padding: .35rem .5rem; border-bottom: 1px solid var(--sl-color-hairline); }
+	code { font-family: var(--sl-font-mono); font-size: .8rem; }
+	.sw { display: inline-block; width: 14px; height: 14px; border-radius: 4px; border: 1px solid var(--sl-color-hairline); vertical-align: -2px; margin-right: .35rem; }
+</style>

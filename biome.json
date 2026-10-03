@@ -1,0 +1,73 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
+	"vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
+	"files": {
+		"ignoreUnknown": true,
+		"includes": [
+			"**/*.ts",
+			"**/*.tsx",
+			"**/*.js",
+			"**/*.mjs",
+			"**/*.json",
+			"**/*.jsonc",
+			"**/*.css",
+			"!refs",
+			"!**/registry.json",
+			"!apps/docs/public/r",
+			"!**/.astro",
+			"!**/.svelte-kit",
+			"!**/dist",
+			"!**/node_modules",
+			"!bun.lock",
+			"!packages/tokens/src/tokens.css",
+			"!packages/tokens/src/theme.css",
+			"!packages/tokens/src/tokens.json",
+			"!packages/tokens/src/recipes.ts",
+			"!packages/tokens/src/kit.css",
+			"!examples/svelte/.vscode",
+			"!examples/svelte/src/routes/layout.css",
+			"!examples/*/src/lib/utils.ts",
+			"!examples/*/src/components/ui",
+			"!examples/*/src/lib/components",
+			"!examples/*/src/lib/hooks",
+			"!examples/react/src/hooks",
+			"!examples/react/src/components/allocation-bar.tsx",
+			"!examples/react/src/components/app-header.tsx",
+			"!examples/react/src/components/index-row.tsx",
+			"!examples/react/src/components/layout-picker.tsx",
+			"!examples/react/src/components/stat-tile.tsx",
+			"!examples/react/src/components/ticker-strip.tsx",
+			"!examples/react/src/components/watchlist-item.tsx",
+			"!examples/vue/src/components/app-header",
+			"!examples/vue/src/components/index-row",
+			"!examples/vue/src/components/layout-picker",
+			"!examples/vue/src/components/ticker-strip",
+			"!examples/vue/src/components/watchlist-item"
+		]
+	},
+	"formatter": { "enabled": true, "indentStyle": "tab" },
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"preset": "recommended",
+			"suspicious": { "noDocumentCookie": "off" }
+		}
+	},
+	"overrides": [
+		{
+			"includes": ["apps/docs/src/styles/global.css"],
+			"linter": {
+				"rules": {
+					"complexity": { "noImportantStyles": "off" },
+					"style": { "noDescendingSpecificity": "off" }
+				}
+			}
+		}
+	],
+	"css": { "parser": { "tailwindDirectives": true } },
+	"javascript": { "formatter": { "quoteStyle": "double" } },
+	"assist": {
+		"enabled": true,
+		"actions": { "source": { "organizeImports": "on" } }
+	}
+}

@@ -1,0 +1,20 @@
+---
+title: Marker
+description: Inline status, system note, bordered row or labeled separator inside a conversation.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="marker" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| Marker | variant | `default \| border \| separator` | `default` |
+| Marker | render | `ReactElement` | none |
+| MarkerIcon, MarkerContent | `span` props | | |
+
+## ✦ Edmi additions
+- 12.5px muted text and a 14px icon, matching the conversation board.
+
+## Vue / Svelte differences
+- **Svelte**: `Marker` has no `render` prop. Pass `href` to render an `<a>`.

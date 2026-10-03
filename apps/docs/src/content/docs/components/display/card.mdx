@@ -1,0 +1,24 @@
+---
+title: Card
+description: Surface with a hard 2px lip and a top highlight. Header, title, description, action, content and footer; size default or sm.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="card" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look (3D look: hard lip + soft top highlight).
+
+<ComponentDemo name="card" demo="card-raised" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `size` | `default \| sm` | `default` |
+| `raised` | `boolean` | `false` |
+
+Parts: `Card`, `CardHeader`, `CardTitle`, `CardDescription`, `CardAction`, `CardContent`, `CardFooter`.
+
+## ✦ Edmi additions
+- Flat (border only); `raised` adds the hard 2px lip (`shadow-card`), no blur. Footer on a muted tint.

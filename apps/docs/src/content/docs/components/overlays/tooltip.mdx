@@ -1,0 +1,19 @@
+---
+title: Tooltip
+description: A short label on hover or focus. Only for extra info; never put required content or actions in a tooltip.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="tooltip" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `TooltipContent side` | `top \| right \| bottom \| left` | `top` |
+| `TooltipContent sideOffset` | `number` | `6` |
+| `TooltipProvider delay` | `number` (ms) | `0` |
+
+Parts: `TooltipProvider`, `Tooltip`, `TooltipTrigger`, `TooltipContent`. A disabled trigger must be wrapped in a `span`.
+
+## ✦ Edmi additions
+- Solid `--primary` chip (7px radius) with a small arrow; a `Kbd` inside gets tighter right padding.

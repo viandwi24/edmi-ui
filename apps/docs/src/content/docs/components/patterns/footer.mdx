@@ -1,0 +1,23 @@
+---
+title: Footer
+description: "Site footer: brand, link columns, social slot and legal line."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="footer" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look.
+
+<ComponentDemo name="footer" demo="footer-raised" />
+
+## API
+| Part | Props | Notes |
+| --- | --- | --- |
+| `SiteFooter` | `brand?, description?, socials?, columns?, legal?, note?` | `columns` is `{title, links: {label, href}[]}[]`. |
+| `raised` | `boolean` | `false` |
+
+## ✦ Edmi additions
+- Whole block is an Edmi addition (DESIGN §5 Patterns, board 11). Composed from: card, separator.
+- Install: `shadcn add @edmi/footer`.

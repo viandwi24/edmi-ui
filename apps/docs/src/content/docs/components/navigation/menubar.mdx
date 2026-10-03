@@ -1,0 +1,26 @@
+---
+title: Menubar
+description: A persistent row of menus, like a desktop app menu bar.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="menubar" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look (on `Menubar` (the bar)).
+
+<ComponentDemo name="menubar" demo="menubar-raised" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `MenubarItem variant` | `default \| destructive` | `default` |
+| `MenubarItem inset` | `boolean` | `false` |
+| `MenubarContent align` | `start \| center \| end` | `start` |
+| `raised` | `boolean` | `false` |
+
+Parts: `Menubar`, `MenubarMenu`, `MenubarTrigger`, `MenubarContent`, `MenubarGroup`, `MenubarLabel`, `MenubarItem`, `MenubarCheckboxItem`, `MenubarRadioGroup`, `MenubarRadioItem`, `MenubarSeparator`, `MenubarShortcut`, `MenubarSub`, `MenubarSubTrigger`, `MenubarSubContent`.
+
+## ✦ Edmi additions
+- Menus reuse the Dropdown Menu recipe (hard 4px lip, `data-[highlighted]`); the open trigger stays highlighted.

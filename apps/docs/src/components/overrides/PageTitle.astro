@@ -1,0 +1,19 @@
+---
+
+const PAGE_TITLE_ID = "_top";
+
+const { entry } = Astro.locals.starlightRoute;
+const { title, description, template } = entry.data;
+const isSplash = template === "splash";
+---
+
+{
+	isSplash ? (
+		<h1 id={PAGE_TITLE_ID} class="sr-only">{title}</h1>
+	) : (
+		<div class="edmi-page-title">
+			<h1 id={PAGE_TITLE_ID}>{title}</h1>
+			{description && <p class="edmi-page-desc">{description}</p>}
+		</div>
+	)
+}

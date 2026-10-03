@@ -1,0 +1,48 @@
+---
+title: Data Table
+description: Table + TanStack Table v9 — filter, faceted filters, sortable columns, column visibility, row selection, row actions and pagination.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="data-table" />
+
+## Anatomy
+```tsx
+const table = useTable({ features, data, columns }) // TanStack Table v9
+<DataTable columns data />            // toolbar + table + pagination
+  <DataTableViewOptions />            // column visibility
+  <DataTableColumnHeader />           // sort / hide
+  <DataTablePagination />             // rows per page, page nav, selection count
+  <DataTableFacetedFilter /> ✦        // dashed "+ Status" filters
+  <DataTableRowActions /> ✦           // ghost "…" + DropdownMenu
+```
+
+Declare the features once in `data-table-features.ts` (v9 is feature-based, unused features are tree-shaken) and pass `typeof features` as the first generic to `ColumnDef`, `Column` and `Table`.
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look (hard lip under the table surface, raised controls in the toolbar).
+
+<ComponentDemo name="data-table" demo="data-table-raised" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `DataTable columns` | `ColumnDef<DataTableFeatures, TData, any>[]` | required |
+| `DataTable data` | `TData[]` | required |
+| `DataTable filterColumn` | `string` (column id) | none (no input) |
+| `DataTable facetedFilters` ✦ | `{ column, title, options? }[]` | none |
+| `DataTable pageSize` | `number` | `10` |
+| `DataTableColumnHeader numeric` ✦ | `boolean` | `false` |
+| `DataTablePagination pageSizes` | `number[]` (the current page size is added if missing) | `[10, 20, 30, 40, 50]` |
+| `raised` | `boolean` | `false` |
+
+Requires `@tanstack/react-table` (v9), and the `table`, `button`, `input`, `checkbox`, `select`, `dropdown-menu` and `badge` items.
+
+## ✦ Edmi additions
+- Table sits in a bordered card surface (flat; `raised` adds the hard 2px lip); selected rows get a soft brand tint.
+- Numbers are mono and right-aligned (`numeric`), deltas use `brand`/`destructive` badges.
+- Dashed faceted filter buttons and `DataTableRowActions` match the kit board.
+
+## Vue / Svelte differences
+- **Vue** and **Svelte** include an extra `TableEmpty` part for the no-results row.

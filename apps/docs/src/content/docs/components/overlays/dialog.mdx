@@ -1,0 +1,26 @@
+---
+title: Dialog
+description: Modal window for a focused task. Content behind is inert; Esc, the X or a click outside closes it.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="dialog" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look (on `DialogContent`).
+
+<ComponentDemo name="dialog" demo="dialog-raised" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `DialogContent showCloseButton` | `boolean` | `true` |
+| `DialogFooter showCloseButton` | `boolean` | `false` |
+| `Dialog open / onOpenChange` | controlled state | uncontrolled |
+| `raised` | `boolean` | `false` |
+
+Parts: `Dialog`, `DialogTrigger`, `DialogContent`, `DialogHeader`, `DialogTitle`, `DialogDescription`, `DialogFooter`, `DialogClose`, `DialogOverlay`, `DialogPortal`.
+
+## ✦ Edmi additions
+- `--overlay` scrim without backdrop blur; flat by default; `raised` adds the strong lip (`shadow-dialog`).

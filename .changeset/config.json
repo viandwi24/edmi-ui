@@ -1,0 +1,27 @@
+{
+	"$schema": "https://unpkg.com/@changesets/config@4.0.1/schema.json",
+	"baseBranch": "main",
+	"access": "public",
+	"format": "auto",
+	"changelog": "@changesets/cli/changelog",
+	"commit": false,
+	"fixed": [
+		[
+			"@edmi-ui/tokens",
+			"@edmi-ui/registry-react",
+			"@edmi-ui/registry-vue",
+			"@edmi-ui/registry-svelte"
+		]
+	],
+	"linked": [],
+	"ignore": [
+		"@edmi-ui/react",
+		"@edmi-ui/vue",
+		"@edmi-ui/svelte",
+		"@edmi-ui/docs",
+		"@edmi-ui/example-react",
+		"@edmi-ui/example-vue",
+		"@edmi-ui/example-svelte"
+	],
+	"updateInternalDependencies": "patch"
+}

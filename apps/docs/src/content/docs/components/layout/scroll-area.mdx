@@ -1,0 +1,21 @@
+---
+title: Scroll Area
+description: Custom thin scrollbars over native scrolling.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="scroll-area" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `ScrollBar orientation` | `"vertical" \| "horizontal"` | `"vertical"` |
+
+Size the area with `className` (`h-*`, `w-*`).
+
+## ✦ Edmi additions
+- Thumb is a 6px `--input` pill with no track.
+
+## Vue / Svelte differences
+- **Svelte**: `ScrollArea` takes `orientation="vertical" | "horizontal" | "both"`; there is no separate `ScrollBar` component to add.
+- **Vue**: exports `ScrollBar` like React.

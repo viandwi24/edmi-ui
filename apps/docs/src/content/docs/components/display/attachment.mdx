@@ -1,0 +1,20 @@
+---
+title: Attachment
+description: A file or image with metadata, upload state and actions. States idle, uploading, processing, error, done.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="attachment" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `state` | `idle \| uploading \| processing \| error \| done` | `done` |
+| `size` | `default \| sm \| xs` | `default` |
+| `orientation` | `horizontal \| vertical` | `horizontal` |
+| `AttachmentMedia variant` | `icon \| image` | `icon` |
+
+Parts: `Attachment`, `AttachmentGroup`, `AttachmentMedia`, `AttachmentContent`, `AttachmentTitle`, `AttachmentDescription`, `AttachmentActions`, `AttachmentAction`, `AttachmentTrigger`.
+
+## ✦ Edmi additions
+- Uploading and processing titles shimmer (gradient text); idle is dashed, error uses the destructive tint; hard 1px lip.
