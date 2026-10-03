@@ -30,3 +30,10 @@ Every component is FLAT by default (solid fill + 1px border, no gradient/lip/`sh
 - Card-based patterns type their props as `ComponentProps<typeof Card>`, so `raised` flows to the Card automatically; forward it explicitly to any other primitive they render (Button, …).
 - `ghost`/`link` buttons and Tabs `line` are never raised. Control height is `h-9`.
 - Every raised component gets a docs demo `apps/docs/src/demos/svelte/<name>-raised.svelte` (flat vs raised side by side).
+
+## Edmi AI pack (`ai-*` items)
+Full rules: AGENTS.md section 7b. Short version for Svelte:
+- Source `src/lib/registry/ai/<name>/<part>.svelte` + `index.ts`; the manifest entry is `aiSvelte(name, [files])` in `registry.manifest/ai-<cat>.svelte.ts` (adds `type: registry:component` and an explicit `target: "ai/<name>/<file>"`, which installs to `$lib/components/ai/<name>/`). **Imports between AI items are relative** (`../shimmer/index.js`); ui items `$lib/registry/ui/<x>/index.js`, utils `$lib/utils.js` as usual. Remove the item from `svelte` in `scripts/ai-pending.json`.
+- Stock source: `bun run scripts/ai-fetch-stock.ts`, `.ai-src/svelte/<name>.json` (Svelte AI Elements, MIT, 24 items only) and the React source for anatomy/props; the other ~25 items are ported from React. Headers: `<!-- Derived from Svelte AI Elements (MIT), modified for Edmi UI. -->` or the Vercel header (Apache-2.0) when ported from React.
+- `IconPlaceholder` (once per file); `$bindable` instead of controllable-state hooks; snippets for ReactNode props; markdown `svelte-streamdown`; flow `@xyflow/svelte`; Rive `@rive-app/webgl2` (thin wrapper); ANSI `anser`; `tv()` for variants.
+- Preview route `src/routes/preview` group `ai-<cat>`; smoke `bash scripts/smoke/svelte.sh` installs `ai-all` as soon as it has items.
