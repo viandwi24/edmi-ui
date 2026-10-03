@@ -240,6 +240,16 @@ Spec (local, gitignored `refs/edmi-ui`): DESIGN.md §4 rules 16-17 and §5b, REV
 - `apps/docs` has the union. If an item needs a package not listed, stop and ask (do not edit package.json); `resolve.dedupe` / `ssr.noExternal` for new libs live in `apps/docs/astro.config.mjs`.
 - Consumer CSS: Streamdown ships Tailwind classes in its dist; React consumers add `@source "../node_modules/streamdown/dist/*.js";` (documented on the `ai-message` page; already in `packages/react/src/index.css` and the docs `global.css`).
 
+### 7.6 Docs examples (`apps/docs/src/examples`)
+Spec: `refs/edmi-ui/EXAMPLES.md` (one live page per screen, light/dark, stone/slate, green/ocean). Short guide: `apps/docs/src/examples/README.md`.
+- **Source of truth**: `src/examples/index.ts` (slug, title, tag AI|App|Marketing|Theme, board, thumb, `frameworks` = all three, `uses`). It drives the `/examples` grid + tag filter, the routes, the sidebar group (read by `astro.config.mjs`) and `scripts/verify-examples.ts` (run by `bun run verify:matrix`).
+- **Folder** `src/examples/<slug>/`: `data.ts` (ONE shared sample-data file, framework-free, local structural types, imported as `./data` by all three), `react.tsx` (default export), `vue.vue`, `svelte.svelte`, optional helpers in `react/ vue/ svelte/` of that port. Thumbnails `public/examples/<thumb>-{light,dark}.png` (~800px, copied from `refs/` with `sips -Z 800`; `refs/` is gitignored).
+- **Allowed imports**: registry items only through `@edmi-react/{ui,components/ai,blocks}/…`, `@edmi-vue/{ui,components/ai}/…`, `@edmi-svelte/{ui,ai}/…`, icons per 6 (React/Svelte `IconPlaceholder`, Vue `@lucide/vue`). No `packages/*`, `../`, CSS files or `<style>` (verify-examples enforces); Tailwind utilities on layout wrappers are fine. Missing piece = registry gap, report it. The Code tab rewrites aliases to consumer paths (`lib/demo.ts`).
+- **Render**: `plugins/gen-islands.mjs` also writes `components/islands/examples/<slug>/<fw>.astro` (`client:load`). The bare route `pages/examples/[slug]/render/[fw].astro` loads `styles/example-render.css` (own Tailwind entry: preflight + tokens + base/theme CSS, so portals are styled) and runs inline in an iframe: `<html>` gets `.dark`, `data-base`, `data-theme`, `--radius` from the query (`mode, base, theme, radius`) and from `postMessage({type:"edmi-example", state})`, so knobs never reload the frame. Page root: `min-h-svh` (or `h-svh`) + `bg-background text-foreground`; never set the knob attributes in the example.
+- **Viewer** `components/ExampleViewer.astro`: toolbar (mode, base, theme, radius, framework select synced with the global `edmi-framework` preference, desktop/tablet 820/mobile 390 presets, drag handle, Open ↗), Preview/Code tabs (Starlight `<Code>`, file tabs: main, helpers, data.ts). The framework switch only swaps the iframe `src`.
+- **Add one**: README steps; restart `astro dev` after adding files (islands generated at config load). Thumbnails: crop the board with `sips -c H W --cropOffset Y X`. Compare each port in light + dark, stone·green + slate·ocean against the screenshot.
+- Gotchas: the React/Vue conversation items render client-side (SSR HTML is empty until hydration); Vue `MessageResponse` fades words in (screenshots right after load look dim); the Svelte `IconPlaceholder` dev shim renders circles (not real icons) in live previews: known gap, see decisions.
+
 ## 8. Verification gates
 
 Run on the final tree; all must exit 0 before claiming done:
@@ -330,6 +340,10 @@ AI pack (v3, decided with the user)
   - Vue docs alias `@edmi-vue/components` maps to `packages/vue/registry/components` (demos import `@edmi-vue/components/ai/<name>`).
   - Previews: Vue and Svelte previews load groups lazily and accept `?group=<name>` (`?group=a,b` in Vue; Svelte route `/preview?group=`); both add Tailwind `@source` for `apps/docs/src/demos/<fw>`, so never add hidden "class list" spans to make demo utilities exist.
 - Docs `.edmi-preview` default `border-color` moved into `@layer components` so utilities (`border-transparent`, `border-b-lip`) win in previews (it was unlayered and overrode them; visible as a frame around ghost bubbles).
+
+Docs examples
+- Examples render in an **iframe to a bare route** (real viewport for Sidebar/media queries, own `<html>` so portals follow the knobs), not a scoped container. Knobs travel by query + `postMessage`; framework switch swaps the route. Why: robustness; EXAMPLES.md allowed either.
+- Every example is live in all three frameworks (user decision), shares one `data.ts`, and imports registry aliases only. Known gap: the Svelte `IconPlaceholder` shim (docs dev runtime) draws a circle, so Svelte example icons are placeholders until a docs-side Phosphor shim exists.
 
 Superseded and intentionally dropped: lucide as default icon set; raised-by-default look and `h-[38px]` controls (v1 spec); plan-era parallel-worker ownership rules and `plans/requests`; `registry:font` for Vue/Svelte; the "utils item for all ports" idea; `data-raised` as a styling hook (the base rule stays harmless).
 
