@@ -7,7 +7,7 @@ import {
   WebPreviewNavigationButton,
   WebPreviewUrl,
 } from "@edmi-vue/components/ai/web-preview";
-import { ChevronLeftIcon, ChevronRightIcon, ExternalLinkIcon, Loader2Icon, RotateCwIcon } from "@lucide/vue";
+import { ChevronLeftIcon, ChevronRightIcon, ArrowUpRightIcon, Loader2Icon, RotateCwIcon } from "@lucide/vue";
 
 const cards = [
   ["NAV", "$0.9998"],
@@ -36,7 +36,7 @@ const logs = [
         <WebPreviewNavigationButton tooltip="Forward"><ChevronRightIcon class="size-4" /></WebPreviewNavigationButton>
         <WebPreviewNavigationButton tooltip="Reload"><RotateCwIcon class="size-4" /></WebPreviewNavigationButton>
         <WebPreviewUrl />
-        <WebPreviewNavigationButton tooltip="Open in new tab"><ExternalLinkIcon class="size-4" /></WebPreviewNavigationButton>
+        <WebPreviewNavigationButton tooltip="Open in new tab"><ArrowUpRightIcon class="size-4" /></WebPreviewNavigationButton>
       </WebPreviewNavigation>
       <WebPreviewBody class="h-[220px]" :srcdoc="page" />
       <WebPreviewConsole :logs="logs" />
@@ -47,7 +47,7 @@ const logs = [
         <WebPreviewNavigationButton tooltip="Forward"><ChevronRightIcon class="size-4" /></WebPreviewNavigationButton>
         <WebPreviewNavigationButton tooltip="Reload"><RotateCwIcon class="size-4" /></WebPreviewNavigationButton>
         <WebPreviewUrl />
-        <WebPreviewNavigationButton tooltip="Open in new tab"><ExternalLinkIcon class="size-4" /></WebPreviewNavigationButton>
+        <WebPreviewNavigationButton tooltip="Open in new tab"><ArrowUpRightIcon class="size-4" /></WebPreviewNavigationButton>
       </WebPreviewNavigation>
       <WebPreviewBody class="h-[220px]" src="about:blank">
         <template #loading>

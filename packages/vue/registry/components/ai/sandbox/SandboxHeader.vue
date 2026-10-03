@@ -2,7 +2,7 @@
 // Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
 import type { ToolUIPart } from "ai"
 import type { HTMLAttributes } from "vue"
-import { ChevronDownIcon, TerminalSquareIcon } from "@lucide/vue"
+import { ChevronDownIcon, Terminal } from "@lucide/vue"
 import { cn } from "@/registry/edmi/lib/utils"
 import { CollapsibleTrigger } from "@/registry/edmi/ui/collapsible"
 import SandboxStatusBadge from "./SandboxStatusBadge.vue"
@@ -22,7 +22,7 @@ const props = defineProps<{
       props.class,
     )"
   >
-    <TerminalSquareIcon class="size-[15px] shrink-0 text-muted-foreground" />
+    <Terminal class="size-[15px] shrink-0 text-muted-foreground" />
     <span class="font-mono text-[12.5px]">{{ props.title }}</span>
     <SandboxStatusBadge :state="props.state" />
     <ChevronDownIcon class="ml-auto size-3.5 shrink-0 text-muted-foreground transition-transform group-data-[state=open]/ai-sandbox-trigger:rotate-180" />
