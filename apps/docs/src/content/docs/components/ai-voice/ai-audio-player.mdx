@@ -1,0 +1,37 @@
+---
+title: Audio Player
+description: "Audio player on media-chrome: play, seek, time, mute and volume, styled as an Edmi card."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-audio-player" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/audio-player) (Apache-2.0), restyled for Edmi UI. Built on `button`; the ranges are media-chrome ranges themed through its CSS variables.
+
+## Installation
+
+<ComponentInstall name="ai-audio-player" />
+
+## Usage
+
+<ComponentUsage name="ai-audio-player" />
+
+## Component source
+
+<ComponentSource name="ai-audio-player" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| AudioPlayer | `className`, `style` | merged into the media-chrome controller (`--media-*` variables can be overridden in `style`) | |
+| AudioPlayerElement | `src` or `data` | `string`, or an AI SDK speech `audio` result | |
+| AudioPlayerSeekBackwardButton, AudioPlayerSeekForwardButton | `seekOffset` | `number` (seconds) | `10` |
+| other parts | | media-chrome element props | |
+
+## ✦ Edmi additions
+- The player is a `--card` surface with a 1px border; play is a 36px round primary button, seek and mute are ghost icon buttons.
+- Times are mono and tabular; the time range fills with `--brand` over a `--muted` track.
+- Deviation from the board: the board draws a waveform for the time range; the real component uses the media-chrome range (a waveform needs decoded audio).

@@ -1,0 +1,41 @@
+---
+title: Mic Selector
+description: "Microphone picker: outline trigger, searchable popover list, cleaned-up device names with the hardware id muted."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-mic-selector" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/mic-selector) (Apache-2.0), restyled for Edmi UI. Built on `popover` and `command`.
+
+## Installation
+
+<ComponentInstall name="ai-mic-selector" />
+
+## Usage
+
+<ComponentUsage name="ai-mic-selector" />
+
+## Component source
+
+<ComponentSource name="ai-mic-selector" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| MicSelector | `value`, `defaultValue`, `onValueChange` | device id | |
+| MicSelector | `open`, `defaultOpen`, `onOpenChange` | `boolean` | `false` |
+| MicSelector | `devices` ✦ | `MediaDeviceInfo[]`; omit to enumerate the audio inputs (asks for permission when the list opens) | |
+| MicSelectorList | `children` | `(devices: MediaDeviceInfo[]) => ReactNode` | |
+| MicSelectorItem | `value` | device id | |
+| MicSelectorLabel | `device`, `showId` | `MediaDeviceInfo`, `boolean` | `true` |
+
+`useAudioDevices()` is exported for custom pickers.
+
+## ✦ Edmi additions
+- `devices` prop, so a demo or a server-provided list needs no permission prompt.
+- `MicSelectorLabel` prints the `(1a2b:3c4d)` suffix as a muted mono id on the right; `MicSelectorValue` shows the name only.
+- The selected item shows the check; selecting closes the popover. The command highlight is no longer tied to the selected value, so arrow keys and hover do not change the selection.

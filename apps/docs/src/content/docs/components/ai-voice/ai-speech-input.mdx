@@ -1,0 +1,42 @@
+---
+title: Speech Input
+description: "Dictation button using the Web Speech API (MediaRecorder fallback) with listening and processing states."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-speech-input" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/speech-input) (Apache-2.0), restyled for Edmi UI. Built on `button` and `spinner`.
+
+## Installation
+
+<ComponentInstall name="ai-speech-input" />
+
+## Usage
+
+<ComponentUsage name="ai-speech-input" />
+
+## Component source
+
+<ComponentSource name="ai-speech-input" />
+
+## Raised ✦
+
+Flat by default. `raised` is forwarded to the Button.
+
+<ComponentDemo name="ai-speech-input" demo="ai-speech-input-raised" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `onTranscriptionChange` | `(text: string) => void` | |
+| `onAudioRecorded` | `(blob: Blob) => Promise<string>` (MediaRecorder fallback: return the transcript) | |
+| `lang` | `string` | `en-US` |
+| `variant`, `size` | Button props | `outline`, `icon` |
+| `raised` | `boolean` | `false` |
+
+## ✦ Edmi additions
+- States follow the board: outline default, `--brand` fill with a solid soft ring and pulsing outlines while listening, spinner while processing, 45% opacity when disabled.
