@@ -6,3 +6,6 @@
 @import "@edmi-ui/tokens/theme.css";
 
 @custom-variant dark (&:is(.dark *));
+
+/* Docs demos (rendered by /preview) carry their own utility classes. */
+@source "../../../../apps/docs/src/demos/svelte";

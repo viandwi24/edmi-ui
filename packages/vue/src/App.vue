@@ -1,19 +1,25 @@
 <script setup lang="ts">
-import { type Component, computed } from "vue";
+import { type Component, computed, defineAsyncComponent } from "vue";
 
 // Visual-check page: every `src/preview/<group>.vue` is rendered twice, light and dark, side by
-// side. Add a file per group; nothing to register here.
-const modules = import.meta.glob<{ default: Component }>(
-	["./preview/*.vue", "!./preview/_*.vue"],
-	{ eager: true },
-);
+// side. Add a file per group; nothing to register here. Groups load lazily; `?group=<name>` (comma
+// separated) renders only those, so one broken group cannot blank the whole page.
+const modules = import.meta.glob<{ default: Component }>([
+	"./preview/*.vue",
+	"!./preview/_*.vue",
+]);
+const only = new URLSearchParams(window.location.search)
+	.get("group")
+	?.split(",")
+	.filter(Boolean);
 const groups = computed(() =>
 	Object.entries(modules)
 		.sort(([a], [b]) => a.localeCompare(b))
-		.map(([path, mod]) => ({
+		.map(([path, load]) => ({
 			name: path.replace("./preview/", "").replace(".vue", ""),
-			component: mod.default,
-		})),
+			component: defineAsyncComponent(load),
+		}))
+		.filter((g) => !only || only.includes(g.name)),
 );
 </script>
 

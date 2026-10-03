@@ -1,16 +1,13 @@
 <script setup lang="ts">
-import type { Component } from "vue";
+import { defineAsyncComponent } from "vue";
 
 // Renders the docs Vue demos (apps/docs/src/demos/vue) by name.
-const demos = import.meta.glob<{ default: Component }>(
-	"../../../../apps/docs/src/demos/vue/*.vue",
-	{ eager: true },
-);
+const demos = import.meta.glob("../../../../apps/docs/src/demos/vue/*.vue");
 const props = defineProps<{ names: string[] }>();
-const items = props.names.map((name) => ({
-	name,
-	component: demos[`../../../../apps/docs/src/demos/vue/${name}.vue`]?.default,
-}));
+const items = props.names.map((name) => {
+	const load = demos[`../../../../apps/docs/src/demos/vue/${name}.vue`];
+	return { name, component: load ? defineAsyncComponent(load as never) : null };
+});
 </script>
 
 <template>

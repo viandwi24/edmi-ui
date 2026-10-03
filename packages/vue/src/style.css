@@ -7,3 +7,5 @@
 
 /* Registry sources live in registry/, outside src: tell Tailwind to scan them. */
 @source "../registry";
+/* Docs demos (rendered by the preview pages) carry their own utility classes. */
+@source "../../../apps/docs/src/demos/vue";
