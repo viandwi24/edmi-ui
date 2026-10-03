@@ -1,0 +1,21 @@
+{
+	"root": false,
+	"extends": "//",
+	"files": {
+		"includes": [
+			"**/*.ts",
+			"**/*.tsx",
+			"**/*.js",
+			"**/*.mjs",
+			"**/*.json",
+			"**/*.jsonc",
+			"**/*.css",
+			"!**/node_modules",
+			"!.svelte-kit",
+			"!src/routes/layout.css",
+			"!src/lib/utils.ts",
+			"!src/lib/components",
+			"!src/lib/hooks"
+		]
+	}
+}

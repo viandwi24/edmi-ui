@@ -28,7 +28,7 @@ warm neutrals, mono numbers and one-step depth, inspired by Claude and Cofounder
 ## Links
 
 - Docs and live demos: <https://viandwi24.github.io/edmi-ui/>
-- Examples (StackBlitz-ready): [`examples/react`](examples/react), [`examples/vue`](examples/vue), [`examples/svelte`](examples/svelte)
+- Examples (StackBlitz-ready): [`examples/react`](examples/react), [`examples/vue`](examples/vue), [`examples/svelte`](examples/svelte); Layerbeat (Slate · Ocean theme): [`examples/layerbeat-react`](examples/layerbeat-react), [`examples/layerbeat-vue`](examples/layerbeat-vue), [`examples/layerbeat-svelte`](examples/layerbeat-svelte)
 - Releasing: [RELEASING.md](RELEASING.md) · Contributing: [CONTRIBUTING.md](CONTRIBUTING.md)
 
 **Flat by default, raised on demand.** Every component renders the plain shadcn look (solid fill, 1px border,
