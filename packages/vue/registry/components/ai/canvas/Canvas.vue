@@ -1,9 +1,10 @@
 <script setup lang="ts">
 // Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
-import type { FlowEmits, FlowProps, FlowSlots } from "@vue-flow/core"
+import type { FlowEmits, FlowProps } from "@vue-flow/core"
 import { Background } from "@vue-flow/background"
 import { VueFlow } from "@vue-flow/core"
 import { useForwardPropsEmits } from "reka-ui"
+import { computed, useSlots } from "vue"
 import "@vue-flow/core/dist/style.css"
 
 defineOptions({ inheritAttrs: false })
@@ -18,7 +19,9 @@ const props = withDefaults(defineProps<FlowProps>(), {
 })
 
 const emits = defineEmits<FlowEmits>()
-const slots = defineSlots<FlowSlots>()
+const slots = useSlots()
+// Every slot except the default one is handed to Vue Flow as is (#node-<type>, #edge-<type>, ...).
+const forwardedSlotNames = computed(() => Object.keys(slots).filter((n) => n !== "default"))
 const forwarded = useForwardPropsEmits(props, emits)
 </script>
 
@@ -35,7 +38,7 @@ const forwarded = useForwardPropsEmits(props, emits)
     <Background :gap="18" :size="1" pattern-color="var(--input)" bg-color="var(--background)" />
 
     <!-- Forward the other slots as they are: #node-<type>, #edge-<type>, #connection-line, #zoom-pane. -->
-    <template v-for="name in Object.keys(slots).filter((n) => n !== 'default')" :key="name" #[name]="slotData">
+    <template v-for="name in forwardedSlotNames" :key="name" #[name]="slotData">
       <slot :name="name" v-bind="slotData || {}" />
     </template>
 
