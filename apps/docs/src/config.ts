@@ -112,3 +112,18 @@ export const COMPONENT_GROUPS: { dir: string; label: string }[] = [
 	{ dir: "patterns", label: "Patterns" },
 	{ dir: "meta", label: "Meta" },
 ];
+
+/**
+ * Edmi AI pack groups: pages live in `components/ai-<cat>/ai-<name>.mdx` (page name = registry item
+ * name). Sidebar: one "AI" group with a subgroup per entry. Keep in sync with astro.config.mjs and
+ * registry.manifest/ai-*.ts categories.
+ */
+export const AI_GROUPS: { dir: string; label: string }[] = [
+	{ dir: "ai-chat", label: "Chat" },
+	{ dir: "ai-agent", label: "Agent" },
+	{ dir: "ai-code", label: "Code" },
+	{ dir: "ai-runtime", label: "Runtime" },
+	{ dir: "ai-voice", label: "Voice" },
+	{ dir: "ai-workflow", label: "Workflow" },
+	{ dir: "ai-patterns", label: "Patterns ✦" },
+];

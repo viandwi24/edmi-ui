@@ -213,6 +213,21 @@ export const items: Item[] = [
 		},
 	},
 	{
+		name: "ai-all",
+		title: "All Edmi AI components",
+		description:
+			"Every Edmi AI component (chat, agent output, code, runtime, voice, workflow and the ✦ patterns) in one install. Pair it with `all` and `theme`.",
+		type: "registry:block",
+		categories: CAT,
+		aggregate: "ai",
+		docs: "Run `add @edmi-ui/theme @edmi-ui/all @edmi-ui/ai-all --overwrite` for the whole kit with the AI pack. Installs into `components/ai/`.",
+		frameworks: {
+			react: { files: [] },
+			vue: { files: [] },
+			svelte: { files: [] },
+		},
+	},
+	{
 		name: "edmi",
 		title: "Edmi",
 		description:

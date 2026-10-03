@@ -79,6 +79,11 @@ export function rewriteDependency(
 		: `@edmi-ui/${name}`;
 }
 
+/** Edmi AI pack items (`ai-*`) carry a category that starts with this prefix. */
+export const AI_CATEGORY_PREFIX = "AI · ";
+export const isAiItem = (item: Item) =>
+	item.categories?.some((c) => c.startsWith(AI_CATEGORY_PREFIX)) ?? false;
+
 const uniqSorted = (xs: string[]) => [...new Set(xs)].sort();
 
 type Plan = { item: Item; entry: FrameworkEntry; type: ItemType };
@@ -129,7 +134,11 @@ export function buildFramework(
 			if (shipped.has(dep)) deps.push(dep);
 		if (item.aggregate === "ui")
 			for (const [n, p] of shipped)
-				if (n !== name && p.type === "registry:ui") deps.push(n);
+				if (n !== name && p.type === "registry:ui" && !isAiItem(p.item))
+					deps.push(n);
+		if (item.aggregate === "ai")
+			for (const [n, p] of shipped)
+				if (n !== name && isAiItem(p.item)) deps.push(n);
 		if (item.aggregate === "patterns")
 			for (const [n, p] of shipped)
 				if (n !== name && p.item.categories?.includes("Patterns")) deps.push(n);

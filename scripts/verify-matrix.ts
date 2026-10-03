@@ -5,7 +5,7 @@
  * Exit 1 on any ✗ that is not an explained `skip` (shown as `–`).
  *   bun run verify:matrix [--markdown]   # --markdown prints the README table only
  */
-import { existsSync, readdirSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { listBases, listThemes } from "../packages/tokens/src/css-vars.ts";
 import { manifest } from "../registry.manifest/index.ts";
@@ -17,7 +17,7 @@ const EXT = { react: "tsx", vue: "vue", svelte: "svelte" } as const;
 
 /** DESIGN.md §5, by group, as registry item names. */
 const REQUIRED: Record<string, string[]> = {
-	Meta: ["theme", "all", "patterns", "edmi"],
+	Meta: ["theme", "all", "patterns", "ai-all", "edmi"],
 	Actions: ["button", "button-group", "toggle", "toggle-group", "badge", "kbd"],
 	Forms: [
 		"label",
@@ -110,6 +110,86 @@ const REQUIRED: Record<string, string[]> = {
 	],
 };
 
+/**
+ * Edmi AI pack (AGENTS.md "AI pack"): every item must ship in all three frameworks, be explained with
+ * `skip`, or be listed in scripts/ai-pending.json (temporary, must shrink to empty).
+ */
+const AI_REQUIRED: Record<string, string[]> = {
+	"AI · Chat": [
+		"conversation",
+		"message",
+		"prompt-input",
+		"suggestion",
+		"attachments",
+		"model-selector",
+		"context",
+		"shimmer",
+	],
+	"AI · Agent": [
+		"reasoning",
+		"chain-of-thought",
+		"tool",
+		"confirmation",
+		"sources",
+		"inline-citation",
+		"plan",
+		"task",
+		"queue",
+		"checkpoint",
+	],
+	"AI · Code": [
+		"agent",
+		"artifact",
+		"code-block",
+		"commit",
+		"environment-variables",
+		"file-tree",
+		"jsx-preview",
+		"package-info",
+	],
+	"AI · Runtime": [
+		"sandbox",
+		"schema-display",
+		"snippet",
+		"stack-trace",
+		"terminal",
+		"test-results",
+		"web-preview",
+	],
+	"AI · Voice": [
+		"audio-player",
+		"mic-selector",
+		"persona",
+		"speech-input",
+		"transcription",
+		"voice-selector",
+	],
+	"AI · Workflow": [
+		"canvas",
+		"node",
+		"edge",
+		"connection",
+		"controls",
+		"panel",
+		"toolbar",
+		"image",
+		"open-in-chat",
+	],
+	"AI · Patterns ✦": [
+		"artifact-card",
+		"artifact-stack",
+		"artifact-viewer",
+		"session-panel",
+		"agent-avatar",
+		"prompt-input-agent",
+		"chat-composer",
+		"chat-header",
+	],
+};
+
+/** AI items with a `raised` prop: each needs `ai-<name>-raised` demos (same rule as RAISED). */
+const AI_RAISED = ["prompt-input", "suggestion"];
+
 /** AGENTS.md section 5: every item with a `raised` prop ships a `<name>-raised` demo in all three frameworks. */
 const RAISED = [
 	"button",
@@ -166,19 +246,55 @@ for (const g of readdirSync(compDir, { withFileTypes: true }))
 const byName = new Map(manifest.map((i) => [i.name, i]));
 const META = new Set(REQUIRED.Meta);
 
-type Cell = "ok" | "skip" | "fail";
+type Cell = "ok" | "skip" | "fail" | "pending";
+
+const pending: Record<string, string[]> = JSON.parse(
+	readFileSync(resolve(import.meta.dir, "ai-pending.json"), "utf8"),
+);
+const aiNames = new Set(
+	Object.values(AI_REQUIRED)
+		.flat()
+		.map((n) => `ai-${n}`),
+);
+for (const fw of FWS)
+	for (const n of pending[fw] ?? [])
+		if (!aiNames.has(n))
+			throw new Error(
+				`scripts/ai-pending.json: unknown AI item "${n}" [${fw}]`,
+			);
 let failures = 0;
 const problems: string[] = [];
 const rows: { group: string; name: string; cells: Cell[]; docs: boolean }[] =
 	[];
 
-for (const [group, names] of Object.entries(REQUIRED)) {
+const groups: [string, string[], boolean][] = [
+	...Object.entries(REQUIRED).map(
+		([g, n]) => [g, n, false] as [string, string[], boolean],
+	),
+	...Object.entries(AI_REQUIRED).map(
+		([g, n]) =>
+			[g, n.map((x) => `ai-${x}`), true] as [string, string[], boolean],
+	),
+];
+for (const [group, names, isAi] of groups) {
 	for (const name of names) {
 		const item = byName.get(name);
 		const cells: Cell[] = FWS.map((fw) => {
 			const entry = item?.frameworks[fw];
 			if (entry?.skip) return "skip";
 			const why: string[] = [];
+			if (isAi && pending[fw]?.includes(name)) {
+				const built = existsSync(
+					resolve(ROOT, `apps/docs/public/r/${fw}/${name}.json`),
+				);
+				if (entry?.files?.length || built) {
+					problems.push(
+						`${name} [${fw}]: listed in scripts/ai-pending.json but already shipped; remove it from the list`,
+					);
+					return "fail";
+				}
+				return "pending";
+			}
 			if (!item) why.push("not in manifest");
 			else if (!entry) why.push("manifest has no entry");
 			if (!existsSync(resolve(ROOT, `apps/docs/public/r/${fw}/${name}.json`)))
@@ -196,16 +312,18 @@ for (const [group, names] of Object.entries(REQUIRED)) {
 			}
 			return "ok";
 		});
-		const docs = META.has(name) || docsPages.has(name);
+		const shipped = cells.some((c) => c === "ok");
+		const docs = META.has(name) || docsPages.has(name) || (isAi && !shipped);
 		if (!docs) problems.push(`${name}: docs page missing`);
 		failures += cells.filter((c) => c === "fail").length + (docs ? 0 : 1);
 		rows.push({ group, name, cells, docs });
 	}
 }
 
-for (const name of RAISED)
+for (const name of [...RAISED, ...AI_RAISED.map((n) => `ai-${n}`)])
 	for (const fw of FWS) {
 		if (byName.get(name)?.frameworks[fw]?.skip) continue;
+		if (pending[fw]?.includes(name)) continue;
 		if (
 			!existsSync(
 				resolve(ROOT, `apps/docs/src/demos/${fw}/${name}-raised.${EXT[fw]}`),
@@ -234,7 +352,7 @@ for (const name of themeNames)
 		}
 	}
 
-const sym = { ok: "✓", skip: "–", fail: "✗" } as const;
+const sym = { ok: "✓", skip: "–", fail: "✗", pending: "…" } as const;
 if (process.argv.includes("--markdown")) {
 	console.log(
 		"| Group | Item | React | Vue | Svelte |\n| --- | --- | :-: | :-: | :-: |",
@@ -258,7 +376,7 @@ for (const r of rows) {
 	);
 }
 console.log(
-	"\n  columns: react vue svelte   (✓ manifest+built JSON+demo, – explained skip, ✗ missing)",
+	"\n  columns: react vue svelte   (✓ manifest+built JSON+demo, – explained skip, … AI pending, ✗ missing)",
 );
 const skips = rows.flatMap((r) =>
 	r.cells
@@ -271,6 +389,11 @@ if (failures) {
 	console.error(`\n${failures} problem(s):\n  ${problems.join("\n  ")}`);
 	process.exit(1);
 }
+const pend = rows.flatMap((r) => r.cells.filter((c) => c === "pending"));
+if (pend.length)
+	console.log(
+		`  pending: ${pend.length} AI item x framework cells still listed in scripts/ai-pending.json`,
+	);
 console.log(
-	`\nAll ${rows.length} items present in all frameworks; ${RAISED.length} raised demos x 3 frameworks present; ${themeNames.length} theme items (${themeNames.join(", ")}) x 3 frameworks present.`,
+	`\nAll ${rows.length} items are present (AI items listed in scripts/ai-pending.json excepted) in all frameworks; ${RAISED.length} raised demos x 3 frameworks present; ${themeNames.length} theme items (${themeNames.join(", ")}) x 3 frameworks present.`,
 );

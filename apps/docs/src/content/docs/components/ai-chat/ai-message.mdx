@@ -1,0 +1,53 @@
+---
+title: Message
+description: "One chat turn: secondary user bubble or full-width assistant response with markdown typography, actions, branches and toolbar."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-message" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/message) (Apache-2.0), restyled for Edmi UI. Built on `message` and `bubble`.
+
+## Installation
+
+<ComponentInstall name="ai-message" />
+
+## Usage
+
+<ComponentUsage name="ai-message" />
+
+## Component source
+
+<ComponentSource name="ai-message" />
+
+## More examples
+
+### Branches
+
+<ComponentDemo name="ai-message" demo="ai-message-branch" />
+
+### Multi-agent (avatar and name)
+
+<ComponentDemo name="ai-message" demo="ai-message-agent" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| Message | `from` | `user \| assistant \| system` | |
+| MessageContent | `variant` | `Bubble` variant | `secondary` (user), `ghost` (assistant) |
+| MessageResponse | `Streamdown` props | markdown string as `children` | |
+| MessageAction | `tooltip`, `label` | `string` | |
+| MessageBranch | `defaultBranch`, `onBranchChange` | `number`, `fn` | `0` |
+| MessageToolbar, MessageActions, MessageBranchSelector/Previous/Next/Page | | | |
+| MessageAvatar, MessageHeader | | opt-in (multi-agent) | |
+
+`MessageResponse` uses [Streamdown](https://streamdown.ai); add `@source "../node_modules/streamdown/dist/*.js";` to your Tailwind CSS so its classes are generated.
+
+## ✦ Edmi additions
+- No assistant avatar by default: the response is full width on the left, the user turn is a secondary bubble on the right.
+- Status and shimmer text goes inside `MessageContent` (a ghost bubble) so its first line aligns like any message.
+- `MessageResponse` typography: 15px / 1.65, 600 lead-ins, h1-h3 22/18/16, inline code in mono 12.5 on `--muted` with `--destructive-text`, links `--info-text` underlined, 3px `--border` quote rule, 22px list indent, max ~68ch.
+- `MessageAvatar` + `MessageHeader` for multi-agent chats: the avatar aligns to the name line.

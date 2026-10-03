@@ -1,0 +1,38 @@
+---
+title: Model Selector
+description: "Searchable model picker in a command dialog, with provider logos and grouped lists."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-model-selector" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/model-selector) (Apache-2.0), restyled for Edmi UI. Built on `command` and `dialog`.
+
+## Installation
+
+<ComponentInstall name="ai-model-selector" />
+
+## Usage
+
+<ComponentUsage name="ai-model-selector" />
+
+## Component source
+
+<ComponentSource name="ai-model-selector" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| ModelSelector | `Dialog` props (`open`, `onOpenChange`) | | |
+| ModelSelectorTrigger | `render` | element, e.g. `<Button variant="outline" />` | |
+| ModelSelectorContent | `title` | `ReactNode` (screen reader) | `Model Selector` |
+| ModelSelectorLogo | `provider` | models.dev provider id | |
+| ModelSelectorInput/List/Empty/Group/Item/Shortcut/Separator/Name/LogoGroup, ModelSelectorDialog | | | |
+
+Logos load from `https://models.dev/logos/<provider>.svg`.
+
+## ✦ Edmi additions
+- The popup is the Edmi dialog with the command palette inside (no close button, search first).

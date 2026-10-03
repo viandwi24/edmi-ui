@@ -23,3 +23,5 @@ apps/docs/public/r/
 .claude
 refs
 plans
+# stock AI Elements sources fetched by scripts/ai-fetch-stock.ts (reference only, never committed)
+.ai-src/

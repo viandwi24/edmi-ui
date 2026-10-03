@@ -12,18 +12,21 @@ export function rewriteImports(fw: Framework, src: string): string {
 		case "react":
 			return src
 				.replaceAll("@edmi-react/ui/", "@/components/ui/")
+				.replaceAll("@edmi-react/components/", "@/components/")
 				.replaceAll("@edmi-react/hooks/", "@/hooks/")
 				.replaceAll("@edmi-react/lib/", "@/lib/")
 				.replaceAll("@edmi-react/blocks/", "@/components/");
 		case "vue":
 			return src
 				.replaceAll("@edmi-vue/ui/", "@/components/ui/")
+				.replaceAll("@edmi-vue/components/", "@/components/")
 				.replaceAll("@edmi-vue/hooks/", "@/composables/")
 				.replaceAll("@edmi-vue/lib/", "@/lib/")
 				.replaceAll("@edmi-vue/blocks/", "@/components/");
 		case "svelte":
 			return src
 				.replaceAll("@edmi-svelte/ui/", "$lib/components/ui/")
+				.replaceAll("@edmi-svelte/ai/", "$lib/components/ai/")
 				.replaceAll("@edmi-svelte/hooks/", "$lib/hooks/")
 				.replaceAll("@edmi-svelte/lib/", "$lib/")
 				.replaceAll("@edmi-svelte/blocks/", "$lib/components/");

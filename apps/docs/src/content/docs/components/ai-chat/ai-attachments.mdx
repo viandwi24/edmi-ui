@@ -1,0 +1,36 @@
+---
+title: Attachments
+description: "Files and images attached to a message or prompt: grid, inline and list layouts with preview and remove."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-attachments" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/attachments) (Apache-2.0), restyled for Edmi UI. Built on `attachment`.
+
+## Installation
+
+<ComponentInstall name="ai-attachments" />
+
+## Usage
+
+<ComponentUsage name="ai-attachments" />
+
+## Component source
+
+<ComponentSource name="ai-attachments" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| Attachments | `variant` | `grid \| inline \| list` | `grid` |
+| Attachment | `data`, `onRemove` | `FileUIPart \| SourceDocumentUIPart` + `id`, `size?` | |
+| AttachmentInfo | `showMediaType` | `boolean` | `false` |
+| AttachmentPreview, AttachmentRemove, AttachmentHoverCard*, AttachmentEmpty | | | |
+
+## ✦ Edmi additions
+- The grid shows the file name under the tile; the list meta line is `mediaType · size`.
+- The remove button on a grid tile is a solid `--popover` chip with a 1px border (no transparency).

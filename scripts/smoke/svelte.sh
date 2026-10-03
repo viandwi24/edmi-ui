@@ -58,6 +58,19 @@ done
 grep -q "raised" "$APP/src/lib/components/ui/button/button.svelte" || { echo "button.svelte is not the Edmi v2 version (raised)"; exit 1; }
 grep -q -- "--brand-hi" "$APP/src/routes/layout.css" || { echo "theme cssVars missing from layout.css"; exit 1; }
 
+# Edmi AI pack: once `ai-all` has dependencies (items ported), install it too; every item must land in
+# $lib/components/ai/<name>/ (explicit per-file targets), sibling imports are relative, svelte-check below covers it.
+AI_NAMES="$(bun -e 'const d = await Bun.file(process.argv[1]).json(); console.log(d.registryDependencies.map((x) => x.split("/").pop().replace(/\.json$/, "")).filter((n) => n.startsWith("ai-")).join(" "))' "$WORK/public/r/svelte/ai-all.json")"
+if [ -n "$AI_NAMES" ]; then
+	echo "== add ai-all ($(echo "$AI_NAMES" | wc -w | tr -d ' ') items)"
+	(cd "$APP" && bunx --bun shadcn-svelte@latest add "$URL/ai-all.json" --overwrite --yes </dev/null >"$WORK/add-ai.log" 2>&1) || { cat "$WORK/add-ai.log"; exit 1; }
+	for n in $AI_NAMES; do
+		test -d "$APP/src/lib/components/ai/${n#ai-}" || { echo "missing components/ai/${n#ai-}"; exit 1; }
+		test ! -e "$APP/src/lib/components/ui/$n" || { echo "$n leaked into components/ui"; exit 1; }
+	done
+	if grep -rq "\$lib/registry\|\$UI\$\|\$UTILS\$" "$APP/src/lib/components/ai"; then echo "unrewritten registry placeholders/imports in components/ai"; exit 1; fi
+fi
+
 echo "== svelte-check"
 cat >"$APP/src/routes/+page.svelte" <<'SVELTE'
 <script lang="ts">

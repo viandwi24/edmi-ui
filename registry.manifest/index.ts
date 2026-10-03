@@ -1,6 +1,30 @@
 import { entries as actionsSvelte } from "./actions.svelte.ts";
 import { items as actions } from "./actions.ts";
 import { entries as actionsVue } from "./actions.vue.ts";
+import { entries as aiAgentSvelte } from "./ai-agent.svelte.ts";
+import { items as aiAgent } from "./ai-agent.ts";
+import { entries as aiAgentVue } from "./ai-agent.vue.ts";
+import { entries as aiChatSvelte } from "./ai-chat.svelte.ts";
+import { items as aiChat } from "./ai-chat.ts";
+import { entries as aiChatVue } from "./ai-chat.vue.ts";
+import { entries as aiCodeSvelte } from "./ai-code.svelte.ts";
+import { items as aiCode } from "./ai-code.ts";
+import { entries as aiCodeVue } from "./ai-code.vue.ts";
+import { entries as aiPatternsSvelte } from "./ai-patterns.svelte.ts";
+import { items as aiPatterns } from "./ai-patterns.ts";
+import { entries as aiPatternsVue } from "./ai-patterns.vue.ts";
+import { entries as aiRuntimeSvelte } from "./ai-runtime.svelte.ts";
+import { items as aiRuntime } from "./ai-runtime.ts";
+import { entries as aiRuntimeVue } from "./ai-runtime.vue.ts";
+import { entries as aiUtilitiesSvelte } from "./ai-utilities.svelte.ts";
+import { items as aiUtilities } from "./ai-utilities.ts";
+import { entries as aiUtilitiesVue } from "./ai-utilities.vue.ts";
+import { entries as aiVoiceSvelte } from "./ai-voice.svelte.ts";
+import { items as aiVoice } from "./ai-voice.ts";
+import { entries as aiVoiceVue } from "./ai-voice.vue.ts";
+import { entries as aiWorkflowSvelte } from "./ai-workflow.svelte.ts";
+import { items as aiWorkflow } from "./ai-workflow.ts";
+import { entries as aiWorkflowVue } from "./ai-workflow.vue.ts";
 import { entries as conversationSvelte } from "./conversation.svelte.ts";
 import { items as conversation } from "./conversation.ts";
 import { entries as conversationVue } from "./conversation.vue.ts";
@@ -87,5 +111,13 @@ export const manifest: Item[] = [
 	...group(conversation, conversationVue, conversationSvelte, "conversation"),
 	...group(patterns, patternsVue, patternsSvelte, "patterns"),
 	...group(patterns2, patterns2Vue, patterns2Svelte, "patterns-2"),
+	...group(aiChat, aiChatVue, aiChatSvelte, "ai-chat"),
+	...group(aiAgent, aiAgentVue, aiAgentSvelte, "ai-agent"),
+	...group(aiCode, aiCodeVue, aiCodeSvelte, "ai-code"),
+	...group(aiRuntime, aiRuntimeVue, aiRuntimeSvelte, "ai-runtime"),
+	...group(aiVoice, aiVoiceVue, aiVoiceSvelte, "ai-voice"),
+	...group(aiWorkflow, aiWorkflowVue, aiWorkflowSvelte, "ai-workflow"),
+	...group(aiPatterns, aiPatternsVue, aiPatternsSvelte, "ai-patterns"),
+	...group(aiUtilities, aiUtilitiesVue, aiUtilitiesSvelte, "ai-utilities"),
 	...themes,
 ];

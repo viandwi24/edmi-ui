@@ -18,6 +18,8 @@
 @source "../../../../packages/svelte/registry";
 @source "../../../../packages/svelte/src/lib";
 @source "../demos";
+/* AI pack: Streamdown (ai-message) ships Tailwind classes in its dist. */
+@source "../../node_modules/streamdown/dist/*.js";
 
 /* ------------------------------------------------------------------------------------------------
    Starlight chrome in Edmi tokens. Every --sl-color-* is mapped to a token, so light and dark both
@@ -763,7 +765,15 @@ details#starlight__mobile-toc summary {
 .edmi-preview ::before,
 .edmi-preview ::after {
 	box-sizing: border-box;
-	border-color: var(--border);
+}
+/* Default border color for previews, but in `components` (above Starlight, below utilities) so utilities
+   like `border-transparent` / `border-b-lip` in the registry components still win. */
+@layer components {
+	.edmi-preview *,
+	.edmi-preview ::before,
+	.edmi-preview ::after {
+		border-color: var(--border);
+	}
 }
 
 /* ---- framework-aware panels: html[data-fw] is set by the head script and the header select ---- */

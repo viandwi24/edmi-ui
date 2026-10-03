@@ -25,7 +25,7 @@ echo "== building the registry for $URL (does not touch apps/docs/public)"
 (cd "$ROOT" && EDMI_URL="http://localhost:$PORT" bun run scripts/gen-registry.ts --strict --out "$WORK/gen" >/dev/null)
 (cd "$ROOT/packages/react" && bunx shadcn@latest build "$WORK/gen/react/registry.json" --cwd "$ROOT/packages/react" --output "$WORK/public/r/react" </dev/null)
 curl -fsS "$URL/button.json" >/dev/null
-for f in button theme edmi all patterns utils; do test -f "$WORK/public/r/react/$f.json" || { echo "missing $f.json"; exit 1; }; done
+for f in button theme edmi all patterns utils ai-all ai-message ai-use-controllable-state; do test -f "$WORK/public/r/react/$f.json" || { echo "missing $f.json"; exit 1; }; done
 echo "== registry served at $URL"
 
 # Item names every install must contain.
@@ -42,6 +42,21 @@ check_files() {
 		grep -q "\"@fontsource-variable/$f\"" "$dir/package.json" || { echo "package.json lacks @fontsource-variable/$f"; exit 1; }
 	done
 	grep -q -- "--brand-hi" "$dir/src/index.css" || { echo "theme cssVars missing from src/index.css"; exit 1; }
+}
+
+# AI pack: files land in components/ai (not components/ui), imports are rewritten to the consumer aliases,
+# icons follow iconLibrary, no leftover registry paths.
+check_ai() {
+	local dir="$1"
+	for n in conversation message prompt-input suggestion attachments model-selector context shimmer; do
+		test -f "$dir/src/components/ai/$n.tsx" || { echo "missing components/ai/$n.tsx"; exit 1; }
+	done
+	test -f "$dir/src/hooks/ai/use-controllable-state.ts" || { echo "missing hooks/ai/use-controllable-state.ts"; exit 1; }
+	! grep -rq "@/registry/" "$dir/src/components/ai" "$dir/src/hooks/ai" || { echo "unrewritten @/registry imports in the AI files"; exit 1; }
+	grep -q "@/components/ui/button" "$dir/src/components/ai/conversation.tsx" || { echo "ai imports are not rewritten to @/components/ui"; exit 1; }
+	! grep -rq "IconPlaceholder\|icon-placeholder" "$dir/src/components/ai" || { echo "AI files still have IconPlaceholder"; exit 1; }
+	grep -q "Derived from Vercel AI Elements (Apache-2.0)" "$dir/src/components/ai/message.tsx" || { echo "attribution header missing"; exit 1; }
+	test ! -f "$dir/src/components/ui/ai-message.tsx" || { echo "ai item leaked into components/ui"; exit 1; }
 }
 
 # $2 = lucide | phosphor: icons are written as IconPlaceholder and the CLI rewrites them to iconLibrary.
@@ -78,6 +93,12 @@ echo "== 1b. add @edmi-ui/all --overwrite into the same stock project (plan 09 s
 echo "== 1c. add @edmi-ui/patterns (every pattern block)"
 (cd "$APP" && bunx shadcn@latest add @edmi-ui/patterns --overwrite --yes </dev/null)
 check_files "$APP"
+typecheck "$APP"
+echo "   ok"
+
+echo "== 1d. add @edmi-ui/ai-all (Edmi AI pack: installs into components/ai and hooks/ai)"
+(cd "$APP" && bunx shadcn@latest add @edmi-ui/ai-all --overwrite --yes </dev/null)
+check_ai "$APP"
 typecheck "$APP"
 echo "   ok"
 

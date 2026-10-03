@@ -1,0 +1,42 @@
+Edmi UI
+Copyright (c) the Edmi UI authors.
+
+This repository's "Edmi AI" pack (registry items named `ai-*`, sources under `components/ai/`) is
+derived from the following third-party works. Each derived source file starts with a header comment
+naming its origin, and states that it was modified for Edmi UI (restyled with Edmi tokens and
+recipes, ported to Base UI / Reka UI / Bits UI, icons via IconPlaceholder, local state hooks).
+
+1. AI Elements (React)
+   Copyright 2023 Vercel, Inc.
+   https://github.com/vercel/ai-elements  -  https://elements.ai-sdk.dev
+   License: Apache License 2.0 (full text: licenses/Apache-2.0.txt)
+   Derived: the React sources of every `ai-*` item that has an AI Elements counterpart (conversation,
+   message, prompt-input, suggestion, attachments, model-selector, context, shimmer, reasoning,
+   chain-of-thought, tool, confirmation, sources, inline-citation, plan, task, queue, checkpoint, agent,
+   artifact, code-block, commit, environment-variables, file-tree, jsx-preview, package-info, sandbox,
+   schema-display, snippet, stack-trace, terminal, test-results, web-preview, audio-player, mic-selector,
+   persona, speech-input, transcription, voice-selector, canvas, node, edge, connection, controls, panel,
+   toolbar, image, open-in-chat). The Vue and Svelte ports follow the same anatomy and props.
+
+2. AI Elements Vue
+   Copyright 2025 cwandev
+   https://github.com/vuepont/ai-elements-vue
+   License: Apache License 2.0 (full text: licenses/Apache-2.0.txt)
+   Derived: the Vue sources of `ai-*` items that were taken from this port as a starting point.
+
+3. Svelte AI Elements
+   Copyright (c) 2026 Sikandar Bhide
+   https://github.com/SikandarJODD/ai-elements
+   License: MIT (full text: licenses/svelte-ai-elements-MIT.txt)
+   Derived: the Svelte sources of `ai-*` items that were taken from this port as a starting point.
+
+Modifications (Apache-2.0 section 4(b)): files derived from the works above were changed by the Edmi UI
+authors; the changes are visible in this repository's history. Edmi additions (artifact card/stack/viewer,
+session panel, agent avatar, prompt input agent, chat composer, chat header, Suggestion card and chip
+variants, Conversation home state, response typography) are original work and are not derived.
+
+Per-file header convention (first lines of every derived file):
+  React/Vue/Svelte script:  // Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
+  Vue template files:       <!-- Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI. -->
+  Svelte markup files:      <!-- Derived from Svelte AI Elements (MIT), modified for Edmi UI. -->
+See AGENTS.md "AI pack" for which header to use.

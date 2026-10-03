@@ -1,0 +1,46 @@
+---
+title: Message
+description: "One-line description (same as the manifest). Quote it: an unquoted colon breaks the YAML."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+{/* File: src/content/docs/components/ai-<cat>/ai-<name>.mdx (cat: chat | agent | code | runtime | voice | workflow | patterns). `name` is the registry item name (ai-<name>); demos live in src/demos/<fw>/ai-<name>*.* */}
+
+<ComponentDemo name="ai-message" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/message) (Apache-2.0), restyled for Edmi UI. Built on `message` and `bubble`.
+{/* ✦ Edmi patterns have no upstream: write "Edmi ✦ addition (not in Vercel AI Elements)." instead of the "Derived from" sentence. */}
+
+## Installation
+
+<ComponentInstall name="ai-message" />
+
+## Usage
+
+<ComponentUsage name="ai-message" />
+
+## Component source
+
+<ComponentSource name="ai-message" />
+
+## More examples
+
+{/* Extra demos: <ComponentDemo name="ai-message" demo="ai-message-branch" /> -> src/demos/<fw>/ai-message-branch.* */}
+
+## Raised ✦
+
+{/* Only when the item has `raised` (and is listed in AI_RAISED in scripts/verify-matrix.ts). */}
+Flat by default. `raised` gives the one-step 3D look.
+
+<ComponentDemo name="ai-message" demo="ai-message-raised" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| ... | ... | ... | ... |
+
+## ✦ Edmi additions
+- ...

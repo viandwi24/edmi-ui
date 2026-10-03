@@ -1,0 +1,40 @@
+---
+title: Suggestion
+description: "Suggested prompts as pills in a scrollable row, with a card variant for the home state."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-suggestion" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/suggestion) (Apache-2.0), restyled for Edmi UI. Built on `button` (`outline`, pill).
+
+## Installation
+
+<ComponentInstall name="ai-suggestion" />
+
+## Usage
+
+<ComponentUsage name="ai-suggestion" />
+
+## Component source
+
+<ComponentSource name="ai-suggestion" />
+
+## Raised ✦
+
+Flat by default. `raised` gives the one-step 3D look.
+
+<ComponentDemo name="ai-suggestion" demo="ai-suggestion-raised" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| Suggestion | `suggestion`, `onClick` | `string`, `(suggestion) => void` | |
+| Suggestion | `variant` | `chip \| card \| Button variant` | `chip` |
+| Suggestion | `raised` | `boolean` | `false` |
+
+## ✦ Edmi additions
+- `variant="card"`: a larger tile with a lead-in line; `children` is the muted description.

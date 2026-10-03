@@ -101,6 +101,22 @@ check_files "$APP"
 typecheck "$APP"
 echo "   ok"
 
+# Edmi AI pack: once `ai-all` has dependencies (items ported), install it on top of the same project; every
+# item must land in components/ai/<name>/ (not components/ui), imports rewritten, and the project type-checks.
+AI_NAMES="$(bun -e 'const d = await Bun.file(process.argv[1]).json(); console.log(d.registryDependencies.map((x) => x.split("/").pop().replace(/\.json$/, "")).filter((n) => n.startsWith("ai-")).join(" "))' "$WORK/public/r/vue/ai-all.json")"
+if [ -n "$AI_NAMES" ]; then
+	echo "== 1d. add @edmi-ui/ai-all ($(echo "$AI_NAMES" | wc -w | tr -d ' ') items) into the same project"
+	(cd "$APP" && bunx shadcn-vue@latest add @edmi-ui/ai-all --overwrite --yes </dev/null)
+	for n in $AI_NAMES; do
+		test -d "$APP/src/components/ai/${n#ai-}" || { echo "missing components/ai/${n#ai-}"; exit 1; }
+		test ! -e "$APP/src/components/ui/$n" || { echo "$n leaked into components/ui"; exit 1; }
+	done
+	if grep -rq "@/registry/edmi" "$APP/src/components/ai"; then echo "unrewritten @/registry/edmi import in components/ai"; exit 1; fi
+	! grep -rq "IconPlaceholder" "$APP/src/components/ai" || { echo "IconPlaceholder in a Vue AI file"; exit 1; }
+	typecheck "$APP"
+	echo "   ok"
+fi
+
 # `shadcn-vue init <url>/edmi.json` is not usable with shadcn-vue 2.8.2 (see AGENTS.md section 11): it
 # ignores registry-item `config` (so `@edmi-ui/*` dependencies cannot resolve) and writes registry:lib
 # files to src/lib/registry/... . Vue's supported flow is init + registries + add.

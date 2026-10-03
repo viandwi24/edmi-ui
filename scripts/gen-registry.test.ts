@@ -141,6 +141,53 @@ describe("skip handling", () => {
 				.registryDependencies,
 		).toEqual([`${URL_}/r/svelte/p1.json`]);
 	});
+	test("aggregate `ai` collects AI items; `ui` excludes them", () => {
+		const aiAll = mk("ai-all", {
+			type: "registry:block",
+			categories: ["Meta"],
+			aggregate: "ai",
+		});
+		const all = mk("all", {
+			type: "registry:block",
+			categories: ["Meta"],
+			aggregate: "ui",
+		});
+		const list = [
+			mk("button"),
+			mk("ai-message", {
+				type: "registry:component",
+				categories: ["AI · Chat"],
+				frameworks: { react: {}, svelte: { skip: true } },
+			}),
+			mk("ai-tool", {
+				type: "registry:ui",
+				categories: ["AI · Agent"],
+			}),
+			aiAll,
+			all,
+		];
+		expect(
+			item(buildFramework(list, "react", opts()), "ai-all")
+				.registryDependencies,
+		).toEqual(["@edmi-ui/ai-message", "@edmi-ui/ai-tool"]);
+		expect(
+			item(buildFramework(list, "svelte", opts()), "ai-all")
+				.registryDependencies,
+		).toEqual([`${URL_}/r/svelte/ai-tool.json`]);
+		expect(
+			item(buildFramework(list, "react", opts()), "all").registryDependencies,
+		).toEqual(["@edmi-ui/button"]);
+	});
+	test("real manifest: AI items are named ai-*, never in `all`, shipped via `ai-all`", () => {
+		const react = buildFramework(realManifest, "react", opts());
+		const all = item(react, "all").registryDependencies as string[];
+		expect(all.some((d) => d.startsWith("@edmi-ui/ai-"))).toBe(false);
+		const aiAll = item(react, "ai-all").registryDependencies as string[];
+		expect(aiAll).toContain("@edmi-ui/ai-message");
+		for (const i of realManifest)
+			if (i.categories.some((c) => c.startsWith("AI · ")))
+				expect(i.name.startsWith("ai-")).toBe(true);
+	});
 	test("optional dependencies only when present", () => {
 		const x = mk("x", { optionalRegistryDependencies: ["utils", "nope"] });
 		expect(

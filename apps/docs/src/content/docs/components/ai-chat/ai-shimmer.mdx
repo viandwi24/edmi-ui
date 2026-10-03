@@ -1,0 +1,35 @@
+---
+title: Shimmer
+description: "Animated sweep over streaming or loading text; used for status lines inside a ghost bubble."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-shimmer" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/shimmer) (Apache-2.0), restyled for Edmi UI. Polymorphic (`as`), uses `motion`.
+
+## Installation
+
+<ComponentInstall name="ai-shimmer" />
+
+## Usage
+
+<ComponentUsage name="ai-shimmer" />
+
+## Component source
+
+<ComponentSource name="ai-shimmer" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `children` | `string` | |
+| `as` | `ElementType` | `p` |
+| `duration` | `number` (seconds per sweep) | `2` |
+| `spread` | `number` (px per character) | `2` |
+
+## ✦ Edmi additions
+- The sweep is a `--foreground` highlight over `--muted-foreground`, so it reads in light and dark.

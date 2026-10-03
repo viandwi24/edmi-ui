@@ -66,6 +66,16 @@ const groups = [
 	["meta", "Meta"],
 ]; // keep in sync with src/config.ts COMPONENT_GROUPS
 
+const aiGroups = [
+	["ai-chat", "Chat"],
+	["ai-agent", "Agent"],
+	["ai-code", "Code"],
+	["ai-runtime", "Runtime"],
+	["ai-voice", "Voice"],
+	["ai-workflow", "Workflow"],
+	["ai-patterns", "Patterns ✦"],
+]; // keep in sync with src/config.ts AI_GROUPS
+
 const darkSync = `(function(){var d=document.documentElement;function s(){d.classList.toggle('dark',d.dataset.theme==='dark')}s();new MutationObserver(s).observe(d,{attributes:true,attributeFilter:['data-theme']})})();`;
 
 // Global framework choice: set <html data-fw> before paint, keep it in sync with the header select / demos.
@@ -134,6 +144,15 @@ export default defineConfig({
 						})),
 					],
 				},
+				{
+					label: "AI",
+					collapsed: true,
+					items: aiGroups.map(([dir, label]) => ({
+						label,
+						collapsed: true,
+						items: [{ autogenerate: { directory: `components/${dir}` } }],
+					})),
+				},
 				{ label: "Theming", slug: "theming" },
 				{ label: "Themes", slug: "themes" },
 				{ label: "Rules", slug: "rules" },
@@ -171,6 +190,11 @@ export default defineConfig({
 				"react-day-picker",
 				"recharts",
 				"@internationalized/date",
+				"motion",
+				"@xyflow/react",
+				"@xyflow/svelte",
+				"@vue-flow/core",
+				"streamdown",
 			],
 		},
 		server: { fs: { allow: [repoRoot] } },

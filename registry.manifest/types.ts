@@ -74,11 +74,11 @@ export type Item = {
 	 */
 	optionalRegistryDependencies?: string[];
 	/**
-	 * Add every `registry:ui` item ("ui") or every item categorised "Patterns" ("patterns") available
-	 * for the framework to registryDependencies.
+	 * Add every `registry:ui` item ("ui"), every item categorised "Patterns" ("patterns") or every
+	 * Edmi AI item ("ai": category starting with "AI · ") available for the framework to
+	 * registryDependencies. "ui" never includes AI items (they ship through `ai-all`).
 	 */
-	aggregate?: "ui" | "patterns";
-	// "patterns": every item in the "Patterns" category (the ✦ blocks) instead.
+	aggregate?: "ui" | "patterns" | "ai";
 	/** One-line install note. */
 	docs?: string;
 	/** A framework key must be present for the item to be emitted for it. */

@@ -1,0 +1,37 @@
+---
+title: Context
+description: "Context window usage ring with a hover card of token and cost breakdown."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-context" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/context) (Apache-2.0), restyled for Edmi UI. Built on `hover-card` and `progress`; costs come from [tokenlens](https://tokenlens.dev).
+
+## Installation
+
+<ComponentInstall name="ai-context" />
+
+## Usage
+
+<ComponentUsage name="ai-context" />
+
+## Component source
+
+<ComponentSource name="ai-context" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| Context | `maxTokens`, `usedTokens`, `usage`, `modelId` | `number`, `number`, `LanguageModelUsage`, `string` | |
+| ContextTrigger, ContextContent, ContextContentHeader/Body/Footer | | | |
+| ContextInputUsage, ContextOutputUsage, ContextReasoningUsage, ContextCacheUsage | | | |
+
+`usage` is the AI SDK v7 `LanguageModelUsage` (`outputTokenDetails.reasoningTokens`, `inputTokenDetails.cacheReadTokens`).
+
+## ✦ Edmi additions
+- The trigger is a small `--brand` ring plus the percentage; at 90% and above the percentage turns `--warning-text`.
+- The progress bar is `Progress variant="brand"`; the footer sits on `--muted`.
