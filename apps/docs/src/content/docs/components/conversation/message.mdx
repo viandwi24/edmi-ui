@@ -1,0 +1,17 @@
+---
+title: Message
+description: "A chat row: avatar, header, content and footer, top-aligned and mirrored with align."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="message" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| Message | align | `start \| end` | `start` |
+| MessageGroup, MessageAvatar, MessageContent, MessageHeader, MessageFooter | `div` props | | |
+
+## ✦ Edmi additions
+- The avatar is top-aligned with the header line, or with the first bubble line when there is no header.
+- The header is a fixed 30px row; the footer follows the side of the message.

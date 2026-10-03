@@ -1,0 +1,20 @@
+---
+title: Index Row
+description: "Market table row: avatar stack, name, ticker and tags, mono price, delta and sparkline; includes a matching header row."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="index-row" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `IndexRow index` | `{ name, symbol, tokens, tags?, creator, price, change, aum, holders, spark?, href? }` | required |
+| `IndexRowHeader` | `TableRow` props | |
+| `Sparkline data` | `number[]` | required |
+| `Sparkline tone` | `"up" \| "down"` | last vs first |
+
+Place `IndexRowHeader` in `TableHeader` and `IndexRow` in `TableBody`; numeric columns are mono and right-aligned (§4.10).
+
+## ✦ Edmi additions
+- `Sparkline` is exported on its own.

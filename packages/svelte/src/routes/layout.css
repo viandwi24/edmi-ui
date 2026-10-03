@@ -1,0 +1,8 @@
+@import "@edmi/tokens/fonts.css";
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn-svelte/tailwind.css";
+@import "@edmi/tokens/tokens.css";
+@import "@edmi/tokens/theme.css";
+
+@custom-variant dark (&:is(.dark *));

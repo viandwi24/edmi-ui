@@ -1,0 +1,25 @@
+---
+title: Carousel
+description: Swipeable slides built on Embla, with arrows and position dots.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="carousel" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `opts` | Embla options | — |
+| `plugins` | Embla plugins | — |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` |
+| `setApi` | `(api: CarouselApi) => void` | — |
+
+Anatomy: `CarouselContent`, `CarouselItem`, `CarouselPrevious`, `CarouselNext`.
+
+## ✦ Edmi additions
+- `CarouselDots`: position dots (active slide is a wider pill).
+
+## Vue / Svelte differences
+- `CarouselDots` is shipped in all three frameworks.
+- **Vue**: the carousel emits `init-api`, the equivalent of React's `setApi`.
+- **Svelte**: pass a `setApi` prop, as in React.

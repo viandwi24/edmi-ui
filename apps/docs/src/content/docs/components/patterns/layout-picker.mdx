@@ -1,0 +1,28 @@
+---
+title: Layout Picker
+description: "Dashboard or navbar choice cards, plus a first-visit corner toast that saves the choice in a cookie."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="layout-picker" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look.
+
+<ComponentDemo name="layout-picker" demo="layout-picker-raised" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `LayoutPicker value` / `defaultValue` | `"dashboard" \| "navbar"` | `"dashboard"` |
+| `LayoutPicker onValueChange` | `(layout) => void` | none |
+| `LayoutPickerToast defaultOpen` | `boolean` (skip the cookie check) | cookie unset |
+| `LayoutPickerToast onValueChange` / `onClose` | callbacks | none |
+| `getLayoutCookie(cookie?)` / `setLayoutCookie(layout)` | helpers, cookie `edmi-layout` | |
+| `raised` | `boolean` | `false` |
+
+The toast renders nothing once the cookie exists. Picking a card saves it; closing without picking saves the default (`dashboard`) so the toast does not return. Read the cookie on the server (`getLayoutCookie(request.headers.get("cookie") ?? "")`) to render the right shell without a flash (DESIGN §3, §6).
+
+## ✦ Edmi additions
+- Choice cards are native radios (arrow keys work).

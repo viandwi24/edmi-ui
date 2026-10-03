@@ -1,0 +1,17 @@
+---
+title: Spinner
+description: Shows that something is loading. Inherits color and sizes with the surrounding text.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="spinner" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `className` | `string` | `size-4` (use `size-*` to resize) |
+
+Renders a lucide `Loader2Icon` with `role="status"` and `aria-label="Loading"`.
+
+## ✦ Edmi additions
+- None; same anatomy as shadcn. Place inside `Button`/`Badge` and the icon sizing is picked up.

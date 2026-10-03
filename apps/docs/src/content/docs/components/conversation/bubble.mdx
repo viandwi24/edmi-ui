@@ -1,0 +1,31 @@
+---
+title: Bubble
+description: "Conversational content in a bubble: seven variants, start/end alignment, grouping and floating reactions."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="bubble" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look (on `BubbleReactions`, flows to every chip).
+
+<ComponentDemo name="bubble" demo="bubble-raised" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| Bubble | variant | `default \| secondary \| muted \| tinted \| outline \| ghost \| destructive` | `default` |
+| Bubble | align | `start \| end` | `start` |
+| BubbleContent | render | `ReactElement` (button or link bubbles) | none |
+| BubbleReactions | side | `top \| bottom` | `bottom` |
+| BubbleReactions | align | `start \| end` | `end` |
+| BubbleGroup | stacks bubbles | `div` props | none |
+| `raised` | `boolean` | `false` | One-step 3D look ✦ (on `BubbleReactions`, flows to every chip) |
+
+## ✦ Edmi additions
+- `BubbleReaction` (`active`): a solid floating chip with a 1px border and no ring; the active chip is brand-tinted.
+- `tinted` and `destructive` use the soft brand and destructive tokens; `ghost` keeps its vertical padding so avatars line up.
+
+## Vue / Svelte differences
+- **Svelte**: `BubbleContent` has no `render` prop. Pass `href` to render an `<a>`, or `as="button"` for a `<button>`.

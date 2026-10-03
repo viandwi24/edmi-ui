@@ -1,0 +1,23 @@
+---
+title: Code block
+description: "Card with mono code, optional line highlight and a copy button."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="code-block" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look.
+
+<ComponentDemo name="code-block" demo="code-block-raised" />
+
+## API
+| Part | Props | Notes |
+| --- | --- | --- |
+| `CodeBlock` | `code, title?, highlightLines?, copyable=true, onCopy?` | Plain mono `pre` (no syntax highlighting, no extra dependency). Copy button shows a check for 1.5s. |
+| `raised` | `boolean` | `false` |
+
+## ✦ Edmi additions
+- Whole block is an Edmi addition (DESIGN §5 Patterns, board 11). Composed from: button, card.
+- Install: `shadcn add @edmi/code-block`.

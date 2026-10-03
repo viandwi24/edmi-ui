@@ -1,0 +1,27 @@
+---
+title: Watchlist Item
+description: "Compact sidebar row with a colored letter tile, symbol, mono price and change."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="watchlist-item" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` and the active row gets a one-step lip.
+
+<ComponentDemo name="watchlist-item" demo="watchlist-item-raised" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `symbol` / `price` / `change` | `string` | required |
+| `color` | CSS color | `var(--chart-1)` |
+| `letter` | `string` | first letter of `symbol` |
+| `active` | `boolean` | `false` |
+| `raised` | `boolean` | `false` |
+
+Renders an `<a>`; pass `href` and other anchor props.
+
+## ✦ Edmi additions
+- Uses the `--sidebar-*` tokens, so it fits inside the Sidebar block.

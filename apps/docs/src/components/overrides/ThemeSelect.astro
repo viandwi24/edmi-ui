@@ -1,0 +1,37 @@
+---
+// Light/dark toggle (replaces Starlight's select). Starlight's ThemeProvider owns first paint from
+// localStorage "starlight-theme"; the head script in astro.config maps data-theme -> `.dark`.
+---
+
+<button type="button" class="edmi-icon-btn" data-theme-toggle aria-label="Toggle theme" title="Toggle theme">
+	<svg class="edmi-sun" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+		<circle cx="12" cy="12" r="4"></circle>
+		<path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
+	</svg>
+	<svg class="edmi-moon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+		<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>
+	</svg>
+</button>
+
+<script>
+	function toggle() {
+		const root = document.documentElement;
+		const next = root.dataset.theme === "dark" ? "light" : "dark";
+		// Switch every surface in the same frame: no per-element colour fades (islands with
+		// `transition-colors` would otherwise lag behind the page chrome) and `.dark` is set
+		// synchronously instead of waiting for the head-script MutationObserver.
+		const freeze = document.createElement("style");
+		freeze.textContent = "*,*::before,*::after{transition:none!important}";
+		document.head.append(freeze);
+		root.dataset.theme = next;
+		root.classList.toggle("dark", next === "dark");
+		void root.offsetWidth; // flush styles while transitions are off
+		requestAnimationFrame(() => requestAnimationFrame(() => freeze.remove()));
+		try {
+			localStorage.setItem("starlight-theme", next);
+		} catch {}
+	}
+	for (const b of document.querySelectorAll("[data-theme-toggle]")) {
+		b.addEventListener("click", toggle);
+	}
+</script>

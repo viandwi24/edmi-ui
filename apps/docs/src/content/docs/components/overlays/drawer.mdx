@@ -1,0 +1,24 @@
+---
+title: Drawer
+description: A panel that swipes in from an edge, usually the bottom on mobile. Supports a swipe handle, snap points and non-modal use.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="drawer" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `Drawer swipeDirection` | `down \| up \| left \| right` | `down` |
+| `Drawer snapPoints` | `(number \| string)[]` (0-1 = viewport fraction, `"148px"`, `"30rem"`) | none |
+| `Drawer snapPoint / onSnapPointChange` | controlled snap point | uncontrolled |
+| `Drawer modal` | `boolean \| "trap-focus"` | `true` |
+| `DrawerContent showHandle` | `boolean` | `false` |
+
+Parts: `Drawer`, `DrawerTrigger`, `DrawerContent`, `DrawerHeader`, `DrawerTitle`, `DrawerDescription`, `DrawerFooter`, `DrawerClose`, `DrawerSwipeHandle`. Built on the Base UI Drawer (not vaul).
+
+## ✦ Edmi additions
+- `DrawerSwipeHandle` grabber and `showHandle`; hard 4px strong lip, no blur.
+
+## Vue / Svelte differences
+- **Svelte** (vaul-svelte) names the edge in `direction` (`top | bottom | left | right`). Edmi also accepts `swipeDirection` for parity with React and Vue and maps it: `up` -> `top`, `down` -> `bottom`, `left` -> `left`, `right` -> `right`. `direction` wins if both are set.

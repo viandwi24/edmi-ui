@@ -1,0 +1,18 @@
+---
+title: Hover Card
+description: A preview of what is behind a link, for sighted mouse users. Opens on hover after a short delay.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="hover-card" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `HoverCard delay / closeDelay` | `number` (ms) | Base UI defaults |
+| `HoverCardContent side / align` | positioner props | `bottom` / `center` |
+
+Parts: `HoverCard`, `HoverCardTrigger`, `HoverCardContent`. Built on Base UI `PreviewCard`.
+
+## ✦ Edmi additions
+- Hard 4px lip, solid popover surface, no blur.

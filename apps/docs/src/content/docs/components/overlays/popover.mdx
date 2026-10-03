@@ -1,0 +1,27 @@
+---
+title: Popover
+description: Rich content in a floating panel opened by a button. Unlike Dialog, the page behind stays usable.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="popover" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look (on `PopoverContent`).
+
+<ComponentDemo name="popover" demo="popover-raised" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `PopoverContent side` | `top \| right \| bottom \| left` | `bottom` |
+| `PopoverContent align` | `start \| center \| end` | `center` |
+| `PopoverContent sideOffset` | `number` | `6` |
+| `PopoverTrigger render` | `ReactElement` | none (Base UI, replaces `asChild`) |
+| `raised` | `boolean` | `false` |
+
+Parts: `Popover`, `PopoverTrigger`, `PopoverContent`, `PopoverHeader`, `PopoverTitle`, `PopoverDescription`.
+
+## ✦ Edmi additions
+- Flat by default; `raised` adds the hard lip (`shadow-pop`). Solid `--popover` surface with a 1px border.

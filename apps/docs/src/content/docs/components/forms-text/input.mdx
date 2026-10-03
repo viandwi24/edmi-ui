@@ -1,0 +1,17 @@
+---
+title: Input
+description: Single-line text field on the card surface with a sunken inner shadow and focus ring.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="input" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| Props | `React.ComponentProps<"input">` (Base UI Input) | none |
+| aria-invalid | `boolean` | `false` |
+
+## ✦ Edmi additions
+- No size prop; the state comes from `disabled` and `aria-invalid`.
+- Sunken inner shadow and a ring halo on focus and error.

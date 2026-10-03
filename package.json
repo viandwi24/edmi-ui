@@ -1,0 +1,29 @@
+{
+	"name": "edmi-ui",
+	"private": true,
+	"type": "module",
+	"packageManager": "bun@1.4.2",
+	"workspaces": [
+		"packages/*",
+		"apps/*",
+		"examples/*"
+	],
+	"scripts": {
+		"gen": "bun run scripts/gen-registry.ts",
+		"gen:strict": "bun run scripts/gen-registry.ts --strict",
+		"build:registry": "bun run scripts/build-registry.ts",
+		"pack:registries": "bun run scripts/pack-registries.ts",
+		"verify:matrix": "bun run scripts/verify-matrix.ts",
+		"typecheck": "tsc --noEmit -p . && bun run --if-present --workspaces typecheck",
+		"lint": "biome check .",
+		"format": "biome check --write .",
+		"test": "bun test",
+		"dev": "bun run --filter @edmi/docs dev"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.5.15",
+		"@changesets/cli": "^3.0.3",
+		"@types/bun": "latest",
+		"typescript": "^7"
+	}
+}

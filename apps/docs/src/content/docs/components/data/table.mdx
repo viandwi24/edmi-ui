@@ -1,0 +1,24 @@
+---
+title: Table
+description: A plain, styled HTML table. Numbers are right-aligned and use the mono face; the footer holds totals.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="table" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `TableHead numeric` ✦ | `boolean` | `false` |
+| `TableCell numeric` ✦ | `boolean` | `false` |
+| `TableCell trend` ✦ | `up \| down` | none |
+
+Parts: `Table`, `TableHeader`, `TableBody`, `TableFooter`, `TableRow`, `TableHead`, `TableCell`, `TableCaption`. All stock parts and `data-slot`s are kept; `TableRow` highlights `data-[state=selected]` with a soft brand tint.
+
+## ✦ Edmi additions
+- `numeric` right-aligns and sets mono tabular numbers (DESIGN §4 rule 10).
+- `trend="up|down"` colours a value with `--brand-text` / `--destructive-text`.
+- Footer sits on `--muted`; the caption renders as a bordered footer line.
+
+## Vue / Svelte differences
+- **Vue** and **Svelte** include an extra `TableEmpty` part for an empty-state row.

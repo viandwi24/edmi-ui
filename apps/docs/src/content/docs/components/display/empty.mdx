@@ -1,0 +1,26 @@
+---
+title: Empty
+description: What to show when there is nothing yet. Icon media, title, description and actions; dashed outline.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="empty" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look (on `EmptyMedia variant="icon"`).
+
+<ComponentDemo name="empty" demo="empty-raised" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `EmptyMedia variant` | `default \| icon` | `default` |
+| `raised` | `boolean` | `false` |
+
+Outline = dashed: add `border border-input` to `Empty` (the dashed style is built in).
+
+Parts: `Empty`, `EmptyHeader`, `EmptyMedia`, `EmptyTitle`, `EmptyDescription`, `EmptyContent`.
+
+## ✦ Edmi additions
+- Icon media is a 48px tile (`--card`, 1px border); `raised` adds the 2px lip.

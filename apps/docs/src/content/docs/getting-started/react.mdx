@@ -1,0 +1,87 @@
+---
+title: Getting started with React
+description: Add the Edmi registry to a shadcn/ui project.
+---
+
+import { Code } from "@astrojs/starlight/components";
+
+Edmi UI for React is a shadcn registry built on Base UI and Tailwind v4.
+
+## 1. Initialise shadcn
+
+```bash
+bunx shadcn@latest init
+```
+
+## 2. Register Edmi
+
+Add the registry to `components.json`:
+
+```json
+{
+  "registries": {
+    "@edmi": "https://viandwi24.github.io/edmi-ui/r/react/{name}.json"
+  }
+}
+```
+
+## 3. Install the base (tokens, theme, fonts)
+
+```bash
+bunx shadcn@latest add @edmi/edmi
+```
+
+## 4. Add components
+
+```bash
+bunx shadcn@latest add @edmi/button @edmi/card
+```
+
+Components that exist in stock shadcn replace the stock file; use `--overwrite` when asked.
+
+## Flat by default, raised ✦
+
+Every Edmi component renders flat out of the box: a solid fill, a 1px border and no lip. Pass `raised` for one step of 3D (gradient face, soft top highlight, one hard lip that sinks 2px on press).
+
+```tsx
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+
+export function Example() {
+  return (
+    <>
+      <Button raised>Get started</Button>
+
+      <Tabs defaultValue="overview">
+        <TabsList raised variant="pills">
+          <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="holdings">Holdings</TabsTrigger>
+        </TabsList>
+      </Tabs>
+
+      <Card raised>…</Card>
+    </>
+  )
+}
+```
+
+Components that accept `raised` (all default to `false`):
+
+- **Actions**: Button, Toggle, Toggle Group (on the root, flows to items), Kbd
+- **Forms**: Native Select, Select (trigger), Checkbox, Switch (thumb), Slider (thumb), Calendar (selected day), choice cards and Questionnaire options
+- **Display**: Card, Inset Panel, Empty (media)
+- **Overlays**: Dialog, Popover, Toast (`<Toaster raised />`)
+- **Navigation**: Menubar, Pagination (active link), Tabs (on `TabsList`; `line` and `ghost`/`link` are never raised)
+- **Conversation**: Reactions
+- **Patterns**: every pattern forwards `raised` to the primitives it renders
+
+Rule of thumb: raised for hero and primary CTAs and marketing pages, flat for dense app UI, forms, tables and dialog footers. The full list with demos lives on each component page under **Raised ✦**.
+
+## Icons
+
+Icons follow your project's `components.json` `iconLibrary`. Registry sources use `<IconPlaceholder lucide="…" phosphor="…" … />`, which the CLI rewrites to your library on install (`lucide`, `tabler`, `hugeicons`, `phosphor` or `remixicon`). Edmi's own default is **Phosphor**; an existing shadcn project keeps whatever it already uses.
+
+## Dark mode
+
+Add the `dark` class to `<html>`. Tokens are CSS variables, so no provider is required.

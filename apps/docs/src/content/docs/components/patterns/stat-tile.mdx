@@ -1,0 +1,30 @@
+---
+title: Stat Tile
+description: "KPI tile with a mono value and delta badge, an optional segmented meter, and a stat strip for grouped numbers."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="stat-tile" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look.
+
+<ComponentDemo name="stat-tile" demo="stat-tile-raised" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `StatTile label` / `value` | `ReactNode` | required |
+| `StatTile delta` | `string` (sign sets brand/destructive badge) | none |
+| `StatTile deltaLabel` | `ReactNode` | none |
+| `StatTile trend` | `"up" \| "down"` (overrides the sign) | auto |
+| `StatTile meter` | `StatMeter` props | none |
+| `StatMeter value` | `number` 0..1 | required |
+| `StatMeter steps` | `number` | `30` |
+| `StatMeter zones` | `{ upTo: number; color: string }[]` | green / amber / red |
+| `StatStripItem value` / `label` | `ReactNode` | required |
+| `raised` | `boolean` | `false` |
+
+## ✦ Edmi additions
+- `StatMeter` and `StatStrip` / `StatStripItem` are separate exports of the same block.

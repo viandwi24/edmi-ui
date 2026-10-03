@@ -1,0 +1,26 @@
+---
+title: Dropdown Menu
+description: A menu of actions opened by a button, with labels, icons, shortcuts, checkbox and radio items, sub-menus and destructive items.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="dropdown-menu" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `DropdownMenuContent side` | `top \| right \| bottom \| left` | `bottom` |
+| `DropdownMenuContent align` | `start \| center \| end` | `start` |
+| `DropdownMenuContent sideOffset` | `number` | `4` |
+| `DropdownMenuItem variant` | `default \| destructive` | `default` |
+| `DropdownMenuItem inset` | `boolean` | `false` |
+| `DropdownMenuTrigger render` | `ReactElement` | none (Base UI, replaces `asChild`) |
+
+Parts: `DropdownMenu`, `DropdownMenuTrigger`, `DropdownMenuContent`, `DropdownMenuGroup`, `DropdownMenuLabel`, `DropdownMenuItem`, `DropdownMenuCheckboxItem`, `DropdownMenuRadioGroup`, `DropdownMenuRadioItem`, `DropdownMenuSeparator`, `DropdownMenuShortcut`, `DropdownMenuSub`, `DropdownMenuSubTrigger`, `DropdownMenuSubContent`, `DropdownMenuPortal`.
+
+`DropdownMenuLabel` must sit inside a `DropdownMenuGroup` (Base UI `Menu.GroupLabel`).
+
+## ✦ Edmi additions
+- Flat: solid `--popover` surface, 1px border; no shadow.
+- Highlighted item uses `data-[highlighted]`; check and radio indicators sit on the left, radio shows a dot.
+- Shortcuts are mono text.

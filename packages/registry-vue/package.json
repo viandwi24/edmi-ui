@@ -1,0 +1,18 @@
+{
+	"name": "@edmi/registry-vue",
+	"version": "0.0.0",
+	"description": "Edmi UI vue registry (built shadcn registry JSON, served via CDN)",
+	"license": "MIT",
+	"files": [
+		"r"
+	],
+	"publishConfig": {
+		"access": "public"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/viandwi24/edmi-ui.git",
+		"directory": "packages/registry-vue"
+	},
+	"homepage": "https://github.com/viandwi24/edmi-ui#readme"
+}

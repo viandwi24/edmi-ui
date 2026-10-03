@@ -1,0 +1,23 @@
+---
+title: Command
+description: Fast, filterable command palette (⌘K) with groups, shortcuts and an empty state. Can open as a dialog from anywhere.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="command" />
+
+## API
+Built on [cmdk](https://cmdk.paco.me).
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `CommandDialog open` / `onOpenChange` | `boolean` / `(open) => void` | none |
+| `CommandDialog title` / `description` | `string` | screen-reader only |
+| `CommandDialog showCloseButton` | `boolean` | `false` |
+| `CommandItem onSelect` | `(value) => void` | none |
+
+Parts: `Command`, `CommandDialog`, `CommandInput`, `CommandList`, `CommandEmpty`, `CommandGroup`, `CommandItem`, `CommandShortcut`, `CommandSeparator`.
+
+## ✦ Edmi additions
+- The input is a flat search row with a bottom border; the selected item uses `--accent` (cmdk `data-[selected=true]`).
+- Shortcuts are mono text. The dialog uses the flat Edmi dialog surface.

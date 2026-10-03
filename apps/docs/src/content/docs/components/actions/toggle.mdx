@@ -1,0 +1,24 @@
+---
+title: Toggle
+description: Two-state button with a pressed state.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="toggle" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look (3D look: hard lip + soft top highlight).
+
+<ComponentDemo name="toggle" demo="toggle-raised" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| variant | `default \| outline` | `default` |
+| size | `sm \| default \| lg` | `default` |
+| pressed / defaultPressed | `boolean` | `false` |
+| `raised` | `boolean` | `false` |
+
+## ✦ Edmi additions
+- Pressed state: accent fill; with `raised` it also sinks 1px with an inner shadow.

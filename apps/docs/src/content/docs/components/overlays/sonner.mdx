@@ -1,0 +1,26 @@
+---
+title: Sonner
+description: "Toast notifications via Sonner. Types: default, success, info, warning, error, loading, plus a promise toast."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="sonner" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look (on `Toaster`, applies to every toast).
+
+<ComponentDemo name="sonner" demo="sonner-raised" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `Toaster` | Sonner `ToasterProps` | bottom-right |
+| `toast(title, opts)` | `toast.success / info / warning / error / loading / promise` | none |
+| `raised` | `boolean` | `false` |
+
+Mount `<Toaster />` once in the app root, then call `toast()` anywhere. `next-themes` is read for the theme and falls back to `system` when no ThemeProvider exists (Vite apps).
+
+## ✦ Edmi additions
+- Typed toasts use the soft fill and tinted border; the default toast is a solid popover chip with a 3px lip.
+- `toast` is re-exported from the same module as `Toaster`.

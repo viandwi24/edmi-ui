@@ -1,0 +1,18 @@
+---
+title: Progress
+description: Shows how far a task is. Label and value parts; brand variant.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="progress" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `value` | `number \| null` | `null` |
+| `variant` | `default \| brand` | `default` |
+
+Parts: `Progress`, `ProgressLabel`, `ProgressValue`, `ProgressTrack`, `ProgressIndicator`.
+
+## ✦ Edmi additions
+- `variant="brand"` fills with `--brand`; track is 8px with a 1px border; value is mono.

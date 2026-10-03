@@ -1,0 +1,30 @@
+---
+title: Site Header
+description: "Marketing top bar for the navbar layout: brand, stepped lead-in list, links and one call to action."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="site-header" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look.
+
+<ComponentDemo name="site-header" demo="site-header-raised" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `logo` | `ReactNode` | chart mark |
+| `name` | `ReactNode` | `"Stockbreak"` |
+| `href` | `string` | `"/"` |
+| `lead` | `ReactNode` (muted text before `steps`) | none |
+| `steps` | `{ label, href }[]` (separated by 1px dividers) | `[]` |
+| `links` | `{ label, href }[]` | `[]` |
+| `action` | `ReactNode` (usually a `Button`) | none |
+| `raised` | `boolean` | `false` |
+
+Also exported: `SiteHeaderBrand`, `SiteHeaderMark`. Nav hides below `md`.
+
+## ✦ Edmi additions
+- Whole block is new (no shadcn counterpart): composed from the card recipe plus the Stockbreak wordmark (Sora, `font-brand`).

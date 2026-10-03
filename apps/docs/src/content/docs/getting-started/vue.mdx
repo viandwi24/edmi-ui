@@ -1,0 +1,76 @@
+---
+title: Getting started with Vue
+description: Add the Edmi registry to a shadcn-vue project.
+---
+
+Edmi UI for Vue is a shadcn-vue registry built on Reka UI and Tailwind v4.
+
+## 1. Initialise shadcn-vue
+
+```bash
+bunx shadcn-vue@latest init
+```
+
+## 2. Register Edmi
+
+Add the registry to `components.json`:
+
+```json
+{
+  "registries": {
+    "@edmi": "https://viandwi24.github.io/edmi-ui/r/vue/{name}.json"
+  }
+}
+```
+
+## 3. Install the base and components
+
+```bash
+bunx shadcn-vue@latest add @edmi/edmi
+bunx shadcn-vue@latest add @edmi/button @edmi/card
+```
+
+## Flat by default, raised ✦
+
+Every Edmi component renders flat out of the box: a solid fill, a 1px border and no lip. Pass `raised` for one step of 3D (gradient face, soft top highlight, one hard lip that sinks 2px on press).
+
+```vue
+<script setup lang="ts">
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+</script>
+
+<template>
+  <Button raised>Get started</Button>
+
+  <Tabs default-value="overview">
+    <TabsList raised variant="pills">
+      <TabsTrigger value="overview">Overview</TabsTrigger>
+      <TabsTrigger value="holdings">Holdings</TabsTrigger>
+    </TabsList>
+  </Tabs>
+
+  <Card raised>…</Card>
+</template>
+```
+
+Components that accept `raised` (all default to `false`):
+
+- **Actions**: Button, Toggle, Toggle Group (on the root, flows to items), Kbd
+- **Forms**: Native Select, Select (trigger), Checkbox, Switch (thumb), Slider (thumb), Calendar (selected day), choice cards and Questionnaire options
+- **Display**: Card, Inset Panel, Empty (media)
+- **Overlays**: Dialog, Popover, Toast (`<Toaster raised />`)
+- **Navigation**: Menubar, Pagination (active link), Tabs (on `TabsList`; `line` and `ghost`/`link` are never raised)
+- **Conversation**: Reactions
+- **Patterns**: every pattern forwards `raised` to the primitives it renders
+
+Rule of thumb: raised for hero and primary CTAs and marketing pages, flat for dense app UI, forms, tables and dialog footers. The full list with demos lives on each component page under **Raised ✦**.
+
+## Icons
+
+Icons follow your project's `components.json` `iconLibrary`. Registry sources import from `@lucide/vue`; shadcn-vue rewrites those imports to your library on install. Edmi's own default is **Phosphor**; an existing shadcn-vue project keeps its own library. The demos on this site render the unrewritten sources.
+
+## Dark mode
+
+Add the `dark` class to `<html>`.

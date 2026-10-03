@@ -1,0 +1,28 @@
+---
+title: Checkbox
+description: Toggle one option on or off; checked state is a solid primary fill, with an indeterminate state for partial selections.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="checkbox" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look (3D look: hard lip + soft top highlight).
+
+<ComponentDemo name="checkbox" demo="checkbox-raised" />
+
+## API
+Built on Base UI `Checkbox`. Same props as shadcn.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `checked` / `defaultChecked` | `boolean` | `false` |
+| `indeterminate` | `boolean` | `false` |
+| `onCheckedChange` | `(checked: boolean, event) => void` | - |
+| `disabled` | `boolean` | `false` |
+| `aria-invalid` | `boolean` | - |
+| `raised` | `boolean` | `false` |
+
+## ✦ Edmi additions
+- Checked and indeterminate use a solid `--primary` fill (`raised` adds the gradient) with a check/minus icon.

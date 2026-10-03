@@ -1,0 +1,23 @@
+---
+title: Task list
+description: "Agent tasks grouped by status badge (ready to review, running, completed)."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="task-list" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look.
+
+<ComponentDemo name="task-list" demo="task-list-raised" />
+
+## API
+| Part | Props | Notes |
+| --- | --- | --- |
+| `TaskList` | `tasks: {title, agent?, status}[], labels?` | Groups by `status` (`review` warning, `running` info, `completed` brand) in first-appearance order; `labels` overrides badge text. |
+| `raised` | `boolean` | `false` |
+
+## ✦ Edmi additions
+- Whole block is an Edmi addition (DESIGN §5 Patterns, board 11). Composed from: card, badge, separator.
+- Install: `shadcn add @edmi/task-list`.

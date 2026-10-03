@@ -1,0 +1,23 @@
+---
+title: Resizable
+description: Panels the user can resize by dragging a handle.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="resizable" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `ResizablePanelGroup orientation` | `"horizontal" \| "vertical"` | `"horizontal"` |
+| `ResizablePanel defaultSize` | `number` (px) or `string` (e.g. `"60%"`) | — |
+| `ResizableHandle withHandle` | `boolean` | `false` |
+
+Built on `react-resizable-panels` v4 (`orientation`, not `direction`).
+
+## ✦ Edmi additions
+- Handle grip is the Edmi 12x22 chip (`--card` fill, 1px `--border`).
+
+## Vue / Svelte differences
+- **Vue**: `ResizablePanelGroup`, `ResizablePanel`, `ResizableHandle` (Reka Splitter). Takes `direction` and a numeric `default-size`; the panel group needs an `id` for SSR and persisted layouts.
+- **Svelte**: `Resizable.PaneGroup`, `Resizable.Pane`, `Resizable.Handle` (paneforge). Takes `direction` and a numeric `defaultSize`.

@@ -1,0 +1,37 @@
+---
+title: Date Picker
+description: A button that opens a calendar in a popover. Ranges can offer presets on the side.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="date-picker" />
+
+## Range with presets
+<ComponentDemo name="date-picker" demo="date-picker-range" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look; it is forwarded to the trigger button and the calendar's selected day.
+
+<ComponentDemo name="date-picker" demo="date-picker-raised" />
+
+## API
+Shipped as a `registry:block` (shadcn documents it as a composition): `Popover` + outline `Button` + `Calendar`.
+
+| Component | Prop | Type | Default |
+| --- | --- | --- | --- |
+| `DatePicker` | `value` / `defaultValue` | `Date` | - |
+| | `onValueChange` | `(date?: Date) => void` | - |
+| | `placeholder` | `string` | `"Pick a date"` |
+| | `raised` ✦ | `boolean` | `false` |
+| `DateRangePicker` ✦ | `value` / `defaultValue` | `DateRange` | - |
+| | `onValueChange` | `(range?: DateRange) => void` | - |
+| | `presets` | `boolean \| { label; range() }[]` | - |
+| | `raised` ✦ | `boolean` | `false` |
+
+## ✦ Edmi additions
+- `DateRangePicker` with an optional preset column (Today, Last 7 days, Last 30 days, This month).
+- `DatePicker` uses the dropdown caption layout, as on the board.
+
+## Vue / Svelte differences
+- **Vue** and **Svelte**: Date Picker is a `registry:ui` item (a plain component that installs into `components/ui/date-picker`), not a block.

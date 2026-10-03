@@ -1,0 +1,36 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write # npm Trusted Publishing (OIDC), no NPM_TOKEN
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: oven-sh/setup-bun@v2
+      # PENDING USER CONFIRMATION (see AGENTS.md section 9): Node is used ONLY for the npm OIDC publish
+      # step. Changesets calls `npm publish`, and Trusted Publishing needs Node >= 22.14 and
+      # npm >= 11.5.1. Everything else in this repo uses bun.
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - run: npm i -g npm@latest
+      - run: bun install --frozen-lockfile
+      - uses: changesets/action@v2.1.2
+        with:
+          version: bunx changeset version
+          # gen:strict is rerun by pack:registries per framework with the CDN EDMI_URL.
+          publish: bun run gen:strict && bun run build:registry && bun run pack:registries && bunx changeset publish
+          createGithubReleases: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EDMI_URL: https://viandwi24.github.io/edmi-ui

@@ -1,0 +1,24 @@
+---
+title: Inset panel
+description: Header and footer on a muted shell with a card body running edge to edge. Optional bottom fade.
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="inset-panel" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look (3D look: hard lip + soft top highlight).
+
+<ComponentDemo name="inset-panel" demo="inset-panel-raised" />
+
+## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `InsetPanelBody fade` | `boolean` | `false` |
+| `raised` | `boolean` | `false` |
+
+Parts: `InsetPanel`, `InsetPanelHeader`, `InsetPanelBody`, `InsetPanelFooter`.
+
+## ✦ Edmi additions
+- Whole component is an Edmi addition (DESIGN §4.7): body is a `--card` panel with radius on the top corners only.

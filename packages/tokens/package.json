@@ -1,0 +1,29 @@
+{
+	"name": "@edmi/tokens",
+	"version": "0.0.0",
+	"description": "Edmi UI design tokens, Tailwind v4 theme and class recipes",
+	"license": "MIT",
+	"type": "module",
+	"files": [
+		"src"
+	],
+	"exports": {
+		"./tokens.css": "./src/tokens.css",
+		"./theme.css": "./src/theme.css",
+		"./fonts.css": "./src/fonts.css",
+		"./kit.css": "./src/kit.css",
+		"./tokens.json": "./src/tokens.json",
+		"./recipes": "./src/recipes.ts",
+		"./css-vars": "./src/css-vars.ts"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"typecheck": "tsc --noEmit",
+		"test": "bun test"
+	},
+	"dependencies": {
+		"class-variance-authority": "^0.7.1"
+	}
+}

@@ -1,0 +1,21 @@
+---
+title: Message Scroller
+description: "The chat viewport: anchors each turn, follows streaming replies and offers Jump to latest."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="message-scroller" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| MessageScrollerProvider | autoScroll | `boolean` | `false` |
+| MessageScrollerItem | messageId | `string` | none |
+| MessageScrollerItem | scrollAnchor | `boolean` | `false` |
+| MessageScrollerButton | direction | `start \| end` | `end` |
+| MessageScrollerButton | variant, size | Button props | `outline`, `sm` |
+
+Built on `@shadcn/react/message-scroller`; the hooks `useMessageScroller`, `useMessageScrollerScrollable` and `useMessageScrollerVisibility` are re-exported.
+
+## ✦ Edmi additions
+- The scroll button is a labeled pill ("Jump to latest") instead of an icon-only button.

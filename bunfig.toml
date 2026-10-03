@@ -1,0 +1,3 @@
+[install]
+# astro check resolves @astrojs/svelte from the svelte registry sources (packages/svelte), so it must be reachable from the repo root.
+publicHoistPattern = ["@astrojs/svelte"]

@@ -1,0 +1,24 @@
+---
+title: Kanban column
+description: "Sunken stage column with a mono header and Card items."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+
+<ComponentDemo name="kanban-column" />
+
+## Raised ✦
+
+Flat by default. Pass `raised` for the one-step 3D look.
+
+<ComponentDemo name="kanban-column" demo="kanban-column-raised" />
+
+## API
+| Part | Props | Notes |
+| --- | --- | --- |
+| `KanbanColumn` | `title, meta?` | Sunk container, 282px wide. |
+| `KanbanItem` | `title, description?, icon?, action?, disabled?` | Card row; `disabled` dims to 60%. |
+| `raised` | `boolean` | `false` |
+
+## ✦ Edmi additions
+- Whole block is an Edmi addition (DESIGN §5 Patterns, board 11). Composed from: card.
+- Install: `shadcn add @edmi/kanban-column`.
