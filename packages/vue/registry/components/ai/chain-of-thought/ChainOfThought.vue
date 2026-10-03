@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
-import type { HTMLAttributes } from "vue"
+import type { HTMLAttributes, Ref } from "vue"
 import { useVModel } from "@vueuse/core"
 import { provide } from "vue"
 import { cn } from "@/registry/edmi/lib/utils"
@@ -22,7 +22,7 @@ const emit = defineEmits<{
 const isOpen = useVModel(props, "open", emit, {
   defaultValue: props.defaultOpen,
   passive: true,
-})
+}) as Ref<boolean>
 
 provide(ChainOfThoughtKey, {
   isOpen,

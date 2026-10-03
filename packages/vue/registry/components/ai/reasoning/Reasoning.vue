@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
-import type { HTMLAttributes } from "vue"
+import type { HTMLAttributes, Ref } from "vue"
 import { useVModel } from "@vueuse/core"
 import { computed, onBeforeUnmount, provide, ref, watch } from "vue"
 import { cn } from "@/registry/edmi/lib/utils"
@@ -32,7 +32,7 @@ const MS_IN_S = 1000
 const isOpen = useVModel(props, "open", emit, {
   defaultValue: props.defaultOpen ?? props.isStreaming,
   passive: true,
-})
+}) as Ref<boolean>
 
 const internalDuration = ref<number | undefined>(props.duration)
 watch(() => props.duration, (value) => {
