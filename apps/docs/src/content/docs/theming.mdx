@@ -18,6 +18,151 @@ Type: **Instrument Sans** for UI text, **JetBrains Mono** for every number, **So
 
 <TokensTable />
 
+## Base, theme, radius and mode
+
+Four independent knobs, all set on `<html>` and all plain CSS variables. Try them on the [Themes](/edmi-ui/themes/) page.
+
+| Knob | How | Values | Changes |
+| --- | --- | --- | --- |
+| Mode | `class="dark"` | light (default), dark | every token |
+| Base color | `data-base="…"` | `stone` (default, in `tokens.css`), `slate` | neutrals: surfaces, text, borders, lips, the neutral "ink" primary |
+| Theme | `data-theme="…"` | `green` (default, in `tokens.css`), `ocean` | accent: brand, ring, charts, sidebar-primary; Ocean also recolors primary |
+| Radius | `style="--radius: …"` | `0.625rem` default (`0.3rem` sharp to `1rem` round) | every radius |
+
+```html
+<html class="dark" data-base="slate" data-theme="ocean" style="--radius: 0.625rem">
+```
+
+Status colors (destructive, warning, success, info) never change with the base or theme. Positive values use
+`success`, so they stay green in Ocean. **Stone · Green** is the default and needs no attributes. Slate and Ocean
+are examples of how to customize: every base and theme is one CSS file, and components never reference a name.
+
+## Registry themes
+
+`@edmi-ui/theme` installs the default (Stone · Green) tokens. For every base and theme combination there is also a
+`registry:theme` item with the complete light and dark color set. Installing one **replaces** the color variables in
+`:root` and `.dark` (your radius is left alone), like shadcn's themes:
+
+| Item | Base | Theme |
+| --- | --- | --- |
+| `theme-stone-green` | Stone | Green (same as the default) |
+| `theme-stone-ocean` | Stone | Ocean |
+| `theme-slate-green` | Slate | Green |
+| `theme-slate-ocean` | Slate | Ocean |
+
+```bash
+# React
+bunx shadcn@latest add @edmi-ui/theme-slate-ocean
+# Vue
+bunx shadcn-vue@latest add @edmi-ui/theme-slate-ocean
+# Svelte (URL only)
+bunx shadcn-svelte@latest add https://viandwi24.github.io/edmi-ui/r/svelte/theme-slate-ocean.json
+```
+
+Run it after `@edmi-ui/theme` (which also carries the Tailwind theme map and fonts). The Themes page generates the
+same variables for any selection with **Copy CSS** if you would rather paste them. New items appear automatically
+when you add a base or theme file (see below).
+
+## Runtime theming
+
+Use the CSS route instead when your app lets end users switch base, theme, radius or mode at runtime.
+
+**1. Load the files in this order.** Themes must win over bases for `primary`.
+
+```css
+@import "tailwindcss";
+@import "@edmi-ui/tokens/tokens.css";          /* Stone · Green + dark */
+@import "@edmi-ui/tokens/base/slate.css";      /* [data-base="slate"], .dark[data-base="slate"] */
+@import "@edmi-ui/tokens/themes/ocean.css";    /* [data-theme="ocean"], .dark[data-theme="ocean"] */
+@import "@edmi-ui/tokens/theme.css";
+```
+
+Every base and theme ships light **and** dark blocks. Keys a file does not set fall back to the default.
+
+**2. Switch with attributes on `<html>`.** Persist the choice in **cookies** and render the attributes on the server
+so the first paint is already right (no flash).
+
+```ts
+// anywhere on the client
+function setTheme(opts: { mode?: "light" | "dark"; base?: string; theme?: string; radius?: string }) {
+	const root = document.documentElement;
+	const set = (k: string, v: string) => {
+		document.cookie = `${k}=${v}; path=/; max-age=31536000; samesite=lax`;
+	};
+	if (opts.mode) {
+		root.classList.toggle("dark", opts.mode === "dark");
+		set("edmi-mode", opts.mode);
+	}
+	if (opts.base) (root.dataset.base = opts.base), set("edmi-base", opts.base);
+	if (opts.theme) (root.dataset.theme = opts.theme), set("edmi-accent", opts.theme);
+	if (opts.radius) {
+		root.style.setProperty("--radius", `${opts.radius}rem`);
+		set("edmi-radius", opts.radius);
+	}
+}
+```
+
+**React or Vue with Vite (client only).** An inline script in `index.html` applies the cookies before first paint:
+
+```html
+<script>
+	(function () {
+		var c = {};
+		document.cookie.split("; ").forEach(function (p) {
+			var i = p.indexOf("=");
+			c[p.slice(0, i)] = p.slice(i + 1);
+		});
+		var r = document.documentElement;
+		if (c["edmi-mode"] === "dark") r.classList.add("dark");
+		if (c["edmi-base"]) r.dataset.base = c["edmi-base"];
+		if (c["edmi-accent"]) r.dataset.theme = c["edmi-accent"];
+		if (c["edmi-radius"]) r.style.setProperty("--radius", c["edmi-radius"] + "rem");
+	})();
+</script>
+```
+
+**SvelteKit (server-rendered).** Read the cookies in `hooks.server.ts` and fill placeholders in `app.html`:
+
+```ts
+// src/hooks.server.ts
+import type { Handle } from "@sveltejs/kit";
+
+export const handle: Handle = ({ event, resolve }) => {
+	const get = (k: string) => event.cookies.get(k) ?? "";
+	return resolve(event, {
+		transformPageChunk: ({ html }) =>
+			html
+				.replace("%edmi.mode%", get("edmi-mode") === "dark" ? "dark" : "")
+				.replace("%edmi.base%", get("edmi-base") || "stone")
+				.replace("%edmi.accent%", get("edmi-accent") || "green")
+				.replace("%edmi.radius%", `${get("edmi-radius") || "0.625"}rem`),
+	});
+};
+```
+
+```html
+<!-- src/app.html -->
+<html lang="en" class="%edmi.mode%" data-base="%edmi.base%" data-theme="%edmi.accent%" style="--radius: %edmi.radius%">
+```
+
+**Vue with Nuxt (or any SSR).** Same idea: read the cookies on the server (`useCookie("edmi-mode")`, …) and render them
+with `useHead({ htmlAttrs: { class, "data-base", "data-theme", style } })` so the HTML arrives themed. In a plain Vite
+app use the inline script above.
+
+**Scoped theming.** Any subtree can carry its own attributes and `class="dark"`, for example an always-dark sidebar
+inside a light app. Put `class="dark" data-base="slate"` on that element; its tokens (and `dark:` styles) resolve inside it only.
+
+### Create your own base or theme
+
+Copy a file, change the values, keep the selectors:
+
+1. New base: copy `packages/tokens/src/base/slate.css` to `base/<name>.css` and change the neutrals (`[data-base="<name>"]` and `.dark[data-base="<name>"]`).
+2. New theme: copy `themes/ocean.css` to `themes/<name>.css` and change the accent keys (`[data-theme="<name>"]` and `.dark[data-theme="<name>"]`).
+3. Import it after `tokens.css` and set the attribute on `<html>`.
+
+In this repository, dropping the file in those folders is all it takes: the registry generates the matching
+`theme-<base>-<theme>` items and the Themes page offers the new option.
+
 ## Flat by default, `raised` opt-in
 
 The shadow tokens (`shadow-btn-*`, `shadow-card`, `shadow-pop`, `shadow-dialog`) are only used when a component is rendered with `raised`. Without it every component is flat: a solid fill, a 1px border and no lip.

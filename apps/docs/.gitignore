@@ -21,3 +21,4 @@ pnpm-debug.log*
 .DS_Store
 src/styles/tokens-light.generated.css
 src/components/islands/
+src/styles/themes.generated.css

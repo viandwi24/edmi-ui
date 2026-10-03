@@ -1,0 +1,41 @@
+---
+import {
+	composeCssVars,
+	listBases,
+	listThemes,
+	themeItemCssVars,
+	themeToCss,
+} from "@edmi-ui/tokens/css-vars";
+import ThemeCustomizer, { type ThemeData } from "./ThemeCustomizer";
+
+const bases = listBases();
+const themes = listThemes();
+const data: ThemeData = {
+	bases,
+	themes,
+	swatch: {
+		themes: Object.fromEntries(
+			themes.map((t) => [t, composeCssVars("stone", t).light.brand as string]),
+		),
+		bases: Object.fromEntries(
+			bases.map((b) => {
+				const v = composeCssVars(b, "green").light;
+				return [b, { bg: v.background as string, ink: v.primary as string }];
+			}),
+		),
+	},
+	css: Object.fromEntries(
+		bases.flatMap((b) =>
+			themes.map((t) => [`${b}/${t}`, themeToCss(themeItemCssVars(b, t))]),
+		),
+	),
+};
+---
+
+<ThemeCustomizer client:load data={data} />
+
+<style is:global>
+	/* wide content, no right TOC: the preview grid needs the room */
+	html:has(.edmi-themes) { --sl-content-width: 80rem; }
+	.edmi-themes > * { margin-top: 0 !important; }
+</style>

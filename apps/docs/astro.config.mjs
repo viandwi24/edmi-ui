@@ -1,5 +1,5 @@
 // @ts-check
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import react from "@astrojs/react";
@@ -31,6 +31,22 @@ const repoRoot = resolve(here, "../..");
 	writeFileSync(
 		out,
 		`/* generated */\n${lightBlock.replace(":root", ".edmi-light")}`,
+	);
+}
+
+// Every base (src/base/*.css) and theme (src/themes/*.css) of @edmi-ui/tokens, so `data-base` / `data-theme`
+// work on a scoped wrapper (Themes page). Auto-discovered: dropping a file in those folders is enough.
+{
+	const tok = resolve(repoRoot, "packages/tokens/src");
+	const imports = ["base", "themes"].flatMap((d) =>
+		readdirSync(resolve(tok, d))
+			.filter((f) => f.endsWith(".css"))
+			.sort()
+			.map((f) => `@import "../../../../packages/tokens/src/${d}/${f}";`),
+	);
+	writeFileSync(
+		resolve(here, "src/styles/themes.generated.css"),
+		`/* generated */\n${imports.join("\n")}\n`,
 	);
 }
 
@@ -115,6 +131,7 @@ export default defineConfig({
 					],
 				},
 				{ label: "Theming", slug: "theming" },
+				{ label: "Themes", slug: "themes" },
 				{ label: "Rules", slug: "rules" },
 				{ label: "Changelog", slug: "changelog" },
 			],
