@@ -7,6 +7,7 @@ import ArtifactCardThumbnail from "./artifact-card-thumbnail.svelte";
 import ArtifactCardTitle from "./artifact-card-title.svelte";
 import ArtifactKindIcon from "./artifact-kind-icon.svelte";
 
+export * from "./use-artifact-card.svelte.js";
 export {
 	ArtifactCard,
 	ArtifactCardActions,
@@ -17,4 +18,3 @@ export {
 	ArtifactCardTitle,
 	ArtifactKindIcon,
 };
-export * from "./use-artifact-card.svelte.js";

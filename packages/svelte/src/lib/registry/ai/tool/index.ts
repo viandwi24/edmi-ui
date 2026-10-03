@@ -16,8 +16,8 @@ export {
 	Output,
 	Output as ToolOutput,
 	Root,
-	StatusBadge,
-	StatusBadge as ToolStatusBadge,
 	//
 	Root as Tool,
+	StatusBadge,
+	StatusBadge as ToolStatusBadge,
 };

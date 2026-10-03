@@ -19,7 +19,8 @@ export class AudioDevices {
 			this.error = null;
 			this.devices = await this.#list();
 		} catch (err) {
-			this.error = err instanceof Error ? err.message : "Failed to get audio devices";
+			this.error =
+				err instanceof Error ? err.message : "Failed to get audio devices";
 			console.error("Error getting audio devices:", this.error);
 		} finally {
 			this.loading = false;
@@ -31,12 +32,15 @@ export class AudioDevices {
 		try {
 			this.loading = true;
 			this.error = null;
-			const tempStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+			const tempStream = await navigator.mediaDevices.getUserMedia({
+				audio: true,
+			});
 			for (const track of tempStream.getTracks()) track.stop();
 			this.devices = await this.#list();
 			this.hasPermission = true;
 		} catch (err) {
-			this.error = err instanceof Error ? err.message : "Failed to get audio devices";
+			this.error =
+				err instanceof Error ? err.message : "Failed to get audio devices";
 			console.error("Error getting audio devices:", this.error);
 		} finally {
 			this.loading = false;
@@ -56,7 +60,8 @@ export function useAudioDevices() {
 			} else audio.loadWithoutPermission();
 		};
 		navigator.mediaDevices.addEventListener("devicechange", onChange);
-		return () => navigator.mediaDevices.removeEventListener("devicechange", onChange);
+		return () =>
+			navigator.mediaDevices.removeEventListener("devicechange", onChange);
 	});
 
 	return audio;

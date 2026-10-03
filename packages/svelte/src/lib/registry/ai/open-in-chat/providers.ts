@@ -8,7 +8,14 @@ import SciraIcon from "./icons/scira.svelte";
 import T3Icon from "./icons/t3.svelte";
 import V0Icon from "./icons/v0.svelte";
 
-export type ProviderKey = "github" | "scira" | "chatgpt" | "claude" | "t3" | "v0" | "cursor";
+export type ProviderKey =
+	| "github"
+	| "scira"
+	| "chatgpt"
+	| "claude"
+	| "t3"
+	| "v0"
+	| "cursor";
 
 export type ProviderConfig = {
 	title: string;

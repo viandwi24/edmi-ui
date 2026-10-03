@@ -21,9 +21,6 @@ import Shortcut from "./voice-selector-shortcut.svelte";
 import Trigger from "./voice-selector-trigger.svelte";
 
 export {
-	Root,
-	//
-	Root as VoiceSelector,
 	Accent,
 	Accent as VoiceSelectorAccent,
 	Age,
@@ -58,6 +55,9 @@ export {
 	Name as VoiceSelectorName,
 	Preview,
 	Preview as VoiceSelectorPreview,
+	Root,
+	//
+	Root as VoiceSelector,
 	Separator,
 	Separator as VoiceSelectorSeparator,
 	Shortcut,

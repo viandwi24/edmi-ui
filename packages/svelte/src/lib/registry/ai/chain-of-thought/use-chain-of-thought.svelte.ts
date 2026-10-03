@@ -15,6 +15,9 @@ export function setChainOfThoughtContext(value: ChainOfThoughtContextValue) {
 
 export function useChainOfThought(): ChainOfThoughtContextValue {
 	const ctx = getContext<ChainOfThoughtContextValue | undefined>(KEY);
-	if (!ctx) throw new Error("ChainOfThought components must be used within <ChainOfThought>");
+	if (!ctx)
+		throw new Error(
+			"ChainOfThought components must be used within <ChainOfThought>",
+		);
 	return ctx;
 }

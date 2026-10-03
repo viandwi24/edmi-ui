@@ -7,6 +7,7 @@ import SessionProgress from "./session-progress.svelte";
 import SessionSection from "./session-section.svelte";
 import SessionSource from "./session-source.svelte";
 
+export * from "./types.js";
 export {
 	SessionFile,
 	SessionOutputPreview,
@@ -17,4 +18,3 @@ export {
 	SessionSection,
 	SessionSource,
 };
-export * from "./types.js";

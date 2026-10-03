@@ -11,9 +11,6 @@ import TimeRange from "./audio-player-time-range.svelte";
 import VolumeRange from "./audio-player-volume-range.svelte";
 
 export {
-	Root,
-	//
-	Root as AudioPlayer,
 	ControlBar,
 	ControlBar as AudioPlayerControlBar,
 	DurationDisplay,
@@ -24,6 +21,9 @@ export {
 	MuteButton as AudioPlayerMuteButton,
 	PlayButton,
 	PlayButton as AudioPlayerPlayButton,
+	Root,
+	//
+	Root as AudioPlayer,
 	SeekBackwardButton,
 	SeekBackwardButton as AudioPlayerSeekBackwardButton,
 	SeekForwardButton,

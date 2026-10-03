@@ -17,6 +17,7 @@ export function setReasoningContext(value: ReasoningContextValue) {
 
 export function useReasoning(): ReasoningContextValue {
 	const ctx = getContext<ReasoningContextValue | undefined>(REASONING_KEY);
-	if (!ctx) throw new Error("Reasoning components must be used within <Reasoning>");
+	if (!ctx)
+		throw new Error("Reasoning components must be used within <Reasoning>");
 	return ctx;
 }

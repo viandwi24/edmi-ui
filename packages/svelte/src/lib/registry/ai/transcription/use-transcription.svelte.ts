@@ -2,7 +2,9 @@
 import type { Experimental_TranscriptionResult as TranscriptionResult } from "ai";
 import { getContext, setContext } from "svelte";
 
-export type TranscriptionSegment = NonNullable<TranscriptionResult["segments"]>[number];
+export type TranscriptionSegment = NonNullable<
+	TranscriptionResult["segments"]
+>[number];
 
 /** Getter object so consumers stay reactive when the props change. */
 export interface TranscriptionContext {
@@ -21,7 +23,9 @@ export function setTranscriptionContext(value: TranscriptionContext) {
 export function useTranscription(): TranscriptionContext {
 	const context = getContext<TranscriptionContext | undefined>(KEY);
 	if (!context) {
-		throw new Error("Transcription components must be used within Transcription");
+		throw new Error(
+			"Transcription components must be used within Transcription",
+		);
 	}
 	return context;
 }

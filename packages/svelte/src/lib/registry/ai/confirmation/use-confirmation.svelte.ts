@@ -22,10 +22,15 @@ export function setConfirmationContext(value: ConfirmationContextValue) {
 
 export function useConfirmation(): ConfirmationContextValue {
 	const ctx = getContext<ConfirmationContextValue | undefined>(KEY);
-	if (!ctx) throw new Error("Confirmation components must be used within <Confirmation>");
+	if (!ctx)
+		throw new Error(
+			"Confirmation components must be used within <Confirmation>",
+		);
 	return ctx;
 }
 
-export function useConfirmationOptional(): ConfirmationContextValue | undefined {
+export function useConfirmationOptional():
+	| ConfirmationContextValue
+	| undefined {
 	return getContext<ConfirmationContextValue | undefined>(KEY);
 }

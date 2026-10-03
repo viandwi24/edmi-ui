@@ -1,7 +1,7 @@
+import Source from "./source.svelte";
 import Root from "./sources.svelte";
 import Content from "./sources-content.svelte";
 import Trigger from "./sources-trigger.svelte";
-import Source from "./source.svelte";
 
 export {
 	Content,

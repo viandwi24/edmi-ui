@@ -9,9 +9,10 @@ import Trigger from "./mic-selector-trigger.svelte";
 import Value from "./mic-selector-value.svelte";
 
 export {
-	Root,
-	//
-	Root as MicSelector,
+	AudioDevices,
+	useAudioDevices,
+} from "./use-audio-devices.svelte.js";
+export {
 	Content,
 	Content as MicSelectorContent,
 	Empty,
@@ -24,12 +25,11 @@ export {
 	Label as MicSelectorLabel,
 	List,
 	List as MicSelectorList,
+	Root,
+	//
+	Root as MicSelector,
 	Trigger,
 	Trigger as MicSelectorTrigger,
 	Value,
 	Value as MicSelectorValue,
 };
-export {
-	AudioDevices,
-	useAudioDevices,
-} from "./use-audio-devices.svelte.js";

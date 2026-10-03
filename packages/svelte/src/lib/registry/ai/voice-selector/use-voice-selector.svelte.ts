@@ -17,7 +17,9 @@ export function setVoiceSelectorContext(value: VoiceSelectorContext) {
 export function useVoiceSelector(): VoiceSelectorContext {
 	const context = getContext<VoiceSelectorContext | undefined>(KEY);
 	if (!context) {
-		throw new Error("VoiceSelector components must be used within VoiceSelector");
+		throw new Error(
+			"VoiceSelector components must be used within VoiceSelector",
+		);
 	}
 	return context;
 }
