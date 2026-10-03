@@ -651,31 +651,50 @@ details#starlight__mobile-toc summary {
 	font-size: 0.75rem;
 }
 
-/* Tailwind preflight, scoped to registry previews and the landing showcase. The docs site does not load
+/* Tailwind preflight, scoped to registry previews, the landing and every Astro island (all islands render Edmi components). The docs site does not load
    the global preflight (Starlight owns its own reset), but registry components assume it: UA button
    fill/borders, list bullets, link underline and block svg would otherwise leak into previews. Layered
    in `base`, so every utility in the components still wins. */
 @layer base {
-	:where(.edmi-preview, .edmi-showcase, .edmi-hero, .edmi-footer-wrap)
+	:where(
+			.edmi-preview,
+			.edmi-showcase,
+			.edmi-hero,
+			.edmi-footer-wrap,
+			astro-island
+		)
 		:where(*, ::before, ::after) {
 		border: 0 solid var(--border);
 	}
-	:where(.edmi-preview, .edmi-showcase, .edmi-hero, .edmi-footer-wrap)
+	:where(
+			.edmi-preview,
+			.edmi-showcase,
+			.edmi-hero,
+			.edmi-footer-wrap,
+			astro-island
+		)
 		:where(h1, h2, h3, h4, h5, h6) {
 		font-size: inherit;
 		font-weight: inherit;
 	}
-	:where(.edmi-preview, .edmi-showcase, .edmi-footer-wrap)
+	:where(.edmi-preview, .edmi-showcase, .edmi-footer-wrap, astro-island)
 		:where(ul, ol, menu) {
 		list-style: none;
 		margin: 0;
 		padding: 0;
 	}
-	:where(.edmi-preview, .edmi-showcase, .edmi-footer-wrap) :where(a) {
+	:where(.edmi-preview, .edmi-showcase, .edmi-footer-wrap, astro-island)
+		:where(a) {
 		color: inherit;
 		text-decoration: inherit;
 	}
-	:where(.edmi-preview, .edmi-showcase, .edmi-hero, .edmi-footer-wrap)
+	:where(
+			.edmi-preview,
+			.edmi-showcase,
+			.edmi-hero,
+			.edmi-footer-wrap,
+			astro-island
+		)
 		:where(button, input, select, textarea) {
 		font: inherit;
 		letter-spacing: inherit;
@@ -684,29 +703,33 @@ details#starlight__mobile-toc summary {
 		border-radius: 0;
 		opacity: 1;
 	}
-	:where(.edmi-preview, .edmi-showcase, .edmi-footer-wrap)
+	:where(.edmi-preview, .edmi-showcase, .edmi-footer-wrap, astro-island)
 		:where(img, svg, video, canvas, iframe) {
 		display: block;
 		vertical-align: middle;
 	}
-	:where(.edmi-preview, .edmi-showcase, .edmi-footer-wrap) :where(img, video) {
+	:where(.edmi-preview, .edmi-showcase, .edmi-footer-wrap, astro-island)
+		:where(img, video) {
 		max-width: 100%;
 		height: auto;
 	}
-	:where(.edmi-preview, .edmi-showcase, .edmi-footer-wrap) :where(table) {
+	:where(.edmi-preview, .edmi-showcase, .edmi-footer-wrap, astro-island)
+		:where(table) {
 		border-collapse: collapse;
 		text-indent: 0;
 		border-color: inherit;
 	}
-	:where(.edmi-preview, .edmi-showcase, .edmi-footer-wrap) :where(textarea) {
+	:where(.edmi-preview, .edmi-showcase, .edmi-footer-wrap, astro-island)
+		:where(textarea) {
 		resize: vertical;
 	}
-	:where(.edmi-preview, .edmi-showcase, .edmi-footer-wrap)
+	:where(.edmi-preview, .edmi-showcase, .edmi-footer-wrap, astro-island)
 		:where(code, kbd, samp, pre) {
 		font-family: var(--font-mono);
 		font-size: 1em;
 	}
-	:where(.edmi-preview, .edmi-showcase, .edmi-footer-wrap) :where(strong, b) {
+	:where(.edmi-preview, .edmi-showcase, .edmi-footer-wrap, astro-island)
+		:where(strong, b) {
 		font-weight: bolder;
 	}
 }
