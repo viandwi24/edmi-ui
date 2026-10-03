@@ -7,7 +7,7 @@
   /* shadcn tokens */
   --background: oklch(0.964 0.005 95.1);
   --foreground: oklch(0.239 0.004 106.7);
-  --card: oklch(0.988 0.003 106.4);
+  --card: oklch(1.000 0 0);
   --card-foreground: oklch(0.239 0.004 106.7);
   --popover: oklch(1.000 0 0);
   --popover-foreground: oklch(0.239 0.004 106.7);
@@ -72,8 +72,8 @@
   --overlay: rgba(31,31,29,0.32);
   --lip: oklch(0.912 0.011 95.2);
   --lip-strong: oklch(0.869 0.012 96.4);
-  --outline-hi: oklch(0.964 0.005 95.1);
-  --outline-face: oklch(0.964 0.005 95.1);
+  --outline-hi: oklch(1.000 0 0);
+  --outline-face: oklch(1.000 0 0);
   --outline-lip: oklch(0.912 0.011 95.2);
   --card-hi: oklch(1.000 0 0);
   --grid-dot: oklch(0.909 0.010 93.6);
@@ -137,18 +137,18 @@
   --destructive-hi: oklch(0.724 0.150 12.8);
   --destructive-edge: oklch(0.579 0.167 14.7);
   --destructive-lip: oklch(0.398 0.119 14.2);
-  --destructive-soft: rgba(239,91,112,0.14);
+  --destructive-soft: oklch(0.301 0.033 357.6);
   --destructive-text: oklch(0.746 0.133 11.5);
   --brand-hi: oklch(0.806 0.138 161.3);
   --brand-edge: oklch(0.653 0.138 158.6);
   --brand-lip: oklch(0.480 0.097 159.8);
-  --brand-soft: rgba(62,207,142,0.14);
+  --brand-soft: oklch(0.321 0.029 174.6);
   --brand-text: oklch(0.806 0.138 161.3);
-  --success-soft: rgba(62,207,142,0.14);
+  --success-soft: oklch(0.321 0.029 174.6);
   --success-text: oklch(0.806 0.138 161.3);
-  --warning-soft: rgba(232,166,74,0.14);
+  --warning-soft: oklch(0.324 0.021 69.9);
   --warning-text: oklch(0.824 0.115 76.3);
-  --info-soft: rgba(91,140,255,0.15);
+  --info-soft: oklch(0.308 0.039 269.8);
   --info-text: oklch(0.764 0.120 265.9);
   --ring-soft: rgba(62,207,142,0.28);
   --overlay: rgba(0,0,0,0.6);

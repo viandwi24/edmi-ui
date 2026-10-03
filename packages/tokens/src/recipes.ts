@@ -9,6 +9,7 @@
  * ✦ = Edmi UI addition, not in shadcn.
  *
  * THEMING: recipes only use tokens, so data-base / data-theme / .dark / --radius restyle everything (DESIGN.md §3).
+ * NO TRANSPARENT FILLS (v3): tints are pre-mixed solids — never `/NN` opacity on bg or border; use color-mix(…, var(--popover)).
  * POSITIVE VALUES use `success` (badge variant, text-success-text), never `brand` — brand follows the theme.
  *
  * DEPTH RULE: every component is FLAT by default (plain shadcn look: solid fill + 1px border).
@@ -29,13 +30,13 @@ export const button = cva(
     variants: {
       /* Flat by default (plain shadcn look). Add `raised` for the one-step 3D look ✦ */
       variant: {
-        default: "border border-transparent bg-primary text-primary-foreground hover:bg-primary/90 active:brightness-95",
+        default: "border border-transparent bg-primary text-primary-foreground hover:bg-[color-mix(in_srgb,var(--primary)_90%,var(--background))] active:brightness-95",
         secondary: "border border-transparent bg-secondary text-secondary-foreground hover:bg-accent",
         outline: "border border-input bg-background text-foreground hover:bg-accent",
         ghost: "text-foreground hover:bg-accent",
-        destructive: "border border-transparent bg-destructive text-white hover:bg-destructive/90",
+        destructive: "border border-transparent bg-destructive text-white hover:bg-[color-mix(in_srgb,var(--destructive)_90%,var(--background))]",
         link: "text-foreground underline underline-offset-4 px-1",
-        brand: "border border-transparent bg-brand text-brand-foreground hover:bg-brand/90", // ✦
+        brand: "border border-transparent bg-brand text-brand-foreground hover:bg-[color-mix(in_srgb,var(--brand)_90%,var(--background))]", // ✦
       },
       raised: { false: "", true: "active:translate-y-[2px]" }, // ✦ opt-in one-step 3D
       size: {
@@ -69,14 +70,14 @@ export const badge = cva(
       variant: {
         default: "bg-primary text-primary-foreground",
         secondary: "bg-secondary text-secondary-foreground border-border",
-        destructive: "bg-destructive-soft text-destructive-text border-destructive/30",
+        destructive: "bg-destructive-soft text-destructive-text border-[color-mix(in_srgb,var(--destructive)_30%,var(--popover))]",
         outline: "border-input text-foreground",
         ghost: "text-foreground",
         link: "text-foreground underline underline-offset-[3px]",
-        brand: "bg-brand-soft text-brand-text border-brand/30", // ✦ custom color (follows the theme accent)
-        success: "bg-success-soft text-success-text border-success/30", // ✦ positive deltas / done states — always green, any theme
-        warning: "bg-warning-soft text-warning-text border-warning/30", // ✦
-        info: "bg-info-soft text-info-text border-info/30", // ✦
+        brand: "bg-brand-soft text-brand-text border-[color-mix(in_srgb,var(--brand)_30%,var(--popover))]", // ✦ custom color (follows the theme accent)
+        success: "bg-success-soft text-success-text border-[color-mix(in_srgb,var(--success)_30%,var(--popover))]", // ✦ positive deltas / done states — always green, any theme
+        warning: "bg-warning-soft text-warning-text border-[color-mix(in_srgb,var(--warning)_30%,var(--popover))]", // ✦
+        info: "bg-info-soft text-info-text border-[color-mix(in_srgb,var(--info)_30%,var(--popover))]", // ✦
       },
       shape: { default: "", pill: "rounded-full", number: "min-w-[22px] justify-center px-1.5 font-mono text-[11px]" },
     },
@@ -232,11 +233,11 @@ export const alert = cva("grid grid-cols-[20px_1fr_auto] gap-x-3 gap-y-0.5 round
   variants: {
     variant: {
       default: "bg-card border-border",
-      destructive: "bg-destructive-soft border-destructive/40 text-destructive-text",
-      brand: "bg-brand-soft border-brand/40 text-brand-text", // ✦
-      success: "bg-success-soft border-success/40 text-success-text", // ✦
-      info: "bg-info-soft border-info/40 text-info-text", // ✦
-      warning: "bg-warning-soft border-warning/40 text-warning-text", // ✦
+      destructive: "bg-destructive-soft border-[color-mix(in_srgb,var(--destructive)_40%,var(--popover))] text-destructive-text",
+      brand: "bg-brand-soft border-[color-mix(in_srgb,var(--brand)_40%,var(--popover))] text-brand-text", // ✦
+      success: "bg-success-soft border-[color-mix(in_srgb,var(--success)_40%,var(--popover))] text-success-text", // ✦
+      info: "bg-info-soft border-[color-mix(in_srgb,var(--info)_40%,var(--popover))] text-info-text", // ✦
+      warning: "bg-warning-soft border-[color-mix(in_srgb,var(--warning)_40%,var(--popover))] text-warning-text", // ✦
     },
   },
   defaultVariants: { variant: "default" },
@@ -254,10 +255,10 @@ export const bubble = cva("inline-block max-w-[360px] rounded-2xl border border-
       default: "bg-primary text-primary-foreground",
       secondary: "bg-secondary text-secondary-foreground border-border",
       muted: "bg-muted text-muted-foreground",
-      tinted: "bg-brand-soft text-foreground border-brand/25",
+      tinted: "bg-brand-soft text-foreground border-[color-mix(in_srgb,var(--brand)_25%,var(--popover))]",
       outline: "border-input bg-transparent",
       ghost: "bg-transparent px-0", // keep the vertical padding so avatars line up with the first line
-      destructive: "bg-destructive-soft text-destructive-text border-destructive/30",
+      destructive: "bg-destructive-soft text-destructive-text border-[color-mix(in_srgb,var(--destructive)_30%,var(--popover))]",
     },
   },
   defaultVariants: { variant: "default" },

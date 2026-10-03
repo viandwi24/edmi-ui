@@ -4,7 +4,7 @@
 [data-base="slate"] {
   --background: oklch(0.976 0.006 264.5);
   --foreground: oklch(0.223 0.052 258.3);
-  --card: oklch(0.991 0.003 264.5);
+  --card: oklch(1.000 0 0);
   --card-foreground: oklch(0.223 0.052 258.3);
   --popover: oklch(1.000 0 0);
   --popover-foreground: oklch(0.223 0.052 258.3);
@@ -34,8 +34,8 @@
   --overlay: rgba(11,27,51,0.35);
   --lip: oklch(0.913 0.017 256.3);
   --lip-strong: oklch(0.872 0.024 256.1);
-  --outline-hi: oklch(0.976 0.006 264.5);
-  --outline-face: oklch(0.976 0.006 264.5);
+  --outline-hi: oklch(1.000 0 0);
+  --outline-face: oklch(1.000 0 0);
   --outline-lip: oklch(0.913 0.017 256.3);
   --card-hi: oklch(1.000 0 0);
   --grid-dot: oklch(0.923 0.016 257.2);
@@ -80,6 +80,11 @@
   --overlay: rgba(2,6,15,0.65);
   --lip: oklch(0.331 0.071 265.5);
   --lip-strong: oklch(0.360 0.058 261.9);
+  --destructive-soft: oklch(0.307 0.044 303.0);
+  --success-soft: oklch(0.331 0.043 227.6);
+  --warning-soft: oklch(0.328 0.016 280.5);
+  --info-soft: oklch(0.322 0.072 263.7);
+  --brand-soft: oklch(0.331 0.043 227.6);
   --outline-hi: oklch(0.295 0.055 262.1);
   --outline-face: oklch(0.254 0.051 262.5);
   --outline-lip: oklch(0.399 0.069 262.5);

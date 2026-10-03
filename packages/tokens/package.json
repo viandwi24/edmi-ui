@@ -12,6 +12,7 @@
 		"./theme.css": "./src/theme.css",
 		"./fonts.css": "./src/fonts.css",
 		"./kit.css": "./src/kit.css",
+		"./ai.css": "./src/ai.css",
 		"./base/slate.css": "./src/base/slate.css",
 		"./themes/ocean.css": "./src/themes/ocean.css",
 		"./tokens.json": "./src/tokens.json",

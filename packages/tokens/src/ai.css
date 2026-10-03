@@ -1,0 +1,56 @@
+/* Edmi AI (@edmi/ai) — plain CSS reference for the AI pack (prefix ai-). Load after tokens.css + kit.css.
+   Port into the AI Elements components you install; names follow Vercel AI Elements. */
+
+/* ── Edmi AI pack (@edmi/ai) — built on Edmi UI tokens; prefix ai- for slots/classes ── */
+.ai-pi{width:100%;border:1px solid var(--input);border-radius:calc(var(--radius)*1.6);background:var(--card);overflow:hidden}
+.ai-pi.focus{border-color:var(--ring);box-shadow:0 0 0 3px var(--ring-soft)}
+.ai-pi-h{display:flex;gap:6px;flex-wrap:wrap;padding:10px 12px 0}
+.ai-pi-b{padding:12px 14px 6px;font-size:14px;min-height:56px;line-height:1.5}
+.ai-pi-f{display:flex;align-items:center;gap:4px;padding:6px 8px 8px}
+.ai-pi-f .btn{height:30px;font-size:13px;padding:0 9px;gap:6px}
+.ai-pi-f .btn.btn-icon{width:30px;padding:0}
+.ai-send{width:32px;height:32px;border-radius:calc(var(--radius)*0.9);display:inline-flex;align-items:center;justify-content:center;background:var(--primary);color:var(--primary-foreground);border:1px solid transparent}
+.ai-send.dis{opacity:.4}
+.ai-coll{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--muted-foreground)}
+.ai-coll .chev{display:inline-flex;margin-left:auto}
+.ai-box{border:1px solid var(--border);border-radius:calc(var(--radius)*1.2);background:var(--card);overflow:hidden}
+.ai-box-h{display:flex;align-items:center;gap:10px;padding:10px 14px;font-size:13.5px}
+.ai-box-b{border-top:1px solid var(--border);padding:12px 14px;font-size:13px}
+.ai-lbl{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.8px;color:var(--muted-foreground);text-transform:uppercase}
+.ai-pre{margin:0;padding:10px 12px;border-radius:calc(var(--radius)*0.8);background:var(--muted);font:12px/1.6 'JetBrains Mono',monospace;white-space:pre;overflow:hidden;color:var(--foreground)}
+.ai-code{border:1px solid var(--border);border-radius:calc(var(--radius)*1.2);overflow:hidden;background:var(--card)}
+.ai-code-h{display:flex;align-items:center;gap:8px;height:38px;padding:0 6px 0 12px;background:var(--muted);border-bottom:1px solid var(--border);font-size:12.5px}
+.ai-code-b{padding:10px 0;font:12.5px/1.7 'JetBrains Mono',monospace;white-space:pre;overflow:hidden}
+.ai-code-b .ln{display:inline-block;width:38px;padding-right:14px;text-align:right;color:var(--muted-foreground-2);user-select:none}
+.tk-k{color:var(--chart-2)}.tk-s{color:var(--success-text)}.tk-n{color:var(--chart-3)}.tk-f{color:var(--chart-4)}.tk-c{color:var(--muted-foreground);font-style:italic}
+.ai-term{border-radius:calc(var(--radius)*1.2);overflow:hidden;background:oklch(0.17 0.005 286);color:oklch(0.92 0.003 286);border:1px solid oklch(0.27 0.007 286)}
+.ai-term-h{display:flex;align-items:center;gap:8px;height:36px;padding:0 6px 0 12px;border-bottom:1px solid oklch(0.27 0.007 286);font-size:12.5px;color:oklch(0.72 0.01 286)}
+.ai-term-b{padding:10px 14px;font:12.5px/1.7 'JetBrains Mono',monospace;white-space:pre}
+.ai-term .g{color:oklch(0.78 0.15 155)}.ai-term .y{color:oklch(0.83 0.13 85)}.ai-term .r{color:oklch(0.7 0.17 20)}.ai-term .b{color:oklch(0.72 0.13 255)}.ai-term .d{color:oklch(0.58 0.01 286)}
+.ai-term .cur{display:inline-block;width:7px;height:14px;background:currentColor;vertical-align:-2px}
+.ai-tree{font-size:13px}
+.ai-tree .it{display:flex;align-items:center;gap:7px;height:28px;padding:0 8px;border-radius:6px;white-space:nowrap}
+.ai-tree .it.on{background:var(--accent);font-weight:500}
+.ai-tree .it .ic{color:var(--muted-foreground)}
+.ai-step{display:grid;grid-template-columns:22px 1fr;gap:10px;position:relative}
+.ai-step .ico{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:var(--muted-foreground);background:var(--card);position:relative;z-index:1}
+.ai-step .ln{position:absolute;left:10.5px;top:24px;bottom:-8px;width:1px;background:var(--border)}
+.ai-cite{display:inline-flex;align-items:center;gap:4px;height:20px;padding:0 7px;border-radius:999px;background:var(--secondary);border:1px solid var(--border);font-size:11.5px;color:var(--foreground-2);vertical-align:1px}
+.ai-ring{width:22px;height:22px}
+.ai-node{width:240px;border:1px solid var(--border);border-radius:calc(var(--radius)*1.2);background:var(--card);position:absolute}
+.ai-node.is-sel{border-color:var(--ring);box-shadow:0 0 0 3px var(--ring-soft)}
+.ai-node-h{padding:10px 12px;border-bottom:1px solid var(--border-2)}
+.ai-node-t{font-size:13.5px;font-weight:600}.ai-node-d{font-size:12px;color:var(--muted-foreground);margin-top:1px}
+.ai-node-c{padding:10px 12px;font-size:12.5px}
+.ai-node-f{padding:8px 12px;border-top:1px solid var(--border-2);font-size:11.5px;color:var(--muted-foreground)}
+.ai-handle{position:absolute;top:50%;width:10px;height:10px;margin-top:-5px;border-radius:50%;background:var(--card);border:2px solid var(--muted-foreground)}
+.ai-canvas{position:relative;border:1px solid var(--border);border-radius:calc(var(--radius)*1.4);overflow:hidden;background-color:var(--background);background-image:radial-gradient(var(--input) 1px,transparent 1px);background-size:18px 18px}
+.ai-ctrl{display:flex;flex-direction:column;border:1px solid var(--border);border-radius:calc(var(--radius)*0.9);background:var(--card);overflow:hidden}
+.ai-ctrl span{width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;color:var(--foreground-2)}
+.ai-ctrl span+span{border-top:1px solid var(--border)}
+.ai-orb{border-radius:50%;position:relative;flex-shrink:0}
+.ai-wave{display:flex;align-items:center;gap:2px;height:28px}
+.ai-wave i{display:block;width:3px;border-radius:2px;background:var(--muted-foreground)}
+.ai-wave i.p{background:var(--brand)}
+.ai-seg{padding:2px 3px;border-radius:4px}
+.ai-meth{font:600 11px 'JetBrains Mono',monospace;padding:2px 7px;border-radius:5px}
