@@ -1,0 +1,93 @@
+/* Edmi UI base color "slate". Base color = neutrals (surfaces, text, borders, lips, neutral "ink" primary).
+   Use: <html data-base="slate">. Load after tokens.css and before themes/*. */
+
+[data-base="slate"] {
+  --background: oklch(0.976 0.006 264.5);
+  --foreground: oklch(0.223 0.052 258.3);
+  --card: oklch(0.991 0.003 264.5);
+  --card-foreground: oklch(0.223 0.052 258.3);
+  --popover: oklch(1.000 0 0);
+  --popover-foreground: oklch(0.223 0.052 258.3);
+  --primary: oklch(0.257 0.054 259.7);
+  --primary-foreground: oklch(1.000 0 0);
+  --primary-hi: oklch(0.375 0.060 260.5);
+  --primary-edge: oklch(0.200 0.040 258.3);
+  --primary-lip: oklch(0.158 0.031 257.5);
+  --primary-inset: rgba(255,255,255,0.22);
+  --secondary: oklch(0.960 0.009 258.3);
+  --secondary-foreground: oklch(0.223 0.052 258.3);
+  --secondary-hi: oklch(1.000 0 0);
+  --secondary-lip: oklch(0.850 0.026 255.6);
+  --muted: oklch(0.972 0.006 255.5);
+  --muted-foreground: oklch(0.523 0.041 257.4);
+  --accent: oklch(0.947 0.015 257.2);
+  --accent-foreground: oklch(0.223 0.052 258.3);
+  --border: oklch(0.923 0.016 257.2);
+  --input: oklch(0.866 0.024 256.1);
+  --sidebar: oklch(0.972 0.006 255.5);
+  --sidebar-foreground: oklch(0.223 0.052 258.3);
+  --sidebar-primary: oklch(0.257 0.054 259.7);
+  --sidebar-primary-foreground: oklch(1.000 0 0);
+  --sidebar-accent: oklch(0.947 0.015 257.2);
+  --sidebar-accent-foreground: oklch(0.223 0.052 258.3);
+  --sidebar-border: oklch(0.923 0.016 257.2);
+  --overlay: rgba(11,27,51,0.35);
+  --lip: oklch(0.913 0.017 256.3);
+  --lip-strong: oklch(0.872 0.024 256.1);
+  --outline-hi: oklch(0.976 0.006 264.5);
+  --outline-face: oklch(0.976 0.006 264.5);
+  --outline-lip: oklch(0.913 0.017 256.3);
+  --card-hi: oklch(1.000 0 0);
+  --grid-dot: oklch(0.923 0.016 257.2);
+  --stage: oklch(0.960 0.009 258.3);
+  --foreground-2: oklch(0.384 0.050 258.7);
+  --tab-active: oklch(1.000 0 0);
+  --muted-foreground-2: oklch(0.705 0.033 257.3);
+  --border-2: oklch(0.947 0.011 256.7);
+}
+
+.dark[data-base="slate"] {
+  --background: oklch(0.188 0.037 262.2);
+  --foreground: oklch(0.944 0.015 257.2);
+  --card: oklch(0.232 0.046 261.7);
+  --card-foreground: oklch(0.944 0.015 257.2);
+  --popover: oklch(0.254 0.051 262.5);
+  --popover-foreground: oklch(0.944 0.015 257.2);
+  --primary: oklch(0.944 0.015 257.2);
+  --primary-foreground: oklch(0.188 0.037 262.2);
+  --primary-hi: oklch(1.000 0 0);
+  --primary-edge: transparent;
+  --primary-lip: oklch(0.631 0.036 261.0);
+  --primary-inset: rgba(255,255,255,0.7);
+  --secondary: oklch(0.278 0.052 262.0);
+  --secondary-foreground: oklch(0.944 0.015 257.2);
+  --secondary-hi: oklch(0.334 0.069 264.3);
+  --secondary-inset: rgba(255,255,255,0.08);
+  --secondary-lip: oklch(0.399 0.069 262.5);
+  --muted: oklch(0.219 0.043 261.6);
+  --muted-foreground: oklch(0.662 0.042 257.9);
+  --accent: oklch(0.291 0.055 262.1);
+  --accent-foreground: oklch(0.944 0.015 257.2);
+  --border: oklch(0.293 0.050 261.5);
+  --input: oklch(0.360 0.058 261.9);
+  --sidebar: oklch(0.202 0.041 262.3);
+  --sidebar-foreground: oklch(0.944 0.015 257.2);
+  --sidebar-primary: oklch(0.944 0.015 257.2);
+  --sidebar-primary-foreground: oklch(0.188 0.037 262.2);
+  --sidebar-accent: oklch(0.261 0.051 261.3);
+  --sidebar-accent-foreground: oklch(0.944 0.015 257.2);
+  --sidebar-border: oklch(0.274 0.050 262.6);
+  --overlay: rgba(2,6,15,0.65);
+  --lip: oklch(0.331 0.071 265.5);
+  --lip-strong: oklch(0.360 0.058 261.9);
+  --outline-hi: oklch(0.295 0.055 262.1);
+  --outline-face: oklch(0.254 0.051 262.5);
+  --outline-lip: oklch(0.399 0.069 262.5);
+  --card-hi: rgba(255,255,255,0.04);
+  --grid-dot: oklch(0.257 0.047 261.2);
+  --stage: oklch(0.205 0.039 261.5);
+  --foreground-2: oklch(0.804 0.032 258.9);
+  --tab-active: oklch(0.291 0.055 262.1);
+  --muted-foreground-2: oklch(0.534 0.046 258.8);
+  --border-2: oklch(0.264 0.056 264.1);
+}

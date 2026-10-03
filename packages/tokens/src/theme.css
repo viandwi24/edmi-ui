@@ -73,12 +73,17 @@
   --color-brand-lip: var(--brand-lip);
   --color-brand-soft: var(--brand-soft);
   --color-brand-text: var(--brand-text);
+  --color-success-soft: var(--success-soft);
+  --color-success-text: var(--success-text);
   --color-warning-soft: var(--warning-soft);
   --color-warning-text: var(--warning-text);
   --color-info-soft: var(--info-soft);
   --color-info-text: var(--info-text);
   --color-lip: var(--lip);
   --color-lip-strong: var(--lip-strong);
+  --color-outline-hi: var(--outline-hi);
+  --color-outline-face: var(--outline-face);
+  --color-outline-lip: var(--outline-lip);
   --color-card-hi: var(--card-hi);
   --color-grid-dot: var(--grid-dot);
   --color-stage: var(--stage);
@@ -95,7 +100,7 @@
   --shadow-sunk: inset 0 1px 2px rgb(0 0 0 / 0.05);
   --shadow-btn-primary: inset 0 1px 0 var(--primary-inset), 0 2px 0 var(--primary-lip);
   --shadow-btn-secondary: inset 0 1px 0 var(--secondary-inset), 0 2px 0 var(--secondary-lip);
-  --shadow-btn-outline: 0 2px 0 var(--lip);
+  --shadow-btn-outline: 0 2px 0 var(--outline-lip);
   --shadow-btn-brand: inset 0 1px 0 rgb(255 255 255 / 0.35), 0 2px 0 var(--brand-lip);
   --shadow-btn-destructive: inset 0 1px 0 rgb(255 255 255 / 0.28), 0 2px 0 var(--destructive-lip);
   --shadow-pressed: inset 0 2px 3px rgb(0 0 0 / 0.22);

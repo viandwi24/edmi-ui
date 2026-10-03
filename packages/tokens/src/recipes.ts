@@ -8,6 +8,9 @@
  * Requires: tokens/tokens.css + tokens/tailwind-v4.css loaded, `class-variance-authority` installed.
  * ✦ = Edmi UI addition, not in shadcn.
  *
+ * THEMING: recipes only use tokens, so data-base / data-theme / .dark / --radius restyle everything (DESIGN.md §3).
+ * POSITIVE VALUES use `success` (badge variant, text-success-text), never `brand` — brand follows the theme.
+ *
  * DEPTH RULE: every component is FLAT by default (plain shadcn look: solid fill + 1px border).
  * The one-step 3D look is opt-in with `raised: true` (✦), available on every component below.
  */
@@ -49,7 +52,7 @@ export const button = cva(
     compoundVariants: [
       { raised: true, variant: "default", class: `${raised} from-primary-hi to-primary border-primary-edge border-b-primary-lip shadow-btn-primary hover:brightness-105 active:shadow-pressed active:border-b-primary-edge` },
       { raised: true, variant: "secondary", class: `${raised} from-secondary-hi to-secondary border-input border-b-secondary-lip shadow-btn-secondary hover:from-accent hover:to-accent active:shadow-pressed` },
-      { raised: true, variant: "outline", class: "border-b-lip shadow-btn-outline active:shadow-none" },
+      { raised: true, variant: "outline", class: "bg-linear-to-b from-outline-hi to-outline-face [background-origin:border-box] border-b-outline-lip shadow-btn-outline hover:from-accent hover:to-accent active:shadow-none active:bg-none active:bg-outline-face" }, // gray lip in dark (rev 1)
       { raised: true, variant: "destructive", class: `${raised} from-destructive-hi to-destructive border-destructive-edge border-b-destructive-lip shadow-btn-destructive hover:brightness-105 active:shadow-pressed` },
       { raised: true, variant: "brand", class: `${raised} from-brand-hi to-brand border-brand-edge border-b-brand-lip shadow-btn-brand hover:brightness-105 active:shadow-pressed` },
       // ghost & link never get raised
@@ -70,7 +73,8 @@ export const badge = cva(
         outline: "border-input text-foreground",
         ghost: "text-foreground",
         link: "text-foreground underline underline-offset-[3px]",
-        brand: "bg-brand-soft text-brand-text border-brand/30", // ✦ custom color
+        brand: "bg-brand-soft text-brand-text border-brand/30", // ✦ custom color (follows the theme accent)
+        success: "bg-success-soft text-success-text border-success/30", // ✦ positive deltas / done states — always green, any theme
         warning: "bg-warning-soft text-warning-text border-warning/30", // ✦
         info: "bg-info-soft text-info-text border-info/30", // ✦
       },
@@ -158,7 +162,7 @@ export const toggle = cva(
       size: { sm: "h-8 min-w-8 px-2", default: "h-9 min-w-9 px-2.5", lg: "h-[42px] min-w-[42px] px-3" },
       raised: { false: "", true: "data-[state=on]:translate-y-px data-[state=on]:shadow-sunk" }, // ✦
     },
-    compoundVariants: [{ variant: "outline", raised: true, class: "border-b-lip shadow-btn-outline data-[state=on]:shadow-sunk" }],
+    compoundVariants: [{ variant: "outline", raised: true, class: "bg-linear-to-b from-outline-hi to-outline-face [background-origin:border-box] border-b-outline-lip shadow-btn-outline data-[state=on]:bg-none data-[state=on]:bg-accent data-[state=on]:shadow-sunk" }],
     defaultVariants: { variant: "default", size: "default", raised: false },
   },
 );
@@ -230,6 +234,8 @@ export const alert = cva("grid grid-cols-[20px_1fr_auto] gap-x-3 gap-y-0.5 round
       default: "bg-card border-border",
       destructive: "bg-destructive-soft border-destructive/40 text-destructive-text",
       brand: "bg-brand-soft border-brand/40 text-brand-text", // ✦
+      success: "bg-success-soft border-success/40 text-success-text", // ✦
+      info: "bg-info-soft border-info/40 text-info-text", // ✦
       warning: "bg-warning-soft border-warning/40 text-warning-text", // ✦
     },
   },
