@@ -1,0 +1,32 @@
+---
+title: Edge
+description: "Animated and temporary edges for the workflow canvas."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-edge" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/edge) (Apache-2.0), restyled for Edmi UI.
+
+Register as `edgeTypes={{ animated: Edge.Animated, temporary: Edge.Temporary }}`. Edges without a type use the default solid bezier (`--muted-foreground`).
+
+## Installation
+
+<ComponentInstall name="ai-edge" />
+
+## Usage
+
+<ComponentUsage name="ai-edge" />
+
+## Component source
+
+<ComponentSource name="ai-edge" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| Edge.Animated | edge type | brand dashes that move to the target |  |
+| Edge.Temporary | edge type | dotted muted path for conditional or error flow |  |

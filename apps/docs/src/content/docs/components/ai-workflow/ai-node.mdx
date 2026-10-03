@@ -1,0 +1,40 @@
+---
+title: Node
+description: "Workflow node card with header, content, footer and source/target handles."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-node" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/node) (Apache-2.0), restyled for Edmi UI. Built on `card`.
+
+Selected nodes get the `--ring` border and a 3px ring. Inside xyflow the wrapper's `selected` class does this automatically.
+
+## Installation
+
+<ComponentInstall name="ai-node" />
+
+## Usage
+
+<ComponentUsage name="ai-node" />
+
+## Component source
+
+<ComponentSource name="ai-node" />
+
+## Raised ✦
+
+Flat by default. `raised` gives the one-step 3D card (one face plus one hard lip).
+
+<ComponentDemo name="ai-node" demo="ai-node-raised" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| Node | `handles` | `{ target: boolean; source: boolean }` |  |
+| Node | `selected` | `boolean` | `false` |
+| Node | `raised` | `boolean` | `false` |
+| NodeHeader, NodeTitle, NodeDescription, NodeAction, NodeContent, NodeFooter | Card parts |  |  |

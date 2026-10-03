@@ -1,4 +1,4 @@
-import { aiItem, AI_CATEGORIES as C } from "./ai-shared.ts";
+import { aiItem, aiReact, AI_CATEGORIES as C } from "./ai-shared.ts";
 import type { Item } from "./types.ts";
 
 /** AI · Workflow: board AI 08 (Canvas, Node, Edge, Connection, Controls, Panel, Toolbar, Image, Open In Chat). */
@@ -9,6 +9,7 @@ export const items: Item[] = [
 		description:
 			"Workflow canvas on xyflow (React Flow, Vue Flow, Svelte Flow) with the dotted Edmi background.",
 		category: C.workflow,
+		react: aiReact("canvas", ["@xyflow/react", "cn"]),
 	}),
 	aiItem({
 		name: "node",
@@ -17,42 +18,49 @@ export const items: Item[] = [
 			"Workflow node card with header, content, footer and source/target handles.",
 		category: C.workflow,
 		deps: ["card"],
+		react: aiReact("node", ["@xyflow/react", "cn"]),
 	}),
 	aiItem({
 		name: "edge",
 		title: "Edge",
 		description: "Animated and temporary edges for the workflow canvas.",
 		category: C.workflow,
+		react: aiReact("edge", ["@xyflow/react"]),
 	}),
 	aiItem({
 		name: "connection",
 		title: "Connection",
 		description: "Connection line shown while dragging a new edge.",
 		category: C.workflow,
+		react: aiReact("connection", ["@xyflow/react"]),
 	}),
 	aiItem({
 		name: "controls",
 		title: "Controls",
 		description: "Zoom and fit controls for the workflow canvas.",
 		category: C.workflow,
+		react: aiReact("controls", ["@xyflow/react", "cn"]),
 	}),
 	aiItem({
 		name: "panel",
 		title: "Panel",
 		description: "Canvas overlay panel positioned in a corner of the workflow.",
 		category: C.workflow,
+		react: aiReact("panel", ["@xyflow/react", "cn"]),
 	}),
 	aiItem({
 		name: "toolbar",
 		title: "Toolbar",
 		description: "Floating toolbar attached to a selected node.",
 		category: C.workflow,
+		react: aiReact("toolbar", ["@xyflow/react", "cn"]),
 	}),
 	aiItem({
 		name: "image",
 		title: "Image",
 		description: "Displays an AI-generated image from base64 or bytes.",
 		category: C.workflow,
+		react: aiReact("image", ["ai", "cn"]),
 	}),
 	aiItem({
 		name: "open-in-chat",
@@ -61,5 +69,6 @@ export const items: Item[] = [
 			"Dropdown that opens a prompt in ChatGPT, Claude, T3, Scira, v0 or Cursor.",
 		category: C.workflow,
 		deps: ["button", "dropdown-menu"],
+		react: aiReact("open-in-chat", ["cn"]),
 	}),
 ];

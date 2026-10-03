@@ -1,0 +1,32 @@
+---
+title: Canvas
+description: "Workflow canvas on xyflow (React Flow, Vue Flow, Svelte Flow) with the dotted Edmi background."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="ai-canvas" />
+
+Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/canvas) (Apache-2.0), restyled for Edmi UI.
+
+Hosts Node, Edge, Connection, Controls, Panel and Toolbar. Dots are `--input` on `--background`; the surface has pan on scroll, selection on drag, fit view on load and Backspace/Delete to remove.
+
+## Installation
+
+<ComponentInstall name="ai-canvas" />
+
+## Usage
+
+<ComponentUsage name="ai-canvas" />
+
+## Component source
+
+<ComponentSource name="ai-canvas" />
+
+## API
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| Canvas | `nodes`, `edges`, `nodeTypes`, `edgeTypes` | xyflow props |  |
+| Canvas | `connectionLineComponent` | `Connection` |  |
