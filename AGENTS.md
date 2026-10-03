@@ -30,7 +30,7 @@ bun run gen:strict          # same, but missing files / unresolved deps are erro
 bun run build:registry      # run each package's registry build -> apps/docs/public/r/<fw>/*.json
 bun run pack:registries     # build npm-publishable registries into packages/registry-<fw>/r (EDMI_URL = jsDelivr path)
 bun run release             # CI publish step (release.yml publish-script): gen:strict, build:registry, pack:registries, changeset publish
-bun run verify:matrix       # item x framework matrix (manifest + built JSON + docs page + demo + <name>-raised demos); exit 1 on gaps; --markdown prints the README table; AI items not ported yet are `…` (scripts/ai-pending.json)
+bun run verify:matrix       # item x framework matrix (manifest + built JSON + docs page + demo + <name>-raised demos); exit 1 on gaps; --markdown prints the README table; `scripts/ai-pending.json` must stay empty
 bun run scripts/ai-fetch-stock.ts [dir]   # AI pack: download the stock AI Elements sources (react/vue/svelte) into .ai-src/ (gitignored) for porting
 bun run scripts/ai-icon.ts ArrowUpIcon size-4   # AI pack: print the 5-prop <IconPlaceholder /> snippet for a lucide icon name
 bun run typecheck           # root tsc + every workspace's typecheck (astro check, vue-tsc wrapper, svelte-check)
@@ -312,13 +312,23 @@ Spec v3 and AI pack
 
 AI pack (v3, decided with the user)
 - Items are `ai-<name>` in the `@edmi-ui` namespace plus the `ai-all` aggregate (not a separate `@edmi/ai` namespace: shadcn namespaces are per registry; one registry, prefixed names, folder `components/ai/`). Why: user decision; DESIGN §5b's `@edmi/ai` becomes `@edmi-ui/ai-*`.
-- ALL AI Elements components ship in all three frameworks where at all possible (persona/Rive, workflow canvas via xyflow, audio player included); only a truly impossible item may `skip`, with the reason documented. `scripts/ai-pending.json` is the temporary allowlist while ports are in progress.
+- ALL AI Elements components ship in all three frameworks where at all possible (persona/Rive, workflow canvas via xyflow, audio player included); only a truly impossible item may `skip`, with the reason documented. `scripts/ai-pending.json` (temporary allowlist for ports in progress) is now empty: all 56 items ship in all three ports; keep it empty (the stale-entry check stays).
 - Licenses: Vercel AI Elements is Apache-2.0, **AI Elements Vue is Apache-2.0 (© cwandev), not MIT**, Svelte AI Elements is MIT (© Sikandar Bhide). NOTICE + `licenses/` carry the texts; derived files carry a header comment.
 - Item type `registry:component` (not `registry:ui`) so AI items install to `components/ai/` and never into `components/ui/`; the `ui` aggregate also filters by category, so `all` stays AI-free.
 - React Radix `useControllableState` is replaced by a local hook shipped as `ai-use-controllable-state` (`registry:hook`, `hooks/ai/`); Vue uses `useVModel`, Svelte `$bindable` (items `skip` there).
 - Conversation is a thin layer on `ui/message-scroller` (no `use-stick-to-bottom`); Message = `ui/message` + `ui/bubble`: assistant `MessageContent` is a ghost bubble (status text aligns), user is a secondary bubble, avatar + header opt-in via a grid in `Message`.
 - Markdown: React `streamdown`, Vue `vue-stream-markdown`, Svelte `svelte-streamdown` (MIT, actively maintained; chosen over `streamdown-svelte`, which pulls the whole remark/rehype tree and ships its own shiki 3). Rive: `@rive-app/webgl2` directly in Vue and Svelte (no maintained Svelte wrapper exists). Terminal ANSI: `ansi-to-react` / `ansi-to-vue3` / `anser`.
 - `ai` (Vercel AI SDK) is v7: stock sources written for v5/v6 type fields need adapting (see 7b).
+- AI wave decisions (all three ports shipped):
+  - Vue icons: only names that exist in the shadcn-vue icon map (checked by `scripts/smoke/vue-icons.ts`, run by `vue.sh`); substitute rather than add a custom icon (`TerminalSquareIcon` -> `Terminal`, `ExternalLinkIcon` -> `ArrowUpRightIcon`). The Vue/Svelte docs demos follow the same rule.
+  - Svelte: a child that registers itself with its parent from `$effect` must wrap reads/writes of parent state in `untrack` (otherwise effect loops); optional boolean props need an explicit default in `$props()` (`raised = false`, `open = false`), never rely on `undefined`.
+  - jsx-preview: Vue and Svelte use a small sandboxed JSX parser (no `eval`/`new Function`, no `react-jsx-parser`), only a safe subset of tags/props; React keeps `react-jsx-parser`.
+  - Code highlighting: Shiki with a `css-variables` theme whose variables are mapped to the chart tokens (`--chart-1..5`, `--foreground`, `--muted-foreground`), so code recolours with the theme; the terminal (ANSI) is always dark in every mode (oklch literals from `ai.css`).
+  - Persona: Rive artwork is loaded from the network and its colors cannot follow Edmi tokens (Rive limitation); variants are listed in the docs page.
+  - Voice selector: voice metadata (gender, accent, age) is rendered as plain text meta (no icons/flags); mic selector: built on the cmdk `Command` list, so device search/selection follow cmdk behaviour (the item value is the device id, filtering is by label).
+  - Workflow: `Toolbar` (node toolbar) defaults to `Position.Top`; `open-in-chat` provider marks use literal brand hex colors (the only allowed hex: third-party brand logos); `audio-player` is built on `media-chrome` (React `media-chrome/react`, Vue/Svelte via the custom elements); transcription does not use it.
+  - Vue docs alias `@edmi-vue/components` maps to `packages/vue/registry/components` (demos import `@edmi-vue/components/ai/<name>`).
+  - Previews: Vue and Svelte previews load groups lazily and accept `?group=<name>` (`?group=a,b` in Vue; Svelte route `/preview?group=`); both add Tailwind `@source` for `apps/docs/src/demos/<fw>`, so never add hidden "class list" spans to make demo utilities exist.
 - Docs `.edmi-preview` default `border-color` moved into `@layer components` so utilities (`border-transparent`, `border-b-lip`) win in previews (it was unlayered and overrode them; visible as a frame around ghost bubbles).
 
 Superseded and intentionally dropped: lucide as default icon set; raised-by-default look and `h-[38px]` controls (v1 spec); plan-era parallel-worker ownership rules and `plans/requests`; `registry:font` for Vue/Svelte; the "utils item for all ports" idea; `data-raised` as a styling hook (the base rule stays harmless).
