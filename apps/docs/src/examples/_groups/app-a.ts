@@ -28,4 +28,26 @@ export const examples: ExampleMeta[] = [
 			"Kbd",
 		],
 	},
+	{
+		slug: "explore",
+		title: "Explore",
+		tag: "App",
+		description:
+			"Stockbreak Explore: app header, search and Human/AI segmented filter, strategy and sort selects, and the full index table with avatar stacks, tags and sparklines.",
+		board: "Stockbreak · Explore",
+		thumb: "explore",
+		frameworks: ALL,
+		height: 900,
+		uses: [
+			"AppHeader",
+			"InputGroup",
+			"ToggleGroup",
+			"Toggle",
+			"Select",
+			"IndexRow",
+			"Table",
+			"Card",
+			"Badge",
+		],
+	},
 ];
