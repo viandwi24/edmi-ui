@@ -3,11 +3,13 @@ import Item from "./queue-item.svelte";
 import ItemAction from "./queue-item-action.svelte";
 import ItemActions from "./queue-item-actions.svelte";
 import ItemAttachment from "./queue-item-attachment.svelte";
+import ItemAvatar from "./queue-item-avatar.svelte";
 import ItemContent from "./queue-item-content.svelte";
 import ItemDescription from "./queue-item-description.svelte";
 import ItemFile from "./queue-item-file.svelte";
 import ItemImage from "./queue-item-image.svelte";
 import ItemIndicator from "./queue-item-indicator.svelte";
+import ItemStatus from "./queue-item-status.svelte";
 import List from "./queue-list.svelte";
 import Section from "./queue-section.svelte";
 import SectionContent from "./queue-section-content.svelte";
@@ -24,6 +26,8 @@ export {
 	ItemActions as QueueItemActions,
 	ItemAttachment,
 	ItemAttachment as QueueItemAttachment,
+	ItemAvatar,
+	ItemAvatar as QueueItemAvatar,
 	ItemContent,
 	ItemContent as QueueItemContent,
 	ItemDescription,
@@ -34,6 +38,8 @@ export {
 	ItemImage as QueueItemImage,
 	ItemIndicator,
 	ItemIndicator as QueueItemIndicator,
+	ItemStatus,
+	ItemStatus as QueueItemStatus,
 	List,
 	List as QueueList,
 	Root,

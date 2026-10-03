@@ -15,7 +15,9 @@ import { PromptInputAgent } from "@edmi-vue/components/ai/prompt-input-agent";
 import {
   Queue,
   QueueItem,
+  QueueItemAvatar,
   QueueItemContent,
+  QueueItemStatus,
   QueueList,
   QueueSection,
   QueueSectionContent,
@@ -36,20 +38,24 @@ import { agent, greeting, project, suggestions, tasks } from "./data";
         <MapIcon class="size-3" />
         {{ project }}
       </Badge>
-      <Queue class="w-full border-0 bg-transparent p-0 text-left">
+      <Queue variant="flat" class="w-full text-left">
         <QueueSection>
           <QueueSectionTrigger class="font-normal text-muted-foreground">
-            <QueueSectionLabel label="Tasks" />
+            <QueueSectionLabel label="Tasks" :chevron="false" />
           </QueueSectionTrigger>
           <QueueSectionContent>
             <QueueList>
               <QueueItem v-for="task in tasks" :key="task.id">
                 <div class="flex items-center gap-2">
-                  <AgentAvatar :seed="task.agent.id" :color="task.agent.color" :size="22" :tile="false" />
+                  <QueueItemAvatar>
+                    <AgentAvatar :seed="task.agent.id" :color="task.agent.color" :size="22" :tile="false" />
+                  </QueueItemAvatar>
                   <QueueItemContent>{{ task.title }}</QueueItemContent>
-                  <span class="font-mono text-xs text-muted-foreground">{{ task.age }}</span>
-                  <Spinner v-if="task.status === 'running'" class="size-3.5 text-muted-foreground" />
-                  <span v-else class="size-1.5 rounded-full bg-success" />
+                  <QueueItemStatus>
+                    <span class="font-mono">{{ task.age }}</span>
+                    <Spinner v-if="task.status === 'running'" class="size-3.5" />
+                    <span v-else class="size-1.5 rounded-full bg-success" />
+                  </QueueItemStatus>
                 </div>
               </QueueItem>
             </QueueList>

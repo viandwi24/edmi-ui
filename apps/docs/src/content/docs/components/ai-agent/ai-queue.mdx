@@ -27,10 +27,18 @@ Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/queue) 
 | Part | Prop | Type | Default |
 | --- | --- | --- | --- |
 | QueueSection | `open`, `defaultOpen` | collapsible state | `defaultOpen = true` |
-| QueueSectionLabel | `label`, `count`, `icon` | label, number badge, optional icon | |
+| Queue | `variant` ✦ | `"card" \| "flat"` | `"card"` |
+| QueueSectionLabel | `label`, `count`, `icon`, `chevron` ✦ | label, number badge, optional icon, collapse chevron | `chevron = true` |
+| QueueItemAvatar, QueueItemStatus ✦ | | leading and trailing slots of an item row | |
 | QueueItemIndicator, QueueItemContent, QueueItemDescription | `completed` | `boolean` | `false` |
 | QueueItemAction | Button props | ghost `icon-xs`, revealed on hover or focus | |
 | QueueItemImage, QueueItemFile | | attachment thumbnails | |
+
+## Flat ✦
+
+`variant="flat"` drops the card border, fill and padding (the AI home board). Hide the chevron with `chevron={false}` on `QueueSectionLabel`, and use `QueueItemAvatar` / `QueueItemStatus` for the leading avatar and trailing age or status.
+
+<ComponentDemo name="ai-queue" demo="ai-queue-flat" />
 
 ## ✦ Edmi additions
 - The count is a number badge next to the label, and a section that follows another gets a divider.

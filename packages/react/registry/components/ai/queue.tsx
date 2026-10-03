@@ -68,6 +68,37 @@ export const QueueItemIndicator = ({
 	/>
 );
 
+// QueueItemAvatar: leading slot (avatar, icon) of an item row
+export type QueueItemAvatarProps = ComponentProps<"span">;
+
+export const QueueItemAvatar = ({
+	className,
+	...props
+}: QueueItemAvatarProps) => (
+	<span
+		data-slot="ai-queue-item-avatar"
+		className={cn("flex shrink-0 items-center", className)}
+		{...props}
+	/>
+);
+
+// QueueItemStatus: trailing slot (age, spinner, status dot) of an item row
+export type QueueItemStatusProps = ComponentProps<"span">;
+
+export const QueueItemStatus = ({
+	className,
+	...props
+}: QueueItemStatusProps) => (
+	<span
+		data-slot="ai-queue-item-status"
+		className={cn(
+			"flex shrink-0 items-center gap-2 text-xs text-muted-foreground",
+			className,
+		)}
+		{...props}
+	/>
+);
+
 export type QueueItemContentProps = ComponentProps<"span"> & {
 	completed?: boolean;
 };
@@ -268,12 +299,15 @@ export type QueueSectionLabelProps = ComponentProps<"span"> & {
 	count?: number;
 	label: string;
 	icon?: ReactNode;
+	/** ✦ Show the collapse chevron (default true). */
+	chevron?: boolean;
 };
 
 export const QueueSectionLabel = ({
 	count,
 	label,
 	icon,
+	chevron = true,
 	className,
 	...props
 }: QueueSectionLabelProps) => (
@@ -282,14 +316,16 @@ export const QueueSectionLabel = ({
 		className={cn("flex items-center gap-2", className)}
 		{...props}
 	>
-		<IconPlaceholder
-			lucide="ChevronDownIcon"
-			tabler="IconChevronDown"
-			hugeicons="ArrowDown01Icon"
-			phosphor="CaretDownIcon"
-			remixicon="RiArrowDownSLine"
-			className="size-4 text-muted-foreground transition-transform group-data-[panel-open]/queue-trigger:rotate-180"
-		/>
+		{chevron && (
+			<IconPlaceholder
+				lucide="ChevronDownIcon"
+				tabler="IconChevronDown"
+				hugeicons="ArrowDown01Icon"
+				phosphor="CaretDownIcon"
+				remixicon="RiArrowDownSLine"
+				className="size-4 text-muted-foreground transition-transform group-data-[panel-open]/queue-trigger:rotate-180"
+			/>
+		)}
 		{icon}
 		<span>{label}</span>
 		{count !== undefined && (
@@ -319,13 +355,22 @@ export const QueueSectionContent = ({
 	/>
 );
 
-export type QueueProps = ComponentProps<"div">;
+export type QueueProps = ComponentProps<"div"> & {
+	/** ✦ `card` (default) or `flat` (no border, fill or padding). */
+	variant?: "card" | "flat";
+};
 
-export const Queue = ({ className, ...props }: QueueProps) => (
+export const Queue = ({
+	className,
+	variant = "card",
+	...props
+}: QueueProps) => (
 	<div
 		data-slot="ai-queue"
+		data-variant={variant}
 		className={cn(
-			"not-prose flex flex-col rounded-xl border border-border bg-card p-2",
+			"not-prose flex flex-col",
+			variant === "card" && "rounded-xl border border-border bg-card p-2",
 			className,
 		)}
 		{...props}

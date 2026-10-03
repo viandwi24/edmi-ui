@@ -13,7 +13,9 @@ import { PromptInputAgent } from "@edmi-react/components/ai/prompt-input-agent";
 import {
 	Queue,
 	QueueItem,
+	QueueItemAvatar,
 	QueueItemContent,
+	QueueItemStatus,
 	QueueList,
 	QueueSection,
 	QueueSectionContent,
@@ -47,31 +49,33 @@ export default function AgentHomeExample() {
 					/>
 					{project}
 				</Badge>
-				<Queue className="w-full border-0 bg-transparent p-0 text-left">
+				<Queue variant="flat" className="w-full text-left">
 					<QueueSection>
 						<QueueSectionTrigger className="font-normal text-muted-foreground">
-							<QueueSectionLabel label="Tasks" />
+							<QueueSectionLabel label="Tasks" chevron={false} />
 						</QueueSectionTrigger>
 						<QueueSectionContent>
 							<QueueList>
 								{tasks.map((task) => (
 									<QueueItem key={task.id}>
 										<div className="flex items-center gap-2">
-											<AgentAvatar
-												seed={task.agent.id}
-												color={task.agent.color}
-												size={22}
-												tile={false}
-											/>
+											<QueueItemAvatar>
+												<AgentAvatar
+													seed={task.agent.id}
+													color={task.agent.color}
+													size={22}
+													tile={false}
+												/>
+											</QueueItemAvatar>
 											<QueueItemContent>{task.title}</QueueItemContent>
-											<span className="font-mono text-xs text-muted-foreground">
-												{task.age}
-											</span>
-											{task.status === "running" ? (
-												<Spinner className="size-3.5 text-muted-foreground" />
-											) : (
-												<span className="size-1.5 rounded-full bg-success" />
-											)}
+											<QueueItemStatus>
+												<span className="font-mono">{task.age}</span>
+												{task.status === "running" ? (
+													<Spinner className="size-3.5" />
+												) : (
+													<span className="size-1.5 rounded-full bg-success" />
+												)}
+											</QueueItemStatus>
 										</div>
 									</QueueItem>
 								))}

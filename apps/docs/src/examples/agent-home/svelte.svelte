@@ -14,7 +14,9 @@
 	import {
 		Queue,
 		QueueItem,
+		QueueItemAvatar,
 		QueueItemContent,
+		QueueItemStatus,
 		QueueList,
 		QueueSection,
 		QueueSectionContent,
@@ -42,24 +44,28 @@
 			/>
 			{project}
 		</Badge>
-		<Queue class="w-full border-0 bg-transparent p-0 text-left">
+		<Queue variant="flat" class="w-full text-left">
 			<QueueSection>
 				<QueueSectionTrigger class="font-normal text-muted-foreground">
-					<QueueSectionLabel label="Tasks" />
+					<QueueSectionLabel label="Tasks" chevron={false} />
 				</QueueSectionTrigger>
 				<QueueSectionContent>
 					<QueueList>
 						{#each tasks as task (task.id)}
 							<QueueItem>
 								<div class="flex items-center gap-2">
-									<AgentAvatar seed={task.agent.id} color={task.agent.color} size={22} tile={false} />
+									<QueueItemAvatar>
+										<AgentAvatar seed={task.agent.id} color={task.agent.color} size={22} tile={false} />
+									</QueueItemAvatar>
 									<QueueItemContent>{task.title}</QueueItemContent>
-									<span class="font-mono text-xs text-muted-foreground">{task.age}</span>
-									{#if task.status === "running"}
-										<Spinner class="size-3.5 text-muted-foreground" />
-									{:else}
-										<span class="size-1.5 rounded-full bg-success"></span>
-									{/if}
+									<QueueItemStatus>
+										<span class="font-mono">{task.age}</span>
+										{#if task.status === "running"}
+											<Spinner class="size-3.5" />
+										{:else}
+											<span class="size-1.5 rounded-full bg-success"></span>
+										{/if}
+									</QueueItemStatus>
 								</div>
 							</QueueItem>
 						{/each}
