@@ -12,5 +12,5 @@
 	hugeicons="Message01Icon"
 	phosphor="ChatCircleIcon"
 	remixicon="RiChatSmile3Line"
-	{...restProps}
+	{...(restProps as object)}
 />

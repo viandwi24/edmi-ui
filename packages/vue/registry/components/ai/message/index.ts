@@ -1,8 +1,7 @@
 // Opt-in (multi-agent): same parts as ui/message, the avatar aligns to the name line.
-export {
-	MessageAvatar,
-	MessageHeader,
-} from "@/registry/edmi/ui/message";
+// Imported then re-exported: the shadcn-vue CLI only rewrites `import` specifiers, not `export ... from`.
+import { MessageAvatar, MessageHeader } from "@/registry/edmi/ui/message";
+export { MessageAvatar, MessageHeader };
 export * from "./context";
 export { default as Message } from "./Message.vue";
 export { default as MessageAction } from "./MessageAction.vue";

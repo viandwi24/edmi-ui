@@ -119,7 +119,7 @@ export const ChainOfThoughtHeader = memo(
 );
 
 export type ChainOfThoughtStepProps = Omit<ComponentProps<"div">, "title"> & {
-	/** Any element (an `IconPlaceholder`, an svg). Defaults to a small dot. */
+	/** Any element (an icon, an svg). Defaults to a small dot. */
 	icon?: ReactNode;
 	label: ReactNode;
 	description?: ReactNode;

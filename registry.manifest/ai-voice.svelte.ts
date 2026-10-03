@@ -3,10 +3,11 @@ import type { FrameworkEntry } from "./types.ts";
 
 /**
  * `frameworks.svelte` entries for items in ./ai-voice.ts, keyed by item name (`ai-<name>`).
- * Dependencies are inferred by `shadcn-svelte registry build`; ui dependencies come from `registryDependencies`.
+ * Dependencies are inferred by `shadcn-svelte registry build` (dynamic imports need an explicit `dependencies`); ui dependencies come from `registryDependencies`.
  */
 export const entries: Record<string, FrameworkEntry> = {
-	"ai-audio-player": aiSvelte("audio-player", [
+	"ai-audio-player": {
+		...aiSvelte("audio-player", [
 		"audio-player-control-bar.svelte",
 		"audio-player-duration-display.svelte",
 		"audio-player-element.svelte",
@@ -20,6 +21,9 @@ export const entries: Record<string, FrameworkEntry> = {
 		"audio-player.svelte",
 		"index.ts",
 	]),
+		// Registered at runtime through a dynamic import, which the builder does not infer.
+		dependencies: ["media-chrome@^4.19.3"],
+	},
 	"ai-mic-selector": aiSvelte("mic-selector", [
 		"mic-selector-content.svelte",
 		"mic-selector-empty.svelte",

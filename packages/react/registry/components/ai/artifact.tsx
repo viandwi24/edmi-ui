@@ -108,7 +108,7 @@ export const ArtifactActions = ({
 export type ArtifactActionProps = ComponentProps<typeof Button> & {
 	tooltip?: string;
 	label?: string;
-	/** The icon element (an `IconPlaceholder`); `children` works too. */
+	/** The icon element (an icon element); `children` works too. */
 	icon?: ReactNode;
 };
 

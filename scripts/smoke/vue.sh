@@ -111,7 +111,7 @@ if [ -n "$AI_NAMES" ]; then
 		test -d "$APP/src/components/ai/${n#ai-}" || { echo "missing components/ai/${n#ai-}"; exit 1; }
 		test ! -e "$APP/src/components/ui/$n" || { echo "$n leaked into components/ui"; exit 1; }
 	done
-	if grep -rq "@/registry/edmi" "$APP/src/components/ai"; then echo "unrewritten @/registry/edmi import in components/ai"; exit 1; fi
+	if grep -rn "@/registry/edmi" "$APP/src/components/ai"; then echo "unrewritten @/registry/edmi import in components/ai"; exit 1; fi
 	! grep -rq "IconPlaceholder" "$APP/src/components/ai" || { echo "IconPlaceholder in a Vue AI file"; exit 1; }
 	typecheck "$APP"
 	echo "   ok"
