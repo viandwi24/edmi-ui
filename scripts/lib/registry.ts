@@ -130,6 +130,9 @@ export function buildFramework(
 		if (item.aggregate === "ui")
 			for (const [n, p] of shipped)
 				if (n !== name && p.type === "registry:ui") deps.push(n);
+		if (item.aggregate === "patterns")
+			for (const [n, p] of shipped)
+				if (n !== name && p.item.categories?.includes("Patterns")) deps.push(n);
 
 		const files = (entry.files ?? []).map((f) => {
 			const path = f.path.replace(/^\.\//, "");

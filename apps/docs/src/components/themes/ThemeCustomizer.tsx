@@ -8,6 +8,9 @@ import {
 	FRAMEWORKS,
 	type Framework,
 	installCommand,
+	type PackageManager,
+	PM_KEY,
+	PMS,
 } from "../../config";
 import {
 	ChartCard,
@@ -130,6 +133,23 @@ function CopyButton({ text, label }: { text: string; label: string }) {
 	);
 }
 
+/** Current global package manager (head script sets html[data-pm]; synced through the edmi-pm event). */
+function usePm(): PackageManager {
+	const [pm, setPm] = useState<PackageManager>("npm");
+	useEffect(() => {
+		const read = () => {
+			const v = document.documentElement.dataset.pm as
+				| PackageManager
+				| undefined;
+			if (v && PMS.includes(v)) setPm(v);
+		};
+		read();
+		window.addEventListener(PM_KEY, read);
+		return () => window.removeEventListener(PM_KEY, read);
+	}, []);
+	return pm;
+}
+
 export default function ThemeCustomizer({ data }: { data: ThemeData }) {
 	const [s, setS] = useState<State>({
 		base: "stone",
@@ -139,6 +159,7 @@ export default function ThemeCustomizer({ data }: { data: ThemeData }) {
 	});
 	const [tab, setTab] = useState<"css" | "install">("css");
 	const [fw, setFw] = useFramework();
+	const pm = usePm();
 	const raised = useRaised();
 
 	// restore the saved choice (or follow the docs mode on first visit)
@@ -329,15 +350,32 @@ export default function ThemeCustomizer({ data }: { data: ThemeData }) {
 							(light and dark); your radius stays. The radius above is copied
 							with <b>Copy CSS</b>, not installed.
 						</p>
-						<pre
-							data-install
-							className="overflow-x-auto rounded-lg border border-border bg-muted p-3 font-mono text-[12.5px] text-foreground"
-						>
-							{installCommand(fw, item)}
-						</pre>
+						<div className="flex flex-wrap gap-1">
+							{PMS.map((p) => (
+								<button
+									key={p}
+									type="button"
+									data-pm-set={p}
+									aria-pressed={pm === p}
+									className="rounded-md border border-transparent px-2 py-1 text-[12px] font-medium text-muted-foreground aria-pressed:border-border aria-pressed:bg-muted aria-pressed:text-foreground"
+								>
+									{p}
+								</button>
+							))}
+						</div>
+						{PMS.map((p) => (
+							<pre
+								key={p}
+								data-install
+								data-pm-panel={p}
+								className="overflow-x-auto rounded-lg border border-border bg-muted p-3 font-mono text-[12.5px] text-foreground"
+							>
+								{installCommand(fw, item, p)}
+							</pre>
+						))}
 						<div>
 							<CopyButton
-								text={installCommand(fw, item)}
+								text={installCommand(fw, item, pm)}
 								label="Copy command"
 							/>
 						</div>

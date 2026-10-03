@@ -4,14 +4,29 @@ description: Add the Edmi registry to a shadcn/ui project.
 ---
 
 import { Code } from "@astrojs/starlight/components";
+import PmCommand from "../../../components/PmCommand.astro";
 
 Edmi UI for React is a shadcn registry built on Base UI and Tailwind v4.
 
+## Install everything
+
+New project (the `edmi` base: theme, fonts, utils and every component):
+
+<PmCommand fw="react" args="init https://viandwi24.github.io/edmi-ui/r/react/edmi.json" />
+
+Existing shadcn project, after registering `@edmi-ui` in `components.json` (step 2 below):
+
+<PmCommand fw="react" args="add @edmi-ui/theme @edmi-ui/all --overwrite" />
+
+<PmCommand fw="react" args="add @edmi-ui/patterns" />
+
+`all` is every Edmi component; `patterns` is every ✦ pattern block (headers, stat tiles, tickers, feeds and more). Add both for everything. `--overwrite` replaces the stock shadcn files with the Edmi versions.
+
+Prefer to pick components one at a time? Follow the steps below.
+
 ## 1. Initialise shadcn
 
-```bash
-bunx shadcn@latest init
-```
+<PmCommand fw="react" args="init" />
 
 ## 2. Register Edmi
 
@@ -27,15 +42,11 @@ Add the registry to `components.json`:
 
 ## 3. Install the base (tokens, theme, fonts)
 
-```bash
-bunx shadcn@latest add @edmi-ui/edmi
-```
+<PmCommand fw="react" args="add @edmi-ui/edmi" />
 
 ## 4. Add components
 
-```bash
-bunx shadcn@latest add @edmi-ui/button @edmi-ui/card
-```
+<PmCommand fw="react" args="add @edmi-ui/button @edmi-ui/card" />
 
 Components that exist in stock shadcn replace the stock file; use `--overwrite` when asked.
 

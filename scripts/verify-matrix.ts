@@ -17,7 +17,7 @@ const EXT = { react: "tsx", vue: "vue", svelte: "svelte" } as const;
 
 /** DESIGN.md §5, by group, as registry item names. */
 const REQUIRED: Record<string, string[]> = {
-	Meta: ["theme", "all", "edmi"],
+	Meta: ["theme", "all", "patterns", "edmi"],
 	Actions: ["button", "button-group", "toggle", "toggle-group", "badge", "kbd"],
 	Forms: [
 		"label",

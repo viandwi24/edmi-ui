@@ -71,6 +71,9 @@ const darkSync = `(function(){var d=document.documentElement;function s(){d.clas
 // Global framework choice: set <html data-fw> before paint, keep it in sync with the header select / demos.
 const fwSync = `(function(){var d=document.documentElement,K='edmi-framework',v='react';try{v=localStorage.getItem(K)||v}catch(e){}if(['react','vue','svelte'].indexOf(v)<0)v='react';d.dataset.fw=v;window.addEventListener(K,function(e){d.dataset.fw=e.detail});document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-fw-set]');if(b){var f=b.getAttribute('data-fw-set');try{localStorage.setItem(K,f)}catch(x){}window.dispatchEvent(new CustomEvent(K,{detail:f}))}})})();`;
 
+// Global package-manager choice (npm default): set <html data-pm> before paint; any [data-pm-set] button switches it site-wide.
+const pmSync = `(function(){var d=document.documentElement,K='edmi-pm',v='npm';try{v=localStorage.getItem(K)||v}catch(e){}if(['npm','pnpm','yarn','bun'].indexOf(v)<0)v='npm';d.dataset.pm=v;window.addEventListener(K,function(e){d.dataset.pm=e.detail});document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-pm-set]');if(b){var f=b.getAttribute('data-pm-set');try{localStorage.setItem(K,f)}catch(x){}window.dispatchEvent(new CustomEvent(K,{detail:f}))}})})();`;
+
 // https://astro.build/config
 export default defineConfig({
 	site: "https://viandwi24.github.io",
@@ -109,6 +112,7 @@ export default defineConfig({
 				},
 				{ tag: "script", content: darkSync },
 				{ tag: "script", content: fwSync },
+				{ tag: "script", content: pmSync },
 			],
 			sidebar: [
 				{

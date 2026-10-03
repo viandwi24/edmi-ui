@@ -73,8 +73,12 @@ export type Item = {
 	 * framework, e.g. `utils` or font items.
 	 */
 	optionalRegistryDependencies?: string[];
-	/** Add every `registry:ui` item available for the framework to registryDependencies. */
-	aggregate?: "ui";
+	/**
+	 * Add every `registry:ui` item ("ui") or every item categorised "Patterns" ("patterns") available
+	 * for the framework to registryDependencies.
+	 */
+	aggregate?: "ui" | "patterns";
+	// "patterns": every item in the "Patterns" category (the ✦ blocks) instead.
 	/** One-line install note. */
 	docs?: string;
 	/** A framework key must be present for the item to be emitted for it. */

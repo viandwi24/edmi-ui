@@ -3,13 +3,25 @@ title: Getting started with Vue
 description: Add the Edmi registry to a shadcn-vue project.
 ---
 
+import PmCommand from "../../../components/PmCommand.astro";
+
 Edmi UI for Vue is a shadcn-vue registry built on Reka UI and Tailwind v4.
+
+## Install everything
+
+After registering `@edmi-ui` in `components.json` (step 2 below):
+
+<PmCommand fw="vue" args="add @edmi-ui/theme @edmi-ui/all --overwrite" />
+
+<PmCommand fw="vue" args="add @edmi-ui/patterns" />
+
+`all` is every Edmi component; `patterns` is every ✦ pattern block (headers, stat tiles, tickers, feeds and more). Add both for everything. `--overwrite` replaces the stock shadcn-vue files with the Edmi versions.
+
+Prefer to pick components one at a time? Follow the steps below.
 
 ## 1. Initialise shadcn-vue
 
-```bash
-bunx shadcn-vue@latest init
-```
+<PmCommand fw="vue" args="init" />
 
 ## 2. Register Edmi
 
@@ -25,10 +37,9 @@ Add the registry to `components.json`:
 
 ## 3. Install the base and components
 
-```bash
-bunx shadcn-vue@latest add @edmi-ui/edmi
-bunx shadcn-vue@latest add @edmi-ui/button @edmi-ui/card
-```
+<PmCommand fw="vue" args="add @edmi-ui/edmi" />
+
+<PmCommand fw="vue" args="add @edmi-ui/button @edmi-ui/card" />
 
 ## Flat by default, raised ✦
 

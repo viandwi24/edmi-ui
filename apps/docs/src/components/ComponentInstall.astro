@@ -1,6 +1,6 @@
 ---
-import { Code } from "@astrojs/starlight/components";
-import { BASE, FRAMEWORK_LABEL, FRAMEWORKS, installCommand } from "../config";
+import { BASE, FRAMEWORK_LABEL, FRAMEWORKS, registryRef } from "../config";
+import PmCommand from "./PmCommand.astro";
 import { getItem, itemFrameworks } from "../lib/demo";
 
 interface Props {
@@ -18,7 +18,6 @@ const manual = FRAMEWORKS.filter((fw) => has.includes(fw)).map((fw) => {
 	const regNames = reg.map((r) => (r.startsWith("http") ? r.replace(/^.*\/([^/]+)\.json$/, "$1") : r.replace(/^@edmi-ui\//, "")));
 	return { fw, deps, regNames };
 });
-const pm = (fw: string, deps: string[]) => (fw === "svelte" ? `bun add ${deps.join(" ")}` : `bun add ${deps.join(" ")}`);
 ---
 
 <div class="edmi-install not-content" data-edmi-install>
@@ -31,9 +30,9 @@ const pm = (fw: string, deps: string[]) => (fw === "svelte" ? `bun add ${deps.jo
 						<button type="button" role="tab" data-install-tab="manual">Manual</button>
 					</div>
 					<div data-install-panel="cli">
-						<Code code={installCommand(fw, name)} lang="bash" />
+						<PmCommand fw={fw} args={`add ${registryRef(fw, name)}`} />
 						<p class="edmi-install-note">
-							Swap <code>bunx</code> for <code>npx</code> or <code>pnpm dlx</code> as needed. Add the <code>@edmi-ui</code> registry first, see <a href={`${BASE}/getting-started/${fw}/`}>Getting started</a>.
+							Pick your package manager above; the choice is remembered. Add the <code>@edmi-ui</code> registry first, see <a href={`${BASE}/getting-started/${fw}/`}>Getting started</a>.
 						</p>
 					</div>
 					<div data-install-panel="manual" hidden>
@@ -45,7 +44,7 @@ const pm = (fw: string, deps: string[]) => (fw === "svelte" ? `bun add ${deps.jo
 										{m.deps.length > 0 && (
 											<li>
 												<p>Install the dependencies:</p>
-												<Code code={pm(fw, m.deps)} lang="bash" />
+												<PmCommand add={m.deps} />
 											</li>
 										)}
 										{m.regNames.length > 0 && (

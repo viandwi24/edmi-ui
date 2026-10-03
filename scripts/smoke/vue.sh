@@ -29,7 +29,7 @@ echo "== building the registry for $URL (does not touch apps/docs/public)"
 (cd "$ROOT" && EDMI_URL="http://localhost:$PORT" bun run scripts/gen-registry.ts --strict --out "$WORK/gen" >/dev/null)
 (cd "$ROOT/packages/vue" && bunx shadcn-vue@latest build "$WORK/gen/vue/registry.json" --cwd "$ROOT/packages/vue" --output "$WORK/public/r/vue" </dev/null)
 curl -fsS "$URL/button.json" >/dev/null
-for f in button theme edmi all; do test -f "$WORK/public/r/vue/$f.json" || { echo "missing $f.json"; exit 1; }; done
+for f in button theme edmi all patterns; do test -f "$WORK/public/r/vue/$f.json" || { echo "missing $f.json"; exit 1; }; done
 echo "== registry served at $URL"
 
 # Item names every install must contain: <dir>:<main file>

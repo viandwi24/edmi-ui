@@ -1,0 +1,33 @@
+---
+import { Code } from "@astrojs/starlight/components";
+import { cliCommand, type Framework, type PackageManager, pmAdd, PMS } from "../config";
+
+interface Props {
+	/** Framework CLI to run (shadcn / shadcn-vue / shadcn-svelte). Use with `args`. */
+	fw?: Framework;
+	/** Arguments after the CLI name, e.g. "add @edmi-ui/button". */
+	args?: string;
+	/** Instead of a CLI: npm packages to install, rendered as npm install / pnpm add / yarn add / bun add. */
+	add?: string[];
+	dev?: boolean;
+}
+const { fw, args = "", add, dev = false } = Astro.props;
+
+const cmd = (pm: PackageManager): string => {
+	if (add) return pmAdd(pm, add, dev);
+	return cliCommand(fw ?? "react", pm, args);
+};
+---
+
+<div class="edmi-pm not-content">
+	<div class="edmi-pm-tabs" role="group" aria-label="Package manager">
+		{PMS.map((pm) => <button type="button" data-pm-set={pm}>{pm}</button>)}
+	</div>
+	{
+		PMS.map((pm) => (
+			<div data-pm-panel={pm}>
+				<Code code={cmd(pm)} lang="bash" />
+			</div>
+		))
+	}
+</div>

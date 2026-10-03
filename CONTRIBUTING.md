@@ -1,6 +1,6 @@
 # Contributing to Edmi UI
 
-Bun is the only package manager and runtime (`bun install`, `bunx <cli>`). Node, npm, pnpm and yarn are not used.
+Bun (1.4+) is the only package manager and runtime for developing this repo (`bun install`, `bunx <cli>`); Node, npm, pnpm and yarn are not used here. Users of Edmi UI may use any package manager.
 
 ## Layout
 - `packages/tokens` — published tokens, Tailwind theme, recipes.

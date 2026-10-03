@@ -5,8 +5,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
-		"build": "bun scripts/vue-tsc.mjs -b && vite build",
-		"typecheck": "bun scripts/vue-tsc.mjs --noEmit -p tsconfig.app.json && bun scripts/vue-tsc.mjs --noEmit -p tsconfig.node.json",
+		"build": "node scripts/vue-tsc.mjs -b && vite build",
+		"typecheck": "node scripts/vue-tsc.mjs --noEmit -p tsconfig.app.json && node scripts/vue-tsc.mjs --noEmit -p tsconfig.node.json",
 		"preview": "vite preview"
 	},
 	"dependencies": {

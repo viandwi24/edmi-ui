@@ -785,6 +785,49 @@ html[data-fw="svelte"]
 	display: none;
 }
 
+/* ---- package-manager panels: html[data-pm] is set by the head script (npm default) ---- */
+html[data-pm="npm"] [data-pm-panel]:not([data-pm-panel="npm"]),
+html[data-pm="pnpm"] [data-pm-panel]:not([data-pm-panel="pnpm"]),
+html[data-pm="yarn"] [data-pm-panel]:not([data-pm-panel="yarn"]),
+html[data-pm="bun"] [data-pm-panel]:not([data-pm-panel="bun"]) {
+	display: none;
+}
+html:not([data-pm]) [data-pm-panel]:not([data-pm-panel="npm"]) {
+	display: none;
+}
+.edmi-pm {
+	margin: 1rem 0;
+}
+.edmi-pm-tabs {
+	display: inline-flex;
+	gap: 2px;
+	padding: 3px;
+	margin-bottom: 0.5rem;
+	border-radius: 9px;
+	background: var(--muted);
+	border: 1px solid var(--border);
+}
+.edmi-pm-tabs button {
+	font: 500 12px / 1 var(--sl-font);
+	padding: 0.35rem 0.65rem;
+	border-radius: 6px;
+	border: 1px solid transparent;
+	background: transparent;
+	color: var(--muted-foreground);
+	cursor: pointer;
+}
+html[data-pm="npm"] .edmi-pm-tabs [data-pm-set="npm"],
+html[data-pm="pnpm"] .edmi-pm-tabs [data-pm-set="pnpm"],
+html[data-pm="yarn"] .edmi-pm-tabs [data-pm-set="yarn"],
+html[data-pm="bun"] .edmi-pm-tabs [data-pm-set="bun"] {
+	background: var(--tab-active);
+	border-color: var(--border);
+	color: var(--foreground);
+}
+.edmi-pm .expressive-code {
+	margin: 0;
+}
+
 /* API tables scroll inside the content column instead of widening the page on phones */
 .sl-markdown-content table {
 	display: block;

@@ -198,6 +198,21 @@ export const items: Item[] = [
 		},
 	},
 	{
+		name: "patterns",
+		title: "All Edmi patterns",
+		description:
+			"Every Edmi ✦ pattern block (headers, stat tiles, tickers, feeds, pricing, kanban and more) in one install. Add it next to `all` for everything.",
+		type: "registry:block",
+		categories: CAT,
+		aggregate: "patterns",
+		docs: "Run `add @edmi-ui/patterns` for every pattern block; pair with `@edmi-ui/all` for every component.",
+		frameworks: {
+			react: { files: [] },
+			vue: { files: [] },
+			svelte: { files: [] },
+		},
+	},
+	{
 		name: "edmi",
 		title: "Edmi",
 		description:

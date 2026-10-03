@@ -116,6 +116,31 @@ describe("skip handling", () => {
 			item(buildFramework(list, "svelte", opts()), "all").registryDependencies,
 		).toEqual([`${URL_}/r/svelte/a.json`]);
 	});
+	test("aggregate `patterns` collects the Patterns category only", () => {
+		const pats = mk("patterns", {
+			type: "registry:block",
+			aggregate: "patterns",
+			frameworks: { react: {}, svelte: {} },
+		});
+		const list = [
+			mk("a"),
+			mk("p1", { type: "registry:block", categories: ["Patterns"] }),
+			mk("p2", {
+				type: "registry:block",
+				categories: ["Patterns"],
+				frameworks: { react: {}, svelte: { skip: true } },
+			}),
+			pats,
+		];
+		expect(
+			item(buildFramework(list, "react", opts()), "patterns")
+				.registryDependencies,
+		).toEqual(["@edmi-ui/p1", "@edmi-ui/p2"]);
+		expect(
+			item(buildFramework(list, "svelte", opts()), "patterns")
+				.registryDependencies,
+		).toEqual([`${URL_}/r/svelte/p1.json`]);
+	});
 	test("optional dependencies only when present", () => {
 		const x = mk("x", { optionalRegistryDependencies: ["utils", "nope"] });
 		expect(

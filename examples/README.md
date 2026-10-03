@@ -11,3 +11,7 @@ shadcn CLI only, never from `packages/*`.
 
 `EDMI_URL` (default `http://localhost:4321/edmi-ui`, the docs dev server) must serve `/r/<framework>/*.json`.
 Smoke tests: `bash scripts/smoke/example-<framework>.sh`.
+
+Each example is a standalone app (no `workspace:` dependencies): copy a folder out of the repo and run
+`npm install && npm run dev` (or pnpm, yarn, bun). `install.sh` takes `PM=npm|pnpm|yarn|bun` (default `bun`) to
+choose which package manager runs the shadcn CLI, e.g. `PM=pnpm examples/install.sh react`.

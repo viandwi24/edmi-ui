@@ -4,7 +4,7 @@ Built [shadcn](https://ui.shadcn.com) registry JSON for Edmi UI (Svelte). Contai
 published so the registry can be pinned to a version through a CDN.
 
 ```bash
-bunx shadcn-svelte@latest add https://cdn.jsdelivr.net/npm/@edmi-ui/registry-svelte@0/r/button.json
+npx shadcn-svelte@latest add https://cdn.jsdelivr.net/npm/@edmi-ui/registry-svelte@0/r/button.json
 ```
 
 See https://viandwi24.github.io/edmi-ui for docs.

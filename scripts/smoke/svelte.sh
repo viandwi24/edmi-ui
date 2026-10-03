@@ -25,7 +25,7 @@ URL="http://localhost:$PORT/r/svelte"
 echo "== building the registry for $URL (does not touch apps/docs/public)"
 (cd "$ROOT" && EDMI_URL="http://localhost:$PORT" bun run scripts/gen-registry.ts --strict --out "$WORK/gen" >/dev/null)
 (cd "$ROOT/packages/svelte" && bunx --bun shadcn-svelte@latest registry build "$WORK/gen/svelte/registry.json" --cwd "$ROOT/packages/svelte" --output "$WORK/public/r/svelte" </dev/null >/dev/null)
-for f in button theme edmi all; do test -f "$WORK/public/r/svelte/$f.json" || { echo "missing $f.json"; exit 1; }; done
+for f in button theme edmi all patterns; do test -f "$WORK/public/r/svelte/$f.json" || { echo "missing $f.json"; exit 1; }; done
 curl -fsS "$URL/button.json" >/dev/null
 echo "== registry served at $URL"
 

@@ -153,6 +153,18 @@ const why = [
 	.edmi-install-tabs button[aria-selected="true"] {
 		background: var(--tab-active); border-color: var(--border); color: var(--foreground);
 	}
+	.edmi-install-pm { margin-top: .5rem; display: flex; justify-content: center; gap: .25rem; }
+	.edmi-install-pm button {
+		font: 500 12px/1 var(--sl-font); padding: .3rem .55rem; border-radius: 6px; border: 0;
+		background: transparent; color: var(--muted-foreground-2); cursor: pointer;
+	}
+	.edmi-install-pm button:hover { color: var(--foreground); }
+	html[data-pm="npm"] .edmi-install-pm [data-pm-set="npm"],
+	html[data-pm="pnpm"] .edmi-install-pm [data-pm-set="pnpm"],
+	html[data-pm="yarn"] .edmi-install-pm [data-pm-set="yarn"],
+	html[data-pm="bun"] .edmi-install-pm [data-pm-set="bun"] { color: var(--foreground); background: var(--muted); }
+	.edmi-install-all { margin: .375rem 0 0; font-size: 12.5px; color: var(--muted-foreground); }
+	.edmi-install-all a { color: var(--foreground); }
 	.edmi-install-cmd {
 		margin-top: .625rem; display: flex; align-items: center; gap: .625rem; text-align: left;
 		height: 44px; padding: 0 .5rem 0 .875rem; border-radius: 10px;

@@ -4,7 +4,7 @@ Built [shadcn](https://ui.shadcn.com) registry JSON for Edmi UI (Vue). Contains 
 published so the registry can be pinned to a version through a CDN.
 
 ```bash
-bunx shadcn-vue@latest add https://cdn.jsdelivr.net/npm/@edmi-ui/registry-vue@0/r/button.json
+npx shadcn-vue@latest add https://cdn.jsdelivr.net/npm/@edmi-ui/registry-vue@0/r/button.json
 ```
 
 See https://viandwi24.github.io/edmi-ui for docs.

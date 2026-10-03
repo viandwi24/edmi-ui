@@ -1,12 +1,20 @@
 // `vue-tsc` under Bun. vue-tsc patches TypeScript by intercepting fs.readFileSync() while it
 // require()s tsc.js; Bun's module loader never calls fs.readFileSync, so the stock bin runs a
 // plain tsc that cannot resolve `.vue` imports. This wrapper applies the same patch
-// (volar's own transformTscContent) to a copy of tsc and runs that. Usage: bun scripts/vue-tsc.mjs <tsc args>
+// (volar's own transformTscContent) to a copy of tsc and runs that. Usage: node scripts/vue-tsc.mjs <tsc args>
+// Under real Node the stock vue-tsc works, so this wrapper just delegates to it.
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 
 const here = createRequire(import.meta.url);
+
+if (typeof Bun === "undefined") {
+	const bin = here.resolve("vue-tsc/bin/vue-tsc.js");
+	process.argv.splice(1, 1, bin);
+	await import(bin);
+	process.exit(process.exitCode ?? 0);
+}
 const vueTscDir = dirname(here.resolve("vue-tsc/package.json"));
 const fromVueTsc = createRequire(`${vueTscDir}/`);
 const runTscPath = fromVueTsc.resolve(

@@ -25,7 +25,7 @@ echo "== building the registry for $URL (does not touch apps/docs/public)"
 (cd "$ROOT" && EDMI_URL="http://localhost:$PORT" bun run scripts/gen-registry.ts --strict --out "$WORK/gen" >/dev/null)
 (cd "$ROOT/packages/react" && bunx shadcn@latest build "$WORK/gen/react/registry.json" --cwd "$ROOT/packages/react" --output "$WORK/public/r/react" </dev/null)
 curl -fsS "$URL/button.json" >/dev/null
-for f in button theme edmi all utils; do test -f "$WORK/public/r/react/$f.json" || { echo "missing $f.json"; exit 1; }; done
+for f in button theme edmi all patterns utils; do test -f "$WORK/public/r/react/$f.json" || { echo "missing $f.json"; exit 1; }; done
 echo "== registry served at $URL"
 
 # Item names every install must contain.
@@ -75,6 +75,8 @@ echo "   ok"
 
 echo "== 1b. add @edmi-ui/all --overwrite into the same stock project (plan 09 step 4)"
 (cd "$APP" && bunx shadcn@latest add @edmi-ui/all --overwrite --yes </dev/null)
+echo "== 1c. add @edmi-ui/patterns (every pattern block)"
+(cd "$APP" && bunx shadcn@latest add @edmi-ui/patterns --overwrite --yes </dev/null)
 check_files "$APP"
 typecheck "$APP"
 echo "   ok"
