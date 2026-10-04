@@ -58,7 +58,7 @@ import {
 import { Separator } from "@/registry/edmi/ui/separator";
 import { Skeleton } from "@/registry/edmi/ui/skeleton";
 import { Spinner } from "@/registry/edmi/ui/spinner";
-import { RaisedSection } from "./_raised";
+import { ElevationSection } from "./_elevation";
 
 export default function DisplayPreview() {
 	return (
@@ -299,7 +299,7 @@ export default function DisplayPreview() {
 					</EmptyHeader>
 				</Empty>
 			</div>
-			<RaisedSection>
+			<ElevationSection>
 				<div className="grid gap-5 sm:grid-cols-2">
 					<Card elevation="raised">
 						<CardHeader>
@@ -342,7 +342,7 @@ export default function DisplayPreview() {
 						<EmptyTitle>No indexes yet</EmptyTitle>
 					</EmptyHeader>
 				</Empty>
-			</RaisedSection>
+			</ElevationSection>
 		</div>
 	);
 }

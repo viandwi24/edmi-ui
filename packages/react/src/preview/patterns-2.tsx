@@ -19,7 +19,7 @@ import { PricingPlan } from "@/registry/edmi/blocks/pricing-plan/pricing-plan";
 import { StepCard } from "@/registry/edmi/blocks/step-card/step-card";
 import { TaskList } from "@/registry/edmi/blocks/task-list/task-list";
 import { Button } from "@/registry/edmi/ui/button";
-import { RaisedSection } from "./_raised";
+import { ElevationSection } from "./_elevation";
 
 function DemoFeedPost({ raised }: { raised?: boolean }) {
 	return (
@@ -374,7 +374,7 @@ export default function PatternsTwoPreview() {
 				</span>
 				<DemoFooter />
 			</section>
-			<RaisedSection>
+			<ElevationSection>
 				<DemoFeedPost raised />
 				<DemoAgentCard raised />
 				<DemoFeatureRow raised />
@@ -384,7 +384,7 @@ export default function PatternsTwoPreview() {
 				<DemoKanbanColumn raised />
 				<DemoCodeBlock raised />
 				<DemoFooter raised />
-			</RaisedSection>
+			</ElevationSection>
 		</div>
 	);
 }

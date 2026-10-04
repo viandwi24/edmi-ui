@@ -188,8 +188,8 @@ const AI_REQUIRED: Record<string, string[]> = {
 	],
 };
 
-/** AI items with a `raised` prop: each needs `ai-<name>-raised` demos (same rule as RAISED). */
-const AI_RAISED = [
+/** AI items with an `elevation` prop: each needs `ai-<name>-elevation` demos (same rule as ELEVATION). */
+const AI_ELEVATION = [
 	"prompt-input",
 	"suggestion",
 	"artifact-card",
@@ -204,8 +204,8 @@ const AI_RAISED = [
 	"chat-composer",
 ];
 
-/** AGENTS.md section 5: every item with a `raised` prop ships a `<name>-raised` demo in all three frameworks. */
-const RAISED = [
+/** AGENTS.md section 5: every item with an `elevation` prop ships a `<name>-elevation` demo in all three frameworks. */
+const ELEVATION = [
 	"button",
 	"button-group",
 	"badge",
@@ -342,16 +342,16 @@ for (const [group, names, isAi] of groups) {
 	}
 }
 
-for (const name of [...RAISED, ...AI_RAISED.map((n) => `ai-${n}`)])
+for (const name of [...ELEVATION, ...AI_ELEVATION.map((n) => `ai-${n}`)])
 	for (const fw of FWS) {
 		if (byName.get(name)?.frameworks[fw]?.skip) continue;
 		if (pending[fw]?.includes(name)) continue;
 		if (
 			!existsSync(
-				resolve(ROOT, `apps/docs/src/demos/${fw}/${name}-raised.${EXT[fw]}`),
+				resolve(ROOT, `apps/docs/src/demos/${fw}/${name}-elevation.${EXT[fw]}`),
 			)
 		) {
-			problems.push(`${name} [${fw}]: raised demo missing`);
+			problems.push(`${name} [${fw}]: elevation demo missing`);
 			failures++;
 		}
 	}
@@ -417,5 +417,5 @@ if (pend.length)
 		`  pending: ${pend.length} AI item x framework cells still listed in scripts/ai-pending.json`,
 	);
 console.log(
-	`\nAll ${rows.length} items are present (AI items listed in scripts/ai-pending.json excepted) in all frameworks; ${RAISED.length} raised demos x 3 frameworks present; ${themeNames.length} theme items (${themeNames.join(", ")}) x 3 frameworks present.`,
+	`\nAll ${rows.length} items are present (AI items listed in scripts/ai-pending.json excepted) in all frameworks; ${ELEVATION.length} elevation demos x 3 frameworks present; ${themeNames.length} theme items (${themeNames.join(", ")}) x 3 frameworks present.`,
 );

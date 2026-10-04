@@ -7,7 +7,7 @@ import { Checkbox } from "@/registry/edmi/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/registry/edmi/ui/radio-group";
 import { Slider } from "@/registry/edmi/ui/slider";
 import { Switch } from "@/registry/edmi/ui/switch";
-import { RaisedSection } from "./_raised";
+import { ElevationSection } from "./_elevation";
 
 export default function FormsChoicePreview() {
 	return (
@@ -69,7 +69,7 @@ export default function FormsChoicePreview() {
 				endMonth={new Date(2030, 11)}
 				className="w-fit rounded-xl border border-border"
 			/>
-			<RaisedSection>
+			<ElevationSection>
 				<div className="flex items-center gap-3">
 					<Checkbox elevation="raised" defaultChecked />
 					<Checkbox elevation="raised" indeterminate />
@@ -85,7 +85,7 @@ export default function FormsChoicePreview() {
 					defaultMonth={new Date(2026, 9)}
 					className="w-fit rounded-xl border border-border"
 				/>
-			</RaisedSection>
+			</ElevationSection>
 		</div>
 	);
 }

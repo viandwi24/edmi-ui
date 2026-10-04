@@ -3,9 +3,9 @@ import DemoList from "./_demo-list.vue";
 
 const names = [
 	"ai-agent",
-	"ai-agent-raised",
+	"ai-agent-elevation",
 	"ai-artifact",
-	"ai-artifact-raised",
+	"ai-artifact-elevation",
 	"ai-code-block",
 	"ai-commit",
 	"ai-environment-variables",

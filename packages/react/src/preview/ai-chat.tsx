@@ -76,7 +76,7 @@ import {
 	Suggestions,
 } from "@/registry/edmi/components/ai/suggestion";
 import { Button } from "@/registry/edmi/ui/button";
-import { RaisedSection } from "./_raised";
+import { ElevationSection } from "./_elevation";
 
 const Label = ({ children }: { children: string }) => (
 	<p className="mb-3 font-mono text-[10.5px] tracking-wide text-muted-foreground uppercase">
@@ -319,7 +319,7 @@ export default function AiChatPreview() {
 					))}
 					<PromptInputSubmit disabled />
 				</div>
-				<RaisedSection>
+				<ElevationSection>
 					<PromptInput
 						elevation="raised"
 						onSubmit={() => {}}
@@ -333,7 +333,7 @@ export default function AiChatPreview() {
 							<PromptInputSubmit status="ready" />
 						</PromptInputFooter>
 					</PromptInput>
-				</RaisedSection>
+				</ElevationSection>
 			</section>
 
 			<section className="flex flex-col gap-4">
@@ -356,12 +356,12 @@ export default function AiChatPreview() {
 						Write a feed update
 					</Suggestion>
 				</div>
-				<RaisedSection>
+				<ElevationSection>
 					<div className="flex gap-2">
 						<Suggestion suggestion="Rebalance now" elevation="raised" />
 						<Suggestion suggestion="Draft a post" elevation="raised" />
 					</div>
-				</RaisedSection>
+				</ElevationSection>
 			</section>
 
 			<section className="flex flex-col gap-6">

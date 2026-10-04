@@ -31,7 +31,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/registry/edmi/ui/table";
-import { RaisedSection } from "./_raised";
+import { ElevationSection } from "./_elevation";
 
 type Row = {
 	symbol: string;
@@ -267,7 +267,7 @@ export default function DataPreview() {
 					</CardContent>
 				</Card>
 			</div>
-			<RaisedSection>
+			<ElevationSection>
 				<DataTable
 					elevation="raised"
 					columns={columns}
@@ -276,7 +276,7 @@ export default function DataPreview() {
 					filterPlaceholder="Filter indexes…"
 					pageSize={3}
 				/>
-			</RaisedSection>
+			</ElevationSection>
 		</div>
 	);
 }

@@ -93,7 +93,7 @@ import {
 	ToolOutput,
 } from "@/registry/edmi/components/ai/tool";
 import { Button } from "@/registry/edmi/ui/button";
-import { RaisedSection } from "./_raised";
+import { ElevationSection } from "./_elevation";
 
 const Label = ({ children }: { children: string }) => (
 	<p className="mb-3 font-mono text-[10.5px] tracking-wide text-muted-foreground uppercase">
@@ -364,14 +364,14 @@ export default function AiAgentPreview() {
 						</Tool>
 					))}
 				</div>
-				<RaisedSection>
+				<ElevationSection>
 					<Tool elevation="raised" className="w-full max-w-[440px]">
 						<ToolHeader type="tool-get_prices" state="output-available" />
 						<ToolContent>
 							<ToolInput input={input} />
 						</ToolContent>
 					</Tool>
-				</RaisedSection>
+				</ElevationSection>
 			</section>
 
 			<section className="flex flex-col gap-4">
@@ -379,9 +379,9 @@ export default function AiAgentPreview() {
 				<ConfirmationRow state="approval-requested" />
 				<ConfirmationRow state="approval-responded" approved />
 				<ConfirmationRow state="output-denied" approved={false} />
-				<RaisedSection>
+				<ElevationSection>
 					<ConfirmationRow state="approval-requested" raised />
-				</RaisedSection>
+				</ElevationSection>
 			</section>
 
 			<section className="flex flex-col gap-4">
@@ -444,9 +444,9 @@ export default function AiAgentPreview() {
 					<PlanExample />
 					<PlanExample streaming />
 				</div>
-				<RaisedSection>
+				<ElevationSection>
 					<PlanExample raised />
-				</RaisedSection>
+				</ElevationSection>
 			</section>
 
 			<section>

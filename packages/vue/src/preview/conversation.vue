@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import DemoList from "./_demo-list.vue";
 
-const names = ["bubble", "message", "marker", "message-scroller", "questionnaire", "bubble-raised", "questionnaire-raised"].map(String);
+const names = ["bubble", "message", "marker", "message-scroller", "questionnaire", "bubble-elevation", "questionnaire-elevation"].map(String);
 </script>
 
 <template>

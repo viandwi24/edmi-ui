@@ -14,6 +14,6 @@ import DemoList from "./_demo-list.vue";
 			<ChartBar />
 		</div>
 		<DataTable />
-		<DemoList :names="['data-table-raised']" />
+		<DemoList :names="['data-table-elevation']" />
 	</div>
 </template>

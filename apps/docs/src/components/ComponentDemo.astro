@@ -15,7 +15,7 @@ import OpenInStackBlitz from "./OpenInStackBlitz.astro";
 interface Props {
 	/** Registry item name, e.g. "button". */
 	name: string;
-	/** Demo file basename (default: `name`), e.g. "button-raised". */
+	/** Demo file basename (default: `name`), e.g. "button-elevation". */
 	demo?: string;
 }
 const { name, demo = name } = Astro.props;
@@ -110,7 +110,7 @@ const missing = FRAMEWORKS.filter((fw) => !has.includes(fw));
 
 <style is:global>
 	.edmi-demo { margin: 1.5rem 0 2rem; }
-	/* flat segmented track: active = --tab-active fill + 1px border, no gradient, no lip (rule 5) */
+	/* flat segmented track: active = --tab-active fill + 1px border, no gradient, no bevel */
 	.edmi-seg { display: inline-flex; gap: 2px; padding: 3px; border-radius: 9px; background: var(--muted); border: 1px solid var(--border); }
 	.edmi-seg button {
 		font: 500 12.5px/1 var(--sl-font); padding: .4rem .75rem; border-radius: 6px; cursor: pointer;

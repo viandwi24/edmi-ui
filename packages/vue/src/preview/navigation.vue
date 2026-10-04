@@ -24,6 +24,6 @@ import SidebarFloating from "./_navigation/sidebar-floating.vue";
 		<Command />
 		<Sidebar />
 		<SidebarFloating />
-		<DemoList :names="['menubar-raised', 'pagination-raised']" />
+		<DemoList :names="['menubar-elevation', 'pagination-elevation']" />
 	</div>
 </template>

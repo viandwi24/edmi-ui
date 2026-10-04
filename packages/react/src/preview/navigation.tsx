@@ -61,7 +61,7 @@ import {
 } from "@/registry/edmi/ui/tabs";
 import CommandDemo from "../../../../apps/docs/src/demos/react/command";
 import SidebarDemo from "../../../../apps/docs/src/demos/react/sidebar";
-import { RaisedSection } from "./_raised";
+import { ElevationSection } from "./_elevation";
 
 export default function NavigationPreview() {
 	return (
@@ -197,7 +197,7 @@ export default function NavigationPreview() {
 				<TabsContent value="a">Panel A</TabsContent>
 				<TabsContent value="b">Panel B</TabsContent>
 			</Tabs>
-			<RaisedSection>
+			<ElevationSection>
 				<Pagination elevation="raised">
 					<PaginationContent>
 						<PaginationItem>
@@ -242,7 +242,7 @@ export default function NavigationPreview() {
 						<TabsContent value="holders">Holders panel</TabsContent>
 					</Tabs>
 				))}
-			</RaisedSection>
+			</ElevationSection>
 		</div>
 	);
 }

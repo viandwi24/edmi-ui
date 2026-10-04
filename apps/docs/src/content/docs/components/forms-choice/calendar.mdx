@@ -29,9 +29,11 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 ## Elevation ✦
 
+See the [Elevation guide](/edmi-ui/getting-started/elevation/) for the levels, roles and layered mode.
+
 `elevation` sits on the calendar shell (sunken -1, flat, raised +1, floating +2), never on the day grid. When raised or floating the selected day (and range ends) rise with the handle recipe. Inside a popover or card the host owns the shell, so only the selected day changes.
 
-<ComponentDemo name="calendar" demo="calendar-raised" />
+<ComponentDemo name="calendar" demo="calendar-elevation" />
 
 ## API
 Built on `react-day-picker` v10 (and `date-fns`). All DayPicker props are forwarded.

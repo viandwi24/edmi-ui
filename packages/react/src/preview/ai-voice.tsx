@@ -55,7 +55,7 @@ import {
 	VoiceSelectorTrigger,
 } from "@/registry/edmi/components/ai/voice-selector";
 import { Button } from "@/registry/edmi/ui/button";
-import { RaisedSection } from "./_raised";
+import { ElevationSection } from "./_elevation";
 
 const Label = ({ children }: { children: string }) => (
 	<p className="mb-3 font-mono text-[10.5px] tracking-wide text-muted-foreground uppercase">
@@ -253,11 +253,11 @@ export default function AiVoicePreview() {
 					<SpeechInput onAudioRecorded={async () => ""} />
 					<SpeechInput disabled />
 				</div>
-				<RaisedSection>
+				<ElevationSection>
 					<div>
 						<SpeechInput elevation="raised" onAudioRecorded={async () => ""} />
 					</div>
-				</RaisedSection>
+				</ElevationSection>
 			</section>
 
 			<section>

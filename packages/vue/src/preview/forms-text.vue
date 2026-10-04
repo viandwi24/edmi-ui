@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import DemoList from "./_demo-list.vue";
 
-const names = ["label", "input", "input-group", "input-otp", "textarea", "native-select", "select", "field", "native-select-raised", "select-raised"].map(String);
+const names = ["label", "input", "input-group", "input-otp", "textarea", "native-select", "select", "field", "native-select-elevation", "select-elevation"].map(String);
 </script>
 
 <template>

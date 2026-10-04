@@ -44,7 +44,7 @@ import {
 	SelectValue,
 } from "@/registry/edmi/ui/select";
 import { Textarea } from "@/registry/edmi/ui/textarea";
-import { RaisedSection } from "./_raised";
+import { ElevationSection } from "./_elevation";
 
 const tokens = ["NVDAx", "MSFTx", "AAPLx"];
 
@@ -123,7 +123,7 @@ export default function FormsTextPreview() {
 				</Field>
 			</FieldGroup>
 			<Button>Submit</Button>
-			<RaisedSection>
+			<ElevationSection>
 				<NativeSelect elevation="raised">
 					<NativeSelectOption>Solana devnet</NativeSelectOption>
 				</NativeSelect>
@@ -142,7 +142,7 @@ export default function FormsTextPreview() {
 					</SelectContent>
 				</Select>
 				<Button elevation="raised">Submit</Button>
-			</RaisedSection>
+			</ElevationSection>
 		</div>
 	);
 }

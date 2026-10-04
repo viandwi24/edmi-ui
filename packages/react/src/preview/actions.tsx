@@ -9,7 +9,7 @@ import {
 import { Kbd, KbdGroup } from "@/registry/edmi/ui/kbd";
 import { Toggle } from "@/registry/edmi/ui/toggle";
 import { ToggleGroup, ToggleGroupItem } from "@/registry/edmi/ui/toggle-group";
-import { RaisedSection } from "./_raised";
+import { ElevationSection } from "./_elevation";
 
 const variants = [
 	"default",
@@ -231,7 +231,7 @@ export default function ActionsPreview() {
 				</KbdGroup>
 				<Kbd>Enter</Kbd>
 			</div>
-			<RaisedSection>
+			<ElevationSection>
 				<div className="flex flex-wrap items-center gap-3">
 					{variants.map((variant) => (
 						<Button key={variant} variant={variant} elevation="raised">
@@ -286,7 +286,7 @@ export default function ActionsPreview() {
 						<Kbd elevation="raised">K</Kbd>
 					</KbdGroup>
 				</div>
-			</RaisedSection>
+			</ElevationSection>
 		</div>
 	);
 }

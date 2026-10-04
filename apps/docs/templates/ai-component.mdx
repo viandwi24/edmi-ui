@@ -30,12 +30,14 @@ Built on `message` and `bubble`.
 
 {/* Extra demos: <ComponentDemo name="ai-message" demo="ai-message-branch" /> -> src/demos/<fw>/ai-message-branch.* */}
 
-## Raised ✦
+## Elevation ✦
 
-{/* Only when the item has `raised` (and is listed in AI_RAISED in scripts/verify-matrix.ts). */}
-Flat by default. `raised` gives the one-step 3D look.
+See the [Elevation guide](/edmi-ui/getting-started/elevation/) for the levels, roles and layered mode.
 
-<ComponentDemo name="ai-message" demo="ai-message-raised" />
+{/* Only when the item has `elevation` (and is listed in AI_ELEVATION in scripts/verify-matrix.ts). */}
+Flat by default. `elevation` takes `sunken` (-1), `flat`, `raised` (+1) or `floating` (+2); say which part rises.
+
+<ComponentDemo name="ai-message" demo="ai-message-elevation" />
 
 ## API
 | Part | Prop | Type | Default |

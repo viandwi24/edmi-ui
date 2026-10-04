@@ -91,7 +91,7 @@ import {
 import { Button } from "@/registry/edmi/ui/button";
 import { Card } from "@/registry/edmi/ui/card";
 import { Skeleton } from "@/registry/edmi/ui/skeleton";
-import { RaisedSection } from "./_raised";
+import { ElevationSection } from "./_elevation";
 
 const Label = ({ children }: { children: string }) => (
 	<p className="font-mono text-[10.5px] tracking-wide text-muted-foreground uppercase">
@@ -665,16 +665,16 @@ export default function AiCodePreview() {
 			<section className="flex flex-col gap-4">
 				<Label>agent</Label>
 				<DemoAgent />
-				<RaisedSection>
+				<ElevationSection>
 					<DemoAgentRaised />
-				</RaisedSection>
+				</ElevationSection>
 			</section>
 			<section className="flex flex-col gap-4">
 				<Label>artifact</Label>
 				<DemoArtifact />
-				<RaisedSection>
+				<ElevationSection>
 					<DemoArtifactRaised />
-				</RaisedSection>
+				</ElevationSection>
 			</section>
 			<section className="flex flex-col gap-4">
 				<Label>code-block</Label>

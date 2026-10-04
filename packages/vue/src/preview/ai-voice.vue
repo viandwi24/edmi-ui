@@ -6,7 +6,7 @@ const names = [
 	"ai-mic-selector",
 	"ai-persona",
 	"ai-speech-input",
-	"ai-speech-input-raised",
+	"ai-speech-input-elevation",
 	"ai-transcription",
 	"ai-voice-selector",
 ];

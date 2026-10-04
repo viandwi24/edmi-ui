@@ -23,7 +23,7 @@ import { WatchlistItem } from "@/registry/edmi/blocks/watchlist-item/watchlist-i
 import { Button } from "@/registry/edmi/ui/button";
 import { Card } from "@/registry/edmi/ui/card";
 import { Table, TableBody, TableHeader } from "@/registry/edmi/ui/table";
-import { RaisedSection } from "./_raised";
+import { ElevationSection } from "./_elevation";
 
 const tokens = [{ label: "A" }, { label: "N" }, { label: "T" }];
 const rows: IndexRowData[] = [
@@ -183,7 +183,7 @@ export default function Patterns1Preview() {
 				]}
 			/>
 			<LayoutPicker value={layout} onValueChange={setLayout} />
-			<RaisedSection>
+			<ElevationSection>
 				<SiteHeader
 					elevation="raised"
 					lead="How to"
@@ -230,7 +230,7 @@ export default function Patterns1Preview() {
 					value={layout}
 					onValueChange={setLayout}
 				/>
-			</RaisedSection>
+			</ElevationSection>
 		</div>
 	);
 }

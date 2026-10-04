@@ -66,7 +66,7 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/registry/edmi/ui/tooltip";
-import { RaisedSection } from "./_raised";
+import { ElevationSection } from "./_elevation";
 
 export default function OverlaysPreview() {
 	return (
@@ -241,7 +241,7 @@ export default function OverlaysPreview() {
 					<HoverCardContent>Dewi Lestari, 3 indexes.</HoverCardContent>
 				</HoverCard>
 			</div>
-			<RaisedSection>
+			<ElevationSection>
 				<div className="flex flex-wrap items-start gap-3">
 					<Popover defaultOpen>
 						<PopoverTrigger
@@ -307,7 +307,7 @@ export default function OverlaysPreview() {
 						Raised toast
 					</Button>
 				</div>
-			</RaisedSection>
+			</ElevationSection>
 		</div>
 	);
 }

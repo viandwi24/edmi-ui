@@ -36,7 +36,7 @@ import {
 	QuestionnaireSkip,
 	QuestionnaireTitle,
 } from "@/registry/edmi/ui/questionnaire";
-import { RaisedSection } from "./_raised";
+import { ElevationSection } from "./_elevation";
 
 const variants = [
 	"default",
@@ -165,7 +165,7 @@ export default function ConversationPreview() {
 					<QuestionnaireNext />
 				</QuestionnaireActions>
 			</Questionnaire>
-			<RaisedSection>
+			<ElevationSection>
 				<Bubble variant="secondary" className="mb-3">
 					<BubbleContent>The keeper just rebalanced MAG4.</BubbleContent>
 					<BubbleReactions elevation="raised">
@@ -189,7 +189,7 @@ export default function ConversationPreview() {
 						</QuestionnaireChoices>
 					</QuestionnaireItem>
 				</Questionnaire>
-			</RaisedSection>
+			</ElevationSection>
 		</div>
 	);
 }

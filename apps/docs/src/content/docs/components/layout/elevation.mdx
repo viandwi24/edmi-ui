@@ -23,6 +23,8 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 ## How it works
 
+Read the [Elevation guide](/edmi-ui/getting-started/elevation/) first for the philosophy, the role table and when to use layered mode.
+
 Every Edmi component is flat by default (the plain shadcn look). Components that can take depth accept one prop,
 `elevation?: "auto" | "sunken" | "flat" | "raised" | "floating"` (default `"auto"`), and resolve it in this order:
 the explicit prop, then the nearest `ElevationProvider`, then `flat`.

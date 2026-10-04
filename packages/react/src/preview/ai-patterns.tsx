@@ -61,7 +61,7 @@ import {
 } from "@/registry/edmi/components/ai/session-panel";
 import { Button } from "@/registry/edmi/ui/button";
 import { DropdownMenuItem } from "@/registry/edmi/ui/dropdown-menu";
-import { RaisedSection } from "./_raised";
+import { ElevationSection } from "./_elevation";
 
 const agents: PromptInputAgentOption[] = [
 	{ id: "keeper", name: "Keeper", scope: "trading", color: "chart-3" },
@@ -151,7 +151,7 @@ export default function AiPatterns() {
 						<ArtifactCardActions />
 					</ArtifactCard>
 				</div>
-				<RaisedSection>
+				<ElevationSection>
 					<ArtifactCard elevation="raised" className="max-w-lg">
 						<ArtifactCardIcon kind="archive" />
 						<ArtifactCardBody>
@@ -160,7 +160,7 @@ export default function AiPatterns() {
 						</ArtifactCardBody>
 						<ArtifactCardActions>{cardMenu}</ArtifactCardActions>
 					</ArtifactCard>
-				</RaisedSection>
+				</ElevationSection>
 			</section>
 
 			<section className="flex flex-col gap-4">
