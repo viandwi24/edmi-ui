@@ -118,10 +118,7 @@ function Calendar({
 					"relative isolate z-0 rounded-r-(--cell-radius) bg-accent",
 					defaultClassNames.range_end,
 				),
-				today: cn(
-					"rounded-(--cell-radius) bg-accent font-semibold text-foreground data-[selected=true]:rounded-none",
-					defaultClassNames.today,
-				),
+				today: cn("rounded-(--cell-radius)", defaultClassNames.today),
 				outside: cn(
 					"text-muted-foreground opacity-50 aria-selected:text-muted-foreground",
 					defaultClassNames.outside,
@@ -235,8 +232,9 @@ function CalendarDayButton({
 			data-range-start={modifiers.range_start}
 			data-range-end={modifiers.range_end}
 			data-range-middle={modifiers.range_middle}
+			data-today={modifiers.today && !modifiers.selected}
 			className={cn(
-				"relative isolate z-10 flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 rounded-(--cell-radius) border-0 text-[13px] leading-none font-normal group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:shadow-ring data-[range-middle=true]:rounded-none data-[range-middle=true]:bg-accent data-[range-middle=true]:text-foreground [&>span]:text-xs [&>span]:opacity-70",
+				"relative isolate z-10 flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 rounded-(--cell-radius) border-0 text-[13px] leading-none font-normal data-[today=true]:bg-accent data-[today=true]:font-semibold data-[today=true]:text-foreground group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:shadow-ring data-[range-middle=true]:rounded-none data-[range-middle=true]:bg-accent data-[range-middle=true]:text-foreground [&>span]:text-xs [&>span]:opacity-70",
 				"data-[selected-single=true]:bg-primary data-[selected-single=true]:text-primary-foreground data-[selected-single=true]:hover:bg-primary data-[selected-single=true]:hover:text-primary-foreground",
 				"data-[range-start=true]:bg-primary data-[range-start=true]:text-primary-foreground data-[range-start=true]:hover:bg-primary data-[range-start=true]:hover:text-primary-foreground",
 				"data-[range-end=true]:bg-primary data-[range-end=true]:text-primary-foreground data-[range-end=true]:hover:bg-primary data-[range-end=true]:hover:text-primary-foreground",
