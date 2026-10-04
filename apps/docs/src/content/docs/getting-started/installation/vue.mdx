@@ -50,42 +50,39 @@ Besides the components, the registry ships a few entry items. They are not compo
 - fonts: Instrument Sans, JetBrains Mono and Sora are imported by `theme`; there are no separate font items.
 - `ai-use-controllable-state`: the controlled/uncontrolled state hook that the AI components share.
 
-## Flat by default, raised ✦
+## Elevation ✦
 
-Every Edmi component renders flat out of the box: a solid fill, a 1px border and no lip. Pass `raised` for one step of 3D (gradient face, soft top highlight, one hard lip that sinks 2px on press).
+Every Edmi component renders flat out of the box: a solid fill and a 1px border. Depth is the `elevation` prop (`"sunken"`, `"flat"`, `"raised"`, `"floating"`, default `"auto"`), or a whole subtree at once with `ElevationProvider`.
 
 ```vue
 <script setup lang="ts">
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { ElevationProvider } from "@/components/ui/elevation"
 </script>
 
 <template>
+  <!-- one component -->
   <Button elevation="raised">Get started</Button>
 
-  <Tabs default-value="overview">
-    <TabsList raised variant="pills">
-      <TabsTrigger value="overview">Overview</TabsTrigger>
-      <TabsTrigger value="holdings">Holdings</TabsTrigger>
-    </TabsList>
-  </Tabs>
-
-  <Card raised>…</Card>
+  <!-- a page where every role takes its level: actions up, fields down, overlays float -->
+  <ElevationProvider mode="layered">
+    <Card>…</Card>
+  </ElevationProvider>
 </template>
 ```
 
-Components that accept `raised` (all default to `false`):
+Components that take `elevation` (default `"auto"`):
 
-- **Actions**: Button, Toggle, Toggle Group (on the root, flows to items), Kbd
-- **Forms**: Native Select, Select (trigger), Checkbox, Switch (thumb), Slider (thumb), Calendar (selected day), choice cards and Questionnaire options
+- **Actions**: Button, Button Group, Badge, Toggle, Toggle Group (the ON item rises), Kbd
+- **Forms**: Input, Textarea, Input Group, Input OTP, Select (trigger), Native Select, Checkbox (checked box), Switch (thumb), Slider (thumbs), Calendar and Date Picker (selected day; the level sits on the shell), choice cards and Questionnaire options
 - **Display**: Card, Inset Panel, Empty (media)
-- **Overlays**: Dialog, Popover, Toast (`<Toaster raised />`)
-- **Navigation**: Menubar, Pagination (active link), Tabs (on `TabsList`; `line` and `ghost`/`link` are never raised)
+- **Overlays**: Dialog, Alert Dialog, Popover, Toast
+- **Navigation**: Menubar, Pagination (active link), Tabs (active trigger), Dropdown and Context menus
 - **Conversation**: Reactions
-- **Patterns**: every pattern forwards `raised` to the primitives it renders
+- **Patterns** and the **AI pack**: forward `elevation` to the Card, Button or surface they render
 
-Rule of thumb: raised for hero and primary CTAs and marketing pages, flat for dense app UI, forms, tables and dialog footers. The full list with demos lives on each component page under **Raised ✦**.
+Pick flat for dense app UI and layered mode for pages that should feel tactile. Read the [Elevation guide](/edmi-ui/getting-started/elevation/) for the philosophy, the role table and the nesting rule; each component page has an **Elevation ✦** section.
 
 ## Icons
 

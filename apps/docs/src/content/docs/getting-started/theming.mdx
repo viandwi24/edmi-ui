@@ -28,7 +28,7 @@ Four independent knobs, all set on `<html>` and all plain CSS variables. Try the
 | Knob | How | Values | Changes |
 | --- | --- | --- | --- |
 | Mode | `class="dark"` | light (default), dark | every token |
-| Base color | `data-base="…"` | `stone` (default, in `tokens.css`), `slate` | neutrals: surfaces, text, borders, lips, the neutral "ink" primary |
+| Base color | `data-base="…"` | `stone` (default, in `tokens.css`), `slate` | neutrals: surfaces, text, borders, the bevel colours, the neutral "ink" primary |
 | Theme | `data-theme="…"` | `green` (default, in `tokens.css`), `ocean` | accent: brand, ring, charts, sidebar-primary; Ocean also recolors primary |
 | Radius | `style="--radius: …"` | `0.625rem` default (`0.3rem` sharp to `1rem` round) | every radius |
 
@@ -178,16 +178,40 @@ Run `bun scripts/gen-default-scopes.ts` after changing `tokens.css` or adding a 
 In this repository, dropping the file in those folders is all it takes: the registry generates the matching
 `theme-<base>-<theme>` items and the Themes page offers the new option.
 
-## Flat by default, `raised` opt-in
+## Elevation tokens
 
-The shadow tokens (`shadow-btn-*`, `shadow-card`, `shadow-pop`, `shadow-dialog`) are only used when a component is rendered with `raised`. Without it every component is flat: a solid fill, a 1px border and no lip.
+Depth is the [elevation system](/edmi-ui/getting-started/elevation/). Components are flat unless they take an
+`elevation` level (`sunken`, `flat`, `raised`, `floating`) from the prop or from an `ElevationProvider`. The visuals
+come from tokens that exist for light and dark and for every base color, so a theme never has to touch them.
 
-Use it per component, never globally:
+| Token | Role |
+| --- | --- |
+| `--bv-ring` | inner rim of the bevel |
+| `--bv-top` | 1px top highlight of the bevel |
+| `--bv-out` | dark hairline around a raised or floating surface |
+| `--bv-face-a`, `--bv-face-b` | neutral face gradient (top to bottom) |
+| `--bv-float` | the one soft drop of a floating layer |
+| `--sk-bg`, `--sk-bd`, `--sk-sh` | sunken well: fill, border, soft inset |
+| `--r1-p`, `--r1-p-face`, `--r1-s`, `--r1-s-face` | raised (+1) button edge and face, primary and neutral |
+| `--fl-p`, `--fl-p-face`, `--fl-s`, `--fl-s-face` | floating (+2) button edge and face, primary and neutral |
 
-```tsx
-<Button elevation="raised">Get started</Button>
-<TabsList raised variant="pills">…</TabsList>
-<Card raised>…</Card>
-```
+`@edmi-ui/tokens/theme.css` maps them to Tailwind utilities: `shadow-raised`, `shadow-floating`, `shadow-sunken`,
+`shadow-btn-raised-primary|neutral|color`, `shadow-btn-float-primary|neutral|color`, `shadow-btn-sunken-filled`,
+`shadow-pressed`, `shadow-pressed-float`, `shadow-thumb`, `shadow-group-float`, plus `bg-sk-bg` and `border-sk-bd`.
+Components use these; do not hard-code shadows. Gradient faces on a bordered control use a transparent border and
+`[background-origin:border-box]`.
 
-Vue and Svelte take the same boolean prop (`<Button elevation="raised">`, `<Tabs.List raised variant="pills">`). The landing page toggle flips every showcase component between flat and raised. See each framework's getting-started page for the full list of components that accept `raised`.
+The old lip tokens (`--lip`, `--lip-strong`, `--*-lip`, `--*-edge`, `--*-shade`, `--card-hi`, `--outline-*`) are kept
+only for compatibility. Components no longer use them.
+
+### Dark ladder
+
+The stone dark palette uses a clearer ladder so surfaces separate without black blocks: background `#121214`, card
+`#1c1c20`, popover `#232328`, secondary `#2a2a30`, border and accent `#303036`, input `#48484f`, muted text `#9b9ba3`.
+Slate keeps its own dark values. In dark mode depth comes from the bevel hairline and a faint top highlight, and the
+sunken well is a soft inset darker than the card.
+
+### Layered mode in the docs
+
+The landing page and the Themes page preview switch between **Flat** and **Layered**: the showcase is wrapped in an
+`ElevationProvider` and the toggle flips its `mode`. Your app does the same with one wrapper.

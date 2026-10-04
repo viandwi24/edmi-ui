@@ -7,7 +7,7 @@ import PmCommand from "../../../components/PmCommand.astro";
 
 Edmi UI ships an installable **agent skill**: a small folder of instructions that your coding agent loads when you
 build UI. With it the agent installs Edmi items with the right CLI instead of inventing components, themes with
-tokens, uses `raised` where it belongs and composes AI chat screens correctly.
+tokens, uses elevation (flat, layered, raised) where it belongs and composes AI chat screens correctly.
 
 ## Install
 
@@ -34,7 +34,7 @@ Without `-g` the skill is added to the current project, so teammates get it with
 - **Install**: React (shadcn/ui), Vue (shadcn-vue) and Svelte (shadcn-svelte) flows, entry items (`theme`, `all`,
   `patterns`, `ai-all`), pinned CDN versions, icons.
 - **Theming**: tokens, Stone / Slate bases, Green / Ocean accents, radius, dark mode, runtime switching and custom accents.
-- **`raised`**: when the 3D look helps and when to stay flat, with do and don't examples.
+- **Elevation**: the philosophy, roles, when to use layered mode and when to stay flat, with do and don't examples.
 - **Components**: every item with a "use when" line, including Patterns and the AI pack.
 - **AI interfaces**: composing chat, agent, code, voice and workflow screens with the Vercel AI SDK.
 - **Design rules** and framework differences (Base UI, Reka UI, Bits UI).
@@ -46,7 +46,7 @@ After installing, ask your agent things like:
 
 - "Add Edmi UI to this Vite React project with the Slate and Ocean theme."
 - "Build a pricing section with Edmi pricing plans. Raise only the featured plan's button."
-- "Make this form use Edmi fields and keep it flat, with one raised submit button."
+- "Make this form use Edmi fields and keep it flat, with one raised submit button, or wrap the page in a layered ElevationProvider."
 - "Build a chat page with the Edmi AI components and the AI SDK `useChat`."
 - "Switch this app to dark mode support and let users choose Stone or Slate."
 - "Upgrade the Edmi components in this project to the latest release."

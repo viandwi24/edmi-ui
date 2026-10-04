@@ -42,9 +42,107 @@ again and reviewing the diff.
    Only add the entry items you originally installed (`patterns` and `ai-all` are optional). If you use a color theme
    item (`theme-<base>-<accent>`), install it again **after** `theme`.
 5. **Review `git diff`.** Re-apply your local changes to overwritten files, fix call sites for changed or removed
-   props, and run your typecheck and build. Check light and dark mode and any `raised` surfaces.
+   props, and run your typecheck and build. Check light and dark mode and every surface that used `raised` (see the 0.2 to 0.3 notes below).
 6. **Pinned CDN users:** change the version in the URL (`@0.2.0` to `@0.3.0`, or use the `@0` range). If you pinned the
    registry in `components.json` (`registries` for React and Vue), change it there too.
+
+## From 0.2 to 0.3: `raised` becomes `elevation`
+
+0.3 replaces the boolean `raised` prop with the [elevation system](/edmi-ui/getting-started/elevation/). It is a breaking
+change and there is no alias: a leftover `raised` prop is a type error (or ends up on the DOM in Vue and Svelte).
+
+**What changed**
+
+- `raised` is removed everywhere. Use `elevation="auto" | "sunken" | "flat" | "raised" | "floating"` (default `"auto"`).
+- Raised no longer has a hard lip. It is a bevel (rim, top highlight, hairline); `floating` adds one soft drop; `sunken` is
+  a soft inset. Pressed sinks 1px instead of 2px.
+- Only the active part of tabs, toggle groups, pagination, calendars, switches and sliders rises. A raised `TabsList`
+  raises the active trigger, not the list.
+- New `elevation` item with `ElevationProvider`. Wrap a page in `mode="layered"` and every role takes its default level
+  (filled buttons raised, fields sunken, cards raised, popovers and dialogs floating).
+- New tokens (`--bv-*`, `--sk-*`, `--r1-*`, `--fl-*`) and a clearer dark ladder for the stone base. The `theme` item's base
+  rule now keys off `[data-elevation=raised], [data-elevation=floating]`. The old lip tokens remain for compatibility only.
+- Demo and docs names changed from `<name>-raised` to `<name>-elevation`.
+
+**Steps**
+
+1. Re-add the entry items and every component you use with `--overwrite` (flow above). Always include `theme` and
+   `elevation`; components that take depth install `elevation` as a dependency.
+2. Replace every `raised` in your code. Search for ` raised`, `:raised`, `raised=` and `itemRaised`.
+3. Decide per page: keep it flat, raise a few things with the prop, or wrap the page in a layered `ElevationProvider`.
+4. Delete any hand-written lips (`shadow-[0_2px_0_...]`, `border-b-lip`, `shadow-btn-outline`): use the prop or the tokens.
+5. Check light and dark mode, and any `Toaster`, `TabsList`, `ToggleGroup`, `Pagination` and `Calendar` that used `raised`.
+
+**Before and after**
+
+<div data-fw-panel="react">
+
+```tsx
+// 0.2
+<Button raised>Get started</Button>
+<TabsList raised variant="pills">…</TabsList>
+<Card raised>…</Card>
+<Toaster raised />
+
+// 0.3
+<Button elevation="raised">Get started</Button>
+<TabsList elevation="raised" variant="pills">…</TabsList>
+<Card elevation="raised">…</Card>
+<Toaster elevation="raised" />
+
+// 0.3, layered: no per-component props, roles decide
+<ElevationProvider mode="layered">
+  <App />
+</ElevationProvider>
+```
+
+</div>
+
+<div data-fw-panel="vue">
+
+```vue
+<!-- 0.2 -->
+<Button raised>Get started</Button>
+<TabsList raised variant="pills">…</TabsList>
+<Card :raised="featured">…</Card>
+
+<!-- 0.3 -->
+<Button elevation="raised">Get started</Button>
+<TabsList elevation="raised" variant="pills">…</TabsList>
+<Card :elevation="featured ? 'raised' : 'flat'">…</Card>
+
+<!-- 0.3, layered -->
+<ElevationProvider mode="layered">
+  <App />
+</ElevationProvider>
+```
+
+</div>
+
+<div data-fw-panel="svelte">
+
+```svelte
+<!-- 0.2 -->
+<Button raised>Get started</Button>
+<Tabs.List raised variant="pills">…</Tabs.List>
+<Card.Root raised={featured}>…</Card.Root>
+
+<!-- 0.3 -->
+<Button elevation="raised">Get started</Button>
+<Tabs.List elevation="raised" variant="pills">…</Tabs.List>
+<Card.Root elevation={featured ? "raised" : "flat"}>…</Card.Root>
+
+<!-- 0.3, layered -->
+<ElevationProvider mode="layered">
+  {@render children()}
+</ElevationProvider>
+```
+
+</div>
+
+The documentation examples and the example apps in the repository use layered mode for the Stockbreak pages and explicit
+levels for the Layerbeat page; open an example's Code tab to see both styles. With the
+[Agent skills](/edmi-ui/getting-started/skills/) installed your coding agent knows this migration.
 
 ## Tips
 

@@ -1,6 +1,6 @@
 // Static "open state" thumbnails for the components index. Overlay primitives render closed (and
 // portalled) in SSR, so these compose the same Edmi recipe classes by hand. Keyed by item name; the
-// index renders them to a string server-side. Flat only (no lips/shadows), per DESIGN.md §4.
+// index renders them to a string server-side. Flat only (no elevation), per DESIGN.md §4.
 import { Button } from "@edmi-react/ui/button";
 import { Calendar } from "@edmi-react/ui/calendar";
 import type { ReactNode } from "react";

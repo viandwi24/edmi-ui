@@ -41,7 +41,7 @@ import { Tabs, TabsList, TabsTrigger } from "@edmi-react/ui/tabs";
 import { CopyIcon, PlusIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 import { installCommand, type PackageManager, PMS } from "../../config";
-import { setRaised, useRaised } from "./cards";
+import { setLayered, useLayered } from "./cards";
 import { setPm, useFramework, usePm } from "./hooks";
 
 /* hero: install card ------------------------------------------------------------------------ */
@@ -109,7 +109,7 @@ const SCOPES = [
 ];
 
 export function LiveBar() {
-	const raised = useRaised();
+	const layered = useLayered();
 	const [scope, setScope] = useState("stone/green");
 	const cur = SCOPES.find((s) => s.value === scope) ?? SCOPES[0];
 	const apply = (v: string) => {
@@ -125,18 +125,15 @@ export function LiveBar() {
 		<div className="flex flex-wrap items-center gap-x-2.5 gap-y-3">
 			<span className="text-[12.5px] text-muted-foreground">Style</span>
 			<Tabs
-				value={raised ? "raised" : "flat"}
-				onValueChange={(v) => setRaised(v === "raised")}
+				value={layered ? "layered" : "flat"}
+				onValueChange={(v) => setLayered(v === "layered")}
 			>
-				<TabsList
-					aria-label="Preview style"
-					elevation={raised ? "raised" : undefined}
-				>
+				<TabsList aria-label="Preview style">
 					<TabsTrigger value="flat" className="h-[30px] px-3">
 						Flat
 					</TabsTrigger>
-					<TabsTrigger value="raised" className="h-[30px] px-3">
-						Raised ✦
+					<TabsTrigger value="layered" className="h-[30px] px-3">
+						Layered ✦
 					</TabsTrigger>
 				</TabsList>
 			</Tabs>
@@ -146,12 +143,7 @@ export function LiveBar() {
 			/>
 			<span className="text-[12.5px] text-muted-foreground">Theme</span>
 			<Select value={scope} onValueChange={(v) => v && apply(v)}>
-				<SelectTrigger
-					size="sm"
-					elevation={raised ? "raised" : undefined}
-					className="w-[170px]"
-					aria-label="Theme"
-				>
+				<SelectTrigger size="sm" className="w-[170px]" aria-label="Theme">
 					<SelectValue>
 						{() => (
 							<>

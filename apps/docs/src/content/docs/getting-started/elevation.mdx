@@ -1,0 +1,259 @@
+---
+title: Elevation
+description: "How Edmi expresses depth: four levels, role-based defaults, a layered mode for a whole page, and the nesting rules. Philosophy first."
+---
+
+import ComponentDemo from "../../../components/ComponentDemo.astro";
+
+Edmi is calm and editorial by default. Depth is the one tool it adds on top of the plain shadcn look, and it is used
+to say something: what is an action, what receives input, what sits above the page. This page explains the thinking
+first, then the levels, the roles, the layered mode and the rules that keep it tidy.
+
+## Philosophy
+
+**Flat is the default.** Every component renders the plain shadcn look: a solid fill and a 1px border. That is what
+keeps dense app UI quiet and readable, and it means `add @edmi-ui/<name> --overwrite` over a stock project never
+surprises anyone. Depth is opt-in, either per component or for a whole scope.
+
+**Depth expresses role, not decoration.** A global skin that puts a shadow on everything makes everything shout. Edmi
+decides depth by what a thing *does*:
+
+- the controls that do something rise (a filled button, a card you act on, a switch thumb you drag);
+- the controls that receive input sink, so a field reads as a well;
+- the things that sit above the page float (popovers, menus, dialogs, the chat composer);
+- everything else, the frame and the quiet parts, stays flat.
+
+**Levels are relative to the parent.** A child is never more than one step above what holds it. A card inside a
+raised card drops back to flat and keeps its border: no bevel on bevel. Buttons and fields are exempt, because they
+are what you reach for inside any surface.
+
+**One step only, and only the part that is active.** Tabs, a segmented control, pagination, a calendar, a switch and a
+slider never bevel their track, list or grid. Only the active tab, the selected day, the checked box and the thumb
+rise. Alerts, toasts, tooltips and brand badges stay soft fill with a tinted border; floating is simply the natural
+level for toasts.
+
+**A bevel, not a lip.** Earlier versions used a hard lip under raised things. It read as a stack of slabs and made
+nesting awkward. The bevel is one quiet language everywhere: a top highlight, an inner rim and a dark hairline.
+Floating adds exactly one soft drop on top of the same bevel. Sunken is a soft inset with no hard dark edge, and when a
+sunken field takes focus the ring replaces its edge. Pressed sinks 1px. Elevation never changes a component's size, so
+control heights stay 36 / 32 / 42.
+
+**Layered mode applies the policy to a page.** You can raise things one by one, or wrap a subtree in
+`ElevationProvider mode="layered"` and let every role take the level it is meant to have. Same markup, two modes. An
+explicit `elevation` prop on a component always wins, so you can still opt one call-to-action in or out.
+
+## The four levels
+
+`elevation` is one prop with five values, available on every component that can take depth. Default `"auto"`.
+
+| Value | Level | Look | Tokens |
+| --- | --- | --- | --- |
+| `sunken` | -1 | soft inset well | `bg-sk-bg border-sk-bd shadow-sunken` |
+| `flat` | 0 | fill and 1px border | none |
+| `raised` | +1 | bevel: rim, top highlight, hairline | `shadow-raised`, buttons `shadow-btn-raised-*` |
+| `floating` | +2 | the bevel plus one soft drop | `shadow-floating`, buttons `shadow-btn-float-*` |
+
+<ComponentDemo name="card" demo="card-elevation" />
+
+`auto` resolves in this order: the component's own `elevation` prop, the nearest `ElevationProvider`, then `flat`.
+
+## Roles and layered defaults
+
+In a layered scope each component has a role, and each role has a default level. An explicit prop always wins.
+
+| Role | Components | Layered level |
+| --- | --- | --- |
+| filled action (`button-filled`) | Button default, secondary, destructive, brand | +1 raised |
+| quiet action (`button-quiet`) | Button outline, ghost, link | 0 flat |
+| field | Input, Textarea, Select trigger, Input OTP, Input Group | -1 sunken |
+| control | Checkbox, Radio, Tabs, Segmented, Pagination, Badge | 0 flat (the active part rises when raised) |
+| handle | Switch thumb, Slider thumb, calendar selected day, Kbd, Empty media | +1 raised |
+| surface | Card, node, list-row card, Inset panel body | +1 raised |
+| container | Inset panel shell, nested card, Alert, Toast, Tooltip | 0 flat |
+| overlay | Popover, Dropdown, Select menu, Dialog, chat composer | +2 floating |
+
+The full list of components that take `elevation`, and what rises on each, is on the component pages under
+**Elevation ✦**.
+
+## Flat or layered?
+
+| Use flat (default) when | Use layered when |
+| --- | --- |
+| the screen is dense: forms, tables, settings, admin | the page should feel tactile: dashboards, marketing, product tours |
+| you want the calm, plain shadcn look | you want roles to read at a glance: actions up, fields down, overlays above |
+| you raise one or two things yourself | most of the page should follow the role policy |
+
+Pick one per page. Do not mix a layered page with hand-raised random controls; override the few that need it.
+
+<ComponentDemo name="elevation" />
+
+## Using the provider
+
+Install it with any component that takes `elevation` (it is a dependency), or on its own with
+`add @edmi-ui/elevation`. Wrap the app, or any subtree, in `ElevationProvider`.
+
+<div data-fw-panel="react">
+
+```tsx
+import { ElevationProvider } from "@/components/ui/elevation";
+
+export function App() {
+  return (
+    <ElevationProvider mode="layered">
+      <Dashboard />
+    </ElevationProvider>
+  );
+}
+```
+
+</div>
+
+<div data-fw-panel="vue">
+
+```vue
+<script setup lang="ts">
+import { ElevationProvider } from "@/components/ui/elevation";
+</script>
+
+<template>
+  <ElevationProvider mode="layered">
+    <Dashboard />
+  </ElevationProvider>
+</template>
+```
+
+</div>
+
+<div data-fw-panel="svelte">
+
+```svelte
+<script lang="ts">
+  import { ElevationProvider } from "$lib/components/ui/elevation";
+  let { children } = $props();
+</script>
+
+<ElevationProvider mode="layered">
+  {@render children()}
+</ElevationProvider>
+```
+
+</div>
+
+- `mode="layered"` gives each role its default level. `mode="flat"` is the default.
+- `level="raised"` (or `sunken`, `flat`, `floating`) forces one level for the whole subtree and wins over `mode`.
+- The provider is layout-neutral (`display: contents`) unless you pass a class, and it renders `data-elevation` for CSS.
+- Scopes nest: a child provider can set its own mode.
+
+### Override one component
+
+Props beat the scope in both directions.
+
+<div data-fw-panel="react">
+
+```tsx
+<ElevationProvider mode="layered">
+  <Button elevation="floating">Create index</Button> {/* the one hero action */}
+  <Button elevation="flat" variant="secondary">Cancel</Button>
+</ElevationProvider>
+
+<Card elevation="raised">…</Card>            {/* flat page, one raised card */}
+<Input elevation="sunken" />
+```
+
+</div>
+
+<div data-fw-panel="vue">
+
+```vue
+<ElevationProvider mode="layered">
+  <Button elevation="floating">Create index</Button>
+  <Button elevation="flat" variant="secondary">Cancel</Button>
+</ElevationProvider>
+
+<Card elevation="raised">…</Card>
+<Input elevation="sunken" />
+```
+
+</div>
+
+<div data-fw-panel="svelte">
+
+```svelte
+<ElevationProvider mode="layered">
+  <Button elevation="floating">Create index</Button>
+  <Button elevation="flat" variant="secondary">Cancel</Button>
+</ElevationProvider>
+
+<Card.Root elevation="raised">…</Card.Root>
+<Input elevation="sunken" />
+```
+
+</div>
+
+## Nesting
+
+Levels are relative to the parent. A surface (a card, a panel body) inside a raised or floating surface drops to flat
+and keeps its border, so you never get bevel on bevel. Buttons and fields are exempt and keep their role level inside
+any surface. An explicit `elevation` still wins, but a card at +1 on a card at +1 is almost always a mistake.
+
+The card demo above ends with a nested card: it resolves flat inside the raised one. An Inset panel follows the same
+idea: the shell stays flat as the frame, the body is the raised plate inside it (inset 2px so the depth reads), and a
+card inside that body drops to flat.
+
+## Only the active part rises
+
+Components made of a track and an active item never bevel the track.
+
+| Component | What rises with `raised` |
+| --- | --- |
+| Tabs | the active trigger (`line` never) |
+| Toggle group, segmented | the ON item |
+| Pagination | the active link |
+| Calendar, date picker | the selected day; elevation sits on the shell (popover or card), never the day grid |
+| Switch, Slider | the thumb or thumbs |
+| Checkbox | the checked box |
+| Toggle (default) | shows depth only when ON |
+
+<ComponentDemo name="tabs" demo="tabs-elevation" />
+
+### Button groups
+
+On a `ButtonGroup`, `raised` raises each item. `floating` floats the whole group as **one plate** while the items stay
+raised, so you never get a drop shadow per item.
+
+<ComponentDemo name="button-group" demo="button-group-elevation" />
+
+## Buttons: three depths
+
+Flat, raised (+1) and floating (+2). Use floating for the one hero action in a view. Filled buttons keep their colour
+when sunken (8% darker). `ghost` follows the neutral faces and `link` never gets depth. Pressed sinks 1px.
+
+<ComponentDemo name="button" demo="button-elevation" />
+
+## Do and don't
+
+**Do**
+
+- Start flat. Add layered mode to pages that benefit from it.
+- Let roles decide: actions rise, fields sink, overlays float.
+- Use one floating action per view.
+- Override a single component with the prop when the page needs an exception.
+
+**Don't**
+
+- Raise everything. If every control has depth, none of them says "primary".
+- Stack bevels: no raised card inside a raised card, no floating inside floating.
+- Hand-write shadows, gradients or lips to imitate it. Use the prop or the tokens.
+- Add transparency to surfaces for effect. Floating layers are always solid.
+
+## Dark mode
+
+Depth in dark comes from the bevel hairline and a faint top highlight, never from black blocks. The stone dark palette
+uses a clearer ladder so each step is visible: background, card, popover, secondary, border, input. See
+[Theming](/edmi-ui/getting-started/theming/#elevation-tokens) for the tokens.
+
+## See also
+
+- [Rules](/edmi-ui/getting-started/rules/): the design decisions, including the bevel model.
+- [Elevation component](/edmi-ui/components/layout/elevation/): `ElevationProvider`, `useElevation` and the API.
+- [Upgrading](/edmi-ui/getting-started/upgrading/): moving from `raised` to `elevation`.

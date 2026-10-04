@@ -58,6 +58,7 @@ export function buildSidebar(docsDir, { componentGroups, aiGroups }) {
 					],
 				},
 				{ label: "Theming", slug: "getting-started/theming" },
+				{ label: "Elevation", slug: "getting-started/elevation" },
 				{ label: "Rules", slug: "getting-started/rules" },
 				{ label: "Upgrading", slug: "getting-started/upgrading" },
 				{ label: "Agent skills", slug: "getting-started/skills" },

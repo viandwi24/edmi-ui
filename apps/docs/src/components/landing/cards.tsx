@@ -43,6 +43,7 @@ import {
 	CommandSeparator,
 	CommandShortcut,
 } from "@edmi-react/ui/command";
+import { ElevationProvider } from "@edmi-react/ui/elevation";
 import { Field, FieldGroup, FieldLabel } from "@edmi-react/ui/field";
 import { Input } from "@edmi-react/ui/input";
 import {
@@ -112,40 +113,62 @@ import {
 	ThumbsUpIcon,
 	WarningIcon,
 } from "@phosphor-icons/react";
-import { useEffect, useState, useSyncExternalStore } from "react";
+import {
+	type ReactNode,
+	useEffect,
+	useState,
+	useSyncExternalStore,
+} from "react";
 
-/* shared flat | raised state (module singleton, shared by every island) ----------------------- */
-let raisedState = false;
-const raisedListeners = new Set<() => void>();
-export function setRaised(next: boolean) {
-	if (next === raisedState) return;
-	raisedState = next;
-	for (const l of raisedListeners) l();
+/* shared flat | layered state (module singleton, shared by every island) ---------------------- */
+let layeredState = false;
+const layeredListeners = new Set<() => void>();
+export function setLayered(next: boolean) {
+	if (next === layeredState) return;
+	layeredState = next;
+	for (const l of layeredListeners) l();
 }
-export function useRaised() {
+export function useLayered() {
 	return useSyncExternalStore(
 		(cb) => {
-			raisedListeners.add(cb);
-			return () => raisedListeners.delete(cb);
+			layeredListeners.add(cb);
+			return () => layeredListeners.delete(cb);
 		},
-		() => raisedState,
+		() => layeredState,
 		() => false,
 	);
 }
 
-export function RaisedToggle() {
-	const raised = useRaised();
+/* Every island wraps itself in this scope: the Flat | Layered toggle flips the mode of all of them. */
+export function LayeredScope({ children }: { children: ReactNode }) {
+	const layered = useLayered();
+	return (
+		<ElevationProvider mode={layered ? "layered" : "flat"}>
+			{children}
+		</ElevationProvider>
+	);
+}
+
+function withLayered<P extends object>(Inner: (props: P) => ReactNode) {
+	return function Layered(props: P) {
+		return (
+			<LayeredScope>
+				<Inner {...props} />
+			</LayeredScope>
+		);
+	};
+}
+
+export function ElevationToggle() {
+	const layered = useLayered();
 	return (
 		<Tabs
-			value={raised ? "raised" : "flat"}
-			onValueChange={(v) => setRaised(v === "raised")}
+			value={layered ? "layered" : "flat"}
+			onValueChange={(v) => setLayered(v === "layered")}
 		>
-			<TabsList
-				aria-label="Showcase style"
-				elevation={raised ? "raised" : undefined}
-			>
+			<TabsList aria-label="Showcase style">
 				<TabsTrigger value="flat">Flat</TabsTrigger>
-				<TabsTrigger value="raised">Raised ✦</TabsTrigger>
+				<TabsTrigger value="layered">Layered ✦</TabsTrigger>
 			</TabsList>
 		</Tabs>
 	);
@@ -165,23 +188,16 @@ function useSiteDark() {
 }
 
 /* 1 · controls ------------------------------------------------------------------------------ */
-export function ControlsCard() {
-	const raised = useRaised();
+function ControlsCardInner() {
 	return (
-		<Card elevation={raised ? "raised" : undefined} className="gap-4 p-5">
+		<Card className="gap-4 p-5">
 			<div className="flex flex-wrap items-center gap-2.5">
-				<Button elevation={raised ? "raised" : undefined}>
+				<Button>
 					Button <ArrowRightIcon />
 				</Button>
-				<Button elevation={raised ? "raised" : undefined} variant="secondary">
-					Secondary
-				</Button>
-				<Button elevation={raised ? "raised" : undefined} variant="outline">
-					Outline
-				</Button>
-				<Button elevation={raised ? "raised" : undefined} variant="brand">
-					Brand
-				</Button>
+				<Button variant="secondary">Secondary</Button>
+				<Button variant="outline">Outline</Button>
+				<Button variant="brand">Brand</Button>
 			</div>
 			<InputGroup>
 				<InputGroupInput placeholder="Search indexes" />
@@ -201,33 +217,16 @@ export function ControlsCard() {
 						<RadioGroupItem value="a" aria-label="A" />
 						<RadioGroupItem value="b" aria-label="B" />
 					</RadioGroup>
-					<Checkbox
-						elevation={raised ? "raised" : undefined}
-						defaultChecked
-						aria-label="Checked"
-					/>
-					<Switch
-						elevation={raised ? "raised" : undefined}
-						defaultChecked
-						aria-label="Switch"
-					/>
+					<Checkbox defaultChecked aria-label="Checked" />
+					<Switch defaultChecked aria-label="Switch" />
 				</div>
 			</div>
 			<div className="flex items-center justify-between gap-3">
-				<Button elevation={raised ? "raised" : undefined} variant="outline">
-					Alert dialog
-				</Button>
+				<Button variant="outline">Alert dialog</Button>
 				<ButtonGroup>
-					<Button elevation={raised ? "raised" : undefined} variant="outline">
-						Button group
-					</Button>
+					<Button variant="outline">Button group</Button>
 					<ButtonGroupSeparator />
-					<Button
-						elevation={raised ? "raised" : undefined}
-						variant="outline"
-						size="icon"
-						aria-label="More"
-					>
+					<Button variant="outline" size="icon" aria-label="More">
 						<CaretDownIcon />
 					</Button>
 				</ButtonGroup>
@@ -249,10 +248,9 @@ const barConfig = {
 	v: { label: "Contributions", color: "var(--chart-1)" },
 } satisfies ChartConfig;
 
-export function ChartCard() {
-	const raised = useRaised();
+function ChartCardInner() {
 	return (
-		<Card elevation={raised ? "raised" : undefined}>
+		<Card>
 			<CardHeader>
 				<CardTitle>Contribution history</CardTitle>
 				<CardDescription>Last 6 months of activity</CardDescription>
@@ -305,10 +303,9 @@ const strategies: Record<string, string> = {
 };
 
 /* 3 · form ---------------------------------------------------------------------------------- */
-export function FormCard() {
-	const raised = useRaised();
+function FormCardInner() {
 	return (
-		<Card elevation={raised ? "raised" : undefined}>
+		<Card>
 			<CardHeader>
 				<CardTitle>Set a new milestone</CardTitle>
 				<CardDescription>
@@ -346,10 +343,7 @@ export function FormCard() {
 					<Field>
 						<FieldLabel>Strategy</FieldLabel>
 						<Select defaultValue="steady">
-							<SelectTrigger
-								elevation={raised ? "raised" : undefined}
-								className="w-full"
-							>
+							<SelectTrigger className="w-full">
 								<SelectValue>{(v: string) => strategies[v] ?? v}</SelectValue>
 							</SelectTrigger>
 							<SelectContent alignItemWithTrigger={false}>
@@ -362,14 +356,8 @@ export function FormCard() {
 				</FieldGroup>
 			</CardContent>
 			<CardFooter className="flex-col gap-2.5">
-				<Button elevation={raised ? "raised" : undefined} className="w-full">
-					Create goal
-				</Button>
-				<Button
-					elevation={raised ? "raised" : undefined}
-					variant="outline"
-					className="w-full"
-				>
+				<Button className="w-full">Create goal</Button>
+				<Button variant="outline" className="w-full">
 					Cancel
 				</Button>
 			</CardFooter>
@@ -378,10 +366,9 @@ export function FormCard() {
 }
 
 /* 4 · chat ---------------------------------------------------------------------------------- */
-export function ChatCard() {
-	const raised = useRaised();
+function ChatCardInner() {
 	return (
-		<Card elevation={raised ? "raised" : undefined}>
+		<Card>
 			<CardHeader>
 				<CardTitle>New chat</CardTitle>
 				<CardDescription>How can I help today?</CardDescription>
@@ -447,8 +434,7 @@ export function ChatCard() {
 }
 
 /* 5 · questionnaire ------------------------------------------------------------------------- */
-export function QuestionCard() {
-	const raised = useRaised();
+function QuestionCardInner() {
 	return (
 		<Questionnaire
 			items={[
@@ -462,7 +448,6 @@ export function QuestionCard() {
 				},
 			]}
 			shortcuts="letters"
-			elevation={raised ? "raised" : undefined}
 			className="w-full rounded-xl border border-border bg-card p-5"
 			onSubmit={(e) => {
 				e.preventDefault();
@@ -496,7 +481,7 @@ export function QuestionCard() {
 }
 
 /* 6 · command ------------------------------------------------------------------------------- */
-export function CommandCard() {
+function CommandCardInner() {
 	return (
 		<Command className="w-full rounded-xl border border-border">
 			<CommandInput placeholder="Search indexes and actions…" />
@@ -521,8 +506,7 @@ export function CommandCard() {
 }
 
 /* 7 · market -------------------------------------------------------------------------------- */
-export function MarketCard() {
-	const raised = useRaised();
+function MarketCardInner() {
 	return (
 		<div className="flex flex-col gap-3">
 			<TickerStrip
@@ -531,14 +515,12 @@ export function MarketCard() {
 					{ symbol: "NVDAx", price: "$227.06", change: "+0.81%" },
 					{ symbol: "TSLAx", price: "$370.21", change: "−0.31%" },
 				]}
-				elevation={raised ? "raised" : undefined}
 			/>
-			<Card elevation={raised ? "raised" : undefined} className="gap-1.5 p-3">
+			<Card className="gap-1.5 p-3">
 				<div className="px-2 pt-1 pb-1.5 font-mono text-[10.5px] tracking-wider text-muted-foreground uppercase">
 					Watchlist
 				</div>
 				<WatchlistItem
-					elevation={raised ? "raised" : undefined}
 					href="#"
 					symbol="MAG4"
 					price="1.0000"
@@ -547,7 +529,6 @@ export function MarketCard() {
 					active
 				/>
 				<WatchlistItem
-					elevation={raised ? "raised" : undefined}
 					href="#"
 					symbol="AIFR"
 					price="1.0104"
@@ -555,7 +536,6 @@ export function MarketCard() {
 					color="var(--chart-4)"
 				/>
 				<WatchlistItem
-					elevation={raised ? "raised" : undefined}
 					href="#"
 					symbol="ATLS"
 					price="0.9893"
@@ -568,9 +548,8 @@ export function MarketCard() {
 }
 
 /* 8 · feedback ------------------------------------------------------------------------------ */
-export function FeedbackCard() {
+function FeedbackCardInner() {
 	const dark = useSiteDark();
-	const raised = useRaised();
 	const [value, setValue] = useState(35);
 	useEffect(() => {
 		const id = setInterval(
@@ -580,11 +559,8 @@ export function FeedbackCard() {
 		return () => clearInterval(id);
 	}, []);
 	return (
-		<Card elevation={raised ? "raised" : undefined} className="gap-4 p-5">
-			<Toaster
-				elevation={raised ? "raised" : undefined}
-				theme={dark ? "dark" : "light"}
-			/>
+		<Card className="gap-4 p-5">
+			<Toaster theme={dark ? "dark" : "light"} />
 			<Alert variant="brand">
 				<CheckCircleIcon />
 				<AlertTitle>Index launched</AlertTitle>
@@ -601,13 +577,9 @@ export function FeedbackCard() {
 				<ProgressLabel>Raising for launch</ProgressLabel>
 				<ProgressValue />
 			</Progress>
-			<Slider
-				elevation={raised ? "raised" : undefined}
-				defaultValue={[25, 70]}
-			/>
+			<Slider defaultValue={[25, 70]} />
 			<div className="flex flex-wrap gap-2">
 				<Button
-					elevation={raised ? "raised" : undefined}
 					variant="outline"
 					size="sm"
 					onClick={() =>
@@ -617,7 +589,6 @@ export function FeedbackCard() {
 					Toast
 				</Button>
 				<Button
-					elevation={raised ? "raised" : undefined}
 					variant="outline"
 					size="sm"
 					onClick={() =>
@@ -629,7 +600,6 @@ export function FeedbackCard() {
 					Info
 				</Button>
 				<Button
-					elevation={raised ? "raised" : undefined}
 					variant="outline"
 					size="sm"
 					onClick={() => toast.error("Signature rejected")}
@@ -647,13 +617,12 @@ const people = [
 	["ER", "Erik Ross", "Keeper operator"],
 	["SC", "Sam Chen", "Joined yesterday"],
 ];
-export function PeopleCard() {
-	const raised = useRaised();
+function PeopleCardInner() {
 	return (
-		<Card elevation={raised ? "raised" : undefined} className="gap-3 p-3">
+		<Card className="gap-3 p-3">
 			<div className="flex items-center justify-between px-2 pt-1">
 				<Tabs defaultValue="team">
-					<TabsList elevation={raised ? "raised" : undefined}>
+					<TabsList>
 						<TabsTrigger value="team">Team</TabsTrigger>
 						<TabsTrigger value="holders">Holders</TabsTrigger>
 					</TabsList>
@@ -683,11 +652,7 @@ export function PeopleCard() {
 								<ItemDescription>{role}</ItemDescription>
 							</ItemContent>
 							<ItemActions>
-								<Button
-									elevation={raised ? "raised" : undefined}
-									size="sm"
-									variant="outline"
-								>
+								<Button size="sm" variant="outline">
 									Follow
 								</Button>
 							</ItemActions>
@@ -757,3 +722,13 @@ export function LandingFooter() {
 		/>
 	);
 }
+
+export const ControlsCard = withLayered(ControlsCardInner);
+export const ChartCard = withLayered(ChartCardInner);
+export const FormCard = withLayered(FormCardInner);
+export const ChatCard = withLayered(ChatCardInner);
+export const CommandCard = withLayered(CommandCardInner);
+export const MarketCard = withLayered(MarketCardInner);
+export const QuestionCard = withLayered(QuestionCardInner);
+export const FeedbackCard = withLayered(FeedbackCardInner);
+export const PeopleCard = withLayered(PeopleCardInner);

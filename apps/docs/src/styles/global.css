@@ -81,10 +81,10 @@
 	--sl-color-purple: var(--chart-4);
 	--sl-color-purple-high: var(--foreground-2);
 
-	/* No blurred shadows (rule 1): Starlight shadows become hard lips. */
-	--sl-shadow-sm: 0 1px 0 var(--lip);
-	--sl-shadow-md: 0 2px 0 var(--lip);
-	--sl-shadow-lg: 0 4px 0 var(--lip-strong);
+	/* Docs chrome follows the elevation tokens: a hairline for small things, the one soft drop for floating layers. */
+	--sl-shadow-sm: 0 0 1.5px var(--bv-out);
+	--sl-shadow-md: 0 0 1.5px var(--bv-out);
+	--sl-shadow-lg: var(--bv-float);
 
 	/* layout: slim sidebar, wide content, right TOC */
 	--sl-nav-height: 3.5rem;
@@ -909,7 +909,7 @@ details#starlight__mobile-toc summary {
 	box-sizing: border-box;
 }
 /* Default border color for previews, but in `components` (above Starlight, below utilities) so utilities
-   like `border-transparent` / `border-b-lip` in the registry components still win. */
+   like `border-transparent` / `border-sk-bd` in the registry components still win. */
 @layer components {
 	.edmi-preview *,
 	.edmi-preview ::before,

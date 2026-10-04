@@ -40,8 +40,8 @@ import {
 	MarketCard,
 	PeopleCard,
 	QuestionCard,
-	setRaised,
-	useRaised,
+	setLayered,
+	useLayered,
 } from "../landing/cards";
 import { setPm, useFramework, usePm } from "../landing/hooks";
 
@@ -74,14 +74,12 @@ function Control<T extends string>({
 	value,
 	options,
 	onChange,
-	raised,
 }: {
 	label: string;
 	hint: string;
 	value: T;
 	options: { value: T; label: string; swatch?: React.ReactNode }[];
 	onChange: (v: T) => void;
-	raised?: boolean;
 }) {
 	return (
 		<div className="flex min-w-0 flex-col gap-1.5">
@@ -92,10 +90,7 @@ function Control<T extends string>({
 				</span>
 			</div>
 			<Tabs value={value} onValueChange={(v) => onChange(v as T)}>
-				<TabsList
-					elevation={raised ? "raised" : undefined}
-					className="max-w-full flex-wrap"
-				>
+				<TabsList className="max-w-full flex-wrap">
 					{options.map((o) => (
 						<TabsTrigger key={o.value} value={o.value}>
 							{o.swatch}
@@ -142,7 +137,7 @@ export default function ThemeCustomizer({ data }: { data: ThemeData }) {
 	const [cssTab, setCssTab] = useState<"css" | "tailwind">("css");
 	const [fw, setFw] = useFramework();
 	const pm = usePm();
-	const raised = useRaised();
+	const layered = useLayered();
 
 	// restore the saved choice (or follow the docs mode on first visit)
 	useEffect(() => {
@@ -150,7 +145,7 @@ export default function ThemeCustomizer({ data }: { data: ThemeData }) {
 			const saved = JSON.parse(localStorage.getItem(KEY) ?? "null");
 			if (saved) {
 				setS((p) => ({ ...p, ...saved.state }));
-				setRaised(Boolean(saved.raised));
+				setLayered(Boolean(saved.layered));
 				return;
 			}
 		} catch {}
@@ -159,9 +154,9 @@ export default function ThemeCustomizer({ data }: { data: ThemeData }) {
 	}, []);
 	useEffect(() => {
 		try {
-			localStorage.setItem(KEY, JSON.stringify({ state: s, raised }));
+			localStorage.setItem(KEY, JSON.stringify({ state: s, layered }));
 		} catch {}
-	}, [s, raised]);
+	}, [s, layered]);
 
 	const set = <K extends keyof State>(k: K, v: State[K]) =>
 		setS((p) => ({ ...p, [k]: v }));
@@ -217,7 +212,6 @@ ${installCommand(fw, item, pm)}`;
 					label="Base color"
 					hint="data-base"
 					value={s.base}
-					raised={raised}
 					onChange={(v) => set("base", v)}
 					options={data.bases.map((b) => ({
 						value: b,
@@ -234,7 +228,6 @@ ${installCommand(fw, item, pm)}`;
 					label="Theme"
 					hint="data-theme"
 					value={s.theme}
-					raised={raised}
 					onChange={(v) => set("theme", v)}
 					options={data.themes.map((t) => ({
 						value: t,
@@ -251,7 +244,6 @@ ${installCommand(fw, item, pm)}`;
 					label="Radius"
 					hint="--radius"
 					value={s.radius}
-					raised={raised}
 					onChange={(v) => set("radius", v)}
 					options={RADII.map((r) => ({ value: r, label: r }))}
 				/>
@@ -259,7 +251,6 @@ ${installCommand(fw, item, pm)}`;
 					label="Mode"
 					hint="class=dark"
 					value={s.mode}
-					raised={raised}
 					onChange={(v) => set("mode", v)}
 					options={[
 						{ value: "light", label: "Light" },
@@ -268,13 +259,12 @@ ${installCommand(fw, item, pm)}`;
 				/>
 				<Control
 					label="Style"
-					hint="raised"
-					value={raised ? "raised" : "flat"}
-					raised={raised}
-					onChange={(v) => setRaised(v === "raised")}
+					hint="elevation"
+					value={layered ? "layered" : "flat"}
+					onChange={(v) => setLayered(v === "layered")}
 					options={[
 						{ value: "flat", label: "Flat" },
-						{ value: "raised", label: "Raised \u2726" },
+						{ value: "layered", label: "Layered \u2726" },
 					]}
 				/>
 			</div>
