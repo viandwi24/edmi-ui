@@ -113,7 +113,7 @@ const navIcons: Record<string, unknown> = {
 					</Button>
 				</div>
 			</header>
-	<div class="min-h-0 flex-1 overflow-y-auto overscroll-contain flex w-full flex-col gap-6 px-4 py-8 md:px-10">
+	<div class="min-h-0 flex-1 overflow-y-auto overscroll-contain flex w-full flex-col gap-6 px-4 py-8 md:px-10 [&>*]:shrink-0">
 		<div class="flex flex-wrap items-end justify-between gap-4">
 			<div>
 				<div class="flex items-center gap-3">
