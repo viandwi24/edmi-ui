@@ -1,7 +1,11 @@
+"use client";
+
 import { Tabs as TabsPrimitive } from "@base-ui/react/tabs";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
 import * as React from "react";
+
+import { type Elevation, useElevation } from "@/registry/edmi/ui/elevation";
 
 function Tabs({
 	className,
@@ -22,15 +26,15 @@ function Tabs({
 }
 
 // Flat by default: the active tab is a --tab-active fill + 1px border, with or without a track.
-// ✦ `raised` (on TabsList, flows to the triggers) makes the active tab a one-step 3D secondary button.
-// The `line` variant has no track; it underlines the active tab and ignores `raised`.
+// ✦ `elevation` (on TabsList, flows to the triggers): raised/floating make ONLY the active tab rise (bevel);
+// the list/track itself never gets the bevel. The `line` variant has no track and ignores elevation.
 const tabsListVariants = cva(
 	"group/tabs-list text-muted-foreground group-data-[orientation=vertical]/tabs:flex-col",
 	{
 		variants: {
 			variant: {
 				default:
-					"inline-flex w-fit items-center justify-center gap-0.5 rounded-lg border border-border bg-muted p-[3px] shadow-sunk group-data-[orientation=vertical]/tabs:h-fit",
+					"inline-flex w-fit items-center justify-center gap-0.5 rounded-lg border border-border bg-muted p-[3px] shadow-[inset_0_1px_2px_rgb(0_0_0/0.04)] group-data-[orientation=vertical]/tabs:h-fit",
 				line: "flex gap-[22px] border-border group-data-[orientation=horizontal]/tabs:border-b group-data-[orientation=vertical]/tabs:gap-1 group-data-[orientation=vertical]/tabs:border-l",
 				// ✦ no track
 				pills:
@@ -44,7 +48,7 @@ const tabsListVariants = cva(
 );
 
 const raisedActive =
-	"data-[active]:border-input data-[active]:border-b-secondary-lip data-[active]:bg-linear-to-b data-[active]:from-secondary-hi data-[active]:to-secondary data-[active]:shadow-btn-secondary data-[active]:[background-origin:border-box]";
+	"data-[active]:border-transparent data-[active]:[background-image:var(--r1-s-face)] data-[active]:[background-origin:border-box] data-[active]:shadow-btn-raised-neutral";
 
 const tabsTriggerVariants = cva(
 	"relative inline-flex items-center justify-center gap-1.5 text-[13.5px] font-medium whitespace-nowrap text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 group-data-[orientation=vertical]/tabs:w-full group-data-[orientation=vertical]/tabs:justify-start [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
@@ -57,35 +61,41 @@ const tabsTriggerVariants = cva(
 				pills:
 					"h-8 rounded-[7px] border border-transparent px-3 data-[active]:border-border data-[active]:bg-tab-active data-[active]:text-foreground",
 			},
-			// ✦ the TabsList `raised` prop, passed down to each trigger
-			raised: { false: "", true: "" },
+			// ✦ the TabsList elevation, passed down to each trigger
+			elevation: { flat: "", raised: "" },
 		},
 		compoundVariants: [
-			{ variant: "default", raised: true, class: raisedActive },
-			{ variant: "pills", raised: true, class: raisedActive },
+			{ variant: "default", elevation: "raised", class: raisedActive },
+			{ variant: "pills", elevation: "raised", class: raisedActive },
 		],
-		defaultVariants: { variant: "default", raised: false },
+		defaultVariants: { variant: "default", elevation: "flat" },
 	},
 );
 
 const TabsListContext = React.createContext<{
 	variant: "default" | "line" | "pills";
-	raised: boolean;
-}>({ variant: "default", raised: false });
+	elevation: "flat" | "raised";
+}>({ variant: "default", elevation: "flat" });
 
 function TabsList({
 	className,
 	variant = "default",
-	raised = false,
+	elevation,
 	activateOnFocus = true,
 	...props
 }: TabsPrimitive.List.Props &
 	VariantProps<typeof tabsListVariants> & {
-		/** ✦ one-step 3D look for the active tab (ignored by `line`). */
-		raised?: boolean;
+		/** ✦ depth: raised +1 / floating +2 make the active tab rise (ignored by `line`). */
+		elevation?: Elevation;
 	}) {
+	const level = useElevation(elevation, "control");
 	return (
-		<TabsListContext.Provider value={{ variant: variant ?? "default", raised }}>
+		<TabsListContext.Provider
+			value={{
+				variant: variant ?? "default",
+				elevation: level === "flat" || level === "sunken" ? "flat" : "raised",
+			}}
+		>
 			<TabsPrimitive.List
 				data-slot="tabs-list"
 				data-variant={variant}
@@ -99,17 +109,23 @@ function TabsList({
 
 function TabsTrigger({
 	className,
-	raised,
+	elevation,
 	...props
-}: TabsPrimitive.Tab.Props & { raised?: boolean }) {
+}: TabsPrimitive.Tab.Props & { elevation?: Elevation }) {
 	const context = React.useContext(TabsListContext);
+	const own =
+		elevation && elevation !== "auto"
+			? elevation === "raised" || elevation === "floating"
+				? "raised"
+				: "flat"
+			: undefined;
 	return (
 		<TabsPrimitive.Tab
 			data-slot="tabs-trigger"
 			className={cn(
 				tabsTriggerVariants({
 					variant: context.variant,
-					raised: raised ?? context.raised,
+					elevation: own ?? context.elevation,
 				}),
 				className,
 			)}

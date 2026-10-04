@@ -5,6 +5,16 @@ import { cn } from "cn";
 import type * as React from "react";
 import { IconPlaceholder } from "@/edmi/icon-placeholder";
 
+import { type Elevation, useElevation } from "@/registry/edmi/ui/elevation";
+
+// ✦ depth (v4): overlay role. Natural level is floating in layered mode; flat otherwise.
+const overlayElevation = {
+	sunken: "",
+	flat: "",
+	raised: "border-transparent shadow-raised",
+	floating: "border-transparent shadow-floating",
+};
+
 function ContextMenu({ ...props }: ContextMenuPrimitive.Root.Props) {
 	return <ContextMenuPrimitive.Root data-slot="context-menu" {...props} />;
 }
@@ -34,12 +44,17 @@ function ContextMenuContent({
 	alignOffset = 4,
 	side = "right",
 	sideOffset = 0,
+	elevation,
 	...props
 }: ContextMenuPrimitive.Popup.Props &
 	Pick<
 		ContextMenuPrimitive.Positioner.Props,
 		"align" | "alignOffset" | "side" | "sideOffset"
-	>) {
+	> & {
+		/** ✦ depth: flat 0, raised +1 (bevel), floating +2 (bevel + drop). */
+		elevation?: Elevation;
+	}) {
+	const level = useElevation(elevation, "overlay");
 	return (
 		<ContextMenuPrimitive.Portal>
 			<ContextMenuPrimitive.Positioner
@@ -53,6 +68,7 @@ function ContextMenuContent({
 					data-slot="context-menu-content"
 					className={cn(
 						"z-50 max-h-(--available-height) min-w-40 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-xl border border-border bg-popover p-1.5 text-popover-foreground duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-[open]:animate-in data-[open]:fade-in-0 data-[open]:zoom-in-95 data-[closed]:animate-out data-[closed]:fade-out-0 data-[closed]:zoom-out-95 data-[closed]:overflow-hidden",
+						overlayElevation[level],
 						className,
 					)}
 					{...props}

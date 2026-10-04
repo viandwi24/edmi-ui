@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="pagination" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look (on `Pagination`, applies to the active link).
+Flat by default. Set `raised` on `Pagination`: only the active link rises (bevel); the list never does. `PaginationLink` can override it.
 
 <ComponentDemo name="pagination" demo="pagination-raised" />
 
@@ -33,7 +33,7 @@ Flat by default. Pass `raised` for the one-step 3D look (on `Pagination`, applie
 | `PaginationLink isActive` | `boolean` | `false` |
 | `PaginationLink size` | Button sizes | `icon` |
 | `PaginationPrevious text` / `PaginationNext text` | `string` | `Previous` / `Next` |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 Parts: `Pagination`, `PaginationContent`, `PaginationItem`, `PaginationLink`, `PaginationPrevious`, `PaginationNext`, `PaginationEllipsis`.
 

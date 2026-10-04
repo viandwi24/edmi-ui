@@ -23,9 +23,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentDemo name="tabs" demo="tabs-line" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look. Set it on `TabsList`; it flows to the triggers and `line` ignores it.
+Flat by default. Set `raised` on `TabsList`: only the ACTIVE trigger rises (bevel); the list or track itself never does. It flows to the triggers (a trigger can override it) and `line` ignores it.
 
 <ComponentDemo name="tabs" demo="tabs-raised" />
 
@@ -36,7 +36,7 @@ Flat by default. Pass `raised` for the one-step 3D look. Set it on `TabsList`; i
 | `Tabs orientation` | `horizontal \| vertical` | `horizontal` |
 | `TabsList variant` | `default \| line \| pills` | `default` |
 | `TabsTrigger disabled` | `boolean` | `false` |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 Parts: `Tabs`, `TabsList`, `TabsTrigger`, `TabsContent`.
 

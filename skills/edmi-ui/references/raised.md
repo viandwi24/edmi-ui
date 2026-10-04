@@ -98,7 +98,7 @@ Do: let a container pass `raised` down; override a child only when needed.
 ## Components that accept `raised` (generated from the source)
 
 <!-- BEGIN GENERATED: raised-list -->
-UI and patterns (48): `agent-card`, `alert-dialog`, `app-header`, `badge`, `bubble`, `button`, `button-group`, `calendar`, `card`, `checkbox`, `code-block`, `data-table`, `date-picker`, `dialog`, `empty`, `feature-row`, `feed-post`, `footer`, `input`, `input-group`, `input-otp`, `inset-panel`, `join-panel`, `kanban-column`, `kbd`, `layout-picker`, `leaderboard-podium`, `menubar`, `native-select`, `pagination`, `popover`, `pricing-plan`, `questionnaire`, `radio-group`, `select`, `site-header`, `slider`, `sonner`, `stat-tile`, `step-card`, `switch`, `tabs`, `task-list`, `textarea`, `ticker-strip`, `toggle`, `toggle-group`, `watchlist-item`
+UI and patterns (50): `agent-card`, `alert-dialog`, `app-header`, `badge`, `bubble`, `button`, `button-group`, `calendar`, `card`, `checkbox`, `code-block`, `context-menu`, `data-table`, `date-picker`, `dialog`, `dropdown-menu`, `empty`, `feature-row`, `feed-post`, `footer`, `input`, `input-group`, `input-otp`, `inset-panel`, `join-panel`, `kanban-column`, `kbd`, `layout-picker`, `leaderboard-podium`, `menubar`, `native-select`, `pagination`, `popover`, `pricing-plan`, `questionnaire`, `radio-group`, `select`, `site-header`, `slider`, `sonner`, `stat-tile`, `step-card`, `switch`, `tabs`, `task-list`, `textarea`, `ticker-strip`, `toggle`, `toggle-group`, `watchlist-item`
 
 AI (11): `ai-agent`, `ai-artifact`, `ai-artifact-card`, `ai-confirmation`, `ai-node`, `ai-plan`, `ai-prompt-input`, `ai-prompt-input-agent`, `ai-speech-input`, `ai-suggestion`, `ai-tool`
 <!-- END GENERATED: raised-list -->

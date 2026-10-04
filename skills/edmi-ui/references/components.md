@@ -76,8 +76,8 @@ Choose by "use when". If two items fit, prefer the more specific one (`field` ov
 
 - `breadcrumb`: location trail in a hierarchy.
 - `command`: command palette and searchable lists (⌘K).
-- `context-menu`: right-click menu.
-- `dropdown-menu`: actions menu opened by a button.
+- `context-menu` [raised]: right-click menu.
+- `dropdown-menu` [raised]: actions menu opened by a button.
 - `menubar` [raised]: a persistent row of menus (desktop-app style).
 - `navigation-menu`: top-level site navigation with rich dropdown panels.
 - `pagination` [raised]: page navigation for lists and tables.

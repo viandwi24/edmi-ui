@@ -16,6 +16,14 @@ const fieldElevation = {
 	floating: "border-transparent shadow-floating",
 };
 
+// ✦ depth (v4): overlay role for the menu popup. Natural level is floating in layered mode; flat otherwise.
+const overlayElevation = {
+	sunken: "",
+	flat: "",
+	raised: "border-transparent shadow-raised",
+	floating: "border-transparent shadow-floating",
+};
+
 const Select = SelectPrimitive.Root;
 
 function SelectGroup({ className, ...props }: SelectPrimitive.Group.Props) {
@@ -86,12 +94,17 @@ function SelectContent({
 	align = "center",
 	alignOffset = 0,
 	alignItemWithTrigger = true,
+	elevation,
 	...props
 }: SelectPrimitive.Popup.Props &
 	Pick<
 		SelectPrimitive.Positioner.Props,
 		"align" | "alignOffset" | "side" | "sideOffset" | "alignItemWithTrigger"
-	>) {
+	> & {
+		/** ✦ depth of the menu popup: flat 0, raised +1 (bevel), floating +2 (bevel + drop). */
+		elevation?: Elevation;
+	}) {
+	const level = useElevation(elevation, "overlay");
 	return (
 		<SelectPrimitive.Portal>
 			<SelectPrimitive.Positioner
@@ -107,6 +120,7 @@ function SelectContent({
 					data-align-trigger={alignItemWithTrigger}
 					className={cn(
 						"relative isolate z-50 max-h-(--available-height) w-(--anchor-width) min-w-36 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-xl border border-border bg-popover p-1.5 text-popover-foreground duration-100 data-[align-trigger=true]:animate-none data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2 data-[open]:animate-in data-[open]:fade-in-0 data-[open]:zoom-in-95 data-[closed]:animate-out data-[closed]:fade-out-0 data-[closed]:zoom-out-95",
+						overlayElevation[level],
 						className,
 					)}
 					{...props}

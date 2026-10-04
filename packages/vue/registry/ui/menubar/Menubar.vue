@@ -7,11 +7,21 @@ import {
   useForwardPropsEmits,
 } from "reka-ui"
 import { cn } from "@/registry/edmi/lib/utils"
+import { type Elevation, useElevation } from "@/registry/edmi/ui/elevation"
 
-const props = withDefaults(defineProps<MenubarRootProps & { class?: HTMLAttributes["class"], raised?: boolean }>(), { raised: false })
+const props = withDefaults(defineProps<MenubarRootProps & { class?: HTMLAttributes["class"], elevation?: Elevation }>(), { elevation: undefined })
 const emits = defineEmits<MenubarRootEmits>()
 
-const delegatedProps = reactiveOmit(props, "class", "raised")
+const delegatedProps = reactiveOmit(props, "class", "elevation")
+
+// ✦ depth (v4): the bar itself rises.
+const barElevation = {
+  sunken: '',
+  flat: '',
+  raised: 'border-transparent shadow-raised',
+  floating: 'border-transparent shadow-floating',
+}
+const level = useElevation(() => props.elevation, 'control')
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
 </script>
@@ -24,7 +34,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     :class="
       cn(
       `flex items-center gap-0.5 rounded-[10px] border border-border bg-card p-[3px]`,
-        props.raised && 'border-b-lip shadow-[0_2px_0_var(--lip)]',
+        barElevation[level],
         props.class,
       )
     "

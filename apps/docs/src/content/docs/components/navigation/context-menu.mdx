@@ -21,8 +21,18 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="context-menu" />
 
+## Elevation ✦
+
+Flat by default. On `ContextMenuContent`, `raised` (+1) adds the bevel and `floating` (+2) the bevel plus one soft drop.
+
+<ComponentDemo name="context-menu" demo="context-menu-raised" />
+
 ## API
+| Prop | Type | Default |
+| --- | --- | --- |
+| `ContextMenuContent elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
+
 Same parts and props as [Dropdown Menu](/components/navigation/dropdown-menu/), prefixed `ContextMenu`: `ContextMenu`, `ContextMenuTrigger`, `ContextMenuContent`, `ContextMenuGroup`, `ContextMenuLabel`, `ContextMenuItem` (`variant default | destructive`), `ContextMenuCheckboxItem`, `ContextMenuRadioGroup`, `ContextMenuRadioItem`, `ContextMenuSeparator`, `ContextMenuShortcut`, `ContextMenuSub`, `ContextMenuSubTrigger`, `ContextMenuSubContent`.
 
 ## ✦ Edmi additions
-- Same recipe as Dropdown Menu: hard 4px lip, `data-[highlighted]` items, left-hand indicators.
+- Same recipe as Dropdown Menu: `data-[highlighted]` items, left-hand indicators, optional `elevation` on the content.

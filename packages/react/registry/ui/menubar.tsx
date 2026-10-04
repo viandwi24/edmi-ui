@@ -20,21 +20,31 @@ import {
 	DropdownMenuSubTrigger,
 	DropdownMenuTrigger,
 } from "@/registry/edmi/ui/dropdown-menu";
+import { type Elevation, useElevation } from "@/registry/edmi/ui/elevation";
+
+// ✦ depth (v4): the bar itself rises.
+const barElevation = {
+	sunken: "",
+	flat: "",
+	raised: "border-transparent shadow-raised",
+	floating: "border-transparent shadow-floating",
+};
 
 function Menubar({
 	className,
-	raised = false,
+	elevation,
 	...props
 }: MenubarPrimitive.Props & {
-	/** ✦ one-step 3D look for the bar (`border-b-lip` + 2px lip). */
-	raised?: boolean;
+	/** ✦ depth for the bar: flat 0, raised +1 (bevel), floating +2. */
+	elevation?: Elevation;
 }) {
+	const level = useElevation(elevation, "control");
 	return (
 		<MenubarPrimitive
 			data-slot="menubar"
 			className={cn(
 				"flex items-center gap-0.5 rounded-[10px] border border-border bg-card p-[3px]",
-				raised && "border-b-lip shadow-[0_2px_0_var(--lip)]",
+				barElevation[level],
 				className,
 			)}
 			{...props}

@@ -231,6 +231,8 @@ const RAISED = [
 	"popover",
 	"sonner",
 	"menubar",
+	"dropdown-menu",
+	"context-menu",
 	"pagination",
 	"tabs",
 	"bubble",

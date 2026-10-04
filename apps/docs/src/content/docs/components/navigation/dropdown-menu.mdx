@@ -21,12 +21,19 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="dropdown-menu" />
 
+## Elevation ✦
+
+Flat by default. On `DropdownMenuContent`, `raised` (+1) adds the bevel and `floating` (+2) the bevel plus one soft drop (the natural level of a menu in layered mode).
+
+<ComponentDemo name="dropdown-menu" demo="dropdown-menu-raised" />
+
 ## API
 | Prop | Type | Default |
 | --- | --- | --- |
 | `DropdownMenuContent side` | `top \| right \| bottom \| left` | `bottom` |
 | `DropdownMenuContent align` | `start \| center \| end` | `start` |
 | `DropdownMenuContent sideOffset` | `number` | `4` |
+| `DropdownMenuContent elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 | `DropdownMenuItem variant` | `default \| destructive` | `default` |
 | `DropdownMenuItem inset` | `boolean` | `false` |
 | `DropdownMenuTrigger render` | `ReactElement` | none (Base UI, replaces `asChild`) |
@@ -36,6 +43,6 @@ Parts: `DropdownMenu`, `DropdownMenuTrigger`, `DropdownMenuContent`, `DropdownMe
 `DropdownMenuLabel` must sit inside a `DropdownMenuGroup` (Base UI `Menu.GroupLabel`).
 
 ## ✦ Edmi additions
-- Flat: solid `--popover` surface, 1px border; no shadow.
+- Flat: solid `--popover` surface, 1px border; no shadow. `elevation` adds the bevel / drop.
 - Highlighted item uses `data-[highlighted]`; check and radio indicators sit on the left, radio shows a dot.
 - Shortcuts are mono text.

@@ -4,24 +4,31 @@ import type { HTMLAttributes } from "vue"
 import type { ButtonVariants } from "@/registry/edmi/ui/button"
 import { reactiveOmit } from "@vueuse/core"
 import { PaginationListItem } from "reka-ui"
-import { inject } from "vue"
+import { computed, inject } from "vue"
 import { cn } from "@/registry/edmi/lib/utils"
+import type { Elevation } from "@/registry/edmi/ui/elevation"
 import { buttonVariants } from "@/registry/edmi/ui/button"
 
 const props = withDefaults(defineProps<PaginationListItemProps & {
   size?: ButtonVariants["size"]
   class?: HTMLAttributes["class"]
   isActive?: boolean
-  /** ✦ overrides the Pagination `raised` for this link */
-  raised?: boolean
+  /** ✦ overrides the Pagination `elevation` for this link (the active link rises) */
+  elevation?: Elevation
 }>(), {
   size: "icon",
-  raised: undefined,
+  elevation: undefined,
 })
 
 const context = inject<{ raised?: boolean } | null>("pagination", null)
 
-const delegatedProps = reactiveOmit(props, "class", "size", "isActive", "raised")
+const delegatedProps = reactiveOmit(props, "class", "size", "isActive", "elevation")
+
+const raised = computed(() =>
+  props.elevation && props.elevation !== "auto"
+    ? props.elevation === "raised" || props.elevation === "floating"
+    : !!context?.raised,
+)
 </script>
 
 <template>
@@ -34,7 +41,7 @@ const delegatedProps = reactiveOmit(props, "class", "size", "isActive", "raised"
         size,
       }),
       isActive && 'bg-card font-semibold',
-      isActive && (props.raised ?? context?.raised) && 'border-b-lip shadow-[0_2px_0_var(--lip)]',
+      isActive && raised && 'border-transparent shadow-btn-raised-neutral',
       props.class)"
   >
     <slot />

@@ -8,6 +8,7 @@ export const items: Item[] = [
 			"Tabs in a flat, sunken track (variant default) or underlined (variant line). Horizontal and vertical.",
 		type: "registry:ui",
 		categories: ["Navigation"],
+		registryDependencies: ["elevation"],
 		docs: "Replaces the stock tabs: `shadcn add @edmi-ui/tabs --overwrite`.",
 		frameworks: {
 			react: {
@@ -38,7 +39,7 @@ export const items: Item[] = [
 			"Page navigation built from Edmi buttons: active page outline, previous/next and ellipsis.",
 		type: "registry:ui",
 		categories: ["Navigation"],
-		registryDependencies: ["button"],
+		registryDependencies: ["button", "elevation"],
 		docs: "Replaces the stock pagination: `shadcn add @edmi-ui/pagination --overwrite`.",
 		frameworks: {
 			react: {
@@ -51,9 +52,10 @@ export const items: Item[] = [
 		name: "dropdown-menu",
 		title: "Dropdown Menu",
 		description:
-			"Menu opened by a button: items (default, destructive), checkbox and radio items, labels, shortcuts and sub-menus. Hard 4px lip.",
+			"Menu opened by a button: items (default, destructive), checkbox and radio items, labels, shortcuts and sub-menus.",
 		type: "registry:ui",
 		categories: ["Navigation"],
+		registryDependencies: ["elevation"],
 		docs: "Replaces the stock dropdown-menu: `shadcn add @edmi-ui/dropdown-menu --overwrite`.",
 		frameworks: {
 			react: {
@@ -69,6 +71,7 @@ export const items: Item[] = [
 			"Right-click menu with the same anatomy and recipe as the dropdown menu.",
 		type: "registry:ui",
 		categories: ["Navigation"],
+		registryDependencies: ["elevation"],
 		docs: "Replaces the stock context-menu: `shadcn add @edmi-ui/context-menu --overwrite`.",
 		frameworks: {
 			react: {
@@ -83,7 +86,7 @@ export const items: Item[] = [
 		description: "Persistent row of menus; items have a destructive variant.",
 		type: "registry:ui",
 		categories: ["Navigation"],
-		registryDependencies: ["dropdown-menu"],
+		registryDependencies: ["dropdown-menu", "elevation"],
 		docs: "Replaces the stock menubar: `shadcn add @edmi-ui/menubar --overwrite`.",
 		frameworks: {
 			react: {

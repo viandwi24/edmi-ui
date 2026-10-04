@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="menubar" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look (on `Menubar` (the bar)).
+Flat by default. On `Menubar`, `raised` (+1) adds the bevel to the bar and `floating` (+2) a soft drop. The menus below it follow `DropdownMenuContent` (flat, or `elevation` on the content).
 
 <ComponentDemo name="menubar" demo="menubar-raised" />
 
@@ -33,9 +33,9 @@ Flat by default. Pass `raised` for the one-step 3D look (on `Menubar` (the bar))
 | `MenubarItem variant` | `default \| destructive` | `default` |
 | `MenubarItem inset` | `boolean` | `false` |
 | `MenubarContent align` | `start \| center \| end` | `start` |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 Parts: `Menubar`, `MenubarMenu`, `MenubarTrigger`, `MenubarContent`, `MenubarGroup`, `MenubarLabel`, `MenubarItem`, `MenubarCheckboxItem`, `MenubarRadioGroup`, `MenubarRadioItem`, `MenubarSeparator`, `MenubarShortcut`, `MenubarSub`, `MenubarSubTrigger`, `MenubarSubContent`.
 
 ## ✦ Edmi additions
-- Menus reuse the Dropdown Menu recipe (hard 4px lip, `data-[highlighted]`); the open trigger stays highlighted.
+- Menus reuse the Dropdown Menu recipe (`data-[highlighted]`); the open trigger stays highlighted.

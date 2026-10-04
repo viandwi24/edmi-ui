@@ -10,9 +10,14 @@ import {
 	MenubarTrigger,
 } from "@edmi-react/ui/menubar";
 
-export default function Demo() {
+const levels = [
+	{ value: "flat", label: "Flat (0)" },
+	{ value: "raised", label: "Raised (+1)" },
+] as const;
+
+function Bar({ elevation }: { elevation: "flat" | "raised" }) {
 	return (
-		<Menubar raised>
+		<Menubar elevation={elevation}>
 			<MenubarMenu>
 				<MenubarTrigger>File</MenubarTrigger>
 				<MenubarContent>
@@ -51,5 +56,18 @@ export default function Demo() {
 				</MenubarContent>
 			</MenubarMenu>
 		</Menubar>
+	);
+}
+
+export default function Demo() {
+	return (
+		<div className="flex flex-col gap-5">
+			{levels.map(({ value, label }) => (
+				<div key={value} className="flex flex-col gap-2">
+					<p className="text-xs font-medium text-muted-foreground">{label}</p>
+					<Bar elevation={value} />
+				</div>
+			))}
+		</div>
 	);
 }
