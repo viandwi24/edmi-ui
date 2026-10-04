@@ -9,7 +9,7 @@ const { name } = useEnvironmentVariableContext()
 </script>
 
 <template>
-  <span :class="cn('w-[190px] shrink-0 truncate font-mono text-[12.5px]', props.class)">
+  <span :class="cn('col-start-1 w-[190px] shrink-0 truncate font-mono text-[12.5px]', props.class)">
     <slot>{{ name }}</slot>
   </span>
 </template>

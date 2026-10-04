@@ -28,6 +28,7 @@ const displayText = computed(() => {
 <template>
   <HoverCardTrigger as-child>
     <Badge
+      as="span"
       data-slot="ai-inline-citation-trigger"
       shape="pill"
       variant="secondary"

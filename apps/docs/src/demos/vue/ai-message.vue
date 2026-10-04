@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CopyIcon, RefreshCwIcon, HeartIcon } from "@lucide/vue";
+import { CopyIcon, RefreshCwIcon, CircleCheckIcon } from "@lucide/vue";
 import {
   Message,
   MessageAction,
@@ -34,7 +34,7 @@ Sources: [Jupiter quote API](https://example.com).`;
         <MessageActions>
           <MessageAction tooltip="Copy"><CopyIcon /></MessageAction>
           <MessageAction tooltip="Regenerate"><RefreshCwIcon /></MessageAction>
-          <MessageAction tooltip="Good response"><HeartIcon /></MessageAction>
+          <MessageAction tooltip="Good response"><CircleCheckIcon /></MessageAction>
         </MessageActions>
       </MessageToolbar>
     </Message>

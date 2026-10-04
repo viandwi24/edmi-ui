@@ -50,7 +50,7 @@
 
 <Button
 	aria-label={`Copy ${copyFormat}`}
-	class={cn("shrink-0", className)}
+	class={cn("col-start-4 shrink-0", className)}
 	onclick={copy}
 	size="icon-xs"
 	type="button"

@@ -9,6 +9,8 @@ import {
 	ArtifactTitle,
 } from "@edmi-react/components/ai/artifact";
 import { CodeBlock } from "@edmi-react/components/ai/code-block";
+import { Button } from "@edmi-react/ui/button";
+import { useState } from "react";
 import { IconPlaceholder } from "@/edmi/icon-placeholder";
 
 const code = `import { rebalance } from "@/lib/keeper"
@@ -21,6 +23,19 @@ export async function run(index: string) {
 }`;
 
 export default function Demo() {
+	const [open, setOpen] = useState(true);
+	const [copied, setCopied] = useState(false);
+	const copy = () => {
+		navigator.clipboard?.writeText(code).catch(() => {});
+		setCopied(true);
+		setTimeout(() => setCopied(false), 1500);
+	};
+	if (!open)
+		return (
+			<Button variant="outline" size="sm" onClick={() => setOpen(true)}>
+				Reopen rebalance.ts
+			</Button>
+		);
 	return (
 		<Artifact className="max-w-xl">
 			<ArtifactHeader>
@@ -30,15 +45,27 @@ export default function Demo() {
 				</div>
 				<ArtifactActions>
 					<ArtifactAction
+						onClick={copy}
 						icon={
-							<IconPlaceholder
-								lucide="CopyIcon"
-								tabler="IconCopy"
-								hugeicons="Copy01Icon"
-								phosphor="CopyIcon"
-								remixicon="RiFileCopyLine"
-								className="size-4"
-							/>
+							copied ? (
+								<IconPlaceholder
+									lucide="CheckIcon"
+									tabler="IconCheck"
+									hugeicons="Tick02Icon"
+									phosphor="CheckIcon"
+									remixicon="RiCheckLine"
+									className="size-4"
+								/>
+							) : (
+								<IconPlaceholder
+									lucide="CopyIcon"
+									tabler="IconCopy"
+									hugeicons="Copy01Icon"
+									phosphor="CopyIcon"
+									remixicon="RiFileCopyLine"
+									className="size-4"
+								/>
+							)
 						}
 						tooltip="Copy"
 					/>
@@ -68,7 +95,7 @@ export default function Demo() {
 						}
 						tooltip="Open"
 					/>
-					<ArtifactClose />
+					<ArtifactClose onClick={() => setOpen(false)} />
 				</ArtifactActions>
 			</ArtifactHeader>
 			<ArtifactContent>

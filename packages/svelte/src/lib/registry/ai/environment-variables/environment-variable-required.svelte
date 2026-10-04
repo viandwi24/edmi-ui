@@ -6,6 +6,6 @@
 	let { class: className, children, ...restProps }: ComponentProps<typeof Badge> = $props();
 </script>
 
-<Badge variant="warning" class={cn("h-[18px] text-[10.5px]", className)} {...restProps}>
+<Badge variant="warning" class={cn("col-start-2 h-[18px] text-[10.5px]", className)} {...restProps}>
 	{#if children}{@render children()}{:else}Required{/if}
 </Badge>

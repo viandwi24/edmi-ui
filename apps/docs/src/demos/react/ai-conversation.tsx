@@ -29,7 +29,7 @@ export default function Demo() {
 	return (
 		<div className="relative flex h-96 w-full max-w-xl overflow-hidden rounded-xl border border-border bg-card">
 			<Conversation className="size-full">
-				<ConversationContent>
+				<ConversationContent className="pt-14">
 					{turns.map((t, i) => (
 						<ConversationItem key={t.text} messageId={`m${i}`}>
 							<Message from={t.role}>

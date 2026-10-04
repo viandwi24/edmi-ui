@@ -26,7 +26,7 @@
 </script>
 
 <div class="flex items-start gap-6">
-	<Context maxTokens={200000} usedTokens={124000} {usage} modelId="anthropic:claude-sonnet-4">
+	<Context maxTokens={200000} usedTokens={124000} {usage} modelId="anthropic/claude-sonnet-4">
 		<ContextTrigger />
 		<ContextContent>
 			<ContextContentHeader />

@@ -30,7 +30,7 @@ export default function Demo() {
 					Keep every index within its drift limit. Never trade without approval
 					when the order is above <b>$500</b>.
 				</AgentInstructions>
-				<AgentTools defaultValue={["rebalance"]} multiple>
+				<AgentTools defaultValue={["rebalance"]}>
 					<AgentTool name="get_prices" tool={getPrices} value="get_prices" />
 					<AgentTool name="rebalance" tool={rebalance} value="rebalance" />
 					<AgentTool name="post_feed" tool={postFeed} value="post_feed" />

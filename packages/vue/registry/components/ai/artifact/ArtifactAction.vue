@@ -5,6 +5,8 @@ import { cn } from "@/registry/edmi/lib/utils"
 import { Button } from "@/registry/edmi/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/registry/edmi/ui/tooltip"
 
+defineOptions({ inheritAttrs: false })
+
 // The icon goes in the default slot (an icon component), e.g. `<ArtifactAction tooltip="Copy"><CopyIcon /></ArtifactAction>`.
 const props = withDefaults(defineProps<{
   class?: HTMLAttributes["class"]
@@ -23,6 +25,7 @@ const props = withDefaults(defineProps<{
     <Tooltip>
       <TooltipTrigger as-child>
         <Button
+          v-bind="$attrs"
           type="button"
           :variant="props.variant"
           :size="props.size"
@@ -39,6 +42,7 @@ const props = withDefaults(defineProps<{
   </TooltipProvider>
   <Button
     v-else
+    v-bind="$attrs"
     type="button"
     :variant="props.variant"
     :size="props.size"

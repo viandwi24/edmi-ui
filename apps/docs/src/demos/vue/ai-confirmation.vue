@@ -10,12 +10,19 @@ import {
   ConfirmationTitle,
 } from "@edmi-vue/components/ai/confirmation";
 import { CheckIcon, XIcon } from "@lucide/vue";
+import { reactive } from "vue";
 
-const rows = [
+const rows = reactive([
   { state: "approval-requested", approval: { id: "1" } },
   { state: "approval-responded", approval: { id: "2", approved: true } },
   { state: "output-denied", approval: { id: "3", approved: false } },
-] as const;
+]) as { state: "approval-requested" | "approval-responded" | "output-denied"; approval: { id: string; approved?: boolean } }[];
+
+// The first row is live: Approve / Reject move it to the matching state.
+function respond(row: (typeof rows)[number], approved: boolean) {
+  row.approval = { ...row.approval, approved };
+  row.state = approved ? "approval-responded" : "output-denied";
+}
 </script>
 
 <template>
@@ -42,8 +49,8 @@ const rows = [
         Sells 0.42 NVDAx and buys MSFTx + AAPLx. Max slippage 1%.
       </ConfirmationDescription>
       <ConfirmationActions>
-        <ConfirmationAction>Approve</ConfirmationAction>
-        <ConfirmationAction variant="outline">Reject</ConfirmationAction>
+        <ConfirmationAction @click="row.approval.id === '1' && respond(row, true)">Approve</ConfirmationAction>
+        <ConfirmationAction variant="outline" @click="row.approval.id === '1' && respond(row, false)">Reject</ConfirmationAction>
       </ConfirmationActions>
     </Confirmation>
   </div>

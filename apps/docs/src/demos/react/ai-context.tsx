@@ -30,7 +30,7 @@ export default function Demo() {
 				maxTokens={200000}
 				usedTokens={124000}
 				usage={usage}
-				modelId="anthropic:claude-sonnet-4"
+				modelId="anthropic/claude-sonnet-4"
 			>
 				<ContextTrigger />
 				<ContextContent>

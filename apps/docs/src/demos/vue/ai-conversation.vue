@@ -36,7 +36,7 @@ const messages = turns.map((t, i) => ({
 <template>
   <div class="relative flex h-96 w-full max-w-xl overflow-hidden rounded-xl border border-border bg-card">
     <Conversation class="size-full">
-      <ConversationContent>
+      <ConversationContent class="pt-14">
         <ConversationItem v-for="(t, i) in turns" :key="t.text" :message-id="`m${i}`">
           <Message :from="t.role">
             <MessageContent>

@@ -35,7 +35,7 @@
 
 <div class="relative flex h-96 w-full max-w-xl overflow-hidden rounded-xl border border-border bg-card">
 	<Conversation class="size-full">
-		<ConversationContent>
+		<ConversationContent class="pt-14">
 			{#each turns as t, i (t.text)}
 				<ConversationItem messageId={`m${i}`}>
 					<Message from={t.role}>

@@ -27,7 +27,7 @@ const usage = {
 
 <template>
   <div class="flex items-start gap-6">
-    <Context :max-tokens="200000" :used-tokens="124000" :usage="usage" model-id="anthropic:claude-sonnet-4">
+    <Context :max-tokens="200000" :used-tokens="124000" :usage="usage" model-id="anthropic/claude-sonnet-4">
       <ContextTrigger />
       <ContextContent>
         <ContextContentHeader />

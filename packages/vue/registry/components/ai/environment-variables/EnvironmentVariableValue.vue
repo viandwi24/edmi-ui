@@ -16,7 +16,7 @@ const displayValue = computed(() => (showValues.value ? value.value : "•".repe
 <template>
   <span
     :class="cn(
-      'min-w-0 flex-1 truncate font-mono text-[12.5px]',
+      'col-start-3 min-w-0 truncate font-mono text-[12.5px]',
       !showValues && 'tracking-[2px] text-muted-foreground select-none',
       props.class,
     )"

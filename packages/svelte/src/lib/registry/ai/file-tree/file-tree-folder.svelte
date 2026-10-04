@@ -45,7 +45,10 @@
 			<button
 				class="flex min-w-0 flex-1 cursor-pointer items-center gap-[7px] border-none bg-transparent p-0 text-left"
 				type="button"
-				onclick={() => tree.select(path)}
+				onclick={() => {
+					tree.select(path);
+					tree.togglePath(path);
+				}}
 			>
 				<FileTreeIcon class="text-chart-3">
 					{#if isExpanded}

@@ -151,9 +151,11 @@ export const FileTreeFolder = ({
 		togglePath(path);
 	}, [togglePath, path]);
 
+	// Clicking the label selects the folder and toggles it, like the chevron.
 	const handleSelect = useCallback(() => {
 		onSelect?.(path);
-	}, [onSelect, path]);
+		togglePath(path);
+	}, [onSelect, togglePath, path]);
 
 	const folderContextValue = useMemo(
 		() => ({ isExpanded, name, path }),

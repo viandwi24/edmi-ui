@@ -381,7 +381,10 @@ export const CodeBlockContent = ({
 		};
 	}, [code, language]);
 
-	const tokenized = asyncTokens ?? syncTokens;
+	// Server and hydration render the plain tokens; the (possibly cached) highlighted ones only after mount.
+	const [mounted, setMounted] = useState(false);
+	useEffect(() => setMounted(true), []);
+	const tokenized = asyncTokens ?? (mounted ? syncTokens : rawTokens);
 
 	return (
 		<div className="relative overflow-auto">

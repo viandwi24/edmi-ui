@@ -62,7 +62,7 @@ onBeforeUnmount(() => {
 <template>
   <Button
     :aria-label="`Copy ${props.copyFormat}`"
-    :class="cn('shrink-0', props.class)"
+    :class="cn('col-start-4 shrink-0', props.class)"
     size="icon-xs"
     type="button"
     variant="ghost"

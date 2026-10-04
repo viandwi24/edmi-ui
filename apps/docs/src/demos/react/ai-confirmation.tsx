@@ -8,6 +8,7 @@ import {
 	ConfirmationRequest,
 	ConfirmationTitle,
 } from "@edmi-react/components/ai/confirmation";
+import { useState } from "react";
 import { IconPlaceholder } from "@/edmi/icon-placeholder";
 
 const check = (
@@ -31,13 +32,23 @@ const cross = (
 	/>
 );
 
+type State = "approval-requested" | "approval-responded" | "output-denied";
+
 function Row({
-	state,
-	approval,
+	state: initial,
+	approval: initialApproval,
+	interactive = false,
 }: {
-	state: "approval-requested" | "approval-responded" | "output-denied";
+	state: State;
 	approval: { id: string; approved?: boolean };
+	interactive?: boolean;
 }) {
+	const [state, setState] = useState<State>(initial);
+	const [approval, setApproval] = useState(initialApproval);
+	const respond = (approved: boolean) => {
+		setApproval({ ...approval, approved });
+		setState(approved ? "approval-responded" : "output-denied");
+	};
 	return (
 		<Confirmation approval={approval} state={state} className="w-full max-w-md">
 			<ConfirmationTitle>
@@ -55,8 +66,17 @@ function Row({
 				Sells 0.42 NVDAx and buys MSFTx + AAPLx. Max slippage 1%.
 			</ConfirmationDescription>
 			<ConfirmationActions>
-				<ConfirmationAction>Approve</ConfirmationAction>
-				<ConfirmationAction variant="outline">Reject</ConfirmationAction>
+				<ConfirmationAction
+					onClick={interactive ? () => respond(true) : undefined}
+				>
+					Approve
+				</ConfirmationAction>
+				<ConfirmationAction
+					variant="outline"
+					onClick={interactive ? () => respond(false) : undefined}
+				>
+					Reject
+				</ConfirmationAction>
 			</ConfirmationActions>
 		</Confirmation>
 	);
@@ -65,7 +85,7 @@ function Row({
 export default function Demo() {
 	return (
 		<div className="flex flex-col gap-4">
-			<Row state="approval-requested" approval={{ id: "1" }} />
+			<Row state="approval-requested" approval={{ id: "1" }} interactive />
 			<Row state="approval-responded" approval={{ id: "2", approved: true }} />
 			<Row state="output-denied" approval={{ id: "3", approved: false }} />
 		</div>

@@ -21,7 +21,7 @@ provide(EnvironmentVariableKey, {
 <template>
   <div
     data-slot="ai-environment-variable"
-    :class="cn('flex items-center gap-2.5 border-t border-border-2 px-3.5 py-[9px]', props.class)"
+    :class="cn('col-span-full grid grid-cols-subgrid items-center border-t border-border-2 px-3.5 py-[9px]', props.class)"
   >
     <slot>
       <EnvironmentVariableName />

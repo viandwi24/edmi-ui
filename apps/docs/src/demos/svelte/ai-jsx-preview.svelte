@@ -8,6 +8,7 @@
 	const components = { Card, Button, Skeleton };
 
 	const rendered = `<Card size="sm" class="gap-0 px-4">
+  <div class="font-semibold">Join MAG4</div>
   <div class="mt-0.5 text-xs text-muted-foreground">Magnificent Four · 4 tokens</div>
   <div class="mt-3.5 flex gap-2">
     <Button raised>Join index</Button>

@@ -153,7 +153,13 @@ export const EnvironmentVariablesContent = ({
 	children,
 	...props
 }: EnvironmentVariablesContentProps) => (
-	<div className={cn("flex flex-col", className)} {...props}>
+	<div
+		className={cn(
+			"grid grid-cols-[190px_auto_minmax(0,1fr)_auto] gap-x-2.5",
+			className,
+		)}
+		{...props}
+	>
 		{children}
 	</div>
 );
@@ -193,7 +199,7 @@ export const EnvironmentVariableName = ({
 	return (
 		<span
 			className={cn(
-				"w-[190px] shrink-0 truncate font-mono text-[12.5px]",
+				"col-start-1 w-[190px] shrink-0 truncate font-mono text-[12.5px]",
 				className,
 			)}
 			{...props}
@@ -219,7 +225,7 @@ export const EnvironmentVariableValue = ({
 	return (
 		<span
 			className={cn(
-				"min-w-0 flex-1 truncate font-mono text-[12.5px]",
+				"col-start-3 min-w-0 truncate font-mono text-[12.5px]",
 				!showValues && "tracking-[2px] text-muted-foreground select-none",
 				className,
 			)}
@@ -249,7 +255,7 @@ export const EnvironmentVariable = ({
 			<div
 				data-slot="ai-environment-variable"
 				className={cn(
-					"flex items-center gap-2.5 border-t border-border-2 px-3.5 py-[9px]",
+					"col-span-full grid grid-cols-subgrid items-center border-t border-border-2 px-3.5 py-[9px]",
 					className,
 				)}
 				{...props}
@@ -322,7 +328,7 @@ export const EnvironmentVariableCopyButton = ({
 	return (
 		<Button
 			aria-label={`Copy ${copyFormat}`}
-			className={cn("shrink-0", className)}
+			className={cn("col-start-4 shrink-0", className)}
 			onClick={copyToClipboard}
 			size="icon-xs"
 			variant="ghost"
@@ -358,7 +364,7 @@ export const EnvironmentVariableRequired = ({
 	...props
 }: EnvironmentVariableRequiredProps) => (
 	<Badge
-		className={cn("h-[18px] text-[10.5px]", className)}
+		className={cn("col-start-2 h-[18px] text-[10.5px]", className)}
 		variant="warning"
 		{...props}
 	>

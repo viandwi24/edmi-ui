@@ -4,7 +4,7 @@ import { Task, TaskContent, TaskItem, TaskItemFile, TaskTrigger } from "@edmi-vu
 
 <template>
   <Task class="w-full max-w-lg">
-    <TaskTrigger title="Update the weights file · 2 of 4" />
+    <TaskTrigger title="Update the weights file · 2 of 5" />
     <TaskContent>
       <TaskItem status="completed">Read <TaskItemFile>weights.ts</TaskItemFile></TaskItem>
       <TaskItem status="completed">Validate total = 100%</TaskItem>

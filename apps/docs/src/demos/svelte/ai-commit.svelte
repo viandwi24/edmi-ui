@@ -30,7 +30,7 @@
 		{ path: "lib/old-keeper.ts", status: "deleted", add: 0, del: 41 },
 	] as const;
 
-	const date = new Date(Date.now() - 12 * 60 * 1000);
+	const date = new Date("2026-03-14T09:30:00Z");
 </script>
 
 <Commit class="max-w-lg" open>

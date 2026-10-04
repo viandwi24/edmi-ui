@@ -231,14 +231,17 @@ export const JSXPreviewContent = memo(
 				}
 				errorReportedRef.current = processedJsx;
 
-				// During streaming, suppress errors and fall back to last good JSX
-				if (isStreaming) {
-					setHadError(true);
-					return;
-				}
+				// JsxParser reports errors while it renders: defer the state updates out of that render pass.
+				queueMicrotask(() => {
+					// During streaming, suppress errors and fall back to last good JSX
+					if (isStreaming) {
+						setHadError(true);
+						return;
+					}
 
-				setError(err);
-				onErrorProp?.(err);
+					setError(err);
+					onErrorProp?.(err);
+				});
 			},
 			[processedJsx, isStreaming, onErrorProp, setError],
 		);

@@ -5,11 +5,13 @@ import { Markdown } from "vue-stream-markdown"
 import { cn } from "@/registry/edmi/lib/utils"
 import "vue-stream-markdown/index.css"
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   /** Markdown source; the default slot text works too. */
   content?: string
+  /** `streaming` fades words in as they arrive; `static` (default) renders at once. */
+  mode?: "static" | "streaming"
   class?: HTMLAttributes["class"]
-}>()
+}>(), { mode: "static" })
 
 const slots = useSlots()
 const slotContent = computed<string | undefined>(() => {
@@ -51,6 +53,8 @@ const responseTypography = [
   <Markdown
     data-slot="ai-message-response"
     :content="md"
+    :mode="props.mode"
+    :enable-animate="props.mode === 'streaming'"
     :link-options="{ favicon: false }"
     :class="cn('size-full', responseTypography, props.class)"
   />

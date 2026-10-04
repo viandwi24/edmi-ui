@@ -18,6 +18,12 @@ const { expandedPaths, togglePath, selectedPath, select } = useFileTreeContext()
 
 const isExpanded = computed(() => expandedPaths.value.has(props.path))
 const isSelected = computed(() => selectedPath.value === props.path)
+
+// Clicking the label selects the folder and toggles it, like the chevron.
+function onLabelClick() {
+  select(props.path)
+  togglePath(props.path)
+}
 </script>
 
 <template>
@@ -33,7 +39,7 @@ const isSelected = computed(() => selectedPath.value === props.path)
         <button
           class="flex min-w-0 flex-1 cursor-pointer items-center gap-[7px] border-none bg-transparent p-0 text-left"
           type="button"
-          @click="select(props.path)"
+          @click="onLabelClick"
         >
           <FileTreeIcon class="text-chart-3">
             <FolderOpenIcon v-if="isExpanded" class="size-4" />
