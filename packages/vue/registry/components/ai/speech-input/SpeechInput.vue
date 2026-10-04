@@ -5,18 +5,19 @@ import { AudioLinesIcon } from "@lucide/vue"
 import { computed, onMounted, onUnmounted, ref, useAttrs, watch } from "vue"
 import { cn } from "@/registry/edmi/lib/utils"
 import { Button } from "@/registry/edmi/ui/button"
+import type { Elevation } from "@/registry/edmi/ui/elevation"
 import { Spinner } from "@/registry/edmi/ui/spinner"
 
 // Built on ui/button (DESIGN §5b): outline icon button; listening = brand fill with a solid soft ring and
-// two pulsing outlines, processing = spinner. `raised` is forwarded to the Button.
+// two pulsing outlines, processing = spinner. `elevation` is forwarded to the Button.
 defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps<{
   class?: HTMLAttributes["class"]
   variant?: ButtonVariants["variant"]
   size?: ButtonVariants["size"]
-  /** ✦ one-step 3D look */
-  raised?: boolean
+  /** ✦ depth: sunken -1, flat 0, raised +1, floating +2 (follows the Button rules). */
+  elevation?: Elevation
   /**
    * MediaRecorder fallback for browsers without the Web Speech API (Firefox): receives the recorded audio and
    * returns the transcript, which is emitted as `transcriptionChange`.
@@ -26,7 +27,7 @@ const props = withDefaults(defineProps<{
 }>(), {
   variant: "outline",
   size: "icon",
-  raised: false,
+  elevation: undefined,
   lang: "en-US",
   onAudioRecorded: undefined,
 })
@@ -228,11 +229,11 @@ const state = computed(() => (isProcessing.value ? "processing" : isListening.va
       :aria-pressed="isListening"
       :variant="isListening ? 'brand' : props.variant"
       :size="props.size"
-      :elevation="props.raised ? 'raised' : undefined"
+      :elevation="props.elevation"
       :disabled="isDisabled"
       :class="cn(
         'relative z-10',
-        isListening && !props.raised && 'shadow-[0_0_0_5px_color-mix(in_srgb,var(--brand)_22%,var(--background))]',
+        isListening && 'ring-[5px] ring-[color-mix(in_srgb,var(--brand)_22%,var(--background))]',
         props.class,
       )"
       @click="toggleListening"

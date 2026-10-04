@@ -6,12 +6,11 @@
 	import { onDestroy, onMount } from "svelte";
 
 	// Built on ui/button (DESIGN §5b): outline icon button; listening = brand fill with a solid soft ring and
-	// two pulsing outlines, processing = spinner. `raised` is forwarded to the Button.
+	// two pulsing outlines, processing = spinner. `elevation` is forwarded to the Button (Button props).
 	let {
 		class: className,
 		variant = "outline",
 		size = "icon",
-		raised = false,
 		disabled = false,
 		lang = "en-US",
 		onTranscriptionChange,
@@ -19,8 +18,6 @@
 		...restProps
 	}: Omit<ButtonProps, "onclick" | "href"> & {
 		onTranscriptionChange?: (text: string) => void;
-		/** legacy prop, forwarded as `elevation="raised"` (the AI pack migration renames it) */
-		raised?: boolean;
 		/**
 		 * MediaRecorder fallback for browsers without the Web Speech API (Firefox): receives the recorded audio
 		 * and returns the transcript, which is passed to `onTranscriptionChange`.
@@ -200,13 +197,11 @@
 		aria-pressed={isListening}
 		variant={isListening ? "brand" : variant}
 		{size}
-		elevation={raised ? "raised" : undefined}
 		disabled={isDisabled}
 		class={cn(
 			"relative z-10",
 			isListening &&
-				!raised &&
-				"shadow-[0_0_0_5px_color-mix(in_srgb,var(--brand)_22%,var(--background))]",
+				"ring-[5px] ring-[color-mix(in_srgb,var(--brand)_22%,var(--background))]",
 			className
 		)}
 		onclick={toggleListening}

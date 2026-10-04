@@ -36,7 +36,7 @@ export const items: Item[] = [
 		description:
 			"Dictation button using the Web Speech API (MediaRecorder fallback) with listening and processing states; supports raised.",
 		category: C.voice,
-		deps: ["button", "spinner"],
+		deps: ["button", "spinner", "elevation"],
 		react: aiReact("speech-input", ["cn"]),
 	}),
 	aiItem({

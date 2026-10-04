@@ -23,9 +23,9 @@ Built on `button` and `spinner`.
 
 <ComponentSource name="ai-speech-input" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. `raised` is forwarded to the Button.
+The speech button is a Button, so it follows the Button levels: flat by default, `sunken` (-1), `raised` (+1) and `floating` (+2).
 
 <ComponentDemo name="ai-speech-input" demo="ai-speech-input-raised" />
 
@@ -36,7 +36,7 @@ Flat by default. `raised` is forwarded to the Button.
 | `onAudioRecorded` | `(blob: Blob) => Promise<string>` (MediaRecorder fallback: return the transcript) | |
 | `lang` | `string` | `en-US` |
 | `variant`, `size` | Button props | `outline`, `icon` |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 ## ✦ Edmi additions
 - States follow the board: outline default, `--brand` fill with a solid soft ring and pulsing outlines while listening, spinner while processing, 45% opacity when disabled.

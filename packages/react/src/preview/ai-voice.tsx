@@ -255,7 +255,7 @@ export default function AiVoicePreview() {
 				</div>
 				<RaisedSection>
 					<div>
-						<SpeechInput raised onAudioRecorded={async () => ""} />
+						<SpeechInput elevation="raised" onAudioRecorded={async () => ""} />
 					</div>
 				</RaisedSection>
 			</section>

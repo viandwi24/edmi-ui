@@ -8,7 +8,7 @@ import { Button } from "@/registry/edmi/ui/button";
 import { Spinner } from "@/registry/edmi/ui/spinner";
 
 // Built on ui/button (DESIGN §5b): outline icon button; listening = brand fill with a solid soft ring and
-// two pulsing outlines, processing = spinner. `raised` is forwarded to the Button.
+// two pulsing outlines, processing = spinner. `elevation` is forwarded to the Button.
 
 interface SpeechRecognition extends EventTarget {
 	continuous: boolean;
@@ -63,8 +63,6 @@ declare global {
 type SpeechInputMode = "speech-recognition" | "media-recorder" | "none";
 
 export type SpeechInputProps = ComponentProps<typeof Button> & {
-	/** legacy prop, forwarded as `elevation="raised"` (the AI pack migration renames it) */
-	raised?: boolean;
 	onTranscriptionChange?: (text: string) => void;
 	/**
 	 * Callback for when audio is recorded using MediaRecorder fallback.
@@ -96,7 +94,6 @@ export const SpeechInput = ({
 	className,
 	variant = "outline",
 	size = "icon",
-	raised = false,
 	onTranscriptionChange,
 	onAudioRecorded,
 	lang = "en-US",
@@ -322,13 +319,11 @@ export const SpeechInput = ({
 				className={cn(
 					"relative z-10",
 					isListening &&
-						!raised &&
-						"shadow-[0_0_0_5px_color-mix(in_srgb,var(--brand)_22%,var(--background))]",
+						"ring-[5px] ring-[color-mix(in_srgb,var(--brand)_22%,var(--background))]",
 					className,
 				)}
 				disabled={isDisabled}
 				onClick={toggleListening}
-				elevation={raised ? "raised" : undefined}
 				size={size}
 				variant={isListening ? "brand" : variant}
 				{...props}
