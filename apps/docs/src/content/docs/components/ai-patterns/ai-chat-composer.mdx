@@ -23,10 +23,17 @@ Edmi ✦ addition. Built on `ai-prompt-input`, `button` and `dropdown-menu`.
 
 <ComponentSource name="ai-chat-composer" />
 
+## Elevation ✦
+
+The composer plate is an overlay surface: flat by default, floating in layered mode. `sunken` (-1) is a soft inset, `raised` (+1) a bevel and `floating` (+2) a bevel with a soft drop; the send button follows the Button rules.
+
+<ComponentDemo name="ai-chat-composer" demo="ai-chat-composer-raised" />
+
 ## API
 | Prop | Type | Default |
 | --- | --- | --- |
 | `onSubmit` | `(message, event) => void` | required |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 | `placeholder`, `status`, `onStop` | `string`, `ChatStatus`, `() => void` | `Reply` |
 | `onAttach`, `onSpeech` | `() => void` (button hidden when omitted) | |
 | `disclaimer` | `ReactNode` | |

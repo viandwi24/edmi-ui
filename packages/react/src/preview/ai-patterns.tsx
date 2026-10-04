@@ -98,7 +98,7 @@ function AgentComposer({ raised }: { raised?: boolean }) {
 			<div className="relative">
 				{mention.open && <PromptInputAgentMentions {...mention.mentions} />}
 				<PromptInput
-					raised={raised}
+					elevation={raised ? "raised" : undefined}
 					onSubmit={() => {}}
 					className="[&_[data-slot=input-group]]:bg-muted"
 				>
@@ -326,7 +326,7 @@ export default function AiPatterns() {
 			</section>
 
 			<section className="flex flex-col gap-4">
-				<Label>Prompt input agent (@ open, raised send)</Label>
+				<Label>Prompt input agent (@ open, raised composer)</Label>
 				<AgentComposer raised />
 			</section>
 

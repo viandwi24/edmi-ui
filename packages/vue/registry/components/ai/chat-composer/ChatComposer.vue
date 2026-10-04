@@ -14,6 +14,7 @@ import {
 } from "@/registry/edmi/components/ai/prompt-input"
 import { cn } from "@/registry/edmi/lib/utils"
 import { Button } from "@/registry/edmi/ui/button"
+import type { Elevation } from "@/registry/edmi/ui/elevation"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,8 +35,8 @@ const props = withDefaults(defineProps<{
   /** Same as PromptInput. */
   accept?: string
   multiple?: boolean
-  /** ✦ one-step 3D look on the submit button. */
-  raised?: boolean
+  /** ✦ depth of the composer plate (overlay role: floating in layered mode). */
+  elevation?: Elevation
   models?: ChatComposerOption[]
   /** `v-model:model`; use `defaultModel` for uncontrolled. */
   model?: string
@@ -48,7 +49,7 @@ const props = withDefaults(defineProps<{
   defaultMode?: string
 }>(), {
   placeholder: "Reply",
-  raised: false,
+  elevation: undefined,
 })
 
 const emit = defineEmits<{
@@ -81,7 +82,7 @@ const ready = computed(() => props.status === undefined || props.status === "rea
     <PromptInput
       :accept="accept"
       :multiple="multiple"
-      :raised="raised"
+      :elevation="elevation"
       @submit="(m: PromptInputMessage) => emit('submit', m)"
     >
       <PromptInputBody>

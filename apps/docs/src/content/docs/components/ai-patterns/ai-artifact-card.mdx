@@ -23,9 +23,9 @@ Edmi ✦ addition. Built on `card`, `button`, `button-group`, `dropdown-menu` an
 
 <ComponentSource name="ai-artifact-card" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. `raised` gives the one-step 3D look.
+The card are flat by default and take the surface level in layered mode (raised). `sunken` (-1) is a soft inset, `raised` (+1) a bevel and `floating` (+2) a bevel with a soft drop.
 
 <ComponentDemo name="ai-artifact-card" demo="ai-artifact-card-raised" />
 
@@ -33,7 +33,7 @@ Flat by default. `raised` gives the one-step 3D look.
 | Part | Prop | Type | Default |
 | --- | --- | --- | --- |
 | ArtifactCard | `state` | `ready \| generating` | `ready` |
-| ArtifactCard | `raised` | `boolean` | `false` |
+| ArtifactCard | `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 | ArtifactCardIcon | `kind` | `archive \| document \| code \| image \| slides \| file` | `document` |
 | ArtifactCardThumbnail | `variant` | `paper \| slide` | `paper` |
 | ArtifactCardTitle / Meta / Body | | `div` props | |

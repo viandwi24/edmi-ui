@@ -1,6 +1,6 @@
 ---
 title: Prompt Input Agent
-description: "Agent composer: agent chip, @ mention list and raised send button."
+description: "Agent composer: agent chip, @ mention list and send button."
 ---
 import ComponentDemo from "../../../../components/ComponentDemo.astro";
 import ComponentInstall from "../../../../components/ComponentInstall.astro";
@@ -23,9 +23,9 @@ Edmi ✦ addition. Built on `ai-prompt-input`, `ai-agent-avatar` and `button`.
 
 <ComponentSource name="ai-prompt-input-agent" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. `raised` gives the one-step 3D look.
+The composer plate is an overlay surface: flat by default, floating in layered mode; `sunken` (-1), `raised` (+1) and `floating` (+2) can be set on `PromptInput`.
 
 <ComponentDemo name="ai-prompt-input-agent" demo="ai-prompt-input-agent-raised" />
 
@@ -38,4 +38,4 @@ Flat by default. `raised` gives the one-step 3D look.
 
 ## ✦ Edmi additions
 - Put `PromptInputAgent` in `PromptInputHeader`. Typing `@` opens the mention list (arrows, Enter or Tab pick, Escape closes); render it next to `PromptInput`, not inside, because the input group clips overflow.
-- Pass `raised` to `PromptInput` for the raised send button; the muted shell is a class on the form (`[&_[data-slot=input-group]]:bg-muted`).
+- Pass `elevation` to `PromptInput` for the plate depth; the muted shell is a class on the form (`[&_[data-slot=input-group]]:bg-muted`).

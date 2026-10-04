@@ -12,7 +12,14 @@ export const items: Item[] = [
 		description:
 			"File card for generated output: paper thumbnail, format meta, split Download and a generating state.",
 		category: C.patterns,
-		deps: ["card", "button", "button-group", "dropdown-menu", "ai-shimmer"],
+		deps: [
+			"card",
+			"button",
+			"button-group",
+			"dropdown-menu",
+			"ai-shimmer",
+			"elevation",
+		],
 		react: aiReact("artifact-card", ["cn"]),
 	}),
 	aiItem({
@@ -60,8 +67,7 @@ export const items: Item[] = [
 	aiItem({
 		name: "prompt-input-agent",
 		title: "Prompt Input Agent",
-		description:
-			"Agent composer: agent chip, @ mention list and raised send button.",
+		description: "Agent composer: agent chip, @ mention list and send button.",
 		category: C.patterns,
 		deps: ["ai-agent-avatar", "button"],
 		react: aiReact("prompt-input-agent", ["cn"]),
@@ -72,7 +78,7 @@ export const items: Item[] = [
 		description:
 			"Prompt input with the outside footer: attach, speech, disclaimer, model with effort, and mode.",
 		category: C.patterns,
-		deps: ["ai-prompt-input", "button", "dropdown-menu"],
+		deps: ["ai-prompt-input", "button", "dropdown-menu", "elevation"],
 		react: aiReact("chat-composer", ["ai", "cn"]),
 	}),
 	aiItem({

@@ -8,20 +8,25 @@ import {
   ArtifactCardTitle,
 } from "@edmi-vue/components/ai/artifact-card";
 import { DropdownMenuItem } from "@edmi-vue/ui/dropdown-menu";
+
+const levels = [{ value: "sunken", label: "Sunken (-1)" }, { value: "flat", label: "Flat (0)" }, { value: "raised", label: "Raised (+1)" }, { value: "floating", label: "Floating (+2)" }];
 </script>
 
 <template>
-  <div class="flex w-full max-w-lg flex-col gap-3">
-    <ArtifactCard raised>
-      <ArtifactCardIcon kind="archive" />
-      <ArtifactCardBody>
-        <ArtifactCardTitle>Keeper starter</ArtifactCardTitle>
-        <ArtifactCardMeta>ZIP</ArtifactCardMeta>
-      </ArtifactCardBody>
-      <ArtifactCardActions>
-        <DropdownMenuItem>Copy link</DropdownMenuItem>
-        <DropdownMenuItem>Open</DropdownMenuItem>
-      </ArtifactCardActions>
-    </ArtifactCard>
+  <div class="flex w-full max-w-2xl flex-col gap-5">
+    <div v-for="level in levels" :key="level.value" class="flex flex-col gap-2">
+      <p class="text-xs font-medium text-muted-foreground">{{ level.label }}</p>
+      <ArtifactCard :elevation="level.value" class="max-w-lg">
+        <ArtifactCardIcon kind="archive" />
+        <ArtifactCardBody>
+          <ArtifactCardTitle>Keeper starter</ArtifactCardTitle>
+          <ArtifactCardMeta>ZIP</ArtifactCardMeta>
+        </ArtifactCardBody>
+        <ArtifactCardActions>
+          <DropdownMenuItem>Copy link</DropdownMenuItem>
+          <DropdownMenuItem>Open</DropdownMenuItem>
+        </ArtifactCardActions>
+      </ArtifactCard>
+    </div>
   </div>
 </template>
