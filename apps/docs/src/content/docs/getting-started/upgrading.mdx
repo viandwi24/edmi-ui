@@ -70,7 +70,7 @@ change and there is no alias: a leftover `raised` prop is a type error (or ends 
    `elevation`; components that take depth install `elevation` as a dependency.
 2. Replace every `raised` in your code. Search for ` raised`, `:raised`, `raised=` and `itemRaised`.
 3. Decide per page: keep it flat, raise a few things with the prop, or wrap the page in a layered `ElevationProvider`.
-4. Delete any hand-written lips (`shadow-[0_2px_0_...]`, `border-b-lip`, `shadow-btn-outline`): use the prop or the tokens.
+4. Delete any hand-written lip shadows and `-lip` border colours: use the prop or the shadow tokens.
 5. Check light and dark mode, and any `Toaster`, `TabsList`, `ToggleGroup`, `Pagination` and `Calendar` that used `raised`.
 
 **Before and after**

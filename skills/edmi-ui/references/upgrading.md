@@ -35,7 +35,7 @@ Breaking, no alias. Re-add the entry items (`theme`, the new `elevation` item) a
 | `<PromptInput raised>` | `<PromptInput elevation="floating">` (or a layered provider) |
 | whole page raised by hand | `<ElevationProvider mode="layered">` once |
 
-Hard lips are gone (a raised element is a bevel, pressed sinks 1px). Delete hand-written `shadow-[0_2px_0_...]` and `border-b-lip`. New tokens `--bv-*`, `--sk-*`, `--r1-*`, `--fl-*` and a clearer stone dark ladder come with the new `theme`. Search the code for ` raised`, `:raised`, `raised=` and `itemRaised`. See [elevation.md](elevation.md).
+Hard lips are gone (a raised element is a bevel, pressed sinks 1px). Delete hand-written lip shadows and `-lip` border colours. New tokens `--bv-*`, `--sk-*`, `--r1-*`, `--fl-*` and a clearer stone dark ladder come with the new `theme`. Search the code for ` raised`, `:raised`, `raised=` and `itemRaised`. See [elevation.md](elevation.md).
 
 ## Rules for the agent
 

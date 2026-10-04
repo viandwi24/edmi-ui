@@ -23,13 +23,13 @@ export const entries: Record<string, FrameworkEntry> = {
 ```
 Build: `bun run gen && (cd packages/svelte && bunx --bun shadcn-svelte@latest registry build --output ../../apps/docs/public/r/svelte)`. Install is URL-only: `bunx --bun shadcn-svelte@latest add <url>/x.json`.
 
-## Flat default + `raised` (v2 convention)
-Every component is FLAT by default (solid fill + 1px border, no gradient/lip/`shadow-btn-*`/`shadow-card`/`shadow-pop`/`shadow-dialog`). The one-step 3D look is opt-in:
-- `raised?: boolean` in `$props()` (default `false`), same name as React/Vue. Pass it to the `tv()` call (boolean variant `raised: { false: "", true: "…" }` + `compoundVariants`, strings verbatim from `recipes.ts`) or append with `cn(…, raised && "…")`. Bits UI keeps `data-[state=…]` verbatim.
-- Containers pass it down to children through **context** with a getter object so it stays reactive: `setContext("x", { get raised() { return raised } })` in the container (module-script `setXCtx`/`getXCtx` helpers, see `tabs-list.svelte`, `toggle-group.svelte`, `pagination.svelte`, `bubble-reactions.svelte`, `kanban-column.svelte`, Questionnaire root context). Children resolve `raised ?? ctx?.raised ?? false`, so their own prop wins. Pure CSS fan-out is fine when no JS is needed (`data-raised` + `group-data-[raised]/…`, e.g. InsetPanel body).
-- Card-based patterns type their props as `ComponentProps<typeof Card>`, so `raised` flows to the Card automatically; forward it explicitly to any other primitive they render (Button, …).
-- `ghost`/`link` buttons and Tabs `line` are never raised. Control height is `h-9`.
-- Every raised component gets a docs demo `apps/docs/src/demos/svelte/<name>-raised.svelte` (flat vs raised side by side).
+## Flat default + `elevation` (v4 convention)
+Every component is FLAT by default (solid fill + 1px border, no gradient/bevel/shadow). Depth is the `elevation` prop; the full convention is AGENTS.md section 5 "Elevation (v4)":
+- `elevation = "auto"` in `$props()`, same name as React/Vue. Resolve it with `useElevation(() => elevation, role)` from `$lib/registry/ui/elevation/index.js` (returns `{ current }`) and pass `level.current` to the `tv()` call (variant `elevation: { sunken, flat, raised, floating }` + `compoundVariants`, strings verbatim from `recipes.ts`) or to the plain surface classes. Bits UI keeps `data-[state=…]` verbatim.
+- Containers pass it down to children through **context** with a getter object so it stays reactive: `setContext("x", { get elevation() { return elevation } })` in the container (module-script `setXCtx`/`getXCtx` helpers, see `tabs-list.svelte`, `toggle-group.svelte`, `pagination.svelte`, `bubble-reactions.svelte`, `kanban-column.svelte`, Questionnaire root context). Children resolve their own prop, then the container value, then `useElevation`.
+- Card-based patterns type their props as `ComponentProps<typeof Card>`, so `elevation` flows to the Card automatically; forward it explicitly to any other primitive they render (Button, …).
+- `link` buttons and Tabs `line` never take depth. Control height is `h-9`.
+- Every component with `elevation` gets a docs demo `apps/docs/src/demos/svelte/<name>-elevation.svelte` (flat / raised / floating / sunken).
 
 ## Edmi AI pack (`ai-*` items)
 Full rules: AGENTS.md section 7b. Short version for Svelte:

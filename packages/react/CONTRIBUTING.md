@@ -38,18 +38,17 @@ No icon-package imports in `registry/**`/demos. Use `import { IconPlaceholder } 
 The shadcn CLI rewrites it to the consumer's `iconLibrary`. All 5 props required (copy from stock base-nova JSON; verify new names); self-closing JSX only (no `icon={X}` refs);
 no icon package in manifest `dependencies` (only the `edmi` base lists `@phosphor-icons/react`).
 
-## Raised ✦ (v2: flat default)
-Every component is flat by default (solid fill + 1px border). The one-step 3D look is opt-in with `raised?: boolean` (default `false`), same prop name in all ports:
-- cva components: variant `raised: { false: "", true: "…" }` + `compoundVariants` copied from `packages/tokens/src/recipes.ts` (Base UI selector swap per table above), `defaultVariants.raised = false`; the component destructures `raised = false` and passes it to the cva call.
-- Plain components: `raised && "…"` inside `cn(...)`.
-- Containers pass it down: TabsList / ToggleGroup / Pagination / Questionnaire / BubbleReactions use a `React.createContext` in the same file; children use `raised ?? context.raised`. Patterns forward `raised` to the Card / Button they render and never hard-code lips or shadows.
-- `ghost` / `link` buttons and the Tabs `line` variant are never raised. Control height is `h-9`.
-- Each raised component needs `apps/docs/src/demos/react/<name>-raised.tsx`, a `## Raised ✦` section and a `raised` API row in its mdx page.
+## Elevation ✦ (v4: flat default)
+Every component is flat by default (solid fill + 1px border). Depth is the `elevation?: "auto" | "sunken" | "flat" | "raised" | "floating"` prop (default `auto`), same name in all ports; the full convention is AGENTS.md section 5 "Elevation (v4)":
+- Resolve the level with `useElevation(elevation, role)` from `@/registry/edmi/ui/elevation` (role from the AGENTS table) and pass it to the cva `elevation` variant (+ `compoundVariants` copied from `packages/tokens/src/recipes.ts`, Base UI selector swap per table above, `defaultVariants.elevation = "flat"`) or to the plain surface classes.
+- Containers pass depth down: TabsList / ToggleGroup / Pagination / Questionnaire / BubbleReactions / ButtonGroup use a `React.createContext` in the same file; children use `elevation ?? context.elevation`. Patterns forward `elevation` to the Card / Button they render and never hard-code shadows.
+- `link` buttons and the Tabs `line` variant never take depth. Control height is `h-9`.
+- Each component with `elevation` needs `apps/docs/src/demos/react/<name>-elevation.tsx`, an `## Elevation ✦` section (linking the Elevation guide) and an `elevation` API row in its mdx page; add it to `ELEVATION` in `scripts/verify-matrix.ts`.
 
 ## Edmi AI pack (`ai-*` items)
 Full rules: AGENTS.md section 7b. Short version for React:
 - Source `registry/components/ai/<name>.tsx` (installs to `components/ai/`), hooks `registry/hooks/ai/*.ts`; imports `@/registry/edmi/components/ai/<x>` (AI), `@/registry/edmi/ui/<x>` (ui), `@/registry/edmi/hooks/ai/<x>`; `cn` from `"cn"`. Item helper: `aiReact(name, deps)` in `registry.manifest/ai-<cat>.ts`; remove the item from `react` in `scripts/ai-pending.json`.
 - Stock source: `bun run scripts/ai-fetch-stock.ts` then read `.ai-src/react/<name>.tsx` (and `example-<name>*.json` for demos). Port: Radix to Base UI (`asChild` -> `render`, menu `onSelect` -> `onClick`, HoverCard delays on the **Trigger**, no `@radix-ui/*`, `useControllableState` from `@/registry/edmi/hooks/ai/use-controllable-state`), `lucide-react` -> `IconPlaceholder` (`bun run scripts/ai-icon.ts <LucideName> size-4`), `@/lib/utils` -> `cn`.
-- Build on ui items, never copy them (`ui` never imports `ai`). Tokens only, flat by default, `raised` only where the spec lists it, solid tints (no `/NN` on bg/border), no assistant avatar by default, status text in a ghost bubble, terminal always dark.
+- Build on ui items, never copy them (`ui` never imports `ai`). Tokens only, flat by default, `elevation` only where the spec lists it, solid tints (no `/NN` on bg/border), no assistant avatar by default, status text in a ghost bubble, terminal always dark.
 - `ai` is v7 (types changed vs the stock: `outputTokenDetails.reasoningTokens`, `inputTokenDetails.cacheReadTokens`).
 - Preview: `src/preview/ai-<cat>.tsx` (`ai-chat.tsx` is the reference page); smoke: `bash scripts/smoke/react.sh` installs `@edmi-ui/ai-all` and type-checks it.
