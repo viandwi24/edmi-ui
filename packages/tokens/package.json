@@ -1,6 +1,6 @@
 {
 	"name": "@edmi-ui/tokens",
-	"version": "0.3.0",
+	"version": "0.4.0",
 	"description": "Edmi UI design tokens, Tailwind v4 theme and class recipes",
 	"license": "MIT",
 	"type": "module",
