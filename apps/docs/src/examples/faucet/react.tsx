@@ -92,7 +92,7 @@ export default function FaucetExample() {
 							</span>
 						</AlertDescription>
 					</Alert>
-					<Button raised variant="outline" className="self-start">
+					<Button elevation="raised" variant="outline" className="self-start">
 						{solFaucet.buttonLabel}
 					</Button>
 				</Card>
@@ -107,7 +107,7 @@ export default function FaucetExample() {
 						</p>
 					</div>
 					<ToggleGroup
-						raised
+						elevation="raised"
 						variant="segmented"
 						className="self-start"
 						aria-label="Amount"
@@ -121,7 +121,7 @@ export default function FaucetExample() {
 						))}
 					</ToggleGroup>
 					<Button
-						raised
+						elevation="raised"
 						size="lg"
 						className="self-start"
 						disabled={busy}

@@ -75,7 +75,7 @@ export default function MarketsExample() {
 							else’s.
 						</p>
 					</div>
-					<Button raised size="lg">
+					<Button elevation="raised" size="lg">
 						Create index
 						<IconPlaceholder
 							lucide="PlusIcon"

@@ -42,12 +42,12 @@
 				</TabsList>
 			</Tabs>
 			<div class="flex flex-wrap items-center gap-3">
-				<ToggleGroup type="single" raised variant="segmented" value={period} onValueChange={(v) => v && (period = v)}>
+				<ToggleGroup type="single" elevation="raised" variant="segmented" value={period} onValueChange={(v) => v && (period = v)}>
 					{#each periods as p (p.value)}
 						<ToggleGroupItem value={p.value}>{p.label}</ToggleGroupItem>
 					{/each}
 				</ToggleGroup>
-				<ToggleGroup type="single" raised variant="segmented" value={kind} onValueChange={(v) => v && (kind = v)}>
+				<ToggleGroup type="single" elevation="raised" variant="segmented" value={kind} onValueChange={(v) => v && (kind = v)}>
 					{#each kinds as k (k.value)}
 						<ToggleGroupItem value={k.value}>{k.label}</ToggleGroupItem>
 					{/each}

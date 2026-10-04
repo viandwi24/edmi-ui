@@ -192,7 +192,7 @@ export default function Patterns1Preview() {
 						{ label: "Build", href: "#" },
 					]}
 					links={[{ label: "Pricing", href: "#" }]}
-					action={<Button raised>Create an index</Button>}
+					action={<Button elevation="raised">Create an index</Button>}
 				/>
 				<AppHeader
 					raised

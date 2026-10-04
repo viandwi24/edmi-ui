@@ -303,7 +303,7 @@ function SummaryCard({
 					Review your configuration before purchasing. Credit is used only when
 					you confirm.
 				</p>
-				<Button raised size="lg" className="w-full">
+				<Button elevation="raised" size="lg" className="w-full">
 					Purchase server
 				</Button>
 				<Button variant="ghost" className="-mt-1.5 w-full">
@@ -761,7 +761,7 @@ function CreatePage() {
 					>
 						<div className="flex flex-wrap items-center justify-between gap-4">
 							<ToggleGroup
-								raised
+								elevation="raised"
 								variant="segmented"
 								className="flex-wrap"
 								value={[months]}

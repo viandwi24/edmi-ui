@@ -38,7 +38,7 @@ function CardTop({ title, action }: { title: string; action?: string }) {
 		<div className="flex items-center justify-between gap-3">
 			<h2 className="text-xl font-normal tracking-[-0.3px]">{title}</h2>
 			{action ? (
-				<Button raised variant="outline" size="sm">
+				<Button elevation="raised" variant="outline" size="sm">
 					{action}
 				</Button>
 			) : null}
@@ -207,7 +207,7 @@ export default function PortfolioExample() {
 											AUM {x.aum}
 										</div>
 									</div>
-									<Button raised variant="outline" size="sm">
+									<Button elevation="raised" variant="outline" size="sm">
 										Manage
 									</Button>
 								</li>

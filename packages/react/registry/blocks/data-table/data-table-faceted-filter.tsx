@@ -49,7 +49,7 @@ export function DataTableFacetedFilter<TData extends RowData, TValue>({
 					<Button
 						variant="outline"
 						size="sm"
-						raised={raised}
+						elevation={raised ? "raised" : undefined}
 						className="border-dashed"
 					/>
 				}

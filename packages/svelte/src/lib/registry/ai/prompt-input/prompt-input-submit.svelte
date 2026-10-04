@@ -19,6 +19,8 @@
 		...restProps
 	}: Omit<ComponentProps<typeof InputGroupButton>, "href" | "onclick"> & {
 		status?: ChatStatus;
+		/** legacy prop, forwarded as `elevation="raised"` (the AI pack migration renames it) */
+		raised?: boolean;
 		/** With `onStop` the button turns into a stop button while generating. */
 		onStop?: () => void;
 		onclick?: (event: MouseEvent) => void;
@@ -45,7 +47,7 @@
 	type={isStop ? "button" : "submit"}
 	{size}
 	variant={variant ?? (status === "error" ? "destructive" : "default")}
-	raised={raised ?? controller?.raised ?? false}
+	elevation={raised ?? controller?.raised ?? false ? "raised" : undefined}
 	class={cn("rounded-[9px]", className)}
 	onclick={handleClick}
 	{...restProps}

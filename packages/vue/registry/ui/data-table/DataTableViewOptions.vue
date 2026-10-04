@@ -34,7 +34,7 @@ withDefaults(
 <template>
 	<DropdownMenu>
 		<DropdownMenuTrigger as-child>
-			<Button variant="outline" size="sm" :raised="raised" class="ml-auto">
+			<Button variant="outline" size="sm" :elevation="raised ? 'raised' : undefined" class="ml-auto">
 				<PanelLeft />
 				Columns
 				<ChevronDown />

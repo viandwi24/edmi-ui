@@ -71,15 +71,15 @@
 				</InputGroupAddon>
 				<InputGroupInput bind:value={query} placeholder="Search name, symbol, asset" aria-label="Search indexes" />
 			</InputGroup>
-			<ToggleGroup type="single" raised variant="segmented" value={kind} onValueChange={(v) => v && (kind = v)}>
+			<ToggleGroup type="single" elevation="raised" variant="segmented" value={kind} onValueChange={(v) => v && (kind = v)}>
 				{#each kinds as k (k.value)}
 					<ToggleGroupItem value={k.value}>{k.label}</ToggleGroupItem>
 				{/each}
 			</ToggleGroup>
-			<Toggle raised variant="outline" bind:pressed={preIpo}>Pre-IPO</Toggle>
+			<Toggle elevation="raised" variant="outline" bind:pressed={preIpo}>Pre-IPO</Toggle>
 			<div class="flex items-center gap-3 sm:ml-auto">
 				<Select type="single" bind:value={strategy}>
-					<SelectTrigger raised class="w-40">{strategies.find((s) => s.value === strategy)?.label}</SelectTrigger>
+					<SelectTrigger elevation="raised" class="w-40">{strategies.find((s) => s.value === strategy)?.label}</SelectTrigger>
 					<SelectContent>
 						{#each strategies as s (s.value)}
 							<SelectItem value={s.value} label={s.label} />
@@ -87,7 +87,7 @@
 					</SelectContent>
 				</Select>
 				<Select type="single" bind:value={sort}>
-					<SelectTrigger raised class="w-28">{sorts.find((s) => s.value === sort)?.label}</SelectTrigger>
+					<SelectTrigger elevation="raised" class="w-28">{sorts.find((s) => s.value === sort)?.label}</SelectTrigger>
 					<SelectContent>
 						{#each sorts as s (s.value)}
 							<SelectItem value={s.value} label={s.label} />

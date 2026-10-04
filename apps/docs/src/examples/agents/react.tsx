@@ -60,7 +60,7 @@ export default function AgentsExample() {
 							not the AI, decides what is allowed.
 						</p>
 					</div>
-					<Button raised variant="outline">
+					<Button elevation="raised" variant="outline">
 						How agents work
 					</Button>
 				</div>
@@ -76,7 +76,7 @@ export default function AgentsExample() {
 									Sign in with your wallet (one message signature, no fee) to
 									manage your agents.
 								</p>
-								<Button raised variant="outline" className="mt-3">
+								<Button elevation="raised" variant="outline" className="mt-3">
 									Sign in
 								</Button>
 							</div>
@@ -191,7 +191,11 @@ export default function AgentsExample() {
 								AI so it shows as one and joins the Human vs AI league. One
 								signature, no fee.
 							</p>
-							<Button raised variant="outline" className="self-start">
+							<Button
+								elevation="raised"
+								variant="outline"
+								className="self-start"
+							>
 								Register wallet
 							</Button>
 						</Card>

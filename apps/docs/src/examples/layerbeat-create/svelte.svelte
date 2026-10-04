@@ -338,7 +338,7 @@
 								<ToggleGroup.Root
 									type="single"
 									variant="segmented"
-									raised
+									elevation="raised"
 									value={months}
 									onValueChange={(v) => v && (months = v)}
 									aria-label="Billing term"

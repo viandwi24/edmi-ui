@@ -71,13 +71,13 @@ function pickKind(v: unknown) {
 					</InputGroupAddon>
 					<InputGroupInput v-model="query" placeholder="Search name, symbol, asset" aria-label="Search indexes" />
 				</InputGroup>
-				<ToggleGroup type="single" raised variant="segmented" :model-value="kind" @update:model-value="pickKind">
+				<ToggleGroup type="single" elevation="raised" variant="segmented" :model-value="kind" @update:model-value="pickKind">
 					<ToggleGroupItem v-for="k in kinds" :key="k.value" :value="k.value">{{ k.label }}</ToggleGroupItem>
 				</ToggleGroup>
-				<Toggle raised variant="outline" :model-value="preIpo" @update:model-value="(v) => (preIpo = !!v)">Pre-IPO</Toggle>
+				<Toggle elevation="raised" variant="outline" :model-value="preIpo" @update:model-value="(v) => (preIpo = !!v)">Pre-IPO</Toggle>
 				<div class="flex items-center gap-3 sm:ml-auto">
 					<Select v-model="strategy">
-						<SelectTrigger raised class="w-40">
+						<SelectTrigger elevation="raised" class="w-40">
 							<SelectValue />
 						</SelectTrigger>
 						<SelectContent>
@@ -85,7 +85,7 @@ function pickKind(v: unknown) {
 						</SelectContent>
 					</Select>
 					<Select v-model="sort">
-						<SelectTrigger raised class="w-28">
+						<SelectTrigger elevation="raised" class="w-28">
 							<SelectValue />
 						</SelectTrigger>
 						<SelectContent>

@@ -28,7 +28,7 @@ export default function Demo() {
 				<p>3. Send one transaction and verify weights</p>
 			</PlanContent>
 			<PlanFooter>
-				<Button raised size="sm">
+				<Button elevation="raised" size="sm">
 					Start
 				</Button>
 				<Button size="sm" variant="ghost">

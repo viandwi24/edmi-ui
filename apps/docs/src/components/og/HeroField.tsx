@@ -62,13 +62,13 @@ export default function HeroField() {
 			<Col offset={60}>
 				<Card raised className="gap-4 p-5">
 					<div className="flex flex-wrap gap-2.5">
-						<Button raised>
+						<Button elevation="raised">
 							Join index <ArrowRightIcon />
 						</Button>
-						<Button raised variant="secondary">
+						<Button elevation="raised" variant="secondary">
 							Secondary
 						</Button>
-						<Button raised variant="outline">
+						<Button elevation="raised" variant="outline">
 							Outline
 						</Button>
 						<Button variant="brand">Continue</Button>
@@ -103,13 +103,13 @@ export default function HeroField() {
 				/>
 				<Card className="gap-3 p-5">
 					<Label className="flex items-center gap-2.5 text-sm">
-						<Switch raised defaultChecked /> Keeper on
+						<Switch elevation="raised" defaultChecked /> Keeper on
 					</Label>
 					<Label className="flex items-center gap-2.5 text-sm">
-						<Checkbox raised defaultChecked /> Accept the mandate
+						<Checkbox elevation="raised" defaultChecked /> Accept the mandate
 					</Label>
 					<Label className="flex items-center gap-2.5 text-sm">
-						<Checkbox raised /> Notify on drift
+						<Checkbox elevation="raised" /> Notify on drift
 					</Label>
 				</Card>
 			</Col>
@@ -127,10 +127,10 @@ export default function HeroField() {
 						</Progress>
 					</CardContent>
 					<CardFooter className="gap-2">
-						<Button raised size="sm" variant="outline">
+						<Button elevation="raised" size="sm" variant="outline">
 							Cancel
 						</Button>
-						<Button raised size="sm">
+						<Button elevation="raised" size="sm">
 							Join index
 						</Button>
 					</CardFooter>
@@ -249,7 +249,7 @@ export default function HeroField() {
 						<Button variant="outline" size="sm">
 							Flat
 						</Button>
-						<Button raised variant="outline" size="sm">
+						<Button elevation="raised" variant="outline" size="sm">
 							Raised
 						</Button>
 					</div>
@@ -266,7 +266,7 @@ export default function HeroField() {
 					<div className="text-sm text-muted-foreground">
 						SPYx · +0.30% today
 					</div>
-					<Button raised className="w-full">
+					<Button elevation="raised" className="w-full">
 						Trade
 					</Button>
 				</Card>

@@ -65,9 +65,9 @@
 				</Breadcrumb.List>
 			</Breadcrumb.Root>
 			<div class="flex items-center gap-2">
-				<Button variant="outline" raised>Clone</Button>
-				<Button variant="outline" raised>Follow</Button>
-				<Button variant="outline" raised size="icon" aria-label="Share">
+				<Button variant="outline" elevation="raised">Clone</Button>
+				<Button variant="outline" elevation="raised">Follow</Button>
+				<Button variant="outline" elevation="raised" size="icon" aria-label="Share">
 					<IconPlaceholder
 						lucide="ArrowUpIcon"
 						tabler="IconArrowUp"
@@ -111,7 +111,7 @@
 						<p class="mt-2 text-[13px] text-muted-foreground">{index.retNote}</p>
 					</div>
 				</div>
-				<Button variant="outline" raised>Compare index</Button>
+				<Button variant="outline" elevation="raised">Compare index</Button>
 			</div>
 
 			<Chart.Container {config} class="aspect-auto h-[260px] w-full">
@@ -216,7 +216,7 @@
 				<h2 class="text-sm font-semibold">Share</h2>
 				<div class="flex flex-wrap gap-2">
 					{#each shareActions as s (s)}
-						<Button variant="outline" raised size="sm">{s}</Button>
+						<Button variant="outline" elevation="raised" size="sm">{s}</Button>
 					{/each}
 				</div>
 			</Card>

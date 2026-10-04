@@ -160,7 +160,7 @@ export default function CreateIndexExample() {
 													</span>
 													<Checkbox
 														id={`asset-${a.symbol}`}
-														raised
+														elevation="raised"
 														aria-label={`Select ${a.symbol}`}
 														checked={selected.includes(a.symbol)}
 														onCheckedChange={(v) =>
@@ -203,7 +203,7 @@ export default function CreateIndexExample() {
 													{s}
 												</span>
 												<Slider
-													raised
+													elevation="raised"
 													aria-label={`${s} weight`}
 													value={[weights[s] ?? 0]}
 													onValueChange={(v) => {
@@ -235,7 +235,7 @@ export default function CreateIndexExample() {
 									>
 										<SelectTrigger
 											id="rebalance"
-											raised
+											elevation="raised"
 											className="w-full sm:w-60"
 										>
 											<SelectValue />
@@ -261,7 +261,7 @@ export default function CreateIndexExample() {
 									</FieldLabel>
 									<Slider
 										id="drift"
-										raised
+										elevation="raised"
 										min={1}
 										max={20}
 										aria-label="Drift limit"
@@ -363,7 +363,7 @@ export default function CreateIndexExample() {
 
 						<div className="flex items-center justify-between">
 							<Button
-								raised
+								elevation="raised"
 								variant="outline"
 								size="lg"
 								disabled={stepIndex === 0}
@@ -372,7 +372,7 @@ export default function CreateIndexExample() {
 								Back
 							</Button>
 							<Button
-								raised
+								elevation="raised"
 								size="lg"
 								disabled={step === "assets" && selected.length === 0}
 								onClick={() => go(1)}

@@ -25,7 +25,7 @@ const ctx = inject(ConfirmationKey, null)
     type="button"
     :variant="props.variant"
     :size="props.size"
-    :raised="props.raised ?? ctx?.raised.value ?? false"
+    :elevation="props.raised ?? ctx?.raised.value ?? false ? 'raised' : undefined"
     :class="props.class"
   >
     <slot />

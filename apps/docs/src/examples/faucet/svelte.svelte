@@ -71,7 +71,7 @@
 					<span class="font-mono font-semibold break-all">{wallet.address}</span>
 				</AlertDescription>
 			</Alert>
-			<Button raised variant="outline" class="self-start">{solFaucet.buttonLabel}</Button>
+			<Button elevation="raised" variant="outline" class="self-start">{solFaucet.buttonLabel}</Button>
 		</Card>
 
 		<Card raised class="gap-4 px-7">
@@ -81,7 +81,7 @@
 			</div>
 			<ToggleGroup.Root
 				type="single"
-				raised
+				elevation="raised"
 				variant="segmented"
 				class="self-start"
 				aria-label="Amount"
@@ -92,7 +92,7 @@
 					<ToggleGroup.Item value={String(a)}>{fmt(a)}</ToggleGroup.Item>
 				{/each}
 			</ToggleGroup.Root>
-			<Button raised size="lg" class="self-start" disabled={busy} onclick={mint}>Get {fmt(amount)} USDC</Button>
+			<Button elevation="raised" size="lg" class="self-start" disabled={busy} onclick={mint}>Get {fmt(amount)} USDC</Button>
 		</Card>
 	</div>
 </div>

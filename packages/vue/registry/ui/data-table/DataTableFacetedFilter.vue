@@ -52,7 +52,7 @@ function toggle(value: string, checked: boolean) {
 <template>
 	<DropdownMenu v-if="column">
 		<DropdownMenuTrigger as-child>
-			<Button variant="outline" size="sm" :raised="raised" class="border-dashed">
+			<Button variant="outline" size="sm" :elevation="raised ? 'raised' : undefined" class="border-dashed">
 				<Plus />
 				{{ title }}
 				<Badge v-if="selected.size > 0" variant="brand" shape="number">

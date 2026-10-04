@@ -306,7 +306,7 @@ export default function DisplayPreview() {
 							<CardTitle>Portfolio</CardTitle>
 							<CardDescription>Holdings across all indexes.</CardDescription>
 							<CardAction>
-								<Button size="sm" variant="outline" raised>
+								<Button size="sm" variant="outline" elevation="raised">
 									Edit
 								</Button>
 							</CardAction>
@@ -315,7 +315,7 @@ export default function DisplayPreview() {
 							<p className="font-mono text-2xl">$12,480.20</p>
 						</CardContent>
 						<CardFooter>
-							<Button size="sm" raised>
+							<Button size="sm" elevation="raised">
 								Deposit
 							</Button>
 						</CardFooter>

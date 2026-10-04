@@ -64,7 +64,7 @@ export default function LandingExample() {
 								<Badge variant="outline" className="max-sm:hidden">
 									Devnet
 								</Badge>
-								<Button raised>Launch app</Button>
+								<Button elevation="raised">Launch app</Button>
 							</div>
 						}
 					/>
@@ -82,11 +82,11 @@ export default function LandingExample() {
 							{hero.lead}
 						</p>
 						<div className="flex flex-wrap gap-3">
-							<Button raised size="lg">
+							<Button elevation="raised" size="lg">
 								Launch app
 								{arrow}
 							</Button>
-							<Button raised variant="outline" size="lg">
+							<Button elevation="raised" variant="outline" size="lg">
 								See how it works
 							</Button>
 						</div>
@@ -253,7 +253,7 @@ export default function LandingExample() {
 								featuresLead={p.lead}
 								features={p.features}
 								action={
-									<Button raised variant="outline">
+									<Button elevation="raised" variant="outline">
 										Launch app
 									</Button>
 								}
@@ -273,10 +273,10 @@ export default function LandingExample() {
 						<p className="text-muted-foreground">{cta.body}</p>
 					</div>
 					<div className="flex flex-wrap gap-3">
-						<Button raised size="lg">
+						<Button elevation="raised" size="lg">
 							Launch app
 						</Button>
-						<Button raised variant="outline" size="lg">
+						<Button elevation="raised" variant="outline" size="lg">
 							Read the code
 						</Button>
 					</div>

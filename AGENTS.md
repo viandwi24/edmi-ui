@@ -143,7 +143,7 @@ Replaces the old boolean `raised` (removed everywhere, no alias; user decision 2
 | Switch | handle (R) | F R | thumb |
 | Slider | handle (R) | F R | thumbs |
 | Tabs / TabsList | control (F) | F R | active trigger only (`line` never) |
-| ToggleGroup | control (F) | F R | ON item only (`segmented` via `itemRaised`) |
+| ToggleGroup | control (F) | F R | ON item only (`segmented`: `raisedActive` on the item); the group passes its level to the items |
 | Pagination | control (F) | F R | active link |
 | Calendar, RangeCalendar, DatePicker | handle (R) / overlay | F R X | selected day (R); elevation sits on the shell (popover/card), never the day grid |
 | Card | surface (R) | S F R X | the card; a nested card drops to F |
@@ -159,6 +159,8 @@ Replaces the old boolean `raised` (removed everywhere, no alias; user decision 2
 | Patterns (✦) | per inner part | forward | forward `elevation` to the Card/Button they render |
 
 Flat-only (do not add `elevation`): Sheet, Drawer, HoverCard, Tooltip, Alert, NavigationMenu/Command popups, Sidebar, Accordion, Table/DataTable (container flat; toolbar follows Button/Input), Chart, Bubble, Combobox, Attachment. Components not in the table follow the nearest role.
+
+**Button / ButtonGroup context.** A `ButtonGroup` with an explicit `elevation` provides it to the buttons it contains (React `ButtonElevationContext` exported from `button.tsx`, Vue `BUTTON_ELEVATION_KEY` from the button barrel, Svelte `BUTTON_ELEVATION_CONTEXT` from the button module); a floating group hands `raised` to its items and takes `shadow-group-float` itself. A button resolves its level as own prop, then the group, then the scope (`useElevation`).
 
 **Demos and docs.** Every component with `elevation` needs a second demo in all three ports showing flat / +1 / +2 and sunken (-1) for fields, cards, badges and buttons (overlays: floating only), like the kit boards. Demo files keep the legacy `<name>-raised.*` names until the rename wave, then `<name>-elevation.*` (checked by `verify:matrix` `RAISED` lists). mdx: API row `elevation | "auto" \| "sunken" \| "flat" \| "raised" \| "floating" | "auto"` and an `## Elevation ✦` section (levels supported, what rises). The `theme` base rule is `[data-elevation=raised], [data-elevation=floating] { background-origin: border-box }`.
 
@@ -193,7 +195,7 @@ Common: same item names/anatomy/props/`data-slot`/exports as the stock port; res
 ### 7.1 Add a new component or pattern (do all three ports)
 1. Read DESIGN.md §4/§5 and the matching board (light + dark, flat + raised). Check the stock docs page of each port.
 2. Get the stock source with the **official CLI**, never from memory. React: `bunx shadcn@latest add <name> --dry-run`, then `yes n | bunx shadcn@latest add <name>` (writes to `registry/ui/`). Vue (no `--dry-run`): `bunx shadcn-vue@latest add <name> -y </dev/null` only if you own every file it writes, else fetch `https://www.shadcn-vue.com/r/styles/new-york-v4/<name>.json`. Svelte: `bunx --bun shadcn-svelte@latest add <name> --no-deps-install --overwrite -y </dev/null` (or `https://shadcn-svelte.com/registry/styles/nova/<name>.json`). Afterwards `git status`: delete untracked stock deps you do not own, `git checkout --` tracked files you did not mean to change, revert `package.json`/`bun.lock`/`components.json` if the CLI touched them. If the CLI crashes (shared bunx cache corruption), take the stock source from the registry JSON the CLI reads (`https://ui.shadcn.com/r/styles/base-nova/<name>.json`). No stock counterpart (✦, patterns, conversation): build from `recipes.ts` + `kit.css` + the reference boards.
-3. Restyle React first: keep anatomy/props/`data-slot`/exports; inline recipe classes; Base UI selectors; ✦ variants additive; add `raised` per 5 if the spec lists the component; icons via IconPlaceholder; control height `h-9`.
+3. Restyle React first: keep anatomy/props/`data-slot`/exports; inline recipe classes; Base UI selectors; ✦ variants additive; add `elevation` per section 5 ("Elevation (v4)") with the role the table lists, and `"elevation"` in `registryDependencies`; icons via IconPlaceholder; control height `h-9`.
 4. Port to Vue and Svelte with the same recipe strings and each port's conventions (6).
 5. Manifest: item in `registry.manifest/<group>.ts` (+ React files), Vue file list in `<group>.vue.ts`, Svelte in `<group>.svelte.ts`:
    ```ts
@@ -205,7 +207,7 @@ Common: same item names/anatomy/props/`data-slot`/exports as the stock port; res
    // x.svelte.ts:  x: { files: [{ path: "src/lib/registry/ui/x/x.svelte" }, { path: "src/lib/registry/ui/x/index.ts" }], registryDependencies: ["button"] }
    ```
    Per-framework `type`, `registryDependencies`, `cssVars`, `css`, `config`, `skip` overrides are allowed. A new group/file must be merged in `registry.manifest/index.ts`. Add the item name to `REQUIRED` in `scripts/verify-matrix.ts` (and to its raised list if applicable).
-6. Docs: demos `apps/docs/src/demos/{react/x.tsx,vue/x.vue,svelte/x.svelte}` (+ `x-raised.*` for raised components), page `apps/docs/src/content/docs/components/<group>/x.mdx` from `apps/docs/templates/component.mdx`. **Quote the frontmatter description** (an unquoted colon breaks the YAML). Sections: `<ComponentDemo name="x" />`, API table (include `raised | boolean | false`), `## Raised ✦` with `<ComponentDemo name="x" demo="x-raised" />`, `## ✦ Edmi additions`. Demos must import registry code via `@edmi-react/ui/x`, `@edmi-vue/ui/x`, `@edmi-svelte/ui/x`; avoid importing icon or third-party packages the docs app does not depend on. Restart `astro dev` after adding a brand-new demo file (islands are generated at config load).
+6. Docs: demos `apps/docs/src/demos/{react/x.tsx,vue/x.vue,svelte/x.svelte}` (+ `x-raised.*` showing flat / raised (+1) / floating (+2) and sunken (-1) where the component supports it; the name is renamed to `x-elevation.*` in the rename wave), page `apps/docs/src/content/docs/components/<group>/x.mdx` from `apps/docs/templates/component.mdx`. **Quote the frontmatter description** (an unquoted colon breaks the YAML). Sections: `<ComponentDemo name="x" />`, API table (include `elevation | "auto" \| "sunken" \| "flat" \| "raised" \| "floating" | "auto"`), `## Elevation ✦` (levels supported, what rises) with `<ComponentDemo name="x" demo="x-raised" />`, `## ✦ Edmi additions`. Demos must import registry code via `@edmi-react/ui/x`, `@edmi-vue/ui/x`, `@edmi-svelte/ui/x`; avoid importing icon or third-party packages the docs app does not depend on. Restart `astro dev` after adding a brand-new demo file (islands are generated at config load).
 7. Preview page: add the demo to `packages/<fw>/src/preview/<group>.*` and compare against the board.
 8. Skill: add a `USE_WHEN` line for the item in `scripts/gen-skill.ts`, then `bun run scripts/gen-skill.ts` (the test fails otherwise); new props/variants/✦ additions go into `skills/edmi-ui/references/components.md` (and `raised.md` if it takes `raised`; add it to the RAISED lists of `verify-matrix.ts`).
 9. `bunx changeset` (see 9). Run the gates (8). Commit one component per commit, `feat(<fw or all>/<group>): <name>`.

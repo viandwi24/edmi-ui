@@ -14,7 +14,7 @@
 			<IconPlaceholder lucide="ChartLineIcon" tabler="IconChartLine" hugeicons="ChartIcon" phosphor="ChartLineIcon" remixicon="RiLineChartLine" />
 		{/snippet}
 		{#snippet action()}
-			<Button size="sm" raised>Join</Button>
+			<Button size="sm" elevation="raised">Join</Button>
 		{/snippet}
 	</FeedPost.Index>
 	<FeedPost.Footer>

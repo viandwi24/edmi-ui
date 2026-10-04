@@ -8,7 +8,7 @@
 		<Dialog.Root>
 			<Dialog.Trigger>
 				{#snippet child({ props })}
-					<Button variant="outline" {raised} {...props}>{raised ? "Raised dialog" : "Flat dialog"}</Button>
+					<Button variant="outline" elevation={raised ? "raised" : undefined} {...props}>{raised ? "Raised dialog" : "Flat dialog"}</Button>
 				{/snippet}
 			</Dialog.Trigger>
 			<Dialog.Content {raised}>

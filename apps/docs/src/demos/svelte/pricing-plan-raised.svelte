@@ -13,6 +13,6 @@
 	features={["Custom weights and mandate", "Pre-IPO sleeve", "Share cards and Blinks"]}
 >
 	{#snippet action()}
-		<Button size="lg" raised>Launch an index</Button>
+		<Button size="lg" elevation="raised">Launch an index</Button>
 	{/snippet}
 </PricingPlan>

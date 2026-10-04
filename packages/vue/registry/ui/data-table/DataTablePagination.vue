@@ -44,7 +44,7 @@ const sizes = computed(() => {
 					:model-value="`${table.atoms.pagination.get().pageSize}`"
 					@update:model-value="(value) => table.setPageSize(Number(value))"
 				>
-					<SelectTrigger size="sm" :raised="raised" class="w-[72px]">
+					<SelectTrigger size="sm" :elevation="raised ? 'raised' : undefined" class="w-[72px]">
 						<SelectValue />
 					</SelectTrigger>
 					<SelectContent side="top">
@@ -62,7 +62,7 @@ const sizes = computed(() => {
 				<Button
 					variant="outline"
 					size="icon-sm"
-					:raised="raised"
+					:elevation="raised ? 'raised' : undefined"
 					class="hidden lg:inline-flex"
 					:disabled="!table.getCanPreviousPage()"
 					@click="table.setPageIndex(0)"
@@ -73,7 +73,7 @@ const sizes = computed(() => {
 				<Button
 					variant="outline"
 					size="icon-sm"
-					:raised="raised"
+					:elevation="raised ? 'raised' : undefined"
 					:disabled="!table.getCanPreviousPage()"
 					@click="table.previousPage()"
 				>
@@ -83,7 +83,7 @@ const sizes = computed(() => {
 				<Button
 					variant="outline"
 					size="icon-sm"
-					:raised="raised"
+					:elevation="raised ? 'raised' : undefined"
 					:disabled="!table.getCanNextPage()"
 					@click="table.nextPage()"
 				>
@@ -93,7 +93,7 @@ const sizes = computed(() => {
 				<Button
 					variant="outline"
 					size="icon-sm"
-					:raised="raised"
+					:elevation="raised ? 'raised' : undefined"
 					class="hidden lg:inline-flex"
 					:disabled="!table.getCanNextPage()"
 					@click="table.setPageIndex(table.getPageCount() - 1)"

@@ -34,7 +34,7 @@ const copy = (text: string) => navigator.clipboard?.writeText(text);
 						AIs that research, prepare and manage indexes. The vault program, not the AI, decides what is allowed.
 					</p>
 				</div>
-				<Button raised variant="outline">How agents work</Button>
+				<Button elevation="raised" variant="outline">How agents work</Button>
 			</div>
 
 			<div class="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_480px]">
@@ -43,7 +43,7 @@ const copy = (text: string) => navigator.clipboard?.writeText(text);
 						<h2 class="text-xl font-normal tracking-[-0.3px]">Your agents</h2>
 						<div class="rounded-xl border border-dashed border-border bg-transparent p-6">
 							<p class="text-[14px]">Sign in with your wallet (one message signature, no fee) to manage your agents.</p>
-							<Button raised variant="outline" class="mt-3">Sign in</Button>
+							<Button elevation="raised" variant="outline" class="mt-3">Sign in</Button>
 						</div>
 					</section>
 
@@ -106,7 +106,7 @@ const copy = (text: string) => navigator.clipboard?.writeText(text);
 						<p class="text-[13px] leading-relaxed text-muted-foreground">
 							Already run an agent with its own keys? Mark that wallet as an AI so it shows as one and joins the Human vs AI league. One signature, no fee.
 						</p>
-						<Button raised variant="outline" class="self-start">Register wallet</Button>
+						<Button elevation="raised" variant="outline" class="self-start">Register wallet</Button>
 					</Card>
 				</div>
 			</div>

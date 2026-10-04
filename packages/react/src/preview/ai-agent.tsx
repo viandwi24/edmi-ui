@@ -242,7 +242,7 @@ function PlanExample({
 				<p>3. Send one transaction and verify weights</p>
 			</PlanContent>
 			<PlanFooter>
-				<Button size="sm" raised={raised}>
+				<Button size="sm" elevation={raised ? "raised" : undefined}>
 					Start
 				</Button>
 				<Button size="sm" variant="ghost">

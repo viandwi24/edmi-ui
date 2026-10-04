@@ -66,10 +66,14 @@ export default function EditorialDarkExample() {
 					</NavigationMenuList>
 				</NavigationMenu>
 				<div className="flex items-center gap-3">
-					<Button raised variant="secondary" className="max-sm:hidden">
+					<Button
+						elevation="raised"
+						variant="secondary"
+						className="max-sm:hidden"
+					>
 						{nav.contact}
 					</Button>
-					<Button raised>{nav.launch}</Button>
+					<Button elevation="raised">{nav.launch}</Button>
 				</div>
 			</header>
 
@@ -81,20 +85,20 @@ export default function EditorialDarkExample() {
 						</h1>
 						<p className="text-xl text-muted-foreground">{hero.lead}</p>
 						<Card raised className="w-full gap-3 p-7">
-							<Button raised variant="secondary" size="lg">
+							<Button elevation="raised" variant="secondary" size="lg">
 								{hero.wallet}
 							</Button>
 							<span className="text-[11px] text-muted-foreground">
 								{hero.or}
 							</span>
-							<Button raised size="lg">
+							<Button elevation="raised" size="lg">
 								{hero.email}
 							</Button>
 							<p className="text-[11px] leading-relaxed text-muted-foreground">
 								{hero.terms}
 							</p>
 						</Card>
-						<Button raised variant="outline">
+						<Button elevation="raised" variant="outline">
 							{hero.devnet}
 						</Button>
 					</div>
@@ -128,7 +132,7 @@ export default function EditorialDarkExample() {
 									</li>
 								))}
 							</ul>
-							<Button raised variant="brand" size="lg">
+							<Button elevation="raised" variant="brand" size="lg">
 								{index.join}
 							</Button>
 						</Card>
@@ -140,7 +144,7 @@ export default function EditorialDarkExample() {
 						{plans.title}
 					</h2>
 					<ToggleGroup
-						raised
+						elevation="raised"
 						variant="segmented"
 						value={[audience]}
 						onValueChange={(v) => v[0] && setAudience(v[0] as string)}
@@ -161,7 +165,7 @@ export default function EditorialDarkExample() {
 								price={p.price}
 								priceNote={p.note}
 								action={
-									<Button raised variant="outline">
+									<Button elevation="raised" variant="outline">
 										{plans.cta}
 									</Button>
 								}

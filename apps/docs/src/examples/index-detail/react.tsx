@@ -84,13 +84,18 @@ export default function IndexDetailExample() {
 						</BreadcrumbList>
 					</Breadcrumb>
 					<div className="flex items-center gap-2">
-						<Button variant="outline" raised>
+						<Button variant="outline" elevation="raised">
 							Clone
 						</Button>
-						<Button variant="outline" raised>
+						<Button variant="outline" elevation="raised">
 							Follow
 						</Button>
-						<Button variant="outline" raised size="icon" aria-label="Share">
+						<Button
+							variant="outline"
+							elevation="raised"
+							size="icon"
+							aria-label="Share"
+						>
 							<IconPlaceholder
 								lucide="ArrowUpIcon"
 								tabler="IconArrowUp"
@@ -152,7 +157,7 @@ export default function IndexDetailExample() {
 								</p>
 							</div>
 						</div>
-						<Button variant="outline" raised>
+						<Button variant="outline" elevation="raised">
 							Compare index
 						</Button>
 					</div>
@@ -297,7 +302,7 @@ export default function IndexDetailExample() {
 						<h2 className="text-sm font-semibold">Share</h2>
 						<div className="flex flex-wrap gap-2">
 							{shareActions.map((s) => (
-								<Button key={s} variant="outline" raised size="sm">
+								<Button key={s} variant="outline" elevation="raised" size="sm">
 									{s}
 								</Button>
 							))}

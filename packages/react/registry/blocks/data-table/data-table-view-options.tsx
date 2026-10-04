@@ -37,7 +37,7 @@ export function DataTableViewOptions<TData extends RowData>({
 					<Button
 						variant="outline"
 						size="sm"
-						raised={raised}
+						elevation={raised ? "raised" : undefined}
 						className="ml-auto"
 					/>
 				}

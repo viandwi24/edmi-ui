@@ -180,7 +180,7 @@
 														<Item.Description>{row.note}</Item.Description>
 													</Item.Content>
 													<Item.Actions>
-														<Button raised size="sm" type="button" variant="outline">{row.action}</Button>
+														<Button elevation="raised" size="sm" type="button" variant="outline">{row.action}</Button>
 													</Item.Actions>
 												</Item.Root>
 											</div>

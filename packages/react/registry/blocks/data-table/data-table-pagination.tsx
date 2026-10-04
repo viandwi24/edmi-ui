@@ -40,7 +40,11 @@ export function DataTablePagination<TData extends RowData>({
 						value={`${pageSize}`}
 						onValueChange={(value) => table.setPageSize(Number(value))}
 					>
-						<SelectTrigger size="sm" raised={raised} className="w-[72px]">
+						<SelectTrigger
+							size="sm"
+							elevation={raised ? "raised" : undefined}
+							className="w-[72px]"
+						>
 							<SelectValue />
 						</SelectTrigger>
 						<SelectContent side="top">
@@ -59,7 +63,7 @@ export function DataTablePagination<TData extends RowData>({
 					<Button
 						variant="outline"
 						size="icon-sm"
-						raised={raised}
+						elevation={raised ? "raised" : undefined}
 						className="hidden lg:inline-flex"
 						onClick={() => table.setPageIndex(0)}
 						disabled={!table.getCanPreviousPage()}
@@ -76,7 +80,7 @@ export function DataTablePagination<TData extends RowData>({
 					<Button
 						variant="outline"
 						size="icon-sm"
-						raised={raised}
+						elevation={raised ? "raised" : undefined}
 						onClick={() => table.previousPage()}
 						disabled={!table.getCanPreviousPage()}
 					>
@@ -92,7 +96,7 @@ export function DataTablePagination<TData extends RowData>({
 					<Button
 						variant="outline"
 						size="icon-sm"
-						raised={raised}
+						elevation={raised ? "raised" : undefined}
 						onClick={() => table.nextPage()}
 						disabled={!table.getCanNextPage()}
 					>
@@ -108,7 +112,7 @@ export function DataTablePagination<TData extends RowData>({
 					<Button
 						variant="outline"
 						size="icon-sm"
-						raised={raised}
+						elevation={raised ? "raised" : undefined}
 						className="hidden lg:inline-flex"
 						onClick={() => table.setPageIndex(table.getPageCount() - 1)}
 						disabled={!table.getCanNextPage()}

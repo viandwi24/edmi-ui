@@ -83,13 +83,13 @@ const emit = defineEmits<{
           class="text-[13px]"
         />
         <InputGroupAddon align="inline-end">
-          <Kbd :raised="raised">{{ shortcut }}</Kbd>
+          <Kbd :elevation="raised ? 'raised' : undefined">{{ shortcut }}</Kbd>
         </InputGroupAddon>
       </InputGroup>
-      <Button v-if="network" variant="secondary" :raised="raised" @click="emit('network-click')">
+      <Button v-if="network" variant="secondary" :elevation="raised ? 'raised' : undefined" @click="emit('network-click')">
         {{ network }}
       </Button>
-      <Button :raised="raised" @click="emit('connect')">
+      <Button :elevation="raised ? 'raised' : undefined" @click="emit('connect')">
         <WalletIcon />
         {{ connectLabel }}
       </Button>

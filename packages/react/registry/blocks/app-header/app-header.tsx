@@ -143,16 +143,20 @@ function AppHeader({
 							className="text-[13px]"
 						/>
 						<InputGroupAddon align="inline-end">
-							<Kbd raised={raised}>{shortcut}</Kbd>
+							<Kbd elevation={raised ? "raised" : undefined}>{shortcut}</Kbd>
 						</InputGroupAddon>
 					</InputGroup>
 				) : null}
 				{network ? (
-					<Button variant="secondary" raised={raised} onClick={onNetworkClick}>
+					<Button
+						variant="secondary"
+						elevation={raised ? "raised" : undefined}
+						onClick={onNetworkClick}
+					>
 						{network}
 					</Button>
 				) : null}
-				<Button raised={raised} onClick={onConnect}>
+				<Button elevation={raised ? "raised" : undefined} onClick={onConnect}>
 					<IconPlaceholder
 						lucide="WalletIcon"
 						tabler="IconWallet"

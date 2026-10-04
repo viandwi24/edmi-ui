@@ -49,7 +49,7 @@ function handleClick(e: MouseEvent) {
     :type="isStop ? 'button' : 'submit'"
     :size="props.size"
     :variant="props.variant ?? (props.status === 'error' ? 'destructive' : 'default')"
-    :raised="props.raised ?? inheritedRaised"
+    :elevation="props.raised ?? inheritedRaised ? 'raised' : undefined"
     :class="cn('rounded-[9px]', props.class)"
     @click="handleClick"
   >

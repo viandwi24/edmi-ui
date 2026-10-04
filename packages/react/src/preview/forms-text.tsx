@@ -124,11 +124,11 @@ export default function FormsTextPreview() {
 			</FieldGroup>
 			<Button>Submit</Button>
 			<RaisedSection>
-				<NativeSelect raised>
+				<NativeSelect elevation="raised">
 					<NativeSelectOption>Solana devnet</NativeSelectOption>
 				</NativeSelect>
 				<Select defaultValue="NVDAx">
-					<SelectTrigger raised className="w-52">
+					<SelectTrigger elevation="raised" className="w-52">
 						<SelectValue />
 					</SelectTrigger>
 					<SelectContent alignItemWithTrigger={false}>
@@ -141,7 +141,7 @@ export default function FormsTextPreview() {
 						</SelectGroup>
 					</SelectContent>
 				</Select>
-				<Button raised>Submit</Button>
+				<Button elevation="raised">Submit</Button>
 			</RaisedSection>
 		</div>
 	);

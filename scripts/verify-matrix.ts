@@ -206,6 +206,12 @@ const AI_RAISED = [
 /** AGENTS.md section 5: every item with a `raised` prop ships a `<name>-raised` demo in all three frameworks. */
 const RAISED = [
 	"button",
+	"button-group",
+	"badge",
+	"input",
+	"textarea",
+	"input-group",
+	"input-otp",
 	"toggle",
 	"toggle-group",
 	"kbd",

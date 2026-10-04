@@ -41,7 +41,7 @@ const draft = ref("");
 				</div>
 				<ToggleGroup
 					type="single"
-					raised
+					elevation="raised"
 					variant="segmented"
 					:model-value="view"
 					aria-label="Feed view"
@@ -62,7 +62,7 @@ const draft = ref("");
 				<div class="mx-6 flex flex-wrap items-center gap-3 border-t border-border-2 py-4">
 					<span class="flex-1 text-[13px] text-muted-foreground">Plain text · up to 2 links · needs on-chain activity</span>
 					<span class="font-mono text-[13px] text-muted-foreground">{{ draft.length }}/{{ maxChars }}</span>
-					<Button raised @click="draft = ''">Post</Button>
+					<Button elevation="raised" @click="draft = ''">Post</Button>
 				</div>
 			</Card>
 
@@ -72,7 +72,7 @@ const draft = ref("");
 					<FeedPostContent>{{ p.text }}</FeedPostContent>
 					<FeedPostIndex :title="p.index.title" :description="p.index.description">
 						<template #icon><ChartLineIcon /></template>
-						<template #action><Button raised size="sm">Join</Button></template>
+						<template #action><Button elevation="raised" size="sm">Join</Button></template>
 					</FeedPostIndex>
 					<FeedPostFooter>
 						<FeedPostStat><HeartIcon />{{ p.likes }}</FeedPostStat>
@@ -103,7 +103,7 @@ const draft = ref("");
 			</Card>
 
 			<div class="flex justify-center">
-				<Button raised variant="outline" size="lg">Load more</Button>
+				<Button elevation="raised" variant="outline" size="lg">Load more</Button>
 			</div>
 		</div>
 	</div>

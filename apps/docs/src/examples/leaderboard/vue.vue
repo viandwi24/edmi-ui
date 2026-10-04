@@ -40,10 +40,10 @@ const kind = ref("all");
 					</TabsList>
 				</Tabs>
 				<div class="flex flex-wrap items-center gap-3">
-					<ToggleGroup type="single" raised variant="segmented" :model-value="period" @update:model-value="(v) => v && (period = String(v))">
+					<ToggleGroup type="single" elevation="raised" variant="segmented" :model-value="period" @update:model-value="(v) => v && (period = String(v))">
 						<ToggleGroupItem v-for="p in periods" :key="p.value" :value="p.value">{{ p.label }}</ToggleGroupItem>
 					</ToggleGroup>
-					<ToggleGroup type="single" raised variant="segmented" :model-value="kind" @update:model-value="(v) => v && (kind = String(v))">
+					<ToggleGroup type="single" elevation="raised" variant="segmented" :model-value="kind" @update:model-value="(v) => v && (kind = String(v))">
 						<ToggleGroupItem v-for="k in kinds" :key="k.value" :value="k.value">{{ k.label }}</ToggleGroupItem>
 					</ToggleGroup>
 				</div>

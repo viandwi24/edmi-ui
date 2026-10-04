@@ -19,7 +19,7 @@ const rendered = `<Card>
   <div className="font-semibold">Join MAG4</div>
   <div className="mt-0.5 text-xs text-muted-foreground">Magnificent Four · 4 tokens</div>
   <div className="mt-3.5 flex gap-2">
-    <Button raised>Join index</Button>
+    <Button elevation="raised">Join index</Button>
     <Button variant="outline">Details</Button>
   </div>
 </Card>`;

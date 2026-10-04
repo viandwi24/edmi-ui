@@ -90,7 +90,7 @@ export default function ProfileExample() {
 							</div>
 						</div>
 					</div>
-					<Button raised variant="outline">
+					<Button elevation="raised" variant="outline">
 						Edit profile
 					</Button>
 				</div>

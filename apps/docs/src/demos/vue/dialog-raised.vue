@@ -15,7 +15,7 @@ import {
 <template>
   <Dialog>
     <DialogTrigger as-child>
-      <Button variant="outline" raised>Open raised dialog</Button>
+      <Button variant="outline" elevation="raised">Open raised dialog</Button>
     </DialogTrigger>
     <DialogContent raised>
       <DialogHeader>
@@ -26,7 +26,7 @@ import {
         <DialogClose as-child>
           <Button variant="outline">Cancel</Button>
         </DialogClose>
-        <Button raised>Save</Button>
+        <Button elevation="raised">Save</Button>
       </DialogFooter>
     </DialogContent>
   </Dialog>

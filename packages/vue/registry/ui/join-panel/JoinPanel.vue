@@ -126,7 +126,7 @@ function onInput(e: Event) {
         type="button"
         variant="secondary"
         size="sm"
-        :raised="raised"
+        :elevation="raised ? 'raised' : undefined"
         class="flex-1 font-mono"
         @click="q.value !== undefined ? (amount = q.value) : emit('max')"
       >
@@ -142,7 +142,7 @@ function onInput(e: Event) {
       <span class="font-mono">{{ r.value }}</span>
     </div>
     <div class="mt-3.5 px-(--card-spacing)">
-      <Button size="lg" class="w-full" :raised="raised" :disabled="disabled" @click="emit('join')">
+      <Button size="lg" class="w-full" :elevation="raised ? 'raised' : undefined" :disabled="disabled" @click="emit('join')">
         {{ joinLabel }}
       </Button>
     </div>

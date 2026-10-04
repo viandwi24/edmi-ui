@@ -49,8 +49,8 @@ function pickAudience(v: unknown) {
 				</NavigationMenuList>
 			</NavigationMenu>
 			<div class="flex items-center gap-3">
-				<Button raised variant="secondary" class="max-sm:hidden">{{ nav.contact }}</Button>
-				<Button raised>{{ nav.launch }}</Button>
+				<Button elevation="raised" variant="secondary" class="max-sm:hidden">{{ nav.contact }}</Button>
+				<Button elevation="raised">{{ nav.launch }}</Button>
 			</div>
 		</header>
 
@@ -60,12 +60,12 @@ function pickAudience(v: unknown) {
 					<h1 class="text-[56px] leading-[1.05] font-normal tracking-[-2.5px] text-foreground-2 md:text-[72px]">{{ hero.title }}</h1>
 					<p class="text-xl text-muted-foreground">{{ hero.lead }}</p>
 					<Card raised class="w-full gap-3 p-7">
-						<Button raised variant="secondary" size="lg">{{ hero.wallet }}</Button>
+						<Button elevation="raised" variant="secondary" size="lg">{{ hero.wallet }}</Button>
 						<span class="text-[11px] text-muted-foreground">{{ hero.or }}</span>
-						<Button raised size="lg">{{ hero.email }}</Button>
+						<Button elevation="raised" size="lg">{{ hero.email }}</Button>
 						<p class="text-[11px] leading-relaxed text-muted-foreground">{{ hero.terms }}</p>
 					</Card>
-					<Button raised variant="outline">{{ hero.devnet }}</Button>
+					<Button elevation="raised" variant="outline">{{ hero.devnet }}</Button>
 				</div>
 				<Card raised class="items-center justify-center p-6 sm:p-12 lg:min-h-[620px]">
 					<Card class="w-full max-w-[420px] gap-4 p-7">
@@ -79,14 +79,14 @@ function pickAudience(v: unknown) {
 								<span class="font-mono text-xs text-muted-foreground">{{ r.weight }}</span>
 							</li>
 						</ul>
-						<Button raised variant="brand" size="lg">{{ index.join }}</Button>
+						<Button elevation="raised" variant="brand" size="lg">{{ index.join }}</Button>
 					</Card>
 				</Card>
 			</section>
 
 			<section class="flex flex-col items-center gap-10">
 				<h2 class="text-[40px] font-normal tracking-[-1.5px] text-foreground-2 md:text-[56px]">{{ plans.title }}</h2>
-				<ToggleGroup type="single" raised variant="segmented" :model-value="audience" @update:model-value="pickAudience">
+				<ToggleGroup type="single" elevation="raised" variant="segmented" :model-value="audience" @update:model-value="pickAudience">
 					<ToggleGroupItem v-for="t in plans.tabs" :key="t.value" :value="t.value" class="px-4">{{ t.label }}</ToggleGroupItem>
 				</ToggleGroup>
 				<div class="grid w-full gap-5 md:grid-cols-3">
@@ -102,7 +102,7 @@ function pickAudience(v: unknown) {
 						:features="p.features"
 					>
 						<template #action>
-							<Button raised variant="outline">{{ plans.cta }}</Button>
+							<Button elevation="raised" variant="outline">{{ plans.cta }}</Button>
 						</template>
 					</PricingPlan>
 				</div>

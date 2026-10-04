@@ -101,7 +101,7 @@
 		<p class="rounded-xl border border-border px-3.5 py-3 text-xs leading-normal text-muted-foreground">
 			Review your configuration before purchasing. Credit is used only when you confirm.
 		</p>
-		<Button raised size="lg" class="w-full">Purchase server</Button>
+		<Button elevation="raised" size="lg" class="w-full">Purchase server</Button>
 		<Button variant="ghost" class="-mt-1.5 w-full">Save as draft</Button>
 	</div>
 </Card>

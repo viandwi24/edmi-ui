@@ -19,6 +19,8 @@
 		...restProps
 	}: Omit<ButtonProps, "onclick" | "href"> & {
 		onTranscriptionChange?: (text: string) => void;
+		/** legacy prop, forwarded as `elevation="raised"` (the AI pack migration renames it) */
+		raised?: boolean;
 		/**
 		 * MediaRecorder fallback for browsers without the Web Speech API (Firefox): receives the recorded audio
 		 * and returns the transcript, which is passed to `onTranscriptionChange`.
@@ -198,7 +200,7 @@
 		aria-pressed={isListening}
 		variant={isListening ? "brand" : variant}
 		{size}
-		{raised}
+		elevation={raised ? "raised" : undefined}
 		disabled={isDisabled}
 		class={cn(
 			"relative z-10",

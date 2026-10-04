@@ -120,9 +120,9 @@
 			</InputGroup>
 		{/if}
 		{#if network}
-			<Button variant="secondary" {raised} onclick={onNetworkClick}>{network}</Button>
+			<Button variant="secondary" elevation={raised ? "raised" : undefined} onclick={onNetworkClick}>{network}</Button>
 		{/if}
-		<Button {raised} onclick={onConnect}>
+		<Button elevation={raised ? "raised" : undefined} onclick={onConnect}>
 			<IconPlaceholder
 				lucide="WalletIcon"
 				tabler="IconWallet"

@@ -63,6 +63,8 @@ declare global {
 type SpeechInputMode = "speech-recognition" | "media-recorder" | "none";
 
 export type SpeechInputProps = ComponentProps<typeof Button> & {
+	/** legacy prop, forwarded as `elevation="raised"` (the AI pack migration renames it) */
+	raised?: boolean;
 	onTranscriptionChange?: (text: string) => void;
 	/**
 	 * Callback for when audio is recorded using MediaRecorder fallback.
@@ -326,7 +328,7 @@ export const SpeechInput = ({
 				)}
 				disabled={isDisabled}
 				onClick={toggleListening}
-				raised={raised}
+				elevation={raised ? "raised" : undefined}
 				size={size}
 				variant={isListening ? "brand" : variant}
 				{...props}

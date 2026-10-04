@@ -17,7 +17,7 @@ export default function Demo() {
 					<CardTitle>Join MAG4</CardTitle>
 					<CardDescription>Magnificent Four, 4 tokens</CardDescription>
 					<CardAction>
-						<Button raised size="sm" variant="outline">
+						<Button elevation="raised" size="sm" variant="outline">
 							Edit
 						</Button>
 					</CardAction>
@@ -26,10 +26,10 @@ export default function Demo() {
 					Amount 1,000 USDC
 				</CardContent>
 				<CardFooter>
-					<Button raised size="sm" variant="outline">
+					<Button elevation="raised" size="sm" variant="outline">
 						Cancel
 					</Button>
-					<Button raised size="sm">
+					<Button elevation="raised" size="sm">
 						Join index
 					</Button>
 				</CardFooter>

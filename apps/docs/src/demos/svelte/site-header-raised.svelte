@@ -16,6 +16,6 @@
 
 <SiteHeader raised lead="How to" {steps} {links}>
 	{#snippet action({ raised })}
-		<Button {raised}>Create an index</Button>
+		<Button elevation={raised ? "raised" : undefined}>Create an index</Button>
 	{/snippet}
 </SiteHeader>

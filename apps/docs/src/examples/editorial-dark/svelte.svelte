@@ -17,7 +17,7 @@
 {/snippet}
 
 {#snippet planAction()}
-	<Button raised variant="outline">{plans.cta}</Button>
+	<Button elevation="raised" variant="outline">{plans.cta}</Button>
 {/snippet}
 
 <div class="min-h-svh overflow-x-clip bg-background text-foreground">
@@ -51,8 +51,8 @@
 			</NavigationMenu.List>
 		</NavigationMenu.Root>
 		<div class="flex items-center gap-3">
-			<Button raised variant="secondary" class="max-sm:hidden">{nav.contact}</Button>
-			<Button raised>{nav.launch}</Button>
+			<Button elevation="raised" variant="secondary" class="max-sm:hidden">{nav.contact}</Button>
+			<Button elevation="raised">{nav.launch}</Button>
 		</div>
 	</header>
 
@@ -62,12 +62,12 @@
 				<h1 class="text-[56px] leading-[1.05] font-normal tracking-[-2.5px] text-foreground-2 md:text-[72px]">{hero.title}</h1>
 				<p class="text-xl text-muted-foreground">{hero.lead}</p>
 				<Card raised class="w-full gap-3 p-7">
-					<Button raised variant="secondary" size="lg">{hero.wallet}</Button>
+					<Button elevation="raised" variant="secondary" size="lg">{hero.wallet}</Button>
 					<span class="text-[11px] text-muted-foreground">{hero.or}</span>
-					<Button raised size="lg">{hero.email}</Button>
+					<Button elevation="raised" size="lg">{hero.email}</Button>
 					<p class="text-[11px] leading-relaxed text-muted-foreground">{hero.terms}</p>
 				</Card>
-				<Button raised variant="outline">{hero.devnet}</Button>
+				<Button elevation="raised" variant="outline">{hero.devnet}</Button>
 			</div>
 			<Card raised class="items-center justify-center p-6 sm:p-12 lg:min-h-[620px]">
 				<Card class="w-full max-w-[420px] gap-4 p-7">
@@ -83,7 +83,7 @@
 							</li>
 						{/each}
 					</ul>
-					<Button raised variant="brand" size="lg">{index.join}</Button>
+					<Button elevation="raised" variant="brand" size="lg">{index.join}</Button>
 				</Card>
 			</Card>
 		</section>
@@ -92,7 +92,7 @@
 			<h2 class="text-[40px] font-normal tracking-[-1.5px] text-foreground-2 md:text-[56px]">{plans.title}</h2>
 			<ToggleGroup.Root
 				type="single"
-				raised
+				elevation="raised"
 				variant="segmented"
 				value={audience}
 				onValueChange={(v) => v && (audience = v)}

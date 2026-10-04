@@ -21,9 +21,9 @@ Choose by "use when". If two items fit, prefer the more specific one (`field` ov
 
 ### Actions
 
-- `badge`: status, count or tag. Variants include brand, success, warning, info; `shape="pill|number"` ✦.
+- `badge` [raised]: status, count or tag. Variants include brand, success, warning, info; `shape="pill|number"` ✦.
 - `button` [raised]: every action. Variants default, secondary, outline, ghost, destructive, link, brand ✦; sizes xs, sm, default, lg, icon*. One primary per region.
-- `button-group`: join related buttons, an input and a button, or a button and a label into one control.
+- `button-group` [raised]: join related buttons, an input and a button, or a button and a label into one control.
 - `kbd` [raised]: show a keyboard shortcut; `KbdGroup` for combinations.
 - `toggle` [raised]: a two-state button (bold, mute, pin).
 - `toggle-group` [raised]: a set of toggles; `variant="segmented"` ✦ for a flat segmented control; `spacing={0}` joins them.
@@ -35,16 +35,16 @@ Choose by "use when". If two items fit, prefer the more specific one (`field` ov
 - `combobox`: searchable select, with chips for multiple values.
 - `date-picker` [raised]: `DatePicker` for one date, `DateRangePicker` for a range (✦ presets).
 - `field`: a form row: label + control + description + error, vertical, horizontal or responsive. Prefer it over hand-built rows.
-- `input`: single-line text, email, password, search.
-- `input-group`: input with icons, units, buttons or keys inside one shared focus ring.
-- `input-otp`: one-time codes and PINs.
+- `input` [raised]: single-line text, email, password, search.
+- `input-group` [raised]: input with icons, units, buttons or keys inside one shared focus ring.
+- `input-otp` [raised]: one-time codes and PINs.
 - `label`: label a control (Field already includes one).
 - `native-select` [raised]: simple or long lists, mobile-friendly browser select.
 - `radio-group` [raised]: exactly one of a few visible options.
 - `select` [raised]: pick one value from a short list in a popover.
 - `slider` [raised]: pick a value or a range by dragging.
 - `switch` [raised]: instant on/off setting (brand colored when on).
-- `textarea`: multi-line text that grows with content.
+- `textarea` [raised]: multi-line text that grows with content.
 
 ### Display
 

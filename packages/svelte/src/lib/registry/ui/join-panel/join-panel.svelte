@@ -129,7 +129,7 @@
 					type="button"
 					variant="secondary"
 					size="sm"
-					{raised}
+					elevation={raised ? "raised" : undefined}
 					class="flex-1 font-mono"
 					onclick={() => {
 						if (q.value !== undefined) {
@@ -150,7 +150,7 @@
 		</div>
 	{/each}
 	<div class="mt-3.5 px-(--card-spacing)">
-		<Button size="lg" {raised} class="w-full" onclick={onJoin} {disabled}>
+		<Button size="lg" elevation={raised ? "raised" : undefined} class="w-full" onclick={onJoin} {disabled}>
 			{#if typeof joinLabel === "function"}{@render joinLabel()}{:else}{joinLabel}{/if}
 		</Button>
 	</div>

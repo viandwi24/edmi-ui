@@ -44,7 +44,7 @@ export default function FeedExample() {
 						</p>
 					</div>
 					<ToggleGroup
-						raised
+						elevation="raised"
 						variant="segmented"
 						value={[view]}
 						onValueChange={(v) => v[0] && setView(v[0])}
@@ -74,7 +74,7 @@ export default function FeedExample() {
 						<span className="font-mono text-[13px] text-muted-foreground">
 							{draft.length}/{maxChars}
 						</span>
-						<Button raised onClick={() => setDraft("")}>
+						<Button elevation="raised" onClick={() => setDraft("")}>
 							Post
 						</Button>
 					</div>
@@ -103,7 +103,7 @@ export default function FeedExample() {
 										/>
 									}
 									action={
-										<Button raised size="sm">
+										<Button elevation="raised" size="sm">
 											Join
 										</Button>
 									}
@@ -174,7 +174,7 @@ export default function FeedExample() {
 				</Card>
 
 				<div className="flex justify-center">
-					<Button raised variant="outline" size="lg">
+					<Button elevation="raised" variant="outline" size="lg">
 						Load more
 					</Button>
 				</div>

@@ -254,10 +254,14 @@ export default function MarketsSidebarExample() {
 						<span>Markets</span>
 					</div>
 					<div className="flex items-center gap-2">
-						<Button raised variant="outline" className="max-sm:hidden">
+						<Button
+							elevation="raised"
+							variant="outline"
+							className="max-sm:hidden"
+						>
 							Devnet
 						</Button>
-						<Button raised>
+						<Button elevation="raised">
 							Create index
 							<IconPlaceholder
 								lucide="PlusIcon"

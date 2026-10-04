@@ -44,10 +44,10 @@
 		<span class="font-brand text-xl font-semibold tracking-tight">Stockbreak</span>
 	{/snippet}
 	{#snippet socials()}
-		<Button variant="secondary" raised size="icon-sm" aria-label="X">
+		<Button variant="secondary" elevation="raised" size="icon-sm" aria-label="X">
 			<IconPlaceholder lucide="XIcon" tabler="IconX" hugeicons="Cancel01Icon" phosphor="XIcon" remixicon="RiCloseLine" />
 		</Button>
-		<Button variant="secondary" raised size="icon-sm" aria-label="Link">
+		<Button variant="secondary" elevation="raised" size="icon-sm" aria-label="Link">
 			<IconPlaceholder lucide="LinkIcon" tabler="IconLink" hugeicons="LinkIcon" phosphor="LinkIcon" remixicon="RiLinksLine" />
 		</Button>
 	{/snippet}

@@ -115,7 +115,7 @@ function go(delta: number) {
 										<span class="font-mono text-[15px] font-semibold">{{ a.price }}</span>
 										<Checkbox
 											:id="`asset-${a.symbol}`"
-											raised
+											elevation="raised"
 											:aria-label="`Select ${a.symbol}`"
 											:model-value="selected.includes(a.symbol)"
 											@update:model-value="(v) => toggle(a.symbol, v === true)"
@@ -141,7 +141,7 @@ function go(delta: number) {
 							<li v-for="s in selected" :key="s" class="flex items-center gap-4">
 								<span class="w-28 font-mono text-[13px] font-semibold">{{ s }}</span>
 								<Slider
-									raised
+									elevation="raised"
 									:aria-label="`${s} weight`"
 									:model-value="[weights[s] ?? 0]"
 									@update:model-value="(v) => (weights[s] = v?.[0] ?? 0)"
@@ -156,7 +156,7 @@ function go(delta: number) {
 						<Field>
 							<FieldLabel for="rebalance">Rebalance</FieldLabel>
 							<Select :model-value="rebalanceOn" @update:model-value="(v) => (rebalanceOn = String(v))">
-								<SelectTrigger id="rebalance" raised class="w-full sm:w-60">
+								<SelectTrigger id="rebalance" elevation="raised" class="w-full sm:w-60">
 									<SelectValue />
 								</SelectTrigger>
 								<SelectContent>
@@ -172,7 +172,7 @@ function go(delta: number) {
 							</FieldLabel>
 							<Slider
 								id="drift"
-								raised
+								elevation="raised"
 								:min="1"
 								:max="20"
 								aria-label="Drift limit"
@@ -222,8 +222,8 @@ function go(delta: number) {
 					</Card>
 
 					<div class="flex items-center justify-between">
-						<Button raised variant="outline" size="lg" :disabled="stepIndex === 0" @click="go(-1)">Back</Button>
-						<Button raised size="lg" :disabled="step === 'assets' && selected.length === 0" @click="go(1)">
+						<Button elevation="raised" variant="outline" size="lg" :disabled="stepIndex === 0" @click="go(-1)">Back</Button>
+						<Button elevation="raised" size="lg" :disabled="step === 'assets' && selected.length === 0" @click="go(1)">
 							{{ step === "review" ? "Create index" : "Continue" }}
 						</Button>
 					</div>

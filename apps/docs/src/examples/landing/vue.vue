@@ -35,7 +35,7 @@ import {
 					<template #action>
 						<div class="flex items-center gap-3">
 							<Badge variant="outline" class="max-sm:hidden">Devnet</Badge>
-							<Button raised>Launch app</Button>
+							<Button elevation="raised">Launch app</Button>
 						</div>
 					</template>
 				</SiteHeader>
@@ -49,11 +49,11 @@ import {
 					<h1 class="text-[48px] leading-[1.02] font-medium tracking-[-2.4px] md:text-[68px]">{{ hero.title }}</h1>
 					<p class="max-w-[520px] text-lg text-muted-foreground">{{ hero.lead }}</p>
 					<div class="flex flex-wrap gap-3">
-						<Button raised size="lg">
+						<Button elevation="raised" size="lg">
 							Launch app
 							<ArrowUpRightIcon />
 						</Button>
-						<Button raised variant="outline" size="lg">See how it works</Button>
+						<Button elevation="raised" variant="outline" size="lg">See how it works</Button>
 					</div>
 					<div class="flex flex-col gap-1.5 text-xs text-muted-foreground">
 						<span>{{ hero.facts }}</span>
@@ -189,7 +189,7 @@ import {
 						:features="p.features"
 					>
 						<template #action>
-							<Button raised variant="outline">Launch app</Button>
+							<Button elevation="raised" variant="outline">Launch app</Button>
 						</template>
 					</PricingPlan>
 				</div>
@@ -201,8 +201,8 @@ import {
 					<p class="text-muted-foreground">{{ cta.body }}</p>
 				</div>
 				<div class="flex flex-wrap gap-3">
-					<Button raised size="lg">Launch app</Button>
-					<Button raised variant="outline" size="lg">Read the code</Button>
+					<Button elevation="raised" size="lg">Launch app</Button>
+					<Button elevation="raised" variant="outline" size="lg">Read the code</Button>
 				</div>
 			</Card>
 

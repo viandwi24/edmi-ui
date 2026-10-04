@@ -38,7 +38,7 @@ const code = computed(() => snippet(s));
 						</div>
 						<ToggleGroup
 							type="single"
-							raised
+							elevation="raised"
 							variant="segmented"
 							class="flex-wrap"
 							:model-value="s[c.key]"
@@ -75,10 +75,10 @@ const code = computed(() => snippet(s));
 							</div>
 						</div>
 						<div class="flex flex-wrap items-center gap-2">
-							<Button :raised="raised" variant="brand">{{ preview.join }}</Button>
-							<Button :raised="raised" variant="outline">{{ preview.details }}</Button>
+							<Button :elevation="raised ? 'raised' : undefined" variant="brand">{{ preview.join }}</Button>
+							<Button :elevation="raised ? 'raised' : undefined" variant="outline">{{ preview.details }}</Button>
 							<Label class="ml-auto gap-2.5 text-[13px]">
-								<Switch v-model="keeper" :raised="raised" />
+								<Switch v-model="keeper" :elevation="raised ? 'raised' : undefined" />
 								{{ preview.keeper }}
 							</Label>
 						</div>
@@ -86,14 +86,14 @@ const code = computed(() => snippet(s));
 
 					<Card :raised="raised" class="gap-4 px-5">
 						<div class="flex flex-wrap gap-2">
-							<Button v-for="v in preview.variants" :key="v" :raised="raised" :variant="v" size="sm">{{ v }}</Button>
+							<Button v-for="v in preview.variants" :key="v" :elevation="raised ? 'raised' : undefined" :variant="v" size="sm">{{ v }}</Button>
 						</div>
 						<div class="flex flex-wrap gap-2">
 							<Badge v-for="b in preview.badges" :key="b" :variant="b">{{ b }}</Badge>
 						</div>
 						<Input :placeholder="preview.placeholder" />
 						<Label class="gap-2.5 text-[13px]">
-							<Checkbox v-model="mandate" :raised="raised" />
+							<Checkbox v-model="mandate" :elevation="raised ? 'raised' : undefined" />
 							{{ preview.mandate }}
 						</Label>
 					</Card>

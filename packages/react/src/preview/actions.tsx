@@ -234,24 +234,29 @@ export default function ActionsPreview() {
 			<RaisedSection>
 				<div className="flex flex-wrap items-center gap-3">
 					{variants.map((variant) => (
-						<Button key={variant} variant={variant} raised>
+						<Button key={variant} variant={variant} elevation="raised">
 							{variant}
 						</Button>
 					))}
 				</div>
 				<div className="flex flex-wrap items-center gap-3">
-					<Toggle raised aria-label="Bold" defaultPressed>
+					<Toggle elevation="raised" aria-label="Bold" defaultPressed>
 						B
 					</Toggle>
-					<Toggle raised variant="outline" aria-label="Italic" defaultPressed>
+					<Toggle
+						elevation="raised"
+						variant="outline"
+						aria-label="Italic"
+						defaultPressed
+					>
 						I
 					</Toggle>
-					<ToggleGroup raised multiple defaultValue={["b"]}>
+					<ToggleGroup elevation="raised" multiple defaultValue={["b"]}>
 						<ToggleGroupItem value="b">B</ToggleGroupItem>
 						<ToggleGroupItem value="i">I</ToggleGroupItem>
 					</ToggleGroup>
 					<ToggleGroup
-						raised
+						elevation="raised"
 						variant="outline"
 						spacing={0}
 						defaultValue={["1M"]}
@@ -262,7 +267,11 @@ export default function ActionsPreview() {
 							</ToggleGroupItem>
 						))}
 					</ToggleGroup>
-					<ToggleGroup raised variant="segmented" defaultValue={["1M"]}>
+					<ToggleGroup
+						elevation="raised"
+						variant="segmented"
+						defaultValue={["1M"]}
+					>
 						{["1D", "1W", "1M", "1Y"].map((v) => (
 							<ToggleGroupItem key={v} value={v}>
 								{v}
@@ -271,10 +280,10 @@ export default function ActionsPreview() {
 					</ToggleGroup>
 				</div>
 				<div className="flex flex-wrap items-center gap-4">
-					<Kbd raised>K</Kbd>
+					<Kbd elevation="raised">K</Kbd>
 					<KbdGroup>
-						<Kbd raised>⌘</Kbd>
-						<Kbd raised>K</Kbd>
+						<Kbd elevation="raised">⌘</Kbd>
+						<Kbd elevation="raised">K</Kbd>
 					</KbdGroup>
 				</div>
 			</RaisedSection>

@@ -33,7 +33,7 @@
 			</div>
 			<ToggleGroup.Root
 				type="single"
-				raised
+				elevation="raised"
 				variant="segmented"
 				value={view}
 				aria-label="Feed view"
@@ -56,7 +56,7 @@
 			<div class="mx-6 flex flex-wrap items-center gap-3 border-t border-border-2 py-4">
 				<span class="flex-1 text-[13px] text-muted-foreground">Plain text · up to 2 links · needs on-chain activity</span>
 				<span class="font-mono text-[13px] text-muted-foreground">{draft.length}/{maxChars}</span>
-				<Button raised onclick={() => (draft = "")}>Post</Button>
+				<Button elevation="raised" onclick={() => (draft = "")}>Post</Button>
 			</div>
 		</Card>
 
@@ -76,7 +76,7 @@
 							/>
 						{/snippet}
 						{#snippet action()}
-							<Button raised size="sm">Join</Button>
+							<Button elevation="raised" size="sm">Join</Button>
 						{/snippet}
 					</FeedPost.Index>
 					<FeedPost.Footer>
@@ -131,7 +131,7 @@
 		</Card>
 
 		<div class="flex justify-center">
-			<Button raised variant="outline" size="lg">Load more</Button>
+			<Button elevation="raised" variant="outline" size="lg">Load more</Button>
 		</div>
 	</div>
 </div>

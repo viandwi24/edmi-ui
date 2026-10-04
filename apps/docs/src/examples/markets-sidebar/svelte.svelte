@@ -100,8 +100,8 @@
 				<span>Markets</span>
 			</div>
 			<div class="flex items-center gap-2">
-				<Button raised variant="outline" class="max-sm:hidden">Devnet</Button>
-				<Button raised>
+				<Button elevation="raised" variant="outline" class="max-sm:hidden">Devnet</Button>
+				<Button elevation="raised">
 					Create index
 					<IconPlaceholder
 						lucide="PlusIcon"

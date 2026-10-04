@@ -228,7 +228,7 @@ const state = computed(() => (isProcessing.value ? "processing" : isListening.va
       :aria-pressed="isListening"
       :variant="isListening ? 'brand' : props.variant"
       :size="props.size"
-      :raised="props.raised"
+      :elevation="props.raised ? 'raised' : undefined"
       :disabled="isDisabled"
       :class="cn(
         'relative z-10',

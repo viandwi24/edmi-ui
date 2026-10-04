@@ -145,7 +145,7 @@ export function LiveBar() {
 			<Select value={scope} onValueChange={(v) => v && apply(v)}>
 				<SelectTrigger
 					size="sm"
-					raised={raised}
+					elevation={raised ? "raised" : undefined}
 					className="w-[170px]"
 					aria-label="Theme"
 				>
@@ -203,7 +203,7 @@ export function ThemeScopes() {
 							</Badge>
 						</div>
 						<div className="flex items-center gap-1.5">
-							<Button size="sm" raised>
+							<Button size="sm" elevation="raised">
 								Join
 							</Button>
 							<Button size="sm" variant="outline">

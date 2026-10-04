@@ -50,7 +50,7 @@ export default function LeaderboardExample() {
 					</Tabs>
 					<div className="flex flex-wrap items-center gap-3">
 						<ToggleGroup
-							raised
+							elevation="raised"
 							variant="segmented"
 							value={[period]}
 							onValueChange={(v) => v[0] && setPeriod(v[0] as string)}
@@ -62,7 +62,7 @@ export default function LeaderboardExample() {
 							))}
 						</ToggleGroup>
 						<ToggleGroup
-							raised
+							elevation="raised"
 							variant="segmented"
 							value={[kind]}
 							onValueChange={(v) => v[0] && setKind(v[0] as string)}

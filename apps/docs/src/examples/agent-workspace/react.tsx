@@ -218,7 +218,12 @@ function IndexTab() {
 									<ItemDescription>{row.note}</ItemDescription>
 								</ItemContent>
 								<ItemActions>
-									<Button raised size="sm" type="button" variant="outline">
+									<Button
+										elevation="raised"
+										size="sm"
+										type="button"
+										variant="outline"
+									>
 										{row.action}
 									</Button>
 								</ItemActions>

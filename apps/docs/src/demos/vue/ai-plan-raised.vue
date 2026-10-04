@@ -29,7 +29,7 @@ import { Button } from "@edmi-vue/ui/button";
       <p>3. Send one transaction and verify weights</p>
     </PlanContent>
     <PlanFooter>
-      <Button raised size="sm">Start</Button>
+      <Button elevation="raised" size="sm">Start</Button>
       <Button size="sm" variant="ghost">Edit plan</Button>
     </PlanFooter>
   </Plan>

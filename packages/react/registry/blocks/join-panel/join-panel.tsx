@@ -157,7 +157,7 @@ function JoinPanel({
 							type="button"
 							variant="secondary"
 							size="sm"
-							raised={raised}
+							elevation={raised ? "raised" : undefined}
 							className="flex-1 font-mono"
 							onClick={() =>
 								q.value !== undefined ? setAmount(q.value) : onMax?.()
@@ -184,7 +184,7 @@ function JoinPanel({
 			<div className="mt-3.5 px-(--card-spacing)">
 				<Button
 					size="lg"
-					raised={raised}
+					elevation={raised ? "raised" : undefined}
 					className="w-full"
 					onClick={onJoin}
 					disabled={disabled}

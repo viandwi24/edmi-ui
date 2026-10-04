@@ -35,7 +35,7 @@
 						</div>
 						<ToggleGroup.Root
 							type="single"
-							raised
+							elevation="raised"
 							variant="segmented"
 							class="flex-wrap"
 							value={s[c.key]}
@@ -77,10 +77,10 @@
 						</div>
 					</div>
 					<div class="flex flex-wrap items-center gap-2">
-						<Button {raised} variant="brand">{preview.join}</Button>
-						<Button {raised} variant="outline">{preview.details}</Button>
+						<Button elevation={raised ? "raised" : undefined} variant="brand">{preview.join}</Button>
+						<Button elevation={raised ? "raised" : undefined} variant="outline">{preview.details}</Button>
 						<Label class="ml-auto gap-2.5 text-[13px]">
-							<Switch {raised} checked />
+							<Switch elevation={raised ? "raised" : undefined} checked />
 							{preview.keeper}
 						</Label>
 					</div>
@@ -89,7 +89,7 @@
 				<Card {raised} class="gap-4 px-5">
 					<div class="flex flex-wrap gap-2">
 						{#each preview.variants as v (v)}
-							<Button {raised} variant={v} size="sm">{v}</Button>
+							<Button elevation={raised ? "raised" : undefined} variant={v} size="sm">{v}</Button>
 						{/each}
 					</div>
 					<div class="flex flex-wrap gap-2">
@@ -99,7 +99,7 @@
 					</div>
 					<Input placeholder={preview.placeholder} />
 					<Label class="gap-2.5 text-[13px]">
-						<Checkbox {raised} checked />
+						<Checkbox elevation={raised ? "raised" : undefined} checked />
 						{preview.mandate}
 					</Label>
 				</Card>

@@ -46,7 +46,7 @@ export default function ThemesExample() {
 									</span>
 								</div>
 								<ToggleGroup
-									raised
+									elevation="raised"
 									variant="segmented"
 									className="flex-wrap"
 									value={[s[c.key]]}
@@ -100,14 +100,23 @@ export default function ThemesExample() {
 								</div>
 							</div>
 							<div className="flex flex-wrap items-center gap-2">
-								<Button raised={raised} variant="brand">
+								<Button
+									elevation={raised ? "raised" : undefined}
+									variant="brand"
+								>
 									{preview.join}
 								</Button>
-								<Button raised={raised} variant="outline">
+								<Button
+									elevation={raised ? "raised" : undefined}
+									variant="outline"
+								>
 									{preview.details}
 								</Button>
 								<Label className="ml-auto gap-2.5 text-[13px]">
-									<Switch raised={raised} defaultChecked />
+									<Switch
+										elevation={raised ? "raised" : undefined}
+										defaultChecked
+									/>
 									{preview.keeper}
 								</Label>
 							</div>
@@ -116,7 +125,12 @@ export default function ThemesExample() {
 						<Card raised={raised} className="gap-4 px-5">
 							<div className="flex flex-wrap gap-2">
 								{preview.variants.map((v) => (
-									<Button key={v} raised={raised} variant={v} size="sm">
+									<Button
+										key={v}
+										elevation={raised ? "raised" : undefined}
+										variant={v}
+										size="sm"
+									>
 										{v}
 									</Button>
 								))}
@@ -130,7 +144,10 @@ export default function ThemesExample() {
 							</div>
 							<Input placeholder={preview.placeholder} />
 							<Label className="gap-2.5 text-[13px]">
-								<Checkbox raised={raised} defaultChecked />
+								<Checkbox
+									elevation={raised ? "raised" : undefined}
+									defaultChecked
+								/>
 								{preview.mandate}
 							</Label>
 						</Card>

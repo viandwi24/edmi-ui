@@ -65,7 +65,7 @@
 					</div>
 				</div>
 			</div>
-			<Button raised variant="outline">Edit profile</Button>
+			<Button elevation="raised" variant="outline">Edit profile</Button>
 		</div>
 
 		<div class="grid items-stretch gap-6 lg:grid-cols-[minmax(0,1fr)_2fr]">

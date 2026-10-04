@@ -1235,6 +1235,7 @@ export const PromptInputActionMenuItem = ({
 // are provided in opt-in modules (e.g., prompt-input-attachments).
 
 export type PromptInputSubmitProps = ComponentProps<typeof InputGroupButton> & {
+	raised?: boolean;
 	status?: ChatStatus;
 	onStop?: () => void;
 };
@@ -1309,7 +1310,7 @@ export const PromptInputSubmit = ({
 			data-status={status}
 			className={cn("rounded-[9px]", className)}
 			onClick={handleClick}
-			raised={raised ?? inheritedRaised}
+			elevation={(raised ?? inheritedRaised) ? "raised" : undefined}
 			size={size}
 			type={isGenerating && onStop ? "button" : "submit"}
 			variant={variant ?? (status === "error" ? "destructive" : "default")}

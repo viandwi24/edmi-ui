@@ -167,16 +167,16 @@ export function ControlsCard() {
 	return (
 		<Card raised={raised} className="gap-4 p-5">
 			<div className="flex flex-wrap items-center gap-2.5">
-				<Button raised={raised}>
+				<Button elevation={raised ? "raised" : undefined}>
 					Button <ArrowRightIcon />
 				</Button>
-				<Button raised={raised} variant="secondary">
+				<Button elevation={raised ? "raised" : undefined} variant="secondary">
 					Secondary
 				</Button>
-				<Button raised={raised} variant="outline">
+				<Button elevation={raised ? "raised" : undefined} variant="outline">
 					Outline
 				</Button>
-				<Button raised={raised} variant="brand">
+				<Button elevation={raised ? "raised" : undefined} variant="brand">
 					Brand
 				</Button>
 			</div>
@@ -198,21 +198,29 @@ export function ControlsCard() {
 						<RadioGroupItem value="a" aria-label="A" />
 						<RadioGroupItem value="b" aria-label="B" />
 					</RadioGroup>
-					<Checkbox raised={raised} defaultChecked aria-label="Checked" />
-					<Switch raised={raised} defaultChecked aria-label="Switch" />
+					<Checkbox
+						elevation={raised ? "raised" : undefined}
+						defaultChecked
+						aria-label="Checked"
+					/>
+					<Switch
+						elevation={raised ? "raised" : undefined}
+						defaultChecked
+						aria-label="Switch"
+					/>
 				</div>
 			</div>
 			<div className="flex items-center justify-between gap-3">
-				<Button raised={raised} variant="outline">
+				<Button elevation={raised ? "raised" : undefined} variant="outline">
 					Alert dialog
 				</Button>
 				<ButtonGroup>
-					<Button raised={raised} variant="outline">
+					<Button elevation={raised ? "raised" : undefined} variant="outline">
 						Button group
 					</Button>
 					<ButtonGroupSeparator />
 					<Button
-						raised={raised}
+						elevation={raised ? "raised" : undefined}
 						variant="outline"
 						size="icon"
 						aria-label="More"
@@ -335,7 +343,10 @@ export function FormCard() {
 					<Field>
 						<FieldLabel>Strategy</FieldLabel>
 						<Select defaultValue="steady">
-							<SelectTrigger raised={raised} className="w-full">
+							<SelectTrigger
+								elevation={raised ? "raised" : undefined}
+								className="w-full"
+							>
 								<SelectValue>{(v: string) => strategies[v] ?? v}</SelectValue>
 							</SelectTrigger>
 							<SelectContent alignItemWithTrigger={false}>
@@ -348,10 +359,14 @@ export function FormCard() {
 				</FieldGroup>
 			</CardContent>
 			<CardFooter className="flex-col gap-2.5">
-				<Button raised={raised} className="w-full">
+				<Button elevation={raised ? "raised" : undefined} className="w-full">
 					Create goal
 				</Button>
-				<Button raised={raised} variant="outline" className="w-full">
+				<Button
+					elevation={raised ? "raised" : undefined}
+					variant="outline"
+					className="w-full"
+				>
 					Cancel
 				</Button>
 			</CardFooter>
@@ -580,10 +595,13 @@ export function FeedbackCard() {
 				<ProgressLabel>Raising for launch</ProgressLabel>
 				<ProgressValue />
 			</Progress>
-			<Slider raised={raised} defaultValue={[25, 70]} />
+			<Slider
+				elevation={raised ? "raised" : undefined}
+				defaultValue={[25, 70]}
+			/>
 			<div className="flex flex-wrap gap-2">
 				<Button
-					raised={raised}
+					elevation={raised ? "raised" : undefined}
 					variant="outline"
 					size="sm"
 					onClick={() =>
@@ -593,7 +611,7 @@ export function FeedbackCard() {
 					Toast
 				</Button>
 				<Button
-					raised={raised}
+					elevation={raised ? "raised" : undefined}
 					variant="outline"
 					size="sm"
 					onClick={() =>
@@ -605,7 +623,7 @@ export function FeedbackCard() {
 					Info
 				</Button>
 				<Button
-					raised={raised}
+					elevation={raised ? "raised" : undefined}
 					variant="outline"
 					size="sm"
 					onClick={() => toast.error("Signature rejected")}
@@ -659,7 +677,11 @@ export function PeopleCard() {
 								<ItemDescription>{role}</ItemDescription>
 							</ItemContent>
 							<ItemActions>
-								<Button raised={raised} size="sm" variant="outline">
+								<Button
+									elevation={raised ? "raised" : undefined}
+									size="sm"
+									variant="outline"
+								>
 									Follow
 								</Button>
 							</ItemActions>

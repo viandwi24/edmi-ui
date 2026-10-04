@@ -82,7 +82,7 @@ export default function ExploreExample() {
 						/>
 					</InputGroup>
 					<ToggleGroup
-						raised
+						elevation="raised"
 						variant="segmented"
 						value={[kind]}
 						onValueChange={(v) => v[0] && setKind(v[0] as string)}
@@ -94,7 +94,7 @@ export default function ExploreExample() {
 						))}
 					</ToggleGroup>
 					<Toggle
-						raised
+						elevation="raised"
 						variant="outline"
 						pressed={preIpo}
 						onPressedChange={setPreIpo}
@@ -107,7 +107,7 @@ export default function ExploreExample() {
 							items={strategies}
 							onValueChange={(v) => setStrategy(v as string)}
 						>
-							<SelectTrigger raised className="w-40">
+							<SelectTrigger elevation="raised" className="w-40">
 								<SelectValue />
 							</SelectTrigger>
 							<SelectContent alignItemWithTrigger={false}>
@@ -123,7 +123,7 @@ export default function ExploreExample() {
 							items={sorts}
 							onValueChange={(v) => setSort(v as string)}
 						>
-							<SelectTrigger raised className="w-28">
+							<SelectTrigger elevation="raised" className="w-28">
 								<SelectValue />
 							</SelectTrigger>
 							<SelectContent alignItemWithTrigger={false}>

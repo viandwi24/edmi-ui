@@ -67,7 +67,7 @@
 		<Card raised class="gap-4 px-6">
 			<div class="flex items-center justify-between gap-3">
 				<h2 class="text-xl font-normal tracking-[-0.3px]">Positions</h2>
-				<Button raised variant="outline" size="sm">Redeem all</Button>
+				<Button elevation="raised" variant="outline" size="sm">Redeem all</Button>
 			</div>
 			<Table.Root>
 				<Table.Header>
@@ -112,7 +112,7 @@
 			<Card raised class="gap-3 px-6">
 				<div class="flex items-center justify-between gap-3">
 					<h2 class="text-xl font-normal tracking-[-0.3px]">Loose assets</h2>
-					<Button raised variant="outline" size="sm">Swap all to USDC</Button>
+					<Button elevation="raised" variant="outline" size="sm">Swap all to USDC</Button>
 				</div>
 				<p class="text-[13px] leading-relaxed text-muted-foreground">
 					Assets in your wallet that are not in any index, worth about
@@ -132,7 +132,7 @@
 			<Card raised class="gap-3 px-6">
 				<div class="flex items-center justify-between gap-3">
 					<h2 class="text-xl font-normal tracking-[-0.3px]">Your indexes</h2>
-					<Button raised variant="outline" size="sm">Create index</Button>
+					<Button elevation="raised" variant="outline" size="sm">Create index</Button>
 				</div>
 				<ul>
 					{#each yourIndexes as x (x.symbol)}
@@ -145,7 +145,7 @@
 								</div>
 								<div class="text-xs text-muted-foreground">AUM {x.aum}</div>
 							</div>
-							<Button raised variant="outline" size="sm">Manage</Button>
+							<Button elevation="raised" variant="outline" size="sm">Manage</Button>
 						</li>
 					{/each}
 				</ul>

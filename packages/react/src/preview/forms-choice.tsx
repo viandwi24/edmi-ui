@@ -71,15 +71,15 @@ export default function FormsChoicePreview() {
 			/>
 			<RaisedSection>
 				<div className="flex items-center gap-3">
-					<Checkbox raised defaultChecked />
-					<Checkbox raised indeterminate />
-					<Switch raised />
-					<Switch raised defaultChecked />
+					<Checkbox elevation="raised" defaultChecked />
+					<Checkbox elevation="raised" indeterminate />
+					<Switch elevation="raised" />
+					<Switch elevation="raised" defaultChecked />
 				</div>
-				<Slider raised defaultValue={[33]} />
-				<Slider raised defaultValue={[25, 75]} />
+				<Slider elevation="raised" defaultValue={[33]} />
+				<Slider elevation="raised" defaultValue={[25, 75]} />
 				<Calendar
-					raised
+					elevation="raised"
 					mode="range"
 					selected={{ from: new Date(2026, 9, 12), to: new Date(2026, 9, 18) }}
 					defaultMonth={new Date(2026, 9)}

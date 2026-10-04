@@ -123,7 +123,7 @@
 										<span class="font-mono text-[15px] font-semibold">{a.price}</span>
 										<Checkbox
 											id="asset-{a.symbol}"
-											raised
+											elevation="raised"
 											aria-label="Select {a.symbol}"
 											checked={selected.includes(a.symbol)}
 											onCheckedChange={(v) => toggle(a.symbol, v === true)}
@@ -155,7 +155,7 @@
 										<span class="w-28 font-mono text-[13px] font-semibold">{s}</span>
 										<Slider
 											type="single"
-											raised
+											elevation="raised"
 											aria-label="{s} weight"
 											value={weights[s] ?? 0}
 											onValueChange={(v) => (weights[s] = v)}
@@ -174,7 +174,7 @@
 						<Field.Field>
 							<Field.Label for="rebalance">Rebalance</Field.Label>
 							<Select.Root type="single" value={rebalanceOn} onValueChange={(v) => (rebalanceOn = v)}>
-								<Select.Trigger id="rebalance" raised class="w-full sm:w-60">
+								<Select.Trigger id="rebalance" elevation="raised" class="w-full sm:w-60">
 									{rebalanceLabel}
 								</Select.Trigger>
 								<Select.Content>
@@ -193,7 +193,7 @@
 							<Slider
 								type="single"
 								id="drift"
-								raised
+								elevation="raised"
 								min={1}
 								max={20}
 								aria-label="Drift limit"
@@ -253,8 +253,8 @@
 				{/if}
 
 				<div class="flex items-center justify-between">
-					<Button raised variant="outline" size="lg" disabled={stepIndex === 0} onclick={() => go(-1)}>Back</Button>
-					<Button raised size="lg" disabled={step === "assets" && selected.length === 0} onclick={() => go(1)}>
+					<Button elevation="raised" variant="outline" size="lg" disabled={stepIndex === 0} onclick={() => go(-1)}>Back</Button>
+					<Button elevation="raised" size="lg" disabled={step === "assets" && selected.length === 0} onclick={() => go(1)}>
 						{step === "review" ? "Create index" : "Continue"}
 					</Button>
 				</div>

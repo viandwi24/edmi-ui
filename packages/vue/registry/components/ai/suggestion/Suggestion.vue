@@ -38,7 +38,7 @@ const buttonVariant = computed(() =>
     type="button"
     :variant="buttonVariant"
     :size="isCard ? undefined : size"
-    :raised="raised"
+    :elevation="raised ? 'raised' : undefined"
     :class="cn(
       isCard
         ? 'h-auto min-w-44 flex-col items-start gap-1 rounded-xl px-4 py-3 text-left whitespace-normal'

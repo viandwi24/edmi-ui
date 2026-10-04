@@ -89,7 +89,7 @@ export default function EditorialLightExample() {
 						lead={header.lead}
 						steps={header.steps}
 						links={header.links}
-						action={<Button raised>{header.cta}</Button>}
+						action={<Button elevation="raised">{header.cta}</Button>}
 					/>
 				</div>
 			</div>
@@ -190,7 +190,7 @@ export default function EditorialLightExample() {
 					</div>
 					<div className="mx-auto flex max-w-3xl flex-col items-center gap-5 text-center md:flex-row md:text-left">
 						<p className="text-lg text-muted-foreground">{hero.closing}</p>
-						<Button raised size="lg" className="shrink-0">
+						<Button elevation="raised" size="lg" className="shrink-0">
 							{hero.closingCta}
 						</Button>
 					</div>
@@ -306,7 +306,7 @@ export default function EditorialLightExample() {
 					<p className="max-w-md text-center text-muted-foreground">
 						{guide.body}
 					</p>
-					<Button raised size="lg">
+					<Button elevation="raised" size="lg">
 						{guide.cta}
 					</Button>
 					<div className="grid w-full max-w-[780px] gap-8 sm:grid-cols-2">
@@ -333,7 +333,7 @@ export default function EditorialLightExample() {
 							</div>
 						))}
 					</div>
-					<Button raised variant="outline">
+					<Button elevation="raised" variant="outline">
 						{guide.download}
 					</Button>
 				</section>
@@ -355,7 +355,12 @@ export default function EditorialLightExample() {
 					<Card raised className="max-w-md gap-4 p-5">
 						<div className="h-40 rounded-md bg-chart-2" />
 						<p className="text-[15px]">{footer.card.text}</p>
-						<Button raised size="sm" variant="outline" className="w-fit">
+						<Button
+							elevation="raised"
+							size="sm"
+							variant="outline"
+							className="w-fit"
+						>
 							{footer.card.cta}
 						</Button>
 					</Card>

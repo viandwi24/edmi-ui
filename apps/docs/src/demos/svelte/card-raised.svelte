@@ -12,7 +12,7 @@
 			</Card.Header>
 			<Card.Content class="font-mono text-sm">Amount 1,000 USDC</Card.Content>
 			<Card.Footer>
-				<Button size="sm" {raised}>Join index</Button>
+				<Button size="sm" elevation={raised ? "raised" : undefined}>Join index</Button>
 			</Card.Footer>
 		</Card.Root>
 	{/each}

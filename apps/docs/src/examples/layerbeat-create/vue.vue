@@ -309,7 +309,7 @@ function pickVersion(id: string, v: unknown) {
 
 							<StepCard index="05" title="Billing term" description="Pay for the full term up front. Longer terms are cheaper.">
 								<div class="flex flex-wrap items-center justify-between gap-4">
-									<ToggleGroup type="single" raised variant="segmented" class="flex-wrap" :model-value="months" aria-label="Billing term" @update:model-value="pickTerm">
+									<ToggleGroup type="single" elevation="raised" variant="segmented" class="flex-wrap" :model-value="months" aria-label="Billing term" @update:model-value="pickTerm">
 										<ToggleGroupItem v-for="t in billingTerms" :key="t.months" :value="String(t.months)" class="px-3.5">
 											{{ t.label }}
 											<Badge v-if="t.discount" variant="success" shape="number" class="ml-1 h-[18px]">−{{ t.discount }}%</Badge>

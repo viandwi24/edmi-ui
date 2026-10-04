@@ -16,7 +16,7 @@ export default function Demo() {
 				{ label: "Resources", href: "#resources" },
 				{ label: "Pricing", href: "#pricing" },
 			]}
-			action={<Button raised>Create an index</Button>}
+			action={<Button elevation="raised">Create an index</Button>}
 		/>
 	);
 }

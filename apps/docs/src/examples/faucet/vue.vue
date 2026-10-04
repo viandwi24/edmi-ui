@@ -68,7 +68,7 @@ function mint() {
 						<span class="font-mono font-semibold break-all">{{ wallet.address }}</span>
 					</AlertDescription>
 				</Alert>
-				<Button raised variant="outline" class="self-start">{{ solFaucet.buttonLabel }}</Button>
+				<Button elevation="raised" variant="outline" class="self-start">{{ solFaucet.buttonLabel }}</Button>
 			</Card>
 
 			<Card raised class="gap-4 px-7">
@@ -78,7 +78,7 @@ function mint() {
 				</div>
 				<ToggleGroup
 					type="single"
-					raised
+					elevation="raised"
 					variant="segmented"
 					class="self-start"
 					aria-label="Amount"
@@ -87,7 +87,7 @@ function mint() {
 				>
 					<ToggleGroupItem v-for="a in usdcFaucet.amounts" :key="a" :value="String(a)">{{ fmt(a) }}</ToggleGroupItem>
 				</ToggleGroup>
-				<Button raised size="lg" class="self-start" :disabled="busy" @click="mint">Get {{ fmt(amount) }} USDC</Button>
+				<Button elevation="raised" size="lg" class="self-start" :disabled="busy" @click="mint">Get {{ fmt(amount) }} USDC</Button>
 			</Card>
 		</div>
 	</div>

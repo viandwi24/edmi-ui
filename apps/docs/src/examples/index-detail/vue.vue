@@ -94,9 +94,9 @@ const template = componentToString(config, ChartTooltipContent, {
 					</BreadcrumbList>
 				</Breadcrumb>
 				<div class="flex items-center gap-2">
-					<Button variant="outline" raised>Clone</Button>
-					<Button variant="outline" raised>Follow</Button>
-					<Button variant="outline" raised size="icon" aria-label="Share"><ArrowUpIcon /></Button>
+					<Button variant="outline" elevation="raised">Clone</Button>
+					<Button variant="outline" elevation="raised">Follow</Button>
+					<Button variant="outline" elevation="raised" size="icon" aria-label="Share"><ArrowUpIcon /></Button>
 				</div>
 			</div>
 		</div>
@@ -130,7 +130,7 @@ const template = componentToString(config, ChartTooltipContent, {
 							<p class="mt-2 text-[13px] text-muted-foreground">{{ index.retNote }}</p>
 						</div>
 					</div>
-					<Button variant="outline" raised>Compare index</Button>
+					<Button variant="outline" elevation="raised">Compare index</Button>
 				</div>
 
 				<ChartContainer :config="config" class="aspect-auto h-[260px] w-full" cursor>
@@ -230,7 +230,7 @@ const template = componentToString(config, ChartTooltipContent, {
 				<Card raised class="gap-3 px-5">
 					<h2 class="text-sm font-semibold">Share</h2>
 					<div class="flex flex-wrap gap-2">
-						<Button v-for="s in shareActions" :key="s" variant="outline" raised size="sm">{{ s }}</Button>
+						<Button v-for="s in shareActions" :key="s" variant="outline" elevation="raised" size="sm">{{ s }}</Button>
 					</div>
 				</Card>
 

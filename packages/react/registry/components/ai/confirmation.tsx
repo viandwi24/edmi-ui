@@ -244,7 +244,10 @@ export const ConfirmationActions = ({
 	);
 };
 
-export type ConfirmationActionProps = ComponentProps<typeof Button>;
+export type ConfirmationActionProps = ComponentProps<typeof Button> & {
+	/** legacy prop, forwarded as `elevation="raised"` (the AI pack migration renames it) */
+	raised?: boolean;
+};
 
 export const ConfirmationAction = ({
 	raised,
@@ -255,7 +258,7 @@ export const ConfirmationAction = ({
 	return (
 		<Button
 			data-slot="ai-confirmation-action"
-			raised={raised ?? ctx?.raised ?? false}
+			elevation={(raised ?? ctx?.raised ?? false) ? "raised" : undefined}
 			size={size}
 			type="button"
 			{...props}

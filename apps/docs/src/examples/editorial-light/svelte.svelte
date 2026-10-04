@@ -25,7 +25,7 @@
 </script>
 
 {#snippet action()}
-	<Button raised>{header.cta}</Button>
+	<Button elevation="raised">{header.cta}</Button>
 {/snippet}
 
 {#snippet sectionCopy(s: typeof launch)}
@@ -122,7 +122,7 @@
 			</div>
 			<div class="mx-auto flex max-w-3xl flex-col items-center gap-5 text-center md:flex-row md:text-left">
 				<p class="text-lg text-muted-foreground">{hero.closing}</p>
-				<Button raised size="lg" class="shrink-0">{hero.closingCta}</Button>
+				<Button elevation="raised" size="lg" class="shrink-0">{hero.closingCta}</Button>
 			</div>
 		</section>
 
@@ -198,7 +198,7 @@
 		<section class="flex flex-col items-center gap-8">
 			<h2 class="text-center text-[34px] leading-[1.1] font-normal tracking-[-1.5px] text-foreground-2 md:text-[52px]">{guide.title}</h2>
 			<p class="max-w-md text-center text-muted-foreground">{guide.body}</p>
-			<Button raised size="lg">{guide.cta}</Button>
+			<Button elevation="raised" size="lg">{guide.cta}</Button>
 			<div class="grid w-full max-w-[780px] gap-8 sm:grid-cols-2">
 				{#each guide.chapters as c (c.n)}
 					<div class="flex flex-col gap-3">
@@ -218,7 +218,7 @@
 					</div>
 				{/each}
 			</div>
-			<Button raised variant="outline">{guide.download}</Button>
+			<Button elevation="raised" variant="outline">{guide.download}</Button>
 		</section>
 
 		<section class="flex flex-col gap-10">
@@ -235,7 +235,7 @@
 			<Card raised class="max-w-md gap-4 p-5">
 				<div class="h-40 rounded-md bg-chart-2"></div>
 				<p class="text-[15px]">{footer.card.text}</p>
-				<Button raised size="sm" variant="outline" class="w-fit">{footer.card.cta}</Button>
+				<Button elevation="raised" size="sm" variant="outline" class="w-fit">{footer.card.cta}</Button>
 			</Card>
 			<SiteFooter raised columns={footer.columns} legal={footer.legal} note={footer.note} />
 		</section>

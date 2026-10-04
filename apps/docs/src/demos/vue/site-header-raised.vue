@@ -17,7 +17,7 @@ const links = [
 <template>
 	<SiteHeader raised lead="How to" :steps="steps" :links="links">
 		<template #action>
-			<Button raised>Create an index</Button>
+			<Button elevation="raised">Create an index</Button>
 		</template>
 	</SiteHeader>
 </template>

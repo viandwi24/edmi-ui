@@ -244,7 +244,9 @@ export default function OverlaysPreview() {
 			<RaisedSection>
 				<div className="flex flex-wrap items-start gap-3">
 					<Popover defaultOpen>
-						<PopoverTrigger render={<Button variant="outline" raised />}>
+						<PopoverTrigger
+							render={<Button variant="outline" elevation="raised" />}
+						>
 							Raised popover
 						</PopoverTrigger>
 						<PopoverContent raised align="start" className="w-64">
@@ -254,7 +256,9 @@ export default function OverlaysPreview() {
 						</PopoverContent>
 					</Popover>
 					<Dialog>
-						<DialogTrigger render={<Button variant="outline" raised />}>
+						<DialogTrigger
+							render={<Button variant="outline" elevation="raised" />}
+						>
 							Raised dialog
 						</DialogTrigger>
 						<DialogContent raised>
@@ -263,12 +267,14 @@ export default function OverlaysPreview() {
 								<DialogDescription>Shown on your indexes.</DialogDescription>
 							</DialogHeader>
 							<DialogFooter>
-								<Button raised>Save changes</Button>
+								<Button elevation="raised">Save changes</Button>
 							</DialogFooter>
 						</DialogContent>
 					</Dialog>
 					<AlertDialog>
-						<AlertDialogTrigger render={<Button variant="outline" raised />}>
+						<AlertDialogTrigger
+							render={<Button variant="outline" elevation="raised" />}
+						>
 							Raised alert dialog
 						</AlertDialogTrigger>
 						<AlertDialogContent raised>
@@ -280,7 +286,7 @@ export default function OverlaysPreview() {
 							</AlertDialogHeader>
 							<AlertDialogFooter>
 								<AlertDialogCancel>Cancel</AlertDialogCancel>
-								<AlertDialogAction variant="destructive" raised>
+								<AlertDialogAction variant="destructive" elevation="raised">
 									Close index
 								</AlertDialogAction>
 							</AlertDialogFooter>
@@ -288,7 +294,7 @@ export default function OverlaysPreview() {
 					</AlertDialog>
 					<Button
 						variant="outline"
-						raised
+						elevation="raised"
 						onClick={() =>
 							toast.success("Joined MAG4", {
 								description: "98,209 shares",
