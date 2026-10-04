@@ -7,7 +7,7 @@ import { computed, onBeforeUnmount, onMounted, ref, shallowRef, watch } from "vu
 import { cn } from "@/registry/edmi/lib/utils"
 import { personaSources } from "./sources"
 
-// Rive/WebGL2 artwork; the same files as Vercel AI Elements. The look is the artwork, so there is no raised variant.
+// Rive/WebGL2 artwork; the same files as Vercel AI Elements. The look is the artwork, so it takes no elevation.
 const props = withDefaults(defineProps<{
   state?: PersonaState
   variant?: PersonaVariant

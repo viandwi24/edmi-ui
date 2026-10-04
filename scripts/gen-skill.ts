@@ -229,7 +229,7 @@ export const USE_WHEN: Record<string, string> = {
 		"✦ chat side panel: Progress, Outputs, used in this session.",
 	"ai-agent-avatar": "✦ 5x5 pixel identicon generated from an agent id.",
 	"ai-prompt-input-agent":
-		"✦ agent composer with agent chip, @ mentions and raised send.",
+		"✦ agent composer with agent chip, @ mentions and a floating plate.",
 	"ai-chat-composer":
 		"✦ ready-made composer: attach, speech, disclaimer, model + effort, mode. Start here for a chat app.",
 	"ai-chat-header": "✦ conversation header: title, project/model, share, more.",

@@ -201,6 +201,7 @@ const AI_RAISED = [
 	"plan",
 	"agent",
 	"artifact",
+	"chat-composer",
 ];
 
 /** AGENTS.md section 5: every item with a `raised` prop ships a `<name>-raised` demo in all three frameworks. */

@@ -4,7 +4,7 @@
 	import { onMount } from "svelte";
 	import { personaSources, type PersonaState, type PersonaVariant } from "./sources.js";
 
-	// Rive/WebGL2 artwork; the same files as Vercel AI Elements. The look is the artwork, so there is no raised variant.
+	// Rive/WebGL2 artwork; the same files as Vercel AI Elements. The look is the artwork, so it takes no elevation.
 	let {
 		state: personaState = "idle",
 		variant = "obsidian",

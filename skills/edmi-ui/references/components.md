@@ -203,9 +203,9 @@ Choose by "use when". If two items fit, prefer the more specific one (`field` ov
 - `ai-artifact-card` [raised]: ✦ a file card for generated output (paper thumbnail, Download, generating state).
 - `ai-artifact-stack`: ✦ a group of artifact cards with Download all.
 - `ai-artifact-viewer`: ✦ side panel that shows one artifact; documents render as paper.
-- `ai-chat-composer`: ✦ ready-made composer: attach, speech, disclaimer, model + effort, mode. Start here for a chat app.
+- `ai-chat-composer` [raised]: ✦ ready-made composer: attach, speech, disclaimer, model + effort, mode. Start here for a chat app.
 - `ai-chat-header`: ✦ conversation header: title, project/model, share, more.
-- `ai-prompt-input-agent` [raised]: ✦ agent composer with agent chip, @ mentions and raised send.
+- `ai-prompt-input-agent` [raised]: ✦ agent composer with agent chip, @ mentions and a floating plate.
 - `ai-session-panel`: ✦ chat side panel: Progress, Outputs, used in this session.
 
 ### AI · Utilities
