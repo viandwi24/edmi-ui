@@ -7,35 +7,122 @@
 
 <p align="center">
   <a href="https://viandwi24.github.io/edmi-ui/"><strong>Documentation &amp; live demos →</strong></a>
+  &nbsp;·&nbsp; <a href="https://viandwi24.github.io/edmi-ui/getting-started/">Getting started</a>
   &nbsp;·&nbsp; <a href="https://viandwi24.github.io/edmi-ui/components/">Components</a>
+  &nbsp;·&nbsp; <a href="#ai-ready">AI components</a>
+  &nbsp;·&nbsp; <a href="https://viandwi24.github.io/edmi-ui/examples/">Examples</a>
   &nbsp;·&nbsp; <a href="https://viandwi24.github.io/edmi-ui/themes/">Themes</a>
 </p>
 
 # Edmi UI
 
 **Quiet, editorial interfaces for React, Vue and Svelte.** A minimalist design system built on shadcn/ui:
-warm neutrals, mono numbers and one-step depth, inspired by Claude and Cofounder.
+warm neutrals, mono numbers and one-step depth, inspired by Claude and Cofounder. **AI-ready out of the box**:
+chat, agent, code, voice and workflow components ship next to the UI kit, in the same style, for all three frameworks.
 
 ## Features
 
 - **shadcn-compatible.** Three registries, one per framework: React (shadcn/ui), Vue (shadcn-vue) and
   Svelte (shadcn-svelte). Same item names as shadcn, so `add … --overwrite` restyles the stock components.
+- **AI-ready.** 56 AI components (restyled [AI Elements](https://ai-sdk.dev/elements) plus Edmi patterns) for chat,
+  agents, code, runtime, voice and workflows, wired for the Vercel AI SDK. One command: `add @edmi-ui/ai-all`.
 - **Flat by default, raised on demand.** Every component ships the plain look; `raised` ✦ adds a one-step 3D face.
-- **Themeable.** Base colours, accents and radius as tokens; a Themes customizer with Copy CSS and installable theme items.
+- **Themeable.** Base colours, accents and radius as tokens; a [Themes customizer](https://viandwi24.github.io/edmi-ui/themes/) with Copy CSS and
+  installable theme items (`theme-<base>-<accent>`).
 - **Icons your way.** Phosphor by default, rewritten to your `iconLibrary` on install.
-- **86 components and patterns** in all three frameworks, plus chat, data and dashboard blocks.
+- **83 UI components and patterns + 56 AI components**, every one in React, Vue and Svelte, plus
+  [22 live example pages](https://viandwi24.github.io/edmi-ui/examples/) (dashboards, chat, agent workspaces, marketing) in all three frameworks.
+
+## AI-ready
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="apps/docs/public/examples/chat-thread-dark.png">
+    <img alt="Chat thread built with Edmi AI components" src="apps/docs/public/examples/chat-thread-light.png" width="49%">
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="apps/docs/public/examples/agent-workspace-dark.png">
+    <img alt="Agent workspace built with Edmi AI components" src="apps/docs/public/examples/agent-workspace-light.png" width="49%">
+  </picture>
+</p>
+
+The **Edmi AI pack** is everything you need to build an AI product UI, styled like the rest of Edmi (no avatars by
+default, calm 15px response typography, solid chips, a terminal that stays dark). It is a restyle of Vercel's
+[AI Elements](https://ai-sdk.dev/elements) with the same component names and anatomy, ported to Vue and Svelte,
+plus ✦ patterns of our own. Items are named `ai-<name>` and install into `components/ai/`, next to (never into)
+your `components/ui/`.
+
+| Category | Components |
+| --- | --- |
+| **Chat** | Conversation, Message (streaming markdown), Prompt Input, Suggestion, Attachments, Model Selector, Context, Shimmer |
+| **Agent** | Reasoning, Chain of Thought, Tool, Confirmation, Sources, Inline Citation, Plan, Task, Queue, Checkpoint |
+| **Code** | Agent, Artifact, Code Block, Commit, Environment Variables, File Tree, JSX Preview, Package Info |
+| **Runtime** | Sandbox, Schema Display, Snippet, Stack Trace, Terminal, Test Results, Web Preview |
+| **Voice** | Audio Player, Mic Selector, Persona, Speech Input, Transcription, Voice Selector |
+| **Workflow** | Canvas, Node, Edge, Connection, Controls, Panel, Toolbar, Image, Open in Chat |
+| **Patterns ✦** | Artifact Card, Artifact Stack, Artifact Viewer, Session Panel, Agent Avatar, Prompt Input Agent, Chat Composer, Chat Header |
+
+Install the whole pack (React and Vue use the `@edmi-ui` namespace, see [Install](#install); Svelte uses URLs):
+
+```bash
+npx shadcn@latest add @edmi-ui/ai-all
+npx shadcn-vue@latest add @edmi-ui/ai-all
+npx shadcn-svelte@latest add https://viandwi24.github.io/edmi-ui/r/svelte/ai-all.json
+```
+
+Or pick single items: `npx shadcn@latest add @edmi-ui/ai-conversation @edmi-ui/ai-message @edmi-ui/ai-prompt-input`.
+A minimal chat with the [AI SDK](https://ai-sdk.dev) (React):
+
+```tsx
+import { useChat } from "@ai-sdk/react";
+import { Conversation, ConversationContent, ConversationScrollButton } from "@/components/ai/conversation";
+import { Message, MessageContent, MessageResponse } from "@/components/ai/message";
+import { PromptInput, PromptInputFooter, PromptInputSubmit, PromptInputTextarea } from "@/components/ai/prompt-input";
+
+export function Chat() {
+  const { messages, sendMessage, status } = useChat();
+  return (
+    <div className="flex h-svh flex-col">
+      <Conversation>
+        <ConversationContent>
+          {messages.map((m) => (
+            <Message from={m.role} key={m.id}>
+              <MessageContent>
+                {m.parts.map((p, i) => p.type === "text" && <MessageResponse key={i}>{p.text}</MessageResponse>)}
+              </MessageContent>
+            </Message>
+          ))}
+        </ConversationContent>
+        <ConversationScrollButton />
+      </Conversation>
+      <PromptInput onSubmit={({ text }) => sendMessage({ text })}>
+        <PromptInputTextarea />
+        <PromptInputFooter>
+          <PromptInputSubmit status={status} />
+        </PromptInputFooter>
+      </PromptInput>
+    </div>
+  );
+}
+```
+
+Browse every AI component with live demos under **AI** in the [components docs](https://viandwi24.github.io/edmi-ui/components/), and see them
+composed in the AI examples: [chat thread](https://viandwi24.github.io/edmi-ui/examples/chat-thread/), [chat + artifact](https://viandwi24.github.io/edmi-ui/examples/chat-artifact/),
+[agent workspace](https://viandwi24.github.io/edmi-ui/examples/agent-workspace/), [agent home](https://viandwi24.github.io/edmi-ui/examples/agent-home/),
+[coding agent IDE](https://viandwi24.github.io/edmi-ui/examples/ide/), [agent workflow](https://viandwi24.github.io/edmi-ui/examples/workflow/) and [artifact library](https://viandwi24.github.io/edmi-ui/examples/library/).
 
 ## Links
 
 - Docs and live demos: <https://viandwi24.github.io/edmi-ui/>
-- Examples (StackBlitz-ready): [`examples/react`](examples/react), [`examples/vue`](examples/vue), [`examples/svelte`](examples/svelte); Layerbeat (Slate · Ocean theme): [`examples/layerbeat-react`](examples/layerbeat-react), [`examples/layerbeat-vue`](examples/layerbeat-vue), [`examples/layerbeat-svelte`](examples/layerbeat-svelte)
-- Releasing: [RELEASING.md](RELEASING.md) · Contributing: [CONTRIBUTING.md](CONTRIBUTING.md)
+- Live examples (React, Vue and Svelte, every theme): <https://viandwi24.github.io/edmi-ui/examples/>
+- Example apps (StackBlitz-ready): [`examples/react`](examples/react), [`examples/vue`](examples/vue), [`examples/svelte`](examples/svelte); Layerbeat (Slate · Ocean theme): [`examples/layerbeat-react`](examples/layerbeat-react), [`examples/layerbeat-vue`](examples/layerbeat-vue), [`examples/layerbeat-svelte`](examples/layerbeat-svelte)
+- Changelog: <https://viandwi24.github.io/edmi-ui/changelog/> · Releasing: [RELEASING.md](RELEASING.md) · Contributing: [CONTRIBUTING.md](CONTRIBUTING.md)
 
 **Flat by default, raised on demand.** Every component renders the plain shadcn look (solid fill, 1px border,
 no gradient, no lip). Pass `raised` ✦ (`<Button raised>`, `<Card raised>`, `<TabsList raised>` and so on) for the
-one-step 3D look: a face plus one hard lip under it. 42 components and patterns accept `raised`, each with a
-`<name>-raised` demo in all three frameworks (checked by the repo's `verify:matrix` script). The Stockbreak example
-pages opt into `raised`; the docs landing page has a Flat / Raised toggle.
+one-step 3D look: a face plus one hard lip under it. 42 UI components and patterns and 11 AI components accept
+`raised`, each with a `<name>-raised` demo in all three frameworks (checked by the repo's `verify:matrix` script).
+The docs landing page has a Flat / Raised toggle.
 
 The long-term domain is `https://ui.edmi.dev` (the `EDMI_URL` default of the registry generator).
 
@@ -49,19 +136,21 @@ or `bunx` (`bunx --bun` for shadcn-svelte). Edmi UI does not require Bun; only d
 ### Install everything
 
 `theme` is the tokens, Tailwind map and fonts; `all` is every Edmi component; `patterns` is every ✦ pattern
-block (headers, stat tiles, tickers, feeds, pricing, kanban and more). Add `all` and `patterns` for everything.
+block (headers, stat tiles, tickers, feeds, pricing, kanban and more); `ai-all` is the whole [AI pack](#ai-ready).
+Add `all`, `patterns` and `ai-all` for everything.
 `--overwrite` replaces the stock shadcn files with the Edmi versions.
 
 ```bash
 # React, new project (the `edmi` base: theme, fonts, utils and every component)
 npx shadcn@latest init https://viandwi24.github.io/edmi-ui/r/react/edmi.json
+npx shadcn@latest add @edmi-ui/patterns @edmi-ui/ai-all
 
 # React or Vue, existing project (register the @edmi-ui registry first, see below)
-npx shadcn@latest add @edmi-ui/theme @edmi-ui/all @edmi-ui/patterns --overwrite
-npx shadcn-vue@latest add @edmi-ui/theme @edmi-ui/all @edmi-ui/patterns --overwrite
+npx shadcn@latest add @edmi-ui/theme @edmi-ui/all @edmi-ui/patterns @edmi-ui/ai-all --overwrite
+npx shadcn-vue@latest add @edmi-ui/theme @edmi-ui/all @edmi-ui/patterns @edmi-ui/ai-all --overwrite
 
 # Svelte (URLs only)
-npx shadcn-svelte@latest add https://viandwi24.github.io/edmi-ui/r/svelte/theme.json https://viandwi24.github.io/edmi-ui/r/svelte/all.json https://viandwi24.github.io/edmi-ui/r/svelte/patterns.json --overwrite
+npx shadcn-svelte@latest add https://viandwi24.github.io/edmi-ui/r/svelte/theme.json https://viandwi24.github.io/edmi-ui/r/svelte/all.json https://viandwi24.github.io/edmi-ui/r/svelte/patterns.json https://viandwi24.github.io/edmi-ui/r/svelte/ai-all.json --overwrite
 ```
 
 ### React (shadcn/ui)
@@ -111,18 +200,18 @@ Design tokens alone: `npm install @edmi-ui/tokens` (or `pnpm add`, `yarn add`, `
 
 ## Components
 
-Every item of the design spec (DESIGN.md section 5, including the patterns marked with a star) ships for all
-three frameworks. Legend: ✓ in the manifest, built registry JSON, docs page and demo; – intentionally skipped.
-Generated by `bun run verify:matrix --markdown`.
+Every item of the design spec ships for all three frameworks. Legend: ✓ in the manifest, built registry JSON,
+docs page and demo; – intentionally skipped. Generated by `bun run verify:matrix --markdown`.
 
 <details>
-<summary>Component matrix (87 items)</summary>
+<summary>UI component matrix (88 items)</summary>
 
 | Group | Item | React | Vue | Svelte |
 | --- | --- | :-: | :-: | :-: |
 | Meta | `theme` | ✓ | ✓ | ✓ |
 | Meta | `all` | ✓ | ✓ | ✓ |
 | Meta | `patterns` | ✓ | ✓ | ✓ |
+| Meta | `ai-all` | ✓ | ✓ | ✓ |
 | Meta | `edmi` | ✓ | ✓ | ✓ |
 | Actions | `button` | ✓ | ✓ | ✓ |
 | Actions | `button-group` | ✓ | ✓ | ✓ |
@@ -207,6 +296,70 @@ Generated by `bun run verify:matrix --markdown`.
 | Patterns ✦ | `layout-picker` | ✓ | ✓ | ✓ |
 | Patterns ✦ | `code-block` | ✓ | ✓ | ✓ |
 | Patterns ✦ | `footer` | ✓ | ✓ | ✓ |
+
+</details>
+
+<details>
+<summary>AI component matrix (56 items)</summary>
+
+| Group | Item | React | Vue | Svelte |
+| --- | --- | :-: | :-: | :-: |
+| AI · Chat | `ai-conversation` | ✓ | ✓ | ✓ |
+| AI · Chat | `ai-message` | ✓ | ✓ | ✓ |
+| AI · Chat | `ai-prompt-input` | ✓ | ✓ | ✓ |
+| AI · Chat | `ai-suggestion` | ✓ | ✓ | ✓ |
+| AI · Chat | `ai-attachments` | ✓ | ✓ | ✓ |
+| AI · Chat | `ai-model-selector` | ✓ | ✓ | ✓ |
+| AI · Chat | `ai-context` | ✓ | ✓ | ✓ |
+| AI · Chat | `ai-shimmer` | ✓ | ✓ | ✓ |
+| AI · Agent | `ai-reasoning` | ✓ | ✓ | ✓ |
+| AI · Agent | `ai-chain-of-thought` | ✓ | ✓ | ✓ |
+| AI · Agent | `ai-tool` | ✓ | ✓ | ✓ |
+| AI · Agent | `ai-confirmation` | ✓ | ✓ | ✓ |
+| AI · Agent | `ai-sources` | ✓ | ✓ | ✓ |
+| AI · Agent | `ai-inline-citation` | ✓ | ✓ | ✓ |
+| AI · Agent | `ai-plan` | ✓ | ✓ | ✓ |
+| AI · Agent | `ai-task` | ✓ | ✓ | ✓ |
+| AI · Agent | `ai-queue` | ✓ | ✓ | ✓ |
+| AI · Agent | `ai-checkpoint` | ✓ | ✓ | ✓ |
+| AI · Code | `ai-agent` | ✓ | ✓ | ✓ |
+| AI · Code | `ai-artifact` | ✓ | ✓ | ✓ |
+| AI · Code | `ai-code-block` | ✓ | ✓ | ✓ |
+| AI · Code | `ai-commit` | ✓ | ✓ | ✓ |
+| AI · Code | `ai-environment-variables` | ✓ | ✓ | ✓ |
+| AI · Code | `ai-file-tree` | ✓ | ✓ | ✓ |
+| AI · Code | `ai-jsx-preview` | ✓ | ✓ | ✓ |
+| AI · Code | `ai-package-info` | ✓ | ✓ | ✓ |
+| AI · Runtime | `ai-sandbox` | ✓ | ✓ | ✓ |
+| AI · Runtime | `ai-schema-display` | ✓ | ✓ | ✓ |
+| AI · Runtime | `ai-snippet` | ✓ | ✓ | ✓ |
+| AI · Runtime | `ai-stack-trace` | ✓ | ✓ | ✓ |
+| AI · Runtime | `ai-terminal` | ✓ | ✓ | ✓ |
+| AI · Runtime | `ai-test-results` | ✓ | ✓ | ✓ |
+| AI · Runtime | `ai-web-preview` | ✓ | ✓ | ✓ |
+| AI · Voice | `ai-audio-player` | ✓ | ✓ | ✓ |
+| AI · Voice | `ai-mic-selector` | ✓ | ✓ | ✓ |
+| AI · Voice | `ai-persona` | ✓ | ✓ | ✓ |
+| AI · Voice | `ai-speech-input` | ✓ | ✓ | ✓ |
+| AI · Voice | `ai-transcription` | ✓ | ✓ | ✓ |
+| AI · Voice | `ai-voice-selector` | ✓ | ✓ | ✓ |
+| AI · Workflow | `ai-canvas` | ✓ | ✓ | ✓ |
+| AI · Workflow | `ai-node` | ✓ | ✓ | ✓ |
+| AI · Workflow | `ai-edge` | ✓ | ✓ | ✓ |
+| AI · Workflow | `ai-connection` | ✓ | ✓ | ✓ |
+| AI · Workflow | `ai-controls` | ✓ | ✓ | ✓ |
+| AI · Workflow | `ai-panel` | ✓ | ✓ | ✓ |
+| AI · Workflow | `ai-toolbar` | ✓ | ✓ | ✓ |
+| AI · Workflow | `ai-image` | ✓ | ✓ | ✓ |
+| AI · Workflow | `ai-open-in-chat` | ✓ | ✓ | ✓ |
+| AI · Patterns ✦ | `ai-artifact-card` | ✓ | ✓ | ✓ |
+| AI · Patterns ✦ | `ai-artifact-stack` | ✓ | ✓ | ✓ |
+| AI · Patterns ✦ | `ai-artifact-viewer` | ✓ | ✓ | ✓ |
+| AI · Patterns ✦ | `ai-session-panel` | ✓ | ✓ | ✓ |
+| AI · Patterns ✦ | `ai-agent-avatar` | ✓ | ✓ | ✓ |
+| AI · Patterns ✦ | `ai-prompt-input-agent` | ✓ | ✓ | ✓ |
+| AI · Patterns ✦ | `ai-chat-composer` | ✓ | ✓ | ✓ |
+| AI · Patterns ✦ | `ai-chat-header` | ✓ | ✓ | ✓ |
 
 </details>
 
