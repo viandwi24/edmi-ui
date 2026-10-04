@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="empty" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look (on `EmptyMedia variant="icon"`).
+Flat by default. On `EmptyMedia variant="icon"`, `raised` (+1) and `floating` (+2) make the media tile rise.
 
 <ComponentDemo name="empty" demo="empty-raised" />
 
@@ -31,11 +31,11 @@ Flat by default. Pass `raised` for the one-step 3D look (on `EmptyMedia variant=
 | Prop | Type | Default |
 | --- | --- | --- |
 | `EmptyMedia variant` | `default \| icon` | `default` |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 Outline = dashed: add `border border-input` to `Empty` (the dashed style is built in).
 
 Parts: `Empty`, `EmptyHeader`, `EmptyMedia`, `EmptyTitle`, `EmptyDescription`, `EmptyContent`.
 
 ## ✦ Edmi additions
-- Icon media is a 48px tile (`--card`, 1px border); `raised` adds the 2px lip.
+- Icon media is a 48px tile (`--card`, 1px border); `elevation` raises it with the bevel.

@@ -21,6 +21,7 @@ export const entries: Record<string, FrameworkEntry> = {
 			{ path: "registry/ui/inset-panel/InsetPanelBody.vue" },
 			{ path: "registry/ui/inset-panel/InsetPanelFooter.vue" },
 			{ path: "registry/ui/inset-panel/InsetPanelHeader.vue" },
+			{ path: "registry/ui/inset-panel/context.ts" },
 			{ path: "registry/ui/inset-panel/index.ts" },
 		],
 		dependencies: [],

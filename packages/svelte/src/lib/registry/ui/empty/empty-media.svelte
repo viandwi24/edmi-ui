@@ -8,15 +8,16 @@
 				default: "bg-transparent",
 				icon: "size-12 rounded-xl border border-border bg-card text-foreground [&_svg:not([class*='size-'])]:size-5",
 			},
-			// ✦ opt-in one-step 3D look (icon variant only)
-			raised: { false: "", true: "" },
+			// ✦ depth (icon variant only): the media tile rises
+			elevation: { flat: "", raised: "", floating: "" },
 		},
 		compoundVariants: [
-			{ variant: "icon", raised: true, class: "border-b-lip shadow-[0_2px_0_var(--lip)]" },
+			{ variant: "icon", elevation: "raised", class: "border-transparent shadow-raised" },
+			{ variant: "icon", elevation: "floating", class: "border-transparent shadow-floating" },
 		],
 		defaultVariants: {
 			variant: "default",
-			raised: false,
+			elevation: "flat",
 		},
 	});
 
@@ -25,6 +26,7 @@
 
 <script lang="ts">
 	import { cn, type WithElementRef } from "$lib/utils.js";
+	import { type Elevation, useElevation } from "$lib/registry/ui/elevation/index.js";
 	import type { HTMLAttributes } from "svelte/elements";
 
 	let {
@@ -32,20 +34,22 @@
 		class: className,
 		children,
 		variant = "default",
-		raised = false,
+		elevation = "auto",
 		...restProps
 	}: WithElementRef<HTMLAttributes<HTMLDivElement>> & {
 		variant?: EmptyMediaVariant;
-		/** ✦ opt-in one-step 3D look (icon variant). */
-		raised?: boolean;
+		/** ✦ depth for variant="icon": raised +1 / floating +2 make the media tile rise. */
+		elevation?: Elevation;
 	} = $props();
+
+	const level = useElevation(() => elevation, "handle");
 </script>
 
 <div
 	bind:this={ref}
 	data-slot="empty-icon"
 	data-variant={variant}
-	class={cn(emptyMediaVariants({ variant, raised }), className)}
+	class={cn(emptyMediaVariants({ variant, elevation: level.current === "sunken" ? "flat" : level.current }), className)}
 	{...restProps}
 >
 	{@render children?.()}

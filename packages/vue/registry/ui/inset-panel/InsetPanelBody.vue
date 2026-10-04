@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
+import { inject } from 'vue'
 import { cn } from '@/registry/edmi/lib/utils'
+import { INSET_PANEL_KEY, insetPanelElevation } from './context'
 
 const props = withDefaults(defineProps<{
   class?: HTMLAttributes['class']
@@ -9,6 +11,8 @@ const props = withDefaults(defineProps<{
 }>(), {
   fade: false,
 })
+
+const panel = inject(INSET_PANEL_KEY, undefined)
 </script>
 
 <template>
@@ -16,9 +20,10 @@ const props = withDefaults(defineProps<{
     data-slot="inset-panel-body"
     :data-fade="fade || undefined"
     :class="cn(
-      'relative -mx-px flex-1 overflow-hidden rounded-t-xl border border-b-0 border-border bg-card',
-      // no footer: the body runs to the bottom edge
-      'group-has-[[data-slot=inset-panel-footer]]/inset-panel:mb-0 not-group-has-[[data-slot=inset-panel-footer]]/inset-panel:-mb-px',
+      'relative mx-0.5 mb-0.5 flex-1 overflow-hidden rounded-xl border border-border bg-card',
+      // footer: it sits right under the body, so no bottom gap
+      'group-has-[[data-slot=inset-panel-footer]]/inset-panel:mb-0',
+      insetPanelElevation[panel?.value ?? 'flat'].body,
       'data-[fade]:after:pointer-events-none data-[fade]:after:absolute data-[fade]:after:inset-x-0 data-[fade]:after:bottom-0 data-[fade]:after:h-14 data-[fade]:after:bg-linear-to-b data-[fade]:after:from-transparent data-[fade]:after:to-card',
       props.class,
     )"

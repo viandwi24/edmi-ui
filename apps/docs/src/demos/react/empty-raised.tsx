@@ -9,49 +9,40 @@ import {
 } from "@edmi-react/ui/empty";
 import { IconPlaceholder } from "@/edmi/icon-placeholder";
 
+const levels = [
+	{ value: "flat", label: "Flat (0)" },
+	{ value: "raised", label: "Raised (+1)" },
+	{ value: "floating", label: "Floating (+2)" },
+] as const;
+
 export default function Demo() {
 	return (
-		<div className="grid w-full max-w-2xl gap-5 sm:grid-cols-2">
-			<Empty>
-				<EmptyHeader>
-					<EmptyMedia raised variant="icon">
-						<IconPlaceholder
-							lucide="BriefcaseIcon"
-							tabler="IconBriefcase"
-							hugeicons="Briefcase01Icon"
-							phosphor="BriefcaseIcon"
-							remixicon="RiBriefcaseLine"
-						/>
-					</EmptyMedia>
-					<EmptyTitle>No positions yet</EmptyTitle>
-					<EmptyDescription>
-						Join an index and your holdings will show up here.
-					</EmptyDescription>
-				</EmptyHeader>
-				<EmptyContent>
-					<Button>Explore indexes</Button>
-				</EmptyContent>
-			</Empty>
-			<Empty className="border-[1.5px] border-input">
-				<EmptyHeader>
-					<EmptyMedia raised variant="icon">
-						<IconPlaceholder
-							lucide="UploadIcon"
-							tabler="IconUpload"
-							hugeicons="Upload01Icon"
-							phosphor="UploadIcon"
-							remixicon="RiUploadLine"
-						/>
-					</EmptyMedia>
-					<EmptyTitle>Drop your weights file</EmptyTitle>
-					<EmptyDescription>
-						CSV with symbol and weight columns.
-					</EmptyDescription>
-				</EmptyHeader>
-				<EmptyContent>
-					<Button variant="outline">Choose file</Button>
-				</EmptyContent>
-			</Empty>
+		<div className="grid w-full max-w-3xl gap-5 sm:grid-cols-3">
+			{levels.map(({ value, label }) => (
+				<div key={value} className="flex flex-col gap-2">
+					<p className="text-xs font-medium text-muted-foreground">{label}</p>
+					<Empty>
+						<EmptyHeader>
+							<EmptyMedia elevation={value} variant="icon">
+								<IconPlaceholder
+									lucide="BriefcaseIcon"
+									tabler="IconBriefcase"
+									hugeicons="Briefcase01Icon"
+									phosphor="BriefcaseIcon"
+									remixicon="RiBriefcaseLine"
+								/>
+							</EmptyMedia>
+							<EmptyTitle>No positions yet</EmptyTitle>
+							<EmptyDescription>
+								Your holdings will show up here.
+							</EmptyDescription>
+						</EmptyHeader>
+						<EmptyContent>
+							<Button size="sm">Explore indexes</Button>
+						</EmptyContent>
+					</Empty>
+				</div>
+			))}
 		</div>
 	);
 }

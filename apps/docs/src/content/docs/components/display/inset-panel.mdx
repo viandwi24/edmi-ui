@@ -1,6 +1,6 @@
 ---
 title: Inset panel
-description: Header and footer on a muted shell with a card body running edge to edge. Optional bottom fade.
+description: "Header and footer on a muted shell with a card body plate inset 2px from the shell. Optional bottom fade and elevation."
 ---
 import ComponentDemo from "../../../../components/ComponentDemo.astro";
 import ComponentInstall from "../../../../components/ComponentInstall.astro";
@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="inset-panel" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look (3D look: hard lip + soft top highlight).
+Flat by default. `raised` (+1) bevels the body plate, `floating` (+2) also gives the shell the soft drop and `sunken` (-1) turns the shell into a well. The shell itself is level 0 and never rises on its own.
 
 <ComponentDemo name="inset-panel" demo="inset-panel-raised" />
 
@@ -31,9 +31,9 @@ Flat by default. Pass `raised` for the one-step 3D look (3D look: hard lip + sof
 | Prop | Type | Default |
 | --- | --- | --- |
 | `InsetPanelBody fade` | `boolean` | `false` |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 Parts: `InsetPanel`, `InsetPanelHeader`, `InsetPanelBody`, `InsetPanelFooter`.
 
 ## ✦ Edmi additions
-- Whole component is an Edmi addition (DESIGN §4.7): body is a `--card` panel with radius on the top corners only.
+- Whole component is an Edmi addition (DESIGN §4.8): the body is a `--card` plate inset 2px from the shell (left, right, bottom) with its own full radius; with a footer the body keeps a 0 bottom gap and the footer sits on the shell without a divider.

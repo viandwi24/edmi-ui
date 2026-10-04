@@ -1,6 +1,6 @@
 ---
 title: Card
-description: Surface with a hard 2px lip and a top highlight. Header, title, description, action, content and footer; size default or sm.
+description: "Surface with optional elevation (sunken, raised, floating). Header, title, description, action, content and footer; size default or sm."
 ---
 import ComponentDemo from "../../../../components/ComponentDemo.astro";
 import ComponentInstall from "../../../../components/ComponentInstall.astro";
@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="card" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look (3D look: hard lip + soft top highlight).
+Flat by default (border only). `sunken` (-1) turns the card into a soft inset well, `raised` (+1) adds the bevel (inner rim, top highlight, dark hairline) and `floating` (+2) the bevel plus one soft drop. A card inside a raised or floating surface resolves flat (no bevel on bevel).
 
 <ComponentDemo name="card" demo="card-raised" />
 
@@ -31,9 +31,10 @@ Flat by default. Pass `raised` for the one-step 3D look (3D look: hard lip + sof
 | Prop | Type | Default |
 | --- | --- | --- |
 | `size` | `default \| sm` | `default` |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 Parts: `Card`, `CardHeader`, `CardTitle`, `CardDescription`, `CardAction`, `CardContent`, `CardFooter`.
 
 ## ✦ Edmi additions
-- Flat (border only); `raised` adds the hard 2px lip (`shadow-card`), no blur. Footer on a muted tint.
+- Flat (border only); `elevation` adds the bevel / drop (surface role: raised in layered mode). Footer on a muted tint.
+- Publishes its level to nested cards, which drop to flat.

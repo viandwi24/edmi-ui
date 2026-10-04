@@ -5,24 +5,28 @@ import {
 	InsetPanelHeader,
 } from "@edmi-react/ui/inset-panel";
 
+const levels = [
+	{ value: "sunken", label: "Sunken (-1)" },
+	{ value: "flat", label: "Flat (0)" },
+	{ value: "raised", label: "Raised (+1)" },
+	{ value: "floating", label: "Floating (+2)" },
+] as const;
+
 export default function Demo() {
 	return (
-		<div className="grid w-full max-w-2xl gap-5 sm:grid-cols-2">
-			<InsetPanel raised>
-				<InsetPanelHeader>Live joiners</InsetPanelHeader>
-				<InsetPanelBody fade className="h-40 p-4 text-sm">
-					Body runs edge to edge with a faded bottom.
-				</InsetPanelBody>
-				<InsetPanelFooter>
-					2,846 people joined an index this week
-				</InsetPanelFooter>
-			</InsetPanel>
-			<InsetPanel raised>
-				<InsetPanelHeader>Keeper activity</InsetPanelHeader>
-				<InsetPanelBody className="h-40 p-4 text-sm">
-					No footer: the body runs to the bottom edge.
-				</InsetPanelBody>
-			</InsetPanel>
+		<div className="grid w-full max-w-3xl gap-5 sm:grid-cols-2">
+			{levels.map(({ value, label }) => (
+				<div key={value} className="flex flex-col gap-2">
+					<p className="text-xs font-medium text-muted-foreground">{label}</p>
+					<InsetPanel elevation={value}>
+						<InsetPanelHeader>Live joiners</InsetPanelHeader>
+						<InsetPanelBody fade className="h-32 p-4 text-sm">
+							The body plate is inset 2px from the shell.
+						</InsetPanelBody>
+						<InsetPanelFooter>2,846 people joined this week</InsetPanelFooter>
+					</InsetPanel>
+				</div>
+			))}
 		</div>
 	);
 }

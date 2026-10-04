@@ -5,9 +5,10 @@ export const items: Item[] = [
 		name: "card",
 		title: "Card",
 		description:
-			"Surface with a hard 2px lip and a top highlight. Header, title, description, action, content and footer; size default or sm.",
+			"Flat surface with optional elevation (sunken, raised, floating). Header, title, description, action, content and footer; size default or sm.",
 		type: "registry:ui",
 		categories: ["Display"],
+		registryDependencies: ["elevation"],
 		docs: "Replaces the stock card: `shadcn add @edmi-ui/card --overwrite`.",
 		frameworks: {
 			react: {
@@ -20,9 +21,10 @@ export const items: Item[] = [
 		name: "inset-panel",
 		title: "Inset panel",
 		description:
-			"Header and footer on a muted shell with a card body running edge to edge. Optional bottom fade.",
+			"Header and footer on a muted shell with a card body plate inset 2px from the shell. Optional bottom fade and elevation.",
 		type: "registry:ui",
 		categories: ["Display"],
+		registryDependencies: ["elevation"],
 		docs: "Edmi extra: `shadcn add @edmi-ui/inset-panel`.",
 		frameworks: {
 			react: {
@@ -144,6 +146,7 @@ export const items: Item[] = [
 			"What to show when there is nothing yet. Icon media, title, description and actions; dashed outline.",
 		type: "registry:ui",
 		categories: ["Display"],
+		registryDependencies: ["elevation"],
 		docs: "Replaces the stock empty: `shadcn add @edmi-ui/empty --overwrite`.",
 		frameworks: {
 			react: {

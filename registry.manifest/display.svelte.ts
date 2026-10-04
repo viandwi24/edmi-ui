@@ -20,6 +20,7 @@ export const entries: Record<string, FrameworkEntry> = {
 			{ path: "src/lib/registry/ui/inset-panel/inset-panel-header.svelte" },
 			{ path: "src/lib/registry/ui/inset-panel/inset-panel-body.svelte" },
 			{ path: "src/lib/registry/ui/inset-panel/inset-panel-footer.svelte" },
+			{ path: "src/lib/registry/ui/inset-panel/context.ts" },
 			{ path: "src/lib/registry/ui/inset-panel/index.ts" },
 		],
 	},
