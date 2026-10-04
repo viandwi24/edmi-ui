@@ -8,16 +8,30 @@ import {
 	NodeTitle,
 } from "@edmi-react/components/ai/node";
 
-const nodes = [
-	{ id: "check", type: "step", position: { x: 0, y: 0 }, data: {} },
-];
+const levels = [
+	{ value: "sunken", label: "Sunken (-1)" },
+	{ value: "flat", label: "Flat (0)" },
+	{ value: "raised", label: "Raised (+1)" },
+	{ value: "floating", label: "Floating (+2)" },
+] as const;
+
+const nodes = levels.map(({ value, label }, i) => ({
+	id: value,
+	type: "step",
+	position: { x: (i % 2) * 290, y: Math.floor(i / 2) * 170 },
+	data: { elevation: value, label },
+}));
 
 const nodeTypes = {
-	step: () => (
-		<Node handles={{ target: true, source: true }} elevation="raised">
+	step: ({
+		data,
+	}: {
+		data: { elevation: (typeof levels)[number]["value"]; label: string };
+	}) => (
+		<Node handles={{ target: true, source: true }} elevation={data.elevation}>
 			<NodeHeader>
 				<NodeTitle>Check drift</NodeTitle>
-				<NodeDescription>Tool · get_prices</NodeDescription>
+				<NodeDescription>{data.label}</NodeDescription>
 			</NodeHeader>
 			<NodeContent>
 				<span className="font-mono text-xs">
@@ -31,10 +45,10 @@ const nodeTypes = {
 
 export default function Demo() {
 	return (
-		<div className="h-56 w-full overflow-hidden rounded-[calc(var(--radius)*1.4)] border border-border">
+		<div className="h-[26rem] w-full overflow-hidden rounded-[calc(var(--radius)*1.4)] border border-border">
 			<Canvas
 				edges={[]}
-				fitViewOptions={{ maxZoom: 1, padding: 0.4 }}
+				fitViewOptions={{ maxZoom: 1, padding: 0.2 }}
 				nodes={nodes}
 				nodeTypes={nodeTypes}
 			/>

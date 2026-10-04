@@ -8,15 +8,12 @@
 		class: className,
 		handles = { target: false, source: false },
 		selected = false,
-		raised = false,
 		children,
 		...restProps
-	}: Omit<ComponentProps<typeof Card>, "raised"> & {
+	}: ComponentProps<typeof Card> & {
 		handles?: { target?: boolean; source?: boolean };
 		/** Ring state. Inside Svelte Flow the `selected` class on the node wrapper does the same. */
 		selected?: boolean;
-		/** ✦ one-step 3D look. */
-		raised?: boolean;
 	} = $props();
 
 	const handleClass = "size-2.5! min-h-0! min-w-0! rounded-full! border-2! border-muted-foreground! bg-card!";
@@ -26,7 +23,6 @@
 	{...restProps}
 	data-slot="ai-node"
 	data-selected={selected ? "" : undefined}
-	elevation={raised ? "raised" : undefined}
 	class={cn(
 		"relative size-full h-auto w-60 gap-0 overflow-visible rounded-[calc(var(--radius)*1.2)] py-0",
 		"data-[selected]:border-ring data-[selected]:shadow-ring [.selected_&]:border-ring [.selected_&]:shadow-ring",

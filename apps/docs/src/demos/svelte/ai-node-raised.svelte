@@ -4,12 +4,20 @@
 
 	const nodeTypes = { step: Step };
 
-	let nodes = $state.raw([
-		{ id: "check", type: "step", position: { x: 0, y: 0 }, data: { title: "Check drift", description: "Tool · get_prices", body: "MAG4 drift: 2.4%", footer: "412 ms", raised: true, handles: { target: true, source: true } } },
-	]);
+	const levels = ["sunken", "flat", "raised", "floating"] as const;
+	const labels = { sunken: "Sunken (-1)", flat: "Flat (0)", raised: "Raised (+1)", floating: "Floating (+2)" };
+
+	let nodes = $state.raw(
+		levels.map((elevation, i) => ({
+			id: elevation,
+			type: "step",
+			position: { x: (i % 2) * 290, y: Math.floor(i / 2) * 170 },
+			data: { title: "Check drift", description: labels[elevation], body: "MAG4 drift: 2.4%", footer: "412 ms", elevation, handles: { target: true, source: true } },
+		})),
+	);
 	let edges = $state.raw([]);
 </script>
 
-<div style="height: 224px" class="w-full overflow-hidden rounded-[calc(var(--radius)*1.4)] border border-border">
-	<Canvas bind:nodes bind:edges {nodeTypes} fitViewOptions={{ maxZoom: 1, padding: 0.4 }} />
+<div style="height: 416px" class="w-full overflow-hidden rounded-[calc(var(--radius)*1.4)] border border-border">
+	<Canvas bind:nodes bind:edges {nodeTypes} fitViewOptions={{ maxZoom: 1, padding: 0.2 }} />
 </div>

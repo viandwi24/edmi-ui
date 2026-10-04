@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Node, NodeContent, NodeDescription, NodeFooter, NodeHeader, NodeTitle } from "@edmi-svelte/ai/node";
 	import { Toolbar } from "@edmi-svelte/ai/toolbar";
+	import type { Elevation } from "@edmi-svelte/ui/elevation";
 	import { Badge } from "@edmi-svelte/ui/badge";
 	import { Button } from "@edmi-svelte/ui/button";
 	import { CopyIcon, SettingsIcon, Trash2Icon } from "@lucide/svelte";
@@ -13,7 +14,7 @@
 		footer?: string;
 		badges?: string[];
 		toolbar?: boolean;
-		raised?: boolean;
+		elevation?: Elevation;
 		compact?: boolean;
 		handles: { target: boolean; source: boolean };
 	};
@@ -28,7 +29,7 @@
 		<Button size="icon-xs" variant="ghost" aria-label="Delete"><Trash2Icon /></Button>
 	</Toolbar>
 {/if}
-<Node handles={data.handles} {selected} raised={data.raised} class={data.compact ? "w-40" : undefined}>
+<Node handles={data.handles} {selected} elevation={data.elevation} class={data.compact ? "w-40" : undefined}>
 	<NodeHeader class={data.compact ? "border-b-0" : undefined}>
 		<NodeTitle>{data.title}</NodeTitle>
 		{#if data.description}<NodeDescription>{data.description}</NodeDescription>{/if}

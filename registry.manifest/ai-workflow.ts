@@ -17,7 +17,7 @@ export const items: Item[] = [
 		description:
 			"Workflow node card with header, content, footer and source/target handles.",
 		category: C.workflow,
-		deps: ["card"],
+		deps: ["card", "elevation"],
 		react: aiReact("node", ["@xyflow/react", "cn"]),
 	}),
 	aiItem({

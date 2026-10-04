@@ -25,9 +25,9 @@ Selected nodes get the `--ring` border and a 3px ring. Inside xyflow the wrapper
 
 <ComponentSource name="ai-node" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. `raised` gives the one-step 3D card (one face plus one hard lip).
+The node card are flat by default and take the surface level in layered mode (raised). `sunken` (-1) is a soft inset, `raised` (+1) a bevel and `floating` (+2) a bevel with a soft drop.
 
 <ComponentDemo name="ai-node" demo="ai-node-raised" />
 
@@ -36,5 +36,5 @@ Flat by default. `raised` gives the one-step 3D card (one face plus one hard lip
 | --- | --- | --- | --- |
 | Node | `handles` | `{ target: boolean; source: boolean }` |  |
 | Node | `selected` | `boolean` | `false` |
-| Node | `raised` | `boolean` | `false` |
+| Node | `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 | NodeHeader, NodeTitle, NodeDescription, NodeAction, NodeContent, NodeFooter | Card parts |  |  |
