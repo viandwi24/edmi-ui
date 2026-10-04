@@ -9,7 +9,7 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentDemo name="ai-voice-selector" />
 
-Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/voice-selector) (Apache-2.0), restyled for Edmi UI. Built on `command`, `dialog` and `spinner`.
+Built on `command`, `dialog` and `spinner`.
 
 ## Installation
 
@@ -36,7 +36,7 @@ Derived from [Vercel AI Elements](https://elements.ai-sdk.dev/components/voice-s
 
 ## ✦ Edmi additions
 - `VoiceSelectorDetails` and `VoiceSelectorHeader` lay out the two-line row (name + attributes, then description).
-- Deviation from Vercel AI Elements: gender and accent render as muted text separated by `VoiceSelectorBullet` (middle dot), as on the board, not as icons and flags.
+- Gender and accent render as muted text separated by `VoiceSelectorBullet` (middle dot), as on the board, not as icons and flags.
 
 ## Framework notes
 - Vue: `v-model:value` / `v-model:open`, trigger via `as-child`; selecting always sets the value and closes (extra `@select` runs after). Svelte: `bind:value`, trigger via the `child` snippet; passing `onSelect` replaces the default select behaviour, as in React.

@@ -24,8 +24,8 @@ chat, agent, code, voice and workflow components ship next to the UI kit, in the
 
 - **shadcn-compatible.** Three registries, one per framework: React (shadcn/ui), Vue (shadcn-vue) and
   Svelte (shadcn-svelte). Same item names as shadcn, so `add … --overwrite` restyles the stock components.
-- **AI-ready.** 56 AI components (restyled [AI Elements](https://ai-sdk.dev/elements) plus Edmi patterns) for chat,
-  agents, code, runtime, voice and workflows, wired for the Vercel AI SDK. One command: `add @edmi-ui/ai-all`.
+- **AI-ready.** 56 AI components for chat, agents, code, runtime, voice and workflows, ready for the
+  Vercel AI SDK. One command: `add @edmi-ui/ai-all`.
 - **Flat by default, raised on demand.** Every component ships the plain look; `raised` ✦ adds a one-step 3D face.
 - **Themeable.** Base colours, accents and radius as tokens; a [Themes customizer](https://viandwi24.github.io/edmi-ui/themes/) with Copy CSS and
   installable theme items (`theme-<base>-<accent>`).
@@ -47,10 +47,9 @@ chat, agent, code, voice and workflow components ship next to the UI kit, in the
 </p>
 
 The **Edmi AI pack** is everything you need to build an AI product UI, styled like the rest of Edmi (no avatars by
-default, calm 15px response typography, solid chips, a terminal that stays dark). It is a restyle of Vercel's
-[AI Elements](https://ai-sdk.dev/elements) with the same component names and anatomy, ported to Vue and Svelte,
-plus ✦ patterns of our own. Items are named `ai-<name>` and install into `components/ai/`, next to (never into)
-your `components/ui/`.
+default, calm 15px response typography, solid chips, a terminal that stays dark). Every component ships for React,
+Vue and Svelte, including ✦ patterns like artifact cards, session panels and agent avatars. Items are named
+`ai-<name>` and install into `components/ai/`, next to (never into) your `components/ui/`.
 
 | Category | Components |
 | --- | --- |
@@ -71,40 +70,6 @@ npx shadcn-svelte@latest add https://viandwi24.github.io/edmi-ui/r/svelte/ai-all
 ```
 
 Or pick single items: `npx shadcn@latest add @edmi-ui/ai-conversation @edmi-ui/ai-message @edmi-ui/ai-prompt-input`.
-A minimal chat with the [AI SDK](https://ai-sdk.dev) (React):
-
-```tsx
-import { useChat } from "@ai-sdk/react";
-import { Conversation, ConversationContent, ConversationScrollButton } from "@/components/ai/conversation";
-import { Message, MessageContent, MessageResponse } from "@/components/ai/message";
-import { PromptInput, PromptInputFooter, PromptInputSubmit, PromptInputTextarea } from "@/components/ai/prompt-input";
-
-export function Chat() {
-  const { messages, sendMessage, status } = useChat();
-  return (
-    <div className="flex h-svh flex-col">
-      <Conversation>
-        <ConversationContent>
-          {messages.map((m) => (
-            <Message from={m.role} key={m.id}>
-              <MessageContent>
-                {m.parts.map((p, i) => p.type === "text" && <MessageResponse key={i}>{p.text}</MessageResponse>)}
-              </MessageContent>
-            </Message>
-          ))}
-        </ConversationContent>
-        <ConversationScrollButton />
-      </Conversation>
-      <PromptInput onSubmit={({ text }) => sendMessage({ text })}>
-        <PromptInputTextarea />
-        <PromptInputFooter>
-          <PromptInputSubmit status={status} />
-        </PromptInputFooter>
-      </PromptInput>
-    </div>
-  );
-}
-```
 
 Browse every AI component with live demos under **AI** in the [components docs](https://viandwi24.github.io/edmi-ui/components/), and see them
 composed in the AI examples: [chat thread](https://viandwi24.github.io/edmi-ui/examples/chat-thread/), [chat + artifact](https://viandwi24.github.io/edmi-ui/examples/chat-artifact/),
