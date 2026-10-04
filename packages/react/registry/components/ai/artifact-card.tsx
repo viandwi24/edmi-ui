@@ -164,7 +164,7 @@ export type ArtifactCardThumbnailProps = ComponentProps<"span"> & {
 	variant?: "paper" | "slide";
 };
 
-/** Cropped thumbnail (top of the first page), flush with the card's top and bottom edge. */
+/** Cropped thumbnail (top of the first page): an inset tile the size of the icon tile, clipped to its radius. */
 export const ArtifactCardThumbnail = ({
 	variant = "paper",
 	className,
@@ -175,14 +175,14 @@ export const ArtifactCardThumbnail = ({
 		data-slot="ai-artifact-card-thumbnail"
 		data-variant={variant}
 		className={cn(
-			"-my-3 block h-[70px] w-[84px] shrink-0 overflow-hidden rounded-t-[calc(var(--radius)*0.6)]",
+			"block h-14 w-[52px] shrink-0 overflow-hidden rounded-[calc(var(--radius)*0.9)] border border-border",
 			className,
 		)}
 		{...props}
 	>
 		<span
 			className={cn(
-				"box-border block h-[100px] w-[84px] overflow-hidden rounded-[calc(var(--radius)*0.6)] border border-border px-[7px] py-2",
+				"box-border block size-full overflow-hidden px-[6px] py-[7px]",
 				variant === "paper" ? "bg-white" : "bg-[#14213d]",
 			)}
 		>

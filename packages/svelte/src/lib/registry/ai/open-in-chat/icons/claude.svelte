@@ -9,7 +9,7 @@
 
 <svg
 	fill="currentColor"
-	role="img"
+	aria-hidden="true"
 	viewBox="0 0 12 12"
 	xmlns="http://www.w3.org/2000/svg"
 	width={size}
@@ -17,7 +17,6 @@
 	class={className}
 	{...restProps}
 >
-	<title>Claude</title>
 	<path
 		fill-rule="evenodd"
 		clip-rule="evenodd"

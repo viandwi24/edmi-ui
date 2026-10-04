@@ -10,6 +10,10 @@ import {
   SessionSection,
   SessionSource,
 } from "@edmi-vue/components/ai/session-panel";
+import { Button } from "@edmi-vue/ui/button";
+import { ref } from "vue";
+
+const open = ref(true);
 
 const favicons = [
   { label: "Jupiter", color: "#e5484d" },
@@ -19,8 +23,9 @@ const favicons = [
 </script>
 
 <template>
-  <SessionPanel>
-    <SessionProgress :value="60" @close="() => {}">
+  <Button v-if="!open" size="sm" variant="outline" @click="open = true">Show session</Button>
+  <SessionPanel v-else>
+    <SessionProgress :value="60" @close="open = false">
       Reading the keeper config, then drafting the report.
     </SessionProgress>
     <SessionPanelDivider />

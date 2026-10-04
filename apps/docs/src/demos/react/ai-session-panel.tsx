@@ -8,12 +8,24 @@ import {
 	SessionSection,
 	SessionSource,
 } from "@edmi-react/components/ai/session-panel";
+import { Button } from "@edmi-react/ui/button";
+import { useState } from "react";
 import { IconPlaceholder } from "@/edmi/icon-placeholder";
 
 export default function Demo() {
+	const [open, setOpen] = useState(true);
+
+	if (!open) {
+		return (
+			<Button onClick={() => setOpen(true)} size="sm" variant="outline">
+				Show session
+			</Button>
+		);
+	}
+
 	return (
 		<SessionPanel>
-			<SessionProgress onClose={() => {}} value={60}>
+			<SessionProgress onClose={() => setOpen(false)} value={60}>
 				Reading the keeper config, then drafting the report.
 			</SessionProgress>
 			<SessionPanelDivider />

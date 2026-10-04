@@ -15,7 +15,7 @@
 
 <InputGroup.Input
 	bind:ref
-	class={cn("font-mono text-xs text-foreground", className)}
+	class={cn("font-mono text-xs text-ellipsis text-foreground", className)}
 	readonly
 	value={snippet.code}
 	{...(restProps as Record<string, unknown>)}

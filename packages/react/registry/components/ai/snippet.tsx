@@ -78,7 +78,10 @@ export const SnippetInput = ({ className, ...props }: SnippetInputProps) => {
 
 	return (
 		<InputGroupInput
-			className={cn("font-mono text-xs text-foreground", className)}
+			className={cn(
+				"font-mono text-xs text-ellipsis text-foreground",
+				className,
+			)}
 			readOnly
 			value={code}
 			{...props}

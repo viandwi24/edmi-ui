@@ -4,7 +4,7 @@ import { Snippet, SnippetAddon, SnippetCopyButton, SnippetInput, SnippetText } f
 
 <template>
   <div class="flex w-full max-w-md flex-col gap-3">
-    <Snippet code="bunx shadcn-vue@latest add @edmi-ui/ai-tool">
+    <Snippet code="npx shadcn-vue@latest add @edmi-ui/ai-tool">
       <SnippetAddon>
         <SnippetText>$</SnippetText>
       </SnippetAddon>

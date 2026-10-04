@@ -7,7 +7,7 @@
 	let { class: className = "", size = "1em", ...restProps }: Props = $props();
 </script>
 
-<svg
+<svg aria-hidden="true"
 	fill="currentColor"
 	viewBox="0 0 147 70"
 	xmlns="http://www.w3.org/2000/svg"
@@ -16,7 +16,6 @@
 	class={className}
 	{...restProps}
 >
-	<title>v0</title>
 	<path
 		d="M56 50.2031V14H70V60.1562C70 65.5928 65.5928 70 60.1562 70C57.5605 70 54.9982 68.9992 53.1562 67.1573L0 14H19.7969L56 50.2031Z"
 	/>

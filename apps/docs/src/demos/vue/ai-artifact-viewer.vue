@@ -10,16 +10,22 @@ import {
   ArtifactViewerPaper,
   ArtifactViewerTitle,
 } from "@edmi-vue/components/ai/artifact-viewer";
+import { Button } from "@edmi-vue/ui/button";
+import { ref } from "vue";
+
+const open = ref(true);
+const expanded = ref(false);
 </script>
 
 <template>
-  <ArtifactViewer class="w-full max-w-xl">
+  <Button v-if="!open" size="sm" variant="outline" @click="open = true">Show artifact</Button>
+  <ArtifactViewer v-else :class="expanded ? 'w-full max-w-3xl' : 'w-full max-w-xl'">
     <ArtifactViewerHeader>
       <ArtifactViewerTitle format="PDF">Rebalance report</ArtifactViewerTitle>
       <ArtifactViewerOpenIn />
       <ArtifactViewerDownload />
-      <ArtifactViewerExpand />
-      <ArtifactViewerClose />
+      <ArtifactViewerExpand @click="expanded = !expanded" />
+      <ArtifactViewerClose @click="open = false" />
     </ArtifactViewerHeader>
     <ArtifactViewerContent>
       <ArtifactViewerPaper>

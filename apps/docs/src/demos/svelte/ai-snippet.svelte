@@ -9,7 +9,7 @@
 </script>
 
 <div class="flex w-full max-w-md flex-col gap-3">
-	<Snippet code="bunx --bun shadcn-svelte@latest add @edmi-ui/ai-tool">
+	<Snippet code="npx shadcn-svelte@latest add https://viandwi24.github.io/edmi-ui/r/svelte/ai-tool.json">
 		<SnippetAddon>
 			<SnippetText>$</SnippetText>
 		</SnippetAddon>

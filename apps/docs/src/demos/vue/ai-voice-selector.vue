@@ -52,7 +52,7 @@ const current = computed(() => voices.find((v) => v.id === value.value));
         <div v-for="(group, i) in groups" :key="group">
           <VoiceSelectorSeparator v-if="i > 0" />
           <VoiceSelectorGroup :heading="group">
-            <VoiceSelectorItem v-for="v in voices.filter((x) => x.group === group)" :key="v.id" :value="v.id">
+            <VoiceSelectorItem v-for="v in voices.filter((x) => x.group === group)" :key="v.id" :value="v.id" :keywords="[v.name, v.gender, v.accent]">
               <VoiceSelectorPreview
                 :playing="playing === v.id"
                 @play="playing = playing === v.id ? undefined : v.id"

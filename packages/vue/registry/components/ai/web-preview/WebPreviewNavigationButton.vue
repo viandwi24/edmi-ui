@@ -24,6 +24,7 @@ const props = withDefaults(defineProps<{
       <TooltipTrigger as-child>
         <Button
           type="button"
+          :aria-label="props.tooltip"
           :variant="props.variant"
           :size="props.size"
           :disabled="props.disabled"
@@ -40,6 +41,7 @@ const props = withDefaults(defineProps<{
   <Button
     v-else
     type="button"
+    :aria-label="props.tooltip || undefined"
     :variant="props.variant"
     :size="props.size"
     :disabled="props.disabled"

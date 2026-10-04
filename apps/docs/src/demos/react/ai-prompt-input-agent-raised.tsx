@@ -25,6 +25,7 @@ export default function Demo() {
 				<PromptInputTextarea
 					defaultValue="Rebalance MAG4 and draft a post"
 					className="min-h-20"
+					placeholder="Ask Keeper anything about your index…"
 				/>
 			</PromptInputBody>
 			<PromptInputFooter>

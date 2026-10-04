@@ -11,5 +11,5 @@
 </script>
 
 <div style="height: 224px" class="w-full overflow-hidden rounded-[calc(var(--radius)*1.4)] border border-border">
-	<Canvas bind:nodes bind:edges {nodeTypes} />
+	<Canvas bind:nodes bind:edges {nodeTypes} fitViewOptions={{ maxZoom: 1, padding: 0.4 }} />
 </div>

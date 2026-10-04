@@ -39,6 +39,14 @@
 	<VoiceSelectorTrigger>
 		{#snippet child({ props })}
 			<Button variant="outline" {...props}>
+				<IconPlaceholder
+					lucide="AudioLinesIcon"
+					tabler="IconPlayerRecordFilled"
+					hugeicons="AudioWave01Icon"
+					phosphor="RecordIcon"
+					remixicon="RiRecordCircleLine"
+					class="size-3.5"
+				/>
 				{current?.name ?? "Select voice"}
 				<IconPlaceholder
 					lucide="ChevronsUpDownIcon"

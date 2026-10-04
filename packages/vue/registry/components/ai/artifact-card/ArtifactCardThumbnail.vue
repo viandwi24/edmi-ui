@@ -18,11 +18,11 @@ const PAPER_LINES = [92, 85, 78, 71, 64, 87, 80, 73]
   <span
     data-slot="ai-artifact-card-thumbnail"
     :data-variant="variant"
-    :class="cn('-my-3 block h-[70px] w-[84px] shrink-0 overflow-hidden rounded-t-[calc(var(--radius)*0.6)]', props.class)"
+    :class="cn('block h-14 w-[52px] shrink-0 overflow-hidden rounded-[calc(var(--radius)*0.9)] border border-border', props.class)"
   >
     <span
       :class="cn(
-        'box-border block h-[100px] w-[84px] overflow-hidden rounded-[calc(var(--radius)*0.6)] border border-border px-[7px] py-2',
+        'box-border block size-full overflow-hidden px-[6px] py-[7px]',
         variant === 'paper' ? 'bg-white' : 'bg-[#14213d]',
       )"
     >

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import IconPlaceholder from "$lib/components/icon-placeholder/icon-placeholder.svelte";
 	import {
 		WebPreview,
 		WebPreviewBody,
@@ -29,11 +30,47 @@
 
 {#snippet nav()}
 	<WebPreviewNavigation>
-		<WebPreviewNavigationButton tooltip="Back">‹</WebPreviewNavigationButton>
-		<WebPreviewNavigationButton tooltip="Forward">›</WebPreviewNavigationButton>
-		<WebPreviewNavigationButton tooltip="Reload">↻</WebPreviewNavigationButton>
+		<WebPreviewNavigationButton tooltip="Back">
+		<IconPlaceholder
+			lucide="ChevronLeftIcon"
+			tabler="IconChevronLeft"
+			hugeicons="ArrowLeft01Icon"
+			phosphor="CaretLeftIcon"
+			remixicon="RiArrowLeftSLine"
+			class="size-4"
+		/>
+		</WebPreviewNavigationButton>
+		<WebPreviewNavigationButton tooltip="Forward">
+		<IconPlaceholder
+			lucide="ChevronRightIcon"
+			tabler="IconChevronRight"
+			hugeicons="ArrowRight01Icon"
+			phosphor="CaretRightIcon"
+			remixicon="RiArrowRightSLine"
+			class="size-4"
+		/>
+		</WebPreviewNavigationButton>
+		<WebPreviewNavigationButton tooltip="Reload">
+		<IconPlaceholder
+			lucide="RotateCwIcon"
+			tabler="IconRotateClockwise2"
+			hugeicons="Rotate01Icon"
+			phosphor="ArrowClockwiseIcon"
+			remixicon="RiRefreshLine"
+			class="size-4"
+		/>
+		</WebPreviewNavigationButton>
 		<WebPreviewUrl />
-		<WebPreviewNavigationButton tooltip="Open in new tab">↗</WebPreviewNavigationButton>
+		<WebPreviewNavigationButton tooltip="Open in new tab">
+		<IconPlaceholder
+			lucide="ExternalLinkIcon"
+			tabler="IconExternalLink"
+			hugeicons="LinkSquare02Icon"
+			phosphor="ArrowSquareOutIcon"
+			remixicon="RiExternalLinkLine"
+			class="size-4"
+		/>
+		</WebPreviewNavigationButton>
 	</WebPreviewNavigation>
 {/snippet}
 

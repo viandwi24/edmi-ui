@@ -9,7 +9,7 @@ import {
 export default function Demo() {
 	return (
 		<div className="flex w-full max-w-md flex-col gap-3">
-			<Snippet code="bunx shadcn@latest add @edmi-ui/ai-tool">
+			<Snippet code="npx shadcn@latest add @edmi-ui/ai-tool">
 				<SnippetAddon>
 					<SnippetText>$</SnippetText>
 				</SnippetAddon>

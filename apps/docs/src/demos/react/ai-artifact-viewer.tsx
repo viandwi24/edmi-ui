@@ -9,16 +9,31 @@ import {
 	ArtifactViewerPaper,
 	ArtifactViewerTitle,
 } from "@edmi-react/components/ai/artifact-viewer";
+import { Button } from "@edmi-react/ui/button";
+import { useState } from "react";
 
 export default function Demo() {
+	const [open, setOpen] = useState(true);
+	const [expanded, setExpanded] = useState(false);
+
+	if (!open) {
+		return (
+			<Button onClick={() => setOpen(true)} size="sm" variant="outline">
+				Show artifact
+			</Button>
+		);
+	}
+
 	return (
-		<ArtifactViewer className="w-full max-w-xl">
+		<ArtifactViewer
+			className={expanded ? "w-full max-w-3xl" : "w-full max-w-xl"}
+		>
 			<ArtifactViewerHeader>
 				<ArtifactViewerTitle format="PDF">Rebalance report</ArtifactViewerTitle>
 				<ArtifactViewerOpenIn />
 				<ArtifactViewerDownload />
-				<ArtifactViewerExpand />
-				<ArtifactViewerClose />
+				<ArtifactViewerExpand onClick={() => setExpanded((v) => !v)} />
+				<ArtifactViewerClose onClick={() => setOpen(false)} />
 			</ArtifactViewerHeader>
 			<ArtifactViewerContent>
 				<ArtifactViewerPaper>

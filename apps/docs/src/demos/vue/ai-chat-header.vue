@@ -27,7 +27,7 @@ import { DropdownMenuItem } from "@edmi-vue/ui/dropdown-menu";
       <Button aria-label="Web access" size="icon-sm" type="button" variant="ghost">
         <GlobeIcon class="size-4" />
       </Button>
-      <Button size="sm" type="button" variant="ghost">
+      <Button aria-label="1 attached file" size="sm" type="button" variant="ghost">
         <FileTextIcon class="size-3.5" />
         1
       </Button>

@@ -16,7 +16,7 @@ import {
         <ChevronDown class="size-4" />
       </Button>
     </DropdownMenuTrigger>
-    <DropdownMenuContent>
+    <DropdownMenuContent align="start">
       <slot />
     </DropdownMenuContent>
   </DropdownMenu>

@@ -10,6 +10,9 @@
 		SessionSection,
 		SessionSource,
 	} from "@edmi-svelte/ai/session-panel";
+	import { Button } from "@edmi-svelte/ui/button";
+
+	let open = $state(true);
 
 	const favicons = [
 		{ label: "Jupiter", color: "#e5484d" },
@@ -18,8 +21,11 @@
 	];
 </script>
 
+{#if !open}
+	<Button size="sm" variant="outline" onclick={() => (open = true)}>Show session</Button>
+{:else}
 <SessionPanel>
-	<SessionProgress value={60} onClose={() => {}}>
+	<SessionProgress value={60} onClose={() => (open = false)}>
 		Reading the keeper config, then drafting the report.
 	</SessionProgress>
 	<SessionPanelDivider />
@@ -63,3 +69,4 @@
 		</SessionSource>
 	</SessionSection>
 </SessionPanel>
+{/if}

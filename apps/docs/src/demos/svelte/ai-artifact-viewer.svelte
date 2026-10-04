@@ -10,15 +10,22 @@
 		ArtifactViewerPaper,
 		ArtifactViewerTitle,
 	} from "@edmi-svelte/ai/artifact-viewer";
+	import { Button } from "@edmi-svelte/ui/button";
+
+	let open = $state(true);
+	let expanded = $state(false);
 </script>
 
-<ArtifactViewer class="w-full max-w-xl">
+{#if !open}
+	<Button size="sm" variant="outline" onclick={() => (open = true)}>Show artifact</Button>
+{:else}
+<ArtifactViewer class={expanded ? "w-full max-w-3xl" : "w-full max-w-xl"}>
 	<ArtifactViewerHeader>
 		<ArtifactViewerTitle format="PDF">Rebalance report</ArtifactViewerTitle>
 		<ArtifactViewerOpenIn />
 		<ArtifactViewerDownload />
-		<ArtifactViewerExpand />
-		<ArtifactViewerClose />
+		<ArtifactViewerExpand onclick={() => (expanded = !expanded)} />
+		<ArtifactViewerClose onclick={() => (open = false)} />
 	</ArtifactViewerHeader>
 	<ArtifactViewerContent>
 		<ArtifactViewerPaper>
@@ -36,3 +43,4 @@
 		</ArtifactViewerPaper>
 	</ArtifactViewerContent>
 </ArtifactViewer>
+{/if}

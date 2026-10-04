@@ -2,7 +2,7 @@
 import type { FlowEmits, FlowProps } from "@vue-flow/core"
 import { Background } from "@vue-flow/background"
 import { VueFlow } from "@vue-flow/core"
-import { useForwardPropsEmits } from "reka-ui"
+import { useForwardPropsEmits, useId } from "reka-ui"
 import { computed, useSlots } from "vue"
 import "@vue-flow/core/dist/style.css"
 
@@ -23,6 +23,9 @@ const slots = useSlots()
 const forwardedSlotNames = computed(() => Object.keys(slots).filter((n) => n !== "default"))
 // The FlowProps type is deep enough to hit TS2589 in the generic helper: widen it.
 const forwarded = useForwardPropsEmits(props as Record<string, unknown>, emits as any)
+// Vue Flow numbers its stores with a module counter, which differs between server and client (hydration
+// mismatch on the generated ids): a stable per-instance id keeps both sides equal.
+const flowId = useId()
 </script>
 
 <template>
@@ -32,7 +35,7 @@ const forwarded = useForwardPropsEmits(props as Record<string, unknown>, emits a
   -->
   <VueFlow
     data-slot="ai-canvas"
-    v-bind="{ ...$attrs, ...forwarded }"
+    v-bind="{ ...$attrs, ...forwarded, id: props.id ?? flowId }"
     class="bg-background"
   >
     <Background :gap="18" :size="1" pattern-color="var(--input)" bg-color="var(--background)" />

@@ -13,7 +13,7 @@ const { code } = useSnippetContext("SnippetInput")
 
 <template>
   <InputGroupInput
-    :class="cn('font-mono text-xs text-foreground', props.class)"
+    :class="cn('font-mono text-xs text-ellipsis text-foreground', props.class)"
     readonly
     :model-value="code"
   />

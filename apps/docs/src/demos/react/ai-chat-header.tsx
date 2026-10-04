@@ -38,7 +38,12 @@ export default function Demo() {
 						className="size-4"
 					/>
 				</Button>
-				<Button size="sm" type="button" variant="ghost">
+				<Button
+					aria-label="1 attached file"
+					size="sm"
+					type="button"
+					variant="ghost"
+				>
 					<IconPlaceholder
 						lucide="FileTextIcon"
 						tabler="IconFileDescription"

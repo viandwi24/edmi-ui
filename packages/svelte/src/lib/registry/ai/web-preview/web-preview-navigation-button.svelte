@@ -16,7 +16,7 @@
 		<Tooltip.Root>
 			<Tooltip.Trigger>
 				{#snippet child({ props })}
-					<Button {...props} {...restProps} {size} type="button" {variant}>
+					<Button {...props} aria-label={tooltip} {...restProps} {size} type="button" {variant}>
 						{@render children?.()}
 					</Button>
 				{/snippet}

@@ -88,7 +88,12 @@ const nodeTypes = {
 export default function Demo() {
 	return (
 		<div className="h-64 w-full overflow-hidden rounded-[calc(var(--radius)*1.4)] border border-border">
-			<Canvas edges={[]} nodes={nodes} nodeTypes={nodeTypes} />
+			<Canvas
+				edges={[]}
+				fitViewOptions={{ maxZoom: 1, padding: 0.4 }}
+				nodes={nodes}
+				nodeTypes={nodeTypes}
+			/>
 		</div>
 	);
 }

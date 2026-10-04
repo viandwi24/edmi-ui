@@ -28,7 +28,7 @@
 		<Button size="icon-xs" variant="ghost" aria-label="Delete"><Trash2Icon /></Button>
 	</Toolbar>
 {/if}
-<Node handles={data.handles} {selected} raised={data.raised}>
+<Node handles={data.handles} {selected} raised={data.raised} class={data.compact ? "w-40" : undefined}>
 	<NodeHeader class={data.compact ? "border-b-0" : undefined}>
 		<NodeTitle>{data.title}</NodeTitle>
 		{#if data.description}<NodeDescription>{data.description}</NodeDescription>{/if}
@@ -39,7 +39,11 @@
 				<Badge variant="success">{data.badges[0]}</Badge>
 				{#if data.badges[1]}<Badge variant="outline">{data.badges[1]}</Badge>{/if}
 			{:else}
-				<span class="font-mono text-xs">{data.body}</span>
+				{#if data.body === "cron 0 * * * *"}
+					<Badge variant="secondary">{data.body}</Badge>
+				{:else}
+					<span class="font-mono text-xs">{data.body}</span>
+				{/if}
 			{/if}
 		</NodeContent>
 	{/if}

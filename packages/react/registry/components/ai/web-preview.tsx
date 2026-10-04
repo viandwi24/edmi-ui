@@ -125,6 +125,7 @@ export const WebPreviewNavigationButton = ({
 }: WebPreviewNavigationButtonProps) => {
 	const button = (
 		<Button
+			aria-label={tooltip}
 			disabled={disabled}
 			onClick={onClick}
 			size="icon-sm"
