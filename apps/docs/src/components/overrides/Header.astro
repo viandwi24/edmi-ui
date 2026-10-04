@@ -28,6 +28,7 @@ const nav = [
 		{nav.map((n) => <a href={n.href} aria-current={n.active ? "page" : undefined}>{n.label}</a>)}
 	</nav>
 	<div class="edmi-nav-mobile"><MobileNav client:load items={nav} /></div>
+	<div class="edmi-header-slot" data-header-slot></div>
 	<div class="edmi-header-end">
 		<div class="edmi-search"><Search /></div>
 		<FrameworkSelect />

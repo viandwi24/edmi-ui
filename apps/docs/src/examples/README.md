@@ -18,8 +18,8 @@ src/examples/
 public/examples/<thumb>-{light,dark}.png     thumbnails, 800px wide, GENERATED from the live render (see "Thumbnails")
 ```
 
-Routes (static, generated from `index.ts`): `/examples/` (grid + tag filter), `/examples/<slug>/` (toolbar,
-resizable iframe, Code tab), `/examples/<slug>/render/<fw>/` (bare page rendered in the iframe; knobs by query
+Routes (static, generated from `index.ts`): `/examples/` (grid + tag filter), `/examples/<slug>/` (one screen: full-bleed
+iframe, floating header with the toolbar, Code drawer, Info popover), `/examples/<slug>/render/<fw>/` (bare page rendered in the iframe; knobs by query
 `?mode=&base=&theme=&radius=` and `postMessage`).
 
 ## Rules
@@ -77,10 +77,17 @@ elements are not captured).
 
 ## Viewer (`components/ExampleViewer.astro`)
 
-Toolbar: Preview/Code, mode/base/theme/radius knobs, framework, viewport presets, zoom, full page, Open.
+One screen (100dvh, no page scroll): the preview iframe fills the viewport and the docs header becomes a floating
+rounded bar (solid `--popover`, 1px border; only on this page). The viewer script moves its toolbar into the header
+slot (`data-header-slot` in `overrides/Header.astro`): example name + tag, then mode/base/theme/radius knobs,
+viewport presets, zoom and the width readout, framework, Code, Info, Open, hide-bar. Below 100rem the knobs, presets
+and zoom collapse into a "Controls" dropdown; below 62rem the header wraps the toolbar into a second row; below 40rem
+buttons are icon-only and the framework select moves into Controls.
 - **Zoom** (50, 67, 75, 90, 100, 110, 125, 150 %): `--z` on the frame scales the iframe with a CSS transform
   while the iframe keeps its logical width (`visual / zoom`), so a preset (390, 820) keeps its breakpoints and
-  only the visual size changes; responsive mode behaves like browser zoom. Ctrl/Cmd + `=`, `-`, `0` work only
-  while focus is inside the viewer.
-- **Full page**: the card becomes a fixed overlay (z-index above Starlight), body scroll locked, exit with the
-  button or Esc. The state is not persisted.
+  only the visual size changes; responsive mode behaves like browser zoom. Ctrl/Cmd + `=`, `-`, `0` zoom the preview.
+- **Code**: a drawer over the right side of the preview (framework file tabs). **Info**: popover with description,
+  board, tag and the registry items used (moved out of the page body).
+- **Hide bar** (replaces "full page"): hides the floating header; Esc (or the small restore button top right)
+  brings it back. Esc first closes an open Controls/Info/Code panel. Nothing is persisted.
+- The drag handle appears only while the frame is narrower than the stage (after choosing Tablet/Mobile).

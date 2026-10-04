@@ -1,6 +1,7 @@
 ---
-// Example page body: toolbar (mode / base / theme / radius / framework / viewport), a resizable iframe that
-// loads the bare render route, and a Code tab (Shiki via Starlight <Code>) with the example's sources.
+// Example page body (one screen): a full-bleed iframe that loads the bare render route. The toolbar (mode / base /
+// theme / radius / framework / viewport / zoom / Code / Info / Open / hide) is moved by the script into the floating
+// docs header; Code is a drawer over the preview and Info a popover (Shiki via Starlight <Code>).
 import { Code } from "@astrojs/starlight/components";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -41,7 +42,6 @@ for (const fw of example.frameworks) {
 			code: rewriteImports(fw, readFileSync(resolve(dir, f), "utf8")),
 		}));
 }
-const frame = example.height ?? 760;
 const renderBase = `${BASE}/examples/${example.slug}/render`;
 ---
 
@@ -53,15 +53,53 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 	data-default-mode={example.defaultMode}
 	data-default-base={example.defaultBase}
 	data-default-theme={example.defaultTheme}
-	style={`--ex-h:${frame}px`}
 >
-	<div class="edmi-ex-card">
-		<div class="edmi-ex-bar">
-			<div class="edmi-seg" role="tablist" aria-label="View">
-				<button type="button" role="tab" data-view-tab="preview">Preview</button>
-				<button type="button" role="tab" data-view-tab="code">Code</button>
-			</div>
-			<div class="edmi-ex-knobs" data-preview-only>
+	<!-- The bar is moved into the floating docs header (slot `data-header-slot`) by the script below. -->
+	<div class="edmi-ex-bar" data-bar>
+		<div class="edmi-ex-title">
+			<span class="edmi-ex-name" title={example.title}>{example.title}</span>
+			<span class="edmi-ex-tag">{example.tag}</span>
+		</div>
+		<div class="edmi-ex-actions">
+			<button type="button" class="edmi-ex-btn edmi-ex-tools-toggle" data-panel-toggle="tools" aria-expanded="false" aria-haspopup="true">
+				<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"></path><circle cx="16" cy="6" r="2"></circle><circle cx="10" cy="12" r="2"></circle><circle cx="18" cy="18" r="2"></circle></svg>
+				<span>Controls</span>
+			</button>
+			<label class="edmi-ex-select edmi-ex-fw" title="Framework (shared across the site)">
+				<span class="sr-only">Framework</span>
+				<select data-framework-select aria-label="Framework">
+					{FRAMEWORKS.filter((f) => example.frameworks.includes(f)).map((fw) => (
+						<option value={fw}>{FRAMEWORK_LABEL[fw]}</option>
+					))}
+				</select>
+			</label>
+			<button type="button" class="edmi-ex-btn" data-panel-toggle="code" aria-expanded="false" aria-controls="edmi-ex-code">
+				<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"></path></svg>
+				<span>Code</span>
+			</button>
+			<button type="button" class="edmi-ex-btn" data-panel-toggle="info" aria-expanded="false" aria-haspopup="true" aria-label="About this example">
+				<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h0"></path></svg>
+				<span class="edmi-ex-lbl">Info</span>
+			</button>
+			<a class="edmi-ex-btn" data-open href="#" target="_blank" rel="noopener" title="Open the bare render route in a new tab">
+				<span class="edmi-ex-lbl">Open</span>
+				<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M7 17 17 7M8 7h9v9"></path></svg>
+			</a>
+			<button type="button" class="edmi-ex-btn edmi-ex-icon" data-chrome-hide aria-label="Hide the top bar" title="Hide the top bar (Esc restores it)">
+				<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"></path></svg>
+			</button>
+		</div>
+
+		<div class="edmi-ex-panel edmi-ex-tools" data-panel="tools" hidden>
+			<div class="edmi-ex-group">
+				<label class="edmi-ex-select edmi-ex-fw-mobile">
+					<span>Framework</span>
+					<select data-framework-select aria-label="Framework">
+						{FRAMEWORKS.filter((f) => example.frameworks.includes(f)).map((fw) => (
+							<option value={fw}>{FRAMEWORK_LABEL[fw]}</option>
+						))}
+					</select>
+				</label>
 				<div class="edmi-seg edmi-seg-sm" role="group" aria-label="Mode">
 					<button type="button" data-knob="mode" data-value="light">Light</button>
 					<button type="button" data-knob="mode" data-value="dark">Dark</button>
@@ -85,174 +123,230 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 					</select>
 				</label>
 			</div>
-			<div class="edmi-ex-end">
-				<label class="edmi-ex-select" title="Framework (shared across the site)">
-					<span class="sr-only">Framework</span>
-					<select data-framework-select aria-label="Framework">
-						{FRAMEWORKS.filter((f) => example.frameworks.includes(f)).map((fw) => (
-							<option value={fw}>{FRAMEWORK_LABEL[fw]}</option>
-						))}
-					</select>
-				</label>
-				<div class="edmi-seg edmi-seg-sm" role="group" aria-label="Viewport" data-preview-only>
+			<div class="edmi-ex-group">
+				<div class="edmi-seg edmi-seg-sm" role="group" aria-label="Viewport">
 					<button type="button" data-viewport="100%" aria-label="Desktop" title="Desktop">
-						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8M12 16v4"></path></svg>
+						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8M12 16v4"></path></svg>
 					</button>
 					<button type="button" data-viewport="820" aria-label="Tablet" title="Tablet (820px)">
-						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M11 18h2"></path></svg>
+						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M11 18h2"></path></svg>
 					</button>
 					<button type="button" data-viewport="390" aria-label="Mobile" title="Mobile (390px)">
-						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"></rect><path d="M11 18h2"></path></svg>
+						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><rect x="7" y="2" width="10" height="20" rx="2"></rect><path d="M11 18h2"></path></svg>
 					</button>
 				</div>
-				<div class="edmi-seg edmi-seg-sm edmi-ex-zoom" role="group" aria-label="Zoom" data-preview-only>
-					<button type="button" data-zoom="out" aria-label="Zoom out" title="Zoom out (Ctrl/Cmd −)">
-						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path></svg>
+				<div class="edmi-seg edmi-seg-sm edmi-ex-zoom" role="group" aria-label="Zoom">
+					<button type="button" data-zoom="out" aria-label="Zoom out" title="Zoom out (Ctrl/Cmd -)">
+						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M5 12h14"></path></svg>
 					</button>
 					<output class="edmi-ex-zoom-value" data-zoom-label aria-live="polite" title="Current zoom">100%</output>
 					<button type="button" data-zoom="in" aria-label="Zoom in" title="Zoom in (Ctrl/Cmd +)">
-						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5v14"></path></svg>
+						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M5 12h14M12 5v14"></path></svg>
 					</button>
 					<button type="button" data-zoom="reset" aria-label="Reset zoom to 100%" title="Reset zoom (Ctrl/Cmd 0)">
-						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>
+						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>
 					</button>
 				</div>
-				<button type="button" class="edmi-ex-full" data-full aria-pressed="false" aria-label="Full page" title="Full page (Esc to exit)">
-					<svg data-full-on viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"></path></svg>
-					<svg data-full-off viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"></path></svg>
-					<span class="sr-only" data-full-text>Full page</span>
-				</button>
-				<a class="edmi-ex-open" data-open href="#" target="_blank" rel="noopener" title="Open the bare render route in a new tab" data-preview-only>
-					Open ↗
-				</a>
+				<span class="edmi-ex-width" data-width-label>Responsive</span>
 			</div>
 		</div>
 
-		<div data-view="preview">
-			<div class="edmi-ex-stage" data-stage>
-				<div class="edmi-ex-frame" data-frame style="width:100%">
-					<iframe data-iframe title={`${example.title} preview`} loading="lazy"></iframe>
-					<div class="edmi-ex-shield" data-shield></div>
-					<div class="edmi-ex-handle" data-handle role="separator" aria-orientation="vertical" aria-label="Resize preview" title="Drag to resize"></div>
-				</div>
-			</div>
-			<div class="edmi-ex-foot">
-				<span data-width-label>Responsive</span>
-			</div>
-		</div>
-
-		<div data-view="code" hidden>
-			{
-				example.frameworks.map((fw) => (
-					<div data-fw-panel={fw}>
-						<div class="edmi-ex-files" role="tablist" aria-label="Files">
-							{sources[fw].map((f, i) => (
-								<button type="button" role="tab" data-file-tab={`${fw}:${f.name}`} aria-selected={i === 0}>
-									{f.name}
-								</button>
-							))}
-						</div>
-						{sources[fw].map((f, i) => (
-							<div data-file={`${fw}:${f.name}`} hidden={i !== 0}>
-								<Code code={f.code} lang={f.name.endsWith(".ts") ? "ts" : CODE_LANG[fw]} title={f.name} />
-							</div>
-						))}
-					</div>
-				))
-			}
+		<div class="edmi-ex-panel edmi-ex-info" data-panel="info" hidden>
+			<p class="edmi-ex-info-meta"><a href={`${BASE}/examples/`}>Examples</a> · {example.tag} · board {example.board}</p>
+			<p class="edmi-ex-info-desc">{example.description}</p>
+			<p class="edmi-ex-info-uses">
+				Built only from registry items: {example.uses.join(", ")}. Switch the framework to see the same
+				example in React, Vue or Svelte.
+			</p>
 		</div>
 	</div>
+
+	<button type="button" class="edmi-ex-restore" data-chrome-show aria-label="Show the top bar" title="Show the top bar (Esc)">
+		<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"></path></svg>
+	</button>
+
+	<div class="edmi-ex-stage" data-stage>
+		<div class="edmi-ex-frame" data-frame style="width:100%">
+			<iframe data-iframe title={`${example.title} preview`} loading="lazy"></iframe>
+			<div class="edmi-ex-shield" data-shield></div>
+			<div class="edmi-ex-handle" data-handle role="separator" aria-orientation="vertical" aria-label="Resize preview" title="Drag to resize"></div>
+		</div>
+	</div>
+
+	<aside class="edmi-ex-code" id="edmi-ex-code" data-panel="code" aria-label="Example source" hidden>
+		{
+			example.frameworks.map((fw) => (
+				<div data-fw-panel={fw} class="edmi-ex-code-fw">
+					<div class="edmi-ex-files" role="tablist" aria-label="Files">
+						{sources[fw].map((f, i) => (
+							<button type="button" role="tab" data-file-tab={`${fw}:${f.name}`} aria-selected={i === 0}>
+								{f.name}
+							</button>
+						))}
+					</div>
+					{sources[fw].map((f, i) => (
+						<div data-file={`${fw}:${f.name}`} hidden={i !== 0}>
+							<Code code={f.code} lang={f.name.endsWith(".ts") ? "ts" : CODE_LANG[fw]} title={f.name} />
+						</div>
+					))}
+				</div>
+			))
+		}
+	</aside>
 </div>
 
 <style is:global>
-	.edmi-ex { margin: 0 0 1.5rem; }
-	.edmi-ex-card { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: var(--card); }
-	.edmi-ex-bar {
-		display: flex; align-items: center; gap: .5rem .875rem; flex-wrap: wrap;
-		padding: .5rem .625rem; border-bottom: 1px solid var(--border); background: var(--card);
-	}
-	.edmi-ex-knobs { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
-	.edmi-ex-end { display: flex; align-items: center; gap: .5rem; margin-left: auto; flex-wrap: wrap; }
-	.edmi-ex .edmi-seg button { padding: .32rem .7rem; display: inline-flex; align-items: center; justify-content: center; }
-	.edmi-ex .edmi-seg-sm button { padding: .32rem .55rem; font-size: 12px; }
-	.edmi-ex .edmi-seg button[aria-pressed="true"] { background: var(--tab-active); border-color: var(--border); color: var(--foreground); }
+	/* One-screen viewer: fixed overlay under the (floating) docs header; the header hosts the toolbar through its slot. */
+	html:root:has(.edmi-ex) { overflow: hidden; }
+	.edmi-ex { --ex-top: 4.75rem; position: fixed; inset: 0; z-index: 5; background: var(--background); }
+	html[data-ex-chrome="hidden"] .edmi-ex { --ex-top: 0.5rem; }
+	/* the docs main-pane is an isolated stacking context below the header: lift it so the viewer can sit under the header but above the page */
+	.main-pane:has(.edmi-ex) { isolation: auto !important; }
 
-	.edmi-ex-select { position: relative; display: inline-flex; align-items: center; gap: .375rem; font: 500 11px/1 var(--sl-font-mono); text-transform: uppercase; letter-spacing: .05em; color: var(--muted-foreground); }
+	/* docs header becomes a floating rounded bar on this page only */
+	html:has(.edmi-ex) .page > header.header {
+		top: 0.5rem; inset-inline: 0.5rem; width: auto; height: auto; z-index: 20;
+		padding: 0.25rem 0.625rem; background-color: var(--popover);
+		border: 1px solid var(--border); border-radius: 14px;
+	}
+	html:has(.edmi-ex)[data-ex-chrome="hidden"] .page > header.header { display: none; }
+	html:has(.edmi-ex) .edmi-header { height: auto; min-height: 2.75rem; flex-wrap: wrap; gap: 0.5rem 0.75rem; }
+	html:has(.edmi-ex) .edmi-nav { display: none; }
+	html:has(.edmi-ex) .edmi-nav-mobile { display: block; }
+	html:has(.edmi-ex) .edmi-header-end .edmi-fw-select,
+	html:has(.edmi-ex) .edmi-header-end .edmi-header-icons > :not(:last-child) { display: none; }
+	html:has(.edmi-ex) .edmi-search { width: auto; }
+	html:has(.edmi-ex) site-search button[data-open-modal] { width: 34px; padding: 0; justify-content: center; }
+	html:has(.edmi-ex) site-search button[data-open-modal] > kbd,
+	html:has(.edmi-ex) site-search button[data-open-modal] > :not(svg):not(kbd) { display: none; }
+	html:has(.edmi-ex) .edmi-header-slot { flex: 1 1 100%; order: 3; min-width: 0; display: flex; }
+	html:has(.edmi-ex) .edmi-header-end { order: 2; margin-inline-start: auto; }
+	@media (min-width: 62rem) {
+		html:has(.edmi-ex) .edmi-header { flex-wrap: nowrap; }
+		html:has(.edmi-ex) .edmi-header-slot { flex: 1 1 auto; order: 0; }
+		html:has(.edmi-ex) .edmi-header-end { order: 0; margin-inline-start: 0; }
+	}
+	.edmi-header-slot:empty { display: none; }
+
+	.edmi-ex-bar { display: flex; align-items: center; gap: 0.75rem; flex: 1; min-width: 0; }
+	.edmi-ex-title { display: flex; align-items: center; gap: 0.5rem; min-width: 0; flex: 1; }
+	.edmi-ex-name { font-size: 0.875rem; font-weight: 500; color: var(--foreground); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+	.edmi-ex-tag { flex: none; font: 500 11px/1 var(--sl-font-mono); text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); border: 1px solid var(--border); border-radius: 999px; padding: 0.2rem 0.5rem; }
+	.edmi-ex-actions { display: flex; align-items: center; gap: 0.375rem; flex: none; margin-inline-start: auto; }
+	.edmi-ex-btn {
+		display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem; height: 30px; padding: 0 0.6rem; border-radius: 7px; cursor: pointer; text-decoration: none;
+		font: 500 12.5px/1 var(--sl-font); color: var(--muted-foreground); background: transparent; border: 1px solid transparent;
+	}
+	.edmi-ex-btn:hover { background: var(--accent); color: var(--foreground); }
+	.edmi-ex-btn[aria-expanded="true"] { background: var(--tab-active); border-color: var(--border); color: var(--foreground); }
+	.edmi-ex-icon { width: 30px; padding: 0; }
+	.edmi-ex-tools-toggle { display: inline-flex; }
+
+	/* tools: a dropdown panel below the bar; inline on wide screens */
+	.edmi-ex-panel {
+		position: absolute; top: calc(100% + 0.5rem); right: 0; z-index: 30; width: min(30rem, 100%);
+		background: var(--popover); border: 1px solid var(--border); border-radius: 14px; padding: 0.75rem;
+		box-shadow: var(--bv-float);
+	}
+	.edmi-ex-panel[hidden] { display: none; }
+	.edmi-ex-tools { display: flex; flex-direction: column; gap: 0.625rem; }
+	.edmi-ex-group { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+	.edmi-ex-width { font: 500 11.5px/1 var(--sl-font-mono); color: var(--muted-foreground); }
+	@media (min-width: 100rem) {
+		.edmi-ex-tools-toggle { display: none; }
+		.edmi-ex-tools, .edmi-ex-tools[hidden] { position: static; display: flex; flex-direction: row; align-items: center; gap: 0.75rem; width: auto; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; order: -1; }
+		.edmi-ex-bar { flex-wrap: nowrap; }
+		.edmi-ex-bar > .edmi-ex-title { flex: 0 1 auto; }
+		.edmi-ex-bar > .edmi-ex-tools { margin-inline-start: auto; }
+		.edmi-ex-bar > .edmi-ex-actions { margin-inline-start: 0; }
+		.edmi-ex-tools { order: 2; }
+		.edmi-ex-actions { order: 3; }
+	}
+	.edmi-ex-info { width: min(26rem, 100%); }
+	.edmi-ex-info p { margin: 0; font-size: 0.8125rem; line-height: 1.55; color: var(--muted-foreground); }
+	.edmi-ex-info p + p { margin-top: 0.5rem; }
+	.edmi-ex-info .edmi-ex-info-desc { color: var(--foreground); font-size: 0.875rem; }
+	.edmi-ex-info a { color: var(--foreground); }
+
+	.edmi-ex .edmi-seg button, .edmi-header-slot .edmi-seg button { padding: 0.32rem 0.7rem; display: inline-flex; align-items: center; justify-content: center; }
+	.edmi-header-slot .edmi-seg-sm button { padding: 0.32rem 0.55rem; font-size: 12px; }
+	.edmi-header-slot .edmi-seg button[aria-pressed="true"] { background: var(--tab-active); border-color: var(--border); color: var(--foreground); }
+	.edmi-ex-select { position: relative; display: inline-flex; align-items: center; gap: 0.375rem; font: 500 11px/1 var(--sl-font-mono); text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); }
 	.edmi-ex-select select {
-		appearance: auto; height: 28px; padding: 0 .4rem; font: 500 12.5px/1 var(--sl-font); text-transform: capitalize;
+		appearance: auto; height: 28px; padding: 0 0.4rem; font: 500 12.5px/1 var(--sl-font); text-transform: capitalize;
 		color: var(--foreground); background: var(--secondary); border: 1px solid var(--input); border-radius: 7px; cursor: pointer;
 	}
 	.edmi-ex-select select:hover { background: var(--accent); }
-	.edmi-ex-zoom { align-items: center; }
-	.edmi-ex .edmi-ex-zoom button[disabled] { opacity: .4; cursor: default; }
+	.edmi-header-slot .edmi-ex-zoom button[disabled] { opacity: 0.4; cursor: default; }
 	.edmi-ex-zoom-value { min-width: 3.1em; text-align: center; font: 500 12px/1 var(--sl-font-mono); color: var(--foreground); }
-	.edmi-ex-full {
-		display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; padding: 0; border-radius: 7px; cursor: pointer;
-		color: var(--muted-foreground); background: transparent; border: 1px solid transparent;
+
+	.edmi-ex-restore {
+		position: absolute; top: 0.5rem; right: 0.5rem; z-index: 7; display: none; align-items: center; justify-content: center; width: 32px; height: 32px; padding: 0;
+		border-radius: 9px; cursor: pointer; color: var(--foreground); background: var(--popover); border: 1px solid var(--border);
 	}
-	.edmi-ex-full:hover { background: var(--accent); color: var(--foreground); }
-	.edmi-ex-full[aria-pressed="true"] { background: var(--tab-active); border-color: var(--border); color: var(--foreground); }
-	.edmi-ex-full svg[data-full-off], .edmi-ex-full[aria-pressed="true"] svg[data-full-on] { display: none; }
-	.edmi-ex-full[aria-pressed="true"] svg[data-full-off] { display: block; }
-	/* Full page: the card becomes a fixed overlay above the Starlight chrome; toolbar on top, stage fills the rest. */
-	.edmi-ex[data-full] .edmi-ex-card {
-		position: fixed; inset: 0; z-index: 10000; display: flex; flex-direction: column; border: 0; border-radius: 0;
-	}
-	.edmi-ex[data-full] .edmi-ex-bar { flex: none; }
-	.edmi-ex[data-full] [data-view="preview"] { flex: 1; min-height: 0; display: flex; flex-direction: column; }
-	.edmi-ex[data-full] .edmi-ex-stage { flex: 1; min-height: 0; }
-	.edmi-ex[data-full] .edmi-ex-frame { height: auto; align-self: stretch; }
-	.edmi-ex[data-full] [data-view="code"] { flex: 1; min-height: 0; overflow: auto; }
-	.edmi-ex[data-full] .edmi-ex-card .expressive-code .frame pre { max-height: none; }
-	.edmi-ex-open {
-		display: inline-flex; align-items: center; height: 28px; padding: 0 .6rem; border-radius: 7px; text-decoration: none;
-		font: 500 12px/1 var(--sl-font); color: var(--muted-foreground); border: 1px solid transparent;
-	}
-	.edmi-ex-open:hover { background: var(--accent); color: var(--foreground); }
+	html[data-ex-chrome="hidden"] .edmi-ex-restore { display: inline-flex; }
 
 	.edmi-ex-stage {
-		padding: 1rem; display: flex; justify-content: flex-start; overflow-x: auto; overflow-y: hidden; background-color: var(--stage);
+		position: absolute; inset: 0; padding: var(--ex-top) 0.5rem 0.5rem; display: flex; justify-content: flex-start; overflow-x: auto; overflow-y: hidden; background-color: var(--stage);
 		background-image: radial-gradient(color-mix(in oklab, var(--foreground) 16%, transparent) 1px, transparent 1.2px); background-size: 16px 16px;
 	}
-	.edmi-ex-frame { --z: 1; position: relative; flex: none; margin: 0 auto; max-width: 100%; min-width: 280px; height: max(var(--ex-h), 72vh); border: 1px solid var(--border); border-radius: 10px; background: var(--background); }
-	.edmi-ex-frame { overflow: hidden; }
-	/* Zoom: the iframe keeps its LOGICAL size (visual size / zoom), so media queries see the preset width; the transform scales it back to the frame. */
+	.edmi-ex-frame { --z: 1; position: relative; flex: none; margin: 0 auto; max-width: 100%; min-width: 280px; height: 100%; border: 1px solid var(--border); border-radius: 12px; background: var(--background); overflow: hidden; }
 	.edmi-ex-frame iframe { position: absolute; top: 0; left: 0; display: block; width: calc(100% / var(--z)); height: calc(100% / var(--z)); transform: scale(var(--z)); transform-origin: 0 0; border: 0; border-radius: 0; background: var(--background); }
+	.edmi-ex-frame { overflow: visible; }
+	.edmi-ex-frame iframe { border-radius: 11px; clip-path: inset(0 round 11px); }
 	.edmi-ex-shield { display: none; position: absolute; inset: 0; z-index: 2; }
 	.edmi-ex[data-dragging] .edmi-ex-shield { display: block; }
 	.edmi-ex[data-dragging] { user-select: none; cursor: ew-resize; }
-	.edmi-ex-handle {
-		position: absolute; top: 50%; right: -14px; width: 8px; height: 56px; margin-top: -28px; border-radius: 4px;
-		background: var(--border); cursor: ew-resize; touch-action: none; z-index: 3;
-	}
+	.edmi-ex-handle { display: none; position: absolute; top: 50%; right: -14px; width: 8px; height: 56px; margin-top: -28px; border-radius: 4px; background: var(--border); cursor: ew-resize; touch-action: none; z-index: 3; }
+	.edmi-ex[data-limited] .edmi-ex-handle { display: block; }
 	.edmi-ex-handle:hover, .edmi-ex[data-dragging] .edmi-ex-handle { background: var(--muted-foreground); }
-	.edmi-ex-foot { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding: .5rem .875rem; font-size: .75rem; color: var(--muted-foreground); border-top: 1px solid var(--border); background: var(--card); }
-	.edmi-ex-foot [data-width-label] { font-family: var(--sl-font-mono); }
-	.edmi-ex-foot code { font-size: .7rem; }
+	html[data-ex-chrome="hidden"] .edmi-ex-frame { border-radius: 0; }
 
-	.edmi-ex-files { display: flex; gap: 2px; flex-wrap: wrap; padding: .375rem .5rem; border-bottom: 1px solid var(--border); background: var(--muted); }
+	/* Code: a drawer over the right side of the preview */
+	.edmi-ex-code {
+		position: absolute; z-index: 6; top: var(--ex-top); right: 0.5rem; bottom: 0.5rem; width: min(56rem, calc(100% - 1rem));
+		display: flex; flex-direction: column; overflow: hidden; background: var(--card); border: 1px solid var(--border); border-radius: 14px; box-shadow: var(--bv-float);
+	}
+	.edmi-ex-code[hidden] { display: none; }
+	.edmi-ex-code-fw { display: flex; flex-direction: column; min-height: 0; flex: 1; }
+	.edmi-ex-code-fw > [data-file] { flex: 1; min-height: 0; overflow: auto; }
+	.edmi-ex-files { display: flex; gap: 2px; flex-wrap: wrap; padding: 0.375rem 0.5rem; border-bottom: 1px solid var(--border); background: var(--muted); }
 	.edmi-ex-files button {
-		font: 500 12px/1 var(--sl-font-mono); padding: .35rem .6rem; border-radius: 6px; cursor: pointer;
+		font: 500 12px/1 var(--sl-font-mono); padding: 0.35rem 0.6rem; border-radius: 6px; cursor: pointer;
 		border: 1px solid transparent; background: transparent; color: var(--muted-foreground);
 	}
 	.edmi-ex-files button[aria-selected="true"] { background: var(--tab-active); border-color: var(--border); color: var(--foreground); }
-	.edmi-ex-card .expressive-code { margin: 0; }
-	.edmi-ex-card .expressive-code .frame { border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
-	.edmi-ex-card .expressive-code .frame pre { border: 0 !important; border-radius: 0 !important; max-height: 70vh; }
-	.edmi-ex-card .expressive-code .frame .header { border-radius: 0 !important; }
-	.edmi-ex [data-view][hidden], .edmi-ex[data-full] [data-view][hidden] { display: none; }
-	.edmi-ex [data-preview-only][hidden] { display: none; }
-	@media (max-width: 40rem) {
-		.edmi-ex-end { margin-left: 0; }
-		.edmi-ex-handle { display: none; }
+	.edmi-ex-code .expressive-code { margin: 0; }
+	.edmi-ex-code .expressive-code .frame { border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
+	.edmi-ex-code .expressive-code .frame pre { border: 0 !important; border-radius: 0 !important; max-height: none; }
+	.edmi-ex-code .expressive-code .frame .header { border-radius: 0 !important; }
+	.edmi-ex [data-fw-panel] { }
+	@media (max-width: 61.99rem) {
+		.edmi-ex-lbl { display: none; }
+		.edmi-ex-handle { display: none !important; }
+	}
+	.edmi-ex-fw-mobile { display: none; }
+	@media (max-width: 39.99rem) {
+		.edmi-ex-fw { display: none; }
+		.edmi-ex-fw-mobile { display: inline-flex; }
+		.edmi-ex-btn span { display: none; }
+		.edmi-ex-tag { display: none; }
+		html:has(.edmi-ex) .edmi-wordmark { display: none; }
+		.edmi-ex-actions { gap: 0.25rem; }
 	}
 </style>
-
 <script>
 	type State = { mode: string; base: string; theme: string; radius: string };
 
 	for (const root of document.querySelectorAll<HTMLElement>("[data-example]")) {
-		const q = <T extends HTMLElement>(s: string) => root.querySelector<T>(s)!;
+		// Move the toolbar into the floating docs header (its panels are positioned against the header).
+		const bar = root.querySelector<HTMLElement>("[data-bar]")!;
+		const slot = document.querySelector<HTMLElement>("[data-header-slot]");
+		if (slot) slot.append(bar);
+		// everything below is looked up document-wide because the bar no longer lives inside `root`
+		const q = <T extends HTMLElement>(s: string) => document.querySelector<T>(s)!;
+		const qa = <T extends HTMLElement>(s: string) => [...document.querySelectorAll<T>(s)];
+		const html = document.documentElement;
 		const iframe = q<HTMLIFrameElement>("[data-iframe]");
 		const frame = q("[data-frame]");
 		const stage = q("[data-stage]");
@@ -262,42 +356,88 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 		const renderBase = root.dataset.renderBase!;
 
 		const state: State = {
-			mode:
-				root.dataset.defaultMode ?? (document.documentElement.classList.contains("dark") ? "dark" : "light"),
+			mode: root.dataset.defaultMode ?? (html.classList.contains("dark") ? "dark" : "light"),
 			base: root.dataset.defaultBase ?? "stone",
 			theme: root.dataset.defaultTheme ?? "green",
 			radius: "0.625",
 		};
 
-		// ---- view tabs (preview | code)
-		const views = [...root.querySelectorAll<HTMLElement>("[data-view-tab]")];
-		const showView = (id: string) => {
-			for (const t of views) t.setAttribute("aria-selected", String(t.dataset.viewTab === id));
-			for (const c of root.querySelectorAll<HTMLElement>("[data-view]")) c.hidden = c.dataset.view !== id;
-			for (const c of root.querySelectorAll<HTMLElement>("[data-preview-only]")) c.hidden = id !== "preview";
+		// ---- panels: tools / info (popovers under the bar) and code (drawer over the preview). One open at a time.
+		const panels = ["tools", "info", "code"];
+		const panel = (id: string) => document.querySelector<HTMLElement>(`[data-panel="${id}"]`)!;
+		const setPanel = (id: string | null) => {
+			for (const p of panels) {
+				const on = p === id;
+				panel(p).hidden = !on;
+				for (const t of qa(`[data-panel-toggle="${p}"]`)) t.setAttribute("aria-expanded", String(on));
+			}
 		};
-		for (const t of views) t.addEventListener("click", () => showView(t.dataset.viewTab!));
-		showView("preview");
+		const openPanel = () => panels.find((p) => !panel(p).hidden) ?? null;
+		for (const t of qa("[data-panel-toggle]"))
+			t.addEventListener("click", (e) => {
+				e.stopPropagation();
+				const id = t.dataset.panelToggle!;
+				setPanel(openPanel() === id ? null : id);
+			});
+		// clicks inside the viewer's own popovers keep them open; elsewhere (not the preview iframe: focus) closes tools/info
+		document.addEventListener("click", (e) => {
+			const target = e.target as Node;
+			const cur = openPanel();
+			if (!cur || cur === "code") return;
+			if (!panel(cur).contains(target)) setPanel(null);
+		});
+		window.addEventListener("blur", () => {
+			// focus moved into the iframe (a click inside the preview)
+			if (document.activeElement === iframe && openPanel() && openPanel() !== "code") setPanel(null);
+		});
+		setPanel(null);
+
+		// ---- hide / show the top bar (not persisted); Esc closes a panel first, then restores the bar
+		const setChrome = (hidden: boolean) => {
+			if (hidden) {
+				setPanel(null);
+				html.dataset.exChrome = "hidden";
+			} else delete html.dataset.exChrome;
+			measure();
+		};
+		q("[data-chrome-hide]").addEventListener("click", () => setChrome(true));
+		q("[data-chrome-show]").addEventListener("click", () => setChrome(false));
+		document.addEventListener("keydown", (e) => {
+			if (e.key !== "Escape") return;
+			if (openPanel()) {
+				setPanel(null);
+				e.preventDefault();
+			} else if (html.dataset.exChrome === "hidden") {
+				setChrome(false);
+				e.preventDefault();
+			}
+		});
+		// the stage starts below the floating bar, whatever height it wraps to
+		const header = document.querySelector<HTMLElement>("header.header");
+		const measure = () => {
+			const hidden = html.dataset.exChrome === "hidden";
+			root.style.setProperty("--ex-top", hidden || !header ? "0.5rem" : `${Math.round(header.getBoundingClientRect().bottom + 8)}px`);
+		};
+		if (header) new ResizeObserver(measure).observe(header);
+		window.addEventListener("resize", measure);
+		measure();
 
 		// ---- code file tabs
-		for (const tab of root.querySelectorAll<HTMLElement>("[data-file-tab]")) {
+		for (const tab of qa("[data-file-tab]")) {
 			tab.addEventListener("click", () => {
 				const [fw] = tab.dataset.fileTab!.split(":");
-				for (const t of root.querySelectorAll<HTMLElement>(`[data-file-tab^="${fw}:"]`))
-					t.setAttribute("aria-selected", String(t === tab));
-				for (const f of root.querySelectorAll<HTMLElement>(`[data-file^="${fw}:"]`))
-					f.hidden = f.dataset.file !== tab.dataset.fileTab;
+				for (const t of qa(`[data-file-tab^="${fw}:"]`)) t.setAttribute("aria-selected", String(t === tab));
+				for (const f of qa(`[data-file^="${fw}:"]`)) f.hidden = f.dataset.file !== tab.dataset.fileTab;
 			});
 		}
 
 		// ---- iframe: framework picks the route, the knobs travel as query + postMessage
 		const fw = () => {
-			const cur = document.documentElement.dataset.fw ?? "react";
+			const cur = html.dataset.fw ?? "react";
 			return supported.includes(cur) ? cur : supported[0];
 		};
 		const query = () => new URLSearchParams({ ...state }).toString();
-		const post = () =>
-			iframe.contentWindow?.postMessage({ type: "edmi-example", state: { ...state } }, "*");
+		const post = () => iframe.contentWindow?.postMessage({ type: "edmi-example", state: { ...state } }, "*");
 		let loadedFw = "";
 		const load = () => {
 			const f = fw();
@@ -311,26 +451,25 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 			if (e.source === iframe.contentWindow && e.data?.type === "edmi-example-ready") post();
 		});
 		window.addEventListener("edmi-framework", () => load());
-		new MutationObserver(load).observe(document.documentElement, { attributes: true, attributeFilter: ["data-fw"] });
+		new MutationObserver(load).observe(html, { attributes: true, attributeFilter: ["data-fw"] });
 
 		// ---- knobs
 		const paintKnobs = () => {
-			for (const b of root.querySelectorAll<HTMLElement>("[data-knob]"))
+			for (const b of qa("[data-knob]"))
 				b.setAttribute("aria-pressed", String(state[b.dataset.knob as keyof State] === b.dataset.value));
-			for (const s of root.querySelectorAll<HTMLSelectElement>("[data-knob-select]"))
-				s.value = state[s.dataset.knobSelect as keyof State];
+			for (const s of qa<HTMLSelectElement>("[data-knob-select]")) s.value = state[s.dataset.knobSelect as keyof State];
 		};
 		const changed = () => {
 			paintKnobs();
 			post();
 			open.href = `${renderBase}/${fw()}/?${query()}`;
 		};
-		for (const b of root.querySelectorAll<HTMLElement>("[data-knob]"))
+		for (const b of qa("[data-knob]"))
 			b.addEventListener("click", () => {
 				state[b.dataset.knob as keyof State] = b.dataset.value!;
 				changed();
 			});
-		for (const s of root.querySelectorAll<HTMLSelectElement>("[data-knob-select]"))
+		for (const s of qa<HTMLSelectElement>("[data-knob-select]"))
 			s.addEventListener("change", () => {
 				state[s.dataset.knobSelect as keyof State] = s.value;
 				changed();
@@ -350,6 +489,9 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 			const pct = Math.round(zoom * 100);
 			label.textContent =
 				(preset === null && dragged === null ? `Responsive · ${logical}px` : `${logical}px`) + (zoom === 1 ? "" : ` @ ${pct}%`);
+			// the drag handle only makes sense while the frame is narrower than the stage
+			if (frame.offsetWidth < stage.clientWidth - 40) root.dataset.limited = "";
+			else delete root.dataset.limited;
 		};
 		const applyWidth = () => {
 			frame.style.setProperty("--z", String(zoom));
@@ -375,14 +517,13 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 		};
 		const stepZoom = (dir: 1 | -1) => {
 			const i = ZOOMS.findIndex((v) => Math.abs(v - zoom) < 0.001);
-			const next = ZOOMS[Math.min(ZOOMS.length - 1, Math.max(0, i + dir))];
-			setZoom(next);
+			setZoom(ZOOMS[Math.min(ZOOMS.length - 1, Math.max(0, i + dir))]);
 		};
 		zoomBtn("out").addEventListener("click", () => stepZoom(-1));
 		zoomBtn("in").addEventListener("click", () => stepZoom(1));
 		zoomBtn("reset").addEventListener("click", () => setZoom(1));
-		// Ctrl/Cmd + = / - / 0 only while focus is inside this viewer (browser zoom stays untouched elsewhere).
-		root.addEventListener("keydown", (e) => {
+		// Ctrl/Cmd + = / - / 0 zoom the preview (the browser's own zoom is replaced on this page)
+		document.addEventListener("keydown", (e) => {
 			if (!(e.ctrlKey || e.metaKey) || e.altKey) return;
 			if (e.key === "=" || e.key === "+") stepZoom(1);
 			else if (e.key === "-") stepZoom(-1);
@@ -391,25 +532,24 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 			e.preventDefault();
 		});
 
-		for (const b of root.querySelectorAll<HTMLElement>("[data-viewport]"))
+		for (const b of qa("[data-viewport]"))
 			b.addEventListener("click", () => {
 				const v = b.dataset.viewport!;
 				preset = /^\d+(\.\d+)?$/.test(v) ? Number(v) : null;
 				dragged = null;
-				for (const o of root.querySelectorAll<HTMLElement>("[data-viewport]"))
-					o.setAttribute("aria-pressed", String(o === b));
+				for (const o of qa("[data-viewport]")) o.setAttribute("aria-pressed", String(o === b));
 				applyWidth();
 			});
-		root.querySelector("[data-viewport='100%']")?.setAttribute("aria-pressed", "true");
+		document.querySelector("[data-viewport='100%']")?.setAttribute("aria-pressed", "true");
 		const handle = q("[data-handle]");
 		handle.addEventListener("pointerdown", (e) => {
 			e.preventDefault();
 			handle.setPointerCapture(e.pointerId);
 			const startX = e.clientX;
 			const startW = frame.getBoundingClientRect().width;
-			const max = stage.clientWidth - 32;
+			const max = stage.clientWidth - 16;
 			root.dataset.dragging = "";
-			for (const o of root.querySelectorAll<HTMLElement>("[data-viewport]")) o.removeAttribute("aria-pressed");
+			for (const o of qa("[data-viewport]")) o.removeAttribute("aria-pressed");
 			const move = (ev: PointerEvent) => {
 				preset = null;
 				dragged = Math.round(Math.max(280, Math.min(max, startW + (ev.clientX - startX) * 2)));
@@ -427,36 +567,7 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 		});
 		new ResizeObserver(readout).observe(frame);
 		applyWidth();
-
-		// ---- full page: fixed overlay above the docs chrome (not persisted), Esc or the same button exits
-		const fullBtn = q<HTMLButtonElement>("[data-full]");
-		const setFull = (on: boolean) => {
-			if (on) root.dataset.full = "";
-			else delete root.dataset.full;
-			document.documentElement.style.overflow = on ? "hidden" : "";
-			// Starlight's `.main-pane` is `isolation: isolate` (its own stacking context below the fixed header): lift it while open.
-			const pane = root.closest<HTMLElement>(".main-pane");
-			if (pane) pane.style.isolation = on ? "auto" : "";
-			fullBtn.setAttribute("aria-pressed", String(on));
-			fullBtn.setAttribute("aria-label", on ? "Exit full page" : "Full page");
-			q("[data-full-text]").textContent = on ? "Exit full page" : "Full page";
-			if (dragged !== null) dragged = null;
-			applyWidth();
-		};
-		fullBtn.addEventListener("click", () => setFull(!("full" in root.dataset)));
-		document.addEventListener("keydown", (e) => {
-			if (e.key === "Escape" && "full" in root.dataset) {
-				e.preventDefault();
-				setFull(false);
-				fullBtn.focus();
-			}
-		});
-		window.addEventListener("pagehide", () => {
-			document.documentElement.style.overflow = "";
-			const pane = root.closest<HTMLElement>(".main-pane");
-			if (pane) pane.style.isolation = "";
-		});
-
+		window.addEventListener("pagehide", () => delete html.dataset.exChrome);
 		load();
 	}
 </script>
