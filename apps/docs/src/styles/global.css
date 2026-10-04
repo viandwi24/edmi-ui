@@ -415,50 +415,59 @@ site-search dialog::backdrop {
 	--sl-sidebar-item-padding-inline: 0.625rem;
 }
 .sidebar-content .top-level > li + li {
-	margin-top: 1rem;
+	margin-top: 1.25rem;
 }
-/* group labels: mono caps */
-.sidebar-content .top-level > li > details > summary {
+.sidebar-content .edmi-side,
+.sidebar-content .edmi-side ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.sidebar-content .edmi-side li {
+	overflow-wrap: anywhere;
+}
+.sidebar-content .edmi-side a {
+	display: block;
+	text-decoration: none;
+	line-height: 1.4;
+}
+/* section headings: mono caps (Getting started, Components, AI, Examples); some link to an index */
+.sidebar-content .edmi-side-h,
+.sidebar-content a.edmi-side-h {
+	display: block;
 	padding: 0.25rem 0.625rem;
 	margin-bottom: 0.25rem;
-}
-.sidebar-content .top-level > li > details > summary .large {
 	font-family: var(--sl-font-mono);
 	font-size: 0.6875rem;
 	font-weight: 500;
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
 	color: var(--muted-foreground);
+	background: transparent;
+	border-color: transparent;
 }
-.sidebar-content .top-level > li > details > summary .caret {
-	display: none;
-}
-/* sub groups (Actions, Display, ...) */
-.sidebar-content ul ul summary {
-	padding: 0.3rem 0.625rem;
-	border-radius: 6px;
-}
-.sidebar-content ul ul summary:hover {
-	background: var(--accent);
-}
-.sidebar-content ul ul summary .large {
-	font-size: 0.875rem;
-	font-weight: 500;
+.sidebar-content a.edmi-side-h:hover,
+.sidebar-content a.edmi-side-h:focus-visible {
 	color: var(--foreground);
+	background: transparent;
 }
-.sidebar-content ul ul summary .caret {
-	width: 1rem;
-	height: 1rem;
-	color: var(--muted-foreground);
+.sidebar-content a.edmi-side-h[aria-current="page"] {
+	color: var(--foreground);
+	background: transparent;
+	border-color: transparent;
 }
-.sidebar-content .top-level > li > details > ul > li {
+/* flat link lists: no nesting rail */
+.sidebar-content .edmi-side ul li {
 	margin-inline-start: 0;
 	border-inline-start: 0;
 	padding-inline-start: 0;
 }
-.sidebar-content ul ul ul li {
-	margin-inline-start: 0.875rem;
-	padding-inline-start: 0.375rem;
+/* Edmi-only items carry a small star */
+.sidebar-content a[data-edmi]::after {
+	content: "✦";
+	margin-inline-start: 0.35em;
+	font-size: 0.7em;
+	color: var(--muted-foreground);
 }
 .sidebar-content a {
 	font-family: var(--sl-font);

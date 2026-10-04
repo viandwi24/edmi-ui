@@ -1,0 +1,76 @@
+---
+// Flat shadcn-style sidebar: section headings (some link to an index) over always-visible link lists.
+// Replaces Starlight's collapsible <details> groups; keeps its scroll persistence and mobile footer.
+import MobileMenuFooter from "@astrojs/starlight/components/MobileMenuFooter.astro";
+import SidebarPersister from "@astrojs/starlight/components/SidebarPersister.astro";
+
+const { sidebar } = Astro.locals.starlightRoute;
+const pathname = Astro.url.pathname;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+/** Section heading -> index page it links to. */
+const HEADING_LINK: Record<string, string> = {
+	Components: `${base}/components/`,
+	AI: `${base}/components/#group-ai-chat`,
+	Examples: `${base}/examples/`,
+};
+const norm = (p: string) => p.replace(/\/$/, "");
+---
+
+<SidebarPersister>
+	<ul class="top-level edmi-side">
+		{
+			sidebar.map((entry) =>
+				entry.type === "group" ? (
+					<li>
+						{HEADING_LINK[entry.label] ? (
+							<a
+								class="edmi-side-h"
+								href={HEADING_LINK[entry.label]}
+								aria-current={norm(HEADING_LINK[entry.label].split("#")[0]) === norm(pathname) && !HEADING_LINK[entry.label].includes("#") ? "page" : undefined}
+							>
+								{entry.label}
+							</a>
+						) : (
+							<span class="edmi-side-h">{entry.label}</span>
+						)}
+						<ul>
+							{entry.entries.map((e) =>
+								e.type === "link" ? (
+									<li>
+										<a href={e.href} aria-current={e.isCurrent ? "page" : undefined} {...e.attrs}>
+											<span>{e.label}</span>
+										</a>
+									</li>
+								) : null,
+							)}
+						</ul>
+					</li>
+				) : (
+					<li>
+						<a href={entry.href} aria-current={entry.isCurrent ? "page" : undefined}>
+							<span>{entry.label}</span>
+						</a>
+					</li>
+				),
+			)
+		}
+	</ul>
+</SidebarPersister>
+
+<div class="md:sl-hidden">
+	<MobileMenuFooter />
+</div>
+
+<script>
+	// Keep the current page visible inside the sidebar on load (nearest scrollable ancestor only).
+	const cur = document.querySelector<HTMLElement>(".edmi-side a[aria-current='page']");
+	let sc: HTMLElement | null = cur?.parentElement ?? null;
+	while (sc && !(sc.scrollHeight > sc.clientHeight && /(auto|scroll)/.test(getComputedStyle(sc).overflowY)))
+		sc = sc.parentElement;
+	if (cur && sc && sc.clientHeight > 0) {
+		const r = cur.getBoundingClientRect();
+		const s = sc.getBoundingClientRect();
+		if (r.top < s.top + 8 || r.bottom > s.bottom - 8)
+			sc.scrollTop += r.top - s.top - s.height / 2 + r.height / 2;
+	}
+</script>

@@ -50,6 +50,17 @@ Add the registry to `components.json`:
 
 Components that exist in stock shadcn replace the stock file; use `--overwrite` when asked.
 
+## Registry items
+
+Besides the components, the registry ships a few entry items. They are not components, so they are not in the sidebar.
+
+- `edmi`: the base (theme, fonts, utils and every component) for a fresh project.
+- `theme`: the Edmi tokens, `@theme` map and base layer on their own.
+- `all`: every Edmi component. `patterns`: every ✦ pattern block. `ai-all`: every Edmi AI component.
+- `font-instrument-sans`, `font-jetbrains-mono`, `font-sora`: the three fonts, one item each.
+- `utils`: the `cn` helper (React only; Vue and Svelte use the one from your own init).
+- `ai-use-controllable-state`: the controlled/uncontrolled state hook that the AI components share.
+
 ## Flat by default, raised ✦
 
 Every Edmi component renders flat out of the box: a solid fill, a 1px border and no lip. Pass `raised` for one step of 3D (gradient face, soft top highlight, one hard lip that sinks 2px on press).

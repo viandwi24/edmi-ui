@@ -11,6 +11,7 @@ import { defineConfig } from "astro/config";
 import { phosphorIcons } from "../../packages/svelte/phosphor-icons-plugin.mjs";
 import { edmiResolve } from "./plugins/edmi-resolve.mjs";
 import { genIslands } from "./plugins/gen-islands.mjs";
+import { buildSidebar } from "./plugins/sidebar.mjs";
 import { vueNoReactRefresh } from "./plugins/vue-no-react-refresh.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -53,32 +54,8 @@ const repoRoot = resolve(here, "../..");
 
 genIslands(here);
 
-// Examples list (src/examples/index.ts) drives the sidebar group below.
+// Examples list (src/examples/index.ts) drives the Examples sidebar section.
 const { EXAMPLES } = await import("./src/examples/index.ts");
-
-const groups = [
-	["actions", "Actions"],
-	["forms-text", "Forms · Text"],
-	["forms-choice", "Forms · Choice"],
-	["display", "Display"],
-	["overlays", "Overlays"],
-	["navigation", "Navigation"],
-	["layout", "Layout"],
-	["data", "Data"],
-	["conversation", "Conversation"],
-	["patterns", "Patterns"],
-	["meta", "Meta"],
-]; // keep in sync with src/config.ts COMPONENT_GROUPS
-
-const aiGroups = [
-	["ai-chat", "Chat"],
-	["ai-agent", "Agent"],
-	["ai-code", "Code"],
-	["ai-runtime", "Runtime"],
-	["ai-voice", "Voice"],
-	["ai-workflow", "Workflow"],
-	["ai-patterns", "Patterns ✦"],
-]; // keep in sync with src/config.ts AI_GROUPS
 
 const darkSync = `(function(){var d=document.documentElement;function s(){d.classList.toggle('dark',d.dataset.theme==='dark')}s();new MutationObserver(s).observe(d,{attributes:true,attributeFilter:['data-theme']})})();`;
 
@@ -107,6 +84,7 @@ export default defineConfig({
 			],
 			components: {
 				Header: "./src/components/overrides/Header.astro",
+				Sidebar: "./src/components/overrides/Sidebar.astro",
 				ThemeSelect: "./src/components/overrides/ThemeSelect.astro",
 				SocialIcons: "./src/components/overrides/SocialIcons.astro",
 				PageTitle: "./src/components/overrides/PageTitle.astro",
@@ -128,51 +106,7 @@ export default defineConfig({
 				{ tag: "script", content: fwSync },
 				{ tag: "script", content: pmSync },
 			],
-			sidebar: [
-				{
-					label: "Getting started",
-					items: [
-						{ label: "React", slug: "getting-started/react" },
-						{ label: "Vue", slug: "getting-started/vue" },
-						{ label: "Svelte", slug: "getting-started/svelte" },
-					],
-				},
-				{
-					label: "Components",
-					items: [
-						{ label: "Overview", link: "/components/" },
-						...groups.map(([dir, label]) => ({
-							label,
-							collapsed: true,
-							items: [{ autogenerate: { directory: `components/${dir}` } }],
-						})),
-					],
-				},
-				{
-					label: "AI",
-					collapsed: true,
-					items: aiGroups.map(([dir, label]) => ({
-						label,
-						collapsed: true,
-						items: [{ autogenerate: { directory: `components/${dir}` } }],
-					})),
-				},
-				{
-					label: "Examples",
-					collapsed: true,
-					items: [
-						{ label: "Overview", link: "/examples/" },
-						...EXAMPLES.map((e) => ({
-							label: e.title,
-							link: `/examples/${e.slug}/`,
-						})),
-					],
-				},
-				{ label: "Theming", slug: "theming" },
-				{ label: "Themes", slug: "themes" },
-				{ label: "Rules", slug: "rules" },
-				{ label: "Changelog", slug: "changelog" },
-			],
+			sidebar: buildSidebar(resolve(here, "src/content/docs"), EXAMPLES),
 		}),
 		// Scope React (and its Fast Refresh) to React files; the default filter matches every .ts/.tsx.
 		// Vue SFCs still receive `$RefreshSig$` through plugin-vue, see vueNoReactRefresh below.
