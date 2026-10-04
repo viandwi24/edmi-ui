@@ -3,6 +3,7 @@
 	import IconPlaceholder from "$lib/components/icon-placeholder/icon-placeholder.svelte";
 	import { Button } from "$lib/registry/ui/button/index.js";
 	import { cn, type WithoutChildrenOrChild } from "$lib/utils.js";
+	import { type Elevation, setSurface, useElevation } from "$lib/registry/ui/elevation/index.js";
 	import DialogOverlay from "./dialog-overlay.svelte";
 	import DialogPortal from "./dialog-portal.svelte";
 	import type { Snippet } from "svelte";
@@ -14,15 +15,25 @@
 		portalProps,
 		children,
 		showCloseButton = true,
-		raised = false,
+		elevation = "auto",
 		...restProps
 	}: WithoutChildrenOrChild<DialogPrimitive.ContentProps> & {
 		portalProps?: WithoutChildrenOrChild<ComponentProps<typeof DialogPortal>>;
 		children: Snippet;
 		showCloseButton?: boolean;
-		/** ✦ opt-in one-step 3D look (hard strong lip). */
-		raised?: boolean;
+		/** ✦ depth: flat 0, raised +1 (bevel), floating +2 (bevel + drop). */
+		elevation?: Elevation;
 	} = $props();
+
+	// ✦ depth (v4): overlay role. Natural level is floating in layered mode; flat otherwise.
+	const overlayElevation = {
+		sunken: "",
+		flat: "",
+		raised: "border-transparent shadow-raised",
+		floating: "border-transparent shadow-floating",
+	};
+	const level = useElevation(() => elevation, "overlay");
+	setSurface(() => level.current);
 </script>
 
 <DialogPortal {...portalProps}>
@@ -31,9 +42,9 @@
 		bind:ref
 		data-slot="dialog-content"
 		class={cn(
-			// recipes.surface.dialog (flat); raised ✦ adds raisedSurface.dialog.
+			// recipes.surface.dialog (flat); elevation ✦ adds the bevel / drop.
 			"fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-2xl border border-border bg-popover p-[22px] text-sm text-popover-foreground outline-none duration-150 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 sm:max-w-md",
-			raised && "border-b-lip-strong shadow-dialog",
+			overlayElevation[level.current],
 			className
 		)}
 		{...restProps}

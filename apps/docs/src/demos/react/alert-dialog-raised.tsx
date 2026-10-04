@@ -17,7 +17,7 @@ export default function Demo() {
 			<AlertDialogTrigger render={<Button variant="outline" />}>
 				Close index
 			</AlertDialogTrigger>
-			<AlertDialogContent raised>
+			<AlertDialogContent elevation="floating">
 				<AlertDialogHeader>
 					<AlertDialogTitle>Close this index?</AlertDialogTitle>
 					<AlertDialogDescription>

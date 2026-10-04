@@ -1,9 +1,24 @@
+"use client";
+
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog";
 import { cn } from "cn";
 import type * as React from "react";
 import { IconPlaceholder } from "@/edmi/icon-placeholder";
 
 import { Button } from "@/registry/edmi/ui/button";
+import {
+	type Elevation,
+	SurfaceProvider,
+	useElevation,
+} from "@/registry/edmi/ui/elevation";
+
+// ✦ depth (v4): overlay role. Natural level is floating in layered mode; flat otherwise.
+const overlayElevation = {
+	sunken: "",
+	flat: "",
+	raised: "border-transparent shadow-raised",
+	floating: "border-transparent shadow-floating",
+};
 
 function Dialog({ ...props }: DialogPrimitive.Root.Props) {
 	return <DialogPrimitive.Root data-slot="dialog" {...props} />;
@@ -42,27 +57,28 @@ function DialogContent({
 	className,
 	children,
 	showCloseButton = true,
-	raised = false,
+	elevation,
 	...props
 }: DialogPrimitive.Popup.Props & {
 	showCloseButton?: boolean;
-	/** ✦ one-step 3D look: strong lip + dialog shadow. */
-	raised?: boolean;
+	/** ✦ depth: flat 0, raised +1 (bevel), floating +2 (bevel + drop). */
+	elevation?: Elevation;
 }) {
+	const level = useElevation(elevation, "overlay");
 	return (
 		<DialogPortal>
 			<DialogOverlay />
 			<DialogPrimitive.Popup
 				data-slot="dialog-content"
 				className={cn(
-					// recipes.surface.dialog: flat — 2xl radius, 22px padding. `raised` adds the strong lip.
+					// recipes.surface.dialog: flat — 2xl radius, 22px padding. `elevation` adds the bevel / drop.
 					"fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-2xl border border-border bg-popover p-[22px] text-sm text-popover-foreground outline-none transition-[opacity,scale] duration-150 data-[ending-style]:scale-95 data-[ending-style]:opacity-0 data-[starting-style]:scale-95 data-[starting-style]:opacity-0 sm:max-w-md",
-					raised && "border-b-lip-strong shadow-dialog",
+					overlayElevation[level],
 					className,
 				)}
 				{...props}
 			>
-				{children}
+				<SurfaceProvider level={level}>{children}</SurfaceProvider>
 				{showCloseButton && (
 					<DialogPrimitive.Close
 						data-slot="dialog-close"

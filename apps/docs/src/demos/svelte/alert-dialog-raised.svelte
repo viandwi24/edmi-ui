@@ -9,7 +9,7 @@
 			<Button variant="outline" {...props}>Close index</Button>
 		{/snippet}
 	</AlertDialog.Trigger>
-	<AlertDialog.Content raised>
+	<AlertDialog.Content elevation="floating">
 		<AlertDialog.Header>
 			<AlertDialog.Title>Close this index?</AlertDialog.Title>
 			<AlertDialog.Description>

@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="alert-dialog" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look (on `AlertDialogContent`).
+Flat by default. On `AlertDialogContent`, `raised` (+1) adds the bevel and `floating` (+2) the bevel plus one soft drop (the natural level in layered mode).
 
 <ComponentDemo name="alert-dialog" demo="alert-dialog-raised" />
 
@@ -33,9 +33,9 @@ Flat by default. Pass `raised` for the one-step 3D look (on `AlertDialogContent`
 | `AlertDialogContent size` | `default \| sm` | `default` |
 | `AlertDialogAction` | Button props | `default` variant |
 | `AlertDialogCancel variant / size` | Button props | `outline` / `default` |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 Parts: `AlertDialog`, `AlertDialogTrigger`, `AlertDialogContent`, `AlertDialogHeader`, `AlertDialogMedia`, `AlertDialogTitle`, `AlertDialogDescription`, `AlertDialogFooter`, `AlertDialogCancel`, `AlertDialogAction`.
 
 ## ✦ Edmi additions
-- `--overlay` scrim without blur, hard 4px strong lip. Pass `variant="destructive"` to `AlertDialogAction` for the red confirm.
+- `--overlay` scrim without blur, optional bevel / drop via `elevation`. Pass `variant="destructive"` to `AlertDialogAction` for the red confirm.

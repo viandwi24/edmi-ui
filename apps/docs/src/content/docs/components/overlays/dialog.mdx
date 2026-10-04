@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="dialog" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look (on `DialogContent`).
+Flat by default. On `DialogContent`, `raised` (+1) adds the bevel and `floating` (+2) the bevel plus one soft drop (the natural level in layered mode).
 
 <ComponentDemo name="dialog" demo="dialog-raised" />
 
@@ -33,9 +33,9 @@ Flat by default. Pass `raised` for the one-step 3D look (on `DialogContent`).
 | `DialogContent showCloseButton` | `boolean` | `true` |
 | `DialogFooter showCloseButton` | `boolean` | `false` |
 | `Dialog open / onOpenChange` | controlled state | uncontrolled |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 Parts: `Dialog`, `DialogTrigger`, `DialogContent`, `DialogHeader`, `DialogTitle`, `DialogDescription`, `DialogFooter`, `DialogClose`, `DialogOverlay`, `DialogPortal`.
 
 ## ✦ Edmi additions
-- `--overlay` scrim without backdrop blur; flat by default; `raised` adds the strong lip (`shadow-dialog`).
+- `--overlay` scrim without backdrop blur; flat by default; `elevation` adds the bevel / drop.

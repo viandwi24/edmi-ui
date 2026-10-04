@@ -15,18 +15,18 @@ import {
 <template>
   <Dialog>
     <DialogTrigger as-child>
-      <Button variant="outline" elevation="raised">Open raised dialog</Button>
+      <Button variant="outline">Open floating dialog</Button>
     </DialogTrigger>
-    <DialogContent raised>
+    <DialogContent elevation="floating">
       <DialogHeader>
-        <DialogTitle>Raised dialog</DialogTitle>
-        <DialogDescription>A strong lip under the surface.</DialogDescription>
+        <DialogTitle>Floating dialog</DialogTitle>
+        <DialogDescription>Bevel plus one soft drop (+2).</DialogDescription>
       </DialogHeader>
       <DialogFooter>
         <DialogClose as-child>
           <Button variant="outline">Cancel</Button>
         </DialogClose>
-        <Button elevation="raised">Save</Button>
+        <Button>Save</Button>
       </DialogFooter>
     </DialogContent>
   </Dialog>

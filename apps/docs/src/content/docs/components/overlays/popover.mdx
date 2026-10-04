@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="popover" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look (on `PopoverContent`).
+Flat by default. On `PopoverContent`, `raised` (+1) adds the bevel and `floating` (+2) the bevel plus one soft drop (the natural level in layered mode).
 
 <ComponentDemo name="popover" demo="popover-raised" />
 
@@ -34,9 +34,9 @@ Flat by default. Pass `raised` for the one-step 3D look (on `PopoverContent`).
 | `PopoverContent align` | `start \| center \| end` | `center` |
 | `PopoverContent sideOffset` | `number` | `6` |
 | `PopoverTrigger render` | `ReactElement` | none (Base UI, replaces `asChild`) |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 Parts: `Popover`, `PopoverTrigger`, `PopoverContent`, `PopoverHeader`, `PopoverTitle`, `PopoverDescription`.
 
 ## ✦ Edmi additions
-- Flat by default; `raised` adds the hard lip (`shadow-pop`). Solid `--popover` surface with a 1px border.
+- Flat by default; `elevation` adds the bevel / drop. Solid `--popover` surface with a 1px border.

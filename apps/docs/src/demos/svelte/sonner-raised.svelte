@@ -4,7 +4,7 @@
 </script>
 
 <div class="flex flex-wrap gap-2">
-	<Toaster raised />
+	<Toaster elevation="floating" />
 	<Button variant="outline" onclick={() => toast("Copied to clipboard")}>Default</Button>
 	<Button
 		variant="outline"

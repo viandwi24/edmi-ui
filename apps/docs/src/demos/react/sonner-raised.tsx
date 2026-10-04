@@ -4,7 +4,7 @@ import { Toaster, toast } from "@edmi-react/ui/sonner";
 export default function Demo() {
 	return (
 		<div className="flex flex-wrap gap-2">
-			<Toaster raised />
+			<Toaster elevation="floating" />
 			<Button variant="outline" onClick={() => toast("Copied to clipboard")}>
 				Default
 			</Button>

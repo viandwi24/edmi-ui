@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="sonner" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look (on `Toaster`, applies to every toast).
+Flat by default. On `Toaster`, `raised` (+1) adds the bevel and `floating` (+2) the bevel plus one soft drop to every toast (floating is the natural level of a toast).
 
 <ComponentDemo name="sonner" demo="sonner-raised" />
 
@@ -32,10 +32,10 @@ Flat by default. Pass `raised` for the one-step 3D look (on `Toaster`, applies t
 | --- | --- | --- |
 | `Toaster` | Sonner `ToasterProps` | bottom-right |
 | `toast(title, opts)` | `toast.success / info / warning / error / loading / promise` | none |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 Mount `<Toaster />` once in the app root, then call `toast()` anywhere. `next-themes` is read for the theme and falls back to `system` when no ThemeProvider exists (Vite apps).
 
 ## ✦ Edmi additions
-- Typed toasts use the soft fill and tinted border; the default toast is a solid popover chip with a 3px lip.
+- Typed toasts use the soft fill and tinted border; the default toast is a solid popover chip.
 - `toast` is re-exported from the same module as `Toaster`.

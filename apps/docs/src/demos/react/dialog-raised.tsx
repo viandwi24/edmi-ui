@@ -14,10 +14,10 @@ import { Input } from "@edmi-react/ui/input";
 export default function Demo() {
 	return (
 		<Dialog>
-			<DialogTrigger render={<Button elevation="raised" variant="outline" />}>
+			<DialogTrigger render={<Button variant="outline" />}>
 				Edit profile
 			</DialogTrigger>
-			<DialogContent raised showCloseButton>
+			<DialogContent elevation="floating" showCloseButton>
 				<DialogHeader>
 					<DialogTitle>Edit profile</DialogTitle>
 					<DialogDescription>
@@ -35,10 +35,10 @@ export default function Demo() {
 					</div>
 				</div>
 				<DialogFooter>
-					<DialogClose render={<Button elevation="raised" variant="outline" />}>
+					<DialogClose render={<Button variant="outline" />}>
 						Cancel
 					</DialogClose>
-					<Button elevation="raised">Save changes</Button>
+					<Button>Save changes</Button>
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>

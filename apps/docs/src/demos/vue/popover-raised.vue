@@ -16,7 +16,7 @@ import {
     <PopoverTrigger as-child>
       <Button variant="outline">Set limits</Button>
     </PopoverTrigger>
-    <PopoverContent raised align="start" class="w-80">
+    <PopoverContent elevation="floating" align="start" class="w-80">
       <PopoverHeader>
         <PopoverTitle>Rebalance limits</PopoverTitle>
         <PopoverDescription>Applied to the next keeper run.</PopoverDescription>

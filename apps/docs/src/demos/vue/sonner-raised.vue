@@ -5,7 +5,7 @@ import { Toaster, toast } from "@edmi-vue/ui/sonner";
 
 <template>
   <div class="flex flex-wrap gap-2">
-    <Toaster raised />
+    <Toaster elevation="floating" />
     <Button variant="outline" @click="toast('Copied to clipboard')">Default</Button>
     <Button
       variant="outline"

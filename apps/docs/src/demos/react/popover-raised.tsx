@@ -15,7 +15,7 @@ export default function Demo() {
 			<PopoverTrigger render={<Button variant="outline" />}>
 				Set limits
 			</PopoverTrigger>
-			<PopoverContent raised align="start" className="w-80">
+			<PopoverContent elevation="floating" align="start" className="w-80">
 				<PopoverHeader>
 					<PopoverTitle>Rebalance limits</PopoverTitle>
 					<PopoverDescription>

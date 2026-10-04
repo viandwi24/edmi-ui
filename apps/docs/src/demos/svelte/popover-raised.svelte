@@ -10,7 +10,7 @@
 			<Button variant="outline" {...props}>Set limits</Button>
 		{/snippet}
 	</Popover.Trigger>
-	<Popover.Content raised align="start" class="w-80">
+	<Popover.Content elevation="floating" align="start" class="w-80">
 		<Popover.Header>
 			<Popover.Title>Rebalance limits</Popover.Title>
 			<Popover.Description>Applied to the next keeper run.</Popover.Description>

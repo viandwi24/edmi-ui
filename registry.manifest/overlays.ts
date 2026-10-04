@@ -5,9 +5,10 @@ export const items: Item[] = [
 		name: "popover",
 		title: "Popover",
 		description:
-			"Rich content in a floating panel opened by a button. Hard 4px lip, no blur. PopoverHeader, PopoverTitle, PopoverDescription.",
+			"Rich content in a floating panel opened by a button. Optional elevation (raised, floating). PopoverHeader, PopoverTitle, PopoverDescription.",
 		type: "registry:ui",
 		categories: ["Overlays"],
+		registryDependencies: ["elevation"],
 		docs: "Replaces the stock popover: `shadcn add @edmi-ui/popover --overwrite`.",
 		frameworks: {
 			react: {
@@ -20,10 +21,10 @@ export const items: Item[] = [
 		name: "dialog",
 		title: "Dialog",
 		description:
-			"Modal window for a focused task on a --overlay scrim with a hard 4px strong lip. showCloseButton on the content.",
+			"Modal window for a focused task on a --overlay scrim, with optional elevation. showCloseButton on the content.",
 		type: "registry:ui",
 		categories: ["Overlays"],
-		registryDependencies: ["button"],
+		registryDependencies: ["button", "elevation"],
 		docs: "Replaces the stock dialog: `shadcn add @edmi-ui/dialog --overwrite`.",
 		frameworks: {
 			react: {
@@ -54,7 +55,7 @@ export const items: Item[] = [
 			"Blocking confirm for destructive or irreversible actions. No close icon; clicking outside does nothing.",
 		type: "registry:ui",
 		categories: ["Overlays"],
-		registryDependencies: ["button"],
+		registryDependencies: ["button", "elevation"],
 		docs: "Replaces the stock alert-dialog: `shadcn add @edmi-ui/alert-dialog --overwrite`.",
 		frameworks: {
 			react: {
@@ -67,7 +68,7 @@ export const items: Item[] = [
 		name: "sheet",
 		title: "Sheet",
 		description:
-			"Dialog that slides in from an edge (side top, right, bottom, left) with a hard strong lip.",
+			"Dialog that slides in from an edge (side top, right, bottom, left).",
 		type: "registry:ui",
 		categories: ["Overlays"],
 		registryDependencies: ["button"],
@@ -83,7 +84,7 @@ export const items: Item[] = [
 		name: "drawer",
 		title: "Drawer",
 		description:
-			"Base UI drawer: swipeDirection, snapPoints, DrawerSwipeHandle. Hard strong lip on the page-facing edge.",
+			"Base UI drawer: swipeDirection, snapPoints, DrawerSwipeHandle.",
 		type: "registry:ui",
 		categories: ["Overlays"],
 		docs: "Replaces the stock drawer (Base UI based, no vaul): `shadcn add @edmi-ui/drawer --overwrite`.",
@@ -101,6 +102,7 @@ export const items: Item[] = [
 			"Toast via Sonner: default, success, info, warning, error, loading, promise. Soft fill and tinted border per type.",
 		type: "registry:ui",
 		categories: ["Overlays"],
+		registryDependencies: ["elevation"],
 		docs: "Replaces the stock sonner: `shadcn add @edmi-ui/sonner --overwrite`.",
 		frameworks: {
 			react: {
@@ -128,7 +130,7 @@ export const items: Item[] = [
 		name: "hover-card",
 		title: "Hover card",
 		description:
-			"Preview of what is behind a link, opened on hover after a short delay. Hard 4px lip.",
+			"Preview of what is behind a link, opened on hover after a short delay.",
 		type: "registry:ui",
 		categories: ["Overlays"],
 		docs: "Replaces the stock hover-card: `shadcn add @edmi-ui/hover-card --overwrite`.",

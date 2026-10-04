@@ -18,7 +18,7 @@ import { Button } from "@edmi-vue/ui/button";
     <AlertDialogTrigger as-child>
       <Button variant="outline">Close index</Button>
     </AlertDialogTrigger>
-    <AlertDialogContent raised>
+    <AlertDialogContent elevation="floating">
       <AlertDialogHeader>
         <AlertDialogTitle>Close this index?</AlertDialogTitle>
         <AlertDialogDescription>
