@@ -18,7 +18,7 @@
 # Edmi UI
 
 **Quiet, editorial interfaces for React, Vue and Svelte.** A minimalist design system built on shadcn/ui:
-warm neutrals, mono numbers and one-step depth, inspired by Claude and Cofounder. **AI-ready out of the box**:
+warm neutrals, mono numbers and role-based depth, inspired by Claude and Cofounder. **AI-ready out of the box**:
 chat, agent, code, voice and workflow components ship next to the UI kit, in the same style, for all three frameworks.
 
 ## Features
@@ -27,7 +27,8 @@ chat, agent, code, voice and workflow components ship next to the UI kit, in the
   Svelte (shadcn-svelte). Same item names as shadcn, so `add … --overwrite` restyles the stock components.
 - **AI-ready.** 56 AI components for chat, agents, code, runtime, voice and workflows, ready for the
   Vercel AI SDK. One command: `add @edmi-ui/ai-all`.
-- **Flat by default, raised on demand.** Every component ships the plain look; `raised` ✦ adds a one-step 3D face.
+- **Flat by default, elevation on demand.** Every component ships the plain look; `elevation` ✦ adds depth by role, and
+  a layered mode applies it to a whole page. See [Elevation](#elevation).
 - **Themeable.** Base colours, accents and radius as tokens; a [Themes customizer](https://viandwi24.github.io/edmi-ui/themes/) with Copy CSS and
   installable theme items (`theme-<base>-<accent>`).
 - **Icons your way.** Phosphor by default, rewritten to your `iconLibrary` on install.
@@ -77,18 +78,35 @@ composed in the AI examples: [chat thread](https://viandwi24.github.io/edmi-ui/e
 [agent workspace](https://viandwi24.github.io/edmi-ui/examples/agent-workspace/), [agent home](https://viandwi24.github.io/edmi-ui/examples/agent-home/),
 [coding agent IDE](https://viandwi24.github.io/edmi-ui/examples/ide/), [agent workflow](https://viandwi24.github.io/edmi-ui/examples/workflow/) and [artifact library](https://viandwi24.github.io/edmi-ui/examples/library/).
 
+## Elevation
+
+Every component renders the plain shadcn look: a solid fill and a 1px border. Depth is the **elevation** system ✦, one
+prop, `elevation`, with four levels: `sunken` (-1, a soft inset well), `flat` (0, the default), `raised` (+1, a bevel)
+and `floating` (+2, the bevel plus one soft drop). There are no hard lips, and nothing is raised by default.
+
+```tsx
+<Button elevation="raised">Get started</Button>
+
+{/* layered mode: every role takes its level (actions up, fields down, overlays float) */}
+<ElevationProvider mode="layered">
+  <App />
+</ElevationProvider>
+```
+
+Depth expresses role, not decoration. A card inside a raised card drops back to flat, and only the active part of tabs,
+toggle groups, pagination, calendars, switches and sliders rises. 50 UI components and patterns and 12 AI components
+take `elevation`, each with a `<name>-elevation` demo in all three frameworks (checked by the repo's `verify:matrix`
+script). The docs landing page has a Flat / Layered toggle. Read the
+[Elevation guide](https://viandwi24.github.io/edmi-ui/getting-started/elevation/) for the philosophy, the role table and
+when to use layered mode, and the [upgrade notes](https://viandwi24.github.io/edmi-ui/getting-started/upgrading/) if you
+come from the old `raised` prop.
+
 ## Links
 
 - Docs and live demos: <https://viandwi24.github.io/edmi-ui/>
 - Live examples (React, Vue and Svelte, every theme): <https://viandwi24.github.io/edmi-ui/examples/>
 - Example apps (StackBlitz-ready): [`examples/react`](examples/react), [`examples/vue`](examples/vue), [`examples/svelte`](examples/svelte); Layerbeat (Slate · Ocean theme): [`examples/layerbeat-react`](examples/layerbeat-react), [`examples/layerbeat-vue`](examples/layerbeat-vue), [`examples/layerbeat-svelte`](examples/layerbeat-svelte)
 - Changelog: <https://viandwi24.github.io/edmi-ui/changelog/> · Releasing: [RELEASING.md](RELEASING.md) · Contributing: [CONTRIBUTING.md](CONTRIBUTING.md)
-
-**Flat by default, raised on demand.** Every component renders the plain shadcn look (solid fill, 1px border,
-no gradient, no lip). Pass `raised` ✦ (`<Button raised>`, `<Card raised>`, `<TabsList raised>` and so on) for the
-one-step 3D look: a face plus one hard lip under it. 42 UI components and patterns and 11 AI components accept
-`raised`, each with a `<name>-raised` demo in all three frameworks (checked by the repo's `verify:matrix` script).
-The docs landing page has a Flat / Raised toggle.
 
 The long-term domain is `https://ui.edmi.dev` (the `EDMI_URL` default of the registry generator).
 
@@ -174,7 +192,7 @@ npx skills add viandwi24/edmi-ui
 ```
 
 (`pnpm dlx`, `yarn dlx` or `bunx` work the same.) The `edmi-ui` skill covers install flows for all three frameworks,
-theming, when to use `raised`, the component catalog, the AI pack and upgrading. See
+theming, elevation (when to use layered mode and raised), the component catalog, the AI pack and upgrading. See
 [Agent skills](https://viandwi24.github.io/edmi-ui/getting-started/skills/) in the docs.
 
 ## Updating
@@ -362,7 +380,7 @@ newer) as the only package manager and runtime; no Node install is required. Con
 bun install
 bun run gen:strict        # generate packages/<fw>/registry.json (fails on missing files/deps)
 bun run build:registry    # build apps/docs/public/r/<fw>/*.json
-bun run verify:matrix     # component x framework matrix + raised demos, exits 1 on gaps
+bun run verify:matrix     # component x framework matrix + elevation demos, exits 1 on gaps
 bun run typecheck && bun run lint && bun test
 bash scripts/smoke/all.sh # install the built registries into fresh React/Vue/Svelte projects
 bun run dev               # docs site
