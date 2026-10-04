@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ElevationProvider } from "@edmi-vue/ui/elevation"
 import { FileCodeIcon, PlayIcon, PlusIcon } from "@lucide/vue";
 import { computed, ref } from "vue";
 import {
@@ -79,6 +80,7 @@ const file = computed(() => files[selected.value] ?? files[initialPath]);
 </script>
 
 <template>
+  <ElevationProvider mode="layered">
   <div class="flex min-h-svh flex-col gap-2 bg-background p-2 text-foreground lg:h-svh">
     <header class="flex h-10 shrink-0 items-center justify-between gap-2 px-2">
       <div class="flex items-center gap-2 text-sm font-medium">
@@ -225,4 +227,5 @@ const file = computed(() => files[selected.value] ?? files[initialPath]);
       </aside>
     </div>
   </div>
+  </ElevationProvider>
 </template>

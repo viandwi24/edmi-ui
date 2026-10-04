@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { ElevationProvider } from "@edmi-svelte/ui/elevation";
 	import {
 		ArtifactCard,
 		ArtifactCardActions,
@@ -47,6 +48,7 @@
 	}
 </script>
 
+<ElevationProvider mode="layered">
 <Resizable.PaneGroup direction="horizontal" class="h-svh bg-background text-foreground">
 	<Resizable.Pane id="chat" order={1} defaultSize={doc ? 42 : 100} minSize={30}>
 		<div class="flex h-full min-w-0 flex-col">
@@ -148,3 +150,4 @@
 		</Resizable.Pane>
 	{/if}
 </Resizable.PaneGroup>
+</ElevationProvider>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ElevationProvider } from "@edmi-vue/ui/elevation"
 import { FileTextIcon, GlobeIcon } from "@lucide/vue";
 import {
   ArtifactCard,
@@ -31,6 +32,7 @@ import { composer, thread, title } from "./data";
 </script>
 
 <template>
+  <ElevationProvider mode="layered">
   <div class="flex h-svh flex-col gap-2 bg-background p-3 text-foreground">
     <ChatHeader>
       <ChatHeaderTitle>
@@ -95,4 +97,5 @@ import { composer, thread, title } from "./data";
       @speech="() => {}"
     />
   </div>
+  </ElevationProvider>
 </template>

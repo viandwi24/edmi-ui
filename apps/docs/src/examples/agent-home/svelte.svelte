@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { ElevationProvider } from "@edmi-svelte/ui/elevation";
 	import { AgentAvatar } from "@edmi-svelte/ai/agent-avatar";
 	import { ConversationEmptyState } from "@edmi-svelte/ai/conversation";
 	import {
@@ -31,6 +32,7 @@
 	import { agent, greeting, project, suggestions, tasks } from "./data";
 </script>
 
+<ElevationProvider mode="layered">
 <div class="mx-auto flex min-h-svh w-full max-w-2xl flex-col gap-4 bg-background p-4 text-foreground">
 	<ConversationEmptyState variant="home" title={greeting} description="" class="flex-1 gap-8 p-2">
 		<Badge variant="secondary" class="-mt-5 gap-1.5">
@@ -107,3 +109,4 @@
 		</PromptInputFooter>
 	</PromptInput>
 </div>
+</ElevationProvider>

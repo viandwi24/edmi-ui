@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ElevationProvider } from "@edmi-vue/ui/elevation"
 import { MapIcon, PlusIcon } from "@lucide/vue";
 import { AgentAvatar } from "@edmi-vue/components/ai/agent-avatar";
 import { ConversationEmptyState } from "@edmi-vue/components/ai/conversation";
@@ -32,6 +33,7 @@ import { agent, greeting, project, suggestions, tasks } from "./data";
 </script>
 
 <template>
+  <ElevationProvider mode="layered">
   <div class="mx-auto flex min-h-svh w-full max-w-2xl flex-col gap-4 bg-background p-4 text-foreground">
     <ConversationEmptyState variant="home" :title="greeting" description="" class="flex-1 gap-8 p-2">
       <Badge variant="secondary" class="-mt-5 gap-1.5">
@@ -87,4 +89,5 @@ import { agent, greeting, project, suggestions, tasks } from "./data";
       </PromptInputFooter>
     </PromptInput>
   </div>
+  </ElevationProvider>
 </template>

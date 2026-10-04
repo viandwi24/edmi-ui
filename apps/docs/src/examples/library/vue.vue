@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ElevationProvider } from "@edmi-vue/ui/elevation"
 import {
   AppWindowIcon,
   ArrowUpRightIcon,
@@ -54,6 +55,7 @@ const visible = computed(() =>
 </script>
 
 <template>
+  <ElevationProvider mode="layered">
   <div class="min-h-svh bg-background text-foreground">
     <div class="mx-auto w-full max-w-[920px] px-5 py-[30px] sm:px-[34px]">
       <h1 class="font-serif text-[30px] leading-tight font-normal tracking-[-0.3px]">Library</h1>
@@ -153,4 +155,5 @@ const visible = computed(() =>
       </section>
     </div>
   </div>
+  </ElevationProvider>
 </template>

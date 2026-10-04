@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { ElevationProvider } from "@edmi-svelte/ui/elevation";
 	import { Badge } from "@edmi-svelte/ui/badge";
 	import { Button } from "@edmi-svelte/ui/button";
 	import { Card } from "@edmi-svelte/ui/card";
@@ -26,6 +27,7 @@
 	);
 </script>
 
+<ElevationProvider mode="layered">
 {#snippet typeIcon(type: ArtifactType, cls: string)}
 	{#if type === "docs"}
 		<IconPlaceholder
@@ -223,3 +225,4 @@
 		{/each}
 	</div>
 </div>
+</ElevationProvider>

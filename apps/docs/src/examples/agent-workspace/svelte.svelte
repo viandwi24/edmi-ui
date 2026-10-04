@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { ElevationProvider } from "@edmi-svelte/ui/elevation";
 	import { AgentAvatar } from "@edmi-svelte/ai/agent-avatar";
 	import {
 		Message,
@@ -39,6 +40,7 @@
 	const panels = ["agent", "index"];
 </script>
 
+<ElevationProvider mode="layered">
 <div class="flex min-h-svh items-start justify-center gap-6 bg-background p-6 text-foreground">
 	{#each panels as value, n (value)}
 		<div class={n === 0 ? "w-full max-w-[440px]" : "hidden w-full max-w-[440px] min-[960px]:block"}>
@@ -96,7 +98,7 @@
 								</div>
 							</div>
 							<div class="px-2.5 pb-2.5">
-								<PromptInput raised onSubmit={() => {}} class="[&_[data-slot=input-group]]:bg-muted">
+								<PromptInput onSubmit={() => {}} class="[&_[data-slot=input-group]]:bg-muted">
 									<PromptInputHeader>
 										<PromptInputAgent {agent} />
 									</PromptInputHeader>
@@ -246,3 +248,4 @@
 		</div>
 	{/each}
 </div>
+</ElevationProvider>

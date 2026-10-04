@@ -13,6 +13,7 @@ import { Panel } from "@edmi-react/components/ai/panel";
 import { Toolbar } from "@edmi-react/components/ai/toolbar";
 import { Badge } from "@edmi-react/ui/badge";
 import { Button } from "@edmi-react/ui/button";
+import { ElevationProvider } from "@edmi-react/ui/elevation";
 import { IconPlaceholder } from "@/edmi/icon-placeholder";
 import { edges, legend, nodes, type StepData } from "./data";
 
@@ -93,52 +94,54 @@ const edgeTypes = {
 
 export default function WorkflowExample() {
 	return (
-		<div className="h-svh min-h-96 w-full bg-background text-foreground">
-			<Canvas
-				edges={edges}
-				edgeTypes={edgeTypes}
-				nodes={nodes}
-				nodeTypes={nodeTypes}
-			>
-				<Controls position="bottom-left" />
-				<Panel position="top-left" className="px-3 py-2.5 text-xs">
-					<p className="mb-1.5 font-semibold">Legend</p>
-					{legend.map((item, i) => (
-						<p
-							key={item.label}
-							className={
-								i ? "mt-1 flex items-center gap-2" : "flex items-center gap-2"
-							}
-						>
-							<svg aria-hidden="true" height="6" width="26">
-								<path
-									d="M0 3h26"
-									stroke={item.color}
-									strokeDasharray={item.dash}
-									strokeWidth="1.6"
-								/>
-							</svg>
-							{item.label}
-						</p>
-					))}
-				</Panel>
-				<Panel position="top-right" className="flex items-center gap-1.5">
-					<Button size="sm">
-						<IconPlaceholder
-							lucide="PlayIcon"
-							tabler="IconPlayerPlay"
-							hugeicons="PlayIcon"
-							phosphor="PlayIcon"
-							remixicon="RiPlayLine"
-							className="size-3.5"
-						/>
-						Run
-					</Button>
-					<Button size="sm" variant="outline">
-						Save
-					</Button>
-				</Panel>
-			</Canvas>
-		</div>
+		<ElevationProvider mode="layered">
+			<div className="h-svh min-h-96 w-full bg-background text-foreground">
+				<Canvas
+					edges={edges}
+					edgeTypes={edgeTypes}
+					nodes={nodes}
+					nodeTypes={nodeTypes}
+				>
+					<Controls position="bottom-left" />
+					<Panel position="top-left" className="px-3 py-2.5 text-xs">
+						<p className="mb-1.5 font-semibold">Legend</p>
+						{legend.map((item, i) => (
+							<p
+								key={item.label}
+								className={
+									i ? "mt-1 flex items-center gap-2" : "flex items-center gap-2"
+								}
+							>
+								<svg aria-hidden="true" height="6" width="26">
+									<path
+										d="M0 3h26"
+										stroke={item.color}
+										strokeDasharray={item.dash}
+										strokeWidth="1.6"
+									/>
+								</svg>
+								{item.label}
+							</p>
+						))}
+					</Panel>
+					<Panel position="top-right" className="flex items-center gap-1.5">
+						<Button size="sm">
+							<IconPlaceholder
+								lucide="PlayIcon"
+								tabler="IconPlayerPlay"
+								hugeicons="PlayIcon"
+								phosphor="PlayIcon"
+								remixicon="RiPlayLine"
+								className="size-3.5"
+							/>
+							Run
+						</Button>
+						<Button size="sm" variant="outline">
+							Save
+						</Button>
+					</Panel>
+				</Canvas>
+			</div>
+		</ElevationProvider>
 	);
 }

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { ElevationProvider } from "@edmi-svelte/ui/elevation";
 	import { Canvas } from "@edmi-svelte/ai/canvas";
 	import { Controls } from "@edmi-svelte/ai/controls";
 	import { Edge } from "@edmi-svelte/ai/edge";
@@ -15,6 +16,7 @@
 	let edges = $state.raw(edgeData);
 </script>
 
+<ElevationProvider mode="layered">
 <div class="h-svh min-h-96 w-full bg-background text-foreground">
 	<Canvas bind:nodes bind:edges {nodeTypes} {edgeTypes}>
 		<Controls position="bottom-left" />
@@ -45,3 +47,4 @@
 		</Panel>
 	</Canvas>
 </div>
+</ElevationProvider>

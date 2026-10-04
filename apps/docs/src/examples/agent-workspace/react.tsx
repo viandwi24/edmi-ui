@@ -22,6 +22,7 @@ import {
 import { Suggestion } from "@edmi-react/components/ai/suggestion";
 import { Button } from "@edmi-react/ui/button";
 import { Card } from "@edmi-react/ui/card";
+import { ElevationProvider } from "@edmi-react/ui/elevation";
 import {
 	InsetPanel,
 	InsetPanelBody,
@@ -158,7 +159,6 @@ function AgentTab() {
 			</div>
 			<div className="px-2.5 pb-2.5">
 				<PromptInput
-					raised
 					onSubmit={() => {}}
 					className="[&_[data-slot=input-group]]:bg-muted"
 				>
@@ -321,11 +321,13 @@ function Panel({ value }: { value: string }) {
 
 export default function AgentWorkspaceExample() {
 	return (
-		<div className="flex min-h-svh items-start justify-center gap-6 bg-background p-6 text-foreground">
-			<Panel value="agent" />
-			<div className="hidden w-full max-w-[440px] min-[960px]:block">
-				<Panel value="index" />
+		<ElevationProvider mode="layered">
+			<div className="flex min-h-svh items-start justify-center gap-6 bg-background p-6 text-foreground">
+				<Panel value="agent" />
+				<div className="hidden w-full max-w-[440px] min-[960px]:block">
+					<Panel value="index" />
+				</div>
 			</div>
-		</div>
+		</ElevationProvider>
 	);
 }

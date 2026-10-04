@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ElevationProvider } from "@edmi-vue/ui/elevation"
 import { CopyIcon, PlayIcon, SettingsIcon, Trash2Icon } from "@lucide/vue";
 import { markRaw } from "vue";
 import { Canvas } from "@edmi-vue/components/ai/canvas";
@@ -22,6 +23,7 @@ const edgeTypes = { animated: markRaw(Edge.Animated), temporary: markRaw(Edge.Te
 </script>
 
 <template>
+  <ElevationProvider mode="layered">
   <div class="h-svh min-h-96 w-full bg-background text-foreground">
     <Canvas :nodes="nodes" :edges="edges" :edge-types="edgeTypes">
       <template #node-step="{ data, selected }">
@@ -67,4 +69,5 @@ const edgeTypes = { animated: markRaw(Edge.Animated), temporary: markRaw(Edge.Te
       </Panel>
     </Canvas>
   </div>
+  </ElevationProvider>
 </template>

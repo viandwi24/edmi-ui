@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ElevationProvider } from "@edmi-vue/ui/elevation"
 import {
   CreditCardIcon,
   GlobeIcon,
@@ -58,6 +59,7 @@ const panels = ["agent", "index"];
 </script>
 
 <template>
+  <ElevationProvider mode="layered">
   <div class="flex min-h-svh items-start justify-center gap-6 bg-background p-6 text-foreground">
     <div
       v-for="(value, n) in panels"
@@ -120,7 +122,7 @@ const panels = ["agent", "index"];
                 </div>
               </div>
               <div class="px-2.5 pb-2.5">
-                <PromptInput raised class="[&_[data-slot=input-group]]:bg-muted">
+                <PromptInput class="[&_[data-slot=input-group]]:bg-muted">
                   <PromptInputHeader>
                     <PromptInputAgent :agent="agent" />
                   </PromptInputHeader>
@@ -220,4 +222,5 @@ const panels = ["agent", "index"];
       </Tabs>
     </div>
   </div>
+  </ElevationProvider>
 </template>

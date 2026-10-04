@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { ElevationProvider } from "@edmi-svelte/ui/elevation";
 	import {
 		ArtifactCard,
 		ArtifactCardActions,
@@ -30,6 +31,7 @@
 	import { composer, thread, title } from "./data";
 </script>
 
+<ElevationProvider mode="layered">
 <div class="flex h-svh flex-col gap-2 bg-background p-3 text-foreground">
 	<ChatHeader>
 		<ChatHeaderTitle>
@@ -116,3 +118,4 @@
 		modes={composer.modes}
 	/>
 </div>
+</ElevationProvider>

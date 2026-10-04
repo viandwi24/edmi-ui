@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ElevationProvider } from "@edmi-vue/ui/elevation"
 import {
   ArtifactCard,
   ArtifactCardActions,
@@ -52,6 +53,7 @@ function close() {
 </script>
 
 <template>
+  <ElevationProvider mode="layered">
   <ResizablePanelGroup
     id="example-chat-artifact"
     direction="horizontal"
@@ -163,4 +165,5 @@ function close() {
       </ResizablePanel>
     </template>
   </ResizablePanelGroup>
+  </ElevationProvider>
 </template>
