@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="app-header" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look.
+Flat by default. `elevation` sets the depth of the bar; `raised` (+1) and `floating` (+2) also raise the mark, the active nav pill (only the active pill rises) and the buttons. In a layered `ElevationProvider` the bar is a raised surface and its controls follow their own roles.
 
 <ComponentDemo name="app-header" demo="app-header-raised" />
 
@@ -38,9 +38,9 @@ Flat by default. Pass `raised` for the one-step 3D look.
 | `connectLabel` | `ReactNode` | `"Connect"` |
 | `onConnect` / `onNetworkClick` | `() => void` | none |
 | `logo` / `name` / `href` | as `SiteHeader` | |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 `AppHeaderNavItem` (`active`) is exported for custom navs.
 
 ## ✦ Edmi additions
-- Nav pills stand alone (no track), active pill is `--tab-active` + 1px border (the `pills` look); with `raised` it becomes a 3D secondary button.
+- Nav pills stand alone (no track), active pill is `--tab-active` + 1px border (the `pills` look); with `elevation="raised"` it becomes a raised secondary button.

@@ -12,12 +12,23 @@ const links = [
 	{ label: "Resources", href: "#resources" },
 	{ label: "Pricing", href: "#pricing" },
 ];
+
+const levels = [
+	{ value: "flat", label: "Flat (0)" } as const,
+	{ value: "raised", label: "Raised (+1)" } as const,
+	{ value: "floating", label: "Floating (+2)" } as const,
+];
 </script>
 
 <template>
-	<SiteHeader raised lead="How to" :steps="steps" :links="links">
+	<div class="flex flex-col gap-6">
+		<div v-for="l in levels" :key="l.value" class="flex flex-col gap-2">
+			<p class="text-xs font-medium text-muted-foreground">{{ l.label }}</p>
+	<SiteHeader :elevation="l.value" lead="How to" :steps="steps" :links="links">
 		<template #action>
-			<Button elevation="raised">Create an index</Button>
+			<Button :elevation="l.value">Create an index</Button>
 		</template>
 	</SiteHeader>
+		</div>
+	</div>
 </template>

@@ -2,6 +2,7 @@ import { cn } from "cn";
 import * as React from "react";
 import { Button } from "@/registry/edmi/ui/button";
 import { Card } from "@/registry/edmi/ui/card";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
 import {
 	InputGroup,
 	InputGroupAddon,
@@ -38,7 +39,7 @@ function JoinPanel({
 	joinLabel = "Join",
 	onJoin,
 	disabled,
-	raised = false,
+	elevation,
 	...props
 }: Omit<React.ComponentProps<typeof Card>, "children" | "size" | "onSubmit"> & {
 	label?: React.ReactNode;
@@ -67,9 +68,15 @@ function JoinPanel({
 	joinLabel?: React.ReactNode;
 	onJoin?: () => void;
 	disabled?: boolean;
-	/** ✦ one-step 3D look: card and the join Button. */
-	raised?: boolean;
+	/** ✦ depth of the card; raised +1 / floating +2 also raise the tabs, chips and join Button. */
+	elevation?: Elevation;
 }) {
+	const control =
+		elevation && elevation !== "auto"
+			? elevation === "raised" || elevation === "floating"
+				? "raised"
+				: "flat"
+			: undefined;
 	const id = React.useId();
 	const [inner, setInner] = React.useState(defaultAmount);
 	const value = amount ?? inner;
@@ -86,7 +93,7 @@ function JoinPanel({
 		<Card
 			data-slot="join-panel"
 			size="sm"
-			elevation={raised ? "raised" : undefined}
+			elevation={elevation}
 			className={cn("w-80 gap-0", className)}
 			{...props}
 		>
@@ -99,10 +106,7 @@ function JoinPanel({
 							onTabChange?.(v as string);
 						}}
 					>
-						<TabsList
-							elevation={raised ? "raised" : undefined}
-							className="w-full"
-						>
+						<TabsList elevation={control} className="w-full">
 							{tabs.map((t) => (
 								<TabsTrigger key={t.value} value={t.value}>
 									{t.label}
@@ -160,7 +164,7 @@ function JoinPanel({
 							type="button"
 							variant="secondary"
 							size="sm"
-							elevation={raised ? "raised" : undefined}
+							elevation={control}
 							className="flex-1 font-mono"
 							onClick={() =>
 								q.value !== undefined ? setAmount(q.value) : onMax?.()
@@ -187,7 +191,7 @@ function JoinPanel({
 			<div className="mt-3.5 px-(--card-spacing)">
 				<Button
 					size="lg"
-					elevation={raised ? "raised" : undefined}
+					elevation={control}
 					className="w-full"
 					onClick={onJoin}
 					disabled={disabled}

@@ -2,10 +2,18 @@
 	import type { RowData, Table } from "@tanstack/svelte-table";
 	import IconPlaceholder from "$lib/components/icon-placeholder/icon-placeholder.svelte";
 	import { Button } from "$lib/registry/ui/button/index.js";
+	import type { Elevation } from "$lib/registry/ui/elevation/index.js";
 	import * as DropdownMenu from "$lib/registry/ui/dropdown-menu/index.js";
 	import type { DataTableFeatures } from "./data-table-features.js";
 
-	let { table }: { table: Table<DataTableFeatures, TData> } = $props();
+	let {
+		table,
+		elevation = "auto",
+	}: {
+		table: Table<DataTableFeatures, TData>;
+		/** ✦ depth of the toolbar and pagination controls (the table container stays flat). */
+		elevation?: Elevation;
+	} = $props();
 
 	/** Column menu label: `meta.label`, else a string header, else the column id. */
 	function columnLabel(column: { id: string; columnDef: { header?: unknown; meta?: unknown } }) {
@@ -19,7 +27,7 @@
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger>
 		{#snippet child({ props })}
-			<Button {...props} variant="outline" size="sm" class="ml-auto">
+			<Button {...props} variant="outline" size="sm" {elevation} class="ml-auto">
 				<IconPlaceholder
 					lucide="Columns3Icon"
 					tabler="IconLayoutColumns"

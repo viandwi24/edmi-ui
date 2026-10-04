@@ -1,11 +1,12 @@
 import { SiteFooter } from "@edmi-react/blocks/footer/footer";
 import { Button } from "@edmi-react/ui/button";
+import type { Elevation } from "@edmi-react/ui/elevation";
 import { IconPlaceholder } from "@/edmi/icon-placeholder";
 
-export default function Demo() {
+function Sample({ elevation }: { elevation: Elevation }) {
 	return (
 		<SiteFooter
-			elevation="raised"
+			elevation={elevation}
 			className="w-full"
 			brand={
 				<span className="font-brand text-xl font-semibold tracking-tight">
@@ -65,5 +66,24 @@ export default function Demo() {
 			legal="© 2026 Stockbreak"
 			note="Not investment advice · devnet only"
 		/>
+	);
+}
+
+const levels = [
+	{ value: "flat", label: "Flat (0)" },
+	{ value: "raised", label: "Raised (+1)" },
+	{ value: "floating", label: "Floating (+2)" },
+] as const;
+
+export default function Demo() {
+	return (
+		<div className="flex flex-col gap-6">
+			{levels.map(({ value, label }) => (
+				<div key={value} className="flex flex-col gap-2">
+					<p className="text-xs font-medium text-muted-foreground">{label}</p>
+					<Sample elevation={value} />
+				</div>
+			))}
+		</div>
 	);
 }

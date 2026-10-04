@@ -1,9 +1,18 @@
 <script setup lang="ts">
 import { AgentCard } from "@edmi-vue/ui/agent-card";
+
+const levels = [
+	{ value: "flat", label: "Flat (0)" } as const,
+	{ value: "raised", label: "Raised (+1)" } as const,
+	{ value: "floating", label: "Floating (+2)" } as const,
+];
 </script>
 
 <template>
-  <AgentCard raised
+	<div class="flex flex-col gap-6">
+		<div v-for="l in levels" :key="l.value" class="flex flex-col gap-2">
+			<p class="text-xs font-medium text-muted-foreground">{{ l.label }}</p>
+  <AgentCard :elevation="l.value"
     class="w-[380px] max-w-full"
     name="XSD"
     tag="AI"
@@ -15,4 +24,6 @@ import { AgentCard } from "@edmi-vue/ui/agent-card";
       { label: 'Best 7d', value: '+4.1%' },
     ]"
   />
+		</div>
+	</div>
 </template>

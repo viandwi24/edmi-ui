@@ -2,13 +2,14 @@
 import type { HTMLAttributes } from 'vue'
 import { Badge } from '@/registry/edmi/ui/badge'
 import { Card } from '@/registry/edmi/ui/card'
+import type { Elevation } from '@/registry/edmi/ui/elevation'
 import { cn } from '@/registry/edmi/lib/utils'
 import AgentIdenticon from './AgentIdenticon.vue'
 import type { AgentCardStat } from './types'
 
 const props = defineProps<{
-  /** ✦ one-step 3D look, forwarded to the card */
-  raised?: boolean
+  /** ✦ depth of the card: sunken -1, flat 0, raised +1, floating +2 */
+  elevation?: Elevation
   class?: HTMLAttributes['class']
   name: string
   /** Mono sub line, usually a shortened address. */
@@ -24,7 +25,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <Card :elevation="raised ? 'raised' : undefined" data-slot="agent-card" :class="cn('gap-0 p-5', props.class)">
+  <Card :elevation="elevation" data-slot="agent-card" :class="cn('gap-0 p-5', props.class)">
     <div class="flex items-center gap-3.5">
       <AgentIdenticon :seed="seed ?? name" />
       <div class="min-w-0">

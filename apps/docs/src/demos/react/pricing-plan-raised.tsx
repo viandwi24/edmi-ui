@@ -1,10 +1,11 @@
 import { PricingPlan } from "@edmi-react/blocks/pricing-plan/pricing-plan";
 import { Button } from "@edmi-react/ui/button";
+import type { Elevation } from "@edmi-react/ui/elevation";
 
-export default function Demo() {
+function Sample({ elevation }: { elevation: Elevation }) {
 	return (
 		<PricingPlan
-			elevation="raised"
+			elevation={elevation}
 			className="w-[300px] max-w-full"
 			name="Creator"
 			tagline="Launch your own index"
@@ -17,5 +18,24 @@ export default function Demo() {
 				"Share cards and Blinks",
 			]}
 		/>
+	);
+}
+
+const levels = [
+	{ value: "flat", label: "Flat (0)" },
+	{ value: "raised", label: "Raised (+1)" },
+	{ value: "floating", label: "Floating (+2)" },
+] as const;
+
+export default function Demo() {
+	return (
+		<div className="flex flex-col gap-6">
+			{levels.map(({ value, label }) => (
+				<div key={value} className="flex flex-col gap-2">
+					<p className="text-xs font-medium text-muted-foreground">{label}</p>
+					<Sample elevation={value} />
+				</div>
+			))}
+		</div>
 	);
 }

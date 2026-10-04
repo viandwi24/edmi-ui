@@ -3,6 +3,7 @@
 	import IconPlaceholder from "$lib/components/icon-placeholder/icon-placeholder.svelte";
 	import { Badge } from "$lib/registry/ui/badge/index.js";
 	import { Button } from "$lib/registry/ui/button/index.js";
+	import type { Elevation } from "$lib/registry/ui/elevation/index.js";
 	import * as DropdownMenu from "$lib/registry/ui/dropdown-menu/index.js";
 	import type { DataTableFeatures } from "./data-table-features.js";
 
@@ -14,11 +15,14 @@
 		column,
 		title,
 		options,
+		elevation = "auto",
 	}: {
 		column?: Column<DataTableFeatures, TData, TValue>;
 		title: string;
 		/** Defaults to the unique values found in the column. */
 		options?: { label: string; value: string }[];
+		/** ✦ depth of the toolbar and pagination controls (the table container stays flat). */
+		elevation?: Elevation;
 	} = $props();
 
 	const facets = $derived(column?.getFacetedUniqueValues());
@@ -43,7 +47,7 @@
 	<DropdownMenu.Root>
 		<DropdownMenu.Trigger>
 			{#snippet child({ props })}
-				<Button {...props} variant="outline" size="sm" class="border-dashed">
+				<Button {...props} variant="outline" size="sm" {elevation} class="border-dashed">
 					<IconPlaceholder
 						lucide="PlusIcon"
 						tabler="IconPlus"

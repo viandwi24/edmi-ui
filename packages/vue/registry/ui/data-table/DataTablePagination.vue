@@ -3,6 +3,7 @@ import type { RowData, Table } from "@tanstack/vue-table";
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "@lucide/vue";
 import { computed } from "vue";
 import { Button } from "@/registry/edmi/ui/button";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
 import {
 	Select,
 	SelectContent,
@@ -16,10 +17,10 @@ const props = withDefaults(
 	defineProps<{
 		table: Table<DataTableFeatures, TData>;
 		pageSizes?: number[];
-		/** ✦ raised select trigger and buttons */
-		raised?: boolean;
+		/** ✦ depth of the toolbar and pagination controls (the table container stays flat). */
+		elevation?: Elevation;
 	}>(),
-	{ pageSizes: () => [10, 20, 30, 40, 50], raised: false },
+	{ pageSizes: () => [10, 20, 30, 40, 50] },
 );
 
 // The current size (e.g. `DataTable :page-size="5"`) must be an option, or the trigger renders blank.
@@ -44,7 +45,7 @@ const sizes = computed(() => {
 					:model-value="`${table.atoms.pagination.get().pageSize}`"
 					@update:model-value="(value) => table.setPageSize(Number(value))"
 				>
-					<SelectTrigger size="sm" :elevation="raised ? 'raised' : undefined" class="w-[72px]">
+					<SelectTrigger size="sm" :elevation="elevation" class="w-[72px]">
 						<SelectValue />
 					</SelectTrigger>
 					<SelectContent side="top">
@@ -62,7 +63,7 @@ const sizes = computed(() => {
 				<Button
 					variant="outline"
 					size="icon-sm"
-					:elevation="raised ? 'raised' : undefined"
+					:elevation="elevation"
 					class="hidden lg:inline-flex"
 					:disabled="!table.getCanPreviousPage()"
 					@click="table.setPageIndex(0)"
@@ -73,7 +74,7 @@ const sizes = computed(() => {
 				<Button
 					variant="outline"
 					size="icon-sm"
-					:elevation="raised ? 'raised' : undefined"
+					:elevation="elevation"
 					:disabled="!table.getCanPreviousPage()"
 					@click="table.previousPage()"
 				>
@@ -83,7 +84,7 @@ const sizes = computed(() => {
 				<Button
 					variant="outline"
 					size="icon-sm"
-					:elevation="raised ? 'raised' : undefined"
+					:elevation="elevation"
 					:disabled="!table.getCanNextPage()"
 					@click="table.nextPage()"
 				>
@@ -93,7 +94,7 @@ const sizes = computed(() => {
 				<Button
 					variant="outline"
 					size="icon-sm"
-					:elevation="raised ? 'raised' : undefined"
+					:elevation="elevation"
 					class="hidden lg:inline-flex"
 					:disabled="!table.getCanNextPage()"
 					@click="table.setPageIndex(table.getPageCount() - 1)"

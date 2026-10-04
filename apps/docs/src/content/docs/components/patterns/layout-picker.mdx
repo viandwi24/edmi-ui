@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="layout-picker" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look.
+Flat by default. `elevation` sets the depth of the option cards: `sunken` (-1) wells, `raised` (+1) the bevel, `floating` (+2) bevel plus drop; the checked card keeps its ring. `LayoutPickerToast` takes the same prop for the toast (floating is its natural level) and raises the cards when it is `raised` or `floating`.
 
 <ComponentDemo name="layout-picker" demo="layout-picker-raised" />
 
@@ -35,7 +35,7 @@ Flat by default. Pass `raised` for the one-step 3D look.
 | `LayoutPickerToast defaultOpen` | `boolean` (skip the cookie check) | cookie unset |
 | `LayoutPickerToast onValueChange` / `onClose` | callbacks | none |
 | `getLayoutCookie(cookie?)` / `setLayoutCookie(layout)` | helpers, cookie `edmi-layout` | |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 The toast renders nothing once the cookie exists. Picking a card saves it; closing without picking saves the default (`dashboard`) so the toast does not return. Read the cookie on the server (`getLayoutCookie(request.headers.get("cookie") ?? "")`) to render the right shell without a flash (DESIGN §3, §6).
 

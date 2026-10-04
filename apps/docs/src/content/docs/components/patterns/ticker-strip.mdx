@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="ticker-strip" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look.
+Flat by default. `elevation` is forwarded to the card: `sunken` (-1) a soft inset well, `raised` (+1) the bevel, `floating` (+2) the bevel plus one soft drop. In a layered `ElevationProvider` the card resolves to its role default (raised).
 
 <ComponentDemo name="ticker-strip" demo="ticker-strip-raised" />
 
@@ -31,7 +31,7 @@ Flat by default. Pass `raised` for the one-step 3D look.
 | Prop | Type | Default |
 | --- | --- | --- |
 | `items` | `{ symbol, price, change, image?, href? }[]` | required |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 `change` is a signed string; a leading `-`/`−` renders `--destructive-text`, otherwise `--success-text`.
 

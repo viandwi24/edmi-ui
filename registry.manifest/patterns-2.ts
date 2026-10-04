@@ -9,7 +9,7 @@ export const items: Item[] = [
 			"Social post card: avatar header, body, attached index item and stat row.",
 		type: "registry:block",
 		categories: ["Patterns"],
-		registryDependencies: ["avatar", "button", "card", "item"],
+		registryDependencies: ["avatar", "button", "card", "item", "elevation"],
 		docs: "Composition block: `shadcn add @edmi-ui/feed-post`.",
 		frameworks: {
 			react: {
@@ -30,7 +30,7 @@ export const items: Item[] = [
 			"AI agent card with a deterministic 5x5 identicon, badges and a stat row.",
 		type: "registry:block",
 		categories: ["Patterns"],
-		registryDependencies: ["badge", "card"],
+		registryDependencies: ["badge", "card", "elevation"],
 		docs: "Composition block: `shadcn add @edmi-ui/agent-card`.",
 		frameworks: {
 			react: {
@@ -51,7 +51,7 @@ export const items: Item[] = [
 			"Numbered feature row on a card with a trailing icon; expands when given content.",
 		type: "registry:block",
 		categories: ["Patterns"],
-		registryDependencies: ["card", "collapsible"],
+		registryDependencies: ["card", "collapsible", "elevation"],
 		docs: "Composition block: `shadcn add @edmi-ui/feature-row`.",
 		frameworks: {
 			react: {
@@ -72,7 +72,7 @@ export const items: Item[] = [
 			"Numbered step card with a corner icon, title and description.",
 		type: "registry:block",
 		categories: ["Patterns"],
-		registryDependencies: ["card"],
+		registryDependencies: ["card", "elevation"],
 		docs: "Composition block: `shadcn add @edmi-ui/step-card`.",
 		frameworks: {
 			react: {
@@ -93,7 +93,7 @@ export const items: Item[] = [
 			"Plan card with title, price, call to action and a check list.",
 		type: "registry:block",
 		categories: ["Patterns"],
-		registryDependencies: ["card", "separator"],
+		registryDependencies: ["card", "separator", "elevation"],
 		docs: "Composition block: `shadcn add @edmi-ui/pricing-plan`.",
 		frameworks: {
 			react: {
@@ -114,7 +114,7 @@ export const items: Item[] = [
 			"Agent tasks grouped by status badge (ready to review, running, completed).",
 		type: "registry:block",
 		categories: ["Patterns"],
-		registryDependencies: ["badge", "card", "separator"],
+		registryDependencies: ["badge", "card", "separator", "elevation"],
 		docs: "Composition block: `shadcn add @edmi-ui/task-list`.",
 		frameworks: {
 			react: {
@@ -134,7 +134,7 @@ export const items: Item[] = [
 		description: "Sunken stage column with a mono header and Card items.",
 		type: "registry:block",
 		categories: ["Patterns"],
-		registryDependencies: ["card"],
+		registryDependencies: ["card", "elevation"],
 		docs: "Composition block: `shadcn add @edmi-ui/kanban-column`.",
 		frameworks: {
 			react: {
@@ -155,7 +155,7 @@ export const items: Item[] = [
 			"Card with mono code, optional line highlight and a copy button.",
 		type: "registry:block",
 		categories: ["Patterns"],
-		registryDependencies: ["button", "card"],
+		registryDependencies: ["button", "card", "elevation"],
 		docs: "Composition block: `shadcn add @edmi-ui/code-block`.",
 		frameworks: {
 			react: {
@@ -176,7 +176,7 @@ export const items: Item[] = [
 			"Site footer: brand, link columns, social slot and legal line.",
 		type: "registry:block",
 		categories: ["Patterns"],
-		registryDependencies: ["card", "separator"],
+		registryDependencies: ["card", "separator", "elevation"],
 		docs: "Composition block: `shadcn add @edmi-ui/footer`.",
 		frameworks: {
 			react: {

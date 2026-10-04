@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="agent-card" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look.
+Flat by default. `elevation` is forwarded to the card: `sunken` (-1) a soft inset well, `raised` (+1) the bevel, `floating` (+2) the bevel plus one soft drop. In a layered `ElevationProvider` the card resolves to its role default (raised).
 
 <ComponentDemo name="agent-card" demo="agent-card-raised" />
 
@@ -32,7 +32,7 @@ Flat by default. Pass `raised` for the one-step 3D look.
 | --- | --- | --- |
 | `AgentCard` | `name, address?, tag?, autopilot?, stats?, seed?` | Card with identicon, secondary tag badge, brand Autopilot badge and stats. |
 | `AgentIdenticon` | `seed, size=44` | Token-colored 5x5 grid, deterministic per seed. |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 | `children` ✦ | React children, Vue default slot, Svelte `children` snippet | footer under the stats |
 
 ## Footer ✦

@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="stat-tile" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look.
+Flat by default. `elevation` is forwarded to the card: `sunken` (-1) a soft inset well, `raised` (+1) the bevel, `floating` (+2) the bevel plus one soft drop. In a layered `ElevationProvider` the card resolves to its role default (raised).
 
 <ComponentDemo name="stat-tile" demo="stat-tile-raised" />
 
@@ -39,7 +39,7 @@ Flat by default. Pass `raised` for the one-step 3D look.
 | `StatMeter steps` | `number` | `30` |
 | `StatMeter zones` | `{ upTo: number; color: string }[]` | green / amber / red |
 | `StatStripItem value` / `label` | `ReactNode` | required |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 ## ✦ Edmi additions
 - `StatMeter` and `StatStrip` / `StatStripItem` are separate exports of the same block.

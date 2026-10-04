@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="leaderboard-podium" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look.
+Flat by default. `elevation` is forwarded to every card: `sunken` (-1) a soft inset well, `raised` (+1) the bevel, `floating` (+2) the bevel plus one soft drop. In a layered `ElevationProvider` the card resolves to its role default (raised).
 
 <ComponentDemo name="leaderboard-podium" demo="leaderboard-podium-raised" />
 
@@ -31,7 +31,7 @@ Flat by default. Pass `raised` for the one-step 3D look.
 | Prop | Type | Default |
 | --- | --- | --- |
 | `entries` | `{ rank: 1 \| 2 \| 3, name, meta, image?, initials?, href? }[]` | required |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 | `variant` ✦ | `"podium" \| "cards"` | `"podium"` |
 | `entries[].symbol, creator, change, spark, allocation, aum, holders` ✦ | `cards` variant fields | |
 

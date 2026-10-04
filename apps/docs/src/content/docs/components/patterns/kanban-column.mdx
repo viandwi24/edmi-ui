@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="kanban-column" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look.
+Flat by default. The column is a sunken well. `elevation` on the column flows to every `KanbanItem` card (items may override): `raised` (+1) bevel, `floating` (+2) bevel plus drop.
 
 <ComponentDemo name="kanban-column" demo="kanban-column-raised" />
 
@@ -32,7 +32,7 @@ Flat by default. Pass `raised` for the one-step 3D look.
 | --- | --- | --- |
 | `KanbanColumn` | `title, meta?` | Sunk container, 282px wide. |
 | `KanbanItem` | `title, description?, icon?, action?, disabled?` | Card row; `disabled` dims to 60%. |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 ## ✦ Edmi additions
 - Whole block is an Edmi addition (DESIGN §5 Patterns, board 12). Composed from: card.

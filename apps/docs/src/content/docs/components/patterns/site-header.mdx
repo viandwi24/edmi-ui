@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="site-header" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look.
+Flat by default. `elevation` sets the depth of the bar; `raised` (+1) and `floating` (+2) also raise the brand mark. Pass `elevation` to the call-to-action `Button` yourself (the Svelte `action` snippet receives `{ elevation }` to forward).
 
 <ComponentDemo name="site-header" demo="site-header-raised" />
 
@@ -37,7 +37,7 @@ Flat by default. Pass `raised` for the one-step 3D look.
 | `steps` | `{ label, href }[]` (separated by 1px dividers) | `[]` |
 | `links` | `{ label, href }[]` | `[]` |
 | `action` | `ReactNode` (usually a `Button`) | none |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 Also exported: `SiteHeaderBrand`, `SiteHeaderMark`. Nav hides below `md`.
 

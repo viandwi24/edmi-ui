@@ -1,9 +1,10 @@
 import { TaskList } from "@edmi-react/blocks/task-list/task-list";
+import type { Elevation } from "@edmi-react/ui/elevation";
 
-export default function Demo() {
+function Sample({ elevation }: { elevation: Elevation }) {
 	return (
 		<TaskList
-			elevation="raised"
+			elevation={elevation}
 			className="w-[300px] max-w-full"
 			tasks={[
 				{ title: "ICP analysis", agent: "Research agent", status: "review" },
@@ -20,5 +21,24 @@ export default function Demo() {
 				},
 			]}
 		/>
+	);
+}
+
+const levels = [
+	{ value: "flat", label: "Flat (0)" },
+	{ value: "raised", label: "Raised (+1)" },
+	{ value: "floating", label: "Floating (+2)" },
+] as const;
+
+export default function Demo() {
+	return (
+		<div className="flex flex-col gap-6">
+			{levels.map(({ value, label }) => (
+				<div key={value} className="flex flex-col gap-2">
+					<p className="text-xs font-medium text-muted-foreground">{label}</p>
+					<Sample elevation={value} />
+				</div>
+			))}
+		</div>
 	);
 }

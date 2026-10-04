@@ -91,6 +91,11 @@
 			cell: ({ row }) => renderSnippet(actionsCell, row.original),
 		}),
 	]);
+
+	const levels = [
+		{ value: "flat", label: "Flat (0)" } as const,
+		{ value: "raised", label: "Raised (+1)" } as const,
+	];
 </script>
 
 {#snippet indexCell(row: Index)}
@@ -130,8 +135,12 @@
 	</div>
 {/snippet}
 
+<div class="flex flex-col gap-6">
+	{#each levels as l (l.value)}
+		<div class="flex flex-col gap-2">
+			<p class="text-xs font-medium text-muted-foreground">{l.label}</p>
 <DataTable
-	raised
+	elevation={l.value}
 	{columns}
 	{data}
 	filterColumn="index"
@@ -142,3 +151,6 @@
 	]}
 	pageSize={5}
 />
+		</div>
+	{/each}
+</div>

@@ -7,10 +7,20 @@
 		{ label: "Estimated shares", value: (n * 0.98209).toFixed(2) },
 		{ label: "Fee", value: "1.00%" },
 	]);
+
+	const levels = [
+		{ value: "flat", label: "Flat (0)" } as const,
+		{ value: "raised", label: "Raised (+1)" } as const,
+		{ value: "floating", label: "Floating (+2)" } as const,
+	];
 </script>
 
+<div class="flex flex-col gap-6">
+	{#each levels as l (l.value)}
+		<div class="flex flex-col gap-2">
+			<p class="text-xs font-medium text-muted-foreground">{l.label}</p>
 <JoinPanel
-	raised
+	elevation={l.value}
 	bind:amount
 	onMax={() => (amount = "2,500")}
 	label="Amount"
@@ -19,3 +29,6 @@
 	joinLabel="Join MAG4"
 	disabled={n === 0}
 />
+		</div>
+	{/each}
+</div>

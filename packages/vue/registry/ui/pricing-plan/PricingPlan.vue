@@ -2,12 +2,13 @@
 import type { HTMLAttributes } from 'vue'
 import { Check } from '@lucide/vue'
 import { Card } from '@/registry/edmi/ui/card'
+import type { Elevation } from '@/registry/edmi/ui/elevation'
 import { Separator } from '@/registry/edmi/ui/separator'
 import { cn } from '@/registry/edmi/lib/utils'
 
 const props = defineProps<{
-  /** ✦ one-step 3D look, forwarded to the card */
-  raised?: boolean
+  /** ✦ depth of the card: sunken -1, flat 0, raised +1, floating +2 */
+  elevation?: Elevation
   class?: HTMLAttributes['class']
   name: string
   tagline?: string
@@ -25,7 +26,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <Card :elevation="raised ? 'raised' : undefined" data-slot="pricing-plan" :class="cn('gap-0 p-6', props.class)">
+  <Card :elevation="elevation" data-slot="pricing-plan" :class="cn('gap-0 p-6', props.class)">
     <div class="text-[22px] font-semibold">{{ name }}</div>
     <div v-if="tagline" class="mt-1 text-[13.5px] text-muted-foreground">{{ tagline }}</div>
     <div v-if="price" class="mt-[22px] text-[22px] font-semibold">{{ price }}</div>

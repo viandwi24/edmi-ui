@@ -4,6 +4,7 @@ import { Plus } from "@lucide/vue";
 import { computed } from "vue";
 import { Badge } from "@/registry/edmi/ui/badge";
 import { Button } from "@/registry/edmi/ui/button";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
 import {
 	DropdownMenu,
 	DropdownMenuCheckboxItem,
@@ -22,11 +23,11 @@ import type { DataTableFeatures } from "./dataTableFeatures";
 const props = withDefaults(defineProps<{
 	column?: Column<DataTableFeatures, TData, TValue>;
 	title: string;
-	/** ✦ raised trigger button */
-	raised?: boolean;
+	/** ✦ depth of the toolbar and pagination controls (the table container stays flat). */
+	elevation?: Elevation;
 	/** Defaults to the unique values found in the column. */
 	options?: { label: string; value: string }[];
-}>(), { raised: false });
+}>(), { elevation: undefined });
 
 const facets = computed(() => props.column?.getFacetedUniqueValues());
 const items = computed(
@@ -52,7 +53,7 @@ function toggle(value: string, checked: boolean) {
 <template>
 	<DropdownMenu v-if="column">
 		<DropdownMenuTrigger as-child>
-			<Button variant="outline" size="sm" :elevation="raised ? 'raised' : undefined" class="border-dashed">
+			<Button variant="outline" size="sm" :elevation="elevation" class="border-dashed">
 				<Plus />
 				{{ title }}
 				<Badge v-if="selected.size > 0" variant="brand" shape="number">

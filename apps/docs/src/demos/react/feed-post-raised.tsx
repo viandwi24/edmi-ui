@@ -7,11 +7,12 @@ import {
 	FeedPostStat,
 } from "@edmi-react/blocks/feed-post/feed-post";
 import { Button } from "@edmi-react/ui/button";
+import type { Elevation } from "@edmi-react/ui/elevation";
 import { IconPlaceholder } from "@/edmi/icon-placeholder";
 
-export default function Demo() {
+function Sample({ elevation }: { elevation: Elevation }) {
 	return (
-		<FeedPost elevation="raised" className="w-[460px] max-w-full">
+		<FeedPost elevation={elevation} className="w-[460px] max-w-full">
 			<FeedPostHeader
 				name="Dewi Lestari"
 				handle="@dewi"
@@ -68,5 +69,24 @@ export default function Demo() {
 				</FeedPostStat>
 			</FeedPostFooter>
 		</FeedPost>
+	);
+}
+
+const levels = [
+	{ value: "flat", label: "Flat (0)" },
+	{ value: "raised", label: "Raised (+1)" },
+	{ value: "floating", label: "Floating (+2)" },
+] as const;
+
+export default function Demo() {
+	return (
+		<div className="flex flex-col gap-6">
+			{levels.map(({ value, label }) => (
+				<div key={value} className="flex flex-col gap-2">
+					<p className="text-xs font-medium text-muted-foreground">{label}</p>
+					<Sample elevation={value} />
+				</div>
+			))}
+		</div>
 	);
 }

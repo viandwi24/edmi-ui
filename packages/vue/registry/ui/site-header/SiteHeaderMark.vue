@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
 import { ChartLineIcon } from '@lucide/vue'
+import { computed } from 'vue'
 import { cn } from '@/registry/edmi/lib/utils'
+import { type Elevation, useElevation } from '@/registry/edmi/ui/elevation'
 
 const props = withDefaults(defineProps<{
-  /** ✦ one-step 3D look */
-  raised?: boolean
+  /** ✦ raised +1 / floating +2 give the mark the raised face */
+  elevation?: Elevation
   class?: HTMLAttributes['class']
-}>(), { raised: false })
+}>(), { elevation: undefined })
+
+const level = useElevation(() => props.elevation, 'handle')
+const raised = computed(() => level.value === 'raised' || level.value === 'floating')
 </script>
 
 <template>
@@ -16,7 +21,7 @@ const props = withDefaults(defineProps<{
     data-slot="site-header-mark"
     :class="cn(
       'inline-flex size-7 items-center justify-center rounded-lg border border-transparent bg-primary text-primary-foreground',
-      props.raised && 'border-primary-edge border-b-primary-lip bg-linear-to-b from-primary-hi to-primary shadow-btn-primary [background-origin:border-box]',
+      raised && '[background-image:var(--r1-p-face)] shadow-btn-raised-primary [background-origin:border-box]',
       props.class,
     )"
   >

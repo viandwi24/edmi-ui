@@ -2,13 +2,20 @@
 	import type { RowData, Table } from "@tanstack/svelte-table";
 	import IconPlaceholder from "$lib/components/icon-placeholder/icon-placeholder.svelte";
 	import { Button } from "$lib/registry/ui/button/index.js";
+	import type { Elevation } from "$lib/registry/ui/elevation/index.js";
 	import * as Select from "$lib/registry/ui/select/index.js";
 	import type { DataTableFeatures } from "./data-table-features.js";
 
 	let {
 		table,
 		pageSizes = [10, 20, 30, 40, 50],
-	}: { table: Table<DataTableFeatures, TData>; pageSizes?: number[] } = $props();
+		elevation = "auto",
+	}: {
+		table: Table<DataTableFeatures, TData>;
+		pageSizes?: number[];
+		/** ✦ depth of the toolbar and pagination controls (the table container stays flat). */
+		elevation?: Elevation;
+	} = $props();
 
 	const pagination = $derived(table.atoms.pagination.get());
 	// The current size (e.g. `pageSize={5}`) must be an option, or the select shows blank.
@@ -32,7 +39,7 @@
 				value={`${pagination.pageSize}`}
 				onValueChange={(value) => table.setPageSize(Number(value))}
 			>
-				<Select.Trigger size="sm" class="w-[72px]">
+				<Select.Trigger size="sm" {elevation} class="w-[72px]">
 					{pagination.pageSize}
 				</Select.Trigger>
 				<Select.Content side="top">
@@ -48,6 +55,7 @@
 		<div class="flex items-center gap-1">
 			<Button
 				variant="outline"
+				{elevation}
 				size="icon-sm"
 				class="hidden lg:inline-flex"
 				onclick={() => table.setPageIndex(0)}
@@ -64,6 +72,7 @@
 			</Button>
 			<Button
 				variant="outline"
+				{elevation}
 				size="icon-sm"
 				onclick={() => table.previousPage()}
 				disabled={!table.getCanPreviousPage()}
@@ -79,6 +88,7 @@
 			</Button>
 			<Button
 				variant="outline"
+				{elevation}
 				size="icon-sm"
 				onclick={() => table.nextPage()}
 				disabled={!table.getCanNextPage()}
@@ -94,6 +104,7 @@
 			</Button>
 			<Button
 				variant="outline"
+				{elevation}
 				size="icon-sm"
 				class="hidden lg:inline-flex"
 				onclick={() => table.setPageIndex(table.getPageCount() - 1)}

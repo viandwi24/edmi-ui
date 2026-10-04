@@ -8,6 +8,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuSeparator,
 } from "@edmi-react/ui/dropdown-menu";
+import type { Elevation } from "@edmi-react/ui/elevation";
 import { createColumnHelper } from "@tanstack/react-table";
 
 type Index = {
@@ -197,10 +198,10 @@ const columns = col.columns([
 	}),
 ]);
 
-export default function Demo() {
+function Sample({ elevation }: { elevation: Elevation }) {
 	return (
 		<DataTable
-			raised
+			elevation={elevation}
 			columns={columns}
 			data={data}
 			filterColumn="index"
@@ -211,5 +212,23 @@ export default function Demo() {
 			]}
 			pageSize={5}
 		/>
+	);
+}
+
+const levels = [
+	{ value: "flat", label: "Flat (0)" },
+	{ value: "raised", label: "Raised (+1)" },
+] as const;
+
+export default function Demo() {
+	return (
+		<div className="flex flex-col gap-6">
+			{levels.map(({ value, label }) => (
+				<div key={value} className="flex flex-col gap-2">
+					<p className="text-xs font-medium text-muted-foreground">{label}</p>
+					<Sample elevation={value} />
+				</div>
+			))}
+		</div>
 	);
 }

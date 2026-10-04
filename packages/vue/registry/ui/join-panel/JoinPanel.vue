@@ -5,6 +5,7 @@ import { computed, ref, useId } from 'vue'
 import { cn } from '@/registry/edmi/lib/utils'
 import { Button } from '@/registry/edmi/ui/button'
 import { Card } from '@/registry/edmi/ui/card'
+import type { Elevation } from '@/registry/edmi/ui/elevation'
 import {
   InputGroup,
   InputGroupAddon,
@@ -15,8 +16,8 @@ import {
 import { Tabs, TabsList, TabsTrigger } from '@/registry/edmi/ui/tabs'
 
 const props = withDefaults(defineProps<{
-  /** ✦ one-step 3D look, forwarded to the card */
-  raised?: boolean
+  /** ✦ depth of the card; raised +1 / floating +2 also raise the tabs, chips and join Button */
+  elevation?: Elevation
   label?: string
   currency?: string
   defaultAmount?: string
@@ -43,7 +44,15 @@ const props = withDefaults(defineProps<{
   defaultAmount: '',
   rows: () => [],
   joinLabel: 'Join',
+  elevation: undefined,
 })
+
+// Controls follow an explicit card level: raised/floating raise them, flat/sunken keep them flat; auto leaves them to their own role.
+const control = computed(() =>
+  props.elevation && props.elevation !== 'auto'
+    ? (props.elevation === 'raised' || props.elevation === 'floating' ? 'raised' : 'flat')
+    : undefined,
+)
 
 const emit = defineEmits<{
   (e: 'max'): void
@@ -80,10 +89,10 @@ function onInput(e: Event) {
 
 <template>
   <!-- Amount field (mono, Max button, currency) + summary rows + one big action. -->
-  <Card :elevation="raised ? 'raised' : undefined" data-slot="join-panel" size="sm" :class="cn('w-80 gap-0', props.class)">
+  <Card :elevation="elevation" data-slot="join-panel" size="sm" :class="cn('w-80 gap-0', props.class)">
     <div v-if="tabs?.length" class="mb-5 px-(--card-spacing)">
       <Tabs v-model="tabValue">
-        <TabsList :elevation="raised ? 'raised' : undefined" class="w-full">
+        <TabsList :elevation="control" class="w-full">
           <TabsTrigger v-for="t in tabs" :key="t.value" :value="t.value">
             {{ t.label }}
           </TabsTrigger>
@@ -126,7 +135,7 @@ function onInput(e: Event) {
         type="button"
         variant="secondary"
         size="sm"
-        :elevation="raised ? 'raised' : undefined"
+        :elevation="control"
         class="flex-1 font-mono"
         @click="q.value !== undefined ? (amount = q.value) : emit('max')"
       >
@@ -142,7 +151,7 @@ function onInput(e: Event) {
       <span class="font-mono">{{ r.value }}</span>
     </div>
     <div class="mt-3.5 px-(--card-spacing)">
-      <Button size="lg" class="w-full" :elevation="raised ? 'raised' : undefined" :disabled="disabled" @click="emit('join')">
+      <Button size="lg" class="w-full" :elevation="control" :disabled="disabled" @click="emit('join')">
         {{ joinLabel }}
       </Button>
     </div>

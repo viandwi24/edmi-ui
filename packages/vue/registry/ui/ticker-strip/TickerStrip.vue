@@ -4,10 +4,11 @@ import type { TickerItem } from '.'
 import { cn } from '@/registry/edmi/lib/utils'
 import { Avatar, AvatarFallback, AvatarImage } from '@/registry/edmi/ui/avatar'
 import { Card } from '@/registry/edmi/ui/card'
+import type { Elevation } from '@/registry/edmi/ui/elevation'
 
 const props = defineProps<{
-  /** ✦ one-step 3D look, forwarded to the card */
-  raised?: boolean
+  /** ✦ depth of the card (sunken -1, flat 0, raised +1, floating +2) */
+  elevation?: Elevation
   items: TickerItem[]
   class?: HTMLAttributes['class']
 }>()
@@ -18,7 +19,7 @@ const cell = 'block min-w-[150px] flex-1 px-[18px] py-3.5 not-first:border-l not
 
 <template>
   <!-- Horizontal row of price cells (avatar + symbol, mono price, up/down change). -->
-  <Card :elevation="raised ? 'raised' : undefined" data-slot="ticker-strip" :class="cn('flex-row gap-0 overflow-x-auto p-0', props.class)">
+  <Card :elevation="elevation" data-slot="ticker-strip" :class="cn('flex-row gap-0 overflow-x-auto p-0', props.class)">
     <component
       :is="item.href ? 'a' : 'div'"
       v-for="item in items"

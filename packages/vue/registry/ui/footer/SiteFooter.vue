@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
 import { Card } from '@/registry/edmi/ui/card'
+import type { Elevation } from '@/registry/edmi/ui/elevation'
 import { Separator } from '@/registry/edmi/ui/separator'
 import { cn } from '@/registry/edmi/lib/utils'
 import type { FooterColumn } from './types'
 
 const props = defineProps<{
-  /** ✦ one-step 3D look, forwarded to the card */
-  raised?: boolean
+  /** ✦ depth of the card: sunken -1, flat 0, raised +1, floating +2 */
+  elevation?: Elevation
   class?: HTMLAttributes['class']
   description?: string
   columns?: FooterColumn[]
@@ -20,7 +21,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <Card :elevation="raised ? 'raised' : undefined" data-slot="site-footer" :class="cn('gap-0 px-8 py-7', props.class)">
+  <Card :elevation="elevation" data-slot="site-footer" :class="cn('gap-0 px-8 py-7', props.class)">
     <div class="flex flex-wrap justify-between gap-8">
       <div class="flex flex-col gap-3">
         <slot name="brand" />

@@ -21,7 +21,7 @@ function KanbanColumn({
 		<div
 			data-slot="kanban-column"
 			className={cn(
-				"flex w-[282px] flex-col gap-2 rounded-lg border border-border-2 bg-muted p-2.5 shadow-sunk",
+				"flex w-[282px] flex-col gap-2 rounded-lg border border-sk-bd bg-sk-bg p-2.5 shadow-sunken",
 				className,
 			)}
 			{...props}

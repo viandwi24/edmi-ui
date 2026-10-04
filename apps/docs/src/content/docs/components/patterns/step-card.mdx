@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="step-card" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look.
+Flat by default. `elevation` is forwarded to the card: `sunken` (-1) a soft inset well, `raised` (+1) the bevel, `floating` (+2) the bevel plus one soft drop. In a layered `ElevationProvider` the card resolves to its role default (raised).
 
 <ComponentDemo name="step-card" demo="step-card-raised" />
 
@@ -31,7 +31,7 @@ Flat by default. Pass `raised` for the one-step 3D look.
 | Part | Props | Notes |
 | --- | --- | --- |
 | `StepCard` | `index, title, description?, icon?` | Mono index, arrow icon (default up-right), title, muted description. |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 ## ✦ Edmi additions
 - Whole block is an Edmi addition (DESIGN §5 Patterns, board 12). Composed from: card.

@@ -7,7 +7,7 @@ const bar = 'block rounded-sm bg-[color-mix(in_srgb,var(--muted-foreground)_20%,
 </script>
 
 <template>
-  <div class="flex h-24 w-full overflow-hidden rounded-lg border border-border-2 bg-muted shadow-sunk">
+  <div class="flex h-24 w-full overflow-hidden rounded-lg border border-sk-bd bg-sk-bg shadow-sunken">
     <template v-if="layout === 'dashboard'">
       <div class="flex w-[46px] flex-col gap-1.5 border-r border-border p-1.5">
         <span v-for="i in 4" :key="i" :class="`${bar} h-1.5`" />

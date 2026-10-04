@@ -1,6 +1,7 @@
 import type { ReactTable, RowData } from "@tanstack/react-table";
 import { IconPlaceholder } from "@/edmi/icon-placeholder";
 import { Button } from "@/registry/edmi/ui/button";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
 import {
 	Select,
 	SelectContent,
@@ -13,13 +14,14 @@ import type { DataTableFeatures } from "./data-table-features";
 interface DataTablePaginationProps<TData extends RowData> {
 	table: ReactTable<DataTableFeatures, TData>;
 	pageSizes?: number[];
-	raised?: boolean;
+	/** ✦ depth of the toolbar and pagination controls (the table container stays flat). */
+	elevation?: Elevation;
 }
 
 export function DataTablePagination<TData extends RowData>({
 	table,
 	pageSizes = [10, 20, 30, 40, 50],
-	raised = false,
+	elevation,
 }: DataTablePaginationProps<TData>) {
 	const { pageIndex, pageSize } = table.state.pagination;
 	// The current size (e.g. `DataTable pageSize={5}`) must be an option, or the trigger renders blank.
@@ -40,11 +42,7 @@ export function DataTablePagination<TData extends RowData>({
 						value={`${pageSize}`}
 						onValueChange={(value) => table.setPageSize(Number(value))}
 					>
-						<SelectTrigger
-							size="sm"
-							elevation={raised ? "raised" : undefined}
-							className="w-[72px]"
-						>
+						<SelectTrigger size="sm" elevation={elevation} className="w-[72px]">
 							<SelectValue />
 						</SelectTrigger>
 						<SelectContent side="top">
@@ -63,7 +61,7 @@ export function DataTablePagination<TData extends RowData>({
 					<Button
 						variant="outline"
 						size="icon-sm"
-						elevation={raised ? "raised" : undefined}
+						elevation={elevation}
 						className="hidden lg:inline-flex"
 						onClick={() => table.setPageIndex(0)}
 						disabled={!table.getCanPreviousPage()}
@@ -80,7 +78,7 @@ export function DataTablePagination<TData extends RowData>({
 					<Button
 						variant="outline"
 						size="icon-sm"
-						elevation={raised ? "raised" : undefined}
+						elevation={elevation}
 						onClick={() => table.previousPage()}
 						disabled={!table.getCanPreviousPage()}
 					>
@@ -96,7 +94,7 @@ export function DataTablePagination<TData extends RowData>({
 					<Button
 						variant="outline"
 						size="icon-sm"
-						elevation={raised ? "raised" : undefined}
+						elevation={elevation}
 						onClick={() => table.nextPage()}
 						disabled={!table.getCanNextPage()}
 					>
@@ -112,7 +110,7 @@ export function DataTablePagination<TData extends RowData>({
 					<Button
 						variant="outline"
 						size="icon-sm"
-						elevation={raised ? "raised" : undefined}
+						elevation={elevation}
 						className="hidden lg:inline-flex"
 						onClick={() => table.setPageIndex(table.getPageCount() - 1)}
 						disabled={!table.getCanNextPage()}

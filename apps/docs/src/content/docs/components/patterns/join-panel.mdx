@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="join-panel" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look.
+Flat by default. `elevation` is forwarded to the card (`sunken` -1, `raised` +1, `floating` +2); an explicit `raised` or `floating` also raises the tabs, quick-amount chips and the join button, `flat` and `sunken` keep them flat.
 
 <ComponentDemo name="join-panel" demo="join-panel-raised" />
 
@@ -38,7 +38,7 @@ Flat by default. Pass `raised` for the one-step 3D look.
 | `rows` | `{ label, value }[]` (values mono) | `[]` |
 | `joinLabel` | `ReactNode` | `"Join"` |
 | `disabled` | `boolean` | `false` |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 | `tabs` ✦, `tab` / `defaultTab`, `onTabChange` | `{ value, label }[]` mode tabs (Join / Redeem) | none |
 | `quickAmounts` ✦ | `{ label, value? }[]` chips; no `value` calls `onMax` | none |
 | `footnote` ✦ | `ReactNode` small centred note under the action | none |

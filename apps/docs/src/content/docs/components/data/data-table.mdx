@@ -34,9 +34,9 @@ const table = useTable({ features, data, columns }) // TanStack Table v9
 
 Declare the features once in `data-table-features.ts` (v9 is feature-based, unused features are tree-shaken) and pass `typeof features` as the first generic to `ColumnDef`, `Column` and `Table`.
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look (hard lip under the table surface, raised controls in the toolbar).
+The table container stays flat. `elevation` sets the depth of the toolbar and pagination controls: filter input, faceted filters, view options, page size select and page buttons (`raised` +1, `floating` +2, `sunken` -1 for the fields).
 
 <ComponentDemo name="data-table" demo="data-table-raised" />
 
@@ -50,12 +50,12 @@ Flat by default. Pass `raised` for the one-step 3D look (hard lip under the tabl
 | `DataTable pageSize` | `number` | `10` |
 | `DataTableColumnHeader numeric` ✦ | `boolean` | `false` |
 | `DataTablePagination pageSizes` | `number[]` (the current page size is added if missing) | `[10, 20, 30, 40, 50]` |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 Requires `@tanstack/react-table` (v9), and the `table`, `button`, `input`, `checkbox`, `select`, `dropdown-menu` and `badge` items.
 
 ## ✦ Edmi additions
-- Table sits in a bordered card surface (flat; `raised` adds the hard 2px lip); selected rows get a soft brand tint.
+- Table sits in a bordered card surface (always flat); selected rows get a soft brand tint.
 - Numbers are mono and right-aligned (`numeric`), deltas use `success`/`destructive` badges.
 - Dashed faceted filter buttons and `DataTableRowActions` match the kit board.
 

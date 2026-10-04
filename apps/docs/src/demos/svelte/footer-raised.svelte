@@ -30,10 +30,20 @@
 			],
 		},
 	];
+
+	const levels = [
+		{ value: "flat", label: "Flat (0)" } as const,
+		{ value: "raised", label: "Raised (+1)" } as const,
+		{ value: "floating", label: "Floating (+2)" } as const,
+	];
 </script>
 
+<div class="flex flex-col gap-6">
+	{#each levels as l (l.value)}
+		<div class="flex flex-col gap-2">
+			<p class="text-xs font-medium text-muted-foreground">{l.label}</p>
 <SiteFooter
-	raised
+	elevation={l.value}
 	class="w-full"
 	description="Turn a stock thesis into a token. Built on Solana devnet."
 	{columns}
@@ -44,11 +54,14 @@
 		<span class="font-brand text-xl font-semibold tracking-tight">Stockbreak</span>
 	{/snippet}
 	{#snippet socials()}
-		<Button variant="secondary" elevation="raised" size="icon-sm" aria-label="X">
+		<Button variant="secondary" elevation={l.value} size="icon-sm" aria-label="X">
 			<IconPlaceholder lucide="XIcon" tabler="IconX" hugeicons="Cancel01Icon" phosphor="XIcon" remixicon="RiCloseLine" />
 		</Button>
-		<Button variant="secondary" elevation="raised" size="icon-sm" aria-label="Link">
+		<Button variant="secondary" elevation={l.value} size="icon-sm" aria-label="Link">
 			<IconPlaceholder lucide="LinkIcon" tabler="IconLink" hugeicons="LinkIcon" phosphor="LinkIcon" remixicon="RiLinksLine" />
 		</Button>
 	{/snippet}
 </SiteFooter>
+		</div>
+	{/each}
+</div>

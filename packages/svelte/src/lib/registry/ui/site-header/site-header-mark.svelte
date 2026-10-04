@@ -2,16 +2,20 @@
 	import IconPlaceholder from "$lib/components/icon-placeholder/icon-placeholder.svelte";
 	import { cn, type WithElementRef } from "$lib/utils.js";
 	import type { HTMLAttributes } from "svelte/elements";
+	import { type Elevation, useElevation } from "$lib/registry/ui/elevation/index.js";
 
 	let {
 		ref = $bindable(null),
 		class: className,
-		raised = false,
+		elevation = "auto",
 		...restProps
 	}: WithElementRef<Omit<HTMLAttributes<HTMLSpanElement>, "children">> & {
-		/** ✦ opt-in one-step 3D look. */
-		raised?: boolean;
+		/** ✦ raised +1 / floating +2 give the mark the raised face. */
+		elevation?: Elevation;
 	} = $props();
+
+	const level = useElevation(() => elevation, "handle");
+	const raised = $derived(level.current === "raised" || level.current === "floating");
 </script>
 
 <!-- Dark tile with a chart glyph: the Stockbreak mark. Pass a `logo` snippet to the brand/header to replace it. -->
@@ -20,7 +24,7 @@
 	data-slot="site-header-mark"
 	class={cn(
 		"inline-flex size-7 items-center justify-center rounded-lg border border-primary bg-primary text-primary-foreground",
-		raised && "border-primary-edge border-b-primary-lip bg-linear-to-b from-primary-hi to-primary shadow-[0_2px_0_var(--primary-lip)] [background-origin:border-box]",
+		raised && "[background-image:var(--r1-p-face)] shadow-btn-raised-primary [background-origin:border-box]",
 		className
 	)}
 	{...restProps}

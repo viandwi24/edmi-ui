@@ -61,17 +61,13 @@ function TickerCell({ item }: { item: TickerItem }) {
 function TickerStrip({
 	className,
 	items,
-	raised = false,
 	...props
 }: Omit<React.ComponentProps<typeof Card>, "children"> & {
 	items: TickerItem[];
-	/** ✦ forwarded to the Card. */
-	raised?: boolean;
 }) {
 	return (
 		<Card
 			data-slot="ticker-strip"
-			elevation={raised ? "raised" : undefined}
 			className={cn("flex-row gap-0 overflow-x-auto p-0", className)}
 			{...props}
 		>

@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="watchlist-item" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` and the active row gets a one-step lip.
+Flat by default. `elevation` raises only the active row: `raised` (+1) adds the bevel, `floating` (+2) the bevel plus one soft drop.
 
 <ComponentDemo name="watchlist-item" demo="watchlist-item-raised" />
 
@@ -34,7 +34,7 @@ Flat by default. Pass `raised` and the active row gets a one-step lip.
 | `color` | CSS color | `var(--chart-1)` |
 | `letter` | `string` | first letter of `symbol` |
 | `active` | `boolean` | `false` |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 Renders an `<a>`; pass `href` and other anchor props.
 

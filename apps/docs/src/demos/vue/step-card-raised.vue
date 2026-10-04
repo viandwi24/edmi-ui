@@ -1,11 +1,22 @@
 <script setup lang="ts">
 import { StepCard } from "@edmi-vue/ui/step-card";
+
+const levels = [
+	{ value: "flat", label: "Flat (0)" } as const,
+	{ value: "raised", label: "Raised (+1)" } as const,
+	{ value: "floating", label: "Floating (+2)" } as const,
+];
 </script>
 
 <template>
+	<div class="flex flex-col gap-6">
+		<div v-for="l in levels" :key="l.value" class="flex flex-col gap-2">
+			<p class="text-xs font-medium text-muted-foreground">{{ l.label }}</p>
   <div class="flex flex-wrap gap-3">
-    <StepCard raised class="w-[200px]" index="01" title="Create" description="Pick up to 10 assets and set weights." />
-    <StepCard raised class="w-[200px]" index="02" title="Share" description="A link, OG image, feed card and Blink." />
-    <StepCard raised class="w-[200px]" index="03" title="Join" description="Investors pay in USDC in one click." />
+    <StepCard :elevation="l.value" class="w-[200px]" index="01" title="Create" description="Pick up to 10 assets and set weights." />
+    <StepCard :elevation="l.value" class="w-[200px]" index="02" title="Share" description="A link, OG image, feed card and Blink." />
+    <StepCard :elevation="l.value" class="w-[200px]" index="03" title="Join" description="Investors pay in USDC in one click." />
   </div>
+		</div>
+	</div>
 </template>

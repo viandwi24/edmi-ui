@@ -8,7 +8,7 @@ export const items: Item[] = [
 			"Marketing top bar for the navbar layout: brand, stepped lead-in list, links and one call to action.",
 		type: "registry:block",
 		categories: ["Patterns"],
-		registryDependencies: [],
+		registryDependencies: ["elevation"],
 		docs: "Edmi pattern block: `shadcn add @edmi-ui/site-header`.",
 		frameworks: {
 			react: {
@@ -21,10 +21,10 @@ export const items: Item[] = [
 		name: "app-header",
 		title: "App Header",
 		description:
-			"App top bar for the navbar layout: brand, raised nav pills, search, network button and wallet connect.",
+			"App top bar for the navbar layout: brand, nav pills, search, network button and wallet connect.",
 		type: "registry:block",
 		categories: ["Patterns"],
-		registryDependencies: ["button", "input-group", "kbd"],
+		registryDependencies: ["button", "input-group", "kbd", "elevation"],
 		docs: "Edmi pattern block: `shadcn add @edmi-ui/app-header`.",
 		frameworks: {
 			react: {
@@ -40,7 +40,7 @@ export const items: Item[] = [
 			"KPI tile with a mono value and delta badge, an optional segmented meter, and a stat strip for grouped numbers.",
 		type: "registry:block",
 		categories: ["Patterns"],
-		registryDependencies: ["card", "badge"],
+		registryDependencies: ["card", "badge", "elevation"],
 		docs: "Edmi pattern block: `shadcn add @edmi-ui/stat-tile`.",
 		frameworks: {
 			react: {
@@ -56,7 +56,7 @@ export const items: Item[] = [
 			"Horizontal strip of price cells: avatar and symbol, mono price, up/down change.",
 		type: "registry:block",
 		categories: ["Patterns"],
-		registryDependencies: ["card", "avatar"],
+		registryDependencies: ["card", "avatar", "elevation"],
 		docs: "Edmi pattern block: `shadcn add @edmi-ui/ticker-strip`.",
 		frameworks: {
 			react: {
@@ -88,7 +88,7 @@ export const items: Item[] = [
 			"Compact sidebar row with a colored letter tile, symbol, mono price and change.",
 		type: "registry:block",
 		categories: ["Patterns"],
-		registryDependencies: [],
+		registryDependencies: ["elevation"],
 		docs: "Edmi pattern block: `shadcn add @edmi-ui/watchlist-item`.",
 		frameworks: {
 			react: {
@@ -120,7 +120,13 @@ export const items: Item[] = [
 			"Amount input with Max and currency, summary rows and a primary join action.",
 		type: "registry:block",
 		categories: ["Patterns"],
-		registryDependencies: ["card", "button", "input-group", "tabs"],
+		registryDependencies: [
+			"card",
+			"button",
+			"input-group",
+			"tabs",
+			"elevation",
+		],
 		docs: "Edmi pattern block: `shadcn add @edmi-ui/join-panel`.",
 		frameworks: {
 			react: {
@@ -136,7 +142,7 @@ export const items: Item[] = [
 			"Top-three podium cards with rank badges and avatars; first place stands taller in the middle.",
 		type: "registry:block",
 		categories: ["Patterns"],
-		registryDependencies: ["card", "avatar", "badge"],
+		registryDependencies: ["card", "avatar", "badge", "elevation"],
 		docs: "Edmi pattern block: `shadcn add @edmi-ui/leaderboard-podium`.",
 		frameworks: {
 			react: {
@@ -154,7 +160,7 @@ export const items: Item[] = [
 			"Dashboard or navbar choice cards, plus a first-visit corner toast that saves the choice in a cookie.",
 		type: "registry:block",
 		categories: ["Patterns"],
-		registryDependencies: ["button"],
+		registryDependencies: ["button", "elevation"],
 		docs: "Edmi pattern block: `shadcn add @edmi-ui/layout-picker`.",
 		frameworks: {
 			react: {

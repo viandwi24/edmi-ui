@@ -5,11 +5,12 @@ import { computed } from 'vue'
 import { cn } from '@/registry/edmi/lib/utils'
 import { Badge } from '@/registry/edmi/ui/badge'
 import { Card } from '@/registry/edmi/ui/card'
+import type { Elevation } from '@/registry/edmi/ui/elevation'
 import StatMeter from './StatMeter.vue'
 
 const props = defineProps<{
-  /** ✦ one-step 3D look, forwarded to the card */
-  raised?: boolean
+  /** ✦ depth of the card: sunken -1, flat 0, raised +1, floating +2 */
+  elevation?: Elevation
   label?: string
   value?: string | number
   delta?: string
@@ -28,7 +29,7 @@ const down = computed(() =>
 
 <template>
   <!-- KPI tile: label, mono value, delta badge (+ optional meter). Delta direction comes from its sign. -->
-  <Card :elevation="raised ? 'raised' : undefined" data-slot="stat-tile" :class="cn('w-60 gap-0 px-5 py-[18px]', props.class)">
+  <Card :elevation="elevation" data-slot="stat-tile" :class="cn('w-60 gap-0 px-5 py-[18px]', props.class)">
     <div class="text-[13px] text-muted-foreground">
       <slot name="label">{{ label }}</slot>
     </div>

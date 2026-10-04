@@ -3,6 +3,7 @@ import type { HTMLAttributes } from 'vue'
 import { computed } from 'vue'
 import { Badge } from '@/registry/edmi/ui/badge'
 import { Card } from '@/registry/edmi/ui/card'
+import type { Elevation } from '@/registry/edmi/ui/elevation'
 import { Separator } from '@/registry/edmi/ui/separator'
 import { cn } from '@/registry/edmi/lib/utils'
 import type { Task, TaskStatus } from './types'
@@ -14,8 +15,8 @@ const STATUS: Record<TaskStatus, { label: string; variant: 'warning' | 'info' | 
 }
 
 const props = defineProps<{
-  /** ✦ one-step 3D look, forwarded to the card */
-  raised?: boolean
+  /** ✦ depth of the card: sunken -1, flat 0, raised +1, floating +2 */
+  elevation?: Elevation
   class?: HTMLAttributes['class']
   tasks: Task[]
   /** Override the status badge labels. */
@@ -35,7 +36,7 @@ const groups = computed(() => {
 </script>
 
 <template>
-  <Card :elevation="raised ? 'raised' : undefined" data-slot="task-list" :class="cn('gap-0 px-[18px] py-4', props.class)">
+  <Card :elevation="elevation" data-slot="task-list" :class="cn('gap-0 px-[18px] py-4', props.class)">
     <template v-for="(g, gi) in groups" :key="g.status">
       <Separator v-if="gi > 0" class="my-3" />
       <div data-slot="task-group" :data-status="g.status">

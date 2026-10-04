@@ -1,6 +1,7 @@
 import { type ColumnDef, type RowData, useTable } from "@tanstack/react-table";
 import { cn } from "cn";
 import { IconPlaceholder } from "@/edmi/icon-placeholder";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
 import { Input } from "@/registry/edmi/ui/input";
 import {
 	Table,
@@ -36,8 +37,8 @@ interface DataTableProps<TData extends RowData> {
 	}[];
 	pageSize?: number;
 	className?: string;
-	/** ✦ one-step 3D look: table container and toolbar/pagination controls. */
-	raised?: boolean;
+	/** ✦ depth of the toolbar and pagination controls (the table container stays flat). */
+	elevation?: Elevation;
 }
 
 function DataTable<TData extends RowData>({
@@ -48,7 +49,7 @@ function DataTable<TData extends RowData>({
 	facetedFilters,
 	pageSize = 10,
 	className,
-	raised = false,
+	elevation,
 }: DataTableProps<TData>) {
 	const table = useTable({
 		features,
@@ -88,17 +89,12 @@ function DataTable<TData extends RowData>({
 						column={table.getColumn(f.column)}
 						title={f.title}
 						options={f.options}
-						raised={raised}
+						elevation={elevation}
 					/>
 				))}
-				<DataTableViewOptions table={table} raised={raised} />
+				<DataTableViewOptions table={table} elevation={elevation} />
 			</div>
-			<div
-				className={cn(
-					"overflow-hidden rounded-xl border border-border bg-card",
-					raised && "border-b-lip shadow-card",
-				)}
-			>
+			<div className="overflow-hidden rounded-xl border border-border bg-card">
 				<Table>
 					<TableHeader>
 						{table.getHeaderGroups().map((headerGroup) => (
@@ -140,7 +136,7 @@ function DataTable<TData extends RowData>({
 					</TableBody>
 				</Table>
 			</div>
-			<DataTablePagination table={table} raised={raised} />
+			<DataTablePagination table={table} elevation={elevation} />
 		</div>
 	);
 }

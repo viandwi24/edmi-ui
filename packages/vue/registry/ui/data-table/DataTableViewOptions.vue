@@ -2,6 +2,7 @@
 import type { RowData, Table } from "@tanstack/vue-table";
 import { ChevronDown, PanelLeft } from "@lucide/vue";
 import { Button } from "@/registry/edmi/ui/button";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
 import {
 	DropdownMenu,
 	DropdownMenuCheckboxItem,
@@ -24,17 +25,17 @@ function columnLabel(column: { id: string; columnDef: { header?: unknown; meta?:
 withDefaults(
 	defineProps<{
 		table: Table<DataTableFeatures, TData>;
-		/** ✦ raised trigger button */
-		raised?: boolean;
+		/** ✦ depth of the toolbar and pagination controls (the table container stays flat). */
+		elevation?: Elevation;
 	}>(),
-	{ raised: false },
+	{ elevation: undefined },
 );
 </script>
 
 <template>
 	<DropdownMenu>
 		<DropdownMenuTrigger as-child>
-			<Button variant="outline" size="sm" :elevation="raised ? 'raised' : undefined" class="ml-auto">
+			<Button variant="outline" size="sm" :elevation="elevation" class="ml-auto">
 				<PanelLeft />
 				Columns
 				<ChevronDown />

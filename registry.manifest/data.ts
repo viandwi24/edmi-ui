@@ -46,6 +46,7 @@ export const items: Item[] = [
 			"checkbox",
 			"select",
 			"dropdown-menu",
+			"elevation",
 		],
 		docs: "Edmi block built on the stock data-table recipe (TanStack Table v9): `shadcn add @edmi-ui/data-table`. Build columns with `createColumnHelper<typeof features, Row>()`.",
 		frameworks: {

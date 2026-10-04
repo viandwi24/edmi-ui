@@ -10,6 +10,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/registry/edmi/ui/dropdown-menu";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
 import type { DataTableFeatures } from "./data-table-features";
 
 function columnLabel(column: {
@@ -25,10 +26,11 @@ function columnLabel(column: {
 
 export function DataTableViewOptions<TData extends RowData>({
 	table,
-	raised = false,
+	elevation,
 }: {
 	table: ReactTable<DataTableFeatures, TData>;
-	raised?: boolean;
+	/** ✦ depth of the toolbar and pagination controls (the table container stays flat). */
+	elevation?: Elevation;
 }) {
 	return (
 		<DropdownMenu>
@@ -37,7 +39,7 @@ export function DataTableViewOptions<TData extends RowData>({
 					<Button
 						variant="outline"
 						size="sm"
-						elevation={raised ? "raised" : undefined}
+						elevation={elevation}
 						className="ml-auto"
 					/>
 				}

@@ -2,9 +2,10 @@
 import type { HTMLAttributes } from 'vue'
 import type { Layout } from './layout'
 import { X } from '@lucide/vue'
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { cn } from '@/registry/edmi/lib/utils'
 import { Button } from '@/registry/edmi/ui/button'
+import { type Elevation, useElevation } from '@/registry/edmi/ui/elevation'
 import { getLayoutCookie, setLayoutCookie } from './layout'
 import LayoutPicker from './LayoutPicker.vue'
 
@@ -15,8 +16,8 @@ const props = withDefaults(defineProps<{
   defaultOpen?: boolean
   /** Initially selected layout. */
   defaultValue?: Layout
-  /** ✦ one-step 3D look on the toast and its option cards */
-  raised?: boolean
+  /** ✦ depth of the toast (floating is its natural level); raised +1 / floating +2 also raise the option cards */
+  elevation?: Elevation
   class?: HTMLAttributes['class']
 }>(), {
   title: 'Choose your layout',
@@ -24,8 +25,21 @@ const props = withDefaults(defineProps<{
   // Boolean props are cast to false when absent; keep undefined so the cookie check decides.
   defaultOpen: undefined,
   defaultValue: 'dashboard',
-  raised: false,
+  elevation: undefined,
 })
+
+const level = useElevation(() => props.elevation, 'overlay')
+const pickerElevation = computed(() =>
+  props.elevation && props.elevation !== 'auto'
+    ? (level.value === 'raised' || level.value === 'floating' ? 'raised' : 'flat')
+    : undefined,
+)
+const toastElevation = {
+  sunken: 'border-sk-bd bg-sk-bg shadow-sunken',
+  flat: '',
+  raised: 'border-transparent shadow-raised',
+  floating: 'border-transparent shadow-floating',
+}
 
 const emit = defineEmits<{
   (e: 'value-change', value: Layout): void
@@ -63,7 +77,7 @@ function close() {
     aria-label="Choose layout"
     :class="cn(
       'fixed right-4 bottom-4 z-50 w-[min(92vw,500px)] rounded-xl border border-border bg-popover p-4 text-popover-foreground',
-      props.raised && 'border-b-lip shadow-[0_3px_0_var(--lip)]',
+      toastElevation[level],
       props.class,
     )"
   >
@@ -82,7 +96,7 @@ function close() {
     </div>
     <LayoutPicker
       class="mt-3 flex-nowrap"
-      :raised="raised"
+      :elevation="pickerElevation"
       :model-value="value"
       @update:model-value="onChange"
     />

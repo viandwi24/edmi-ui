@@ -3,6 +3,11 @@ import type * as React from "react";
 import { IconPlaceholder } from "@/edmi/icon-placeholder";
 import { Button } from "@/registry/edmi/ui/button";
 import {
+	type Elevation,
+	type ElevationLevel,
+	useElevation,
+} from "@/registry/edmi/ui/elevation";
+import {
 	InputGroup,
 	InputGroupAddon,
 	InputGroupInput,
@@ -11,13 +16,25 @@ import { Kbd } from "@/registry/edmi/ui/kbd";
 
 type AppHeaderItem = { label: string; href: string };
 
-function AppHeaderMark({ raised = false }: { raised?: boolean }) {
+const surfaceElevation = {
+	sunken: "border-sk-bd bg-sk-bg shadow-sunken",
+	flat: "",
+	raised: "border-transparent shadow-raised",
+	floating: "border-transparent shadow-floating",
+};
+
+// A header that rises hands the same depth to the controls it renders; `flat` and `sunken` keep them flat.
+const rises = (level: ElevationLevel) =>
+	level === "raised" || level === "floating";
+
+function AppHeaderMark({ elevation }: { elevation?: Elevation }) {
+	const raised = rises(useElevation(elevation, "handle"));
 	return (
 		<span
 			className={cn(
 				"inline-flex size-7 items-center justify-center rounded-lg border border-transparent bg-primary text-primary-foreground",
 				raised &&
-					"border-primary-edge border-b-primary-lip bg-linear-to-b from-primary-hi to-primary shadow-btn-primary [background-origin:border-box]",
+					"[background-image:var(--r1-p-face)] shadow-btn-raised-primary [background-origin:border-box]",
 			)}
 		>
 			<IconPlaceholder
@@ -32,13 +49,18 @@ function AppHeaderMark({ raised = false }: { raised?: boolean }) {
 	);
 }
 
-// Nav pills stand alone (no track): the `pills` Tabs look. Active = --tab-active + 1px border; `raised` ✦ makes it a 3D secondary button.
+// Nav pills stand alone (no track): the `pills` Tabs look. Active = --tab-active + 1px border; `raised` makes the active pill a raised secondary button.
 function AppHeaderNavItem({
 	className,
 	active,
-	raised = false,
+	elevation,
 	...props
-}: React.ComponentProps<"a"> & { active?: boolean; raised?: boolean }) {
+}: React.ComponentProps<"a"> & {
+	active?: boolean;
+	/** ✦ raised +1 / floating +2 raise the active pill. */
+	elevation?: Elevation;
+}) {
+	const raised = rises(useElevation(elevation, "control"));
 	return (
 		<a
 			data-slot="app-header-nav-item"
@@ -48,7 +70,7 @@ function AppHeaderNavItem({
 				"inline-flex h-8 items-center rounded-[7px] border border-transparent px-3 text-[13.5px] font-medium whitespace-nowrap text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
 				"data-[active]:border-border data-[active]:bg-tab-active data-[active]:text-foreground",
 				raised &&
-					"data-[active]:border-input data-[active]:border-b-secondary-lip data-[active]:bg-linear-to-b data-[active]:from-secondary-hi data-[active]:to-secondary data-[active]:shadow-btn-secondary data-[active]:[background-origin:border-box]",
+					"data-[active]:border-transparent data-[active]:[background-image:var(--r1-s-face)] data-[active]:shadow-btn-raised-neutral data-[active]:[background-origin:border-box]",
 				className,
 			)}
 			{...props}
@@ -71,7 +93,7 @@ function AppHeader({
 	connectLabel = "Connect",
 	onConnect,
 	onNetworkClick,
-	raised = false,
+	elevation,
 	...props
 }: Omit<React.ComponentProps<"header">, "children"> & {
 	logo?: React.ReactNode;
@@ -89,22 +111,30 @@ function AppHeader({
 	connectLabel?: React.ReactNode;
 	onConnect?: () => void;
 	onNetworkClick?: () => void;
-	/** ✦ one-step 3D look: header card, active nav pill, buttons. */
-	raised?: boolean;
+	/** ✦ depth of the header plate; raised +1 / floating +2 also raise the mark, active pill and buttons. */
+	elevation?: Elevation;
 }) {
+	const level = useElevation(elevation, "surface");
+	const raised = rises(level);
+	const control =
+		elevation && elevation !== "auto"
+			? raised
+				? "raised"
+				: "flat"
+			: undefined;
 	return (
 		<header
 			data-slot="app-header"
 			className={cn(
 				"@container/app-header flex w-full items-center justify-between gap-4 rounded-xl border border-border bg-card px-5 py-3 text-sm text-card-foreground",
-				raised && "border-b-lip shadow-card",
+				surfaceElevation[level],
 				className,
 			)}
 			{...props}
 		>
 			<div className="flex items-center gap-[18px]">
 				<a href={href} className="flex items-center gap-2.5 whitespace-nowrap">
-					{logo ?? <AppHeaderMark raised={raised} />}
+					{logo ?? <AppHeaderMark elevation={control} />}
 					<span className="font-brand text-xl font-semibold tracking-[-0.4px]">
 						{name}
 					</span>
@@ -118,7 +148,7 @@ function AppHeader({
 							key={item.href}
 							href={item.href}
 							active={item.href === active}
-							raised={raised}
+							elevation={control}
 						>
 							{item.label}
 						</AppHeaderNavItem>
@@ -143,20 +173,20 @@ function AppHeader({
 							className="text-[13px]"
 						/>
 						<InputGroupAddon align="inline-end">
-							<Kbd elevation={raised ? "raised" : undefined}>{shortcut}</Kbd>
+							<Kbd elevation={control}>{shortcut}</Kbd>
 						</InputGroupAddon>
 					</InputGroup>
 				) : null}
 				{network ? (
 					<Button
 						variant="secondary"
-						elevation={raised ? "raised" : undefined}
+						elevation={control}
 						onClick={onNetworkClick}
 					>
 						{network}
 					</Button>
 				) : null}
-				<Button elevation={raised ? "raised" : undefined} onClick={onConnect}>
+				<Button elevation={control} onClick={onConnect}>
 					<IconPlaceholder
 						lucide="WalletIcon"
 						tabler="IconWallet"

@@ -1,22 +1,32 @@
 import { cn } from "cn";
 import type * as React from "react";
 import { IconPlaceholder } from "@/edmi/icon-placeholder";
+import { type Elevation, useElevation } from "@/registry/edmi/ui/elevation";
 
 type SiteHeaderLink = { label: string; href: string };
 
-// Dark tile with a chart glyph: the Stockbreak mark (`raised` ✦ adds the 3D gradient). Pass `logo` to replace it.
+const surfaceElevation = {
+	sunken: "border-sk-bd bg-sk-bg shadow-sunken",
+	flat: "",
+	raised: "border-transparent shadow-raised",
+	floating: "border-transparent shadow-floating",
+};
+
+// Dark tile with a chart glyph: the Stockbreak mark (`raised` adds the raised face). Pass `logo` to replace it.
 function SiteHeaderMark({
 	className,
-	raised = false,
+	elevation,
 	...props
-}: React.ComponentProps<"span"> & { raised?: boolean }) {
+}: React.ComponentProps<"span"> & { elevation?: Elevation }) {
+	const level = useElevation(elevation, "handle");
+	const raised = level === "raised" || level === "floating";
 	return (
 		<span
 			data-slot="site-header-mark"
 			className={cn(
 				"inline-flex size-7 items-center justify-center rounded-lg border border-transparent bg-primary text-primary-foreground",
 				raised &&
-					"border-primary-edge border-b-primary-lip bg-linear-to-b from-primary-hi to-primary shadow-btn-primary [background-origin:border-box]",
+					"[background-image:var(--r1-p-face)] shadow-btn-raised-primary [background-origin:border-box]",
 				className,
 			)}
 			{...props}
@@ -38,12 +48,13 @@ function SiteHeaderBrand({
 	logo,
 	name = "Stockbreak",
 	href = "/",
-	raised = false,
+	elevation,
 	...props
 }: Omit<React.ComponentProps<"a">, "children"> & {
 	logo?: React.ReactNode;
 	name?: React.ReactNode;
-	raised?: boolean;
+	/** ✦ depth of the mark. */
+	elevation?: Elevation;
 }) {
 	return (
 		<a
@@ -52,7 +63,7 @@ function SiteHeaderBrand({
 			className={cn("flex items-center gap-2.5 whitespace-nowrap", className)}
 			{...props}
 		>
-			{logo ?? <SiteHeaderMark raised={raised} />}
+			{logo ?? <SiteHeaderMark elevation={elevation} />}
 			<span className="font-brand text-xl font-semibold tracking-[-0.4px]">
 				{name}
 			</span>
@@ -70,7 +81,7 @@ function SiteHeader({
 	steps = [],
 	links = [],
 	action,
-	raised = false,
+	elevation,
 	...props
 }: Omit<React.ComponentProps<"header">, "children"> & {
 	logo?: React.ReactNode;
@@ -82,20 +93,33 @@ function SiteHeader({
 	links?: SiteHeaderLink[];
 	/** Trailing slot, usually a `<Button>`. */
 	action?: React.ReactNode;
-	/** ✦ one-step 3D look: header card and mark (pass `raised` to the CTA Button yourself). */
-	raised?: boolean;
+	/** ✦ depth of the header plate; raised +1 / floating +2 also raise the mark (pass `elevation` to the CTA Button yourself). */
+	elevation?: Elevation;
 }) {
+	const level = useElevation(elevation, "surface");
+	const raised = level === "raised" || level === "floating";
 	return (
 		<header
 			data-slot="site-header"
 			className={cn(
 				"flex w-full items-center justify-between gap-6 rounded-xl border border-border bg-card px-5 py-3.5 text-sm text-card-foreground",
-				raised && "border-b-lip shadow-card",
+				surfaceElevation[level],
 				className,
 			)}
 			{...props}
 		>
-			<SiteHeaderBrand logo={logo} name={name} href={href} raised={raised} />
+			<SiteHeaderBrand
+				logo={logo}
+				name={name}
+				href={href}
+				elevation={
+					elevation && elevation !== "auto"
+						? raised
+							? "raised"
+							: "flat"
+						: undefined
+				}
+			/>
 			<nav
 				className="flex items-center gap-1 whitespace-nowrap max-md:hidden"
 				aria-label="Main"

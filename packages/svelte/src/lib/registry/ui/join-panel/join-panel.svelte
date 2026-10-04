@@ -11,6 +11,7 @@
 <script lang="ts">
 	import { Button } from "$lib/registry/ui/button/index.js";
 	import { Card } from "$lib/registry/ui/card/index.js";
+	import type { Elevation } from "$lib/registry/ui/elevation/index.js";
 	import {
 		InputGroup,
 		InputGroupAddon,
@@ -41,7 +42,7 @@
 		joinLabel = "Join",
 		onJoin,
 		disabled,
-		raised = false,
+		elevation = "auto",
 		...restProps
 	}: Omit<ComponentProps<typeof Card>, "children" | "size"> & {
 		label?: string;
@@ -68,16 +69,21 @@
 		joinLabel?: string | Snippet;
 		onJoin?: () => void;
 		disabled?: boolean;
-		/** ✦ opt-in one-step 3D look; forwarded to the Card and the Join button. */
-		raised?: boolean;
+		/** ✦ depth of the card; raised +1 / floating +2 also raise the tabs, chips and Join button. */
+		elevation?: Elevation;
 	} = $props();
+
+	// Controls follow an explicit card level (flat/sunken keep them flat); auto leaves them to their own role.
+	const control = $derived<Elevation>(
+		elevation !== "auto" ? (elevation === "raised" || elevation === "floating" ? "raised" : "flat") : "auto"
+	);
 
 	const id = $props.id();
 
 </script>
 
 <!-- Amount field (mono, Max button, currency) + summary rows + one big action. -->
-<Card bind:ref data-slot="join-panel" size="sm" elevation={raised ? "raised" : undefined} class={cn("w-80 gap-0", className)} {...restProps}>
+<Card bind:ref data-slot="join-panel" size="sm" {elevation} class={cn("w-80 gap-0", className)} {...restProps}>
 	{#if tabs?.length}
 		<div class="mb-5 px-(--card-spacing)">
 			<Tabs
@@ -87,7 +93,7 @@
 					onTabChange?.(v);
 				}}
 			>
-				<TabsList elevation={raised ? "raised" : undefined} class="w-full">
+				<TabsList elevation={control} class="w-full">
 					{#each tabs as t (t.value)}
 						<TabsTrigger value={t.value}>{t.label}</TabsTrigger>
 					{/each}
@@ -129,7 +135,7 @@
 					type="button"
 					variant="secondary"
 					size="sm"
-					elevation={raised ? "raised" : undefined}
+					elevation={control}
 					class="flex-1 font-mono"
 					onclick={() => {
 						if (q.value !== undefined) {
@@ -150,7 +156,7 @@
 		</div>
 	{/each}
 	<div class="mt-3.5 px-(--card-spacing)">
-		<Button size="lg" elevation={raised ? "raised" : undefined} class="w-full" onclick={onJoin} {disabled}>
+		<Button size="lg" elevation={control} class="w-full" onclick={onJoin} {disabled}>
 			{#if typeof joinLabel === "function"}{@render joinLabel()}{:else}{joinLabel}{/if}
 		</Button>
 	</div>

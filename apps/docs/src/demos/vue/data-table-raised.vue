@@ -118,11 +118,19 @@ const columns = col.columns([
       ]),
   }),
 ]);
+
+const levels = [
+	{ value: "flat", label: "Flat (0)" } as const,
+	{ value: "raised", label: "Raised (+1)" } as const,
+];
 </script>
 
 <template>
+	<div class="flex flex-col gap-6">
+		<div v-for="l in levels" :key="l.value" class="flex flex-col gap-2">
+			<p class="text-xs font-medium text-muted-foreground">{{ l.label }}</p>
   <DataTable
-    raised
+    :elevation="l.value"
     :columns="columns"
     :data="data"
     filter-column="index"
@@ -133,4 +141,6 @@ const columns = col.columns([
     ]"
     :page-size="5"
   />
+		</div>
+	</div>
 </template>

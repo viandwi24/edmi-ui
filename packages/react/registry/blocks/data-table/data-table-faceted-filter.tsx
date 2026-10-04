@@ -11,6 +11,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/registry/edmi/ui/dropdown-menu";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
 import type { DataTableFeatures } from "./data-table-features";
 
 interface DataTableFacetedFilterProps<TData extends RowData, TValue> {
@@ -18,7 +19,8 @@ interface DataTableFacetedFilterProps<TData extends RowData, TValue> {
 	title: string;
 	/** Defaults to the unique values found in the column. */
 	options?: { label: string; value: string }[];
-	raised?: boolean;
+	/** ✦ depth of the toolbar and pagination controls (the table container stays flat). */
+	elevation?: Elevation;
 }
 
 /**
@@ -29,7 +31,7 @@ export function DataTableFacetedFilter<TData extends RowData, TValue>({
 	column,
 	title,
 	options,
-	raised = false,
+	elevation,
 }: DataTableFacetedFilterProps<TData, TValue>) {
 	if (!column) return null;
 
@@ -49,7 +51,7 @@ export function DataTableFacetedFilter<TData extends RowData, TValue>({
 					<Button
 						variant="outline"
 						size="sm"
-						elevation={raised ? "raised" : undefined}
+						elevation={elevation}
 						className="border-dashed"
 					/>
 				}

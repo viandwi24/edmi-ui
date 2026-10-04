@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="feed-post" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look.
+Flat by default. `elevation` is forwarded to the card: `sunken` (-1) a soft inset well, `raised` (+1) the bevel, `floating` (+2) the bevel plus one soft drop. In a layered `ElevationProvider` the card resolves to its role default (raised).
 
 <ComponentDemo name="feed-post" demo="feed-post-raised" />
 
@@ -35,7 +35,7 @@ Flat by default. Pass `raised` for the one-step 3D look.
 | `FeedPostContent` | `p` props | Post body. |
 | `FeedPostIndex` | `title, description?, icon?, action?` | Attached index as an outline sm Item. |
 | `FeedPostFooter / FeedPostStat` | div / span props | Muted stat row. |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 ## ✦ Edmi additions
 - Whole block is an Edmi addition (DESIGN §5 Patterns, board 12). Composed from: card, avatar, button, item.

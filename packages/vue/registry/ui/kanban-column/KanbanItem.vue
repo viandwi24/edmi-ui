@@ -4,24 +4,25 @@ import { ArrowUpRightIcon } from '@lucide/vue'
 import { inject } from 'vue'
 import { Card } from '@/registry/edmi/ui/card'
 import { cn } from '@/registry/edmi/lib/utils'
+import type { Elevation } from '@/registry/edmi/ui/elevation'
 
 const props = withDefaults(defineProps<{
-  /** ✦ one-step 3D look; defaults to the column's `raised` */
-  raised?: boolean
+  /** ✦ depth of this card; defaults to the column's `elevation` */
+  elevation?: Elevation
   class?: HTMLAttributes['class']
   title: string
   description?: string
   /** Dims the card (not yet reachable). */
   disabled?: boolean
-}>(), { raised: undefined })
+}>(), { elevation: undefined })
 
-const column = inject<{ raised?: boolean } | null>('kanbanColumn', null)
+const column = inject<{ elevation?: Elevation } | null>('kanbanColumn', null)
 // Slots: `icon` (leading), `action` (trailing; defaults to an arrow up-right).
 </script>
 
 <template>
   <Card
-    :elevation="(props.raised ?? column?.raised ?? false) ? 'raised' : undefined"
+    :elevation="props.elevation ?? column?.elevation"
     data-slot="kanban-item"
     :data-disabled="disabled ? '' : undefined"
     :class="cn('flex-row items-center gap-2.5 px-3 py-2.5 data-[disabled]:opacity-60', props.class)"

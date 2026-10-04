@@ -4,6 +4,15 @@ import { cn } from "cn";
 import * as React from "react";
 import { IconPlaceholder } from "@/edmi/icon-placeholder";
 import { Button } from "@/registry/edmi/ui/button";
+import { type Elevation, useElevation } from "@/registry/edmi/ui/elevation";
+
+// ✦ choice-card depth (v4); the checked card keeps its ring.
+const choiceElevation = {
+	sunken: "border-sk-bd bg-sk-bg shadow-sunken",
+	flat: "",
+	raised: "border-transparent shadow-raised",
+	floating: "border-transparent shadow-floating",
+};
 
 type Layout = "dashboard" | "navbar";
 
@@ -29,7 +38,7 @@ const bar =
 
 function Wireframe({ layout }: { layout: Layout }) {
 	return (
-		<div className="flex h-24 w-full overflow-hidden rounded-lg border border-border-2 bg-muted shadow-sunk">
+		<div className="flex h-24 w-full overflow-hidden rounded-lg border border-sk-bd bg-sk-bg shadow-sunken">
 			{layout === "dashboard" ? (
 				<>
 					<div className="flex w-[46px] flex-col gap-1.5 border-r border-border p-1.5">
@@ -58,6 +67,13 @@ function Wireframe({ layout }: { layout: Layout }) {
 	);
 }
 
+const toastElevation = {
+	sunken: "border-sk-bd bg-sk-bg shadow-sunken",
+	flat: "",
+	raised: "border-transparent shadow-raised",
+	floating: "border-transparent shadow-floating",
+};
+
 const options: { value: Layout; label: string }[] = [
 	{ value: "dashboard", label: "Dashboard" },
 	{ value: "navbar", label: "Navbar" },
@@ -70,7 +86,7 @@ function LayoutPicker({
 	defaultValue = "dashboard",
 	onValueChange,
 	name,
-	raised = false,
+	elevation,
 	...props
 }: Omit<
 	React.ComponentProps<"div">,
@@ -80,9 +96,10 @@ function LayoutPicker({
 	defaultValue?: Layout;
 	onValueChange?: (value: Layout) => void;
 	name?: string;
-	/** ✦ one-step 3D look for the option cards. */
-	raised?: boolean;
+	/** ✦ depth of the option cards: sunken -1, flat 0, raised +1, floating +2 (the checked card keeps its ring). */
+	elevation?: Elevation;
 }) {
+	const level = useElevation(elevation, "control");
 	const groupName = React.useId();
 	const [inner, setInner] = React.useState<Layout>(defaultValue);
 	const current = value ?? inner;
@@ -98,7 +115,7 @@ function LayoutPicker({
 					key={o.value}
 					className={cn(
 						"group/lp flex w-[220px] cursor-pointer flex-col gap-2.5 rounded-xl border border-border bg-card p-3.5 has-[:checked]:border-ring has-[:checked]:bg-[color-mix(in_srgb,var(--brand)_5%,var(--card))] has-[:checked]:shadow-[0_0_0_1px_var(--ring)] has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ring",
-						raised && "border-b-lip shadow-card has-[:checked]:border-b-ring",
+						choiceElevation[level],
 					)}
 				>
 					<input
@@ -115,7 +132,7 @@ function LayoutPicker({
 					<Wireframe layout={o.value} />
 					<span className="flex w-full items-center justify-between">
 						<span className="text-sm font-medium">{o.label}</span>
-						<span className="flex size-[18px] items-center justify-center rounded-full border border-input bg-card shadow-sunk group-has-[:checked]/lp:border-primary group-has-[:checked]/lp:after:size-[9px] group-has-[:checked]/lp:after:rounded-full group-has-[:checked]/lp:after:bg-primary group-has-[:checked]/lp:after:content-['']" />
+						<span className="flex size-[18px] items-center justify-center rounded-full border border-input bg-card group-has-[:checked]/lp:border-primary group-has-[:checked]/lp:after:size-[9px] group-has-[:checked]/lp:after:rounded-full group-has-[:checked]/lp:after:bg-primary group-has-[:checked]/lp:after:content-['']" />
 					</span>
 				</label>
 			))}
@@ -133,7 +150,7 @@ function LayoutPickerToast({
 	defaultValue = "dashboard",
 	onValueChange,
 	onClose,
-	raised = false,
+	elevation,
 	...props
 }: Omit<React.ComponentProps<"div">, "title" | "children"> & {
 	title?: React.ReactNode;
@@ -144,9 +161,10 @@ function LayoutPickerToast({
 	defaultValue?: Layout;
 	onValueChange?: (value: Layout) => void;
 	onClose?: () => void;
-	/** ✦ one-step 3D look for the toast and the option cards. */
-	raised?: boolean;
+	/** ✦ depth of the toast (floating is its natural level); raised +1 / floating +2 also raise the option cards. */
+	elevation?: Elevation;
 }) {
+	const level = useElevation(elevation, "overlay");
 	const [open, setOpen] = React.useState(false);
 	const [value, setValue] = React.useState<Layout>(defaultValue);
 	React.useEffect(() => {
@@ -160,7 +178,7 @@ function LayoutPickerToast({
 			aria-label="Choose layout"
 			className={cn(
 				"fixed right-4 bottom-4 z-50 w-[min(92vw,500px)] rounded-xl border border-border bg-popover p-4 text-popover-foreground",
-				raised && "border-b-lip shadow-[0_3px_0_var(--lip)]",
+				toastElevation[level],
 				className,
 			)}
 			{...props}
@@ -191,7 +209,13 @@ function LayoutPickerToast({
 			</div>
 			<LayoutPicker
 				className="mt-3 flex-nowrap"
-				raised={raised}
+				elevation={
+					elevation && elevation !== "auto"
+						? level === "raised" || level === "floating"
+							? "raised"
+							: "flat"
+						: undefined
+				}
 				value={value}
 				onValueChange={(v) => {
 					setValue(v);

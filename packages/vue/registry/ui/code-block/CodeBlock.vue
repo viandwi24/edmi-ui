@@ -4,11 +4,12 @@ import { computed, onBeforeUnmount, ref } from 'vue'
 import { Check, Copy } from '@lucide/vue'
 import { Button } from '@/registry/edmi/ui/button'
 import { Card } from '@/registry/edmi/ui/card'
+import type { Elevation } from '@/registry/edmi/ui/elevation'
 import { cn } from '@/registry/edmi/lib/utils'
 
 const props = withDefaults(defineProps<{
-  /** ✦ one-step 3D look, forwarded to the card */
-  raised?: boolean
+  /** ✦ depth of the card: sunken -1, flat 0, raised +1, floating +2 */
+  elevation?: Elevation
   class?: HTMLAttributes['class']
   /** Source text. */
   code: string
@@ -42,7 +43,7 @@ const lines = computed(() => props.code.split('\n'))
 </script>
 
 <template>
-  <Card :elevation="raised ? 'raised' : undefined" data-slot="code-block" :class="cn('gap-0 overflow-hidden p-0', props.class)">
+  <Card :elevation="elevation" data-slot="code-block" :class="cn('gap-0 overflow-hidden p-0', props.class)">
     <div
       v-if="title || copyable"
       class="flex items-center justify-between border-b border-border bg-muted py-2 pr-2 pl-3.5"

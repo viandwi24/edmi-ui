@@ -3,6 +3,7 @@ import type * as React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/registry/edmi/ui/avatar";
 import { Badge } from "@/registry/edmi/ui/badge";
 import { Card } from "@/registry/edmi/ui/card";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
 
 type PodiumAllocation = {
 	label: string;
@@ -89,13 +90,13 @@ function PodiumSpark({
 function LeaderboardPodium({
 	className,
 	entries,
-	raised = false,
+	elevation,
 	variant = "podium",
 	...props
 }: Omit<React.ComponentProps<"ol">, "children"> & {
 	entries: PodiumEntry[];
-	/** ✦ one-step 3D look for the cards. */
-	raised?: boolean;
+	/** ✦ depth of the cards (forwarded to each Card). */
+	elevation?: Elevation;
 	/** ✦ `podium` (default) or `cards`. */
 	variant?: "podium" | "cards";
 }) {
@@ -113,10 +114,7 @@ function LeaderboardPodium({
 					const down = e.change ? isDown(e.change) : false;
 					return (
 						<li key={e.rank}>
-							<Card
-								elevation={raised ? "raised" : undefined}
-								className="h-full gap-0 p-6"
-							>
+							<Card elevation={elevation} className="h-full gap-0 p-6">
 								<div className="flex items-center justify-between text-[13px]">
 									<span className="font-medium">No. {e.rank}</span>
 									{e.creator ? (
@@ -249,7 +247,7 @@ function LeaderboardPodium({
 				<li key={e.rank} className={cn("w-[200px]", e.rank !== 1 && "mt-6")}>
 					<Card
 						size="sm"
-						elevation={raised ? "raised" : undefined}
+						elevation={elevation}
 						className="items-center gap-0 p-[18px] text-center"
 					>
 						<Badge
