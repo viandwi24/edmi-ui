@@ -12,6 +12,7 @@
   &nbsp;·&nbsp; <a href="#ai-ready">AI components</a>
   &nbsp;·&nbsp; <a href="https://viandwi24.github.io/edmi-ui/examples/">Examples</a>
   &nbsp;·&nbsp; <a href="https://viandwi24.github.io/edmi-ui/themes/">Themes</a>
+  &nbsp;·&nbsp; <a href="#agent-skills">Agent skills</a>
 </p>
 
 # Edmi UI
@@ -162,6 +163,26 @@ npx shadcn-svelte@latest add https://cdn.jsdelivr.net/npm/@edmi-ui/registry-svel
 ```
 
 Design tokens alone: `npm install @edmi-ui/tokens` (or `pnpm add`, `yarn add`, `bun add`).
+
+## Agent skills
+
+Teach your coding agent (Claude Code, Cursor, Codex and many more) to install, theme and use Edmi UI with the
+[`skills`](https://github.com/vercel-labs/skills) CLI:
+
+```bash
+npx skills add viandwi24/edmi-ui
+```
+
+(`pnpm dlx`, `yarn dlx` or `bunx` work the same.) The `edmi-ui` skill covers install flows for all three frameworks,
+theming, when to use `raised`, the component catalog, the AI pack and upgrading. See
+[Agent skills](https://viandwi24.github.io/edmi-ui/getting-started/skills/) in the docs.
+
+## Updating
+
+Components are copied into your project, so you upgrade by re-adding them: read the
+[changelog](https://viandwi24.github.io/edmi-ui/changelog/), run `add @edmi-ui/<name> --overwrite` (or `theme`, `all`, `patterns`,
+`ai-all`), review `git diff`, then typecheck. Pinned CDN URLs change version in the URL; `@edmi-ui/tokens` updates with your
+package manager. Full guide: [Upgrading](https://viandwi24.github.io/edmi-ui/getting-started/upgrading/).
 
 ## Components
 

@@ -1,0 +1,57 @@
+---
+title: Upgrading
+description: "How to move installed Edmi components to a newer release: changelog, preview, re-add with --overwrite, review."
+---
+
+import PmCommand from "../../../components/PmCommand.astro";
+
+You installed Edmi at one version and a newer one is out. Components are **copied into your project** by the
+`shadcn`, `shadcn-vue` or `shadcn-svelte` CLI, so there is no `npm update` for them. You upgrade by adding the items
+again and reviewing the diff.
+
+## How versions work
+
+- The Pages registry URL (`https://viandwi24.github.io/edmi-ui/r/<framework>/{name}.json`) always serves the **latest** release.
+- jsDelivr serves **pinned** versions: `https://cdn.jsdelivr.net/npm/@edmi-ui/registry-<framework>@0/r/<name>.json` is the latest 0.x,
+  `@0.3.0` is exactly 0.3.0.
+- `@edmi-ui/tokens` is a normal npm package: update it with your package manager (`npm update`, `pnpm update`, `yarn up`, `bun update`).
+- Before 1.0 a minor release (0.2 to 0.3) may contain breaking changes. Read the [Changelog](/edmi-ui/changelog/)
+  (or the GitHub Release `v<version>`) first.
+
+## Recommended flow
+
+1. **Clean working tree.** Commit or stash your work, ideally upgrade on a branch. The diff is your safety net.
+2. **Read the changelog** for every version between yours and the target. Look for removed or renamed items, changed
+   props and token changes.
+3. **Preview the change.** The React CLI can show it without writing files:
+
+   <PmCommand fw="react" args="add @edmi-ui/button --dry-run" />
+
+   `--diff` shows a diff for a file and `--view` shows file contents (see `add --help` for your CLI version).
+   `shadcn-vue` and `shadcn-svelte` have no preview flag: upgrade on a scratch branch and use `git diff`.
+4. **Re-add with `--overwrite`.** Single items, or everything you installed:
+
+   <PmCommand fw="react" args="add @edmi-ui/button @edmi-ui/card --overwrite" />
+
+   <PmCommand fw="react" args="add @edmi-ui/theme @edmi-ui/all @edmi-ui/patterns @edmi-ui/ai-all --overwrite" />
+
+   Vue uses the same `@edmi-ui/<name>` names with `shadcn-vue`. Svelte takes URLs:
+
+   <PmCommand fw="svelte" args="add https://viandwi24.github.io/edmi-ui/r/svelte/theme.json https://viandwi24.github.io/edmi-ui/r/svelte/all.json --overwrite" />
+
+   Only add the entry items you originally installed (`patterns` and `ai-all` are optional). If you use a color theme
+   item (`theme-<base>-<accent>`), install it again **after** `theme`.
+5. **Review `git diff`.** Re-apply your local changes to overwritten files, fix call sites for changed or removed
+   props, and run your typecheck and build. Check light and dark mode and any `raised` surfaces.
+6. **Pinned CDN users:** change the version in the URL (`@0.2.0` to `@0.3.0`, or use the `@0` range). If you pinned the
+   registry in `components.json` (`registries` for React and Vue), change it there too.
+
+## Tips
+
+- Keep customizations in **wrapper components** or `className` at call sites instead of editing installed files, so
+  `--overwrite` never fights your changes.
+- Keep the same `iconLibrary` in `components.json`, so icons are rewritten the same way.
+- New dependencies of a newer version are installed by the CLI. If you skipped dependency install (`--no-deps-install` on
+  Svelte), run your package manager afterwards.
+- Renamed or removed items are called out in the changelog; delete the old file yourself after switching to the new item.
+- Tell your coding agent: with the [Agent skills](/edmi-ui/getting-started/skills/) installed it knows this flow.

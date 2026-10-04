@@ -1,20 +1,23 @@
 ---
 import { Code } from "@astrojs/starlight/components";
-import { cliCommand, type Framework, type PackageManager, pmAdd, PMS } from "../config";
+import { cliCommand, dlx, type Framework, type PackageManager, pmAdd, PMS } from "../config";
 
 interface Props {
 	/** Framework CLI to run (shadcn / shadcn-vue / shadcn-svelte). Use with `args`. */
 	fw?: Framework;
 	/** Arguments after the CLI name, e.g. "add @edmi-ui/button". */
 	args?: string;
+	/** Any other package to run with dlx/npx (e.g. "skills"). Use with `args`. */
+	pkg?: string;
 	/** Instead of a CLI: npm packages to install, rendered as npm install / pnpm add / yarn add / bun add. */
 	add?: string[];
 	dev?: boolean;
 }
-const { fw, args = "", add, dev = false } = Astro.props;
+const { fw, pkg, args = "", add, dev = false } = Astro.props;
 
 const cmd = (pm: PackageManager): string => {
 	if (add) return pmAdd(pm, add, dev);
+	if (pkg) return dlx(pm, pkg, args);
 	return cliCommand(fw ?? "react", pm, args);
 };
 ---
