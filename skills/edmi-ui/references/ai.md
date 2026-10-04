@@ -80,7 +80,7 @@ Rules that make it look right:
 - Give the chat a bounded height (`h-svh`, `min-h-0` on the scroller's parent chain), otherwise it will not scroll.
 - Response typography (15px/1.65, ~68ch) comes with `MessageResponse`; do not restyle it.
 - The terminal (`ai-terminal`) is always dark in every mode, by design. Code colors come from the chart tokens. Documents (artifact viewer, thumbnails) render as white paper in dark mode too.
-- AI chat screens are flat by default. For depth, wrap the chat in `<ElevationProvider mode="layered">` (the composer then floats, artifact cards and tool cards rise) or set `elevation` on the composer (`<PromptInput elevation="floating">` / `ChatComposer`). See [raised.md](raised.md).
+- AI chat screens are flat by default. For depth, wrap the chat in `<ElevationProvider mode="layered">` (the composer then floats, artifact cards and tool cards rise) or set `elevation` on the composer (`<PromptInput elevation="floating">` / `ChatComposer`). See [elevation.md](elevation.md).
 - Use `ai-code-block` (not the `code-block` pattern) for code inside chat.
 
 Vue and Svelte follow the same anatomy:

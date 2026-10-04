@@ -26,14 +26,14 @@ Use these when composing pages or writing a custom component next to Edmi items.
 
 ## Depth
 
-- No blurred shadows anywhere. Depth is a hard lip, only through `raised`. Inset shadows may be soft (1-2px) for sunken inputs.
-- One step only: face plus one lip. Border-bottom and shadow share the lip color. No inner bottom shade.
-- Do not write your own lips, gradients or shadows; use the `raised` prop. See [raised.md](raised.md).
+- Depth is the elevation system: `elevation="sunken | flat | raised | floating"` or an `ElevationProvider`. Raised is a bevel (rim, top highlight, hairline); floating adds ONE soft drop; sunken is a soft inset. No hard lips, no stacked drops.
+- Levels are relative to the parent: no bevel on bevel. Only the active part of tabs, toggle groups, pagination, calendars, switches and sliders rises.
+- Do not write your own lips, gradients or shadows; use the `elevation` prop or the shadow tokens. See [elevation.md](elevation.md).
 
 ## Composition
 
 - Message rows: avatar top-aligned with the sender line (or the first bubble line). Assistant messages have no avatar by default.
-- Inset panel: header on the muted shell, body a card edge to edge, footer back on the shell.
+- Inset panel: header on the muted shell, body a card plate inset 2px from the shell, footer back on the shell.
 - Prefer the Edmi item over hand-built markup: forms with `Field`, rows with `Item`, empty states with `Empty`, stat numbers with `stat-tile`, headers with `site-header` / `app-header`.
 - Responsive: Edmi components are fluid; use Tailwind breakpoints on your layout wrappers, keep a 16px page gutter on mobile.
 - Accessibility: keep the labels, `aria-*` and focus rings the components ship; `aria-invalid` drives the error state of inputs.
@@ -42,5 +42,5 @@ Use these when composing pages or writing a custom component next to Edmi items.
 
 - Do not import from a theme name or branch on `data-theme` inside components.
 - Do not mix in another component library's visual style on top (extra shadows, gradients, glass blur).
-- Do not set `raised` globally or from a loop; do not raise `ghost`, `link` or Tabs `line`.
+- Do not raise everything or set `elevation` from a loop; wrap a page in a layered `ElevationProvider` instead. `link` and Tabs `line` never take depth.
 - Do not pull stock shadcn files over Edmi files after install without `--overwrite` intent: it reverts the restyle.

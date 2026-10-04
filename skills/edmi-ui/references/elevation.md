@@ -1,106 +1,143 @@
-# `raised`: when to use it, when not
+# Elevation: depth by role
 
-`raised` is an opt-in boolean prop (default `false`, same name in React, Vue and Svelte). It gives one step of 3D: a vertical gradient face, a 1px top highlight and **one hard lip** under the element (`0 2px 0` for cards and controls, `0 4px 0` for dialogs and popovers; no blur). Pressing a raised control moves it down 2px and the lip collapses. Flat is the plain shadcn look: solid fill, 1px border, no gradient, no lip.
+Edmi is flat by default. Depth is **elevation**: one prop, `elevation?: "auto" | "sunken" | "flat" | "raised" | "floating"` (default `"auto"`, same name in React, Vue and Svelte), plus an `ElevationProvider` that applies it to a whole subtree. The boolean `raised` was removed in 0.3 (see [upgrading.md](upgrading.md)).
 
-Raised is emphasis. Emphasis only works when most things are not emphasised. Default to flat; add `raised` deliberately.
+## Philosophy (read this first)
 
-## Decision rules
+- **Flat is the default.** The plain shadcn look is a calm, editorial base: solid fill, 1px border. Dense app UI stays quiet and readable. Depth is opt-in.
+- **Depth expresses role and hierarchy, not decoration.** Things you act on rise (filled buttons, key cards, the thumb you drag). Things that receive input sink (fields are wells). Things above the page float (popovers, menus, dialogs, the chat composer). Everything else stays flat.
+- **Levels are relative to the parent.** A child is at most one step above what holds it. A card inside a raised card drops to flat and keeps its border: no bevel on bevel. Buttons and fields are exempt.
+- **One step only, and only the part that is active.** Tabs, toggle groups, pagination, calendars, switches and sliders never bevel their track; only the active tab, the selected day, the checked box and the thumb rise. Alerts, toasts, tooltips and brand badges stay soft fill with a tinted border.
+- **A bevel, not a lip.** Raised is a top highlight, an inner rim and a dark hairline. Floating adds one soft drop to the same bevel. Sunken is a soft inset (focus swaps its edge for the ring). Pressed sinks 1px. Elevation never changes size.
+- **Layered mode applies the policy to a page.** `ElevationProvider mode="layered"` gives each role its level; an explicit prop still wins.
 
-1. **One raised primary action per view or region.** The hero CTA, the form's submit, the dialog's confirm. Secondary actions next to it stay flat (`outline`, `secondary`, `ghost`).
-2. **Raised for hero and marketing surfaces.** Landing pages, pricing, feature rows, step cards, site headers, hero CTAs and key cards benefit from tactile depth.
-3. **Raised for a few key containers in an app.** Summary cards, stat tiles, the ticker strip, a join/checkout panel, the app header nav pills. Not every card on the page by default; choose the ones that carry the page.
-4. **Flat for density.** Forms, tables, data tables, toolbars, filters, menus, command palettes, sidebars, lists of many items, and dialog footers stay flat. Many raised controls in a row or grid compete and look noisy.
-5. **Flat for chat, agent and workflow screens.** The reference chat thread, agent home, IDE, library and workflow pages are fully flat. Use `raised` there only on the send button (`PromptInput raised`), a primary Confirmation action, or a hero artifact card.
-6. **Never raise** `ghost` and `link` buttons, Tabs `variant="line"`, Alert, Sheet, Drawer, HoverCard, Tooltip, menus, Command, NavigationMenu, Sidebar, Accordion, Table, Chart, Combobox, Attachment (Bubble only has raised reaction chips). These are flat-only and have no `raised` prop.
-7. **Be consistent inside a page.** Either the page is a "raised surface" (marketing, showcase dashboards: raised cards + CTA + nav pills, flat tables/forms inside) or it is selective (flat everywhere, one raised CTA). Do not sprinkle raised on random controls.
-8. **Do not stack lips.** A raised element has face plus one lip. Do not put a raised card inside a raised card, and inside a raised card raise at most the single primary button.
-9. **Decide per element, not with a global switch.** Never wrap the app in a "raised everything" flag, never add shadows or gradients yourself to imitate it, and never set `raised` from a loop over many items.
+## Levels
 
-## Quick matrix
+| Value | Level | Look |
+| --- | --- | --- |
+| `sunken` | -1 | soft inset well |
+| `flat` | 0 | fill and 1px border (default) |
+| `raised` | +1 | bevel: rim, top highlight, hairline |
+| `floating` | +2 | the bevel plus one soft drop |
 
-| Place | Raised? |
-| --- | --- |
-| Hero / pricing / marketing CTA button | yes |
-| Primary submit in a form or dialog | yes, only that one |
-| Secondary, cancel, ghost, link buttons | no (ghost and link never) |
-| Cards: key summaries, pricing plans, feature rows, stat tiles | yes, selectively |
-| Cards in a dense grid or list of many items | no |
-| Tabs / segmented control that is the primary view switcher (pills, default) | yes (`TabsList raised`) |
-| Tabs `line`, in-page small toggles, filters | no |
-| Header nav pills (`app-header`), ticker strip, layout picker choice cards | yes (pattern forwards it) |
-| Table, data table (container), toolbar, filters, pagination in dense tables | no |
-| Inputs, textarea, field rows | no (Select trigger, Checkbox, Switch, Slider are raised only on marketing-like forms or settings that need tactility) |
-| Dialog, Popover | optional: `raised` gives the hard 4px lip; use for the main confirm dialog, leave menus flat |
-| Toasts | `<Toaster raised />` if the app is a raised surface, otherwise flat |
-| Chat: messages, bubbles, conversation | no |
-| Chat: send button, primary tool approval | yes, optional |
+`auto` resolves: the component's own prop, then the nearest `ElevationProvider`, then `flat`. A hero action is `floating`; use one per view.
+
+## Roles and layered defaults
+
+| Role | Components | Layered level |
+| --- | --- | --- |
+| filled action | Button default, secondary, destructive, brand | raised (+1) |
+| quiet action | Button outline, ghost, link | flat |
+| field | Input, Textarea, Select trigger, Input OTP, Input Group, Native Select | sunken (-1) |
+| control | Checkbox, Radio, Tabs, Toggle group, Pagination, Badge | flat; the active part rises when `raised` |
+| handle | Switch thumb, Slider thumb, calendar selected day, Kbd, Empty media | raised (+1) |
+| surface | Card, Inset panel body, AI cards and nodes | raised (+1) |
+| container | Inset panel shell, nested card, Alert, Toast, Tooltip | flat |
+| overlay | Popover, Dropdown, Select menu, Dialog, chat composer | floating (+2) |
+
+## Flat page or layered page?
+
+- **Flat (default)** for dense apps: forms, tables, settings, admin, most chat and agent screens. Raise at most one or two things with the prop (the primary submit, a hero card).
+- **Layered** for pages that should feel tactile and readable by role: dashboards, marketing and product pages. Wrap the page once; do not also hand-raise random controls.
+- Pick one per page. Override single components with the prop (`elevation="floating"` on the hero CTA, `elevation="flat"` on one filled button).
+
+## Layered mode: the provider
+
+Installed automatically with any component that takes `elevation`, or alone with `add @edmi-ui/elevation`.
+
+React (`@/components/ui/elevation`):
+
+```tsx
+import { ElevationProvider } from "@/components/ui/elevation";
+
+<ElevationProvider mode="layered">
+  <App />
+</ElevationProvider>
+```
+
+Vue (`@/components/ui/elevation`):
+
+```vue
+<ElevationProvider mode="layered">
+  <App />
+</ElevationProvider>
+```
+
+Svelte (`$lib/components/ui/elevation`):
+
+```svelte
+<ElevationProvider mode="layered">
+  {@render children()}
+</ElevationProvider>
+```
+
+- `mode="layered"` gives each role its default; `mode="flat"` is the default.
+- `level="raised"` (or `sunken`, `flat`, `floating`) forces one level for the subtree and wins over `mode`.
+- The provider is layout-neutral (`display: contents`) unless given a class, and renders `data-elevation`. Scopes nest.
+- `useElevation(prop, role)` is for custom components: React returns the level, Vue a computed, Svelte `{ current }`.
+
+## Nesting and the active-part rule
+
+- A surface inside a raised or floating surface resolves flat automatically. Do not force `raised` on a card inside a raised card.
+- An Inset panel: the shell stays flat, the body is the raised plate (inset 2px), a card inside it drops to flat.
+- Only the active part rises: Tabs (`line` never), Toggle group and segmented (the ON item), Pagination (active link), Calendar and Date picker (selected day; the level sits on the shell), Switch and Slider (thumbs), Checkbox (checked box), default Toggle (only when ON).
+- ButtonGroup: `raised` raises each item; `floating` floats the whole group as one plate while items stay raised. Never a drop per item.
+- Filled buttons keep their colour when sunken. `link` never takes depth; `ghost` follows the neutral faces. Badges keep their fill at every level.
 
 ## Do and don't
 
-Do: one raised CTA, the rest flat.
+Do: let roles decide, one floating hero action, a layered page with one explicit override.
 
 ```tsx
-<Card>
-  <CardHeader><CardTitle>Create index</CardTitle></CardHeader>
-  <CardContent>{/* flat fields */}</CardContent>
-  <CardFooter className="gap-2">
-    <Button variant="ghost">Cancel</Button>
-    <Button raised>Create</Button>
-  </CardFooter>
-</Card>
+<ElevationProvider mode="layered">
+  <Card>
+    <Input placeholder="Amount" />          {/* sinks */}
+    <Button variant="ghost">Cancel</Button> {/* quiet, stays flat */}
+    <Button elevation="floating">Create</Button> {/* the one hero action */}
+  </Card>
+</ElevationProvider>
 ```
 
-Don't: raise every control in a form or toolbar.
+Do: on a flat page, raise only the key elements.
 
 ```tsx
-{/* noisy: five lips compete, nothing is primary */}
-<Button raised variant="outline">Filter</Button>
-<Button raised variant="outline">Sort</Button>
-<Button raised variant="outline">Export</Button>
-<Button raised variant="secondary">Cancel</Button>
-<Button raised>Save</Button>
+<Card elevation="raised">{/* pricing plan */}</Card>
+<Button elevation="raised" size="lg">Get started</Button>
 ```
 
-Do: a raised hero and raised key cards on a marketing page, flat copy and tables.
+Don't: raise every control, stack bevels, or fake it.
 
 ```tsx
-<Button raised size="lg">Get started</Button>
-<Card raised>{/* pricing plan */}</Card>
+{/* noisy: nothing is primary */}
+<Button elevation="raised" variant="outline">Filter</Button>
+<Button elevation="raised" variant="outline">Sort</Button>
+<Button elevation="raised">Save</Button>
+
+{/* bevel on bevel: the inner card should stay flat */}
+<Card elevation="raised"><Card elevation="raised" /></Card>
+
+{/* hand-made depth: use the prop or the tokens */}
+<div className="shadow-[0_2px_0_#999]" />
 ```
 
-Don't: raise ghost or link buttons, or fake it with classes.
+Don't forward `elevation` to a primitive yourself and don't wrap in a "raise everything" flag; use the provider.
 
-```tsx
-<Button raised variant="ghost">Skip</Button>          {/* ignored by design: ghost is never raised */}
-<div className="shadow-[0_2px_0_#999]">...</div>      {/* hand-made lip: use raised, tokens, no hex */}
-```
+## Never take depth
 
-Do: let a container pass `raised` down; override a child only when needed.
-
-```tsx
-<TabsList variant="pills" raised>      {/* every trigger inherits */}
-<ToggleGroup raised>                   {/* items inherit */}
-<Pagination raised>                    {/* active link */}
-<Questionnaire raised>                 {/* every option */}
-```
-
-## Containers pass `raised` down
-
-`child.raised ?? container.raised`: set it once on the parent, and a child can still opt out with `raised={false}`. Containers: Toggle Group (also `segmented` track items), Tabs (on `TabsList`, passed to triggers; `line` ignores it), Pagination (active link), Questionnaire (all options), Calendar / RangeCalendar (selected day), Select (trigger only, popup stays flat), Menubar (the bar only), Toaster (toasts), PromptInput (submit button only; the composer shell stays flat), Card / InsetPanel (container; body highlight). Patterns never hard-code lips: they accept `raised` and forward it to the Card or Button they render.
+Sheet, Drawer, HoverCard, Tooltip, Alert, NavigationMenu and Command popups, Sidebar, Accordion, Table (the container; toolbar and pagination follow Button and Input), Chart, Bubble (only reaction chips take it), Combobox, Attachment.
 
 ## Pressed and states
 
-- Raised pressed: `translateY(2px)` and the lip goes to 0.
-- Flat pressed: slightly darker fill.
-- Selected states that show a ring (checked choice cards, selected day) drop the lip: ring only.
-- Dark mode: the primary is white with a gray lip; all lips are visible grays, never black.
+- Raised pressed: `translateY(1px)` plus a pressed inset shadow. Flat pressed: slightly darker fill.
+- Sunken focus swaps the edge for the ring. Disabled drops to 50%.
+- Dark mode: the bevel is a hairline and a faint top highlight on a clearer surface ladder; never black blocks.
 
-## Components that accept `raised` (generated from the source)
+## Components that accept `elevation` (generated from the source)
 
-<!-- BEGIN GENERATED: raised-list -->
+<!-- BEGIN GENERATED: elevation-list -->
 UI and patterns (50): `agent-card`, `alert-dialog`, `app-header`, `badge`, `bubble`, `button`, `button-group`, `calendar`, `card`, `checkbox`, `code-block`, `context-menu`, `data-table`, `date-picker`, `dialog`, `dropdown-menu`, `empty`, `feature-row`, `feed-post`, `footer`, `input`, `input-group`, `input-otp`, `inset-panel`, `join-panel`, `kanban-column`, `kbd`, `layout-picker`, `leaderboard-podium`, `menubar`, `native-select`, `pagination`, `popover`, `pricing-plan`, `questionnaire`, `radio-group`, `select`, `site-header`, `slider`, `sonner`, `stat-tile`, `step-card`, `switch`, `tabs`, `task-list`, `textarea`, `ticker-strip`, `toggle`, `toggle-group`, `watchlist-item`
 
 AI (12): `ai-agent`, `ai-artifact`, `ai-artifact-card`, `ai-chat-composer`, `ai-confirmation`, `ai-node`, `ai-plan`, `ai-prompt-input`, `ai-prompt-input-agent`, `ai-speech-input`, `ai-suggestion`, `ai-tool`
-<!-- END GENERATED: raised-list -->
+<!-- END GENERATED: elevation-list -->
 
-Per framework syntax is the same boolean: React `<Button raised>`, Vue `<Button raised>`, Svelte `<Button raised>`; compound components pass it on the root (`<Card.Root raised>` in Svelte, `<Tabs.List raised>`). Each component docs page has a **Raised** demo.
+Syntax is the same in all three frameworks: `<Button elevation="raised">`; compound components take it on the root or the part named in the table (`<Card.Root elevation="raised">`, `<Tabs.List elevation="raised">`, `<Toaster elevation="raised" />`). Each component docs page has an **Elevation ✦** section and demo, and the guide lives at https://viandwi24.github.io/edmi-ui/getting-started/elevation/.

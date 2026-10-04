@@ -1,7 +1,7 @@
 // Regenerates the generated blocks of the consumer agent skill (skills/edmi-ui/references):
 //   components.md  catalog of every manifest item, grouped by category, with a "use when" line
-//   raised.md      list of items that accept `raised`
-// The item list comes from registry.manifest/index.ts, `raised` support is detected from the React source,
+//   elevation.md   list of items that accept `elevation`
+// The item list comes from registry.manifest/index.ts, `elevation` support is read from the ELEVATION lists of verify-matrix.ts,
 // the "use when" text lives in USE_WHEN below. A new manifest item without an entry fails the script and
 // `bun test` (scripts/skill.test.ts). Run: `bun run scripts/gen-skill.ts` (add `--check` to only verify).
 import { readFileSync, writeFileSync } from "node:fs";
@@ -62,7 +62,7 @@ export const USE_WHEN: Record<string, string> = {
 	"date-picker":
 		"`DatePicker` for one date, `DateRangePicker` for a range (✦ presets).",
 	// Display
-	card: "the default container for grouped content. `raised` for hero or key cards.",
+	card: "the default container for grouped content. `elevation` raises (+1) or floats (+2) a hero or key card; sunken (-1) for wells.",
 	"inset-panel":
 		"✦ a panel with header and footer on a muted shell and a card body edge to edge (tool and chat panels).",
 	separator: "a thin divider.",
@@ -86,11 +86,11 @@ export const USE_WHEN: Record<string, string> = {
 	sheet: "a panel that slides in from an edge (filters, details, mobile nav).",
 	drawer: "a swipeable bottom or side panel for touch layouts.",
 	sonner:
-		"toasts. Mount `<Toaster />` once and call `toast(...)`; `<Toaster raised />` for 3D toasts.",
+		'toasts. Mount `<Toaster />` once and call `toast(...)`; `<Toaster elevation="raised" />` for beveled toasts.',
 	tooltip: "a short label on hover or focus; never for essential information.",
 	"hover-card": "a preview behind a link, shown on hover.",
 	// Navigation
-	tabs: 'switch views in place. `TabsList variant="default|line|pills"`, `raised` on the list.',
+	tabs: 'switch views in place. `TabsList variant="default|line|pills"`, `elevation="raised"` on the list lifts the active trigger.',
 	breadcrumb: "location trail in a hierarchy.",
 	pagination: "page navigation for lists and tables.",
 	"dropdown-menu": "actions menu opened by a button.",
@@ -131,7 +131,7 @@ export const USE_WHEN: Record<string, string> = {
 	// Patterns
 	"site-header": "marketing top bar: brand, links, one call to action.",
 	"app-header":
-		"app top bar for the navbar layout: raised nav pills, search, actions.",
+		"app top bar for the navbar layout: nav pills, search, actions.",
 	"stat-tile": "a KPI with mono value and delta; `StatStrip` groups several.",
 	"ticker-strip": "a horizontal strip of live prices.",
 	"index-row":
@@ -245,10 +245,10 @@ export function catalogItems(): Item[] {
 }
 
 /**
- * Items with a `raised` prop: parsed from the RAISED / AI_RAISED lists of scripts/verify-matrix.ts, which
- * already requires a `<name>-raised` demo for each (so the list cannot drift from the real components).
+ * Items with an `elevation` prop: parsed from the ELEVATION / AI_ELEVATION lists of scripts/verify-matrix.ts, which
+ * already requires a `<name>-elevation` demo for each (so the list cannot drift from the real components).
  */
-export function raisedItems(): string[] {
+export function elevationItems(): string[] {
 	const src = readFileSync(resolve(ROOT, "scripts/verify-matrix.ts"), "utf8");
 	const list = (name: string) => {
 		const m = src.match(new RegExp(`const ${name} = \\[([\\s\\S]*?)\\];`));
@@ -258,7 +258,7 @@ export function raisedItems(): string[] {
 			x[1] ? [x[1]] : [],
 		);
 	};
-	return [...list("RAISED"), ...list("AI_RAISED").map((n) => `ai-${n}`)];
+	return [...list("ELEVATION"), ...list("AI_ELEVATION").map((n) => `ai-${n}`)];
 }
 
 function frameworkNote(item: Item): string {
@@ -296,7 +296,7 @@ const CATEGORY_TITLE: Record<string, string> = {
 };
 
 export function renderCatalog(): string {
-	const raised = new Set(raisedItems());
+	const elevated = new Set(elevationItems());
 	const by = new Map<string, Item[]>();
 	for (const item of catalogItems()) {
 		const cat = item.categories[0] ?? "Meta";
@@ -316,7 +316,7 @@ export function renderCatalog(): string {
 				throw new Error(
 					`gen-skill: add a USE_WHEN entry for "${item.name}" in scripts/gen-skill.ts`,
 				);
-			const r = raised.has(item.name) ? " [raised]" : "";
+			const r = elevated.has(item.name) ? " [elevation]" : "";
 			lines.push(`- \`${item.name}\`${r}: ${why}${frameworkNote(item)}`);
 		}
 		lines.push("");
@@ -324,8 +324,8 @@ export function renderCatalog(): string {
 	return lines.join("\n").trimEnd();
 }
 
-export function renderRaisedList(): string {
-	const names = raisedItems().sort();
+export function renderElevationList(): string {
+	const names = elevationItems().sort();
 	const ui = names.filter((n) => !n.startsWith("ai-"));
 	const ai = names.filter((n) => n.startsWith("ai-"));
 	const fmt = (xs: string[]) => xs.map((n) => `\`${n}\``).join(", ");
@@ -338,7 +338,11 @@ export function renderRaisedList(): string {
 
 export const BLOCKS = [
 	{ file: "references/components.md", id: "catalog", render: renderCatalog },
-	{ file: "references/raised.md", id: "raised-list", render: renderRaisedList },
+	{
+		file: "references/elevation.md",
+		id: "elevation-list",
+		render: renderElevationList,
+	},
 ] as const;
 
 export function applyBlock(src: string, id: string, body: string): string {

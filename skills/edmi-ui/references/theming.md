@@ -7,7 +7,7 @@ Edmi is themed with CSS variables (OKLCH with hex fallback; names shared with sh
 | Knob | How | Values | Changes |
 | --- | --- | --- | --- |
 | Mode | `class="dark"` | light (default), dark | every token |
-| Base color | `data-base="..."` | `stone` (default), `slate` | neutrals: surfaces, text, borders, lips, neutral "ink" primary |
+| Base color | `data-base="..."` | `stone` (default), `slate` | neutrals: surfaces, text, borders, bevel colours, neutral "ink" primary |
 | Accent theme | `data-theme="..."` | `green` (default), `ocean` | brand, ring, charts, sidebar-primary; Ocean also recolors primary |
 | Radius | `style="--radius: ..."` | `0.625rem` default (0.3rem sharp to 1rem round) | every radius |
 
@@ -66,7 +66,7 @@ Tailwind utilities map to these (`bg-card`, `text-muted-foreground`, `border-bor
 | Actions | `primary`, `secondary`, `destructive`, `brand` (+ `-foreground`) |
 | Soft status fills (solid) | `brand-soft`, `success-soft`, `warning-soft`, `info-soft`, `destructive-soft` |
 | Status text | `brand-text`, `success-text`, `warning-text`, `info-text`, `destructive-text` |
-| Depth (raised only) | `lip`, `lip-strong`, `card-hi`, `*-lip`, `*-hi`, shadows `shadow-card`, `shadow-pop`, `shadow-dialog` |
+| Depth (elevation) | `--bv-ring`, `--bv-top`, `--bv-out`, `--bv-float` (bevel), `--sk-bg`, `--sk-bd`, `--sk-sh` (sunken), `--r1-*` / `--fl-*` (button faces); utilities `shadow-raised`, `shadow-floating`, `shadow-sunken`, `shadow-btn-raised-*`, `shadow-btn-float-*`, `shadow-pressed`. Legacy `lip*` tokens are not used by components |
 | Charts | `chart-1` ... `chart-5` |
 | Fonts | `font-sans` (Instrument Sans), `font-mono` (JetBrains Mono, every number), `font-brand` (Sora 600, wordmarks only) |
 
@@ -75,5 +75,5 @@ Usage rules:
 - `brand` is the theme accent (turns blue in Ocean): brand button/badge, live state, switch, slider, progress, ring. **Positive values (up deltas, done, success) use `success` / `success-text`**, which stay green.
 - Down or error: `destructive` / `destructive-text`.
 - **No transparent fills.** `*-soft` tokens are solid colors. Tinted borders are `border-[color-mix(in_srgb,var(--brand)_30%,var(--popover))]` (over a card: `...,var(--card))`); solid hovers `hover:bg-[color-mix(in_srgb,var(--primary)_90%,var(--background))]`. Never `bg-primary/10`, `border-border/50` or `color-mix(..., transparent)` on a surface. Only focus halos, overlays and decorative glows or gridlines may be transparent.
-- Dark-mode lips are visible grays, never black: use the tokens, do not hard-code a near-black shadow.
+- Depth tokens exist for light, dark and every base. In dark, depth is a bevel hairline and a faint top highlight on a clearer surface ladder (background, card, popover, border, input), never black blocks: use the tokens, do not hard-code shadows. Layered mode and levels: [elevation.md](elevation.md).
 - Do not hard-code hex colors; read tokens (`var(--brand)`) or use utilities.

@@ -19,8 +19,23 @@ Before 1.0 a minor bump (0.2 to 0.3) may contain breaking changes. Always read t
    - Svelte (URLs): `npx shadcn-svelte@latest add https://viandwi24.github.io/edmi-ui/r/svelte/theme.json https://viandwi24.github.io/edmi-ui/r/svelte/all.json --overwrite` (`bunx --bun` with bun).
    - Use the project's package manager (`pnpm dlx`, `yarn dlx`, `bunx`).
 5. Review `git diff`: re-apply local customisations to overwritten files, check changelog-listed renamed/removed items and prop changes in call sites.
-6. Run typecheck and build; check light and dark and any raised surfaces.
+6. Run typecheck and build; check light and dark and every surface that used `raised`.
 7. Pinned CDN users: change the version in the URL (`@0.2.0` to `@0.3.0`, or the range `@0`). React and Vue that pinned the namespace in `components.json` `registries` change the URL there too.
+
+## 0.2 to 0.3: `raised` becomes `elevation`
+
+Breaking, no alias. Re-add the entry items (`theme`, the new `elevation` item) and every component in use with `--overwrite`, then migrate call sites:
+
+| 0.2 | 0.3 |
+| --- | --- |
+| `<Button raised>` | `<Button elevation="raised">` |
+| `<TabsList raised>` / `<Tabs.List raised>` | `elevation="raised"` (only the active trigger rises) |
+| `<Card :raised="x">` (Vue) / `<Card.Root raised={x}>` (Svelte) | `:elevation="x ? 'raised' : 'flat'"` / `elevation={x ? "raised" : "flat"}` |
+| `<Toaster raised />` | `<Toaster elevation="raised" />` |
+| `<PromptInput raised>` | `<PromptInput elevation="floating">` (or a layered provider) |
+| whole page raised by hand | `<ElevationProvider mode="layered">` once |
+
+Hard lips are gone (a raised element is a bevel, pressed sinks 1px). Delete hand-written `shadow-[0_2px_0_...]` and `border-b-lip`. New tokens `--bv-*`, `--sk-*`, `--r1-*`, `--fl-*` and a clearer stone dark ladder come with the new `theme`. Search the code for ` raised`, `:raised`, `raised=` and `itemRaised`. See [elevation.md](elevation.md).
 
 ## Rules for the agent
 
