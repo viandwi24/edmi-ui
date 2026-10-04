@@ -239,6 +239,18 @@ function Snippet({
 	);
 }
 
+const PREVIEW_CARDS = [
+	["controls", ControlsCard],
+	["chart", ChartCard],
+	["form", FormCard],
+	["market", MarketCard],
+	["chat", ChatCard],
+	["command", CommandCard],
+	["question", QuestionCard],
+	["feedback", FeedbackCard],
+	["people", PeopleCard],
+] as const;
+
 export default function ThemeCustomizer({ data }: { data: ThemeData }) {
 	const [s, setS] = useState<State>({
 		base: "stone",
@@ -484,16 +496,17 @@ ${installCommand(fw, item, pm)}`
 					} as React.CSSProperties
 				}
 			>
-				<div className="columns-1 gap-5 min-[760px]:columns-2 min-[1500px]:columns-3 [&>*]:mb-5 [&>*]:break-inside-avoid">
-					<ControlsCard />
-					<ChartCard />
-					<FormCard />
-					<MarketCard />
-					<ChatCard />
-					<CommandCard />
-					<QuestionCard />
-					<FeedbackCard />
-					<PeopleCard />
+				{/* Each card sits in its own block wrapper: the cards render an ElevationProvider with
+				    display: contents, so spacing/break rules must live on a real box. */}
+				<div className="columns-1 gap-5 min-[760px]:columns-2 min-[1500px]:columns-3">
+					{PREVIEW_CARDS.map(([id, Card]) => (
+						<div
+							key={id}
+							className="mb-5 flex break-inside-avoid flex-col gap-5 [&>*]:min-w-0"
+						>
+							<Card />
+						</div>
+					))}
 				</div>
 			</div>
 

@@ -132,7 +132,7 @@ export default defineConfig({
 					["name", "twitter:image", OG_IMAGE],
 					["name", "twitter:image:alt", OG_ALT],
 				].map(([k, n, content]) => ({
-					tag: "meta",
+					tag: /** @type {const} */ ("meta"),
 					attrs: { [k]: n, content },
 				})),
 				{ tag: "script", content: darkSync },
