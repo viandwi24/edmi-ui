@@ -689,9 +689,15 @@ export function LandingFooter() {
 				{
 					title: "Docs",
 					links: [
-						{ label: "React", href: `${base}/getting-started/react/` },
-						{ label: "Vue", href: `${base}/getting-started/vue/` },
-						{ label: "Svelte", href: `${base}/getting-started/svelte/` },
+						{
+							label: "React",
+							href: `${base}/getting-started/installation/react/`,
+						},
+						{ label: "Vue", href: `${base}/getting-started/installation/vue/` },
+						{
+							label: "Svelte",
+							href: `${base}/getting-started/installation/svelte/`,
+						},
 					],
 				},
 				{
@@ -706,7 +712,7 @@ export function LandingFooter() {
 							label: "Patterns",
 							href: `${base}/components/patterns/stat-tile/`,
 						},
-						{ label: "Theming", href: `${base}/theming/` },
+						{ label: "Theming", href: `${base}/getting-started/theming/` },
 					],
 				},
 				{

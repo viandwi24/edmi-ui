@@ -75,11 +75,11 @@ export default defineConfig({
 	output: "static",
 	// Moved routes (docs information architecture): old URLs keep working.
 	redirects: {
-		"/getting-started/react": "/getting-started/installation/react",
-		"/getting-started/vue": "/getting-started/installation/vue",
-		"/getting-started/svelte": "/getting-started/installation/svelte",
-		"/theming": "/getting-started/theming",
-		"/rules": "/getting-started/rules",
+		"/getting-started/react": "/edmi-ui/getting-started/installation/react",
+		"/getting-started/vue": "/edmi-ui/getting-started/installation/vue",
+		"/getting-started/svelte": "/edmi-ui/getting-started/installation/svelte",
+		"/theming": "/edmi-ui/getting-started/theming",
+		"/rules": "/edmi-ui/getting-started/rules",
 	},
 	integrations: [
 		starlight({
