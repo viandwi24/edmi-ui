@@ -12,15 +12,52 @@
  * NO TRANSPARENT FILLS (v3): tints are pre-mixed solids — never `/NN` opacity on bg or border; use color-mix(…, var(--popover)).
  * POSITIVE VALUES use `success` (badge variant, text-success-text), never `brand` — brand follows the theme.
  *
- * DEPTH RULE: every component is FLAT by default (plain shadcn look: solid fill + 1px border).
- * The one-step 3D look is opt-in with `raised: true` (✦), available on every component below.
+ * ELEVATION (v4, replaces the old `raised` prop): every component is FLAT by default (plain shadcn look).
+ * One prop on every component that can take depth:  elevation?: "auto" | "sunken" | "flat" | "raised" | "floating"
+ *   −1 sunken   = soft inset well (fields, wells)            → shadow-sunken + bg-sk-bg
+ *    0 flat     = fill + 1px border (default)
+ *   +1 raised   = bevel: inner rim + top highlight + dark hairline, no hard lip, no drop
+ *   +2 floating = raised + one soft drop (buttons: 2px gloss + bottom shade + drop)
+ * "auto" resolves: component prop → nearest [data-elevation] scope → global mode → flat.
+ * Mode "layered" (data-elevation="layered" on any element) gives each ROLE its default level (see ROLE_LEVEL below).
+ * Pressed always sinks 1px. A surface inside a raised/floating surface drops to 0 + border (no bevel on bevel).
  */
 import { cva, type VariantProps } from "class-variance-authority";
 
-/* Raised controls: gradient fill + 1px top highlight + ONE hard lip (bottom border and 2px shadow share the lip color).
-   Never an inner bottom shade, never blur — that creates a 'stair' with two steps.
-   `data-raised` sets background-origin: border-box so the gradient does not repeat under the border. */
-const raised = "border bg-linear-to-b [background-origin:border-box]";
+export type Elevation = "auto" | "sunken" | "flat" | "raised" | "floating";
+export type ElevationMode = "flat" | "layered";
+
+/* Role defaults in layered mode. In flat mode everything is "flat". An explicit prop always wins. */
+export const ROLE_LEVEL = {
+  "button-filled": "raised",  // default · secondary · destructive · brand
+  "button-quiet": "flat",     // outline · ghost · link
+  field: "sunken",            // input · textarea · select trigger · OTP · input group
+  control: "flat",            // checkbox · radio · tabs · segmented · pagination · badge
+  handle: "raised",           // switch thumb · slider thumb · calendar selected day · kbd
+  surface: "raised",          // card · node · panel body
+  container: "flat",          // panel shell · nested card · alert · toast · tooltip
+  overlay: "floating",        // popover · dropdown · select menu · dialog · composer
+} as const;
+export function resolveElevation(prop: Elevation | undefined, scope: Elevation | ElevationMode | undefined, role: keyof typeof ROLE_LEVEL): Exclude<Elevation, "auto"> {
+  if (prop && prop !== "auto") return prop;
+  if (scope && scope !== "auto" && scope !== "flat" && scope !== "layered") return scope;
+  return scope === "layered" ? ROLE_LEVEL[role] : "flat";
+}
+
+/* Shared face + edge pieces (all tokens; light/dark/base/theme switch automatically). */
+const face = "[background-origin:border-box] border-transparent";
+const FACE = {
+  primaryRaised: `${face} [background-image:var(--r1-p-face)]`,   // white faces get a slightly darker face so the white top edge reads
+  neutralRaised: `${face} [background-image:var(--r1-s-face)]`,
+  primaryFloat: `${face} [background-image:var(--fl-p-face)]`,
+  neutralFloat: `${face} [background-image:var(--fl-s-face)]`,
+};
+export const surfaceElevation = {
+  sunken: "bg-sk-bg border-sk-bd shadow-sunken",
+  flat: "",
+  raised: "border-transparent shadow-raised",
+  floating: "border-transparent shadow-floating",
+};
 
 export const button = cva(
   "relative inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-[filter,transform,box-shadow] select-none " +
@@ -28,7 +65,7 @@ export const button = cva(
     "[&_svg]:shrink-0 [&_svg]:size-4",
   {
     variants: {
-      /* Flat by default (plain shadcn look). Add `raised` for the one-step 3D look ✦ */
+      /* Flat by default (plain shadcn look). elevation ✦ adds depth. */
       variant: {
         default: "border border-transparent bg-primary text-primary-foreground hover:bg-[color-mix(in_srgb,var(--primary)_90%,var(--background))] active:brightness-95",
         secondary: "border border-transparent bg-secondary text-secondary-foreground hover:bg-accent",
@@ -38,7 +75,7 @@ export const button = cva(
         link: "text-foreground underline underline-offset-4 px-1",
         brand: "border border-transparent bg-brand text-brand-foreground hover:bg-[color-mix(in_srgb,var(--brand)_90%,var(--background))]", // ✦
       },
-      raised: { false: "", true: "active:translate-y-[2px]" }, // ✦ opt-in one-step 3D
+      elevation: { flat: "", sunken: "", raised: "active:translate-y-px", floating: "active:translate-y-px" }, // ✦
       size: {
         xs: "h-6 px-2 text-xs rounded-md [&_svg]:size-3.5",
         sm: "h-8 px-3 text-[13px] rounded-[7px] gap-1.5 [&_svg]:size-3.5",
@@ -51,15 +88,25 @@ export const button = cva(
       },
     },
     compoundVariants: [
-      { raised: true, variant: "default", class: `${raised} from-primary-hi to-primary border-primary-edge border-b-primary-lip shadow-btn-primary hover:brightness-105 active:shadow-pressed active:border-b-primary-edge` },
-      { raised: true, variant: "secondary", class: `${raised} from-secondary-hi to-secondary border-input border-b-secondary-lip shadow-btn-secondary hover:from-accent hover:to-accent active:shadow-pressed` },
-      { raised: true, variant: "outline", class: "bg-linear-to-b from-outline-hi to-outline-face [background-origin:border-box] border-b-outline-lip shadow-btn-outline hover:from-accent hover:to-accent active:shadow-none active:bg-none active:bg-outline-face" }, // gray lip in dark (rev 1)
-      { raised: true, variant: "destructive", class: `${raised} from-destructive-hi to-destructive border-destructive-edge border-b-destructive-lip shadow-btn-destructive hover:brightness-105 active:shadow-pressed` },
-      { raised: true, variant: "brand", class: `${raised} from-brand-hi to-brand border-brand-edge border-b-brand-lip shadow-btn-brand hover:brightness-105 active:shadow-pressed` },
-      // ghost & link never get raised
-      { raised: true, variant: ["ghost", "link"], class: "active:translate-y-0" },
+      /* +1 raised */
+      { elevation: "raised", variant: "default", class: `${FACE.primaryRaised} shadow-btn-raised-primary hover:brightness-105 active:shadow-pressed` },
+      { elevation: "raised", variant: ["secondary", "outline", "ghost"], class: `${FACE.neutralRaised} shadow-btn-raised-neutral active:shadow-pressed` },
+      { elevation: "raised", variant: "destructive", class: `${face} bg-linear-to-b from-destructive-hi to-destructive shadow-btn-raised-color hover:brightness-105 active:shadow-pressed` },
+      { elevation: "raised", variant: "brand", class: `${face} bg-linear-to-b from-brand-hi to-brand shadow-btn-raised-color hover:brightness-105 active:shadow-pressed` },
+      /* +2 floating — one hero action per view */
+      { elevation: "floating", variant: "default", class: `${FACE.primaryFloat} shadow-btn-float-primary active:shadow-pressed-float` },
+      { elevation: "floating", variant: ["secondary", "outline", "ghost"], class: `${FACE.neutralFloat} shadow-btn-float-neutral active:shadow-pressed-float` },
+      { elevation: "floating", variant: "destructive", class: `${face} bg-linear-to-b from-destructive-hi to-destructive shadow-btn-float-color active:shadow-pressed-float` },
+      { elevation: "floating", variant: "brand", class: `${face} bg-linear-to-b from-brand-hi to-brand shadow-btn-float-color active:shadow-pressed-float` },
+      /* −1 sunken: filled variants keep their color (8% darker) + inset; neutral ones become a well */
+      { elevation: "sunken", variant: "default", class: "bg-[color-mix(in_srgb,var(--primary)_92%,#000)] border-transparent shadow-btn-sunken-filled" },
+      { elevation: "sunken", variant: "destructive", class: "bg-[color-mix(in_srgb,var(--destructive)_92%,#000)] border-transparent shadow-btn-sunken-filled" },
+      { elevation: "sunken", variant: "brand", class: "bg-[color-mix(in_srgb,var(--brand)_92%,#000)] border-transparent shadow-btn-sunken-filled" },
+      { elevation: "sunken", variant: ["secondary", "outline", "ghost"], class: "bg-sk-bg border-sk-bd shadow-sunken" },
+      // link never gets depth
+      { elevation: ["raised", "floating", "sunken"], variant: "link", class: "bg-none shadow-none active:translate-y-0" },
     ],
-    defaultVariants: { variant: "default", size: "default", raised: false },
+    defaultVariants: { variant: "default", size: "default", elevation: "flat" },
   },
 );
 
@@ -80,40 +127,53 @@ export const badge = cva(
         info: "bg-info-soft text-info-text border-[color-mix(in_srgb,var(--info)_30%,var(--popover))]", // ✦
       },
       shape: { default: "", pill: "rounded-full", number: "min-w-[22px] justify-center px-1.5 font-mono text-[11px]" },
+      /* ✦ badges keep their fill + tinted border at every level; only the edge changes */
+      elevation: {
+        flat: "",
+        sunken: "shadow-[inset_0_1px_2px_rgb(0_0_0/0.22)]",
+        raised: "shadow-raised",
+        floating: "shadow-[inset_0_1px_0_var(--bv-top),0_0_1.5px_var(--bv-out),0_2px_5px_rgb(0_0_0/0.14)]",
+      },
     },
-    defaultVariants: { variant: "default", shape: "default" },
+    defaultVariants: { variant: "default", shape: "default", elevation: "flat" },
   },
 );
 
-/* Card. Flat by default (border only). raised ✦ = hard 2px lip + top highlight, no blur. Sizes per shadcn (default | sm). */
+/* Card. Flat by default (border only). elevation ✦: sunken well · raised bevel · floating bevel + drop. Sizes per shadcn.
+   Nesting: a card inside a raised/floating surface renders flat + border (pass elevation="flat" or let auto resolve). */
 export const card = cva("bg-card text-card-foreground border border-border rounded-xl", {
   variants: {
     size: { default: "[--card-spacing:22px]", sm: "[--card-spacing:16px]" },
-    raised: { false: "", true: "border-b-lip shadow-card" }, // ✦
+    elevation: surfaceElevation, // ✦
   },
-  defaultVariants: { size: "default", raised: false },
+  defaultVariants: { size: "default", elevation: "flat" },
 });
 
 /* ✦ Inset panel (Card variant="inset"): header on the shell, body is an inner card running edge to edge
-   with radius on the top corners only, footer back on the shell. Flat by default; add raisedPanel for 3D. */
+   with its own radius, inset 2px from the shell (left/right/bottom) so the depth reads; footer back on the shell.
+   Shell is level 0 (never rises); the body plate is the raised part. */
 export const insetPanel = {
   root: "flex flex-col overflow-hidden rounded-2xl border border-border bg-muted",
   header: "flex items-center gap-2 px-4 py-3 text-sm font-medium",
-  body: "relative flex-1 -mx-px overflow-hidden rounded-t-xl border border-b-0 border-border bg-card",
-  bodyFull: "-mb-px", // no footer: body runs to the bottom
+  body: "relative flex-1 mx-0.5 mb-0.5 overflow-hidden rounded-xl border border-border bg-card",
+  bodyWithFooter: "mb-0", // footer sits right under the body
   fade: "after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-14 after:bg-linear-to-b after:from-transparent after:to-card",
-  footer: "border-t border-border bg-muted px-4 py-3 text-center text-[13px] text-foreground-2",
+  footer: "bg-muted px-4 py-3 text-center text-[13px] text-foreground-2",
 };
-export const raisedPanel = { root: "border-b-lip-strong shadow-dialog", body: "shadow-[inset_0_1px_0_var(--card-hi)]" }; // ✦
+/* ✦ elevation on the panel: raised = body plate bevels; floating = shell gets the soft drop too. */
+export const insetPanelElevation = {
+  raised: { root: "", body: "border-transparent shadow-raised" },
+  floating: { root: "border-transparent shadow-[0_0_1.5px_var(--bv-out),var(--bv-float)]", body: "border-transparent shadow-raised" },
+  sunken: { root: "bg-sk-bg border-sk-bd shadow-sunken", body: "" },
+};
 
-/* Elevation. Flat by default; append the raisedSurface string (✦) for the one-step lip. */
+/* Overlays. Natural level = floating (+2) in layered mode; flat in flat mode. Append surfaceElevation[level]. */
 export const surface = {
   popover: "bg-popover text-popover-foreground border border-border rounded-xl p-1.5",
   dialog: "bg-popover text-popover-foreground border border-border rounded-2xl p-[22px]",
-  sunk: "bg-muted border border-border-2 rounded-lg shadow-sunk",
+  sunk: "bg-sk-bg border border-sk-bd rounded-lg shadow-sunken", // a well / sunken region (−1)
   overlay: "bg-overlay",
 };
-export const raisedSurface = { popover: "border-b-lip shadow-pop", dialog: "border-b-lip-strong shadow-dialog" }; // ✦
 
 export const menuItem = cva(
   "flex h-8 items-center gap-2.5 rounded-[7px] px-2 text-[13.5px] outline-none data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground data-[disabled]:opacity-45 [&_svg]:size-[15px] [&_svg]:text-muted-foreground",
@@ -123,13 +183,13 @@ export const menuLabel = "px-2 pt-1.5 pb-1 text-xs font-semibold text-muted-fore
 export const menuShortcut = "ml-auto font-mono text-[11.5px] tracking-wide text-muted-foreground";
 
 /* Tabs. Flat by default: active = --tab-active + 1px border (with or without a track).
-   raised ✦ on the list/trigger makes the active trigger a 3D secondary button. */
-const raisedActive = "data-[state=active]:bg-linear-to-b data-[state=active]:[background-origin:border-box] data-[state=active]:from-secondary-hi data-[state=active]:to-secondary data-[state=active]:border-input data-[state=active]:border-b-secondary-lip data-[state=active]:shadow-btn-secondary";
+   elevation="raised" ✦ on the list: ONLY the active trigger rises (bevel); the list/track itself never gets the bevel. */
+const raisedActive = "data-[state=active]:[background-image:var(--r1-s-face)] data-[state=active]:[background-origin:border-box] data-[state=active]:border-transparent data-[state=active]:shadow-btn-raised-neutral";
 export const tabs = {
   list: cva("", {
     variants: {
       variant: {
-        default: "inline-flex gap-0.5 rounded-lg border border-border bg-muted p-[3px] shadow-sunk",
+        default: "inline-flex gap-0.5 rounded-lg border border-border bg-muted p-[3px] shadow-[inset_0_1px_2px_rgb(0_0_0/0.04)]",
         line: "flex gap-[22px] border-b border-border",
         pills: "inline-flex gap-1", // ✦ no track
       },
@@ -143,17 +203,18 @@ export const tabs = {
         line: "px-0.5 pb-[11px] -mb-px border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:text-foreground",
         pills: "h-8 px-3 rounded-[7px] border border-transparent data-[state=active]:bg-tab-active data-[state=active]:border-border data-[state=active]:text-foreground",
       },
-      raised: { false: "", true: "" }, // ✦ pass the TabsList raised prop down to each trigger
+      elevation: { flat: "", raised: "" }, // ✦ pass the TabsList elevation down to each trigger
     },
     compoundVariants: [
-      { variant: "default", raised: true, class: raisedActive },
-      { variant: "pills", raised: true, class: raisedActive },
+      { variant: "default", elevation: "raised", class: raisedActive },
+      { variant: "pills", elevation: "raised", class: raisedActive },
     ],
-    defaultVariants: { variant: "default", raised: false },
+    defaultVariants: { variant: "default", elevation: "flat" },
   }),
 };
 
-/* Toggle / Toggle Group (spacing 2 default; spacing 0 joins items). Flat by default; raised ✦ opt-in. */
+/* Toggle / Toggle Group (spacing 2 default; spacing 0 joins items). Flat by default; elevation ✦ opt-in.
+   Default (non-outline) toggle: only the ON state shows depth (pressed in). Outline toggle: the whole button rises. */
 export const toggle = cva(
   "inline-flex items-center justify-center gap-1.5 rounded-md text-[13.5px] font-medium text-muted-foreground border border-transparent " +
     "data-[state=on]:bg-accent data-[state=on]:text-accent-foreground",
@@ -161,71 +222,80 @@ export const toggle = cva(
     variants: {
       variant: { default: "", outline: "border-input text-foreground" },
       size: { sm: "h-8 min-w-8 px-2", default: "h-9 min-w-9 px-2.5", lg: "h-[42px] min-w-[42px] px-3" },
-      raised: { false: "", true: "data-[state=on]:translate-y-px data-[state=on]:shadow-sunk" }, // ✦
+      elevation: { flat: "", raised: "data-[state=on]:shadow-pressed", floating: "data-[state=on]:shadow-pressed" }, // ✦
     },
-    compoundVariants: [{ variant: "outline", raised: true, class: "bg-linear-to-b from-outline-hi to-outline-face [background-origin:border-box] border-b-outline-lip shadow-btn-outline data-[state=on]:bg-none data-[state=on]:bg-accent data-[state=on]:shadow-sunk" }],
-    defaultVariants: { variant: "default", size: "default", raised: false },
+    compoundVariants: [
+      { variant: "outline", elevation: "raised", class: `${FACE.neutralRaised} shadow-btn-raised-neutral data-[state=on]:bg-none data-[state=on]:bg-accent data-[state=on]:shadow-pressed` },
+      { variant: "outline", elevation: "floating", class: `${FACE.neutralFloat} shadow-btn-float-neutral data-[state=on]:bg-none data-[state=on]:bg-accent data-[state=on]:shadow-pressed-float` },
+    ],
+    defaultVariants: { variant: "default", size: "default", elevation: "flat" },
   },
 );
 export const segmented = { // ✦ ToggleGroup type="single" inside a track
-  root: "inline-flex gap-0.5 rounded-lg border border-border bg-muted p-[3px] shadow-sunk",
+  root: "inline-flex gap-0.5 rounded-lg border border-border bg-muted p-[3px] shadow-[inset_0_1px_2px_rgb(0_0_0/0.04)]",
   item: "h-[30px] min-w-[30px] px-3 rounded-[7px] border border-transparent text-[13.5px] font-medium text-muted-foreground data-[state=on]:bg-tab-active data-[state=on]:border-border data-[state=on]:text-foreground",
-  itemRaised: raisedActive.replaceAll("state=active", "state=on"), // ✦ add to item when raised
+  itemRaised: raisedActive.replaceAll("state=active", "state=on"), // ✦ add to item when elevation="raised" (only the ON item rises)
 };
 
-/* Forms. Control height = button height (h-9 / 36px), like shadcn. */
+/* Forms. Control height = button height (h-9 / 36px), like shadcn. Fields are flat by default and sink (−1) in layered mode:
+   add fieldSunken (or surfaceElevation.sunken) — focus swaps the edge for the ring. */
+export const fieldSunken = "bg-sk-bg border-sk-bd shadow-sunken focus-visible:bg-card";
 export const input =
-  "flex h-9 w-full items-center gap-2 rounded-md border border-input bg-card px-3 text-sm shadow-sunk placeholder:text-muted-foreground " +
+  "flex h-9 w-full items-center gap-2 rounded-md border border-input bg-card px-3 text-sm placeholder:text-muted-foreground " +
   "focus-visible:border-ring focus-visible:shadow-ring outline-none aria-invalid:border-destructive aria-invalid:shadow-ring-error disabled:opacity-50 disabled:bg-muted";
 export const textarea = input.replace("h-9", "min-h-24 py-2.5 leading-relaxed");
 export const selectTrigger = cva("flex h-9 items-center justify-between gap-2 rounded-md border border-input bg-card pl-3 pr-2.5 text-sm data-[state=open]:border-ring data-[state=open]:shadow-ring", {
-  variants: { raised: { false: "", true: "border-b-lip shadow-btn-outline data-[state=open]:border-b-ring" } }, // ✦
-  defaultVariants: { raised: false },
+  variants: { elevation: { ...surfaceElevation, sunken: fieldSunken } }, // ✦ sunken (layered default) · raised · floating
+  defaultVariants: { elevation: "flat" },
 });
 export const inputGroup = {
-  root: "flex h-9 items-stretch overflow-hidden rounded-md border border-input bg-card shadow-sunk focus-within:border-ring focus-within:shadow-ring",
+  root: "flex h-9 items-stretch overflow-hidden rounded-md border border-input bg-card focus-within:border-ring focus-within:shadow-ring",
   text: "flex items-center bg-muted px-2.5 text-[13px] text-muted-foreground", // add border-r / border-l border-input by side
 };
 /* Inside ButtonGroup: Input/InputGroup drops its right radius + inner shadow so it joins the button (same 36px height). */
 export const buttonGroupInput = "rounded-r-none shadow-none";
-export const checkbox = cva("size-[18px] rounded-[5px] border border-input bg-card shadow-sunk data-[state=checked]:bg-primary data-[state=checked]:border-primary data-[state=checked]:text-primary-foreground", {
-  variants: { raised: { false: "", true: "data-[state=checked]:bg-linear-to-b data-[state=checked]:[background-origin:border-box] data-[state=checked]:from-primary-hi data-[state=checked]:to-primary data-[state=checked]:border-primary-edge data-[state=checked]:shadow-[inset_0_1px_0_var(--primary-inset)]" } }, // ✦
-  defaultVariants: { raised: false },
+export const checkbox = cva("size-[18px] rounded-[5px] border border-input bg-card data-[state=checked]:bg-primary data-[state=checked]:border-primary data-[state=checked]:text-primary-foreground", {
+  variants: { elevation: { flat: "", raised: "data-[state=checked]:[background-image:var(--r1-p-face)] data-[state=checked]:border-transparent data-[state=checked]:shadow-btn-raised-primary" } }, // ✦ only the checked box rises
+  defaultVariants: { elevation: "flat" },
 });
 export const radio = "size-[18px] rounded-full border border-input bg-card data-[state=checked]:border-primary [&_[data-indicator]]:size-[9px] [&_[data-indicator]]:rounded-full [&_[data-indicator]]:bg-primary";
 export const switchRoot = cva("relative inline-flex shrink-0 rounded-full bg-input shadow-[inset_0_1px_2px_rgb(0_0_0/0.12)] data-[state=checked]:bg-brand", {
   variants: { size: { default: "h-6 w-10", sm: "h-[18px] w-8" } }, defaultVariants: { size: "default" },
 });
 export const switchThumb = cva("block rounded-full bg-white shadow-[0_0_0_1px_rgb(0_0_0/0.1)] size-[18px] translate-x-[3px] data-[state=checked]:translate-x-[19px]", {
-  variants: { raised: { false: "", true: "bg-linear-to-b from-white to-[#f1f0ec] shadow-[0_1px_0_rgb(0_0_0/0.25)]" } }, // ✦
-  defaultVariants: { raised: false },
+  variants: { elevation: { flat: "", raised: "bg-linear-to-b from-white to-[#eeede9] shadow-thumb" } }, // ✦ only the thumb rises, never the track
+  defaultVariants: { elevation: "flat" },
 });
 export const slider = {
   track: "h-1.5 rounded-full border border-border bg-muted",
   range: "rounded-full bg-brand",
   thumb: cva("size-[18px] rounded-full border border-brand-edge bg-white focus-visible:shadow-[0_0_0_4px_var(--ring-soft)]", {
-    variants: { raised: { false: "", true: "border-b-brand-lip bg-linear-to-b from-white to-[#f1f0ec] shadow-[0_2px_0_var(--brand-lip)] focus-visible:shadow-[0_0_0_4px_var(--ring-soft),0_2px_0_var(--brand-lip)]" } }, // ✦
-    defaultVariants: { raised: false },
+    variants: { elevation: { flat: "", raised: "border-transparent bg-linear-to-b from-white to-[#eeede9] shadow-thumb focus-visible:shadow-[0_0_0_4px_var(--ring-soft),0_0_1.5px_rgb(0_0_0/0.45)]" } }, // ✦
+    defaultVariants: { elevation: "flat" },
   }),
 };
 export const kbd = cva("inline-flex h-[22px] min-w-[22px] items-center justify-center rounded-[5px] border border-input bg-muted px-1.5 font-mono text-[11.5px] text-muted-foreground", {
-  variants: { raised: { false: "", true: `${raised} from-secondary-hi to-muted border-b-secondary-lip shadow-[0_1px_0_var(--secondary-lip)]` } }, // ✦
-  defaultVariants: { raised: false },
+  variants: { elevation: { flat: "", raised: `${FACE.neutralRaised} shadow-btn-raised-neutral`, floating: `${FACE.neutralFloat} shadow-btn-float-neutral` } }, // ✦
+  defaultVariants: { elevation: "flat" },
 });
-/* Calendar selected day: flat primary; raised ✦ adds gradient + primary lip. */
+/* Calendar: elevation goes on the SHELL (the calendar popover/card), never on the day grid.
+   The only part inside that rises is the selected day. */
+export const calendarShell = cva("bg-popover border border-border rounded-xl p-3", {
+  variants: { elevation: surfaceElevation }, defaultVariants: { elevation: "flat" },
+});
 export const calendarSelected = cva("bg-primary text-primary-foreground", {
-  variants: { raised: { false: "", true: "bg-linear-to-b from-primary-hi to-primary border-b-primary-lip shadow-[0_2px_0_var(--primary-lip)]" } },
-  defaultVariants: { raised: false },
+  variants: { elevation: { flat: "", raised: "[background-image:var(--r1-p-face)] shadow-btn-raised-primary" } },
+  defaultVariants: { elevation: "flat" },
 });
-/* Pagination active link: outline, flat; raised ✦ adds the lip. */
+/* Pagination: only the active link rises; the list never does. */
 export const paginationActive = cva("border border-input bg-card font-semibold", {
-  variants: { raised: { false: "", true: "border-b-lip shadow-btn-outline" } },
-  defaultVariants: { raised: false },
+  variants: { elevation: { flat: "", raised: "border-transparent shadow-btn-raised-neutral" } },
+  defaultVariants: { elevation: "flat" },
 });
 /* Choice card (checkbox/radio card, questionnaire option). */
 export const choiceCard = cva("flex gap-3 rounded-xl border border-border bg-card p-3.5 data-[state=checked]:border-ring data-[state=checked]:shadow-[0_0_0_1px_var(--ring)]", {
-  variants: { raised: { false: "", true: "border-b-lip shadow-card data-[state=checked]:border-b-ring" } }, // ✦
-  defaultVariants: { raised: false },
+  variants: { elevation: { ...surfaceElevation, sunken: "bg-sk-bg border-sk-bd shadow-sunken" } }, // ✦ checked keeps the ring
+  defaultVariants: { elevation: "flat" },
 });
 
 /* Feedback */
@@ -243,8 +313,8 @@ export const alert = cva("grid grid-cols-[20px_1fr_auto] gap-x-3 gap-y-0.5 round
   defaultVariants: { variant: "default" },
 });
 export const toast = cva("flex w-[360px] items-start gap-3 rounded-xl border border-border bg-popover px-4 py-3.5", {
-  variants: { raised: { false: "", true: "border-b-lip shadow-[0_3px_0_var(--lip)]" } }, // ✦
-  defaultVariants: { raised: false },
+  variants: { elevation: { flat: "", raised: surfaceElevation.raised, floating: surfaceElevation.floating } }, // ✦ floating is the natural level
+  defaultVariants: { elevation: "flat" },
 });
 export const tooltip = "rounded-[7px] bg-primary px-2.5 py-1.5 text-[12.5px] text-primary-foreground";
 
@@ -267,12 +337,15 @@ export const bubble = cva("inline-block max-w-[360px] rounded-2xl border border-
 export const reaction = cva("inline-flex h-[22px] items-center gap-1 rounded-full border px-[7px] text-[11.5px] bg-popover border-border", {
   variants: {
     active: { true: "bg-[color-mix(in_srgb,var(--brand)_14%,var(--popover))] border-[color-mix(in_srgb,var(--brand)_45%,var(--popover))] text-brand-text", false: "" },
-    raised: { false: "", true: "border-b-lip shadow-[0_1px_0_var(--lip)]" }, // ✦
+    elevation: { flat: "", raised: "border-transparent shadow-btn-raised-neutral" }, // ✦
   },
-  defaultVariants: { active: false, raised: false },
+  defaultVariants: { active: false, elevation: "flat" },
 });
 /* Message row: avatar is top-aligned with the header line (or the first bubble line when there is no header);
    footer sits below the bubble on the message side, indented by avatar width + gap (40px). */
+/* ✦ Button group: +1 = each item raised; +2 = the GROUP floats as one plate (items stay +1), never a drop per item. */
+export const buttonGroupFloating = "rounded-lg shadow-group-float";
+
 export const message = {
   row: "flex items-start gap-2.5 data-[align=end]:flex-row-reverse",
   header: "flex h-[30px] items-center gap-2 text-xs",

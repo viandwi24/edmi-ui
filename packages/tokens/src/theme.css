@@ -91,19 +91,24 @@
   --color-tab-active: var(--tab-active);
   --color-muted-foreground-2: var(--muted-foreground-2);
   --color-border-2: var(--border-2);
+  --color-sk-bg: var(--sk-bg);
+  --color-sk-bd: var(--sk-bd);
   --color-ring-soft: var(--ring-soft);
   --color-overlay: var(--overlay);
-  --shadow-lip: 0 2px 0 var(--lip);
-  --shadow-card: inset 0 1px 0 var(--card-hi), 0 2px 0 var(--lip);
-  --shadow-pop: 0 4px 0 var(--lip);
-  --shadow-dialog: 0 4px 0 var(--lip-strong);
-  --shadow-sunk: inset 0 1px 2px rgb(0 0 0 / 0.05);
-  --shadow-btn-primary: inset 0 1px 0 var(--primary-inset), 0 2px 0 var(--primary-lip);
-  --shadow-btn-secondary: inset 0 1px 0 var(--secondary-inset), 0 2px 0 var(--secondary-lip);
-  --shadow-btn-outline: 0 2px 0 var(--outline-lip);
-  --shadow-btn-brand: inset 0 1px 0 rgb(255 255 255 / 0.35), 0 2px 0 var(--brand-lip);
-  --shadow-btn-destructive: inset 0 1px 0 rgb(255 255 255 / 0.28), 0 2px 0 var(--destructive-lip);
-  --shadow-pressed: inset 0 2px 3px rgb(0 0 0 / 0.22);
+  --shadow-raised: inset 0 1px 0 var(--bv-top), 0 0 1.5px var(--bv-out);
+  --shadow-floating: inset 0 1px 0 var(--bv-top), 0 0 1.5px var(--bv-out), var(--bv-float);
+  --shadow-sunken: var(--sk-sh);
+  --shadow-btn-raised-primary: inset 0 0 .26px 1.1px rgb(255 255 255 / .14), inset 0 1px 0 var(--primary-inset), 0 0 1.5px rgb(0 0 0 / .5), 0 1px 2px rgb(0 0 0 / .16), var(--r1-p);
+  --shadow-btn-raised-neutral: inset 0 0 .26px 1.1px var(--bv-ring), inset 0 1px 0 var(--bv-top), 0 0 1.47px var(--bv-out), var(--r1-s);
+  --shadow-btn-raised-color: inset 0 0 .26px 1.1px rgb(255 255 255 / .16), inset 0 1px 0 rgb(255 255 255 / .32), 0 0 1.5px rgb(0 0 0 / .38), 0 1px 2px rgb(0 0 0 / .14);
+  --shadow-btn-float-primary: inset 0 0 .26px 1.1px rgb(255 255 255 / .14), var(--fl-p), 0 0 1.5px var(--bv-out), 0 2px 5px rgb(0 0 0 / .18), 0 8px 14px -6px rgb(0 0 0 / .3);
+  --shadow-btn-float-neutral: inset 0 0 .26px 1.1px var(--bv-ring), var(--fl-s), 0 0 1.5px var(--bv-out), 0 2px 5px rgb(0 0 0 / .18), 0 8px 14px -6px rgb(0 0 0 / .3);
+  --shadow-btn-float-color: inset 0 0 .26px 1.1px rgb(255 255 255 / .16), inset 0 2px 0 rgb(255 255 255 / .4), inset 0 -2px 0 rgb(0 0 0 / .12), 0 0 1.5px var(--bv-out), 0 2px 5px rgb(0 0 0 / .18), 0 8px 14px -6px rgb(0 0 0 / .3);
+  --shadow-btn-sunken-filled: inset 0 2px 5px rgb(0 0 0 / .4), 0 0 1.5px var(--bv-out);
+  --shadow-pressed: inset 0 1px 3px rgb(0 0 0 / .28), 0 0 1.47px var(--bv-out);
+  --shadow-pressed-float: inset 0 2px 4px rgb(0 0 0 / .3), 0 0 1.47px var(--bv-out);
+  --shadow-thumb: inset 0 1px 0 #fff, 0 0 1.5px rgb(0 0 0 / .45);
+  --shadow-group-float: 0 2px 5px rgb(0 0 0 / .18), 0 8px 14px -6px rgb(0 0 0 / .3);
   --shadow-ring: 0 0 0 3px var(--ring-soft);
   --shadow-ring-error: 0 0 0 3px var(--destructive-soft);
 }
@@ -111,6 +116,6 @@
 @layer base {
   * { @apply border-border; }
   body { @apply bg-background text-foreground font-sans antialiased; }
-  /* gradients on raised controls must cover the border, or the top of the gradient repeats under the bottom border */
-  [data-raised] { background-origin: border-box; }
+  /* gradient faces on elevated controls must cover the border */
+  [data-elevation=raised], [data-elevation=floating] { background-origin: border-box; }
 }

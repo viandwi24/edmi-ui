@@ -90,6 +90,20 @@ const extras = [
 	"tab-active",
 	"ring-soft",
 	"overlay",
+	// v4 elevation
+	"bv-ring",
+	"bv-top",
+	"bv-out",
+	"bv-face-a",
+	"bv-face-b",
+	"bv-float",
+	"sk-bg",
+	"sk-bd",
+	"sk-sh",
+	"r1-p",
+	"r1-s",
+	"fl-p",
+	"fl-s",
 ];
 
 describe("parseTokensCss", () => {

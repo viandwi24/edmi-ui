@@ -61,8 +61,10 @@ const baseRule: CssTree = {
 			color: "var(--foreground)",
 			"-webkit-font-smoothing": "antialiased",
 		},
-		// gradients on raised controls must cover the border (DESIGN §4.2)
-		"[data-raised]": { "background-origin": "border-box" },
+		// gradient faces on elevated controls must cover the border (DESIGN §4.2)
+		"[data-elevation=raised], [data-elevation=floating]": {
+			"background-origin": "border-box",
+		},
 	},
 };
 
