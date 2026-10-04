@@ -15,7 +15,7 @@ src/examples/
     vue.vue                 <script setup lang="ts">    (aliases: @edmi-vue/…)
     svelte.svelte           Svelte 5 runes              (aliases: @edmi-svelte/…)
     react/ vue/ svelte/     OPTIONAL helper components of that port (listed after the main file in the Code tab)
-public/examples/<thumb>-{light,dark}.png     thumbnails, ~800px wide (copy from refs/edmi-ui/screens with `sips -Z 800`)
+public/examples/<thumb>-{light,dark}.png     thumbnails, 800px wide, GENERATED from the live render (see "Thumbnails")
 ```
 
 Routes (static, generated from `index.ts`): `/examples/` (grid + tag filter), `/examples/<slug>/` (toolbar,
@@ -41,8 +41,46 @@ resizable iframe, Code tab), `/examples/<slug>/render/<fw>/` (bare page rendered
 1. Pick the row in EXAMPLES.md, open its screenshot and `reference/*.dc.html`.
 2. Create `src/examples/<slug>/` with `data.ts`, `react.tsx`, `vue.vue`, `svelte.svelte`. Port from React;
    existing `examples/{react,vue,svelte}` apps and `src/demos/*` show each port's idioms.
-3. Copy light and dark screenshots to `public/examples/<thumb>-{light,dark}.png`.
+3. Generate the thumbnails from the live render (`bun scripts/example-thumbs.ts`, see "Thumbnails"); never copy
+   a board screenshot: thumbnails must match what the example renders.
 4. Add the entry to `index.ts` (all three frameworks). Restart `astro dev` (islands are generated at config load).
 5. Verify: `bun run verify:matrix` (runs `scripts/verify-examples.ts`), `bun run typecheck`, `bun run lint`,
    docs build, then compare `/examples/<slug>/render/<fw>/?mode=…&base=…&theme=…` against the board in light
    and dark, stone·green and slate·ocean, all three frameworks.
+
+## Layout variants (Stockbreak)
+
+Stockbreak has two app layouts. The ten page examples (`markets`, `explore`, ...) render the **navbar** layout
+(`AppHeader`); `markets-sidebar` is the same Markets page in the **sidebar** app shell (inset `Sidebar` with
+search, nav, watchlist and the faucet card, breadcrumb header). A layout variant is a separate example folder
+(own `data.ts` copy, since examples may not import from each other) with the layout in the title
+("Markets · navbar layout" / "Markets · sidebar layout"). Add more `<page>-sidebar` examples the same way
+(copy the folder, swap the header for the shell).
+
+## Thumbnails
+
+Thumbnails are generated from the live React render so the index always matches the examples (no board crops):
+
+```bash
+bun run --filter @edmi-ui/docs dev -- --port 4770                      # or astro preview on a built site
+bun scripts/example-thumbs.ts --url http://localhost:4770/edmi-ui [slug...]
+# open the printed .../__thumbs.html in a browser (the in-app browser works) and leave it open until the script exits
+```
+
+The script needs no extra dependency and no headless browser: it writes a temporary driver page
+(`public/__thumbs.html`, deleted on exit) that loads `/examples/<slug>/render/react/?mode=&base=&theme=` in a
+1440x1080 same-origin iframe, rasterises it (SVG foreignObject, page CSS and Google Fonts inlined), and a tiny
+receiver stores `public/examples/<thumb>-{light,dark}.png`, resized with `sips -Z 800`. It honours
+`defaultBase`/`defaultTheme` and a forced `defaultMode` (both thumbnails then use that mode). Regenerate after
+any visual change to an example, and compare the index card with `/examples/<slug>/` (focus rings and canvas
+elements are not captured).
+
+## Viewer (`components/ExampleViewer.astro`)
+
+Toolbar: Preview/Code, mode/base/theme/radius knobs, framework, viewport presets, zoom, full page, Open.
+- **Zoom** (50, 67, 75, 90, 100, 110, 125, 150 %): `--z` on the frame scales the iframe with a CSS transform
+  while the iframe keeps its logical width (`visual / zoom`), so a preset (390, 820) keeps its breakpoints and
+  only the visual size changes; responsive mode behaves like browser zoom. Ctrl/Cmd + `=`, `-`, `0` work only
+  while focus is inside the viewer.
+- **Full page**: the card becomes a fixed overlay (z-index above Starlight), body scroll locked, exit with the
+  button or Esc. The state is not persisted.
