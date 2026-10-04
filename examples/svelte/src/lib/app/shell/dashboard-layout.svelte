@@ -31,7 +31,7 @@
 	];
 </script>
 
-<Sidebar.Provider>
+<Sidebar.Provider class="h-svh min-h-0 overflow-hidden">
 	<Sidebar.Root variant="inset" collapsible="icon">
 		<Sidebar.Header>
 			<a href="/" class="flex items-center gap-2.5 px-1 py-1">
@@ -88,7 +88,7 @@
 		</Sidebar.Footer>
 		<Sidebar.Rail />
 	</Sidebar.Root>
-	<Sidebar.Inset>
+	<Sidebar.Inset class="min-h-0 overflow-hidden">
 		<header
 			class="flex h-[62px] shrink-0 items-center justify-between gap-2 border-b border-border-2 px-4 md:px-6"
 		>
@@ -111,6 +111,6 @@
 				<ThemeToggle />
 			</div>
 		</header>
-		<div class="flex-1 overflow-auto">{@render children()}</div>
+		<div class="min-h-0 flex-1 overflow-auto overscroll-contain">{@render children()}</div>
 	</Sidebar.Inset>
 </Sidebar.Provider>

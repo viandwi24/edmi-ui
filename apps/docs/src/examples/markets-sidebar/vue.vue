@@ -51,7 +51,7 @@ const navIcons: Record<string, unknown> = {
 
 <template>
 <ElevationProvider mode="layered">
-	<SidebarProvider style="--sidebar-width: 16rem">
+	<SidebarProvider class="h-svh min-h-0 overflow-hidden" style="--sidebar-width: 16rem">
 		<Sidebar variant="inset" collapsible="offcanvas">
 			<SidebarHeader class="gap-3 px-3 pt-4">
 				<div class="flex items-center justify-between">
@@ -97,7 +97,7 @@ const navIcons: Record<string, unknown> = {
 				</div>
 			</SidebarFooter>
 		</Sidebar>
-		<SidebarInset class="min-w-0 bg-background">
+		<SidebarInset class="min-h-0 min-w-0 overflow-hidden bg-background">
 			<header class="flex h-16 shrink-0 items-center justify-between gap-3 border-b border-border px-4 md:px-7">
 				<div class="flex min-w-0 items-center gap-2 text-[15px]">
 					<SidebarTrigger class="md:hidden" />
@@ -113,7 +113,7 @@ const navIcons: Record<string, unknown> = {
 					</Button>
 				</div>
 			</header>
-	<div class="flex w-full flex-col gap-6 px-4 py-8 md:px-10">
+	<div class="min-h-0 flex-1 overflow-y-auto overscroll-contain flex w-full flex-col gap-6 px-4 py-8 md:px-10">
 		<div class="flex flex-wrap items-end justify-between gap-4">
 			<div>
 				<div class="flex items-center gap-3">

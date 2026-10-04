@@ -8,11 +8,11 @@
 	let { children }: { children: Snippet } = $props();
 </script>
 
-<Sidebar.Provider style="--sidebar-width: 15rem">
+<Sidebar.Provider class="h-svh min-h-0 overflow-hidden" style="--sidebar-width: 15rem">
 	<AppSidebar />
-	<Sidebar.Inset class="min-w-0">
+	<Sidebar.Inset class="min-h-0 min-w-0 overflow-hidden">
 		<AppHeader />
-		<div class="flex-1">{@render children()}</div>
+		<div class="min-h-0 flex-1 overflow-y-auto overscroll-contain">{@render children()}</div>
 	</Sidebar.Inset>
 </Sidebar.Provider>
 <Toaster elevation="raised" />

@@ -46,7 +46,7 @@ const items = [
 </script>
 
 <template>
-	<SidebarProvider>
+	<SidebarProvider class="h-svh min-h-0 overflow-hidden">
 		<Sidebar variant="inset" collapsible="icon">
 			<SidebarHeader>
 				<a href="#/" class="flex items-center gap-2.5 px-1 py-1">
@@ -93,7 +93,7 @@ const items = [
 			</SidebarFooter>
 			<SidebarRail />
 		</Sidebar>
-		<SidebarInset>
+		<SidebarInset class="min-h-0 overflow-hidden">
 			<header class="flex h-[62px] shrink-0 items-center justify-between gap-2 border-b border-border-2 px-4 md:px-6">
 				<div class="flex items-center gap-2">
 					<SidebarTrigger />
@@ -114,7 +114,7 @@ const items = [
 					<ThemeToggle />
 				</div>
 			</header>
-			<div class="flex-1 overflow-auto"><slot /></div>
+			<div class="min-h-0 flex-1 overflow-auto overscroll-contain"><slot /></div>
 		</SidebarInset>
 	</SidebarProvider>
 </template>

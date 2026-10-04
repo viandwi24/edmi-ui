@@ -31,7 +31,7 @@ function refresh() {
 </script>
 
 <template>
-	<SidebarProvider>
+	<SidebarProvider class="h-svh min-h-0 overflow-hidden">
 		<!-- Always-dark navy sidebar: a scoped `dark` class puts every token in this subtree in dark mode, even in light mode. -->
 		<Sidebar
 			v-show="navOpen"
@@ -50,7 +50,7 @@ function refresh() {
 			</SheetContent>
 		</Sheet>
 
-		<div class="flex min-w-0 flex-1 flex-col bg-background">
+		<div class="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden bg-background">
 			<header class="sticky top-0 z-20 flex h-16 shrink-0 items-center justify-between gap-3 border-b border-border bg-card px-4 md:px-7">
 				<div class="flex min-w-0 items-center gap-2 md:gap-3">
 					<Button variant="ghost" size="icon-sm" class="md:hidden" aria-label="Open navigation" @click="mobileOpen = true">
@@ -112,7 +112,7 @@ function refresh() {
 					</DropdownMenu>
 				</div>
 			</header>
-			<main class="flex-1"><slot /></main>
+			<main class="min-h-0 flex-1 overflow-y-auto overscroll-contain"><slot /></main>
 		</div>
 	</SidebarProvider>
 </template>

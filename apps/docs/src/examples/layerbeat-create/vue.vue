@@ -128,9 +128,9 @@ function pickVersion(id: string, v: unknown) {
 </script>
 
 <template>
-	<SidebarProvider style="--sidebar-width: 15rem">
+	<SidebarProvider class="h-svh min-h-0 overflow-hidden" style="--sidebar-width: 15rem">
 		<AppSidebar :platform="navPlatform" :workspace="navWorkspace" />
-		<SidebarInset class="min-w-0 bg-background">
+		<SidebarInset class="min-h-0 min-w-0 overflow-hidden bg-background">
 			<header class="flex h-16 shrink-0 items-center justify-between gap-3 border-b border-border bg-card px-4 md:px-7">
 				<div class="flex min-w-0 items-center gap-1">
 					<HeaderTrigger />
@@ -173,7 +173,7 @@ function pickVersion(id: string, v: unknown) {
 				</div>
 			</header>
 
-			<div class="flex-1">
+			<div class="min-h-0 flex-1 overflow-y-auto overscroll-contain">
 				<div class="mx-auto w-full max-w-[1328px] px-4 pt-8 pb-12 md:px-9">
 					<h1 class="text-[32px] font-semibold tracking-[-0.8px]">Create a BeatVPS</h1>
 					<p class="mt-2 text-[15px] text-muted-foreground">

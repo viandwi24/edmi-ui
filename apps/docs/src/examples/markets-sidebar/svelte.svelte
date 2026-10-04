@@ -35,7 +35,7 @@
 	</div>
 {/snippet}
 
-<Sidebar.Provider style="--sidebar-width: 16rem">
+<Sidebar.Provider class="h-svh min-h-0 overflow-hidden" style="--sidebar-width: 16rem">
 	<Sidebar.Root variant="inset" collapsible="offcanvas">
 		<Sidebar.Header class="gap-3 px-3 pt-4">
 			<div class="flex items-center justify-between">
@@ -94,7 +94,7 @@
 			</div>
 		</Sidebar.Footer>
 	</Sidebar.Root>
-	<Sidebar.Inset class="min-w-0 bg-background">
+	<Sidebar.Inset class="min-h-0 min-w-0 overflow-hidden bg-background">
 		<header class="flex h-16 shrink-0 items-center justify-between gap-3 border-b border-border px-4 md:px-7">
 			<div class="flex min-w-0 items-center gap-2 text-[15px]">
 				<Sidebar.Trigger class="md:hidden" />
@@ -116,7 +116,7 @@
 				</Button>
 			</div>
 		</header>
-<div class="flex w-full flex-col gap-6 px-4 py-8 md:px-10">
+<div class="min-h-0 flex-1 overflow-y-auto overscroll-contain flex w-full flex-col gap-6 px-4 py-8 md:px-10">
 	<div class="flex flex-wrap items-end justify-between gap-4">
 		<div>
 			<div class="flex items-center gap-3">

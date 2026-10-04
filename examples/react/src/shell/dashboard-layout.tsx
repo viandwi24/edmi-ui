@@ -53,7 +53,7 @@ const items = [
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<SidebarProvider>
+		<SidebarProvider className="h-svh min-h-0 overflow-hidden">
 			<Sidebar variant="inset" collapsible="icon">
 				<SidebarHeader>
 					<a href="#/" className="flex items-center gap-2.5 px-1 py-1">
@@ -121,7 +121,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 				</SidebarFooter>
 				<SidebarRail />
 			</Sidebar>
-			<SidebarInset>
+			<SidebarInset className="min-h-0 overflow-hidden">
 				<header className="flex h-[62px] shrink-0 items-center justify-between gap-2 border-b border-border-2 px-4 md:px-6">
 					<div className="flex items-center gap-2">
 						<SidebarTrigger />
@@ -142,7 +142,9 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 						<ThemeToggle />
 					</div>
 				</header>
-				<div className="flex-1 overflow-auto">{children}</div>
+				<div className="min-h-0 flex-1 overflow-auto overscroll-contain">
+					{children}
+				</div>
 			</SidebarInset>
 		</SidebarProvider>
 	);

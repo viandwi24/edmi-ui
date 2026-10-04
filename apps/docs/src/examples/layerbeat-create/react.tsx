@@ -419,10 +419,11 @@ function HeaderTrigger() {
 function AppShell({ children }: { children: React.ReactNode }) {
 	return (
 		<SidebarProvider
+			className="h-svh min-h-0 overflow-hidden"
 			style={{ "--sidebar-width": "15rem" } as React.CSSProperties}
 		>
 			<AppSidebar />
-			<SidebarInset className="min-w-0 bg-background">
+			<SidebarInset className="min-h-0 min-w-0 overflow-hidden bg-background">
 				<header className="flex h-16 shrink-0 items-center justify-between gap-3 border-b border-border bg-card px-4 md:px-7">
 					<div className="flex min-w-0 items-center gap-1">
 						<HeaderTrigger />
@@ -452,7 +453,9 @@ function AppShell({ children }: { children: React.ReactNode }) {
 						</div>
 					</div>
 				</header>
-				<div className="flex-1">{children}</div>
+				<div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+					{children}
+				</div>
 			</SidebarInset>
 		</SidebarProvider>
 	);
