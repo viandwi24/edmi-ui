@@ -1,6 +1,6 @@
 // Sample data for the theme playground. Plain TS, no framework imports.
 
-export type ControlKey = "base" | "theme" | "mode" | "radius" | "raised";
+export type ControlKey = "base" | "theme" | "mode" | "radius" | "elevation";
 
 export type Option = { value: string; label: string };
 export type Control = {
@@ -17,7 +17,7 @@ export const defaults: State = {
 	theme: "green",
 	mode: "light",
 	radius: "0.625",
-	raised: "flat",
+	elevation: "flat",
 };
 
 export const controls: Control[] = [
@@ -58,12 +58,12 @@ export const controls: Control[] = [
 		})),
 	},
 	{
-		key: "raised",
+		key: "elevation",
 		label: "Depth",
-		hint: "raised",
+		hint: "elevation",
 		options: [
 			{ value: "flat", label: "Flat" },
-			{ value: "raised", label: "Raised ✦" },
+			{ value: "layered", label: "Layered ✦" },
 		],
 	},
 ];

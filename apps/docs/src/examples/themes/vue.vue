@@ -4,6 +4,7 @@ import { Badge } from "@edmi-vue/ui/badge";
 import { Button } from "@edmi-vue/ui/button";
 import { Card } from "@edmi-vue/ui/card";
 import { Checkbox } from "@edmi-vue/ui/checkbox";
+import { ElevationProvider } from "@edmi-vue/ui/elevation";
 import { Input } from "@edmi-vue/ui/input";
 import { Label } from "@edmi-vue/ui/label";
 import { Switch } from "@edmi-vue/ui/switch";
@@ -17,11 +18,12 @@ function set(key: ControlKey, value: unknown) {
 }
 const keeper = ref(true);
 const mandate = ref(true);
-const raised = computed(() => s.raised === "raised");
+const layered = computed(() => s.elevation === "layered");
 const code = computed(() => snippet(s));
 </script>
 
 <template>
+	<ElevationProvider :mode="layered ? 'layered' : 'flat'">
 	<div class="min-h-svh bg-background text-foreground">
 		<div class="mx-auto flex max-w-[1100px] flex-col gap-8 px-4 py-10 md:px-10 md:py-14">
 			<div class="flex flex-col gap-3">
@@ -57,13 +59,13 @@ const code = computed(() => snippet(s));
 				:class="`${s.mode === 'dark' ? 'dark ' : 'edmi-light '}rounded-xl border border-border bg-background p-4 text-foreground sm:p-6`"
 			>
 				<div class="grid gap-4 md:grid-cols-2">
-					<Card :elevation="raised ? 'raised' : undefined" class="gap-4 px-5">
+					<Card class="gap-4 px-5">
 						<div class="flex items-center justify-between">
 							<span class="text-lg font-medium">{{ preview.name }} · {{ s.base }}·{{ s.theme }}</span>
 							<Badge variant="success">Live</Badge>
 						</div>
 						<Tabs default-value="nav">
-							<TabsList :elevation="raised ? 'raised' : undefined">
+							<TabsList>
 								<TabsTrigger v-for="t in preview.tabs" :key="t.value" :value="t.value">{{ t.label }}</TabsTrigger>
 							</TabsList>
 						</Tabs>
@@ -75,25 +77,25 @@ const code = computed(() => snippet(s));
 							</div>
 						</div>
 						<div class="flex flex-wrap items-center gap-2">
-							<Button :elevation="raised ? 'raised' : undefined" variant="brand">{{ preview.join }}</Button>
-							<Button :elevation="raised ? 'raised' : undefined" variant="outline">{{ preview.details }}</Button>
+							<Button variant="brand">{{ preview.join }}</Button>
+							<Button variant="outline">{{ preview.details }}</Button>
 							<Label class="ml-auto gap-2.5 text-[13px]">
-								<Switch v-model="keeper" :elevation="raised ? 'raised' : undefined" />
+								<Switch v-model="keeper" />
 								{{ preview.keeper }}
 							</Label>
 						</div>
 					</Card>
 
-					<Card :elevation="raised ? 'raised' : undefined" class="gap-4 px-5">
+					<Card class="gap-4 px-5">
 						<div class="flex flex-wrap gap-2">
-							<Button v-for="v in preview.variants" :key="v" :elevation="raised ? 'raised' : undefined" :variant="v" size="sm">{{ v }}</Button>
+							<Button v-for="v in preview.variants" :key="v" :variant="v" size="sm">{{ v }}</Button>
 						</div>
 						<div class="flex flex-wrap gap-2">
 							<Badge v-for="b in preview.badges" :key="b" :variant="b">{{ b }}</Badge>
 						</div>
 						<Input :placeholder="preview.placeholder" />
 						<Label class="gap-2.5 text-[13px]">
-							<Checkbox v-model="mandate" :elevation="raised ? 'raised' : undefined" />
+							<Checkbox v-model="mandate" />
 							{{ preview.mandate }}
 						</Label>
 					</Card>
@@ -106,4 +108,5 @@ const code = computed(() => snippet(s));
 			</div>
 		</div>
 	</div>
+	</ElevationProvider>
 </template>

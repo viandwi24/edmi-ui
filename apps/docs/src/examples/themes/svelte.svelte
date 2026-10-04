@@ -3,6 +3,7 @@
 	import { Button } from "@edmi-svelte/ui/button";
 	import { Card } from "@edmi-svelte/ui/card";
 	import { Checkbox } from "@edmi-svelte/ui/checkbox";
+	import { ElevationProvider } from "@edmi-svelte/ui/elevation";
 	import { Input } from "@edmi-svelte/ui/input";
 	import { Label } from "@edmi-svelte/ui/label";
 	import { Switch } from "@edmi-svelte/ui/switch";
@@ -11,13 +12,14 @@
 	import { type ControlKey, controls, defaults, intro, preview, type State, snippet, snippetTitle } from "./data";
 
 	let s = $state<State>({ ...defaults });
-	const raised = $derived(s.raised === "raised");
+	const layered = $derived(s.elevation === "layered");
 	const code = $derived(snippet(s));
 	function set(key: ControlKey, value: string | undefined) {
 		if (value) s[key] = value;
 	}
 </script>
 
+<ElevationProvider mode={layered ? "layered" : "flat"}>
 <div class="min-h-svh bg-background text-foreground">
 	<div class="mx-auto flex max-w-[1100px] flex-col gap-8 px-4 py-10 md:px-10 md:py-14">
 		<div class="flex flex-col gap-3">
@@ -57,13 +59,13 @@
 			class="{s.mode === 'dark' ? 'dark ' : 'edmi-light '}rounded-xl border border-border bg-background p-4 text-foreground sm:p-6"
 		>
 			<div class="grid gap-4 md:grid-cols-2">
-				<Card elevation={raised ? "raised" : undefined} class="gap-4 px-5">
+				<Card class="gap-4 px-5">
 					<div class="flex items-center justify-between">
 						<span class="text-lg font-medium">{preview.name} · {s.base}·{s.theme}</span>
 						<Badge variant="success">Live</Badge>
 					</div>
 					<Tabs.Root value="nav">
-						<Tabs.List elevation={raised ? "raised" : undefined}>
+						<Tabs.List>
 							{#each preview.tabs as t (t.value)}
 								<Tabs.Trigger value={t.value}>{t.label}</Tabs.Trigger>
 							{/each}
@@ -77,19 +79,19 @@
 						</div>
 					</div>
 					<div class="flex flex-wrap items-center gap-2">
-						<Button elevation={raised ? "raised" : undefined} variant="brand">{preview.join}</Button>
-						<Button elevation={raised ? "raised" : undefined} variant="outline">{preview.details}</Button>
+						<Button variant="brand">{preview.join}</Button>
+						<Button variant="outline">{preview.details}</Button>
 						<Label class="ml-auto gap-2.5 text-[13px]">
-							<Switch elevation={raised ? "raised" : undefined} checked />
+							<Switch checked />
 							{preview.keeper}
 						</Label>
 					</div>
 				</Card>
 
-				<Card elevation={raised ? "raised" : undefined} class="gap-4 px-5">
+				<Card class="gap-4 px-5">
 					<div class="flex flex-wrap gap-2">
 						{#each preview.variants as v (v)}
-							<Button elevation={raised ? "raised" : undefined} variant={v} size="sm">{v}</Button>
+							<Button variant={v} size="sm">{v}</Button>
 						{/each}
 					</div>
 					<div class="flex flex-wrap gap-2">
@@ -99,7 +101,7 @@
 					</div>
 					<Input placeholder={preview.placeholder} />
 					<Label class="gap-2.5 text-[13px]">
-						<Checkbox elevation={raised ? "raised" : undefined} checked />
+						<Checkbox checked />
 						{preview.mandate}
 					</Label>
 				</Card>
@@ -112,3 +114,4 @@
 		</div>
 	</div>
 </div>
+</ElevationProvider>
