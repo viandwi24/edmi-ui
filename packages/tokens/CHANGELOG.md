@@ -1,5 +1,17 @@
 # @edmi-ui/tokens
 
+## 0.3.0
+
+### Minor Changes
+
+- af4dbae: Add the `edmi-ui` agent skill (`npx skills add viandwi24/edmi-ui`) for Claude Code, Cursor, Codex and other agents: install flows, theming, when to use `raised`, the component catalog, the AI pack and upgrading. New docs pages: Agent skills and Upgrading.
+- 5575840: v3 tokens: white light card, solid soft tints
+
+### Patch Changes
+
+- 637c3d4: Tokens: explicit `base/stone.css` and `themes/green.css` (the default values) so a nested scope can switch back to the defaults. Vue: `Switch` and `Checkbox` honour a bare `default-value` attribute.
+- 0ef4b2e: Select: vertically center leading icons/dots in item text.
+
 ## 0.2.0
 
 ### Minor Changes
