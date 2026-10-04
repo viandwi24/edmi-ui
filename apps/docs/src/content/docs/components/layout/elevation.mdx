@@ -1,0 +1,57 @@
+---
+title: Elevation
+description: "ElevationProvider and useElevation: the v4 depth plumbing (sunken, flat, raised, floating) with a layered mode."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="elevation" />
+
+## Installation
+
+<ComponentInstall name="elevation" />
+
+## Usage
+
+<ComponentUsage name="elevation" />
+
+## Component source
+
+<ComponentSource name="elevation" />
+
+## How it works
+
+Every Edmi component is flat by default (the plain shadcn look). Components that can take depth accept one prop,
+`elevation?: "auto" | "sunken" | "flat" | "raised" | "floating"` (default `"auto"`), and resolve it in this order:
+the explicit prop, then the nearest `ElevationProvider`, then `flat`.
+
+| Level | Look |
+| --- | --- |
+| `sunken` (-1) | soft inset well |
+| `flat` (0) | fill and 1px border |
+| `raised` (+1) | bevel: rim, top highlight, hairline |
+| `floating` (+2) | bevel and one soft drop |
+
+In `mode="layered"` each role takes its own level: filled buttons raised, fields sunken, cards raised, popovers and dialogs
+floating, everything else flat. A surface inside a raised or floating surface drops back to flat (no bevel on bevel);
+buttons and fields ignore nesting. An explicit `elevation` prop always wins.
+
+## API
+| Export | Notes |
+| --- | --- |
+| `ElevationProvider mode` | `"flat" \| "layered"`. Renders an element with `data-elevation`; layout-neutral (`display: contents`) unless you pass a class. Inherits the parent scope when omitted |
+| `ElevationProvider level` | `"sunken" \| "flat" \| "raised" \| "floating"`. Forces one level for the whole subtree (wins over `mode`) |
+| `useElevation(prop, role)` | Resolves the level for a component (React returns the level, Vue a `ComputedRef`, Svelte `{ current }`) |
+| `SurfaceProvider level` | React. Surfaces wrap their children with their resolved level so nested surfaces drop to flat (Vue `provideSurface`, Svelte `setSurface`) |
+| `resolveElevation(prop, scope, role)` | Pure resolver |
+| `ROLE_LEVEL` | Role to layered level: `button-filled`, `button-quiet`, `field`, `control`, `handle`, `surface`, `container`, `overlay` |
+| types | `Elevation`, `ElevationLevel`, `ElevationMode` |
+
+## ✦ Edmi additions
+The whole item is an Edmi addition; there is no stock counterpart. It is installed automatically as a dependency of every component that takes `elevation`.
+
+## Vue / Svelte differences
+- **Vue**: `ElevationProvider` is a Reka `Primitive` (`as`, `as-child`); `useElevation(() => props.elevation, role)` returns a computed; surfaces call `provideSurface(() => level.value)`.
+- **Svelte**: `ElevationProvider` takes a `child` snippet instead of `as-child`; `useElevation(() => elevation, role)` returns `{ current }`; surfaces call `setSurface(() => level)`.
