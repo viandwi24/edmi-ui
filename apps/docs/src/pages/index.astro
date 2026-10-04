@@ -1,8 +1,8 @@
 ---
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import { badgeVariants } from "@edmi-react/ui/badge";
 import { buttonVariants } from "@edmi-react/ui/button";
 import { BASE } from "../config";
-import InstallTabs from "../components/landing/InstallTabs.astro";
 import {
 	ChartCard,
 	ChatCard,
@@ -14,8 +14,8 @@ import {
 	MarketCard,
 	PeopleCard,
 	QuestionCard,
-	RaisedToggle,
 } from "../components/landing/cards";
+import { AiPackCard, InstallCard, LiveBar, ThemeScopes } from "../components/landing/sections";
 
 const p = (s: string) => `${BASE}${s}`;
 const why = [
@@ -27,7 +27,7 @@ const why = [
 	{
 		n: "02",
 		title: "Flat by default, raised when you want.",
-		text: "Every component is a quiet 1px-border control. Add the raised prop for one step of 3D: a gradient, a highlight and a single hard lip. Nothing uses a blurred shadow, in light or dark.",
+		text: "Every component is a quiet 1px-border control. Add raised for one step of 3D: a gradient, a highlight and a single hard lip. No blurred shadows, light or dark.",
 	},
 	{
 		n: "03",
@@ -46,57 +46,133 @@ const why = [
 		tableOfContents: false,
 	}}
 >
-	<div class="edmi-landing not-content">
-		<section class="edmi-hero">
-			<a class="edmi-pill" href={p("/components/conversation/questionnaire/")}>
-				<span class="edmi-pill-dot"></span>
-				New Questionnaire component
-				<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
-			</a>
-			<h1>Quiet, tactile components for the interfaces you ship</h1>
-			<p class="edmi-lede">
-				An editorial-minimalist, shadcn-compatible registry for React, Vue and Svelte. Flat by
-				default, one-step 3D when you want it, and code you copy in and own.
-			</p>
-			<div class="edmi-cta">
-				<a class={buttonVariants({ size: "lg", raised: true })} href={p("/getting-started/react/")}>Get started</a>
-				<a class={buttonVariants({ size: "lg", variant: "outline", raised: true })} href={p("/components/actions/button/")}>Browse components</a>
-			</div>
-			<InstallTabs />
-		</section>
-
-		<div class="edmi-showcase-bar">
-			<RaisedToggle client:load />
-			<span class="edmi-showcase-hint">Same components, <code>raised</code> flips on.</span>
+	<div class="edmi-landing not-content relative overflow-x-clip pb-4 text-foreground-2">
+		<div
+			aria-hidden="true"
+			class="pointer-events-none absolute inset-x-0 top-0 h-[700px] bg-[radial-gradient(var(--grid-dot)_1px,transparent_1px)] bg-[size:18px_18px] [mask-image:linear-gradient(black,transparent)]"
+		>
 		</div>
 
-		<section class="edmi-showcase" aria-label="Component showcase">
-			<div class="edmi-cell"><ControlsCard client:visible /></div>
-			<div class="edmi-cell"><ChartCard client:visible /></div>
-			<div class="edmi-cell"><FormCard client:visible /></div>
-			<div class="edmi-cell"><ChatCard client:visible /></div>
-			<div class="edmi-cell"><CommandCard client:visible /></div>
-			<div class="edmi-cell"><MarketCard client:visible /></div>
-			<div class="edmi-cell"><QuestionCard client:visible /></div>
-			<div class="edmi-cell"><FeedbackCard client:visible /></div>
-			<div class="edmi-cell"><PeopleCard client:visible /></div>
+		<section class="relative px-4 pt-14 pb-10 text-center sm:pt-[88px] sm:pb-14">
+			<a
+				class={`${badgeVariants({ variant: "brand", shape: "pill" })} h-7 gap-2 px-3 text-[12.5px] no-underline`}
+				href={p("/components/ai-chat/ai-message/")}
+			>
+				<span class="size-[7px] rounded-full bg-current"></span>
+				New: Edmi AI pack · 50+ AI components
+				<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+			</a>
+			<h1 class="mx-auto mt-6 max-w-[900px] text-[clamp(2.5rem,7vw,4.5rem)] leading-[1.02] font-medium tracking-[-0.04em] text-balance text-ink-soft">
+				Quiet, tactile components for the interfaces you ship
+			</h1>
+			<p class="mx-auto mt-5 max-w-[600px] text-[clamp(1rem,1.6vw,1.125rem)] leading-[1.55] text-muted-foreground">
+				An editorial-minimal, shadcn-compatible registry for React, Vue and Svelte. Flat by default,
+				one-step 3D when you want it, and code you copy in and own.
+			</p>
+			<div class="mt-[30px] flex flex-wrap justify-center gap-2.5">
+				<a class={`${buttonVariants({ size: "lg", raised: true })} no-underline`} href={p("/getting-started/react/")}>
+					Get started
+					<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+				</a>
+				<a class={`${buttonVariants({ size: "lg", variant: "secondary", raised: true })} no-underline`} href={p("/components/actions/button/")}>Browse components</a>
+			</div>
+			<div class="mx-auto mt-9 w-[min(32.5rem,100%)]">
+				<InstallCard client:load />
+			</div>
+			<p class="mt-3 text-[13px] text-muted-foreground">
+				Using Vue or Svelte? Pick it in the header.{" "}
+				<a class="text-foreground underline underline-offset-[3px]" href={p("/getting-started/react/#install-everything")}>Install everything →</a>
+			</p>
 		</section>
 
-		<section class="edmi-why">
-			<h2>Built to be read, then owned<span> in three small decisions.</span></h2>
-			<div class="edmi-why-grid">
+		<div id="edmi-live" data-base="stone" data-theme="green" class="relative bg-background px-4 pb-4 text-foreground sm:px-6">
+			<div class="mx-auto mb-4 flex max-w-[1280px] flex-wrap items-center justify-between gap-4 border-t border-border pt-[22px]">
+				<div>
+					<div class="text-[15px] font-medium">Live preview</div>
+					<div class="mt-0.5 text-[12.5px] text-muted-foreground">Real components from the registry. Switch the style and theme.</div>
+				</div>
+				<LiveBar client:load />
+			</div>
+			<section class="mx-auto grid max-w-[1280px] grid-cols-1 items-start gap-5 sm:grid-cols-2 xl:grid-cols-4" aria-label="Component showcase">
+				<div class="flex min-w-0 flex-col gap-5">
+					<ControlsCard client:visible />
+					<ChartCard client:visible />
+				</div>
+				<div class="flex min-w-0 flex-col gap-5">
+					<FormCard client:visible />
+					<ChatCard client:visible />
+				</div>
+				<div class="flex min-w-0 flex-col gap-5">
+					<CommandCard client:visible />
+					<MarketCard client:visible />
+					<QuestionCard client:visible />
+				</div>
+				<div class="flex min-w-0 flex-col gap-5">
+					<FeedbackCard client:visible />
+					<PeopleCard client:visible />
+				</div>
+			</section>
+		</div>
+
+		<section class="relative mx-auto mt-16 max-w-[1040px] px-4 sm:mt-[110px]">
+			<h2 class="m-0 text-[clamp(1.75rem,4vw,2.625rem)] leading-[1.1] font-medium tracking-[-0.035em] text-ink-soft">
+				Built to be read, then owned <span class="text-muted-foreground">in three small decisions.</span>
+			</h2>
+			<div class="mt-10 grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-10">
 				{why.map((w) => (
 					<div>
-						<span class="edmi-why-n">{w.n}</span>
-						<h3>{w.title}</h3>
-						<p>{w.text}</p>
+						<div class="font-mono text-xs text-muted-foreground">{w.n}</div>
+						<div class="mt-[22px] text-[19px] font-medium tracking-[-0.02em] text-ink-soft">{w.title}</div>
+						<p class="m-0 mt-2.5 text-sm leading-[1.65] text-muted-foreground">{w.text}</p>
 					</div>
 				))}
 			</div>
 		</section>
 
-		<div class="edmi-footer-wrap"><LandingFooter /></div>
+		<section class="relative mx-auto mt-16 max-w-[1040px] px-4 sm:mt-[110px]">
+			<div class="flex flex-wrap items-end justify-between gap-4">
+				<div>
+					<div class="font-mono text-xs tracking-wider text-muted-foreground">THEMING</div>
+					<h2 class="m-0 mt-2.5 text-[clamp(1.5rem,3.4vw,2.125rem)] leading-[1.15] font-medium tracking-[-0.03em] text-ink-soft">Four knobs. Every component follows.</h2>
+					<p class="m-0 mt-2.5 text-[15px] text-muted-foreground">Base color, theme, mode and radius — plain CSS variables on <code>&lt;html&gt;</code>.</p>
+				</div>
+				<a class={`${buttonVariants({ variant: "outline" })} no-underline`} href={p("/themes/")}>
+					Open the theme playground
+					<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+				</a>
+			</div>
+			<div class="mt-[26px]"><ThemeScopes client:visible /></div>
+		</section>
+
+		<section class="relative mx-auto mt-16 flex max-w-[1040px] flex-col gap-8 px-4 sm:mt-[110px] lg:flex-row lg:gap-7">
+			<div class="lg:w-[380px] lg:shrink-0">
+				<div class="font-mono text-xs text-muted-foreground">@edmi-ui/ai</div>
+				<h2 class="m-0 mt-2.5 text-[clamp(1.5rem,3.4vw,2.125rem)] leading-[1.15] font-medium tracking-[-0.03em] text-ink-soft">Chat, agents and tools — same voice.</h2>
+				<p class="m-0 mt-3 text-[15px] leading-[1.6] text-muted-foreground">
+					Every AI Elements component, restyled with Edmi tokens, plus artifacts, session panels and agent avatars. It lives in components/ai and never leaks into the core kit.
+				</p>
+				<a class={`${buttonVariants({ variant: "secondary", raised: true })} mt-5 no-underline`} href={p("/components/ai-chat/ai-message/")}>
+					Explore the AI pack
+					<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+				</a>
+			</div>
+			<div class="min-w-0 flex-1"><AiPackCard client:visible /></div>
+		</section>
+
+		<div class="relative mx-auto mt-16 mb-10 max-w-[1040px] px-4 sm:mt-[110px] [&_a]:text-foreground-2 [&_a]:no-underline [&_a:hover]:text-foreground"><LandingFooter /></div>
 	</div>
+	<script is:inline>
+		// Dark tokens for data-base/data-theme scopes are `.dark[data-base]`, so the live wrapper mirrors html.dark.
+		(function () {
+			var root = document.documentElement;
+			var el = document.getElementById("edmi-live");
+			function sync() {
+				if (el) el.classList.toggle("dark", root.classList.contains("dark"));
+			}
+			sync();
+			new MutationObserver(sync).observe(root, { attributes: true, attributeFilter: ["class"] });
+		})();
+	</script>
 </StarlightPage>
 
 <style is:global>
@@ -108,113 +184,5 @@ const why = [
 	html:has(.edmi-landing) .sl-container > * + * { margin-top: 0; }
 	html:has(.edmi-landing) footer.sl-flex,
 	html:has(.edmi-landing) .content-panel > .sl-container > footer { display: none; }
-
-	.edmi-landing {
-		--gutter: clamp(1rem, 3vw, 2rem);
-		padding-bottom: 2.5rem;
-		color: var(--foreground-2);
-	}
-	.edmi-hero {
-		display: flex; flex-direction: column; align-items: center; text-align: center;
-		padding: clamp(3rem, 8vw, 6.5rem) var(--gutter) clamp(2.5rem, 6vw, 4.5rem);
-		background-image: radial-gradient(var(--grid-dot) 1px, transparent 1px);
-		background-size: 18px 18px;
-		-webkit-mask-image: none;
-	}
-	.edmi-pill {
-		display: inline-flex; align-items: center; gap: .5rem; height: 28px; padding: 0 .75rem;
-		border-radius: 999px; font-size: 12.5px; font-weight: 500; text-decoration: none;
-		color: var(--brand-text); background: var(--brand-soft);
-		border: 1px solid color-mix(in oklab, var(--brand) 35%, var(--background));
-	}
-	.edmi-pill:hover { border-color: color-mix(in oklab, var(--brand) 60%, var(--background)); }
-	.edmi-pill-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--brand); }
-	.edmi-hero h1 {
-		margin: 1.5rem 0 0; max-width: 17ch;
-		font-size: clamp(2.5rem, 6.4vw, 4.75rem); font-weight: 500; line-height: 1.02;
-		letter-spacing: -0.045em; color: var(--ink-soft); text-wrap: balance;
-	}
-	.edmi-lede {
-		margin: 1.5rem 0 0; max-width: 40rem; font-size: clamp(1rem, 1.6vw, 1.1875rem);
-		line-height: 1.55; color: var(--muted-foreground);
-	}
-	.edmi-cta { display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem; margin-top: 2rem; }
-	.edmi-cta a { text-decoration: none; }
-
-	.edmi-install { margin-top: 2.25rem; width: min(31rem, 100%); }
-	.edmi-install-tabs {
-		display: inline-flex; gap: 2px; padding: 3px; border-radius: 9px;
-		background: var(--muted); border: 1px solid var(--border);
-	}
-	.edmi-install-tabs button {
-		font: 500 12.5px/1 var(--sl-font); padding: .4rem .75rem; border-radius: 6px;
-		border: 1px solid transparent; background: transparent; color: var(--muted-foreground); cursor: pointer;
-	}
-	.edmi-install-tabs button[aria-selected="true"] {
-		background: var(--tab-active); border-color: var(--border); color: var(--foreground);
-	}
-	.edmi-install-pm { margin-top: .5rem; display: flex; justify-content: center; gap: .25rem; }
-	.edmi-install-pm button {
-		font: 500 12px/1 var(--sl-font); padding: .3rem .55rem; border-radius: 6px; border: 0;
-		background: transparent; color: var(--muted-foreground-2); cursor: pointer;
-	}
-	.edmi-install-pm button:hover { color: var(--foreground); }
-	html[data-pm="npm"] .edmi-install-pm [data-pm-set="npm"],
-	html[data-pm="pnpm"] .edmi-install-pm [data-pm-set="pnpm"],
-	html[data-pm="yarn"] .edmi-install-pm [data-pm-set="yarn"],
-	html[data-pm="bun"] .edmi-install-pm [data-pm-set="bun"] { color: var(--foreground); background: var(--muted); }
-	.edmi-install-all { margin: .375rem 0 0; font-size: 12.5px; color: var(--muted-foreground); }
-	.edmi-install-all a { color: var(--foreground); }
-	.edmi-install-cmd {
-		margin-top: .625rem; display: flex; align-items: center; gap: .625rem; text-align: left;
-		height: 44px; padding: 0 .5rem 0 .875rem; border-radius: 10px;
-		background: var(--card); border: 1px solid var(--input);
-		box-shadow: inset 0 1px 2px rgb(0 0 0 / .06);
-		overflow: hidden;
-	}
-	.edmi-install-prompt { font-family: var(--sl-font-mono); color: var(--muted-foreground-2); font-size: 13px; }
-	.edmi-install-cmd code {
-		flex: 1; min-width: 0; font-family: var(--sl-font-mono); font-size: 12.5px; color: var(--foreground);
-		white-space: nowrap; overflow-x: auto; scrollbar-width: none; background: none; border: 0; padding: 0;
-	}
-	.edmi-install-copy {
-		display: grid; place-items: center; width: 30px; height: 30px; border-radius: 7px; border: 0;
-		background: transparent; color: var(--muted-foreground); cursor: pointer; flex-shrink: 0;
-	}
-	.edmi-install-copy:hover { background: var(--accent); color: var(--foreground); }
-	.edmi-install-copy[data-done] { color: var(--success-text); }
-
-	.edmi-showcase-bar {
-		display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: .75rem;
-		padding: 0 var(--gutter) 1.5rem;
-	}
-	.edmi-showcase-hint { font-size: 13px; color: var(--muted-foreground); }
-	.edmi-showcase-hint code { font-size: 12px; }
-	.edmi-showcase {
-		column-count: 1; column-gap: 1rem; padding: 0 var(--gutter);
-		max-width: 1700px; margin-inline: auto;
-	}
-	@media (min-width: 40rem) { .edmi-showcase { column-count: 2; } }
-	@media (min-width: 66rem) { .edmi-showcase { column-count: 3; } }
-	@media (min-width: 112rem) { .edmi-showcase { column-count: 4; } }
-	.edmi-cell { break-inside: avoid; margin-bottom: 1rem; display: block; }
-	.edmi-cell > astro-island { display: block; }
-
-	.edmi-why { max-width: 1200px; margin: clamp(4rem, 9vw, 7rem) auto 0; padding: 0 var(--gutter); }
-	.edmi-why h2 {
-		margin: 0; font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 500;
-		letter-spacing: -0.035em; line-height: 1.1; color: var(--ink-soft);
-	}
-	.edmi-why h2 span { color: var(--muted-foreground-2); }
-	.edmi-why-grid { display: grid; gap: 2rem; margin-top: 2.75rem; grid-template-columns: 1fr; }
-	@media (min-width: 52rem) { .edmi-why-grid { grid-template-columns: repeat(3, 1fr); gap: 2.5rem; } }
-	.edmi-why-n { font-family: var(--sl-font-mono); font-size: 12px; color: var(--muted-foreground-2); }
-	.edmi-why-grid h3 {
-		margin: .875rem 0 0; font-size: 1.25rem; font-weight: 500; letter-spacing: -0.02em; color: var(--ink-soft);
-	}
-	.edmi-why-grid p { margin: .625rem 0 0; font-size: .9375rem; line-height: 1.6; color: var(--muted-foreground); }
-
-	.edmi-footer-wrap a { color: var(--foreground-2); text-decoration: none; }
-	.edmi-footer-wrap a:hover { color: var(--foreground); }
-	.edmi-footer-wrap { max-width: 1200px; margin: clamp(4rem, 8vw, 6rem) auto 0; padding: 0 var(--gutter); }
+	.edmi-landing astro-island { display: block; }
 </style>

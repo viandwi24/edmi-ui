@@ -2,6 +2,10 @@
 
 import { DatePicker } from "@edmi-react/blocks/date-picker/date-picker";
 import { SiteFooter } from "@edmi-react/blocks/footer/footer";
+import {
+	SiteHeaderBrand,
+	SiteHeaderMark,
+} from "@edmi-react/blocks/site-header/site-header";
 import { TickerStrip } from "@edmi-react/blocks/ticker-strip/ticker-strip";
 import { WatchlistItem } from "@edmi-react/blocks/watchlist-item/watchlist-item";
 import { Alert, AlertDescription, AlertTitle } from "@edmi-react/ui/alert";
@@ -297,16 +301,16 @@ export function FormCard() {
 			<CardHeader>
 				<CardTitle>Set a new milestone</CardTitle>
 				<CardDescription>
-					Define your target and we will help you pace your savings.
+					Define a target and we pace the deposits.
 				</CardDescription>
 			</CardHeader>
 			<CardContent>
 				<FieldGroup>
 					<Field>
 						<FieldLabel htmlFor="lp-goal">Goal name</FieldLabel>
-						<Input id="lp-goal" placeholder="e.g. New car, home downpayment" />
+						<Input id="lp-goal" placeholder="e.g. New car, home" />
 					</Field>
-					<div className="grid grid-cols-1 gap-3 min-[460px]:grid-cols-2">
+					<div className="grid grid-cols-1 gap-3">
 						<Field>
 							<FieldLabel htmlFor="lp-amount">Target amount</FieldLabel>
 							<InputGroup>
@@ -322,7 +326,10 @@ export function FormCard() {
 						</Field>
 						<Field>
 							<FieldLabel>Target date</FieldLabel>
-							<DatePicker defaultValue={new Date(2026, 11, 14)} />
+							<DatePicker
+								defaultValue={new Date(2026, 11, 14)}
+								className="w-full"
+							/>
 						</Field>
 					</div>
 					<Field>
@@ -359,7 +366,7 @@ export function ChatCard() {
 		<Card raised={raised}>
 			<CardHeader>
 				<CardTitle>New chat</CardTitle>
-				<CardDescription>How can I help you today?</CardDescription>
+				<CardDescription>How can I help today?</CardDescription>
 			</CardHeader>
 			<CardContent className="flex flex-col gap-5">
 				<MessageGroup className="gap-5">
@@ -670,9 +677,12 @@ export function LandingFooter() {
 	return (
 		<SiteFooter
 			brand={
-				<span className="font-brand text-lg font-semibold tracking-tight text-foreground">
-					edmi
-				</span>
+				<SiteHeaderBrand
+					name="edmi"
+					href={`${base}/`}
+					className="gap-2 text-foreground [&>span:last-child]:text-[17px]"
+					logo={<SiteHeaderMark className="size-6 rounded-[7px]" />}
+				/>
 			}
 			description="Editorial-minimalist, shadcn-compatible components for React, Vue and Svelte."
 			columns={[
@@ -688,6 +698,10 @@ export function LandingFooter() {
 					title: "Library",
 					links: [
 						{ label: "Components", href: `${base}/components/actions/button/` },
+						{
+							label: "AI pack",
+							href: `${base}/components/ai-chat/ai-message/`,
+						},
 						{
 							label: "Patterns",
 							href: `${base}/components/patterns/stat-tile/`,
@@ -705,7 +719,7 @@ export function LandingFooter() {
 				},
 			]}
 			legal="MIT licensed. Copy the code, own it."
-			note="Flat by default, no blurred shadows."
+			note="Flat by default · no blurred shadows"
 		/>
 	);
 }
