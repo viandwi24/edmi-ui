@@ -370,3 +370,7 @@ bun run dev               # docs site
 
 - Design rules: <https://viandwi24.github.io/edmi-ui/getting-started/rules/>
 - Repo knowledge, conventions, decisions and agent guidance: [AGENTS.md](AGENTS.md)
+
+## License
+
+[MIT](LICENSE) © 2026 viandwi24. Third-party notices: [NOTICE](NOTICE).
