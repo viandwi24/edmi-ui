@@ -152,7 +152,7 @@ export default function AiPatterns() {
 					</ArtifactCard>
 				</div>
 				<RaisedSection>
-					<ArtifactCard raised className="max-w-lg">
+					<ArtifactCard elevation="raised" className="max-w-lg">
 						<ArtifactCardIcon kind="archive" />
 						<ArtifactCardBody>
 							<ArtifactCardTitle>Keeper starter</ArtifactCardTitle>

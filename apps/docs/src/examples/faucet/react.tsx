@@ -28,7 +28,7 @@ export default function FaucetExample() {
 
 	return (
 		<div className="min-h-svh bg-background text-foreground">
-			<Toaster raised />
+			<Toaster elevation="raised" />
 			<div className="border-b border-border">
 				<div className="mx-auto flex max-w-[1328px] items-center gap-2 px-4 py-3 md:px-10">
 					<AppHeader
@@ -53,13 +53,13 @@ export default function FaucetExample() {
 				</div>
 
 				<div className="grid gap-6 sm:grid-cols-2">
-					<Card raised className="gap-1 px-6">
+					<Card elevation="raised" className="gap-1 px-6">
 						<div className="text-[13px] text-muted-foreground">SOL</div>
 						<div className="font-mono text-[32px] leading-tight">
 							{wallet.sol}
 						</div>
 					</Card>
-					<Card raised className="gap-1 px-6">
+					<Card elevation="raised" className="gap-1 px-6">
 						<div className="text-[13px] text-muted-foreground">USDC</div>
 						<div className="font-mono text-[32px] leading-tight">
 							{fmt(usdc)}
@@ -67,7 +67,7 @@ export default function FaucetExample() {
 					</Card>
 				</div>
 
-				<Card raised className="gap-4 px-7">
+				<Card elevation="raised" className="gap-4 px-7">
 					<div>
 						<h2 className="text-lg font-medium tracking-[-0.2px]">
 							{solFaucet.title}
@@ -97,7 +97,7 @@ export default function FaucetExample() {
 					</Button>
 				</Card>
 
-				<Card raised className="gap-4 px-7">
+				<Card elevation="raised" className="gap-4 px-7">
 					<div>
 						<h2 className="text-lg font-medium tracking-[-0.2px]">
 							{usdcFaucet.title}

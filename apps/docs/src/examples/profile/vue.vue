@@ -40,7 +40,7 @@ const progress = ((profile.xp - profile.levelStartXp) / (profile.nextLevelXp - p
 			</div>
 
 			<div class="grid items-stretch gap-6 lg:grid-cols-[minmax(0,1fr)_2fr]">
-				<Card raised class="gap-3 px-6">
+				<Card elevation="raised" class="gap-3 px-6">
 					<div class="flex items-end justify-between">
 						<span class="text-[13px] text-muted-foreground">Level</span>
 						<span class="text-[34px] leading-none font-light">{{ profile.level }}</span>
@@ -48,7 +48,7 @@ const progress = ((profile.xp - profile.levelStartXp) / (profile.nextLevelXp - p
 					<Progress :model-value="progress" variant="brand" aria-label="Level progress" />
 					<div class="text-[13px] text-muted-foreground">{{ profile.xp }} XP · next level at {{ profile.nextLevelXp }}</div>
 				</Card>
-				<Card raised class="gap-3 px-6">
+				<Card elevation="raised" class="gap-3 px-6">
 					<span class="text-[13px] text-muted-foreground">Badges</span>
 					<div class="flex flex-wrap gap-2">
 						<Badge v-for="b in profile.badges" :key="b" variant="secondary">{{ b }}</Badge>
@@ -56,7 +56,7 @@ const progress = ((profile.xp - profile.levelStartXp) / (profile.nextLevelXp - p
 				</Card>
 			</div>
 
-			<Card raised class="gap-4 px-6">
+			<Card elevation="raised" class="gap-4 px-6">
 				<h2 class="text-xl font-normal tracking-[-0.3px]">Indexes created</h2>
 				<Table>
 					<TableHeader>
@@ -90,7 +90,7 @@ const progress = ((profile.xp - profile.levelStartXp) / (profile.nextLevelXp - p
 				</Table>
 			</Card>
 
-			<Card raised class="gap-4 px-6">
+			<Card elevation="raised" class="gap-4 px-6">
 				<h2 class="text-xl font-normal tracking-[-0.3px]">Positions</h2>
 				<Table>
 					<TableHeader>

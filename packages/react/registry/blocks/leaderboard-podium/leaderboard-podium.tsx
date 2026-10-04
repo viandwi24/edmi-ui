@@ -113,7 +113,10 @@ function LeaderboardPodium({
 					const down = e.change ? isDown(e.change) : false;
 					return (
 						<li key={e.rank}>
-							<Card raised={raised} className="h-full gap-0 p-6">
+							<Card
+								elevation={raised ? "raised" : undefined}
+								className="h-full gap-0 p-6"
+							>
 								<div className="flex items-center justify-between text-[13px]">
 									<span className="font-medium">No. {e.rank}</span>
 									{e.creator ? (
@@ -246,7 +249,7 @@ function LeaderboardPodium({
 				<li key={e.rank} className={cn("w-[200px]", e.rank !== 1 && "mt-6")}>
 					<Card
 						size="sm"
-						raised={raised}
+						elevation={raised ? "raised" : undefined}
 						className="items-center gap-0 p-[18px] text-center"
 					>
 						<Badge

@@ -249,7 +249,7 @@ export default function OverlaysPreview() {
 						>
 							Raised popover
 						</PopoverTrigger>
-						<PopoverContent raised align="start" className="w-64">
+						<PopoverContent elevation="raised" align="start" className="w-64">
 							<PopoverHeader>
 								<PopoverTitle>Rebalance limits</PopoverTitle>
 							</PopoverHeader>
@@ -261,7 +261,7 @@ export default function OverlaysPreview() {
 						>
 							Raised dialog
 						</DialogTrigger>
-						<DialogContent raised>
+						<DialogContent elevation="raised">
 							<DialogHeader>
 								<DialogTitle>Edit profile</DialogTitle>
 								<DialogDescription>Shown on your indexes.</DialogDescription>
@@ -277,7 +277,7 @@ export default function OverlaysPreview() {
 						>
 							Raised alert dialog
 						</AlertDialogTrigger>
-						<AlertDialogContent raised>
+						<AlertDialogContent elevation="raised">
 							<AlertDialogHeader>
 								<AlertDialogTitle>Close this index?</AlertDialogTitle>
 								<AlertDialogDescription>

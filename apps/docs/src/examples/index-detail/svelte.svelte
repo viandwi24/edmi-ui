@@ -163,7 +163,7 @@
 
 			<div>
 				<h2 class="mb-3 text-lg font-medium">Assets</h2>
-				<Card raised class="gap-4 px-6 py-2">
+				<Card elevation="raised" class="gap-4 px-6 py-2">
 					<Table.Root>
 						<Table.Header>
 							<Table.Row>
@@ -212,7 +212,7 @@
 				footnote="Self-custodied · Redeem anytime"
 			/>
 
-			<Card raised class="gap-3 px-5">
+			<Card elevation="raised" class="gap-3 px-5">
 				<h2 class="text-sm font-semibold">Share</h2>
 				<div class="flex flex-wrap gap-2">
 					{#each shareActions as s (s)}
@@ -221,7 +221,7 @@
 				</div>
 			</Card>
 
-			<Card raised class="gap-3 px-5">
+			<Card elevation="raised" class="gap-3 px-5">
 				<h2 class="text-sm font-semibold">Created by</h2>
 				<div class="flex items-center gap-3">
 					<Avatar class="size-9">

@@ -120,7 +120,11 @@ const nodeTypes = {
 					))}
 				</Toolbar>
 			)}
-			<Node handles={data.handles} raised={data.raised} selected={selected}>
+			<Node
+				handles={data.handles}
+				elevation={data.raised ? "raised" : undefined}
+				selected={selected}
+			>
 				<NodeHeader>
 					<NodeTitle>{data.title}</NodeTitle>
 					<NodeDescription>{data.description}</NodeDescription>

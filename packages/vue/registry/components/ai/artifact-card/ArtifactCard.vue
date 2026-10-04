@@ -24,7 +24,7 @@ provide(ARTIFACT_CARD_KEY, computed(() => props.state))
   <Card
     data-slot="ai-artifact-card"
     :data-state="state"
-    :raised="raised"
+    :elevation="raised ? 'raised' : undefined"
     :class="cn('w-full flex-row items-center gap-3.5 px-3.5 py-3 text-card-foreground', props.class)"
   >
     <slot />

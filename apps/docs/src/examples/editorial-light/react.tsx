@@ -69,7 +69,12 @@ function SectionCopy({ section }: { section: Section }) {
 			</p>
 			<div className="flex flex-col gap-2">
 				{section.rows.map((r) => (
-					<FeatureRow key={r.index} raised index={r.index} title={r.title}>
+					<FeatureRow
+						key={r.index}
+						elevation="raised"
+						index={r.index}
+						title={r.title}
+					>
 						{r.body}
 					</FeatureRow>
 				))}
@@ -102,7 +107,7 @@ export default function EditorialLightExample() {
 						<span className="text-muted-foreground">{hero.muted}</span>
 					</h1>
 
-					<Card raised className="gap-0 p-0 lg:flex-row">
+					<Card elevation="raised" className="gap-0 p-0 lg:flex-row">
 						<div className="relative min-h-72 flex-1 border-b border-border p-5 lg:min-h-[480px] lg:border-r lg:border-b-0">
 							<div className="flex items-center gap-3 text-[13px]">
 								<Badge variant="secondary" className="h-8 gap-2 px-3">
@@ -117,7 +122,7 @@ export default function EditorialLightExample() {
 								{workspace.nodes.map((n) => (
 									<Card
 										key={n}
-										raised
+										elevation="raised"
 										size="sm"
 										className="items-center justify-center px-3 py-2 text-[13px]"
 									>
@@ -213,7 +218,7 @@ export default function EditorialLightExample() {
 					className="grid items-start gap-12 lg:grid-cols-[480px_1fr]"
 				>
 					<SectionCopy section={launch} />
-					<Card raised className="gap-0 p-0 md:flex-row">
+					<Card elevation="raised" className="gap-0 p-0 md:flex-row">
 						{board.map((col) => (
 							<div
 								key={col.title}
@@ -226,7 +231,7 @@ export default function EditorialLightExample() {
 								{col.cards.map((c) => (
 									<Card
 										key={c.name}
-										raised
+										elevation="raised"
 										size="sm"
 										className="gap-0 px-3 py-2.5"
 									>
@@ -247,7 +252,7 @@ export default function EditorialLightExample() {
 				>
 					<SectionCopy section={operate} />
 					<div className="relative flex flex-col gap-4 lg:pb-32">
-						<Card raised className="gap-4 p-5 lg:mr-24">
+						<Card elevation="raised" className="gap-4 p-5 lg:mr-24">
 							<div className="grid gap-4 sm:grid-cols-3">
 								{metrics.map((m) => (
 									<StatTile
@@ -262,7 +267,7 @@ export default function EditorialLightExample() {
 							</div>
 						</Card>
 						<Card
-							raised
+							elevation="raised"
 							className="gap-0 overflow-hidden p-0 lg:absolute lg:right-0 lg:bottom-0 lg:w-[360px]"
 						>
 							<div className="flex items-center gap-2 border-b border-border bg-muted px-4 py-2.5 text-[13px]">
@@ -312,7 +317,7 @@ export default function EditorialLightExample() {
 					<div className="grid w-full max-w-[780px] gap-8 sm:grid-cols-2">
 						{guide.chapters.map((c) => (
 							<div key={c.n} className="flex flex-col gap-3">
-								<Card raised className="gap-4 p-5">
+								<Card elevation="raised" className="gap-4 p-5">
 									<div className="text-xl leading-snug">
 										Chapter {c.n}
 										<br />
@@ -352,7 +357,7 @@ export default function EditorialLightExample() {
 							</a>
 						))}
 					</div>
-					<Card raised className="max-w-md gap-4 p-5">
+					<Card elevation="raised" className="max-w-md gap-4 p-5">
 						<div className="h-40 rounded-md bg-chart-2" />
 						<p className="text-[15px]">{footer.card.text}</p>
 						<Button
@@ -365,7 +370,7 @@ export default function EditorialLightExample() {
 						</Button>
 					</Card>
 					<SiteFooter
-						raised
+						elevation="raised"
 						columns={footer.columns}
 						legal={footer.legal}
 						note={footer.note}

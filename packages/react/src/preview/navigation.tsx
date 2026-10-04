@@ -198,7 +198,7 @@ export default function NavigationPreview() {
 				<TabsContent value="b">Panel B</TabsContent>
 			</Tabs>
 			<RaisedSection>
-				<Pagination raised>
+				<Pagination elevation="raised">
 					<PaginationContent>
 						<PaginationItem>
 							<PaginationPrevious href="#p" />
@@ -216,7 +216,7 @@ export default function NavigationPreview() {
 						</PaginationItem>
 					</PaginationContent>
 				</Pagination>
-				<Menubar raised className="w-fit">
+				<Menubar elevation="raised" className="w-fit">
 					<MenubarMenu>
 						<MenubarTrigger>File</MenubarTrigger>
 						<MenubarContent>
@@ -232,7 +232,7 @@ export default function NavigationPreview() {
 				</Menubar>
 				{(["default", "pills"] as const).map((variant) => (
 					<Tabs key={variant} defaultValue="overview" className="w-[420px]">
-						<TabsList variant={variant} raised>
+						<TabsList variant={variant} elevation="raised">
 							<TabsTrigger value="overview">Overview</TabsTrigger>
 							<TabsTrigger value="activity">Activity</TabsTrigger>
 							<TabsTrigger value="holders">Holders</TabsTrigger>

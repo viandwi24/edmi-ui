@@ -91,7 +91,7 @@ export default function AgentsExample() {
 								{agents.map((a) => (
 									<AgentCard
 										key={a.name}
-										raised
+										elevation="raised"
 										name={a.name}
 										address={a.address}
 										tag={a.tag}
@@ -115,7 +115,7 @@ export default function AgentsExample() {
 					</div>
 
 					<div className="flex min-w-0 flex-col gap-6">
-						<Card raised className="gap-4 px-6">
+						<Card elevation="raised" className="gap-4 px-6">
 							<div>
 								<h2 className="text-xl font-normal tracking-[-0.3px]">
 									Connect an agent
@@ -143,7 +143,11 @@ export default function AgentsExample() {
 								</InputGroupAddon>
 							</InputGroup>
 							<Tabs value={client} onValueChange={(v) => setClient(String(v))}>
-								<TabsList variant="default" raised className="w-full">
+								<TabsList
+									variant="default"
+									elevation="raised"
+									className="w-full"
+								>
 									{clients.map((c) => (
 										<TabsTrigger key={c.value} value={c.value}>
 											{c.label}
@@ -182,7 +186,7 @@ export default function AgentsExample() {
 							</div>
 						</Card>
 
-						<Card raised className="gap-3 px-6">
+						<Card elevation="raised" className="gap-3 px-6">
 							<h2 className="text-xl font-normal tracking-[-0.3px]">
 								Bring your own wallet
 							</h2>

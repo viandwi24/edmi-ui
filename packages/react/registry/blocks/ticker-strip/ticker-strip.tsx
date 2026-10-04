@@ -71,7 +71,7 @@ function TickerStrip({
 	return (
 		<Card
 			data-slot="ticker-strip"
-			raised={raised}
+			elevation={raised ? "raised" : undefined}
 			className={cn("flex-row gap-0 overflow-x-auto p-0", className)}
 			{...props}
 		>

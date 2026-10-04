@@ -137,7 +137,7 @@ export default function ExploreExample() {
 					</div>
 				</div>
 
-				<Card raised className="px-6 py-2">
+				<Card elevation="raised" className="px-6 py-2">
 					<Table>
 						<TableHeader>
 							<IndexRowHeader />

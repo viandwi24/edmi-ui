@@ -52,7 +52,7 @@ const kind = ref("all");
 
 			<LeaderboardPodium variant="cards" raised :entries="podium" />
 
-			<Card raised class="px-6 py-2">
+			<Card elevation="raised" class="px-6 py-2">
 				<Table>
 					<TableHeader>
 						<IndexRowHeader rank />

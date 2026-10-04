@@ -26,7 +26,7 @@ provide(PlanKey, { isStreaming: computed(() => props.isStreaming) })
   <!-- Collapsible props (open, defaultOpen, update:open) fall through as attrs. -->
   <Collapsible as-child data-slot="ai-plan">
     <Card
-      :raised="props.raised"
+      :elevation="props.raised ? 'raised' : undefined"
       :class="cn('gap-0 py-0 [--card-spacing:16px]', props.class)"
     >
       <slot />

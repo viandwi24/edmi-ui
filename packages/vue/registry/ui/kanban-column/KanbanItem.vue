@@ -21,7 +21,7 @@ const column = inject<{ raised?: boolean } | null>('kanbanColumn', null)
 
 <template>
   <Card
-    :raised="props.raised ?? column?.raised ?? false"
+    :elevation="(props.raised ?? column?.raised ?? false) ? 'raised' : undefined"
     data-slot="kanban-item"
     :data-disabled="disabled ? '' : undefined"
     :class="cn('flex-row items-center gap-2.5 px-3 py-2.5 data-[disabled]:opacity-60', props.class)"

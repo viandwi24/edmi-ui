@@ -65,7 +65,7 @@ import {
 				</div>
 
 				<div class="relative lg:pb-24">
-					<Card raised class="gap-5 p-6 lg:mr-10">
+					<Card elevation="raised" class="gap-5 p-6 lg:mr-10">
 						<div class="flex flex-wrap items-center gap-3">
 							<span class="inline-flex size-11 items-center justify-center rounded-lg border border-border bg-muted text-brand-text">
 								<ChartLineIcon class="size-5" />
@@ -195,7 +195,7 @@ import {
 				</div>
 			</section>
 
-			<Card raised class="flex-col gap-6 p-8 md:flex-row md:items-center md:justify-between md:p-12">
+			<Card elevation="raised" class="flex-col gap-6 p-8 md:flex-row md:items-center md:justify-between md:p-12">
 				<div class="flex flex-col gap-3">
 					<h2 class="text-[34px] leading-tight font-normal tracking-[-1.2px] md:text-[44px]">{{ cta.title }}</h2>
 					<p class="text-muted-foreground">{{ cta.body }}</p>

@@ -14,16 +14,11 @@ import {
 
 export type ArtifactProps = ComponentProps<typeof Card>;
 
-/** Container for generated output. Built on the ui card; `raised` ✦ gives the one-step 3D look. */
-export const Artifact = ({
-	className,
-	raised = false,
-	...props
-}: ArtifactProps) => (
+/** Container for generated output. Built on the ui card; `elevation` ✦ is forwarded to the card. */
+export const Artifact = ({ className, ...props }: ArtifactProps) => (
 	<Card
 		data-slot="ai-artifact"
 		className={cn("w-full gap-0 py-0", className)}
-		raised={raised}
 		{...props}
 	/>
 );

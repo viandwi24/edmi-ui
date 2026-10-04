@@ -23,6 +23,8 @@
 		action?: Snippet;
 		/** Dims the card (not yet reachable). */
 		disabled?: boolean;
+		/** legacy prop, forwarded to the card as `elevation="raised"` (patterns migration renames it) */
+		raised?: boolean;
 	} = $props();
 
 	const ctx = getKanbanColumnCtx();
@@ -30,7 +32,7 @@
 
 <Card
 	data-slot="kanban-item"
-	raised={raised ?? ctx?.raised ?? false}
+	elevation={(raised ?? ctx?.raised ?? false) ? "raised" : undefined}
 	data-disabled={disabled ? "" : undefined}
 	class={cn("flex-row items-center gap-2.5 px-3 py-2.5 data-[disabled]:opacity-60", className)}
 	{...restProps}

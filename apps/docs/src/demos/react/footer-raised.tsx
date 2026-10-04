@@ -5,7 +5,7 @@ import { IconPlaceholder } from "@/edmi/icon-placeholder";
 export default function Demo() {
 	return (
 		<SiteFooter
-			raised
+			elevation="raised"
 			className="w-full"
 			brand={
 				<span className="font-brand text-xl font-semibold tracking-tight">

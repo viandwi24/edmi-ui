@@ -17,7 +17,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <Card :raised="raised"
+  <Card :elevation="raised ? 'raised' : undefined"
     v-if="!$slots.default"
     data-slot="feature-row"
     :class="cn('h-14 flex-row items-center gap-4 px-5 py-0', props.class)"
@@ -28,7 +28,7 @@ const props = defineProps<{
       <slot name="icon"><Plus class="size-4" /></slot>
     </span>
   </Card>
-  <Card :raised="raised" v-else data-slot="feature-row" :class="cn('gap-0 py-0', props.class)">
+  <Card :elevation="raised ? 'raised' : undefined" v-else data-slot="feature-row" :class="cn('gap-0 py-0', props.class)">
     <Collapsible class="group/feature-row">
       <CollapsibleTrigger
         class="flex h-14 w-full cursor-pointer items-center gap-4 px-5 outline-none focus-visible:bg-accent"

@@ -24,7 +24,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <Card :raised="raised" data-slot="agent-card" :class="cn('gap-0 p-5', props.class)">
+  <Card :elevation="raised ? 'raised' : undefined" data-slot="agent-card" :class="cn('gap-0 p-5', props.class)">
     <div class="flex items-center gap-3.5">
       <AgentIdenticon :seed="seed ?? name" />
       <div class="min-w-0">

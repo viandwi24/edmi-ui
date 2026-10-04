@@ -65,7 +65,7 @@
 				<span class="text-muted-foreground">{hero.muted}</span>
 			</h1>
 
-			<Card raised class="gap-0 p-0 lg:flex-row">
+			<Card elevation="raised" class="gap-0 p-0 lg:flex-row">
 				<div class="relative min-h-72 flex-1 border-b border-border p-5 lg:min-h-[480px] lg:border-r lg:border-b-0">
 					<div class="flex items-center gap-3 text-[13px]">
 						<Badge variant="secondary" class="h-8 gap-2 px-3">
@@ -76,7 +76,7 @@
 					</div>
 					<div class="mx-auto mt-10 grid max-w-md grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3">
 						{#each workspace.nodes as n (n)}
-							<Card raised size="sm" class="items-center justify-center px-3 py-2 text-[13px]">
+							<Card elevation="raised" size="sm" class="items-center justify-center px-3 py-2 text-[13px]">
 								{n}
 							</Card>
 						{/each}
@@ -137,7 +137,7 @@
 
 		<section id="launch" class="grid items-start gap-12 lg:grid-cols-[480px_1fr]">
 			{@render sectionCopy(launch)}
-			<Card raised class="gap-0 p-0 md:flex-row">
+			<Card elevation="raised" class="gap-0 p-0 md:flex-row">
 				{#each board as col (col.title)}
 					<div class="flex flex-1 flex-col gap-3 border-b border-border p-4 last:border-b-0 md:border-r md:border-b-0 md:last:border-r-0">
 						<div class="flex justify-between font-mono text-[11px] text-muted-foreground">
@@ -145,7 +145,7 @@
 							<span>{col.count}</span>
 						</div>
 						{#each col.cards as c (c.name)}
-							<Card raised size="sm" class="gap-0 px-3 py-2.5">
+							<Card elevation="raised" size="sm" class="gap-0 px-3 py-2.5">
 								<div class="text-[13px]">{c.name}</div>
 								<div class="text-[11px] text-muted-foreground">{c.sub}</div>
 							</Card>
@@ -158,7 +158,7 @@
 		<section id="operate" class="grid items-start gap-12 lg:grid-cols-[480px_1fr]">
 			{@render sectionCopy(operate)}
 			<div class="relative flex flex-col gap-4 lg:pb-32">
-				<Card raised class="gap-4 p-5 lg:mr-24">
+				<Card elevation="raised" class="gap-4 p-5 lg:mr-24">
 					<div class="grid gap-4 sm:grid-cols-3">
 						{#each metrics as m (m.label)}
 							<StatTile
@@ -171,7 +171,7 @@
 						{/each}
 					</div>
 				</Card>
-				<Card raised class="gap-0 overflow-hidden p-0 lg:absolute lg:right-0 lg:bottom-0 lg:w-[360px]">
+				<Card elevation="raised" class="gap-0 overflow-hidden p-0 lg:absolute lg:right-0 lg:bottom-0 lg:w-[360px]">
 					<div class="flex items-center gap-2 border-b border-border bg-muted px-4 py-2.5 text-[13px]">
 						<span class="size-2 rounded-full bg-brand"></span>
 						Live joiners
@@ -202,7 +202,7 @@
 			<div class="grid w-full max-w-[780px] gap-8 sm:grid-cols-2">
 				{#each guide.chapters as c (c.n)}
 					<div class="flex flex-col gap-3">
-						<Card raised class="gap-4 p-5">
+						<Card elevation="raised" class="gap-4 p-5">
 							<div class="text-xl leading-snug">
 								Chapter {c.n}<br />
 								{c.title}
@@ -232,7 +232,7 @@
 					<a href="#guide" class="hover:text-muted-foreground">{h}</a>
 				{/each}
 			</div>
-			<Card raised class="max-w-md gap-4 p-5">
+			<Card elevation="raised" class="max-w-md gap-4 p-5">
 				<div class="h-40 rounded-md bg-chart-2"></div>
 				<p class="text-[15px]">{footer.card.text}</p>
 				<Button elevation="raised" size="sm" variant="outline" class="w-fit">{footer.card.cta}</Button>

@@ -92,7 +92,10 @@ function Control<T extends string>({
 				</span>
 			</div>
 			<Tabs value={value} onValueChange={(v) => onChange(v as T)}>
-				<TabsList raised={raised} className="max-w-full flex-wrap">
+				<TabsList
+					elevation={raised ? "raised" : undefined}
+					className="max-w-full flex-wrap"
+				>
 					{options.map((o) => (
 						<TabsTrigger key={o.value} value={o.value}>
 							{o.swatch}

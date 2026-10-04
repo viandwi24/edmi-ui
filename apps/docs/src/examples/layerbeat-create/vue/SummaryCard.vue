@@ -37,7 +37,7 @@ const rows = computed(() => [
 </script>
 
 <template>
-	<Card raised class="gap-0 p-0 [--card-spacing:0px]">
+	<Card elevation="raised" class="gap-0 p-0 [--card-spacing:0px]">
 		<div class="relative overflow-hidden border-b border-border-2 bg-[linear-gradient(160deg,var(--brand-soft),var(--card)_75%)] px-5 pt-5 pb-[18px]">
 			<span class="absolute -right-[26px] -bottom-[30px] size-[110px] rounded-full bg-[color-mix(in_srgb,var(--chart-2)_35%,transparent)]" />
 			<span class="absolute right-[30px] -bottom-10 h-[90px] w-[70px] rounded-[40px] bg-[color-mix(in_srgb,var(--chart-1)_30%,transparent)]" />

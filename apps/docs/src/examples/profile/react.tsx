@@ -96,7 +96,7 @@ export default function ProfileExample() {
 				</div>
 
 				<div className="grid items-stretch gap-6 lg:grid-cols-[minmax(0,1fr)_2fr]">
-					<Card raised className="gap-3 px-6">
+					<Card elevation="raised" className="gap-3 px-6">
 						<div className="flex items-end justify-between">
 							<span className="text-[13px] text-muted-foreground">Level</span>
 							<span className="text-[34px] leading-none font-light">
@@ -112,7 +112,7 @@ export default function ProfileExample() {
 							{profile.xp} XP · next level at {profile.nextLevelXp}
 						</div>
 					</Card>
-					<Card raised className="gap-3 px-6">
+					<Card elevation="raised" className="gap-3 px-6">
 						<span className="text-[13px] text-muted-foreground">Badges</span>
 						<div className="flex flex-wrap gap-2">
 							{profile.badges.map((b) => (
@@ -124,7 +124,7 @@ export default function ProfileExample() {
 					</Card>
 				</div>
 
-				<Card raised className="gap-4 px-6">
+				<Card elevation="raised" className="gap-4 px-6">
 					<h2 className="text-xl font-normal tracking-[-0.3px]">
 						Indexes created
 					</h2>
@@ -163,7 +163,7 @@ export default function ProfileExample() {
 					</Table>
 				</Card>
 
-				<Card raised className="gap-4 px-6">
+				<Card elevation="raised" className="gap-4 px-6">
 					<h2 className="text-xl font-normal tracking-[-0.3px]">Positions</h2>
 					<Table>
 						<TableHeader>

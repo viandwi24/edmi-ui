@@ -42,7 +42,7 @@ const lines = computed(() => props.code.split('\n'))
 </script>
 
 <template>
-  <Card :raised="raised" data-slot="code-block" :class="cn('gap-0 overflow-hidden p-0', props.class)">
+  <Card :elevation="raised ? 'raised' : undefined" data-slot="code-block" :class="cn('gap-0 overflow-hidden p-0', props.class)">
     <div
       v-if="title || copyable"
       class="flex items-center justify-between border-b border-border bg-muted py-2 pr-2 pl-3.5"

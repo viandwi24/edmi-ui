@@ -90,7 +90,7 @@
 		{#each ordered as e (e.rank)}
 			{@const down = e.change ? isDown(e.change) : false}
 			<li>
-				<Card {raised} class="h-full gap-0 p-6">
+				<Card elevation={raised ? "raised" : undefined} class="h-full gap-0 p-6">
 					<div class="flex items-center justify-between text-[13px]">
 						<span class="font-medium">No. {e.rank}</span>
 						{#if e.creator}<span class="font-mono text-xs text-muted-foreground">{e.creator}</span>{/if}
@@ -168,7 +168,7 @@
 	<ol bind:this={ref} data-slot="leaderboard-podium" class={cn("flex items-start gap-3", className)} {...restProps}>
 		{#each ordered as e (e.rank)}
 			<li class={cn("w-[200px]", e.rank !== 1 && "mt-6")}>
-				<Card size="sm" {raised} class="items-center gap-0 p-[18px] text-center">
+				<Card size="sm" elevation={raised ? "raised" : undefined} class="items-center gap-0 p-[18px] text-center">
 					<Badge shape="number" variant={e.rank === 1 ? "warning" : "secondary"} class="rounded-full">#{e.rank}</Badge>
 					<Avatar class="mt-3 size-11">
 						{#if e.image}<AvatarImage src={e.image} alt="" />{/if}

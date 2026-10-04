@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<{
 <template>
   <Card
     data-slot="ai-agent"
-    :raised="props.raised"
+    :elevation="props.raised ? 'raised' : undefined"
     :class="cn('not-prose w-full gap-0 py-0', props.class)"
   >
     <slot />

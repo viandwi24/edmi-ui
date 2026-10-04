@@ -22,7 +22,7 @@ export async function run(index: string) {
 
 export default function Demo() {
 	return (
-		<Artifact className="max-w-xl" raised>
+		<Artifact className="max-w-xl" elevation="raised">
 			<ArtifactHeader>
 				<div>
 					<ArtifactTitle>rebalance.ts</ArtifactTitle>

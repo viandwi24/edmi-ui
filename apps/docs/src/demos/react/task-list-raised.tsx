@@ -3,7 +3,7 @@ import { TaskList } from "@edmi-react/blocks/task-list/task-list";
 export default function Demo() {
 	return (
 		<TaskList
-			raised
+			elevation="raised"
 			className="w-[300px] max-w-full"
 			tasks={[
 				{ title: "ICP analysis", agent: "Research agent", status: "review" },

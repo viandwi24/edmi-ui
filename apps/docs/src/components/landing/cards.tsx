@@ -140,7 +140,10 @@ export function RaisedToggle() {
 			value={raised ? "raised" : "flat"}
 			onValueChange={(v) => setRaised(v === "raised")}
 		>
-			<TabsList aria-label="Showcase style" raised={raised}>
+			<TabsList
+				aria-label="Showcase style"
+				elevation={raised ? "raised" : undefined}
+			>
 				<TabsTrigger value="flat">Flat</TabsTrigger>
 				<TabsTrigger value="raised">Raised ✦</TabsTrigger>
 			</TabsList>
@@ -165,7 +168,7 @@ function useSiteDark() {
 export function ControlsCard() {
 	const raised = useRaised();
 	return (
-		<Card raised={raised} className="gap-4 p-5">
+		<Card elevation={raised ? "raised" : undefined} className="gap-4 p-5">
 			<div className="flex flex-wrap items-center gap-2.5">
 				<Button elevation={raised ? "raised" : undefined}>
 					Button <ArrowRightIcon />
@@ -249,7 +252,7 @@ const barConfig = {
 export function ChartCard() {
 	const raised = useRaised();
 	return (
-		<Card raised={raised}>
+		<Card elevation={raised ? "raised" : undefined}>
 			<CardHeader>
 				<CardTitle>Contribution history</CardTitle>
 				<CardDescription>Last 6 months of activity</CardDescription>
@@ -305,7 +308,7 @@ const strategies: Record<string, string> = {
 export function FormCard() {
 	const raised = useRaised();
 	return (
-		<Card raised={raised}>
+		<Card elevation={raised ? "raised" : undefined}>
 			<CardHeader>
 				<CardTitle>Set a new milestone</CardTitle>
 				<CardDescription>
@@ -378,7 +381,7 @@ export function FormCard() {
 export function ChatCard() {
 	const raised = useRaised();
 	return (
-		<Card raised={raised}>
+		<Card elevation={raised ? "raised" : undefined}>
 			<CardHeader>
 				<CardTitle>New chat</CardTitle>
 				<CardDescription>How can I help today?</CardDescription>
@@ -530,7 +533,7 @@ export function MarketCard() {
 				]}
 				raised={raised}
 			/>
-			<Card raised={raised} className="gap-1.5 p-3">
+			<Card elevation={raised ? "raised" : undefined} className="gap-1.5 p-3">
 				<div className="px-2 pt-1 pb-1.5 font-mono text-[10.5px] tracking-wider text-muted-foreground uppercase">
 					Watchlist
 				</div>
@@ -577,8 +580,11 @@ export function FeedbackCard() {
 		return () => clearInterval(id);
 	}, []);
 	return (
-		<Card raised={raised} className="gap-4 p-5">
-			<Toaster raised={raised} theme={dark ? "dark" : "light"} />
+		<Card elevation={raised ? "raised" : undefined} className="gap-4 p-5">
+			<Toaster
+				elevation={raised ? "raised" : undefined}
+				theme={dark ? "dark" : "light"}
+			/>
 			<Alert variant="brand">
 				<CheckCircleIcon />
 				<AlertTitle>Index launched</AlertTitle>
@@ -644,10 +650,10 @@ const people = [
 export function PeopleCard() {
 	const raised = useRaised();
 	return (
-		<Card raised={raised} className="gap-3 p-3">
+		<Card elevation={raised ? "raised" : undefined} className="gap-3 p-3">
 			<div className="flex items-center justify-between px-2 pt-1">
 				<Tabs defaultValue="team">
-					<TabsList raised={raised}>
+					<TabsList elevation={raised ? "raised" : undefined}>
 						<TabsTrigger value="team">Team</TabsTrigger>
 						<TabsTrigger value="holders">Holders</TabsTrigger>
 					</TabsList>

@@ -64,7 +64,7 @@
 
 	<TickerStrip raised items={tickers} />
 
-	<Card raised class="gap-4 px-6">
+	<Card elevation="raised" class="gap-4 px-6">
 		{@render cardTop("Top indexes", "View all")}
 		<Table>
 			<TableHeader>
@@ -79,7 +79,7 @@
 	</Card>
 
 	<div class="grid items-start gap-6 lg:grid-cols-3">
-		<Card raised class="@container gap-4 px-6">
+		<Card elevation="raised" class="@container gap-4 px-6">
 			{@render cardTop("Human vs AI")}
 			<div class="grid gap-3 @[400px]:grid-cols-2">
 				{@render mini(humanVsAi.human)}
@@ -87,7 +87,7 @@
 			</div>
 		</Card>
 
-		<Card raised class="gap-3 px-6">
+		<Card elevation="raised" class="gap-3 px-6">
 			{@render cardTop("Top creators", "See all")}
 			<ul>
 				{#each creators as c (c.address)}
@@ -110,7 +110,7 @@
 			</ul>
 		</Card>
 
-		<Card raised class="gap-3 px-6">
+		<Card elevation="raised" class="gap-3 px-6">
 			{@render cardTop("Latest activity")}
 			<ul>
 				{#each activity as a, i (i)}

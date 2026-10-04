@@ -45,7 +45,7 @@
 			</ToggleGroup.Root>
 		</div>
 
-		<Card raised class="gap-0 p-0">
+		<Card elevation="raised" class="gap-0 p-0">
 			<Textarea
 				bind:value={draft}
 				maxlength={maxChars}
@@ -105,7 +105,7 @@
 			{/each}
 		{/if}
 
-		<Card raised class="gap-0 p-0">
+		<Card elevation="raised" class="gap-0 p-0">
 			<ul class="px-6">
 				{#each updates as u (u.id)}
 					<li class="flex items-center gap-3 border-b border-border-2 py-4">

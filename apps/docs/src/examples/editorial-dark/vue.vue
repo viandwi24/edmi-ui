@@ -59,7 +59,7 @@ function pickAudience(v: unknown) {
 				<div class="mx-auto flex w-full max-w-[460px] flex-col items-center gap-6 text-center">
 					<h1 class="text-[56px] leading-[1.05] font-normal tracking-[-2.5px] text-foreground-2 md:text-[72px]">{{ hero.title }}</h1>
 					<p class="text-xl text-muted-foreground">{{ hero.lead }}</p>
-					<Card raised class="w-full gap-3 p-7">
+					<Card elevation="raised" class="w-full gap-3 p-7">
 						<Button elevation="raised" variant="secondary" size="lg">{{ hero.wallet }}</Button>
 						<span class="text-[11px] text-muted-foreground">{{ hero.or }}</span>
 						<Button elevation="raised" size="lg">{{ hero.email }}</Button>
@@ -67,7 +67,7 @@ function pickAudience(v: unknown) {
 					</Card>
 					<Button elevation="raised" variant="outline">{{ hero.devnet }}</Button>
 				</div>
-				<Card raised class="items-center justify-center p-6 sm:p-12 lg:min-h-[620px]">
+				<Card elevation="raised" class="items-center justify-center p-6 sm:p-12 lg:min-h-[620px]">
 					<Card class="w-full max-w-[420px] gap-4 p-7">
 						<div class="font-mono text-[11px] text-muted-foreground">{{ index.label }}</div>
 						<div class="text-[44px] leading-none font-normal tracking-[-1.5px] text-foreground-2">{{ index.price }}</div>

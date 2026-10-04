@@ -3,7 +3,7 @@ import { AgentCard } from "@edmi-react/blocks/agent-card/agent-card";
 export default function Demo() {
 	return (
 		<AgentCard
-			raised
+			elevation="raised"
 			className="w-[380px] max-w-full"
 			name="XSD"
 			tag="AI"

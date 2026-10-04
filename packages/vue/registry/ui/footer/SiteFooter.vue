@@ -20,7 +20,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <Card :raised="raised" data-slot="site-footer" :class="cn('gap-0 px-8 py-7', props.class)">
+  <Card :elevation="raised ? 'raised' : undefined" data-slot="site-footer" :class="cn('gap-0 px-8 py-7', props.class)">
     <div class="flex flex-wrap justify-between gap-8">
       <div class="flex flex-col gap-3">
         <slot name="brand" />

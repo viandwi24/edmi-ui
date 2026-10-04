@@ -13,6 +13,8 @@
 	}: ComponentProps<typeof Card> & {
 		/** `generating`: the title shimmers and the actions are hidden. */
 		state?: ArtifactCardState;
+		/** legacy prop, forwarded as `elevation="raised"` (the AI pack migration renames it) */
+		raised?: boolean;
 	} = $props();
 
 	setArtifactCardState(() => state);
@@ -21,7 +23,7 @@
 <Card
 	data-slot="ai-artifact-card"
 	data-state={state}
-	{raised}
+	elevation={raised ? "raised" : undefined}
 	class={cn("w-full flex-row items-center gap-3.5 px-3.5 py-3 text-card-foreground", className)}
 	{...restProps}
 >

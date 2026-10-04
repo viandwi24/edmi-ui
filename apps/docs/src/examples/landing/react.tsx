@@ -100,7 +100,7 @@ export default function LandingExample() {
 					</div>
 
 					<div className="relative lg:pb-24">
-						<Card raised className="gap-5 p-6 lg:mr-10">
+						<Card elevation="raised" className="gap-5 p-6 lg:mr-10">
 							<div className="flex flex-wrap items-center gap-3">
 								<span className="inline-flex size-11 items-center justify-center rounded-lg border border-border bg-muted text-brand-text">
 									<IconPlaceholder
@@ -197,7 +197,7 @@ export default function LandingExample() {
 				</section>
 
 				<section className="flex flex-col gap-3">
-					<StatStrip raised>
+					<StatStrip elevation="raised">
 						{stats.map((s) => (
 							<StatStripItem key={s.label} value={s.value} label={s.label} />
 						))}
@@ -230,7 +230,7 @@ export default function LandingExample() {
 						{steps.map((s) => (
 							<StepCard
 								key={s.index}
-								raised
+								elevation="raised"
 								index={s.index}
 								title={s.title}
 								description={s.description}
@@ -245,7 +245,7 @@ export default function LandingExample() {
 						{pricing.map((p) => (
 							<PricingPlan
 								key={p.name}
-								raised
+								elevation="raised"
 								name={p.name}
 								tagline={p.tagline}
 								price={p.price}
@@ -263,7 +263,7 @@ export default function LandingExample() {
 				</section>
 
 				<Card
-					raised
+					elevation="raised"
 					className="flex-col gap-6 p-8 md:flex-row md:items-center md:justify-between md:p-12"
 				>
 					<div className="flex flex-col gap-3">
@@ -283,7 +283,7 @@ export default function LandingExample() {
 				</Card>
 
 				<SiteFooter
-					raised
+					elevation="raised"
 					brand={<SiteHeaderBrand raised />}
 					description={footer.description}
 					columns={footer.columns}

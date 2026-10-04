@@ -12,7 +12,7 @@ import { Button } from "@edmi-react/ui/button";
 
 export default function Demo() {
 	return (
-		<Plan raised defaultOpen className="w-full max-w-md">
+		<Plan elevation="raised" defaultOpen className="w-full max-w-md">
 			<PlanHeader>
 				<div>
 					<PlanTitle>Rebalance MAG4</PlanTitle>

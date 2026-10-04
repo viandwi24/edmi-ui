@@ -223,7 +223,7 @@ function PlanExample({
 	return (
 		<Plan
 			isStreaming={streaming}
-			raised={raised}
+			elevation={raised ? "raised" : undefined}
 			defaultOpen
 			className="w-full max-w-[460px]"
 		>

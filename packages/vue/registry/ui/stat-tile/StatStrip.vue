@@ -12,7 +12,7 @@ const props = defineProps<{
 
 <template>
   <!-- Row of numbers in one card; cells are divided by 1px borders. -->
-  <Card :raised="raised" data-slot="stat-strip" :class="cn('flex-row gap-0 overflow-x-auto p-0', props.class)">
+  <Card :elevation="raised ? 'raised' : undefined" data-slot="stat-strip" :class="cn('flex-row gap-0 overflow-x-auto p-0', props.class)">
     <slot />
   </Card>
 </template>

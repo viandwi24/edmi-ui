@@ -159,7 +159,7 @@ const DemoAgentRaised_postFeed = {
 
 function DemoAgentRaised() {
 	return (
-		<Agent className="max-w-lg" raised>
+		<Agent className="max-w-lg" elevation="raised">
 			<AgentHeader name="Keeper agent" model="claude-opus" />
 			<AgentContent>
 				<AgentInstructions>
@@ -272,7 +272,7 @@ export async function run(index: string) {
 
 function DemoArtifactRaised() {
 	return (
-		<Artifact className="max-w-xl" raised>
+		<Artifact className="max-w-xl" elevation="raised">
 			<ArtifactHeader>
 				<div>
 					<ArtifactTitle>rebalance.ts</ArtifactTitle>

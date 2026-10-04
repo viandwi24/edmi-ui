@@ -79,7 +79,7 @@ export default function LeaderboardExample() {
 
 				<LeaderboardPodium variant="cards" raised entries={podium} />
 
-				<Card raised className="px-6 py-2">
+				<Card elevation="raised" className="px-6 py-2">
 					<Table>
 						<TableHeader>
 							<IndexRowHeader rank />

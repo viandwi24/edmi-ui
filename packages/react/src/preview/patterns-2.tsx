@@ -23,7 +23,10 @@ import { RaisedSection } from "./_raised";
 
 function DemoFeedPost({ raised }: { raised?: boolean }) {
 	return (
-		<FeedPost raised={raised} className="w-[460px] max-w-full">
+		<FeedPost
+			elevation={raised ? "raised" : undefined}
+			className="w-[460px] max-w-full"
+		>
 			<FeedPostHeader
 				name="Dewi Lestari"
 				handle="@dewi"
@@ -86,7 +89,7 @@ function DemoFeedPost({ raised }: { raised?: boolean }) {
 function DemoAgentCard({ raised }: { raised?: boolean }) {
 	return (
 		<AgentCard
-			raised={raised}
+			elevation={raised ? "raised" : undefined}
 			className="w-[380px] max-w-full"
 			name="XSD"
 			tag="AI"
@@ -104,11 +107,23 @@ function DemoAgentCard({ raised }: { raised?: boolean }) {
 function DemoFeatureRow({ raised }: { raised?: boolean }) {
 	return (
 		<div className="flex w-[420px] max-w-full flex-col gap-2">
-			<FeatureRow raised={raised} index="1.1" title="Thesis and weights">
+			<FeatureRow
+				elevation={raised ? "raised" : undefined}
+				index="1.1"
+				title="Thesis and weights"
+			>
 				Describe the thesis, pick up to 10 assets and set their weights.
 			</FeatureRow>
-			<FeatureRow raised={raised} index="1.2" title="Index identity" />
-			<FeatureRow raised={raised} index="1.3" title="Vault deployment" />
+			<FeatureRow
+				elevation={raised ? "raised" : undefined}
+				index="1.2"
+				title="Index identity"
+			/>
+			<FeatureRow
+				elevation={raised ? "raised" : undefined}
+				index="1.3"
+				title="Vault deployment"
+			/>
 		</div>
 	);
 }
@@ -117,21 +132,21 @@ function DemoStepCard({ raised }: { raised?: boolean }) {
 	return (
 		<div className="flex flex-wrap gap-3">
 			<StepCard
-				raised={raised}
+				elevation={raised ? "raised" : undefined}
 				className="w-[200px]"
 				index="01"
 				title="Create"
 				description="Pick up to 10 assets and set weights."
 			/>
 			<StepCard
-				raised={raised}
+				elevation={raised ? "raised" : undefined}
 				className="w-[200px]"
 				index="02"
 				title="Share"
 				description="A link, OG image, feed card and Blink."
 			/>
 			<StepCard
-				raised={raised}
+				elevation={raised ? "raised" : undefined}
 				className="w-[200px]"
 				index="03"
 				title="Join"
@@ -144,7 +159,7 @@ function DemoStepCard({ raised }: { raised?: boolean }) {
 function DemoPricingPlan({ raised }: { raised?: boolean }) {
 	return (
 		<PricingPlan
-			raised={raised}
+			elevation={raised ? "raised" : undefined}
 			className="w-[300px] max-w-full"
 			name="Creator"
 			tagline="Launch your own index"
@@ -163,7 +178,7 @@ function DemoPricingPlan({ raised }: { raised?: boolean }) {
 function DemoTaskList({ raised }: { raised?: boolean }) {
 	return (
 		<TaskList
-			raised={raised}
+			elevation={raised ? "raised" : undefined}
 			className="w-[300px] max-w-full"
 			tasks={[
 				{ title: "ICP analysis", agent: "Research agent", status: "review" },
@@ -198,7 +213,7 @@ function DemoKanbanColumn({ raised }: { raised?: boolean }) {
 		<div className="flex flex-wrap items-start gap-3">
 			<KanbanColumn title="Thesis stage" meta="1/1">
 				<KanbanItem
-					raised={raised}
+					elevation={raised ? "raised" : undefined}
 					icon={icon}
 					title="Initial thesis"
 					description="User task"
@@ -206,14 +221,14 @@ function DemoKanbanColumn({ raised }: { raised?: boolean }) {
 			</KanbanColumn>
 			<KanbanColumn title="Mandate stage" meta="0/3">
 				<KanbanItem
-					raised={raised}
+					elevation={raised ? "raised" : undefined}
 					disabled
 					icon={icon}
 					title="Pick tokens + weights"
 					description="Agent task"
 				/>
 				<KanbanItem
-					raised={raised}
+					elevation={raised ? "raised" : undefined}
 					disabled
 					icon={icon}
 					title="Review mandate"
@@ -227,7 +242,7 @@ function DemoKanbanColumn({ raised }: { raised?: boolean }) {
 function DemoCodeBlock({ raised }: { raised?: boolean }) {
 	return (
 		<CodeBlock
-			raised={raised}
+			elevation={raised ? "raised" : undefined}
 			className="w-[420px] max-w-full"
 			title="Claude Code"
 			code={"claude mcp add stockbreak \\\n  https://stockbreak.fun/api/mcp"}
@@ -239,7 +254,7 @@ function DemoCodeBlock({ raised }: { raised?: boolean }) {
 function DemoFooter({ raised }: { raised?: boolean }) {
 	return (
 		<SiteFooter
-			raised={raised}
+			elevation={raised ? "raised" : undefined}
 			className="w-full"
 			brand={
 				<span className="font-brand text-xl font-semibold tracking-tight">

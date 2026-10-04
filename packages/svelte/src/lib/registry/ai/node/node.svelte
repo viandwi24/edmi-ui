@@ -26,7 +26,7 @@
 	{...restProps}
 	data-slot="ai-node"
 	data-selected={selected ? "" : undefined}
-	{raised}
+	elevation={raised ? "raised" : undefined}
 	class={cn(
 		"relative size-full h-auto w-60 gap-0 overflow-visible rounded-[calc(var(--radius)*1.2)] py-0",
 		"data-[selected]:border-ring data-[selected]:shadow-ring [.selected_&]:border-ring [.selected_&]:shadow-ring",

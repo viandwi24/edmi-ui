@@ -27,7 +27,7 @@
 
 <Collapsible bind:open data-slot="ai-plan" {...restProps}>
 	{#snippet child({ props })}
-		<Card {...props} {raised} class={cn("gap-0 py-0 [--card-spacing:16px]", className)}>
+		<Card {...props} elevation={raised ? "raised" : undefined} class={cn("gap-0 py-0 [--card-spacing:16px]", className)}>
 			{@render children?.()}
 		</Card>
 	{/snippet}

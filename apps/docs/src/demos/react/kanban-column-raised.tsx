@@ -19,7 +19,7 @@ export default function Demo() {
 		<div className="flex flex-wrap items-start gap-3">
 			<KanbanColumn title="Thesis stage" meta="1/1">
 				<KanbanItem
-					raised
+					elevation="raised"
 					icon={icon}
 					title="Initial thesis"
 					description="User task"
@@ -27,14 +27,14 @@ export default function Demo() {
 			</KanbanColumn>
 			<KanbanColumn title="Mandate stage" meta="0/3">
 				<KanbanItem
-					raised
+					elevation="raised"
 					disabled
 					icon={icon}
 					title="Pick tokens + weights"
 					description="Agent task"
 				/>
 				<KanbanItem
-					raised
+					elevation="raised"
 					disabled
 					icon={icon}
 					title="Review mandate"

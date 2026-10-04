@@ -49,7 +49,7 @@ import {
 					<span class="text-muted-foreground">{{ hero.muted }}</span>
 				</h1>
 
-				<Card raised class="gap-0 p-0 lg:flex-row">
+				<Card elevation="raised" class="gap-0 p-0 lg:flex-row">
 					<div class="relative min-h-72 flex-1 border-b border-border p-5 lg:min-h-[480px] lg:border-r lg:border-b-0">
 						<div class="flex items-center gap-3 text-[13px]">
 							<Badge variant="secondary" class="h-8 gap-2 px-3">
@@ -62,7 +62,7 @@ import {
 							<Card
 								v-for="n in workspace.nodes"
 								:key="n"
-								raised
+								elevation="raised"
 								size="sm"
 								class="items-center justify-center px-3 py-2 text-[13px]"
 							>
@@ -130,7 +130,7 @@ import {
 							<FeatureRow v-for="r in launch.rows" :key="r.index" raised :index="r.index" :title="r.title">{{ r.body }}</FeatureRow>
 						</div>
 					</div>
-				<Card raised class="gap-0 p-0 md:flex-row">
+				<Card elevation="raised" class="gap-0 p-0 md:flex-row">
 					<div
 						v-for="col in board"
 						:key="col.title"
@@ -140,7 +140,7 @@ import {
 							<span>{{ col.title }}</span>
 							<span>{{ col.count }}</span>
 						</div>
-						<Card v-for="c in col.cards" :key="c.name" raised size="sm" class="gap-0 px-3 py-2.5">
+						<Card v-for="c in col.cards" :key="c.name" elevation="raised" size="sm" class="gap-0 px-3 py-2.5">
 							<div class="text-[13px]">{{ c.name }}</div>
 							<div class="text-[11px] text-muted-foreground">{{ c.sub }}</div>
 						</Card>
@@ -161,7 +161,7 @@ import {
 						</div>
 					</div>
 				<div class="relative flex flex-col gap-4 lg:pb-32">
-					<Card raised class="gap-4 p-5 lg:mr-24">
+					<Card elevation="raised" class="gap-4 p-5 lg:mr-24">
 						<div class="grid gap-4 sm:grid-cols-3">
 							<StatTile
 								v-for="m in metrics"
@@ -174,7 +174,7 @@ import {
 							/>
 						</div>
 					</Card>
-					<Card raised class="gap-0 overflow-hidden p-0 lg:absolute lg:right-0 lg:bottom-0 lg:w-[360px]">
+					<Card elevation="raised" class="gap-0 overflow-hidden p-0 lg:absolute lg:right-0 lg:bottom-0 lg:w-[360px]">
 						<div class="flex items-center gap-2 border-b border-border bg-muted px-4 py-2.5 text-[13px]">
 							<span class="size-2 rounded-full bg-brand" />
 							Live joiners
@@ -202,7 +202,7 @@ import {
 				<Button elevation="raised" size="lg">{{ guide.cta }}</Button>
 				<div class="grid w-full max-w-[780px] gap-8 sm:grid-cols-2">
 					<div v-for="c in guide.chapters" :key="c.n" class="flex flex-col gap-3">
-						<Card raised class="gap-4 p-5">
+						<Card elevation="raised" class="gap-4 p-5">
 							<div class="text-xl leading-snug">
 								Chapter {{ c.n }}<br />
 								{{ c.title }}
@@ -229,7 +229,7 @@ import {
 					<span class="text-muted-foreground">How to</span>
 					<a v-for="h in footer.howTo" :key="h" href="#guide" class="hover:text-muted-foreground">{{ h }}</a>
 				</div>
-				<Card raised class="max-w-md gap-4 p-5">
+				<Card elevation="raised" class="max-w-md gap-4 p-5">
 					<div class="h-40 rounded-md bg-chart-2" />
 					<p class="text-[15px]">{{ footer.card.text }}</p>
 					<Button elevation="raised" size="sm" variant="outline" class="w-fit">{{ footer.card.cta }}</Button>

@@ -35,7 +35,6 @@ export type ArtifactCardProps = ComponentProps<typeof Card> & {
 export const ArtifactCard = ({
 	className,
 	state = "ready",
-	raised,
 	children,
 	...props
 }: ArtifactCardProps) => (
@@ -43,7 +42,6 @@ export const ArtifactCard = ({
 		<Card
 			data-slot="ai-artifact-card"
 			data-state={state}
-			raised={raised}
 			className={cn(
 				"w-full flex-row items-center gap-3.5 px-3.5 py-3 text-card-foreground",
 				className,

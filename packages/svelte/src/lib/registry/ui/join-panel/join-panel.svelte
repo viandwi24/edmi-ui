@@ -77,7 +77,7 @@
 </script>
 
 <!-- Amount field (mono, Max button, currency) + summary rows + one big action. -->
-<Card bind:ref data-slot="join-panel" size="sm" {raised} class={cn("w-80 gap-0", className)} {...restProps}>
+<Card bind:ref data-slot="join-panel" size="sm" elevation={raised ? "raised" : undefined} class={cn("w-80 gap-0", className)} {...restProps}>
 	{#if tabs?.length}
 		<div class="mb-5 px-(--card-spacing)">
 			<Tabs
@@ -87,7 +87,7 @@
 					onTabChange?.(v);
 				}}
 			>
-				<TabsList {raised} class="w-full">
+				<TabsList elevation={raised ? "raised" : undefined} class="w-full">
 					{#each tabs as t (t.value)}
 						<TabsTrigger value={t.value}>{t.label}</TabsTrigger>
 					{/each}

@@ -78,7 +78,7 @@
 			</div>
 
 			<div class="flex min-w-0 flex-col gap-6">
-				<Card raised class="gap-4 px-6">
+				<Card elevation="raised" class="gap-4 px-6">
 					<div>
 						<h2 class="text-xl font-normal tracking-[-0.3px]">Connect an agent</h2>
 						<p class="mt-1 text-[13px] text-muted-foreground">
@@ -94,7 +94,7 @@
 						</InputGroup.Addon>
 					</InputGroup.Root>
 					<Tabs.Root value={client} onValueChange={(v) => (client = String(v))}>
-						<Tabs.List variant="default" raised class="w-full">
+						<Tabs.List variant="default" elevation="raised" class="w-full">
 							{#each clients as c (c.value)}
 								<Tabs.Trigger value={c.value}>{c.label}</Tabs.Trigger>
 							{/each}
@@ -114,7 +114,7 @@
 					</div>
 				</Card>
 
-				<Card raised class="gap-3 px-6">
+				<Card elevation="raised" class="gap-3 px-6">
 					<h2 class="text-xl font-normal tracking-[-0.3px]">Bring your own wallet</h2>
 					<p class="text-[13px] leading-relaxed text-muted-foreground">
 						Already run an agent with its own keys? Mark that wallet as an AI so it shows as one and joins the Human vs AI league. One signature, no fee.

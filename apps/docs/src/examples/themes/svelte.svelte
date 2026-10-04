@@ -25,7 +25,7 @@
 			<p class="max-w-2xl text-muted-foreground">{intro.body}</p>
 		</div>
 
-		<Card raised class="gap-5 p-6">
+		<Card elevation="raised" class="gap-5 p-6">
 			<div class="grid gap-5 sm:grid-cols-2">
 				{#each controls as c (c.key)}
 					<div class="flex flex-col gap-2">
@@ -57,13 +57,13 @@
 			class="{s.mode === 'dark' ? 'dark ' : 'edmi-light '}rounded-xl border border-border bg-background p-4 text-foreground sm:p-6"
 		>
 			<div class="grid gap-4 md:grid-cols-2">
-				<Card {raised} class="gap-4 px-5">
+				<Card elevation={raised ? "raised" : undefined} class="gap-4 px-5">
 					<div class="flex items-center justify-between">
 						<span class="text-lg font-medium">{preview.name} · {s.base}·{s.theme}</span>
 						<Badge variant="success">Live</Badge>
 					</div>
 					<Tabs.Root value="nav">
-						<Tabs.List {raised}>
+						<Tabs.List elevation={raised ? "raised" : undefined}>
 							{#each preview.tabs as t (t.value)}
 								<Tabs.Trigger value={t.value}>{t.label}</Tabs.Trigger>
 							{/each}
@@ -86,7 +86,7 @@
 					</div>
 				</Card>
 
-				<Card {raised} class="gap-4 px-5">
+				<Card elevation={raised ? "raised" : undefined} class="gap-4 px-5">
 					<div class="flex flex-wrap gap-2">
 						{#each preview.variants as v (v)}
 							<Button elevation={raised ? "raised" : undefined} variant={v} size="sm">{v}</Button>

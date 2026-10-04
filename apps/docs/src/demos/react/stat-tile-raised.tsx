@@ -9,14 +9,14 @@ export default function Demo() {
 		<div className="flex flex-col gap-4">
 			<div className="flex flex-wrap gap-4">
 				<StatTile
-					raised
+					elevation="raised"
 					label="AUM"
 					value="$49,182"
 					delta="+37%"
 					deltaLabel="vs last week"
 				/>
 				<StatTile
-					raised
+					elevation="raised"
 					label="Daily active holders"
 					value="10,291"
 					meter={{
@@ -31,14 +31,14 @@ export default function Demo() {
 					deltaLabel="vs last week"
 				/>
 				<StatTile
-					raised
+					elevation="raised"
 					label="Net flow"
 					value="−$1,204"
 					delta="−4.2%"
 					deltaLabel="vs last week"
 				/>
 			</div>
-			<StatStrip raised>
+			<StatStrip elevation="raised">
 				<StatStripItem value="412" label="holders" />
 				<StatStripItem value="$49.2K" label="AUM" />
 				<StatStripItem value="63%" label="activity off-hours" />

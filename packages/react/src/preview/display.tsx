@@ -301,7 +301,7 @@ export default function DisplayPreview() {
 			</div>
 			<RaisedSection>
 				<div className="grid gap-5 sm:grid-cols-2">
-					<Card raised>
+					<Card elevation="raised">
 						<CardHeader>
 							<CardTitle>Portfolio</CardTitle>
 							<CardDescription>Holdings across all indexes.</CardDescription>
@@ -320,7 +320,7 @@ export default function DisplayPreview() {
 							</Button>
 						</CardFooter>
 					</Card>
-					<InsetPanel raised>
+					<InsetPanel elevation="raised">
 						<InsetPanelHeader>Inset panel</InsetPanelHeader>
 						<InsetPanelBody fade className="h-32 p-4 text-sm">
 							Raised inset panel.
@@ -330,7 +330,7 @@ export default function DisplayPreview() {
 				</div>
 				<Empty>
 					<EmptyHeader>
-						<EmptyMedia variant="icon" raised>
+						<EmptyMedia variant="icon" elevation="raised">
 							<IconPlaceholder
 								lucide="InboxIcon"
 								tabler="IconInbox"

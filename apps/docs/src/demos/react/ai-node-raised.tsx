@@ -14,7 +14,7 @@ const nodes = [
 
 const nodeTypes = {
 	step: () => (
-		<Node handles={{ target: true, source: true }} raised>
+		<Node handles={{ target: true, source: true }} elevation="raised">
 			<NodeHeader>
 				<NodeTitle>Check drift</NodeTitle>
 				<NodeDescription>Tool · get_prices</NodeDescription>

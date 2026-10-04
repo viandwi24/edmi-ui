@@ -60,7 +60,7 @@ export default function HeroField() {
 	return (
 		<div className="flex gap-5">
 			<Col offset={60}>
-				<Card raised className="gap-4 p-5">
+				<Card elevation="raised" className="gap-4 p-5">
 					<div className="flex flex-wrap gap-2.5">
 						<Button elevation="raised">
 							Join index <ArrowRightIcon />
@@ -82,7 +82,7 @@ export default function HeroField() {
 					</div>
 				</Card>
 				<TaskList
-					raised
+					elevation="raised"
 					tasks={[
 						{
 							title: "ICP analysis",
@@ -114,7 +114,7 @@ export default function HeroField() {
 				</Card>
 			</Col>
 			<Col>
-				<Card raised>
+				<Card elevation="raised">
 					<CardHeader>
 						<CardTitle>Join MAG4</CardTitle>
 						<CardDescription>Magnificent Four, 4 tokens</CardDescription>
@@ -151,7 +151,7 @@ export default function HeroField() {
 			<Col offset={-30}>
 				<div className="grid gap-4">
 					<StatTile
-						raised
+						elevation="raised"
 						label="AUM"
 						value="$49,182"
 						delta="+37%"
@@ -166,7 +166,7 @@ export default function HeroField() {
 				</div>
 				<Card className="gap-4 p-5">
 					<Tabs defaultValue="overview">
-						<TabsList variant="pills" raised>
+						<TabsList variant="pills" elevation="raised">
 							<TabsTrigger value="overview">Overview</TabsTrigger>
 							<TabsTrigger value="holdings">Holdings</TabsTrigger>
 							<TabsTrigger value="activity">Activity</TabsTrigger>
@@ -224,7 +224,7 @@ export default function HeroField() {
 						</Message>
 					</MessageGroup>
 				</Card>
-				<Card raised className="gap-3 p-5">
+				<Card elevation="raised" className="gap-3 p-5">
 					<div className="text-sm font-medium">
 						How should the index rebalance?
 					</div>
@@ -257,7 +257,7 @@ export default function HeroField() {
 				</Card>
 			</Col>
 			<Col offset={90}>
-				<Card raised className="gap-4 p-5">
+				<Card elevation="raised" className="gap-4 p-5">
 					<div className="flex gap-2">
 						<Badge variant="brand">Live</Badge>
 						<Badge variant="outline">xStock</Badge>

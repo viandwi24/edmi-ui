@@ -180,7 +180,7 @@ const template = componentToString(config, ChartTooltipContent, {
 
 				<div>
 					<h2 class="mb-3 text-lg font-medium">Assets</h2>
-					<Card raised class="gap-4 px-6 py-2">
+					<Card elevation="raised" class="gap-4 px-6 py-2">
 						<Table>
 							<TableHeader>
 								<TableRow>
@@ -227,14 +227,14 @@ const template = componentToString(config, ChartTooltipContent, {
 				\************
 				/>
 
-				<Card raised class="gap-3 px-5">
+				<Card elevation="raised" class="gap-3 px-5">
 					<h2 class="text-sm font-semibold">Share</h2>
 					<div class="flex flex-wrap gap-2">
 						<Button v-for="s in shareActions" :key="s" variant="outline" elevation="raised" size="sm">{{ s }}</Button>
 					</div>
 				</Card>
 
-				<Card raised class="gap-3 px-5">
+				<Card elevation="raised" class="gap-3 px-5">
 					<h2 class="text-sm font-semibold">Created by</h2>
 					<div class="flex items-center gap-3">
 						<Avatar class="size-9">

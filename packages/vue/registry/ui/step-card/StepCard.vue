@@ -17,7 +17,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <Card :raised="raised" data-slot="step-card" :class="cn('gap-0 p-[18px]', props.class)">
+  <Card :elevation="raised ? 'raised' : undefined" data-slot="step-card" :class="cn('gap-0 p-[18px]', props.class)">
     <div class="flex items-center justify-between">
       <span class="font-mono text-xs text-muted-foreground">{{ index }}</span>
       <span class="text-muted-foreground">

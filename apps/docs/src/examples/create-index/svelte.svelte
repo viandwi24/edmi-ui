@@ -84,7 +84,7 @@
 		<div class="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_400px]">
 			<div class="flex min-w-0 flex-col gap-4">
 				<Tabs.Root value={step} onValueChange={(v) => (step = v as StepValue)}>
-					<Tabs.List variant="pills" raised class="flex-wrap">
+					<Tabs.List variant="pills" elevation="raised" class="flex-wrap">
 						{#each steps as s, i (s.value)}
 							<Tabs.Trigger value={s.value} class="gap-2">
 								<span class="inline-flex size-[18px] items-center justify-center rounded-full border border-border bg-muted font-mono text-[10.5px] text-muted-foreground">{i + 1}</span>
@@ -107,7 +107,7 @@
 						</InputGroup.Addon>
 						<InputGroup.Input placeholder="Search assets" aria-label="Search assets" bind:value={query} />
 					</InputGroup.Root>
-					<Card raised class="gap-0 px-6 py-0">
+					<Card elevation="raised" class="gap-0 px-6 py-0">
 						<ul>
 							{#each visible as a (a.symbol)}
 								<li class="border-b border-border-2 last:border-b-0">
@@ -139,7 +139,7 @@
 				{/if}
 
 				{#if step === "weights"}
-					<Card raised class="gap-4 px-6">
+					<Card elevation="raised" class="gap-4 px-6">
 						<div>
 							<h2 class="text-xl font-normal tracking-[-0.3px]">Weights</h2>
 							<p class="text-[13px] text-muted-foreground">
@@ -169,7 +169,7 @@
 				{/if}
 
 				{#if step === "strategy"}
-					<Card raised class="gap-5 px-6">
+					<Card elevation="raised" class="gap-5 px-6">
 						<h2 class="text-xl font-normal tracking-[-0.3px]">Strategy</h2>
 						<Field.Field>
 							<Field.Label for="rebalance">Rebalance</Field.Label>
@@ -206,7 +206,7 @@
 				{/if}
 
 				{#if step === "fees"}
-					<Card raised class="gap-5 px-6">
+					<Card elevation="raised" class="gap-5 px-6">
 						<h2 class="text-xl font-normal tracking-[-0.3px]">Fees</h2>
 						<div class="grid gap-5 sm:grid-cols-2">
 							<Field.Field>
@@ -234,7 +234,7 @@
 				{/if}
 
 				{#if step === "review"}
-					<Card raised class="gap-4 px-6">
+					<Card elevation="raised" class="gap-4 px-6">
 						<h2 class="text-xl font-normal tracking-[-0.3px]">Review</h2>
 						{#if selected.length}
 							<AllocationBar {segments} />
@@ -260,7 +260,7 @@
 				</div>
 			</div>
 
-			<Card raised class="gap-5 px-6">
+			<Card elevation="raised" class="gap-5 px-6">
 				<div class="flex items-start gap-4">
 					<span class="inline-flex size-[54px] shrink-0 items-center justify-center rounded-xl border border-border bg-muted font-mono text-lg">{(symbol || name || "").charAt(0)}</span>
 					<div class="min-w-0 flex-1">

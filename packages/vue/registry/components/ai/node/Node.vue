@@ -28,7 +28,7 @@ const handleClass = "size-2.5 rounded-full border-2 border-muted-foreground bg-c
   <Card
     data-slot="ai-node"
     :data-selected="props.selected ? '' : undefined"
-    :raised="props.raised"
+    :elevation="props.raised ? 'raised' : undefined"
     :class="cn(
       'relative size-full h-auto w-60 gap-0 overflow-visible rounded-[calc(var(--radius)*1.2)] py-0',
       'data-[selected]:border-ring data-[selected]:shadow-ring [.selected_&]:border-ring [.selected_&]:shadow-ring',

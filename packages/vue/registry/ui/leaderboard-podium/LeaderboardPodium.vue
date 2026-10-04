@@ -51,7 +51,7 @@ function sparkPoints(data: number[], width = 150, height = 34) {
     :class="cn('grid gap-4 lg:grid-cols-3', props.class)"
   >
     <li v-for="e in ordered" :key="e.rank">
-      <Card :raised="raised" class="h-full gap-0 p-6">
+      <Card :elevation="raised ? 'raised' : undefined" class="h-full gap-0 p-6">
         <div class="flex items-center justify-between text-[13px]">
           <span class="font-medium">No. {{ e.rank }}</span>
           <span v-if="e.creator" class="font-mono text-xs text-muted-foreground">{{ e.creator }}</span>
@@ -124,7 +124,7 @@ function sparkPoints(data: number[], width = 150, height = 34) {
   </ol>
   <ol v-else data-slot="leaderboard-podium" :class="cn('flex items-start gap-3', props.class)">
     <li v-for="e in ordered" :key="e.rank" :class="cn('w-[200px]', e.rank !== 1 && 'mt-6')">
-      <Card :raised="raised" size="sm" class="items-center gap-0 p-[18px] text-center">
+      <Card :elevation="raised ? 'raised' : undefined" size="sm" class="items-center gap-0 p-[18px] text-center">
         <Badge shape="number" :variant="e.rank === 1 ? 'warning' : 'secondary'" class="rounded-full">
           #{{ e.rank }}
         </Badge>

@@ -35,7 +35,7 @@ export default function ThemesExample() {
 					<p className="max-w-2xl text-muted-foreground">{intro.body}</p>
 				</div>
 
-				<Card raised className="gap-5 p-6">
+				<Card elevation="raised" className="gap-5 p-6">
 					<div className="grid gap-5 sm:grid-cols-2">
 						{controls.map((c) => (
 							<div key={c.key} className="flex flex-col gap-2">
@@ -70,7 +70,10 @@ export default function ThemesExample() {
 					className={`${s.mode === "dark" ? "dark " : "edmi-light "}rounded-xl border border-border bg-background p-4 text-foreground sm:p-6`}
 				>
 					<div className="grid gap-4 md:grid-cols-2">
-						<Card raised={raised} className="gap-4 px-5">
+						<Card
+							elevation={raised ? "raised" : undefined}
+							className="gap-4 px-5"
+						>
 							<div className="flex items-center justify-between">
 								<span className="text-lg font-medium">
 									{preview.name} · {s.base}·{s.theme}
@@ -78,7 +81,7 @@ export default function ThemesExample() {
 								<Badge variant="success">Live</Badge>
 							</div>
 							<Tabs defaultValue="nav">
-								<TabsList raised={raised}>
+								<TabsList elevation={raised ? "raised" : undefined}>
 									{preview.tabs.map((t) => (
 										<TabsTrigger key={t.value} value={t.value}>
 											{t.label}
@@ -122,7 +125,10 @@ export default function ThemesExample() {
 							</div>
 						</Card>
 
-						<Card raised={raised} className="gap-4 px-5">
+						<Card
+							elevation={raised ? "raised" : undefined}
+							className="gap-4 px-5"
+						>
 							<div className="flex flex-wrap gap-2">
 								{preview.variants.map((v) => (
 									<Button

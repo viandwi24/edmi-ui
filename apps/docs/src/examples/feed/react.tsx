@@ -58,7 +58,7 @@ export default function FeedExample() {
 					</ToggleGroup>
 				</div>
 
-				<Card raised className="gap-0 p-0">
+				<Card elevation="raised" className="gap-0 p-0">
 					<Textarea
 						value={draft}
 						maxLength={maxChars}
@@ -82,7 +82,7 @@ export default function FeedExample() {
 
 				{view === "all"
 					? posts.map((p) => (
-							<FeedPost key={p.id} raised>
+							<FeedPost key={p.id} elevation="raised">
 								<FeedPostHeader
 									name={p.name}
 									handle={p.handle}
@@ -134,7 +134,7 @@ export default function FeedExample() {
 						))
 					: null}
 
-				<Card raised className="gap-0 p-0">
+				<Card elevation="raised" className="gap-0 p-0">
 					<ul className="px-6">
 						{updates.map((u) => (
 							<li

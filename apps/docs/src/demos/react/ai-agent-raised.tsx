@@ -23,7 +23,7 @@ const postFeed = {
 
 export default function Demo() {
 	return (
-		<Agent className="max-w-lg" raised>
+		<Agent className="max-w-lg" elevation="raised">
 			<AgentHeader name="Keeper agent" model="claude-opus" />
 			<AgentContent>
 				<AgentInstructions>

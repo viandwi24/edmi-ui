@@ -69,7 +69,7 @@
 		</div>
 
 		<div class="grid items-stretch gap-6 lg:grid-cols-[minmax(0,1fr)_2fr]">
-			<Card raised class="gap-3 px-6">
+			<Card elevation="raised" class="gap-3 px-6">
 				<div class="flex items-end justify-between">
 					<span class="text-[13px] text-muted-foreground">Level</span>
 					<span class="text-[34px] leading-none font-light">{profile.level}</span>
@@ -77,7 +77,7 @@
 				<Progress.Root value={progress} variant="brand" aria-label="Level progress" />
 				<div class="text-[13px] text-muted-foreground">{profile.xp} XP · next level at {profile.nextLevelXp}</div>
 			</Card>
-			<Card raised class="gap-3 px-6">
+			<Card elevation="raised" class="gap-3 px-6">
 				<span class="text-[13px] text-muted-foreground">Badges</span>
 				<div class="flex flex-wrap gap-2">
 					{#each profile.badges as b (b)}
@@ -87,7 +87,7 @@
 			</Card>
 		</div>
 
-		<Card raised class="gap-4 px-6">
+		<Card elevation="raised" class="gap-4 px-6">
 			<h2 class="text-xl font-normal tracking-[-0.3px]">Indexes created</h2>
 			<Table.Root>
 				<Table.Header>
@@ -116,7 +116,7 @@
 			</Table.Root>
 		</Card>
 
-		<Card raised class="gap-4 px-6">
+		<Card elevation="raised" class="gap-4 px-6">
 			<h2 class="text-xl font-normal tracking-[-0.3px]">Positions</h2>
 			<Table.Root>
 				<Table.Header>

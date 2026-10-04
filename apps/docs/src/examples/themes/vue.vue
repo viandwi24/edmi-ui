@@ -29,7 +29,7 @@ const code = computed(() => snippet(s));
 				<p class="max-w-2xl text-muted-foreground">{{ intro.body }}</p>
 			</div>
 
-			<Card raised class="gap-5 p-6">
+			<Card elevation="raised" class="gap-5 p-6">
 				<div class="grid gap-5 sm:grid-cols-2">
 					<div v-for="c in controls" :key="c.key" class="flex flex-col gap-2">
 						<div class="flex items-baseline gap-2">
@@ -57,13 +57,13 @@ const code = computed(() => snippet(s));
 				:class="`${s.mode === 'dark' ? 'dark ' : 'edmi-light '}rounded-xl border border-border bg-background p-4 text-foreground sm:p-6`"
 			>
 				<div class="grid gap-4 md:grid-cols-2">
-					<Card :raised="raised" class="gap-4 px-5">
+					<Card :elevation="raised ? 'raised' : undefined" class="gap-4 px-5">
 						<div class="flex items-center justify-between">
 							<span class="text-lg font-medium">{{ preview.name }} · {{ s.base }}·{{ s.theme }}</span>
 							<Badge variant="success">Live</Badge>
 						</div>
 						<Tabs default-value="nav">
-							<TabsList :raised="raised">
+							<TabsList :elevation="raised ? 'raised' : undefined">
 								<TabsTrigger v-for="t in preview.tabs" :key="t.value" :value="t.value">{{ t.label }}</TabsTrigger>
 							</TabsList>
 						</Tabs>
@@ -84,7 +84,7 @@ const code = computed(() => snippet(s));
 						</div>
 					</Card>
 
-					<Card :raised="raised" class="gap-4 px-5">
+					<Card :elevation="raised ? 'raised' : undefined" class="gap-4 px-5">
 						<div class="flex flex-wrap gap-2">
 							<Button v-for="v in preview.variants" :key="v" :elevation="raised ? 'raised' : undefined" :variant="v" size="sm">{{ v }}</Button>
 						</div>

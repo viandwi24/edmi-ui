@@ -51,7 +51,7 @@ const draft = ref("");
 				</ToggleGroup>
 			</div>
 
-			<Card raised class="gap-0 p-0">
+			<Card elevation="raised" class="gap-0 p-0">
 				<Textarea
 					v-model="draft"
 					:maxlength="maxChars"
@@ -81,7 +81,7 @@ const draft = ref("");
 				</FeedPost>
 			</template>
 
-			<Card raised class="gap-0 p-0">
+			<Card elevation="raised" class="gap-0 p-0">
 				<ul class="px-6">
 					<li v-for="u in updates" :key="u.id" class="flex items-center gap-3 border-b border-border-2 py-4">
 						<span class="inline-flex size-10 shrink-0 items-center justify-center rounded-full border border-border bg-muted font-mono text-xs">{{ u.initial }}</span>

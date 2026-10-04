@@ -86,7 +86,7 @@ function JoinPanel({
 		<Card
 			data-slot="join-panel"
 			size="sm"
-			raised={raised}
+			elevation={raised ? "raised" : undefined}
 			className={cn("w-80 gap-0", className)}
 			{...props}
 		>
@@ -99,7 +99,10 @@ function JoinPanel({
 							onTabChange?.(v as string);
 						}}
 					>
-						<TabsList raised={raised} className="w-full">
+						<TabsList
+							elevation={raised ? "raised" : undefined}
+							className="w-full"
+						>
 							{tabs.map((t) => (
 								<TabsTrigger key={t.value} value={t.value}>
 									{t.label}

@@ -84,7 +84,7 @@ export default function EditorialDarkExample() {
 							{hero.title}
 						</h1>
 						<p className="text-xl text-muted-foreground">{hero.lead}</p>
-						<Card raised className="w-full gap-3 p-7">
+						<Card elevation="raised" className="w-full gap-3 p-7">
 							<Button elevation="raised" variant="secondary" size="lg">
 								{hero.wallet}
 							</Button>
@@ -103,7 +103,7 @@ export default function EditorialDarkExample() {
 						</Button>
 					</div>
 					<Card
-						raised
+						elevation="raised"
 						className="items-center justify-center p-6 sm:p-12 lg:min-h-[620px]"
 					>
 						<Card className="w-full max-w-[420px] gap-4 p-7">
@@ -159,7 +159,7 @@ export default function EditorialDarkExample() {
 						{plans.items.map((p) => (
 							<PricingPlan
 								key={p.name}
-								raised
+								elevation="raised"
 								name={p.name}
 								tagline={p.tagline}
 								price={p.price}
@@ -190,7 +190,7 @@ export default function EditorialDarkExample() {
 				</section>
 
 				<SiteFooter
-					raised
+					elevation="raised"
 					brand={<SiteHeaderBrand raised />}
 					description={footer.description}
 					columns={footer.columns}

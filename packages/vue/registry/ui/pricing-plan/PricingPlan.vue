@@ -25,7 +25,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <Card :raised="raised" data-slot="pricing-plan" :class="cn('gap-0 p-6', props.class)">
+  <Card :elevation="raised ? 'raised' : undefined" data-slot="pricing-plan" :class="cn('gap-0 p-6', props.class)">
     <div class="text-[22px] font-semibold">{{ name }}</div>
     <div v-if="tagline" class="mt-1 text-[13.5px] text-muted-foreground">{{ tagline }}</div>
     <div v-if="price" class="mt-[22px] text-[22px] font-semibold">{{ price }}</div>

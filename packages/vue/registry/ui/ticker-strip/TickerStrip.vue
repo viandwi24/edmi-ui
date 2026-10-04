@@ -18,7 +18,7 @@ const cell = 'block min-w-[150px] flex-1 px-[18px] py-3.5 not-first:border-l not
 
 <template>
   <!-- Horizontal row of price cells (avatar + symbol, mono price, up/down change). -->
-  <Card :raised="raised" data-slot="ticker-strip" :class="cn('flex-row gap-0 overflow-x-auto p-0', props.class)">
+  <Card :elevation="raised ? 'raised' : undefined" data-slot="ticker-strip" :class="cn('flex-row gap-0 overflow-x-auto p-0', props.class)">
     <component
       :is="item.href ? 'a' : 'div'"
       v-for="item in items"

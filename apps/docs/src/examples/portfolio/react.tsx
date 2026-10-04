@@ -74,7 +74,7 @@ export default function PortfolioExample() {
 				</div>
 
 				<div className="grid items-stretch gap-6 lg:grid-cols-[1.4fr_1fr_1fr]">
-					<Card raised className="gap-1.5 px-7">
+					<Card elevation="raised" className="gap-1.5 px-7">
 						<div className="text-[13px] text-muted-foreground">Total value</div>
 						<div className="text-[56px] leading-none font-light tracking-[-2px]">
 							{totals.value}
@@ -90,7 +90,7 @@ export default function PortfolioExample() {
 						</div>
 					</Card>
 					{[totals.usdc, totals.sol].map((t, i) => (
-						<Card key={t.value} raised className="gap-1 px-6">
+						<Card key={t.value} elevation="raised" className="gap-1 px-6">
 							<div className="text-[13px] text-muted-foreground">
 								{i === 0 ? "USDC" : "SOL"}
 							</div>
@@ -102,7 +102,7 @@ export default function PortfolioExample() {
 					))}
 				</div>
 
-				<Card raised className="gap-4 px-6">
+				<Card elevation="raised" className="gap-4 px-6">
 					<CardTop title="Positions" action="Redeem all" />
 					<Table>
 						<TableHeader>
@@ -160,7 +160,7 @@ export default function PortfolioExample() {
 				</Card>
 
 				<div className="grid items-start gap-6 lg:grid-cols-2">
-					<Card raised className="gap-3 px-6">
+					<Card elevation="raised" className="gap-3 px-6">
 						<CardTop title="Loose assets" action="Swap all to USDC" />
 						<p className="text-[13px] leading-relaxed text-muted-foreground">
 							Assets in your wallet that are not in any index, worth about{" "}
@@ -187,7 +187,7 @@ export default function PortfolioExample() {
 						</ul>
 					</Card>
 
-					<Card raised className="gap-3 px-6">
+					<Card elevation="raised" className="gap-3 px-6">
 						<CardTop title="Your indexes" action="Create index" />
 						<ul>
 							{yourIndexes.map((x) => (

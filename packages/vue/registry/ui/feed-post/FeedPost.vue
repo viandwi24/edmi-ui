@@ -11,7 +11,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <Card :raised="raised" data-slot="feed-post" :class="cn('gap-0 px-[18px] py-[18px]', props.class)">
+  <Card :elevation="raised ? 'raised' : undefined" data-slot="feed-post" :class="cn('gap-0 px-[18px] py-[18px]', props.class)">
     <slot />
   </Card>
 </template>

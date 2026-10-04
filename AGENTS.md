@@ -147,10 +147,10 @@ Replaces the old boolean `raised` (removed everywhere, no alias; user decision 2
 | Pagination | control (F) | F R | active link |
 | Calendar, RangeCalendar, DatePicker | handle (R) / overlay | F R X | selected day (R); elevation sits on the shell (popover/card), never the day grid |
 | Card | surface (R) | S F R X | the card; a nested card drops to F |
-| InsetPanel | surface body (R), shell container (F) | S F R X | R = body plate bevels; X = shell also gets the drop |
+| InsetPanel | surface body (R), shell container (F) | S F R X | R = body plate bevels; X = shell also gets the drop; the panel hands its level to `InsetPanelBody` through its own context (`inset-panel/context.ts` in Vue/Svelte) |
 | EmptyMedia | handle (R) | F R X | the media tile |
 | Choice card (FieldLabel card, radio/checkbox card, Questionnaire options, layout-picker) | control/surface | F R | the checked card; `elevation` on Questionnaire applies to every option |
-| Popover, Dialog, AlertDialog, DropdownMenu content, Select menu | overlay (X) | F R X | the popup; explicit prop wins |
+| Popover, Dialog, AlertDialog, DropdownMenu content, ContextMenu content, Select menu (`SelectContent`) | overlay (X) | F R X | the popup; explicit prop wins; Menubar menus follow `DropdownMenuContent` |
 | Toast (Sonner) | container (F), natural X | F R X | `<Toaster elevation>` adds classes to `toastOptions.classNames.toast` |
 | Alert, Tooltip | container (F) | F | flat only (soft fill + tinted border) |
 | Menubar | control (F) | F R | the bar |
@@ -331,6 +331,7 @@ Environment and process
 
 Spec and design
 - **Elevation v4 (handoff `refs/edmi-ui-update-4`, 2026-10-04): the boolean `raised` is removed without alias** (user decision) and replaced by the enum `elevation="auto|sunken|flat|raised|floating"` on every component that can take depth. Why an enum: four levels (sunken -1, flat 0, raised +1, floating +2) and an `auto` that resolves through a scope; booleans cannot express that. Layered mode is an `ElevationProvider` (registry item `elevation`, context per framework that also renders `data-elevation`), role defaults come from `ROLE_LEVEL`/`resolveElevation` (copied from the recipes), nesting drops a surface inside a raised/floating surface to flat. Hard lips are replaced by the bevel model; dark ladder B applies to the stone base; legacy lip/edge/shade tokens stay for the example pages only. Breaking => changeset minor (0.x) with a migration note. Supersedes the "Menubar raised" and "raised" lines below.
+- Elevation v4 W2 (display, overlays, navigation): Card/InsetPanel/EmptyMedia/Popover/Dialog/AlertDialog/DropdownMenu/ContextMenu/Select content/Sonner/Tabs/Pagination/Menubar take `elevation`. Pattern and AI items that only forward `raised` to a Card keep their own legacy boolean `raised` in Vue/Svelte (forwarded as `elevation="raised"`); in React their props now come straight from Card, so React demos use `elevation`. The patterns/AI wave unifies them. Why: stay inside the display/overlays/navigation scope.
 - Design changes come only from a handoff document exported from the design app into `refs/*`; no in-repo redesigns (e.g. the proposed InsetPanel raised-body "elevation scale" was cancelled for this reason). Why: user decision, keeps code and design app in sync.
 - Binding spec is `refs/edmi-ui` v2 (flat by default, `raised` opt-in, control height `h-9`). Why: user replaced the spec; the new DESIGN.md has no distribution section, so the registry distribution below stays unchanged.
 - Flat default is a default-look change ⇒ minor while 0.x. Ghost/link/Tabs-line never raised.

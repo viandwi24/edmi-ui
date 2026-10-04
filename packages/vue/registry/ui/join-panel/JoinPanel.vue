@@ -80,10 +80,10 @@ function onInput(e: Event) {
 
 <template>
   <!-- Amount field (mono, Max button, currency) + summary rows + one big action. -->
-  <Card :raised="raised" data-slot="join-panel" size="sm" :class="cn('w-80 gap-0', props.class)">
+  <Card :elevation="raised ? 'raised' : undefined" data-slot="join-panel" size="sm" :class="cn('w-80 gap-0', props.class)">
     <div v-if="tabs?.length" class="mb-5 px-(--card-spacing)">
       <Tabs v-model="tabValue">
-        <TabsList :raised="raised" class="w-full">
+        <TabsList :elevation="raised ? 'raised' : undefined" class="w-full">
           <TabsTrigger v-for="t in tabs" :key="t.value" :value="t.value">
             {{ t.label }}
           </TabsTrigger>

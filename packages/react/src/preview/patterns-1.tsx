@@ -204,7 +204,7 @@ export default function Patterns1Preview() {
 				/>
 				<div className="flex flex-wrap items-start gap-4">
 					<StatTile
-						raised
+						elevation="raised"
 						label="AUM"
 						value="$49,182"
 						delta="+37%"

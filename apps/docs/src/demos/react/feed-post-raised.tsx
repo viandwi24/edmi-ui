@@ -11,7 +11,7 @@ import { IconPlaceholder } from "@/edmi/icon-placeholder";
 
 export default function Demo() {
 	return (
-		<FeedPost raised className="w-[460px] max-w-full">
+		<FeedPost elevation="raised" className="w-[460px] max-w-full">
 			<FeedPostHeader
 				name="Dewi Lestari"
 				handle="@dewi"

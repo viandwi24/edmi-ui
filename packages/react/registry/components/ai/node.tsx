@@ -23,7 +23,7 @@ export type NodeProps = ComponentProps<typeof Card> & {
 	selected?: boolean;
 };
 
-/** Workflow step built on Card: target handle on the left, source handle on the right. Flat by default, `raised` ✦ for the one-step 3D card. */
+/** Workflow step built on Card: target handle on the left, source handle on the right. Flat by default, `elevation` ✦ is forwarded to the card. */
 export const Node = ({
 	handles,
 	selected,

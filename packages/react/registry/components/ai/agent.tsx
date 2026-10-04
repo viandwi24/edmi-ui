@@ -20,17 +20,14 @@ const LABEL =
 
 export type AgentProps = ComponentProps<typeof Card>;
 
-/** An agent's configuration at a glance. Built on the ui card; `raised` ✦ gives the one-step 3D look. */
-export const Agent = memo(
-	({ className, raised = false, ...props }: AgentProps) => (
-		<Card
-			data-slot="ai-agent"
-			className={cn("not-prose w-full gap-0 py-0", className)}
-			raised={raised}
-			{...props}
-		/>
-	),
-);
+/** An agent's configuration at a glance. Built on the ui card; `elevation` ✦ is forwarded to the card. */
+export const Agent = memo(({ className, ...props }: AgentProps) => (
+	<Card
+		data-slot="ai-agent"
+		className={cn("not-prose w-full gap-0 py-0", className)}
+		{...props}
+	/>
+));
 
 export type AgentHeaderProps = ComponentProps<"div"> & {
 	name: string;

@@ -237,7 +237,7 @@ export default function IndexDetailExample() {
 
 					<div>
 						<h2 className="mb-3 text-lg font-medium">Assets</h2>
-						<Card raised className="gap-4 px-6 py-2">
+						<Card elevation="raised" className="gap-4 px-6 py-2">
 							<Table>
 								<TableHeader>
 									<TableRow>
@@ -298,7 +298,7 @@ export default function IndexDetailExample() {
 						footnote="Self-custodied · Redeem anytime"
 					/>
 
-					<Card raised className="gap-3 px-5">
+					<Card elevation="raised" className="gap-3 px-5">
 						<h2 className="text-sm font-semibold">Share</h2>
 						<div className="flex flex-wrap gap-2">
 							{shareActions.map((s) => (
@@ -309,7 +309,7 @@ export default function IndexDetailExample() {
 						</div>
 					</Card>
 
-					<Card raised className="gap-3 px-5">
+					<Card elevation="raised" className="gap-3 px-5">
 						<h2 className="text-sm font-semibold">Created by</h2>
 						<div className="flex items-center gap-3">
 							<Avatar className="size-9">

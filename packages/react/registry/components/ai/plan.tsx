@@ -20,6 +20,7 @@ import {
 	CollapsibleContent,
 	CollapsibleTrigger,
 } from "@/registry/edmi/ui/collapsible";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
 
 interface PlanContextValue {
 	isStreaming: boolean;
@@ -37,14 +38,14 @@ const usePlan = () => {
 
 export type PlanProps = Omit<ComponentProps<typeof Collapsible>, "render"> & {
 	isStreaming?: boolean;
-	/** ✦ one-step 3D look on the card. */
-	raised?: boolean;
+	/** ✦ depth of the card (sunken -1, flat 0, raised +1, floating +2). */
+	elevation?: Elevation;
 };
 
 export const Plan = ({
 	className,
 	isStreaming = false,
-	raised = false,
+	elevation,
 	children,
 	...props
 }: PlanProps) => {
@@ -57,7 +58,7 @@ export const Plan = ({
 				render={
 					<Card
 						className={cn("gap-0 py-0 [--card-spacing:16px]", className)}
-						raised={raised}
+						elevation={elevation}
 					/>
 				}
 				{...props}

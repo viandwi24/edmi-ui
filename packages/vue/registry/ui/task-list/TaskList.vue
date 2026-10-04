@@ -35,7 +35,7 @@ const groups = computed(() => {
 </script>
 
 <template>
-  <Card :raised="raised" data-slot="task-list" :class="cn('gap-0 px-[18px] py-4', props.class)">
+  <Card :elevation="raised ? 'raised' : undefined" data-slot="task-list" :class="cn('gap-0 px-[18px] py-4', props.class)">
     <template v-for="(g, gi) in groups" :key="g.status">
       <Separator v-if="gi > 0" class="my-3" />
       <div data-slot="task-group" :data-status="g.status">

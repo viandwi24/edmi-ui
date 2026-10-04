@@ -97,7 +97,11 @@ export default function CreateIndexExample() {
 				<div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_400px]">
 					<div className="flex min-w-0 flex-col gap-4">
 						<Tabs value={step} onValueChange={(v) => setStep(v as StepValue)}>
-							<TabsList variant="pills" raised className="flex-wrap">
+							<TabsList
+								variant="pills"
+								elevation="raised"
+								className="flex-wrap"
+							>
 								{steps.map((s, i) => (
 									<TabsTrigger key={s.value} value={s.value} className="gap-2">
 										<span className="inline-flex size-[18px] items-center justify-center rounded-full border border-border bg-muted font-mono text-[10.5px] text-muted-foreground">
@@ -128,7 +132,7 @@ export default function CreateIndexExample() {
 										onChange={(e) => setQuery(e.target.value)}
 									/>
 								</InputGroup>
-								<Card raised className="gap-0 px-6 py-0">
+								<Card elevation="raised" className="gap-0 px-6 py-0">
 									<ul>
 										{visible.map((a) => (
 											<li
@@ -181,7 +185,7 @@ export default function CreateIndexExample() {
 						) : null}
 
 						{step === "weights" ? (
-							<Card raised className="gap-4 px-6">
+							<Card elevation="raised" className="gap-4 px-6">
 								<div>
 									<h2 className="text-xl font-normal tracking-[-0.3px]">
 										Weights
@@ -222,7 +226,7 @@ export default function CreateIndexExample() {
 						) : null}
 
 						{step === "strategy" ? (
-							<Card raised className="gap-5 px-6">
+							<Card elevation="raised" className="gap-5 px-6">
 								<h2 className="text-xl font-normal tracking-[-0.3px]">
 									Strategy
 								</h2>
@@ -278,7 +282,7 @@ export default function CreateIndexExample() {
 						) : null}
 
 						{step === "fees" ? (
-							<Card raised className="gap-5 px-6">
+							<Card elevation="raised" className="gap-5 px-6">
 								<h2 className="text-xl font-normal tracking-[-0.3px]">Fees</h2>
 								<div className="grid gap-5 sm:grid-cols-2">
 									<Field>
@@ -322,7 +326,7 @@ export default function CreateIndexExample() {
 						) : null}
 
 						{step === "review" ? (
-							<Card raised className="gap-4 px-6">
+							<Card elevation="raised" className="gap-4 px-6">
 								<h2 className="text-xl font-normal tracking-[-0.3px]">
 									Review
 								</h2>
@@ -382,7 +386,7 @@ export default function CreateIndexExample() {
 						</div>
 					</div>
 
-					<Card raised className="gap-5 px-6">
+					<Card elevation="raised" className="gap-5 px-6">
 						<div className="flex items-start gap-4">
 							<span className="inline-flex size-[54px] shrink-0 items-center justify-center rounded-xl border border-border bg-muted font-mono text-lg">
 								{(symbol || name || "").charAt(0)}

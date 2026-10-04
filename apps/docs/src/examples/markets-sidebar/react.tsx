@@ -291,7 +291,7 @@ export default function MarketsSidebarExample() {
 
 					<TickerStrip raised items={tickers} />
 
-					<Card raised className="gap-4 px-6">
+					<Card elevation="raised" className="gap-4 px-6">
 						<CardTop title="Top indexes" action="View all" />
 						<Table>
 							<TableHeader>
@@ -306,7 +306,7 @@ export default function MarketsSidebarExample() {
 					</Card>
 
 					<div className="grid items-start gap-6 lg:grid-cols-3">
-						<Card raised className="@container gap-4 px-6">
+						<Card elevation="raised" className="@container gap-4 px-6">
 							<CardTop title="Human vs AI" />
 							<div className="grid gap-3 @[400px]:grid-cols-2">
 								<Mini {...humanVsAi.human} />
@@ -314,7 +314,7 @@ export default function MarketsSidebarExample() {
 							</div>
 						</Card>
 
-						<Card raised className="gap-3 px-6">
+						<Card elevation="raised" className="gap-3 px-6">
 							<CardTop title="Top creators" action="See all" />
 							<ul>
 								{creators.map((c) => (
@@ -346,7 +346,7 @@ export default function MarketsSidebarExample() {
 							</ul>
 						</Card>
 
-						<Card raised className="gap-3 px-6">
+						<Card elevation="raised" className="gap-3 px-6">
 							<CardTop title="Latest activity" />
 							<ul>
 								{activity.map((a) => (

@@ -4,7 +4,7 @@ import { Button } from "@edmi-react/ui/button";
 export default function Demo() {
 	return (
 		<PricingPlan
-			raised
+			elevation="raised"
 			className="w-[300px] max-w-full"
 			name="Creator"
 			tagline="Launch your own index"

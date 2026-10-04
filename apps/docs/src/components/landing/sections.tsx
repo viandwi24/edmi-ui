@@ -128,7 +128,10 @@ export function LiveBar() {
 				value={raised ? "raised" : "flat"}
 				onValueChange={(v) => setRaised(v === "raised")}
 			>
-				<TabsList aria-label="Preview style" raised={raised}>
+				<TabsList
+					aria-label="Preview style"
+					elevation={raised ? "raised" : undefined}
+				>
 					<TabsTrigger value="flat" className="h-[30px] px-3">
 						Flat
 					</TabsTrigger>
@@ -195,7 +198,10 @@ export function ThemeScopes() {
 					data-theme={m.theme}
 					className={`${m.mode} contents`}
 				>
-					<Card raised className="gap-3 bg-background p-4 text-foreground">
+					<Card
+						elevation="raised"
+						className="gap-3 bg-background p-4 text-foreground"
+					>
 						<div className="flex items-center justify-between">
 							<span className="text-[13px] font-semibold">{m.label}</span>
 							<Badge variant="brand" shape="pill">

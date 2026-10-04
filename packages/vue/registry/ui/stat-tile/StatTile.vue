@@ -28,7 +28,7 @@ const down = computed(() =>
 
 <template>
   <!-- KPI tile: label, mono value, delta badge (+ optional meter). Delta direction comes from its sign. -->
-  <Card :raised="raised" data-slot="stat-tile" :class="cn('w-60 gap-0 px-5 py-[18px]', props.class)">
+  <Card :elevation="raised ? 'raised' : undefined" data-slot="stat-tile" :class="cn('w-60 gap-0 px-5 py-[18px]', props.class)">
     <div class="text-[13px] text-muted-foreground">
       <slot name="label">{{ label }}</slot>
     </div>

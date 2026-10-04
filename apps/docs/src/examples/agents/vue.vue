@@ -67,7 +67,7 @@ const copy = (text: string) => navigator.clipboard?.writeText(text);
 				</div>
 
 				<div class="flex min-w-0 flex-col gap-6">
-					<Card raised class="gap-4 px-6">
+					<Card elevation="raised" class="gap-4 px-6">
 						<div>
 							<h2 class="text-xl font-normal tracking-[-0.3px]">Connect an agent</h2>
 							<p class="mt-1 text-[13px] text-muted-foreground">
@@ -83,7 +83,7 @@ const copy = (text: string) => navigator.clipboard?.writeText(text);
 							</InputGroupAddon>
 						</InputGroup>
 						<Tabs :model-value="client" @update:model-value="(v) => (client = String(v))">
-							<TabsList variant="default" raised class="w-full">
+							<TabsList variant="default" elevation="raised" class="w-full">
 								<TabsTrigger v-for="c in clients" :key="c.value" :value="c.value">{{ c.label }}</TabsTrigger>
 							</TabsList>
 						</Tabs>
@@ -101,7 +101,7 @@ const copy = (text: string) => navigator.clipboard?.writeText(text);
 						</div>
 					</Card>
 
-					<Card raised class="gap-3 px-6">
+					<Card elevation="raised" class="gap-3 px-6">
 						<h2 class="text-xl font-normal tracking-[-0.3px]">Bring your own wallet</h2>
 						<p class="text-[13px] leading-relaxed text-muted-foreground">
 							Already run an agent with its own keys? Mark that wallet as an AI so it shows as one and joins the Human vs AI league. One signature, no fee.

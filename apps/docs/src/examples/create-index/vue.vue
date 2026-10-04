@@ -85,7 +85,7 @@ function go(delta: number) {
 			<div class="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_400px]">
 				<div class="flex min-w-0 flex-col gap-4">
 					<Tabs :model-value="step" @update:model-value="(v) => (step = v as StepValue)">
-						<TabsList variant="pills" raised class="flex-wrap">
+						<TabsList variant="pills" elevation="raised" class="flex-wrap">
 							<TabsTrigger v-for="(s, i) in steps" :key="s.value" :value="s.value" class="gap-2">
 								<span class="inline-flex size-[18px] items-center justify-center rounded-full border border-border bg-muted font-mono text-[10.5px] text-muted-foreground">{{ i + 1 }}</span>
 								{{ s.label }}
@@ -100,7 +100,7 @@ function go(delta: number) {
 							</InputGroupAddon>
 							<InputGroupInput v-model="query" placeholder="Search assets" aria-label="Search assets" />
 						</InputGroup>
-						<Card raised class="gap-0 px-6 py-0">
+						<Card elevation="raised" class="gap-0 px-6 py-0">
 							<ul>
 								<li v-for="a in visible" :key="a.symbol" class="border-b border-border-2 last:border-b-0">
 									<label :for="`asset-${a.symbol}`" class="flex cursor-pointer items-center gap-3.5 py-3.5">
@@ -129,7 +129,7 @@ function go(delta: number) {
 						</Card>
 					</template>
 
-					<Card v-if="step === 'weights'" raised class="gap-4 px-6">
+					<Card v-if="step === 'weights'" elevation="raised" class="gap-4 px-6">
 						<div>
 							<h2 class="text-xl font-normal tracking-[-0.3px]">Weights</h2>
 							<p class="text-[13px] text-muted-foreground">
@@ -151,7 +151,7 @@ function go(delta: number) {
 						</ul>
 					</Card>
 
-					<Card v-if="step === 'strategy'" raised class="gap-5 px-6">
+					<Card v-if="step === 'strategy'" elevation="raised" class="gap-5 px-6">
 						<h2 class="text-xl font-normal tracking-[-0.3px]">Strategy</h2>
 						<Field>
 							<FieldLabel for="rebalance">Rebalance</FieldLabel>
@@ -183,7 +183,7 @@ function go(delta: number) {
 						</Field>
 					</Card>
 
-					<Card v-if="step === 'fees'" raised class="gap-5 px-6">
+					<Card v-if="step === 'fees'" elevation="raised" class="gap-5 px-6">
 						<h2 class="text-xl font-normal tracking-[-0.3px]">Fees</h2>
 						<div class="grid gap-5 sm:grid-cols-2">
 							<Field>
@@ -209,7 +209,7 @@ function go(delta: number) {
 						</Field>
 					</Card>
 
-					<Card v-if="step === 'review'" raised class="gap-4 px-6">
+					<Card v-if="step === 'review'" elevation="raised" class="gap-4 px-6">
 						<h2 class="text-xl font-normal tracking-[-0.3px]">Review</h2>
 						<AllocationBar v-if="selected.length" :segments="segments" />
 						<p v-else class="text-sm text-muted-foreground">No assets picked yet.</p>
@@ -229,7 +229,7 @@ function go(delta: number) {
 					</div>
 				</div>
 
-				<Card raised class="gap-5 px-6">
+				<Card elevation="raised" class="gap-5 px-6">
 					<div class="flex items-start gap-4">
 						<span class="inline-flex size-[54px] shrink-0 items-center justify-center rounded-xl border border-border bg-muted font-mono text-lg">{{ (symbol || name || "").charAt(0) }}</span>
 						<div class="min-w-0 flex-1">
