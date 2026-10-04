@@ -12,6 +12,7 @@
 		title = "Choose your layout",
 		description = "You can switch any time.",
 		defaultOpen,
+		defaultValue = "dashboard",
 		onValueChange,
 		onClose,
 		raised = false,
@@ -21,6 +22,8 @@
 		description?: string;
 		/** Skip the cookie check and show immediately (docs/previews). */
 		defaultOpen?: boolean;
+		/** Initially selected layout. */
+		defaultValue?: Layout;
 		onValueChange?: (value: Layout) => void;
 		onClose?: () => void;
 		/** ✦ opt-in one-step 3D look (toast + option cards). */
@@ -30,7 +33,8 @@
 	// First-visit corner toast. Renders nothing once a layout cookie exists. Choosing saves the cookie;
 	// closing without choosing saves the default (`dashboard`) so it does not return.
 	let open = $state(false);
-	let value = $state<Layout>("dashboard");
+	// svelte-ignore state_referenced_locally
+	let value = $state<Layout>(defaultValue);
 
 	$effect(() => {
 		open = defaultOpen ?? getLayoutCookie() === undefined;

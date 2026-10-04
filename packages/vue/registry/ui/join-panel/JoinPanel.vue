@@ -65,6 +65,17 @@ const tabValue = computed({
 const amount = defineModel<string>('amount')
 const value = computed(() => amount.value ?? props.defaultAmount)
 const id = useId()
+
+// Digits, thousands separators and a decimal point only.
+function sanitize(v: string) {
+  return v.replace(/[^\d.,]/g, '')
+}
+function onInput(e: Event) {
+  const el = e.target as HTMLInputElement
+  const clean = sanitize(el.value)
+  if (clean !== el.value)
+    el.value = clean
+}
 </script>
 
 <template>
@@ -90,7 +101,8 @@ const id = useId()
           autocomplete="off"
           :model-value="value"
           :class="cn('font-mono', amountSize === 'lg' ? 'text-[26px]' : 'text-[17px]')"
-          @update:model-value="(v: string | number) => (amount = String(v))"
+          @input="onInput"
+          @update:model-value="(v: string | number) => (amount = sanitize(String(v)))"
         />
         <InputGroupAddon align="inline-end">
           <InputGroupText v-if="maxLabel" class="bg-transparent text-xs">

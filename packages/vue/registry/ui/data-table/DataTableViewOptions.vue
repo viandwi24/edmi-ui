@@ -13,6 +13,14 @@ import {
 } from "@/registry/edmi/ui/dropdown-menu";
 import type { DataTableFeatures } from "./dataTableFeatures";
 
+/** Column menu label: `meta.label`, else a string header, else the column id. */
+function columnLabel(column: { id: string; columnDef: { header?: unknown; meta?: unknown } }) {
+	const label = (column.columnDef.meta as { label?: string } | undefined)?.label;
+	if (label) return label;
+	const header = column.columnDef.header;
+	return typeof header === "string" ? header : column.id;
+}
+
 withDefaults(
 	defineProps<{
 		table: Table<DataTableFeatures, TData>;
@@ -45,7 +53,7 @@ withDefaults(
 					:model-value="column.getIsVisible()"
 					@update:model-value="(value: boolean) => column.toggleVisibility(!!value)"
 				>
-					{{ column.id }}
+					{{ columnLabel(column) }}
 				</DropdownMenuCheckboxItem>
 			</DropdownMenuGroup>
 		</DropdownMenuContent>

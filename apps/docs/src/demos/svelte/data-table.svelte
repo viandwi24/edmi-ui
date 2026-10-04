@@ -59,15 +59,17 @@
 			cell: ({ row }) => renderSnippet(indexCell, row.original),
 		}),
 		col.accessor("creator", {
+			filterFn: "arrHas",
 			header: ({ column }) => renderComponent(DataTableColumnHeader, { column, title: "Creator" }),
 			cell: ({ getValue }) => renderSnippet(creatorCell, getValue()),
 		}),
 		col.accessor("status", {
 			header: "Status",
-			filterFn: "arrIncludesSome",
+			filterFn: "arrHas",
 			cell: ({ getValue }) => renderSnippet(statusCell, getValue()),
 		}),
 		col.accessor("aum", {
+			meta: { label: "AUM" },
 			header: ({ column }) =>
 				renderComponent(DataTableColumnHeader, { column, title: "AUM", numeric: true }),
 			cell: ({ getValue }) => renderSnippet(aumCell, getValue()),

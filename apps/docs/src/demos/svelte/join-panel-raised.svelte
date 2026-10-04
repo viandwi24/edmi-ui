@@ -17,4 +17,5 @@
 	currency="USDC"
 	{rows}
 	joinLabel="Join MAG4"
+	disabled={n === 0}
 />

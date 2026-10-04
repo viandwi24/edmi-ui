@@ -96,7 +96,10 @@ function SiteHeader({
 			{...props}
 		>
 			<SiteHeaderBrand logo={logo} name={name} href={href} raised={raised} />
-			<nav className="flex items-center gap-1 max-md:hidden" aria-label="Main">
+			<nav
+				className="flex items-center gap-1 whitespace-nowrap max-md:hidden"
+				aria-label="Main"
+			>
 				{lead ? <span className="text-muted-foreground-2">{lead}</span> : null}
 				{steps.map((s) => (
 					<span key={s.href} className="flex items-center">
@@ -119,7 +122,9 @@ function SiteHeader({
 					</a>
 				))}
 			</nav>
-			{action ? <div className="ml-4 flex items-center">{action}</div> : null}
+			{action ? (
+				<div className="ml-4 flex shrink-0 items-center">{action}</div>
+			) : null}
 		</header>
 	);
 }

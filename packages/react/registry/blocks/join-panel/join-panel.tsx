@@ -76,7 +76,9 @@ function JoinPanel({
 	const [innerTab, setInnerTab] = React.useState(
 		defaultTab ?? tabs?.[0]?.value ?? "",
 	);
-	const setAmount = (v: string) => {
+	// Digits, thousands separators and a decimal point only.
+	const setAmount = (raw: string) => {
+		const v = raw.replace(/[^\d.,]/g, "");
 		setInner(v);
 		onAmountChange?.(v);
 	};

@@ -13,6 +13,8 @@ const props = withDefaults(defineProps<{
   description?: string
   /** Skip the cookie check and show immediately (docs/previews). */
   defaultOpen?: boolean
+  /** Initially selected layout. */
+  defaultValue?: Layout
   /** ✦ one-step 3D look on the toast and its option cards */
   raised?: boolean
   class?: HTMLAttributes['class']
@@ -21,6 +23,7 @@ const props = withDefaults(defineProps<{
   description: 'You can switch any time.',
   // Boolean props are cast to false when absent; keep undefined so the cookie check decides.
   defaultOpen: undefined,
+  defaultValue: 'dashboard',
   raised: false,
 })
 
@@ -32,7 +35,7 @@ const emit = defineEmits<{
 // First-visit corner toast. Renders nothing once a layout cookie exists. Choosing saves the cookie;
 // closing without choosing saves the default (`dashboard`) so it does not return.
 const open = ref(false)
-const value = ref<Layout>('dashboard')
+const value = ref<Layout>(props.defaultValue)
 
 onMounted(() => {
   open.value = props.defaultOpen ?? getLayoutCookie() === undefined

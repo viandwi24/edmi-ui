@@ -1,6 +1,7 @@
 <script setup lang="ts" generic="TData extends RowData">
 import type { RowData, Table } from "@tanstack/vue-table";
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "@lucide/vue";
+import { computed } from "vue";
 import { Button } from "@/registry/edmi/ui/button";
 import {
 	Select,
@@ -11,7 +12,7 @@ import {
 } from "@/registry/edmi/ui/select";
 import type { DataTableFeatures } from "./dataTableFeatures";
 
-withDefaults(
+const props = withDefaults(
 	defineProps<{
 		table: Table<DataTableFeatures, TData>;
 		pageSizes?: number[];
@@ -20,6 +21,14 @@ withDefaults(
 	}>(),
 	{ pageSizes: () => [10, 20, 30, 40, 50], raised: false },
 );
+
+// The current size (e.g. `DataTable :page-size="5"`) must be an option, or the trigger renders blank.
+const sizes = computed(() => {
+	const current = props.table.atoms.pagination.get().pageSize;
+	return props.pageSizes.includes(current)
+		? props.pageSizes
+		: [...props.pageSizes, current].sort((a, b) => a - b);
+});
 </script>
 
 <template>
@@ -39,7 +48,7 @@ withDefaults(
 						<SelectValue />
 					</SelectTrigger>
 					<SelectContent side="top">
-						<SelectItem v-for="size in pageSizes" :key="size" :value="`${size}`">
+						<SelectItem v-for="size in sizes" :key="size" :value="`${size}`">
 							{{ size }}
 						</SelectItem>
 					</SelectContent>

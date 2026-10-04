@@ -105,7 +105,11 @@
 				inputmode="decimal"
 				autocomplete="off"
 				bind:value={amount}
-				oninput={() => onAmountChange?.(amount)}
+				oninput={() => {
+					// Digits, thousands separators and a decimal point only.
+					amount = amount.replace(/[^\d.,]/g, "");
+					onAmountChange?.(amount);
+				}}
 				class={cn("font-mono", amountSize === "lg" ? "text-[26px]" : "text-[17px]")}
 			/>
 			<InputGroupAddon align="inline-end">

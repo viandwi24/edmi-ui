@@ -47,7 +47,7 @@
 	{...restProps}
 >
 	<SiteHeaderBrand {logo} {name} {href} {raised} />
-	<nav class="flex items-center gap-1 max-md:hidden" aria-label="Main">
+	<nav class="flex items-center gap-1 whitespace-nowrap max-md:hidden" aria-label="Main">
 		{#if lead}<span class="text-muted-foreground-2">{lead}</span>{/if}
 		{#each steps as s (s.href)}
 			<span class="flex items-center">
@@ -60,6 +60,6 @@
 		{/each}
 	</nav>
 	{#if action}
-		<div class="ml-4 flex items-center">{@render action({ raised })}</div>
+		<div class="ml-4 flex shrink-0 items-center">{@render action({ raised })}</div>
 	{/if}
 </header>

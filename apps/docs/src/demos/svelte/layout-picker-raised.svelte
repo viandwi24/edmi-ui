@@ -1,11 +1,21 @@
 <script lang="ts">
-	import { type Layout, LayoutPicker } from "@edmi-svelte/ui/layout-picker";
+	import { Button } from "@edmi-svelte/ui/button";
+	import { type Layout, LayoutPicker, LayoutPickerToast } from "@edmi-svelte/ui/layout-picker";
 
-	let flat = $state<Layout>("dashboard");
-	let raised = $state<Layout>("navbar");
+	let layout = $state<Layout>("dashboard");
+	let toast = $state(false);
 </script>
 
-<div class="flex flex-col gap-4">
-	<LayoutPicker bind:value={flat} />
-	<LayoutPicker raised bind:value={raised} />
+<div class="flex flex-col items-start gap-4">
+	<LayoutPicker raised bind:value={layout} />
+	<Button variant="outline" onclick={() => (toast = true)}>Show corner toast</Button>
+	{#if toast}
+		<LayoutPickerToast
+			raised
+			defaultOpen
+			defaultValue={layout}
+			onValueChange={(v) => (layout = v)}
+			onClose={() => (toast = false)}
+		/>
+	{/if}
 </div>

@@ -126,6 +126,7 @@ const columns = col.columns([
 		),
 	}),
 	col.accessor("creator", {
+		filterFn: "arrHas",
 		header: ({ column }) => (
 			<DataTableColumnHeader column={column} title="Creator" />
 		),
@@ -135,10 +136,11 @@ const columns = col.columns([
 	}),
 	col.accessor("status", {
 		header: "Status",
-		filterFn: "arrIncludesSome",
+		filterFn: "arrHas",
 		cell: ({ getValue }) => <span className="capitalize">{getValue()}</span>,
 	}),
 	col.accessor("aum", {
+		meta: { label: "AUM" },
 		header: ({ column }) => (
 			<DataTableColumnHeader column={column} title="AUM" numeric />
 		),

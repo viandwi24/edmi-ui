@@ -18,6 +18,7 @@ export default function Demo() {
 			{toast ? (
 				<LayoutPickerToast
 					defaultOpen
+					defaultValue={layout}
 					onValueChange={setLayout}
 					onClose={() => setToast(false)}
 				/>

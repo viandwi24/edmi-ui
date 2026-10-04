@@ -130,6 +130,7 @@ function LayoutPickerToast({
 	title = "Choose your layout",
 	description = "You can switch any time.",
 	defaultOpen,
+	defaultValue = "dashboard",
 	onValueChange,
 	onClose,
 	raised = false,
@@ -139,13 +140,15 @@ function LayoutPickerToast({
 	description?: React.ReactNode;
 	/** Skip the cookie check and show immediately (docs/previews). */
 	defaultOpen?: boolean;
+	/** Initially selected layout. */
+	defaultValue?: Layout;
 	onValueChange?: (value: Layout) => void;
 	onClose?: () => void;
 	/** ✦ one-step 3D look for the toast and the option cards. */
 	raised?: boolean;
 }) {
 	const [open, setOpen] = React.useState(false);
-	const [value, setValue] = React.useState<Layout>("dashboard");
+	const [value, setValue] = React.useState<Layout>(defaultValue);
 	React.useEffect(() => {
 		setOpen(defaultOpen ?? getLayoutCookie() === undefined);
 	}, [defaultOpen]);

@@ -66,15 +66,17 @@ const columns = col.columns([
       ]),
   }),
   col.accessor("creator", {
+    filterFn: "arrHas",
     header: ({ column }) => h(DataTableColumnHeader, { column, title: "Creator" }),
     cell: ({ getValue }) => h("span", { class: "text-muted-foreground" }, getValue()),
   }),
   col.accessor("status", {
     header: "Status",
-    filterFn: "arrIncludesSome",
+    filterFn: "arrHas",
     cell: ({ getValue }) => h("span", { class: "capitalize" }, getValue()),
   }),
   col.accessor("aum", {
+    meta: { label: "AUM" },
     header: ({ column }) => h(DataTableColumnHeader, { column, title: "AUM", numeric: true }),
     cell: ({ getValue }) =>
       h("div", { class: "text-right font-mono tabular-nums" }, `$${getValue().toLocaleString("en-US")}`),

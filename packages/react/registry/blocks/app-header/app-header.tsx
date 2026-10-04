@@ -96,7 +96,7 @@ function AppHeader({
 		<header
 			data-slot="app-header"
 			className={cn(
-				"flex w-full items-center justify-between gap-4 rounded-xl border border-border bg-card px-5 py-3 text-sm text-card-foreground",
+				"@container/app-header flex w-full items-center justify-between gap-4 rounded-xl border border-border bg-card px-5 py-3 text-sm text-card-foreground",
 				raised && "border-b-lip shadow-card",
 				className,
 			)}
@@ -127,7 +127,7 @@ function AppHeader({
 			</div>
 			<div className="flex items-center gap-2">
 				{search ? (
-					<InputGroup className="w-[180px] max-md:hidden">
+					<InputGroup className="w-[180px] @max-[960px]/app-header:hidden">
 						<InputGroupAddon>
 							<IconPlaceholder
 								lucide="SearchIcon"

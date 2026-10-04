@@ -14,7 +14,7 @@
 <div class="flex flex-col gap-4">
 	<div class="flex flex-wrap gap-4">
 		<StatTile label="AUM" value="$49,182" delta="+37%" deltaLabel="vs last week" />
-		<StatTile label="Daily active holders" value="10.291" {meter} delta="+8%" deltaLabel="vs last week" />
+		<StatTile label="Daily active holders" value="10,291" {meter} delta="+8%" deltaLabel="vs last week" />
 		<StatTile label="Net flow" value="−$1,204" delta="−4.2%" deltaLabel="vs last week" />
 	</div>
 	<StatStrip>

@@ -65,8 +65,8 @@ function FeatureRow({
 			className={cn("gap-0 py-0", className)}
 			{...props}
 		>
-			<Collapsible className="group/feature-row">
-				<CollapsibleTrigger className="flex h-14 w-full cursor-pointer items-center gap-4 px-5 outline-none focus-visible:bg-accent">
+			<Collapsible>
+				<CollapsibleTrigger className="group/feature-row flex h-14 w-full cursor-pointer items-center gap-4 px-5 outline-none focus-visible:bg-accent">
 					{head}
 				</CollapsibleTrigger>
 				<CollapsibleContent className="px-5 pb-4 pl-[52px] text-sm text-muted-foreground">

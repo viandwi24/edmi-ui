@@ -14,6 +14,7 @@ const toast = ref(false);
 		<LayoutPickerToast
 			v-if="toast"
 			default-open
+            :default-value="layout"
 			@value-change="layout = $event"
 			@close="toast = false"
 		/>

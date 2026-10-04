@@ -46,7 +46,7 @@ const emit = defineEmits<{
   <header
     data-slot="app-header"
     :class="cn(
-      'flex w-full items-center justify-between gap-4 rounded-xl border border-border bg-card px-5 py-3 text-sm text-card-foreground',
+      '@container/app-header flex w-full items-center justify-between gap-4 rounded-xl border border-border bg-card px-5 py-3 text-sm text-card-foreground',
       props.raised && 'border-b-lip shadow-card',
       props.class,
     )"
@@ -73,7 +73,7 @@ const emit = defineEmits<{
       </nav>
     </div>
     <div class="flex items-center gap-2">
-      <InputGroup v-if="search" class="h-9 w-[180px] max-md:hidden">
+      <InputGroup v-if="search" class="h-9 w-[180px] @max-[960px]/app-header:hidden">
         <InputGroupAddon>
           <Search />
         </InputGroupAddon>

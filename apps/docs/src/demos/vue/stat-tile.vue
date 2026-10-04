@@ -17,7 +17,7 @@ const meter = {
 			<StatTile label="AUM" value="$49,182" delta="+37%" delta-label="vs last week" />
 			<StatTile
 				label="Daily active holders"
-				value="10.291"
+				value="10,291"
 				:meter="meter"
 				delta="+8%"
 				delta-label="vs last week"

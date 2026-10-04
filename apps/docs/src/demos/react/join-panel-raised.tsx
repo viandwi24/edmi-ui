@@ -17,6 +17,7 @@ export default function Demo() {
 				{ label: "Fee", value: "1.00%" },
 			]}
 			joinLabel="Join MAG4"
+			disabled={n === 0}
 		/>
 	);
 }

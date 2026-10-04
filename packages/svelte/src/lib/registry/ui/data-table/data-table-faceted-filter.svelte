@@ -8,7 +8,7 @@
 
 	/**
 	 * ✦ Dashed "+ Status" filter button with a checkbox menu. The column must set
-	 * `filterFn: "arrIncludesSome"`.
+	 * `filterFn: "arrHas"`.
 	 */
 	let {
 		column,
@@ -64,6 +64,7 @@
 				<DropdownMenu.Separator />
 				{#each items as option (option.value)}
 					<DropdownMenu.CheckboxItem
+						class="capitalize"
 						checked={selected.has(option.value)}
 						onCheckedChange={(checked) => toggle(option.value, !!checked)}
 					>

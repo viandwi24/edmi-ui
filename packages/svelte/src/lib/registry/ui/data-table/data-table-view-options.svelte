@@ -6,6 +6,14 @@
 	import type { DataTableFeatures } from "./data-table-features.js";
 
 	let { table }: { table: Table<DataTableFeatures, TData> } = $props();
+
+	/** Column menu label: `meta.label`, else a string header, else the column id. */
+	function columnLabel(column: { id: string; columnDef: { header?: unknown; meta?: unknown } }) {
+		const label = (column.columnDef.meta as { label?: string } | undefined)?.label;
+		if (label) return label;
+		const header = column.columnDef.header;
+		return typeof header === "string" ? header : column.id;
+	}
 </script>
 
 <DropdownMenu.Root>
@@ -42,7 +50,7 @@
 					checked={column.getIsVisible()}
 					onCheckedChange={(value) => column.toggleVisibility(!!value)}
 				>
-					{column.id}
+					{columnLabel(column)}
 				</DropdownMenu.CheckboxItem>
 			{/each}
 		</DropdownMenu.Group>

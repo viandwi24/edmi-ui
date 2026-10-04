@@ -12,6 +12,17 @@ import {
 } from "@/registry/edmi/ui/dropdown-menu";
 import type { DataTableFeatures } from "./data-table-features";
 
+function columnLabel(column: {
+	id: string;
+	columnDef: { header?: unknown; meta?: unknown };
+}) {
+	const label = (column.columnDef.meta as { label?: string } | undefined)
+		?.label;
+	if (label) return label;
+	const header = column.columnDef.header;
+	return typeof header === "string" ? header : column.id;
+}
+
 export function DataTableViewOptions<TData extends RowData>({
 	table,
 	raised = false,
@@ -59,7 +70,7 @@ export function DataTableViewOptions<TData extends RowData>({
 						)
 						.map((column) => (
 							<DropdownMenuCheckboxItem
-								key={column.id}
+								key={columnLabel(column)}
 								className="capitalize"
 								checked={column.getIsVisible()}
 								onCheckedChange={(value) => column.toggleVisibility(!!value)}

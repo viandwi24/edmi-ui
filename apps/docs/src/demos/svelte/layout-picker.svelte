@@ -10,6 +10,6 @@
 	<LayoutPicker bind:value={layout} />
 	<Button variant="outline" onclick={() => (toast = true)}>Show corner toast</Button>
 	{#if toast}
-		<LayoutPickerToast defaultOpen onValueChange={(v) => (layout = v)} onClose={() => (toast = false)} />
+		<LayoutPickerToast defaultOpen defaultValue={layout} onValueChange={(v) => (layout = v)} onClose={() => (toast = false)} />
 	{/if}
 </div>

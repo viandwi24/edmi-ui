@@ -23,7 +23,7 @@ interface DataTableFacetedFilterProps<TData extends RowData, TValue> {
 
 /**
  * ✦ Dashed "+ Status" filter button with a checkbox menu. The column must set
- * `filterFn: "arrIncludesSome"`.
+ * `filterFn: "arrHas"`.
  */
 export function DataTableFacetedFilter<TData extends RowData, TValue>({
 	column,
@@ -75,6 +75,7 @@ export function DataTableFacetedFilter<TData extends RowData, TValue>({
 					{items.map((option) => (
 						<DropdownMenuCheckboxItem
 							key={option.value}
+							className="capitalize"
 							checked={selected.has(option.value)}
 							onCheckedChange={(checked) => {
 								const next = new Set(selected);

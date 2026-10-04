@@ -16,7 +16,7 @@ export default function Demo() {
 				/>
 				<StatTile
 					label="Daily active holders"
-					value="10.291"
+					value="10,291"
 					meter={{
 						value: 23 / 30,
 						zones: [

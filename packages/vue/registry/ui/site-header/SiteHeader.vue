@@ -35,7 +35,7 @@ const props = withDefaults(defineProps<{
         <slot name="logo" />
       </template>
     </SiteHeaderBrand>
-    <nav class="flex items-center gap-1 max-md:hidden" aria-label="Main">
+    <nav class="flex items-center gap-1 whitespace-nowrap max-md:hidden" aria-label="Main">
       <span v-if="lead || $slots.lead" class="text-muted-foreground-2">
         <slot name="lead">{{ lead }}</slot>
       </span>
@@ -50,7 +50,7 @@ const props = withDefaults(defineProps<{
         :class="cn('hover:text-muted-foreground', i === 0 ? 'ml-7' : 'ml-[18px]')"
       >{{ l.label }}</a>
     </nav>
-    <div v-if="$slots.action" class="ml-4 flex items-center">
+    <div v-if="$slots.action" class="ml-4 flex shrink-0 items-center">
       <slot name="action" />
     </div>
   </header>

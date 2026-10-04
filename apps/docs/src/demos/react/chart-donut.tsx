@@ -24,10 +24,10 @@ const data = [
 
 const config = {
 	weight: { label: "Weight" },
-	nvdax: { label: "NVDAx" },
-	msftx: { label: "MSFTx" },
-	aaplx: { label: "AAPLx" },
-	anthrp: { label: "ANTHRP-pre" },
+	nvdax: { label: "NVDAx", color: "var(--chart-1)" },
+	msftx: { label: "MSFTx", color: "var(--chart-2)" },
+	aaplx: { label: "AAPLx", color: "var(--chart-3)" },
+	anthrp: { label: "ANTHRP-pre", color: "var(--chart-4)" },
 } satisfies ChartConfig;
 
 export default function Demo() {
@@ -38,7 +38,7 @@ export default function Demo() {
 				<CardDescription>MAG4 weights</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<ChartContainer config={config} className="mx-auto aspect-square h-52">
+				<ChartContainer config={config} className="aspect-auto h-60 w-full">
 					<PieChart>
 						<ChartTooltip
 							content={

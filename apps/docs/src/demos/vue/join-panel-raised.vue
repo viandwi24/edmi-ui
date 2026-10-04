@@ -17,6 +17,7 @@ const rows = computed(() => [
 		currency="USDC"
 		:rows="rows"
 		join-label="Join MAG4"
+		:disabled="n === 0"
 		@max="amount = '2,500'"
 	/>
 </template>

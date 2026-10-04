@@ -17,7 +17,7 @@ import type { DataTableFeatures } from "./dataTableFeatures";
 
 /**
  * ✦ Dashed "+ Status" filter button with a checkbox menu. The column must set
- * `filterFn: "arrIncludesSome"`.
+ * `filterFn: "arrHas"`.
  */
 const props = withDefaults(defineProps<{
 	column?: Column<DataTableFeatures, TData, TValue>;
@@ -67,6 +67,7 @@ function toggle(value: string, checked: boolean) {
 				<DropdownMenuCheckboxItem
 					v-for="option in items"
 					:key="option.value"
+					class="capitalize"
 					:model-value="selected.has(option.value)"
 					@update:model-value="(checked: boolean) => toggle(option.value, !!checked)"
 				>

@@ -28,7 +28,7 @@ interface DataTableProps<TData extends RowData> {
 	/** Column id the toolbar filter input searches. Omit to hide the input. */
 	filterColumn?: string;
 	filterPlaceholder?: string;
-	/** ✦ Faceted filter buttons; columns need `filterFn: "arrIncludesSome"`. */
+	/** ✦ Faceted filter buttons; columns need `filterFn: "arrHas"`. */
 	facetedFilters?: {
 		column: string;
 		title: string;
