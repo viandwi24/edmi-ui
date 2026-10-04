@@ -72,7 +72,7 @@ export function MarketsPage() {
 				</Button>
 			</div>
 
-			<TickerStrip  items={tickers} />
+			<TickerStrip items={tickers} />
 
 			<Card className="gap-4 px-6">
 				<CardTop title="Top indexes" action="View all" />

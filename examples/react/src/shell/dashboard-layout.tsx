@@ -138,9 +138,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 						</Breadcrumb>
 					</div>
 					<div className="flex items-center gap-2">
-						<Button variant="outline">
-							Devnet
-						</Button>
+						<Button variant="outline">Devnet</Button>
 						<ThemeToggle />
 					</div>
 				</header>
