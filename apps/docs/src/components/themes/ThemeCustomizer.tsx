@@ -19,6 +19,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@edmi-react/ui/dialog";
+import { Input } from "@edmi-react/ui/input";
 import {
 	InsetPanel,
 	InsetPanelBody,
@@ -47,7 +48,7 @@ import {
 	SlidersHorizontalIcon,
 	TerminalWindowIcon,
 } from "@phosphor-icons/react";
-import { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import {
 	FRAMEWORK_LABEL,
 	FRAMEWORKS,
@@ -81,7 +82,22 @@ export type ThemeData = {
 	};
 	/** `${base}/${theme}` -> ready-made CSS (`:root` + `.dark`, radius 0.625rem) */
 	css: Record<string, string>;
+	/** `${base}/${theme}` -> complete composed token sets (builder presets layer on top of these) */
+	vars: Record<string, ModeVars>;
 };
+
+import {
+	accentSwatch,
+	BUILDER_ACCENTS,
+	BUILDER_BASES,
+	baseSwatch,
+	CUSTOM_ACCENT,
+	DEFAULT_CUSTOM,
+	isOfficial,
+	type ModeVars,
+	resolveVars,
+	varsToCss,
+} from "../../lib/theme-presets";
 
 const RADII = ["0.3", "0.5", "0.625", "0.75", "1"];
 const KEY = "edmi-themes";
@@ -92,6 +108,7 @@ type State = {
 	theme: string;
 	radius: string;
 	mode: "light" | "dark";
+	custom: string;
 };
 
 type Option = { value: string; label: string; swatch?: React.ReactNode };
@@ -166,6 +183,39 @@ function Row({
 	);
 }
 
+/** Custom accent: a native colour input + hex field; the accent roles are derived in theme-presets. */
+function CustomAccent({
+	value,
+	onChange,
+}: {
+	value: string;
+	onChange: (v: string) => void;
+}) {
+	const [text, setText] = useState(value);
+	useEffect(() => setText(value), [value]);
+	return (
+		<div className="-mt-2 flex items-center gap-2">
+			<input
+				type="color"
+				aria-label="Custom accent colour"
+				value={value}
+				onChange={(e) => onChange(e.target.value)}
+				className="size-9 shrink-0 cursor-pointer rounded-lg border border-input bg-card p-1"
+			/>
+			<Input
+				aria-label="Custom accent hex"
+				value={text}
+				spellCheck={false}
+				className="h-9 font-mono text-[13px]"
+				onChange={(e) => {
+					setText(e.target.value);
+					if (/^#[0-9a-f]{6}$/i.test(e.target.value)) onChange(e.target.value);
+				}}
+			/>
+		</div>
+	);
+}
+
 function Snippet({
 	code,
 	language,
@@ -195,6 +245,7 @@ export default function ThemeCustomizer({ data }: { data: ThemeData }) {
 		theme: "green",
 		radius: "0.625",
 		mode: "light",
+		custom: DEFAULT_CUSTOM,
 	});
 	const [dialog, setDialog] = useState<"css" | "install" | null>(null);
 	const [panelOpen, setPanelOpen] = useState(false);
@@ -226,28 +277,53 @@ export default function ThemeCustomizer({ data }: { data: ThemeData }) {
 		setS((p) => ({ ...p, [k]: v }));
 
 	const item = `theme-${s.base}-${s.theme}`;
-	const css = useMemo(
+	const official = isOfficial(
+		{ base: s.base, theme: s.theme, custom: s.custom },
+		data,
+	);
+	const vars = useMemo(
 		() =>
-			(data.css[`${s.base}/${s.theme}`] ?? "").replace(
-				"--radius: 0.625rem;",
-				`--radius: ${s.radius}rem;`,
+			resolveVars(
+				{ base: s.base, theme: s.theme, custom: s.custom },
+				data.vars,
+				data,
 			),
-		[data.css, s.base, s.theme, s.radius],
+		[data, s.base, s.theme, s.custom],
+	);
+	const css = useMemo(
+		() => varsToCss(vars, `${s.radius}rem`),
+		[vars, s.radius],
 	);
 	const tailwind = `@import "tailwindcss";
 @import "@edmi-ui/tokens/tokens.css";
 @import "@edmi-ui/tokens/theme.css";
 
 ${css}`;
-	const install = `# once: the Edmi tokens and Tailwind theme
+	const install = official
+		? `# once: the Edmi tokens and Tailwind theme
 ${installCommand(fw, "theme", pm)}
 
 # this base + theme (replaces the color variables, light and dark)
-${installCommand(fw, item, pm)}`;
+${installCommand(fw, item, pm)}`
+		: "";
+	// builder-only combos are applied as inline custom properties on the scoped preview wrapper
+	const modeStyle = useMemo(
+		() =>
+			Object.fromEntries(
+				Object.entries(vars[s.mode]).map(([k, v]) => [`--${k}`, v]),
+			),
+		[vars, s.mode],
+	);
 	const label = `${cap(s.base)} \u00b7 ${cap(s.theme)}`;
 
 	const reset = () => {
-		setS({ base: "stone", theme: "green", radius: "0.625", mode: "light" });
+		setS({
+			base: "stone",
+			theme: "green",
+			radius: "0.625",
+			mode: "light",
+			custom: DEFAULT_CUSTOM,
+		});
 		setLayered(false);
 	};
 
@@ -275,13 +351,15 @@ ${installCommand(fw, item, pm)}`;
 			label: "Base color",
 			value: s.base,
 			onChange: (v) => set("base", v),
-			options: data.bases.map((b) => ({
+			options: [...data.bases, ...BUILDER_BASES].map((b) => ({
 				value: b,
 				label: cap(b),
 				swatch: (
 					<span
 						className="size-3 shrink-0 rounded-full border border-border"
-						style={{ background: data.swatch.bases[b]?.bg }}
+						style={{
+							background: data.swatch.bases[b]?.bg ?? baseSwatch(b),
+						}}
 					/>
 				),
 			})),
@@ -290,13 +368,15 @@ ${installCommand(fw, item, pm)}`;
 			label: "Theme",
 			value: s.theme,
 			onChange: (v) => set("theme", v),
-			options: data.themes.map((t) => ({
+			options: [...data.themes, ...BUILDER_ACCENTS, CUSTOM_ACCENT].map((t) => ({
 				value: t,
 				label: cap(t),
 				swatch: (
 					<span
 						className="size-3 shrink-0 rounded-full"
-						style={{ background: data.swatch.themes[t] }}
+						style={{
+							background: data.swatch.themes[t] ?? accentSwatch(t, s.custom),
+						}}
 					/>
 				),
 			})),
@@ -361,7 +441,15 @@ ${installCommand(fw, item, pm)}`;
 				>
 					<div className="flex flex-col gap-4 p-4">
 						{rows.map((r) => (
-							<Row key={r.label} {...r} />
+							<Fragment key={r.label}>
+								<Row {...r} />
+								{r.label === "Theme" && s.theme === CUSTOM_ACCENT && (
+									<CustomAccent
+										value={s.custom}
+										onChange={(v) => set("custom", v)}
+									/>
+								)}
+							</Fragment>
 						))}
 					</div>
 				</InsetPanelBody>
@@ -383,13 +471,14 @@ ${installCommand(fw, item, pm)}`;
 
 			<div
 				data-preview
-				data-base={s.base}
-				data-theme={s.theme}
+				data-base={data.bases.includes(s.base) ? s.base : "stone"}
+				data-theme={data.themes.includes(s.theme) ? s.theme : "green"}
 				className={`edmi-showcase relative min-h-0 min-w-0 flex-1 overflow-auto rounded-2xl border border-border bg-background p-4 text-foreground sm:p-5 min-[1200px]:p-6 ${
 					s.mode === "dark" ? "dark" : "edmi-light"
 				}`}
 				style={
 					{
+						...(official ? {} : modeStyle),
 						"--radius": `${s.radius}rem`,
 						fontFamily: '"Instrument Sans", system-ui, sans-serif',
 					} as React.CSSProperties
@@ -448,9 +537,15 @@ ${installCommand(fw, item, pm)}`;
 					<DialogHeader>
 						<DialogTitle>Install {label}</DialogTitle>
 						<DialogDescription>
-							Installs the <code>{item}</code> registry theme. It replaces the
-							color variables (light and dark); your radius stays, so copy the
-							radius with Copy CSS.
+							{official ? (
+								<>
+									Installs the <code>{item}</code> registry theme. It replaces
+									the color variables (light and dark); your radius stays, so
+									copy the radius with Copy CSS.
+								</>
+							) : (
+								"Only the Stone/Slate x Green/Ocean combinations ship as registry themes."
+							)}
 						</DialogDescription>
 					</DialogHeader>
 					<div className="flex flex-wrap gap-3">
@@ -473,7 +568,14 @@ ${installCommand(fw, item, pm)}`;
 							</TabsList>
 						</Tabs>
 					</div>
-					<Snippet code={install} language="bash" filename="terminal" />
+					{official ? (
+						<Snippet code={install} language="bash" filename="terminal" />
+					) : (
+						<p className="m-0! rounded-lg border border-border bg-muted p-3 text-sm text-muted-foreground">
+							This combination is builder-only and has no registry item. Use
+							Copy CSS to use this theme.
+						</p>
+					)}
 				</DialogContent>
 			</Dialog>
 		</div>

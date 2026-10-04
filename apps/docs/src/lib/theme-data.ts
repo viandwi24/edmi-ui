@@ -26,6 +26,11 @@ export async function loadThemeData(): Promise<ThemeData> {
 				}),
 			),
 		},
+		vars: Object.fromEntries(
+			bases.flatMap((b) =>
+				themes.map((t) => [`${b}/${t}`, m.composeCssVars(b, t)]),
+			),
+		),
 		css: Object.fromEntries(
 			bases.flatMap((b) =>
 				themes.map((t) => [
