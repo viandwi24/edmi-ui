@@ -1,3 +1,4 @@
+import type { Elevation } from "@edmi-react/ui/elevation";
 import {
 	Questionnaire,
 	QuestionnaireActions,
@@ -23,11 +24,11 @@ const items = [
 	{ name: "notes" },
 ];
 
-export default function Demo() {
+function Sample({ elevation }: { elevation: Elevation }) {
 	const [done, setDone] = useState<string | null>(null);
 	return (
 		<Questionnaire
-			raised
+			elevation={elevation}
 			items={items}
 			shortcuts="letters"
 			className="w-full max-w-md rounded-2xl border border-border bg-card p-6"
@@ -70,5 +71,25 @@ export default function Demo() {
 				<p className="font-mono text-xs text-muted-foreground">{done}</p>
 			) : null}
 		</Questionnaire>
+	);
+}
+
+const levels = [
+	{ value: "sunken", label: "Sunken (-1)" },
+	{ value: "flat", label: "Flat (0)" },
+	{ value: "raised", label: "Raised (+1)" },
+	{ value: "floating", label: "Floating (+2)" },
+] as const;
+
+export default function Demo() {
+	return (
+		<div className="flex flex-col gap-6">
+			{levels.map(({ value, label }) => (
+				<div key={value} className="flex flex-col gap-2">
+					<p className="text-xs font-medium text-muted-foreground">{label}</p>
+					<Sample elevation={value} />
+				</div>
+			))}
+		</div>
 	);
 }

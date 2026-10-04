@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="questionnaire" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look (on `Questionnaire`, applies to every choice and input).
+Flat by default. `elevation` on `Questionnaire` applies to every choice card and the text input: `sunken` (-1) wells, `raised` (+1) the bevel, `floating` (+2) bevel plus drop. A checked option keeps its ring.
 
 <ComponentDemo name="questionnaire" demo="questionnaire-raised" />
 
@@ -36,7 +36,7 @@ Flat by default. Pass `raised` for the one-step 3D look (on `Questionnaire`, app
 | QuestionnaireItem | name, multiple, required, invalid | | |
 | QuestionnaireChoice | value | `string` | required |
 | QuestionnairePrevious, Skip, Next, Submit | size, variant | Button props | |
-| `raised` | `boolean` | `false` | One-step 3D look ✦ (on `Questionnaire`, applies to every choice and input) |
+| Questionnaire | elevation | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 Put a `QuestionnaireInput` inside an item next to its choices for an "Other: ____" answer: typing selects the input and clears the choices, picking a choice selects it again (the typed text is kept but no longer submitted).
 

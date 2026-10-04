@@ -2,6 +2,7 @@
 	import { cn, type WithElementRef } from "$lib/utils.js";
 	import type { HTMLInputAttributes } from "svelte/elements";
 	import { untrack } from "svelte";
+	import { useElevation } from "$lib/registry/ui/elevation/index.js";
 	import {
 		type QuestionnaireInputType,
 		getAnswerKeyShortcuts,
@@ -32,6 +33,13 @@
 
 	const item = getQuestionnaireItemContext();
 	const root = getQuestionnaireRootContext();
+	const level = useElevation(() => root.elevation, "field");
+	const inputElevation = {
+		sunken: "border-sk-bd bg-sk-bg shadow-sunken",
+		flat: "",
+		raised: "border-transparent shadow-raised",
+		floating: "border-transparent shadow-floating",
+	};
 	const answerId = $props.id();
 	const initialDefaultFilled = untrack(() => hasInputValue(defaultValue));
 	let uncontrolledValue = $state(untrack(() => String(defaultValue ?? "")));
@@ -112,7 +120,7 @@
 		class={cn(
 			"h-12 w-full min-w-0 rounded-xl border border-border bg-card px-3.5 text-sm transition-colors outline-none focus-visible:border-ring focus-visible:shadow-[0_0_0_1px_var(--ring)] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive",
 			"placeholder:text-muted-foreground",
-			root.raised && "border-b-lip shadow-card focus-visible:border-b-ring",
+			inputElevation[level.current],
 			className
 		)}
 		oninput={handleInput}

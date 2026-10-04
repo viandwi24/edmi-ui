@@ -10,7 +10,7 @@ export const items: Item[] = [
 			"Conversational content in a bubble: seven variants, start/end alignment, grouping and floating reactions.",
 		type: "registry:ui",
 		categories: ["Conversation"],
-		registryDependencies: [],
+		registryDependencies: ["elevation"],
 		docs: "Replaces the stock bubble: `shadcn add @edmi-ui/bubble --overwrite`.",
 		frameworks: {
 			react: {
@@ -74,7 +74,7 @@ export const items: Item[] = [
 			"Multi-step questions with single, multiple, freeform and skippable answers and keyboard shortcuts.",
 		type: "registry:ui",
 		categories: ["Conversation"],
-		registryDependencies: ["button"],
+		registryDependencies: ["button", "elevation"],
 		docs: "Replaces the stock questionnaire: `shadcn add @edmi-ui/questionnaire --overwrite`.",
 		frameworks: {
 			react: {

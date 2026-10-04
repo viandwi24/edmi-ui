@@ -1,5 +1,6 @@
 import { createContext } from "reka-ui";
 import type { ComputedRef, Ref } from "vue";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
 
 export type QuestionnaireItemStatus = "unanswered" | "answered" | "skipped";
 export type QuestionnaireShortcutMode = "letters" | "numbers";
@@ -80,8 +81,8 @@ export interface QuestionnaireRootContext {
 	> | null>;
 	last: ComputedRef<boolean>;
 	nativeValidation: ComputedRef<boolean>;
-	/** ✦ one-step 3D look for every choice / input */
-	raised: ComputedRef<boolean>;
+	/** ✦ depth of every choice / input (undefined = auto) */
+	elevation: ComputedRef<Elevation | undefined>;
 	registerItem: (registration: ItemRegistration) => () => void;
 	shortcuts: ComputedRef<QuestionnaireShortcutMode | null>;
 	skipCurrent: () => void;

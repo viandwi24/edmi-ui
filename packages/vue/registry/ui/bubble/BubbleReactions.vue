@@ -3,15 +3,16 @@ import type { PrimitiveProps } from "reka-ui"
 import type { HTMLAttributes } from "vue"
 import type { BubbleReactionsVariants } from "."
 import { Primitive } from "reka-ui"
-import { provide } from "vue"
+import { computed, provide } from "vue"
 import { cn } from "@/registry/edmi/lib/utils"
+import { type Elevation, useElevation } from "@/registry/edmi/ui/elevation"
 import { bubbleReactionsVariants } from "."
 
 interface Props extends PrimitiveProps {
   side?: BubbleReactionsVariants["side"]
   align?: BubbleReactionsVariants["align"]
-  /** ✦ one-step 3D look on every chip (chips may override) */
-  raised?: boolean
+  /** ✦ depth of the chips: raised +1 / floating +2 bevel every chip (chips may override) */
+  elevation?: Elevation
   class?: HTMLAttributes["class"]
 }
 
@@ -19,11 +20,14 @@ const props = withDefaults(defineProps<Props>(), {
   side: "bottom",
   align: "end",
   as: "div",
-  raised: false,
+  elevation: undefined,
 })
 
+const level = useElevation(() => props.elevation, "control")
+const raised = computed(() => level.value === "raised" || level.value === "floating")
+
 provide("bubbleReactions", {
-  get raised() { return props.raised },
+  get raised() { return raised.value },
 })
 </script>
 

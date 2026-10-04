@@ -35,21 +35,25 @@
 <script lang="ts">
 	import { cn, type WithElementRef } from "$lib/utils.js";
 	import type { HTMLAttributes } from "svelte/elements";
+	import { type Elevation, useElevation } from "$lib/registry/ui/elevation/index.js";
 
 	let {
 		ref = $bindable(null),
 		class: className,
 		side = "bottom",
 		align = "end",
-		raised = false,
+		elevation = "auto",
 		children,
 		...restProps
 	}: WithElementRef<HTMLAttributes<HTMLDivElement>> & {
 		side?: BubbleReactionsSide;
 		align?: BubbleReactionsAlign;
-		/** ✦ opt-in one-step 3D look, forwarded to every `BubbleReaction` chip. */
-		raised?: boolean;
+		/** ✦ depth of the chips: raised +1 / floating +2 bevel every `BubbleReaction` chip. */
+		elevation?: Elevation;
 	} = $props();
+
+	const level = useElevation(() => elevation, "control");
+	const raised = $derived(level.current === "raised" || level.current === "floating");
 
 	setBubbleReactionsCtx({
 		get raised() {

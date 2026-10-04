@@ -6,19 +6,37 @@ import * as React from "react";
 import { IconPlaceholder } from "@/edmi/icon-placeholder";
 
 import { type Button, buttonVariants } from "@/registry/edmi/ui/button";
+import { type Elevation, useElevation } from "@/registry/edmi/ui/elevation";
 
-// ✦ `raised` on the root flows to every choice / input (one-step 3D look).
-const QuestionnaireContext = React.createContext({ raised: false });
+// ✦ choice-card depth (v4); a checked option keeps its ring.
+const choiceElevation = {
+	sunken: "border-sk-bd bg-sk-bg shadow-sunken",
+	flat: "",
+	raised: "border-transparent shadow-raised",
+	floating: "border-transparent shadow-floating",
+};
+const inputElevation = {
+	sunken: "border-sk-bd bg-sk-bg shadow-sunken",
+	flat: "",
+	raised: "border-transparent shadow-raised",
+	floating: "border-transparent shadow-floating",
+};
+
+// ✦ `elevation` on the root flows to every choice / input.
+const QuestionnaireContext = React.createContext<{
+	elevation: Elevation | undefined;
+}>({ elevation: undefined });
 
 function Questionnaire({
 	className,
-	raised = false,
+	elevation,
 	...props
 }: React.ComponentProps<typeof QuestionnairePrimitive.Root> & {
-	raised?: boolean;
+	/** ✦ depth of every option and the text input: sunken -1, flat 0, raised +1, floating +2. */
+	elevation?: Elevation;
 }) {
 	return (
-		<QuestionnaireContext.Provider value={{ raised }}>
+		<QuestionnaireContext.Provider value={{ elevation }}>
 			<QuestionnairePrimitive.Root
 				data-slot="questionnaire"
 				className={cn("flex w-full min-w-0 flex-col gap-4", className)}
@@ -108,19 +126,23 @@ function QuestionnaireChoices({
 function QuestionnaireChoice({
 	children,
 	className,
-	raised,
+	elevation,
 	...props
 }: React.ComponentProps<typeof QuestionnairePrimitive.Choice> & {
-	raised?: boolean;
+	/** ✦ depth of this option; defaults to the Questionnaire level. */
+	elevation?: Elevation;
 }) {
 	const context = React.useContext(QuestionnaireContext);
+	const level = useElevation(
+		elevation && elevation !== "auto" ? elevation : context.elevation,
+		"control",
+	);
 	return (
 		<QuestionnairePrimitive.Choice
 			data-slot="questionnaire-choice"
 			className={cn(
 				"group/questionnaire-choice relative flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border border-border bg-card px-3.5 py-2 text-start text-sm transition-colors outline-none select-none hover:bg-accent has-[>input:focus-visible]:outline-2 has-[>input:focus-visible]:outline-offset-2 has-[>input:focus-visible]:outline-ring data-[invalid]:border-destructive data-[checked]:border-ring data-[checked]:bg-[color-mix(in_srgb,var(--brand)_5%,var(--card))] data-[checked]:shadow-[0_0_0_1px_var(--ring)]",
-				(raised ?? context.raised) &&
-					"border-b-lip shadow-card data-[checked]:border-b-ring",
+				choiceElevation[level],
 				"data-[disabled]:pointer-events-none data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50",
 				className,
 			)}
@@ -174,12 +196,17 @@ function QuestionnaireChoiceDescription({
 
 function QuestionnaireInput({
 	className,
-	raised,
+	elevation,
 	...props
 }: React.ComponentProps<typeof QuestionnairePrimitive.Input> & {
-	raised?: boolean;
+	/** ✦ depth of the text input; defaults to the Questionnaire level. */
+	elevation?: Elevation;
 }) {
 	const context = React.useContext(QuestionnaireContext);
+	const level = useElevation(
+		elevation && elevation !== "auto" ? elevation : context.elevation,
+		"field",
+	);
 	return (
 		<div
 			data-slot="questionnaire-input-wrapper"
@@ -190,8 +217,7 @@ function QuestionnaireInput({
 				className={cn(
 					"h-12 w-full min-w-0 rounded-xl border border-border bg-card px-3.5 text-sm transition-colors outline-none focus-visible:border-ring focus-visible:shadow-[0_0_0_1px_var(--ring)] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive",
 					"placeholder:text-muted-foreground",
-					(raised ?? context.raised) &&
-						"border-b-lip shadow-card focus-visible:border-b-ring",
+					inputElevation[level],
 					className,
 				)}
 				{...props}

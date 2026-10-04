@@ -5,6 +5,7 @@ import {
 	BubbleReaction,
 	BubbleReactions,
 } from "@edmi-react/ui/bubble";
+import type { Elevation } from "@edmi-react/ui/elevation";
 import { IconPlaceholder } from "@/edmi/icon-placeholder";
 
 const variants = [
@@ -17,7 +18,7 @@ const variants = [
 	"destructive",
 ] as const;
 
-export default function Demo() {
+function Sample({ elevation }: { elevation: Elevation }) {
 	return (
 		<div className="flex w-full max-w-md flex-col gap-4">
 			<BubbleGroup>
@@ -34,7 +35,7 @@ export default function Demo() {
 			</BubbleGroup>
 			<Bubble variant="secondary" className="mb-3">
 				<BubbleContent>The keeper just rebalanced MAG4.</BubbleContent>
-				<BubbleReactions raised>
+				<BubbleReactions elevation={elevation}>
 					<BubbleReaction active>👍 4</BubbleReaction>
 					<BubbleReaction>🚀 2</BubbleReaction>
 					<BubbleReaction aria-label="Add reaction">
@@ -49,6 +50,24 @@ export default function Demo() {
 					</BubbleReaction>
 				</BubbleReactions>
 			</Bubble>
+		</div>
+	);
+}
+
+const levels = [
+	{ value: "flat", label: "Flat (0)" },
+	{ value: "raised", label: "Raised (+1)" },
+] as const;
+
+export default function Demo() {
+	return (
+		<div className="flex flex-col gap-6">
+			{levels.map(({ value, label }) => (
+				<div key={value} className="flex flex-col gap-2">
+					<p className="text-xs font-medium text-muted-foreground">{label}</p>
+					<Sample elevation={value} />
+				</div>
+			))}
 		</div>
 	);
 }

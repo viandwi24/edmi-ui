@@ -6,13 +6,23 @@
 	function onsubmit(event: SubmitEvent) {
 		event.preventDefault();
 	}
+
+	const levels = [
+		{ value: "sunken", label: "Sunken (-1)" } as const,
+		{ value: "flat", label: "Flat (0)" } as const,
+		{ value: "raised", label: "Raised (+1)" } as const,
+		{ value: "floating", label: "Floating (+2)" } as const,
+	];
 </script>
 
+<div class="flex flex-col gap-6">
+	{#each levels as l (l.value)}
+		<div class="flex flex-col gap-2">
+			<p class="text-xs font-medium text-muted-foreground">{l.label}</p>
 <div class="grid w-full max-w-3xl gap-5 md:grid-cols-2">
-	{#each [false, true] as raised (raised)}
 		<Questionnaire.Root
 			{items}
-			{raised}
+			elevation={l.value}
 			shortcuts="letters"
 			class="rounded-2xl border border-border bg-card p-5"
 			{onsubmit}
@@ -27,5 +37,7 @@
 				<Questionnaire.Input placeholder="Other…" />
 			</Questionnaire.Item>
 		</Questionnaire.Root>
+</div>
+		</div>
 	{/each}
 </div>

@@ -68,10 +68,13 @@ export const bubbleReactionVariants = cva(
 				true: "border-[color-mix(in_srgb,var(--brand)_45%,var(--popover))] bg-[color-mix(in_srgb,var(--brand)_14%,var(--popover))] text-brand-text",
 				false: "",
 			},
-			// ✦ opt-in one-step 3D look
-			raised: { false: "", true: "border-b-lip shadow-[0_1px_0_var(--lip)]" },
+			// ✦ elevation: the chip bevels (flat is the default)
+			elevation: {
+				flat: "",
+				raised: "border-transparent shadow-btn-raised-neutral",
+			},
 		},
-		defaultVariants: { active: false, raised: false },
+		defaultVariants: { active: false, elevation: "flat" },
 	},
 );
 export type BubbleReactionVariants = VariantProps<

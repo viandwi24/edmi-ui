@@ -3,6 +3,7 @@ import type { HTMLAttributes } from "vue"
 import { CheckIcon } from "@lucide/vue"
 import { computed, onBeforeUnmount, ref, useId, watch } from "vue"
 import { cn } from "@/registry/edmi/lib/utils"
+import { useElevation } from "@/registry/edmi/ui/elevation"
 import { getAnswerKeyShortcuts, injectQuestionnaireItemContext, injectQuestionnaireRootContext } from "./useQuestionnaire"
 
 const props = withDefaults(defineProps<{
@@ -27,8 +28,17 @@ const emits = defineEmits<{
   "update:checked": [checked: boolean]
 }>()
 
+// ✦ choice-card depth (v4); a checked option keeps its ring.
+const choiceElevation = {
+  sunken: "border-sk-bd bg-sk-bg shadow-sunken",
+  flat: "",
+  raised: "border-transparent shadow-raised",
+  floating: "border-transparent shadow-floating",
+}
+
 const item = injectQuestionnaireItemContext()
 const root = injectQuestionnaireRootContext()
+const level = useElevation(() => root.elevation.value, "control")
 
 const answerId = useId()
 const inputElement = ref<HTMLInputElement | null>(null)
@@ -149,7 +159,7 @@ onBeforeUnmount(() => {
     :class="cn(
       'group/questionnaire-choice relative flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border border-border bg-card px-3.5 py-2 text-start text-sm transition-colors outline-none select-none hover:bg-accent has-[>input:focus-visible]:outline-2 has-[>input:focus-visible]:outline-offset-2 has-[>input:focus-visible]:outline-ring data-[invalid]:border-destructive data-[checked]:border-ring data-[checked]:bg-[color-mix(in_srgb,var(--brand)_5%,var(--card))] data-[checked]:shadow-[0_0_0_1px_var(--ring)]',
       'data-[disabled]:pointer-events-none data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50',
-      root.raised.value && 'border-b-lip shadow-card data-[checked]:border-b-ring',
+      choiceElevation[level],
       props.class,
     )"
   >

@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="bubble" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look (on `BubbleReactions`, flows to every chip).
+Flat by default. `elevation` on `BubbleReactions` (`raised` +1 or `floating` +2) bevels every `BubbleReaction` chip; the `active` tint is kept. A chip can override it with its own `elevation`.
 
 <ComponentDemo name="bubble" demo="bubble-raised" />
 
@@ -36,7 +36,7 @@ Flat by default. Pass `raised` for the one-step 3D look (on `BubbleReactions`, f
 | BubbleReactions | side | `top \| bottom` | `bottom` |
 | BubbleReactions | align | `start \| end` | `end` |
 | BubbleGroup | stacks bubbles | `div` props | none |
-| `raised` | `boolean` | `false` | One-step 3D look ✦ (on `BubbleReactions`, flows to every chip) |
+| BubbleReactions | elevation | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 ## ✦ Edmi additions
 - `BubbleReaction` (`active`): a solid floating chip with a 1px border and no ring; the active chip is brand-tinted.
