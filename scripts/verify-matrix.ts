@@ -78,6 +78,7 @@ const REQUIRED: Record<string, string[]> = {
 		"scroll-area",
 		"carousel",
 		"direction",
+		"elevation",
 	],
 	Data: ["table", "data-table", "chart"],
 	Conversation: [

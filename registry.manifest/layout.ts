@@ -95,4 +95,20 @@ export const items: Item[] = [
 			},
 		},
 	},
+	{
+		name: "elevation",
+		title: "Elevation",
+		description:
+			"ElevationProvider and useElevation: the v4 elevation plumbing (sunken, flat, raised, floating) with a layered mode.",
+		type: "registry:ui",
+		categories: ["Layout"],
+		registryDependencies: [],
+		docs: "Edmi addition: components resolve their `elevation` prop through it. Installed automatically with every component that takes `elevation`.",
+		frameworks: {
+			react: {
+				files: [{ path: "registry/ui/elevation.tsx" }],
+				dependencies: ["@base-ui/react"],
+			},
+		},
+	},
 ];

@@ -15,7 +15,7 @@ Edmi (EDitorial MInimalist) is a Bun monorepo that builds **three shadcn-compati
 | Package | `packages/react` | `packages/vue` | `packages/svelte` |
 
 - Same item names and anatomy/props as shadcn, so `add @edmi-ui/<name> --overwrite` is a drop-in restyle. ✦ marks Edmi additions (additive only; never remove a stock prop or variant).
-- **Flat by default.** Every component renders the plain shadcn look. The 3D look is the opt-in `raised` ✦ prop (one face plus one hard lip).
+- **Flat by default.** Every component renders the plain shadcn look. Depth is the opt-in `elevation` ✦ prop (`sunken | flat | raised | floating`, bevel not lips) or an `ElevationProvider mode="layered"` scope (section 5).
 - Default icons: **Phosphor**, switchable through the consumer's `iconLibrary` (see 6).
 - **Edmi AI pack**: 56 more items named `ai-<name>` (restyled Vercel AI Elements + ✦ additions) in all three ports, installed with `add @edmi-ui/ai-all` into `components/ai/`. Procedure and conventions: section 7b.
 - **Bun is the only package manager and runtime for developing this repo.** No npm/pnpm/yarn, no Node install. This is a maintainer rule only: people *using* Edmi UI may use any package manager, so every user-facing doc, README and example shows npm (default), pnpm, yarn and bun. Run CLIs with `bunx` (bun provides a `node` shim); `bunx npm …` only for publish/pack. Do not use the `gh` CLI.
@@ -77,63 +77,91 @@ Generated, gitignored, never hand-edited: every `registry.json`, `apps/docs/publ
 1. Items are declared once in `registry.manifest/<group>.ts` (`name`, `title`, `description`, `type`, `categories`, `registryDependencies` as **Edmi names only**, `docs`, `frameworks.react`). Vue/Svelte file lists live in the `<group>.vue.ts` / `<group>.svelte.ts` overlays (separate files so ports never edit the same file). Per-framework `skip: true` omits an item (the only one today: `use-mobile` for Vue); depending on a skipped item is an error.
 2. `bun run gen` (`scripts/gen-registry.ts`, logic in `scripts/lib/registry.ts`) writes `packages/<fw>/registry.json`: deterministic, sorted, with `homepage = EDMI_URL`. It rewrites `registryDependencies`: React/Vue → `@edmi-ui/<name>`, Svelte → `${EDMI_URL}/r/svelte/<name>.json` (shadcn-svelte has no namespaces). `--strict`/`CI=true` fails on missing files; `--out <dir>` writes all three elsewhere (smoke tests).
 3. The port's own CLI builds JSON: `shadcn build` (React), `shadcn-vue build`, `bunx --bun shadcn-svelte registry build`, into `apps/docs/public/r/<fw>/`. Pages serves them at `https://viandwi24.github.io/edmi-ui/r/<fw>/{name}.json` (CORS open).
-4. Entry items (`registry.manifest/meta.ts`): `theme` (registry:theme, cssVars from `@edmi-ui/tokens`, `[data-raised]` base rule, border/body base layer), `all` (aggregate of every `registry:ui` item for that framework), `patterns` (aggregate of every item in the Patterns category, `aggregate: "patterns"`; add it with `all` for everything), `edmi` (React `registry:base` with `extends: "none"`, `config.style: "base-nova"`, `config.iconLibrary: phosphor`, `config.registries["@edmi-ui"]` injected from `EDMI_URL`; Vue → `registry:block`; Svelte → `registry:style`), `font-instrument-sans|jetbrains-mono|sora` (React `registry:font`, `@fontsource-variable/*`; Vue/Svelte get the Google Fonts `@import` inside theme `css`).
+4. Entry items (`registry.manifest/meta.ts`): `theme` (registry:theme, cssVars from `@edmi-ui/tokens`, `[data-elevation=raised], [data-elevation=floating]` base rule, border/body base layer), `all` (aggregate of every `registry:ui` item for that framework), `patterns` (aggregate of every item in the Patterns category, `aggregate: "patterns"`; add it with `all` for everything), `edmi` (React `registry:base` with `extends: "none"`, `config.style: "base-nova"`, `config.iconLibrary: phosphor`, `config.registries["@edmi-ui"]` injected from `EDMI_URL`; Vue → `registry:block`; Svelte → `registry:style`), `font-instrument-sans|jetbrains-mono|sora` (React `registry:font`, `@fontsource-variable/*`; Vue/Svelte get the Google Fonts `@import` inside theme `css`).
 5. Theme items (`registry.manifest/themes.ts`, generated): one `registry:theme` item per **base × accent** (`theme-stone-green` = default colors, `theme-stone-ocean`, `theme-slate-green`, `theme-slate-ocean`) for all three ports. Bases/accents are auto-discovered from `packages/tokens/src/base/*.css` (+ implicit `stone`) and `src/themes/*.css` (+ implicit `green`) by `listBases()/listThemes()` in `css-vars.ts`; `composeCssVars(base, theme)` merges `tokens.css` → base → theme (theme wins for `primary`) from the `[data-base=…]`, `.dark[data-base=…]`, `[data-theme=…]`, `.dark[data-theme=…]` blocks. Each item carries the complete light + dark color set and **replaces** `:root`/`.dark` on install (shadcn-style); `radius` is deliberately omitted so a theme never resets the app's radius; no `registryDependencies` (run after `@edmi-ui/theme`); never part of `all`/`edmi`. `verify:matrix` checks every discovered combination x framework; `scripts/gen-registry.test.ts` and `css-vars.test.ts` cover the merge.
 6. Install flows: React `init <url>/edmi.json` (new) or `registry add "@edmi-ui=<url>/r/react/{name}.json"` + `add @edmi-ui/theme @edmi-ui/all --overwrite`; Vue `registries.@edmi-ui` in `components.json` + `add @edmi-ui/theme @edmi-ui/all --overwrite` (init-from-URL is unsupported, see 11); Svelte URL-only `add <url>/theme.json <url>/all.json --overwrite`.
 7. `registryDependencies` rules: Edmi names only, never stock shadcn items; every dependency must exist in the manifest; a dependency may not be skipped for that framework.
 8. Distribution: Pages = docs + latest registries (`EDMI_URL` = Pages URL). npm = `@edmi-ui/tokens` and `@edmi-ui/registry-{react,vue,svelte}`; `pack:registries` regenerates with `EDMI_URL=https://cdn.jsdelivr.net/npm/@edmi-ui/registry-svelte@<major>` so Svelte URL deps pin the same major. Consumers: `https://cdn.jsdelivr.net/npm/@edmi-ui/registry-<fw>@0/r/<name>.json`. `@edmi-ui/{react,vue,svelte}` source packages are `"private": true`.
 9. Schema notes: Svelte registry items are strict (no `docs`/`categories`/`config`; generator moves them into `meta`). `config` is honoured only on React `registry:base`. Every emitted item has `files` + `registryDependencies` (possibly empty).
 
-## 5. Design rules and `raised`
+## 5. Design rules and elevation
 
 **Design changes need a handoff document (maintainer rule).** Agents (and the maintainer, from this repo) never design or restyle components here: no new looks, elevation schemes, tokens, variants or visual tweaks on their own initiative. Design is done in the design app; the maintainer exports a handoff document into `refs/*`, and only then do agents implement that revision, so the code always stays in sync with the design app. Allowed without a handoff: bug fixes that restore the documented spec (wrong state, broken layout, port mismatch, docs-site CSS leaks), docs-site/tooling work, and behaviour fixes. If a request would change the look and there is no handoff, stop and ask for one.
 
-Binding spec (v2.1, `refs/edmi-ui` incl. `REVISIONS.md`, the changelog of v1 → v2.1): `refs/edmi-ui/DESIGN.md` (§1 stack, §3 theming, §4 rules, §5 components). **Read §4 before touching any component.** Classes come from `packages/tokens/src/recipes.ts` (inline the strings into each component; registry files cannot import `@edmi-ui/tokens`). Compare with the boards in `refs/edmi-ui/screens/edmi-ui-kit/<NN-board>-{light,dark}.png` (each board has a "Raised ✦" row) and `refs/edmi-ui/reference/*.dc.html` for exact values. Do not "improve" §4.
+Binding spec (v4, `refs/edmi-ui` incl. `REVISIONS.md` v1 → v3 and `REVISIONS-v4.md` #1-#21; the handoff `refs/edmi-ui-update-4/design/` is mirrored into `refs/edmi-ui`): `refs/edmi-ui/DESIGN.md` (§1 stack, §3 theming, §4 rules, §5 components). **Read §4 before touching any component.** Classes come from `packages/tokens/src/recipes.ts` (inline the strings into each component; registry files cannot import `@edmi-ui/tokens`). Compare with the boards in `refs/edmi-ui/screens/edmi-ui-kit/<NN-board>-{light,dark}.png` (each board has a "Raised ✦" row) and `refs/edmi-ui/reference/*.dc.html` for exact values. Do not "improve" §4.
 
 Theming (spec §3, v2.1): four knobs on `<html>`: mode `class="dark"`, `data-base` (stone default, slate), `data-theme` (green default, ocean), `--radius`. Load order tokens → base → themes. `@edmi-ui/tokens` ships `base/slate.css` and `themes/ocean.css` (exports `./base/slate.css`, `./themes/ocean.css`); distribution/customizer wiring is a separate task. Components use tokens only, never a theme name.
 
-Rules in short (§4):
-1. Flat by default; `raised` opt-in. `ghost`, `link` buttons and Tabs `line` are never raised.
-2. No blurred shadows. Raised depth = hard lips `0 2px 0 var(--lip)` (card/controls), `0 4px 0 var(--lip-strong)` (dialog/popover); only inset shadows may be soft (1–2px).
-3. One step only: face + ONE lip. Bottom border and hard shadow use the same lip colour; never an inner bottom shade (`inset 0 -2px`). Raised filled controls = vertical gradient `-hi → base` + `inset 0 1px 0` highlight + the lip, with `[background-origin:border-box]`.
-4. Dark primary = white with a gray lip and transparent side border; selected states with a ring drop the lip.
-5. Pressed: raised = `translateY(2px)` + lip 0; flat = slightly darker fill.
-6. Tabs/segmented: flat active = `--tab-active` fill + 1px border; raised = 3D secondary button.
+Rules in short (§4, v4):
+1. Flat by default; depth is the **elevation** system (§4b, "Elevation (v4)" below). Four levels: -1 sunken, 0 flat, +1 raised, +2 floating. `ghost`/`link` buttons and Tabs `line` never carry a bevel.
+2. **Bevel, not lips.** Raised = inner rim `inset 0 0 .26px 1.1px var(--bv-ring)` + top highlight `inset 0 1px 0 var(--bv-top)` + dark hairline `0 0 1.5px var(--bv-out)` (`shadow-raised`). Floating = bevel + ONE soft drop (`shadow-floating`; buttons `shadow-btn-float-*`). No hard 2px/4px lips anywhere. Gradient faces use `[background-origin:border-box]` and a transparent border.
+3. **Sunken = soft inset.** `bg-sk-bg border-sk-bd shadow-sunken` (blur allowed on the inset only). Never a hard dark top edge; focus swaps the edge for the ring. No drop-shadow blur on raised surfaces beyond the single floating drop.
+4. Dark primary = white face (slightly darker than white so the top edge reads) with a transparent side border; filled buttons keep their colour when sunken (8% darker).
+5. Pressed: `translateY(1px)` + `shadow-pressed` (floating: `shadow-pressed-float`); flat = slightly darker fill.
+6. **Only the active part rises** on tabs, segmented/toggle group, pagination, calendar (elevation sits on the shell), switch thumb, slider thumbs, checkbox (checked box).
 7. Floating chips over another surface are solid (`--popover`) with a 1px border; no transparency or outer ring.
-8. Inset panel: header on `--muted` shell; body `--card` edge to edge with top radius only; footer back on shell.
+8. Inset panel: header on the `--muted` shell (level 0); body is a `--card` plate inset 2px from the shell (left/right/bottom) with its own full radius; with a footer the body keeps a 0 bottom gap and the footer sits on the shell without a divider.
 9. Message rows: avatar top-aligned with the sender line. 10. One height per group. 11. Numbers are mono, right-aligned in tables; up = `--brand-text`, down = `--destructive-text`. 12. Marketing headings soft ink, weight 400–500. 13. Brand badges/alerts/toasts = soft fill + tinted 30–40% border.
 14. Dark lips are gray, never black. 15. Positive values use `success`. 16. **No transparent fills**: every `*-soft` token is a solid colour (pre-mixed onto `--popover`, per base); tinted borders are `border-[color-mix(in_srgb,var(--x)_30%,var(--popover))]` (in-flow tints over a card: `…,var(--card))`), solid-fill hovers `hover:bg-[color-mix(in_srgb,var(--primary)_90%,var(--background))]`. Never Tailwind `/NN` opacity on `bg-`/`border-`/`from-`/`to-` and never `color-mix(…, transparent)` on a surface; only `ring-soft`, `overlay` and decorative glows/gridlines may be transparent. 17. **Light surfaces:** `--card` is `#fff` (and `--outline-hi/-face`), so cards/inputs/panels lift off the warm body. **Code block body = `--card`, header = `--muted`**, never `--background`/`--muted` for the body.
-14. **Dark-mode lips are gray, never black.** Dark `lip`, `lip-strong`, `secondary-lip`, `outline-lip` are grays lighter than the canvas (like the white primary's gray lip). Never hard-code a near-black lip; use the tokens. Outline `raised` (Button, Toggle, toggle-group items) = gradient `from-outline-hi to-outline-face` + `border-b-outline-lip` + `shadow-btn-outline` (= `0 2px 0 var(--outline-lip)`) + `[background-origin:border-box]`; other raised surfaces (select, native select, pagination, menubar, watch item) use `border-b-lip` with `shadow-[0_2px_0_var(--lip)]` so border and shadow share one colour.
+14. **Dark mode uses ladder B** (stone dark; slate keeps its own): clearer steps between background, card, popover, border, input and muted text. Depth in dark comes from the bevel hairline and a faint top highlight, never from black blocks. The legacy `lip*`, `*-lip`, `*-edge`, `*-shade`, `card-hi`, `outline-*` tokens stay only for the example pages; components must not use them.
 15. **Positive = `success`.** Up deltas, done ticks/states, success toasts, `badge`/`alert` variant `success` use `success-soft` / `success-text` (always green). `brand` is the theme accent and turns blue under `data-theme="ocean"`: use it only for accent roles (brand button/badge, live state, switch, slider, progress, ring).
 
 Tokens/type: OKLCH tokens in `:root` (light) and `.dark`; theme and layout stored in a cookie (plain `document.cookie`, SSR-readable). Radius from `--radius: 0.625rem`. **Control height `h-9` (36px)**, `sm` 32px, `lg` 42px (Button, Input, Input Group, Select, Toggle; Textarea min-h-24). Inputs inside a ButtonGroup: `rounded-r-none shadow-none`. Fonts: Instrument Sans (UI), JetBrains Mono (every number), Sora 600 (wordmarks only).
 
-### `raised` mechanics (same prop name in all ports, default `false`)
-- cva/tv components: boolean variant `raised: { false: "", true: "…" }` + `compoundVariants` copied verbatim from `recipes.ts`. Vue passes real booleans (`buttonVariants({ variant, size, raised })`); Svelte `raised = false` in `$props()`.
-- Plain components: `raised && "…"` inside `cn(...)`.
-- **Containers pass it down** so children can still override (`child.raised ?? ctx.raised`): React `React.createContext` in the same file; Vue `provide`/`inject` with a getter object; Svelte `setContext`/`getContext` with a getter object. Vue children that inherit use `withDefaults(..., { raised: undefined })` (a `false` default would block the fallback); never forward `raised` to a Reka primitive (`reactiveOmit`) or it lands in the DOM.
-- Patterns never hard-code lips/shadows: they accept `raised` and forward it to the Card/Button they render.
-- Selector swap: recipes use Radix/Reka/Bits `data-[state=…]`. Vue and Svelte keep it verbatim. React (Base UI) swaps `data-[state=active]`→`data-[active]`, `on`→`data-[pressed]`, `checked`→`data-[checked]`, open popup→`data-[open]`, open trigger→`data-[popup-open]` (use bracket attributes, not shadcn's custom variants like `data-active:`).
+### Elevation (v4)
 
-| Raised ✦ lives on | Where it applies |
-|---|---|
-| Button (default, secondary, outline, destructive, brand) | variant compounds; active adds `translate-y-[2px]` |
-| Toggle, ToggleGroup | group passes to items; `segmented` track items use `itemRaised` |
-| Tabs (`TabsList variant="default\|line\|pills"` + `raised`) | list passes `{variant, raised}` to triggers; `line` ignores raised |
-| Kbd | on `Kbd`, not `KbdGroup` |
-| Select trigger, Native Select | trigger only (popup stays flat) |
-| Checkbox, Switch (thumb), Slider (thumbs), Calendar/RangeCalendar (selected day) | on the root, applied to the part |
-| Choice card (FieldLabel card, radio/checkbox card, Questionnaire options, layout-picker) | `raised` on Questionnaire applies to every option |
-| Card, InsetPanel (body highlight via context/data attr), EmptyMedia | |
-| Popover, Dialog, AlertDialog | on the Content part |
-| Toast (Sonner) | `<Toaster raised />` adds classes to `toastOptions.classNames.toast` |
-| Menubar | bar only (`border-b-lip shadow-btn-outline`, derived from board 07) |
-| Pagination | active link; context from `Pagination` |
-| BubbleReactions | chips (`active` kept) |
-| DatePicker/DateRangePicker | forward to trigger Button + Calendar |
-| ✦ Patterns | forward to their Card/Button |
+Replaces the old boolean `raised` (removed everywhere, no alias; user decision 2026-10-04, handoff v4). Spec: `refs/edmi-ui/DESIGN.md` §4b, `recipes.ts` (verbatim copy in `packages/tokens/src/recipes.ts`), board 13.
 
-Flat-only (do not add raised): Alert, Sheet, Drawer, HoverCard, Tooltip, menus/Command/NavigationMenu popups, Sidebar, Accordion, Table/DataTable (container flat; toolbar follows Button/Input), Chart, Bubble, Combobox, Input-ish controls, Attachment. Every component with `raised` needs a `<name>-raised` demo in all three ports (checked by `verify:matrix`).
+**Prop** (all ports, default `auto`): `elevation?: "auto" | "sunken" | "flat" | "raised" | "floating"`. **Resolution:** explicit prop, then the nearest `ElevationProvider` scope, then `flat`. **Mode:** `<ElevationProvider mode="layered">` gives each ROLE its default level (`ROLE_LEVEL`); `<ElevationProvider level="raised">` forces one level for the subtree. Both render `data-elevation` (kit.css and the `theme` base rule key off it).
+
+**Registry item `elevation`** (`registry:ui`, category Layout; `packages/react/registry/ui/elevation.tsx`, `packages/vue/registry/ui/elevation/`, `packages/svelte/src/lib/registry/ui/elevation/`). Every component that takes `elevation` lists `"elevation"` in `registryDependencies` and imports it like any ui item (`@/registry/edmi/ui/elevation`, Svelte `$lib/registry/ui/elevation/index.js`). Exports (same names in all ports):
+- types `Elevation`, `ElevationLevel = Exclude<Elevation, "auto">`, `ElevationMode = "flat" | "layered"`, `ElevationRole`; `ROLE_LEVEL`, `resolveElevation(prop, scope, role)` (copied from the recipes);
+- `ElevationProvider` (`mode?`, `level?`; layout-neutral `display: contents` unless a class is passed; React `render` prop (Base UI `useRender`), Vue `as`/`as-child` (Reka `Primitive`), Svelte `child` snippet);
+- `useElevation(prop, role)`: React returns the `ElevationLevel`; Vue `useElevation(() => props.elevation, role)` returns a `ComputedRef`; Svelte `useElevation(() => elevation, role)` returns `{ current }` (getter, reactive). Call it during component init.
+- Surface context: surfaces (card, panel body, popover, dialog) publish their resolved level: React `<SurfaceProvider level={level}>` around the children, Vue `provideSurface(() => level.value)`, Svelte `setSurface(() => level)`. `useElevation(prop, "surface")` with an `auto` prop returns `flat` when the nearest surface ancestor is raised/floating (no bevel on bevel); an explicit prop wins; fields, controls, buttons and overlays ignore nesting. Vue/Svelte also export `provideElevationScope` / `injectElevationScope` and `setElevationScope` / `getElevationScope` (used by the provider; rarely needed).
+
+**Using it in a component**
+1. Role from the table below. React: `const level = useElevation(elevation, "field")`; Vue: `const level = useElevation(() => props.elevation, "field")` (use `level.value`); Svelte: `const level = useElevation(() => elevation, "field")` (use `level.current`).
+2. Pass `level` to the cva/tv `elevation` variant (variants `elevation: { sunken, flat, raised, floating }` and `compoundVariants` copied verbatim from `recipes.ts`, defaultVariants `elevation: "flat"`) or to `surfaceElevation[level]` for plain surfaces. Never hard-code lips or drops.
+3. Prop default: React `elevation` undefined/`"auto"`; Vue `withDefaults(defineProps…, { elevation: undefined })` (treated as auto; a `"flat"` default would block the scope); Svelte `elevation = "auto"` in `$props()`. Never forward `elevation` to a Reka/Bits primitive (`reactiveOmit`) or it lands in the DOM.
+4. Containers pass depth down: a container whose children rise with it (Tabs list to triggers, ToggleGroup to items, ButtonGroup to buttons, Pagination to the active link, Questionnaire to options, DatePicker to trigger + calendar shell, patterns to their Card/Button) uses its own context (React `createContext` in the same file, Vue `provide`/`inject`, Svelte `setContext`/`getContext`, always getter objects so it stays reactive); the child resolves `child.elevation` then the container value then `useElevation`.
+5. Patterns and AI items never hard-code depth: they accept `elevation` and forward it to the Card/Button/surface they render.
+6. Selector swap: recipes use Radix/Reka/Bits `data-[state=...]`; Vue and Svelte keep them. React (Base UI) swaps `data-[state=active]`->`data-[active]`, `on`->`data-[pressed]`, `checked`->`data-[checked]`, open popup->`data-[open]`, open trigger->`data-[popup-open]` (bracket attributes, not shadcn's custom variants).
+
+**Per component** (role -> layered level; "rises" = the part that takes the shadow). Levels: S sunken, F flat, R raised, X floating.
+| Component | Role | Levels | What rises |
+|---|---|---|---|
+| Button default/secondary/destructive/brand | button-filled (R) | S F R X | the button; filled buttons keep their colour when sunken |
+| Button outline/ghost, Toggle (outline) | button-quiet (F) | S F R X | `link` never; ghost follows the neutral faces |
+| Toggle (default) | control | F R X | only when ON |
+| ButtonGroup | button-filled | F R X | R = each item; X = the whole group as one plate (`buttonGroupFloating`), items stay R |
+| Badge | control (F) | S F R X | edge only; fill and tint stay |
+| Kbd | handle (R) | F R X | the key (on Kbd, not KbdGroup) |
+| Input, Textarea, Input Group, InputOTP, Select trigger, Native Select | field (S) | S F R X | the field; sunken swaps the edge for the ring on focus |
+| Checkbox | control (F) | F R | the checked box only |
+| Radio | control (F) | F | -- |
+| Switch | handle (R) | F R | thumb |
+| Slider | handle (R) | F R | thumbs |
+| Tabs / TabsList | control (F) | F R | active trigger only (`line` never) |
+| ToggleGroup | control (F) | F R | ON item only (`segmented` via `itemRaised`) |
+| Pagination | control (F) | F R | active link |
+| Calendar, RangeCalendar, DatePicker | handle (R) / overlay | F R X | selected day (R); elevation sits on the shell (popover/card), never the day grid |
+| Card | surface (R) | S F R X | the card; a nested card drops to F |
+| InsetPanel | surface body (R), shell container (F) | S F R X | R = body plate bevels; X = shell also gets the drop |
+| EmptyMedia | handle (R) | F R X | the media tile |
+| Choice card (FieldLabel card, radio/checkbox card, Questionnaire options, layout-picker) | control/surface | F R | the checked card; `elevation` on Questionnaire applies to every option |
+| Popover, Dialog, AlertDialog, DropdownMenu content, Select menu | overlay (X) | F R X | the popup; explicit prop wins |
+| Toast (Sonner) | container (F), natural X | F R X | `<Toaster elevation>` adds classes to `toastOptions.classNames.toast` |
+| Alert, Tooltip | container (F) | F | flat only (soft fill + tinted border) |
+| Menubar | control (F) | F R | the bar |
+| BubbleReactions | control | F R | chips (`active` kept) |
+| PromptInput / chat composer (AI) | overlay (X) | S F R X | the composer plate |
+| Patterns (✦) | per inner part | forward | forward `elevation` to the Card/Button they render |
+
+Flat-only (do not add `elevation`): Sheet, Drawer, HoverCard, Tooltip, Alert, NavigationMenu/Command popups, Sidebar, Accordion, Table/DataTable (container flat; toolbar follows Button/Input), Chart, Bubble, Combobox, Attachment. Components not in the table follow the nearest role.
+
+**Demos and docs.** Every component with `elevation` needs a second demo in all three ports showing flat / +1 / +2 and sunken (-1) for fields, cards, badges and buttons (overlays: floating only), like the kit boards. Demo files keep the legacy `<name>-raised.*` names until the rename wave, then `<name>-elevation.*` (checked by `verify:matrix` `RAISED` lists). mdx: API row `elevation | "auto" \| "sunken" \| "flat" \| "raised" \| "floating" | "auto"` and an `## Elevation ✦` section (levels supported, what rises). The `theme` base rule is `[data-elevation=raised], [data-elevation=floating] { background-origin: border-box }`.
+
 
 ## 6. Per-framework conventions
 
@@ -148,7 +176,7 @@ Common: same item names/anatomy/props/`data-slot`/exports as the stock port; res
 **Vue** (`packages/vue`, Reka UI)
 - Every item's files live in ONE dir `registry/ui/<name>/{Part.vue,index.ts}`; import via barrel `@/registry/edmi/ui/<name>`; `cn` from `@/registry/edmi/lib/utils`. Standalone files under `registry/lib` or `registry/hooks` get installed to `src/lib/registry/lib/…`, so ship **no utils item** and keep composables (`useX.ts`) inside the item dir. Pattern blocks also live in their item dir. `use-mobile` is skipped (sidebar uses `@vueuse/core` `useMediaQuery`).
 - Icons: import from `@lucide/vue` only; the CLI rewrites to the consumer's `iconLibrary`, but only for names that are keys of <https://www.shadcn-vue.com/r/icons/index.json> (tried as-is, then without trailing `Icon`) and that have phosphor + lucide mappings. Unmapped names break typecheck (no `EyeOff`, `Columns3`, `Briefcase`, `Link`, `ThumbsUp`; use `EyeIcon`, `PanelLeft`, …). Enforced by `scripts/smoke/vue-icons.ts`. Phosphor default cannot be set by a registry item: it is `init --style nova --icon-library phosphor` (documented, smoke-tested). `packages/vue/components.json` stays `iconLibrary: lucide`.
-- Props: `withDefaults(defineProps<…>(), { raised: false })` for components that own the look; `{ x: undefined }` for anything inheriting from `inject` or a cookie (`defaultOpen`, `defaultChecked`, `pressed`). Selectors `data-[state=…]` brackets (Reka puts `data-state=open` on triggers too), not shadcn-vue's custom variants. Polymorphic: `as-child`.
+- Props: `withDefaults(defineProps<…>(), { elevation: undefined })` (= `"auto"`) for components that take depth; `{ x: undefined }` for anything inheriting from `inject` or a cookie (`defaultOpen`, `defaultChecked`, `pressed`). Selectors `data-[state=…]` brackets (Reka puts `data-state=open` on triggers too), not shadcn-vue's custom variants. Polymorphic: `as-child`.
 - `vue-tsc` is broken under Bun; `packages/vue/scripts/vue-tsc.mjs` patches a copy of tsc (used by `typecheck` and smoke). Never call plain `vue-tsc`.
 - Scaffold flags that work: `shadcn-vue init --template vite --base reka --preset nova --css-variables --yes --no-reinstall`.
 
@@ -300,6 +328,7 @@ Environment and process
 - Decisions not covered here: choose the option closest to stock shadcn behaviour and record it in this section.
 
 Spec and design
+- **Elevation v4 (handoff `refs/edmi-ui-update-4`, 2026-10-04): the boolean `raised` is removed without alias** (user decision) and replaced by the enum `elevation="auto|sunken|flat|raised|floating"` on every component that can take depth. Why an enum: four levels (sunken -1, flat 0, raised +1, floating +2) and an `auto` that resolves through a scope; booleans cannot express that. Layered mode is an `ElevationProvider` (registry item `elevation`, context per framework that also renders `data-elevation`), role defaults come from `ROLE_LEVEL`/`resolveElevation` (copied from the recipes), nesting drops a surface inside a raised/floating surface to flat. Hard lips are replaced by the bevel model; dark ladder B applies to the stone base; legacy lip/edge/shade tokens stay for the example pages only. Breaking => changeset minor (0.x) with a migration note. Supersedes the "Menubar raised" and "raised" lines below.
 - Design changes come only from a handoff document exported from the design app into `refs/*`; no in-repo redesigns (e.g. the proposed InsetPanel raised-body "elevation scale" was cancelled for this reason). Why: user decision, keeps code and design app in sync.
 - Binding spec is `refs/edmi-ui` v2 (flat by default, `raised` opt-in, control height `h-9`). Why: user replaced the spec; the new DESIGN.md has no distribution section, so the registry distribution below stays unchanged.
 - Flat default is a default-look change ⇒ minor while 0.x. Ghost/link/Tabs-line never raised.
@@ -315,7 +344,7 @@ Spec and design
 
 Registry and tooling
 - Generator split: pure logic `scripts/lib/registry.ts` (tested) + CLI; manifest overlays `<group>.vue.ts`/`.svelte.ts` so ports never conflict; per-fw `skip`; `aggregate: "ui"` for `all`/`edmi`; `optionalRegistryDependencies`.
-- `theme` carries the whole `@theme inline` map in `cssVars.theme`, plus base-layer `border-color`/`body` rules and `[data-raised]`; font items set `selector` (`html`, `code, kbd, samp, pre`) or mono wins; font deps are `@fontsource-variable/*`.
+- `theme` carries the whole `@theme inline` map in `cssVars.theme`, plus base-layer `border-color`/`body` rules and the `[data-elevation=raised], [data-elevation=floating]` background-origin rule; font items set `selector` (`html`, `code, kbd, samp, pre`) or mono wins; font deps are `@fontsource-variable/*`.
 - React `edmi` base needs `extends: "none"`, `config.style: "base-nova"` (a custom style name 404s), `config.registries`; verified by `smoke/react.sh`. Smoke builds its own registry with a local `EDMI_URL` because URLs are baked in at gen time.
 - Verified: `shadcn init` needs `--preset nova` to be non-interactive (`--template vite --base base --preset nova --css-variables --name react --no-monorepo --pointer --yes`). Remove the nested git repo and the eslint/prettier it adds (Biome owns lint/format).
 - IconPlaceholder works for third-party registries: the CLI transforms every added file, strips imports whose path contains `icon-placeholder`, leaves elements missing the consumer's library prop broken (so all five props), and does not install the icon package on add (only `init` does).

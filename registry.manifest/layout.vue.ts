@@ -59,4 +59,12 @@ export const entries: Record<string, FrameworkEntry> = {
 		],
 		dependencies: ["reka-ui"],
 	},
+	elevation: {
+		files: [
+			{ path: "registry/ui/elevation/ElevationProvider.vue" },
+			{ path: "registry/ui/elevation/context.ts" },
+			{ path: "registry/ui/elevation/index.ts" },
+		],
+		dependencies: ["reka-ui"],
+	},
 };

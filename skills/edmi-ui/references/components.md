@@ -91,6 +91,7 @@ Choose by "use when". If two items fit, prefer the more specific one (`field` ov
 - `carousel`: swipeable slides; `CarouselDots` ✦ for position dots.
 - `collapsible`: one expandable panel.
 - `direction`: LTR / RTL provider.
+- `elevation`: Layered depth mode: wrap a subtree in `ElevationProvider mode="layered"` so each component takes its role level (or force one level).
 - `resizable`: draggable split panes.
 - `scroll-area`: thin custom scrollbars over native scrolling.
 

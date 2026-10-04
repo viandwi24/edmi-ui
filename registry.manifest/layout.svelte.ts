@@ -54,4 +54,11 @@ export const entries: Record<string, FrameworkEntry> = {
 			{ path: `${dir}/direction/index.ts` },
 		],
 	},
+	elevation: {
+		files: [
+			{ path: `${dir}/elevation/elevation-provider.svelte` },
+			{ path: `${dir}/elevation/context.ts` },
+			{ path: `${dir}/elevation/index.ts` },
+		],
+	},
 };

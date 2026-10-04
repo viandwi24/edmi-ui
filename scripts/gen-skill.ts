@@ -110,6 +110,8 @@ export const USE_WHEN: Record<string, string> = {
 	"scroll-area": "thin custom scrollbars over native scrolling.",
 	carousel: "swipeable slides; `CarouselDots` ✦ for position dots.",
 	direction: "LTR / RTL provider.",
+	elevation:
+		'Layered depth mode: wrap a subtree in `ElevationProvider mode="layered"` so each component takes its role level (or force one level).',
 	// Data
 	table:
 		"static tabular data. Numbers are mono and right-aligned (`numeric`, `trend` props).",
