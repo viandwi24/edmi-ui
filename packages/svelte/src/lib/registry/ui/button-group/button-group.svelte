@@ -2,7 +2,7 @@
 	import { tv, type VariantProps } from "tailwind-variants";
 
 	export const buttonGroupVariants = tv({
-		base: "group/button-group flex w-fit items-stretch *:focus-visible:relative *:focus-visible:z-10 has-[>[data-slot=button-group]]:gap-2 has-[select[aria-hidden=true]:last-child]:[&>[data-slot=select-trigger]:last-of-type]:rounded-r-lg [&>[data-slot=select-trigger]:not([class*='w-'])]:w-fit [&>input]:flex-1",
+		base: "group/button-group flex w-fit items-stretch [&>[data-variant=default]+[data-slot=button-group-separator]]:bg-primary-lip [&>[data-variant=secondary]+[data-slot=button-group-separator]]:bg-secondary-lip [&>[data-variant=brand]+[data-slot=button-group-separator]]:bg-brand-lip [&>[data-variant=destructive]+[data-slot=button-group-separator]]:bg-destructive-lip *:focus-visible:relative *:focus-visible:z-10 has-[>[data-slot=button-group]]:gap-2 has-[select[aria-hidden=true]:last-child]:[&>[data-slot=select-trigger]:last-of-type]:rounded-r-lg [&>[data-slot=select-trigger]:not([class*='w-'])]:w-fit [&>input]:flex-1",
 		variants: {
 			orientation: {
 				horizontal: "*:data-slot:rounded-r-none [&>[data-slot=input]]:shadow-none [&>[data-slot=input-group]]:shadow-none [&>[data-slot]:not(:has(~[data-slot]))]:rounded-r-lg! [&>[data-slot]~[data-slot]]:rounded-l-none [&>[data-slot]~[data-slot]]:border-l-0",

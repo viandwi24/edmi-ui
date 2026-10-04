@@ -12,7 +12,7 @@ const props = defineProps<{
   <Input
     data-slot="input-group-control"
     :class="cn(
-      'h-auto flex-1 rounded-none border-0 bg-transparent shadow-none focus-visible:shadow-none disabled:bg-transparent aria-invalid:shadow-none data-[invalid]:shadow-none',
+      'h-auto flex-1 rounded-none border-0 bg-transparent shadow-none! focus-visible:shadow-none! disabled:bg-transparent aria-invalid:shadow-none! data-[invalid]:shadow-none!',
       props.class,
     )"
   />
