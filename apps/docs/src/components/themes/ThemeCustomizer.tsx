@@ -20,6 +20,12 @@ import {
 	DialogTitle,
 } from "@edmi-react/ui/dialog";
 import {
+	InsetPanel,
+	InsetPanelBody,
+	InsetPanelFooter,
+	InsetPanelHeader,
+} from "@edmi-react/ui/inset-panel";
+import {
 	Select,
 	SelectContent,
 	SelectItem,
@@ -27,6 +33,13 @@ import {
 	SelectValue,
 } from "@edmi-react/ui/select";
 import { Tabs, TabsList, TabsTrigger } from "@edmi-react/ui/tabs";
+import { ToggleGroup, ToggleGroupItem } from "@edmi-react/ui/toggle-group";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from "@edmi-react/ui/tooltip";
 import {
 	ArrowCounterClockwiseIcon,
 	CaretDownIcon,
@@ -81,17 +94,24 @@ type State = {
 	mode: "light" | "dark";
 };
 
-function Row<T extends string>({
+type Option = { value: string; label: string; swatch?: React.ReactNode };
+
+/** One customize row: label on top, then a full-width 2-segment control; options with more than two
+ * values fall back to a Select (with the swatches), so extra bases/themes slot in without code changes. */
+function Row({
 	label,
 	value,
 	options,
 	onChange,
+	forceSegmented = false,
 }: {
 	label: string;
-	value: T;
-	options: { value: T; label: string; swatch?: React.ReactNode }[];
-	onChange: (v: T) => void;
+	value: string;
+	options: Option[];
+	onChange: (v: string) => void;
+	forceSegmented?: boolean;
 }) {
+	const segmented = forceSegmented || options.length <= 2;
 	const items = options.map((o) => ({
 		value: o.value,
 		label: (
@@ -102,29 +122,47 @@ function Row<T extends string>({
 		),
 	}));
 	return (
-		<Select
-			value={value}
-			items={items}
-			onValueChange={(v) => v && onChange(v as T)}
-		>
-			<SelectTrigger
-				aria-label={label}
-				className="h-11 w-full gap-3 rounded-lg px-3"
-			>
-				<span className="text-xs font-medium text-muted-foreground">
-					{label}
-				</span>
-				<SelectValue className="ml-auto flex-none text-[13px] font-medium" />
-			</SelectTrigger>
-			<SelectContent align="end" alignItemWithTrigger={false}>
-				{options.map((o) => (
-					<SelectItem key={o.value} value={o.value}>
-						{o.swatch}
-						{o.label}
-					</SelectItem>
-				))}
-			</SelectContent>
-		</Select>
+		<div className="flex flex-col gap-1.5">
+			<span className="text-xs font-medium text-muted-foreground">{label}</span>
+			{segmented ? (
+				<ToggleGroup
+					variant="segmented"
+					aria-label={label}
+					className="w-full"
+					value={[value]}
+					onValueChange={(v) => v[0] && onChange(v[0])}
+				>
+					{options.map((o) => (
+						<ToggleGroupItem
+							key={o.value}
+							value={o.value}
+							className="h-8 min-w-0 flex-1 gap-1.5 px-2 text-[13px]"
+						>
+							{o.swatch}
+							{o.label}
+						</ToggleGroupItem>
+					))}
+				</ToggleGroup>
+			) : (
+				<Select
+					value={value}
+					items={items}
+					onValueChange={(v) => v && onChange(v)}
+				>
+					<SelectTrigger aria-label={label} className="h-10 w-full">
+						<SelectValue className="text-[13px] font-medium" />
+					</SelectTrigger>
+					<SelectContent alignItemWithTrigger={false}>
+						{options.map((o) => (
+							<SelectItem key={o.value} value={o.value}>
+								{o.swatch}
+								{o.label}
+							</SelectItem>
+						))}
+					</SelectContent>
+				</Select>
+			)}
+		</div>
 	);
 }
 
@@ -213,18 +251,77 @@ ${installCommand(fw, item, pm)}`;
 		setLayered(false);
 	};
 
+	// data-driven: every row is built from theme-data; two values -> segmented, more -> Select
+	const rows: Parameters<typeof Row>[0][] = [
+		{
+			label: "Mode",
+			value: s.mode,
+			onChange: (v) => set("mode", v as State["mode"]),
+			options: [
+				{ value: "light", label: "Light" },
+				{ value: "dark", label: "Dark" },
+			],
+		},
+		{
+			label: "Style",
+			value: layered ? "layered" : "flat",
+			onChange: (v) => setLayered(v === "layered"),
+			options: [
+				{ value: "flat", label: "Flat" },
+				{ value: "layered", label: "Layered \u2726" },
+			],
+		},
+		{
+			label: "Base color",
+			value: s.base,
+			onChange: (v) => set("base", v),
+			options: data.bases.map((b) => ({
+				value: b,
+				label: cap(b),
+				swatch: (
+					<span
+						className="size-3 shrink-0 rounded-full border border-border"
+						style={{ background: data.swatch.bases[b]?.bg }}
+					/>
+				),
+			})),
+		},
+		{
+			label: "Theme",
+			value: s.theme,
+			onChange: (v) => set("theme", v),
+			options: data.themes.map((t) => ({
+				value: t,
+				label: cap(t),
+				swatch: (
+					<span
+						className="size-3 shrink-0 rounded-full"
+						style={{ background: data.swatch.themes[t] }}
+					/>
+				),
+			})),
+		},
+		{
+			label: "Radius",
+			value: s.radius,
+			onChange: (v) => set("radius", v),
+			forceSegmented: true,
+			options: RADII.map((r) => ({ value: r, label: r })),
+		},
+	];
+
 	return (
 		<div className="edmi-themes edmi-fit not-content flex h-full min-h-0 flex-col gap-3 min-[900px]:flex-row">
-			<aside
+			<InsetPanel
 				aria-label="Customize"
-				className="flex shrink-0 flex-col rounded-2xl border border-border bg-popover min-[900px]:w-72 min-[900px]:min-h-0"
+				className="shrink-0 min-[900px]:h-full min-[900px]:w-72 min-[900px]:min-h-0"
 			>
-				<div className="flex items-center gap-2 p-3 min-[900px]:pb-2">
+				<InsetPanelHeader className="gap-3 px-4 py-3">
 					<div className="min-w-0 flex-1">
 						<h2 className="m-0! text-[15px] leading-tight font-medium text-foreground">
 							Customize
 						</h2>
-						<p className="m-0! mt-0.5! hidden truncate text-xs text-muted-foreground min-[900px]:block">
+						<p className="m-0! mt-0.5! hidden truncate text-xs font-normal text-muted-foreground min-[900px]:block">
 							{label} · {s.radius}rem · {s.mode}
 						</p>
 					</div>
@@ -241,75 +338,34 @@ ${installCommand(fw, item, pm)}`;
 							className={`size-3.5 transition-transform ${panelOpen ? "rotate-180" : ""}`}
 						/>
 					</Button>
-					<Button
-						variant="ghost"
-						size="icon-sm"
-						aria-label="Reset"
-						title="Reset"
-						onClick={reset}
-					>
-						<ArrowCounterClockwiseIcon className="size-4" />
-					</Button>
-				</div>
-				<div
-					className={`${panelOpen ? "flex" : "hidden"} max-h-[55dvh] flex-col gap-2 overflow-y-auto border-t border-border p-3 min-[900px]:flex min-[900px]:max-h-none min-[900px]:flex-1 min-[900px]:border-t-0 min-[900px]:pt-1`}
+					<TooltipProvider>
+						<Tooltip>
+							<TooltipTrigger
+								render={
+									<Button
+										variant="ghost"
+										size="icon-sm"
+										aria-label="Reset"
+										onClick={reset}
+									/>
+								}
+							>
+								<ArrowCounterClockwiseIcon className="size-4" />
+							</TooltipTrigger>
+							<TooltipContent>Reset to defaults</TooltipContent>
+						</Tooltip>
+					</TooltipProvider>
+				</InsetPanelHeader>
+				<InsetPanelBody
+					className={`${panelOpen ? "block" : "hidden"} max-h-[55dvh] overflow-y-auto min-[900px]:block min-[900px]:max-h-none`}
 				>
-					<Row
-						label="Base color"
-						value={s.base}
-						onChange={(v) => set("base", v)}
-						options={data.bases.map((b) => ({
-							value: b,
-							label: cap(b),
-							swatch: (
-								<span
-									className="size-3 shrink-0 rounded-full border border-border"
-									style={{ background: data.swatch.bases[b]?.bg }}
-								/>
-							),
-						}))}
-					/>
-					<Row
-						label="Theme"
-						value={s.theme}
-						onChange={(v) => set("theme", v)}
-						options={data.themes.map((t) => ({
-							value: t,
-							label: cap(t),
-							swatch: (
-								<span
-									className="size-3 shrink-0 rounded-full"
-									style={{ background: data.swatch.themes[t] }}
-								/>
-							),
-						}))}
-					/>
-					<Row
-						label="Radius"
-						value={s.radius}
-						onChange={(v) => set("radius", v)}
-						options={RADII.map((r) => ({ value: r, label: `${r}rem` }))}
-					/>
-					<Row
-						label="Mode"
-						value={s.mode}
-						onChange={(v) => set("mode", v)}
-						options={[
-							{ value: "light", label: "Light" },
-							{ value: "dark", label: "Dark" },
-						]}
-					/>
-					<Row
-						label="Style"
-						value={layered ? "layered" : "flat"}
-						onChange={(v) => setLayered(v === "layered")}
-						options={[
-							{ value: "flat", label: "Flat" },
-							{ value: "layered", label: "Layered \u2726" },
-						]}
-					/>
-				</div>
-				<div className="mt-auto flex gap-2 border-t border-border p-3">
+					<div className="flex flex-col gap-4 p-4">
+						{rows.map((r) => (
+							<Row key={r.label} {...r} />
+						))}
+					</div>
+				</InsetPanelBody>
+				<InsetPanelFooter className="flex gap-2 p-3">
 					<Button
 						variant="outline"
 						className="flex-1"
@@ -322,14 +378,14 @@ ${installCommand(fw, item, pm)}`;
 						<TerminalWindowIcon className="size-4" />
 						Install
 					</Button>
-				</div>
-			</aside>
+				</InsetPanelFooter>
+			</InsetPanel>
 
 			<div
 				data-preview
 				data-base={s.base}
 				data-theme={s.theme}
-				className={`edmi-showcase relative min-h-0 min-w-0 flex-1 overflow-auto rounded-2xl border border-border bg-background p-4 text-foreground sm:p-6 ${
+				className={`edmi-showcase relative min-h-0 min-w-0 flex-1 overflow-auto rounded-2xl border border-border bg-background p-4 text-foreground sm:p-5 min-[1200px]:p-6 ${
 					s.mode === "dark" ? "dark" : "edmi-light"
 				}`}
 				style={
@@ -339,7 +395,7 @@ ${installCommand(fw, item, pm)}`;
 					} as React.CSSProperties
 				}
 			>
-				<div className="columns-1 gap-4 min-[700px]:columns-2 min-[1500px]:columns-3 [&>*]:mb-4 [&>*]:break-inside-avoid">
+				<div className="columns-1 gap-5 min-[760px]:columns-2 min-[1500px]:columns-3 [&>*]:mb-5 [&>*]:break-inside-avoid">
 					<ControlsCard />
 					<ChartCard />
 					<FormCard />
