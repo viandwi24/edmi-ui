@@ -635,7 +635,7 @@ details#starlight__mobile-toc summary {
 .sl-markdown-content a:not(:where(.not-content *)):hover {
 	text-decoration-color: var(--foreground);
 }
-.sl-markdown-content table {
+.sl-markdown-content table:not(.edmi-preview *) {
 	border-collapse: separate;
 	border-spacing: 0;
 	width: 100%;
@@ -645,16 +645,16 @@ details#starlight__mobile-toc summary {
 	overflow: hidden;
 	font-size: 0.875rem;
 }
-.sl-markdown-content :is(th, td) {
+.sl-markdown-content :is(th, td):not(.edmi-preview *) {
 	padding: 0.5rem 0.875rem;
 	border: 0;
 	border-bottom: 1px solid var(--border-2);
 	text-align: start;
 }
-.sl-markdown-content tr:last-child > td {
+.sl-markdown-content tr:last-child > td:not(.edmi-preview *) {
 	border-bottom: 0;
 }
-.sl-markdown-content th {
+.sl-markdown-content th:not(.edmi-preview *) {
 	background: var(--muted);
 	font-family: var(--sl-font-mono);
 	font-size: 0.6875rem;
@@ -663,10 +663,10 @@ details#starlight__mobile-toc summary {
 	text-transform: uppercase;
 	color: var(--muted-foreground);
 }
-.sl-markdown-content td code {
+.sl-markdown-content td:not(.edmi-preview *) code {
 	font-size: 0.75rem;
 }
-.sl-markdown-content :is(td, th):first-child code {
+.sl-markdown-content :is(td, th):first-child:not(.edmi-preview *) code {
 	background: transparent;
 	border: 0;
 	padding: 0;
@@ -949,7 +949,7 @@ html[data-pm="bun"] .edmi-pm-tabs [data-pm-set="bun"] {
 }
 
 /* API tables scroll inside the content column instead of widening the page on phones */
-.sl-markdown-content table {
+.sl-markdown-content table:not(.edmi-preview *) {
 	display: block;
 	max-width: 100%;
 	overflow-x: auto;
