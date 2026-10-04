@@ -982,6 +982,7 @@ html[data-pm="bun"] .edmi-pm-tabs [data-pm-set="bun"] {
 
 /* Examples pages: segmented track (same look as ComponentDemo's `.edmi-seg`, whose styles load only with demos) */
 .edmi-ex .edmi-seg,
+.edmi-header-slot .edmi-seg,
 .edmi-exi .edmi-seg {
 	display: inline-flex;
 	gap: 2px;
@@ -991,6 +992,7 @@ html[data-pm="bun"] .edmi-pm-tabs [data-pm-set="bun"] {
 	border: 1px solid var(--border);
 }
 .edmi-ex .edmi-seg button,
+.edmi-header-slot .edmi-seg button,
 .edmi-exi .edmi-seg button {
 	font: 500 12.5px / 1 var(--sl-font);
 	border-radius: 6px;
@@ -1000,10 +1002,12 @@ html[data-pm="bun"] .edmi-pm-tabs [data-pm-set="bun"] {
 	color: var(--muted-foreground);
 }
 .edmi-ex .edmi-seg button:hover,
+.edmi-header-slot .edmi-seg button:hover,
 .edmi-exi .edmi-seg button:hover {
 	color: var(--foreground);
 }
-.edmi-ex .edmi-seg button[aria-selected="true"] {
+.edmi-ex .edmi-seg button[aria-selected="true"],
+.edmi-header-slot .edmi-seg button[aria-selected="true"] {
 	background: var(--tab-active);
 	border-color: var(--border);
 	color: var(--foreground);
@@ -1039,4 +1043,55 @@ html:root:has(.edmi-changelog) {
 }
 .sidebar-content .edmi-side-det > ul > li > a {
 	padding-inline-start: 1.125rem;
+}
+
+/* ---------------------------------------- one-screen app pages (Themes) ---------------------------------------- */
+/* The page is exactly 100dvh: docs header on top, the content fills the rest and scrolls inside its own panes. */
+html:root:has(.edmi-fit-page) {
+	overflow: hidden;
+}
+html:has(.edmi-fit-page) .main-frame {
+	height: 100dvh;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+html:has(.edmi-fit-page) .main-frame :is(div, main):has(.edmi-fit-page) {
+	height: 100%;
+	min-height: 0;
+	max-width: none;
+	padding-block: 0;
+}
+html:has(.edmi-fit-page) .main-frame .content-panel:has(.edmi-fit-page) {
+	padding: 0.5rem 0.75rem 0.75rem;
+}
+html:has(.edmi-fit-page) .main-frame .edmi-fit-page {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+html:has(.edmi-fit-page) .main-frame main:has(.edmi-fit-page) {
+	display: flex;
+	flex-direction: column;
+}
+html:has(.edmi-fit-page) .main-frame main > .content-panel:has(.edmi-fit-page) {
+	flex: 1;
+	height: auto;
+}
+/* the splash page title stays in the DOM for assistive tech and search, but takes no space */
+html:has(.edmi-fit-page)
+	.main-frame
+	main
+	> .content-panel:not(:has(.edmi-fit-page)) {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+html:has(.edmi-fit-page) .main-frame .sl-container > footer {
+	display: none;
 }

@@ -19,8 +19,21 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@edmi-react/ui/dialog";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@edmi-react/ui/select";
 import { Tabs, TabsList, TabsTrigger } from "@edmi-react/ui/tabs";
-import { CopyIcon, TerminalWindowIcon } from "@phosphor-icons/react";
+import {
+	ArrowCounterClockwiseIcon,
+	CaretDownIcon,
+	CopyIcon,
+	SlidersHorizontalIcon,
+	TerminalWindowIcon,
+} from "@phosphor-icons/react";
 import { useEffect, useMemo, useState } from "react";
 import {
 	FRAMEWORK_LABEL,
@@ -68,38 +81,50 @@ type State = {
 	mode: "light" | "dark";
 };
 
-function Control<T extends string>({
+function Row<T extends string>({
 	label,
-	hint,
 	value,
 	options,
 	onChange,
 }: {
 	label: string;
-	hint: string;
 	value: T;
 	options: { value: T; label: string; swatch?: React.ReactNode }[];
 	onChange: (v: T) => void;
 }) {
+	const items = options.map((o) => ({
+		value: o.value,
+		label: (
+			<span className="flex items-center gap-2">
+				{o.swatch}
+				{o.label}
+			</span>
+		),
+	}));
 	return (
-		<div className="flex min-w-0 flex-col gap-1.5">
-			<div className="flex items-baseline gap-2">
-				<span className="text-[13px] font-medium text-foreground">{label}</span>
-				<span className="font-mono text-[11px] text-muted-foreground-2">
-					{hint}
+		<Select
+			value={value}
+			items={items}
+			onValueChange={(v) => v && onChange(v as T)}
+		>
+			<SelectTrigger
+				aria-label={label}
+				className="h-11 w-full gap-3 rounded-lg px-3"
+			>
+				<span className="text-xs font-medium text-muted-foreground">
+					{label}
 				</span>
-			</div>
-			<Tabs value={value} onValueChange={(v) => onChange(v as T)}>
-				<TabsList className="max-w-full flex-wrap">
-					{options.map((o) => (
-						<TabsTrigger key={o.value} value={o.value}>
-							{o.swatch}
-							{o.label}
-						</TabsTrigger>
-					))}
-				</TabsList>
-			</Tabs>
-		</div>
+				<SelectValue className="ml-auto flex-none text-[13px] font-medium" />
+			</SelectTrigger>
+			<SelectContent align="end" alignItemWithTrigger={false}>
+				{options.map((o) => (
+					<SelectItem key={o.value} value={o.value}>
+						{o.swatch}
+						{o.label}
+					</SelectItem>
+				))}
+			</SelectContent>
+		</Select>
 	);
 }
 
@@ -134,6 +159,7 @@ export default function ThemeCustomizer({ data }: { data: ThemeData }) {
 		mode: "light",
 	});
 	const [dialog, setDialog] = useState<"css" | "install" | null>(null);
+	const [panelOpen, setPanelOpen] = useState(false);
 	const [cssTab, setCssTab] = useState<"css" | "tailwind">("css");
 	const [fw, setFw] = useFramework();
 	const pm = usePm();
@@ -182,98 +208,128 @@ ${installCommand(fw, "theme", pm)}
 ${installCommand(fw, item, pm)}`;
 	const label = `${cap(s.base)} \u00b7 ${cap(s.theme)}`;
 
+	const reset = () => {
+		setS({ base: "stone", theme: "green", radius: "0.625", mode: "light" });
+		setLayered(false);
+	};
+
 	return (
-		<div className="edmi-themes not-content flex flex-col gap-6">
-			<header className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
-				<div className="max-w-2xl">
-					<h2 className="m-0 text-[clamp(2rem,4vw,2.625rem)] leading-[1.08] font-medium tracking-[-0.035em] text-ink-soft">
-						Themes
-					</h2>
-					<p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
-						Pick a base color, a theme, a radius and a mode, then see real Edmi
-						components in it. Copy the CSS or install the matching registry
-						theme. The preview is scoped: the docs chrome keeps its own theme.
-					</p>
+		<div className="edmi-themes edmi-fit not-content flex h-full min-h-0 flex-col gap-3 min-[900px]:flex-row">
+			<aside
+				aria-label="Customize"
+				className="flex shrink-0 flex-col rounded-2xl border border-border bg-popover min-[900px]:w-72 min-[900px]:min-h-0"
+			>
+				<div className="flex items-center gap-2 p-3 min-[900px]:pb-2">
+					<div className="min-w-0 flex-1">
+						<h2 className="m-0! text-[15px] leading-tight font-medium text-foreground">
+							Customize
+						</h2>
+						<p className="m-0! mt-0.5! hidden truncate text-xs text-muted-foreground min-[900px]:block">
+							{label} · {s.radius}rem · {s.mode}
+						</p>
+					</div>
+					<Button
+						variant="ghost"
+						size="sm"
+						className="min-[900px]:hidden"
+						aria-expanded={panelOpen}
+						onClick={() => setPanelOpen((o) => !o)}
+					>
+						<SlidersHorizontalIcon className="size-4" />
+						Options
+						<CaretDownIcon
+							className={`size-3.5 transition-transform ${panelOpen ? "rotate-180" : ""}`}
+						/>
+					</Button>
+					<Button
+						variant="ghost"
+						size="icon-sm"
+						aria-label="Reset"
+						title="Reset"
+						onClick={reset}
+					>
+						<ArrowCounterClockwiseIcon className="size-4" />
+					</Button>
 				</div>
-				<div className="flex flex-wrap gap-2">
-					<Button variant="outline" onClick={() => setDialog("css")}>
+				<div
+					className={`${panelOpen ? "flex" : "hidden"} max-h-[55dvh] flex-col gap-2 overflow-y-auto border-t border-border p-3 min-[900px]:flex min-[900px]:max-h-none min-[900px]:flex-1 min-[900px]:border-t-0 min-[900px]:pt-1`}
+				>
+					<Row
+						label="Base color"
+						value={s.base}
+						onChange={(v) => set("base", v)}
+						options={data.bases.map((b) => ({
+							value: b,
+							label: cap(b),
+							swatch: (
+								<span
+									className="size-3 shrink-0 rounded-full border border-border"
+									style={{ background: data.swatch.bases[b]?.bg }}
+								/>
+							),
+						}))}
+					/>
+					<Row
+						label="Theme"
+						value={s.theme}
+						onChange={(v) => set("theme", v)}
+						options={data.themes.map((t) => ({
+							value: t,
+							label: cap(t),
+							swatch: (
+								<span
+									className="size-3 shrink-0 rounded-full"
+									style={{ background: data.swatch.themes[t] }}
+								/>
+							),
+						}))}
+					/>
+					<Row
+						label="Radius"
+						value={s.radius}
+						onChange={(v) => set("radius", v)}
+						options={RADII.map((r) => ({ value: r, label: `${r}rem` }))}
+					/>
+					<Row
+						label="Mode"
+						value={s.mode}
+						onChange={(v) => set("mode", v)}
+						options={[
+							{ value: "light", label: "Light" },
+							{ value: "dark", label: "Dark" },
+						]}
+					/>
+					<Row
+						label="Style"
+						value={layered ? "layered" : "flat"}
+						onChange={(v) => setLayered(v === "layered")}
+						options={[
+							{ value: "flat", label: "Flat" },
+							{ value: "layered", label: "Layered \u2726" },
+						]}
+					/>
+				</div>
+				<div className="mt-auto flex gap-2 border-t border-border p-3">
+					<Button
+						variant="outline"
+						className="flex-1"
+						onClick={() => setDialog("css")}
+					>
 						<CopyIcon className="size-4" />
 						Copy CSS
 					</Button>
-					<Button onClick={() => setDialog("install")}>
+					<Button className="flex-1" onClick={() => setDialog("install")}>
 						<TerminalWindowIcon className="size-4" />
 						Install
 					</Button>
 				</div>
-			</header>
-
-			<div className="flex flex-wrap gap-x-8 gap-y-4 rounded-xl border border-border bg-card p-4 sm:p-5">
-				<Control
-					label="Base color"
-					hint="data-base"
-					value={s.base}
-					onChange={(v) => set("base", v)}
-					options={data.bases.map((b) => ({
-						value: b,
-						label: cap(b),
-						swatch: (
-							<span
-								className="size-3 rounded-full border border-border"
-								style={{ background: data.swatch.bases[b]?.bg }}
-							/>
-						),
-					}))}
-				/>
-				<Control
-					label="Theme"
-					hint="data-theme"
-					value={s.theme}
-					onChange={(v) => set("theme", v)}
-					options={data.themes.map((t) => ({
-						value: t,
-						label: cap(t),
-						swatch: (
-							<span
-								className="size-3 rounded-full"
-								style={{ background: data.swatch.themes[t] }}
-							/>
-						),
-					}))}
-				/>
-				<Control
-					label="Radius"
-					hint="--radius"
-					value={s.radius}
-					onChange={(v) => set("radius", v)}
-					options={RADII.map((r) => ({ value: r, label: r }))}
-				/>
-				<Control
-					label="Mode"
-					hint="class=dark"
-					value={s.mode}
-					onChange={(v) => set("mode", v)}
-					options={[
-						{ value: "light", label: "Light" },
-						{ value: "dark", label: "Dark" },
-					]}
-				/>
-				<Control
-					label="Style"
-					hint="elevation"
-					value={layered ? "layered" : "flat"}
-					onChange={(v) => setLayered(v === "layered")}
-					options={[
-						{ value: "flat", label: "Flat" },
-						{ value: "layered", label: "Layered \u2726" },
-					]}
-				/>
-			</div>
+			</aside>
 
 			<div
 				data-preview
 				data-base={s.base}
 				data-theme={s.theme}
-				className={`edmi-showcase rounded-xl border border-border bg-background p-4 text-foreground sm:p-6 ${
+				className={`edmi-showcase relative min-h-0 min-w-0 flex-1 overflow-auto rounded-2xl border border-border bg-background p-4 text-foreground sm:p-6 ${
 					s.mode === "dark" ? "dark" : "edmi-light"
 				}`}
 				style={
@@ -283,7 +339,7 @@ ${installCommand(fw, item, pm)}`;
 					} as React.CSSProperties
 				}
 			>
-				<div className="columns-1 gap-4 md:columns-2 xl:columns-3 [&>*]:mb-4 [&>*]:break-inside-avoid">
+				<div className="columns-1 gap-4 min-[700px]:columns-2 min-[1500px]:columns-3 [&>*]:mb-4 [&>*]:break-inside-avoid">
 					<ControlsCard />
 					<ChartCard />
 					<FormCard />
