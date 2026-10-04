@@ -6,6 +6,7 @@ import { IconPlaceholder } from "@/edmi/icon-placeholder";
 
 import { Button } from "@/registry/edmi/ui/button";
 import { Calendar } from "@/registry/edmi/ui/calendar";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
 import {
 	Popover,
 	PopoverContent,
@@ -21,7 +22,7 @@ function DatePicker({
 	defaultValue,
 	onValueChange,
 	placeholder = "Pick a date",
-	raised = false,
+	elevation,
 	className,
 	...props
 }: Omit<TriggerProps, "defaultValue" | "onChange"> & {
@@ -30,7 +31,7 @@ function DatePicker({
 	onValueChange?: (date: Date | undefined) => void;
 	placeholder?: string;
 	/** ✦ forwarded to the trigger Button and the Calendar */
-	raised?: boolean;
+	elevation?: Elevation;
 }) {
 	const [inner, setInner] = React.useState<Date | undefined>(defaultValue);
 	const [open, setOpen] = React.useState(false);
@@ -41,7 +42,7 @@ function DatePicker({
 				render={
 					<Button
 						variant="outline"
-						raised={raised}
+						elevation={elevation}
 						data-empty={!date}
 						className={cn(
 							"w-[240px] justify-start text-left font-normal data-[empty=true]:text-muted-foreground",
@@ -63,7 +64,7 @@ function DatePicker({
 			<PopoverContent className="w-auto p-0" align="start">
 				<Calendar
 					mode="single"
-					raised={raised}
+					elevation={elevation}
 					captionLayout="dropdown"
 					selected={date}
 					defaultMonth={date}
@@ -112,7 +113,7 @@ function DateRangePicker({
 	onValueChange,
 	placeholder = "Pick a date range",
 	presets,
-	raised = false,
+	elevation,
 	className,
 	...props
 }: Omit<TriggerProps, "defaultValue" | "onChange"> & {
@@ -123,7 +124,7 @@ function DateRangePicker({
 	/** ✦ `true` for the default presets, or your own list. */
 	presets?: boolean | Preset[];
 	/** ✦ forwarded to the trigger Button and the Calendar */
-	raised?: boolean;
+	elevation?: Elevation;
 }) {
 	const [inner, setInner] = React.useState<DateRange | undefined>(defaultValue);
 	const range = value ?? inner;
@@ -138,7 +139,7 @@ function DateRangePicker({
 				render={
 					<Button
 						variant="outline"
-						raised={raised}
+						elevation={elevation}
 						data-empty={!range?.from}
 						className={cn(
 							"w-[260px] justify-start text-left font-normal data-[empty=true]:text-muted-foreground",
@@ -175,7 +176,7 @@ function DateRangePicker({
 				)}
 				<Calendar
 					mode="range"
-					raised={raised}
+					elevation={elevation}
 					numberOfMonths={1}
 					selected={range}
 					defaultMonth={range?.from}

@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="field" />
 
-## Raised ✦
+## Elevation ✦
 
-A `FieldLabel` that wraps a `Field` is a choice card. Flat by default; pass `raised` on the `FieldLabel` for the one-step 3D look.
+A `FieldLabel` that wraps a `Field` is a choice card. `elevation` on the `FieldLabel` sets its depth (sunken -1, flat, raised +1, floating +2); a checked card keeps the ring border.
 
 <ComponentDemo name="radio-group" demo="radio-group-raised" />
 
@@ -33,7 +33,7 @@ A `FieldLabel` that wraps a `Field` is a choice card. Flat by default; pass `rai
 | Field orientation | `vertical \| horizontal \| responsive` | `vertical` |
 | FieldLegend variant | `legend \| label` | `legend` |
 | FieldError errors | `Array<{ message?: string }>` | none |
-| FieldLabel raised ✦ | `boolean` | `false` |
+| FieldLabel elevation ✦ | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 ## ✦ Edmi additions
-- Choice-card labels (a FieldLabel wrapping a Field) highlight with the ring border when checked; `raised` adds the lip.
+- Choice-card labels (a FieldLabel wrapping a Field) highlight with the ring border when checked; `elevation` adds depth.

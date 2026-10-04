@@ -5,9 +5,10 @@ export const items: Item[] = [
 		name: "input",
 		title: "Input",
 		description:
-			"Single-line text field on the card surface with a sunken inner shadow, focus halo and aria-invalid state.",
+			"Single-line text field on the card surface with a focus halo, aria-invalid state and an elevation prop (sunken, raised, floating).",
 		type: "registry:ui",
 		categories: ["Forms"],
+		registryDependencies: ["elevation"],
 		docs: "Replaces the stock input: `shadcn add @edmi-ui/input --overwrite`.",
 		frameworks: {
 			react: {
@@ -35,9 +36,10 @@ export const items: Item[] = [
 		name: "textarea",
 		title: "Textarea",
 		description:
-			"Multi-line text on the card surface with a sunken inner shadow, focus halo and aria-invalid state. Grows with content.",
+			"Multi-line text on the card surface with a focus halo, aria-invalid state and an elevation prop. Grows with content.",
 		type: "registry:ui",
 		categories: ["Forms"],
+		registryDependencies: ["elevation"],
 		docs: "Replaces the stock textarea: `shadcn add @edmi-ui/textarea --overwrite`.",
 		frameworks: {
 			react: {
@@ -53,6 +55,7 @@ export const items: Item[] = [
 			"The browser select with an Edmi trigger skin, for mobile and long, simple lists.",
 		type: "registry:ui",
 		categories: ["Forms"],
+		registryDependencies: ["elevation"],
 		docs: "Replaces the stock native-select: `shadcn add @edmi-ui/native-select --overwrite`.",
 		frameworks: {
 			react: {
@@ -68,6 +71,7 @@ export const items: Item[] = [
 			"One-time code entry with individual slots, caret and paste support.",
 		type: "registry:ui",
 		categories: ["Forms"],
+		registryDependencies: ["elevation"],
 		docs: "Replaces the stock input-otp: `shadcn add @edmi-ui/input-otp --overwrite`.",
 		frameworks: {
 			react: {
@@ -83,7 +87,7 @@ export const items: Item[] = [
 			"Icons, text, buttons or keys around an input or textarea sharing one focus ring.",
 		type: "registry:ui",
 		categories: ["Forms"],
-		registryDependencies: ["button", "input", "textarea"],
+		registryDependencies: ["button", "input", "textarea", "elevation"],
 		docs: "Replaces the stock input-group: `shadcn add @edmi-ui/input-group --overwrite`.",
 		frameworks: {
 			react: {
@@ -99,7 +103,7 @@ export const items: Item[] = [
 			"Composes label, control, description and error into one accessible unit; vertical, horizontal or responsive.",
 		type: "registry:ui",
 		categories: ["Forms"],
-		registryDependencies: ["label", "separator"],
+		registryDependencies: ["label", "separator", "elevation"],
 		docs: "Replaces the stock field: `shadcn add @edmi-ui/field --overwrite`.",
 		frameworks: {
 			react: {
@@ -115,6 +119,7 @@ export const items: Item[] = [
 			"Custom select in a popover with groups, labels, separators, disabled items and a check on the chosen value.",
 		type: "registry:ui",
 		categories: ["Forms"],
+		registryDependencies: ["elevation"],
 		docs: "Replaces the stock select: `shadcn add @edmi-ui/select --overwrite`.",
 		frameworks: {
 			react: {

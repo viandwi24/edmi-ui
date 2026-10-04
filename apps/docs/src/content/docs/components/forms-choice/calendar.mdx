@@ -1,6 +1,6 @@
 ---
 title: Calendar
-description: Month grid for picking a date or a range. Today is tinted; the selected day is a primary fill (`raised` adds the lip).
+description: Month grid for picking a date or a range. Today is tinted; the selected day is a primary fill (`elevation` raises it).
 ---
 import ComponentDemo from "../../../../components/ComponentDemo.astro";
 import ComponentInstall from "../../../../components/ComponentInstall.astro";
@@ -27,9 +27,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 ## Dropdown caption
 <ComponentDemo name="calendar" demo="calendar-dropdown" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look (selected day and range ends).
+`elevation` sits on the calendar shell (sunken -1, flat, raised +1, floating +2), never on the day grid. When raised or floating the selected day (and range ends) rise with the handle recipe. Inside a popover or card the host owns the shell, so only the selected day changes.
 
 <ComponentDemo name="calendar" demo="calendar-raised" />
 
@@ -45,12 +45,12 @@ Built on `react-day-picker` v10 (and `date-fns`). All DayPicker props are forwar
 | `showWeekNumber` | `boolean` | `false` |
 | `buttonVariant` | Button `variant` | `"outline"` |
 | `--cell-size` (CSS var) | length | `36px` |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 Exports: `Calendar`, `CalendarDayButton`.
 
 ## ✦ Edmi additions
-- Selected day and range endpoints are flat primary fills (`raised`: gradient + hard 2px lip); range middle is a flat `--accent` band.
+- Selected day and range endpoints are flat primary fills (`elevation` raised: bevel); range middle is a flat `--accent` band.
 - Month/year dropdowns are bordered mini-buttons with a soft focus ring; nav buttons use the outline button recipe.
 
 ## Vue / Svelte differences

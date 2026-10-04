@@ -1,10 +1,7 @@
 import {
 	Select,
 	SelectContent,
-	SelectGroup,
 	SelectItem,
-	SelectLabel,
-	SelectSeparator,
 	SelectTrigger,
 	SelectValue,
 } from "@edmi-react/ui/select";
@@ -12,33 +9,32 @@ import {
 const tokens = [
 	{ value: "nvdax", label: "NVDAx" },
 	{ value: "msftx", label: "MSFTx" },
-	{ value: "aaplx", label: "AAPLx" },
-	{ value: "anthrop", label: "ANTHRP-pre" },
-	{ value: "openai", label: "OPENAI-pre" },
 ];
+
+const levels = [
+	{ value: "sunken", label: "Sunken (-1)" },
+	{ value: "flat", label: "Flat (0)" },
+	{ value: "raised", label: "Raised (+1)" },
+	{ value: "floating", label: "Floating (+2)" },
+] as const;
 
 export default function Demo() {
 	return (
-		<Select defaultValue="nvdax" items={tokens}>
-			<SelectTrigger raised className="w-52">
-				<SelectValue placeholder="Select a token" />
-			</SelectTrigger>
-			<SelectContent alignItemWithTrigger={false}>
-				<SelectGroup>
-					<SelectLabel>US megacaps</SelectLabel>
-					<SelectItem value="nvdax">NVDAx</SelectItem>
-					<SelectItem value="msftx">MSFTx</SelectItem>
-					<SelectItem value="aaplx">AAPLx</SelectItem>
-				</SelectGroup>
-				<SelectSeparator />
-				<SelectGroup>
-					<SelectLabel>Pre-IPO</SelectLabel>
-					<SelectItem value="anthrop">ANTHRP-pre</SelectItem>
-					<SelectItem value="openai" disabled>
-						OPENAI-pre
-					</SelectItem>
-				</SelectGroup>
-			</SelectContent>
-		</Select>
+		<div className="flex flex-col gap-5">
+			{levels.map(({ value, label }) => (
+				<div key={value} className="flex flex-col gap-2">
+					<p className="text-xs font-medium text-muted-foreground">{label}</p>
+					<Select defaultValue="nvdax" items={tokens}>
+						<SelectTrigger elevation={value} className="w-48">
+							<SelectValue placeholder="Select a token" />
+						</SelectTrigger>
+						<SelectContent alignItemWithTrigger={false}>
+							<SelectItem value="nvdax">NVDAx</SelectItem>
+							<SelectItem value="msftx">MSFTx</SelectItem>
+						</SelectContent>
+					</Select>
+				</div>
+			))}
+		</div>
 	);
 }

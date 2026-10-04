@@ -3,13 +3,18 @@ import type { SliderRootEmits, SliderRootProps } from "reka-ui"
 import type { HTMLAttributes } from "vue"
 import { reactiveOmit } from "@vueuse/core"
 import { SliderRange, SliderRoot, SliderThumb, SliderTrack, useForwardPropsEmits } from "reka-ui"
+import { computed } from "vue"
 import { cn } from "@/registry/edmi/lib/utils"
+import { type Elevation, useElevation } from "@/registry/edmi/ui/elevation"
 
 // Array value: 1 = single, 2 = range, 3+ = multiple thumbs.
-const props = withDefaults(defineProps<SliderRootProps & { class?: HTMLAttributes["class"], raised?: boolean }>(), { raised: false })
+const props = withDefaults(defineProps<SliderRootProps & { class?: HTMLAttributes["class"], elevation?: Elevation }>(), { elevation: undefined })
 const emits = defineEmits<SliderRootEmits>()
 
-const delegatedProps = reactiveOmit(props, "class", "raised")
+const delegatedProps = reactiveOmit(props, "class", "elevation")
+
+const level = useElevation(() => props.elevation, "handle")
+const raised = computed(() => level.value === "raised" || level.value === "floating")
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
 </script>
@@ -42,7 +47,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
       data-slot="slider-thumb"
       :class="cn(
         'relative block size-[18px] shrink-0 rounded-full border border-brand-edge bg-white transition-shadow outline-none select-none after:absolute after:-inset-2 focus-visible:shadow-[0_0_0_4px_var(--ring-soft)] data-[dragging]:shadow-[0_0_0_4px_var(--ring-soft)] active:shadow-[0_0_0_4px_var(--ring-soft)] disabled:pointer-events-none',
-        props.raised && 'border-b-brand-lip bg-linear-to-b [background-origin:border-box] from-white to-[#f1f0ec] shadow-[0_2px_0_var(--brand-lip)] focus-visible:shadow-[0_0_0_4px_var(--ring-soft),0_2px_0_var(--brand-lip)] data-[dragging]:shadow-[0_0_0_4px_var(--ring-soft),0_2px_0_var(--brand-lip)] active:shadow-[0_0_0_4px_var(--ring-soft),0_2px_0_var(--brand-lip)]',
+        raised && 'border-transparent bg-linear-to-b from-white to-[#eeede9] shadow-thumb focus-visible:shadow-[0_0_0_4px_var(--ring-soft),0_0_1.5px_rgb(0_0_0/0.45)] data-[dragging]:shadow-[0_0_0_4px_var(--ring-soft),0_0_1.5px_rgb(0_0_0/0.45)] active:shadow-[0_0_0_4px_var(--ring-soft),0_0_1.5px_rgb(0_0_0/0.45)]',
       )"
     />
   </SliderRoot>

@@ -1,12 +1,13 @@
 <script lang="ts">
 	import IconPlaceholder from "$lib/components/icon-placeholder/icon-placeholder.svelte";
 	import { cn, type WithElementRef } from "$lib/utils.js";
+	import { type Elevation, useElevation } from "$lib/registry/ui/elevation/index.js";
 	import type { HTMLSelectAttributes } from "svelte/elements";
 
 	type NativeSelectProps = Omit<WithElementRef<HTMLSelectAttributes>, "size"> & {
 		size?: "sm" | "default";
-		/** ✦ opt-in one-step 3D look. */
-		raised?: boolean;
+		/** ✦ depth: sunken -1, flat 0, raised +1, floating +2. */
+		elevation?: Elevation;
 	};
 
 	let {
@@ -14,10 +15,19 @@
 		value = $bindable(),
 		class: className,
 		size = "default",
-		raised = false,
+		elevation = "auto",
 		children,
 		...restProps
 	}: NativeSelectProps = $props();
+	// ✦ depth (v4): fields sink (-1) in layered mode; focus swaps the edge for the ring
+	const fieldElevation = {
+		sunken: "border-sk-bd bg-sk-bg shadow-sunken focus-visible:bg-card",
+		flat: "",
+		raised: "border-transparent shadow-raised",
+		floating: "border-transparent shadow-floating",
+	};
+
+	const level = useElevation(() => elevation, "field");
 </script>
 
 <div
@@ -35,7 +45,7 @@
 		data-size={size}
 		class={cn(
 			"h-9 w-full min-w-0 appearance-none rounded-md border border-input bg-card pr-8 pl-3 text-sm text-foreground outline-none select-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:shadow-ring disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-muted aria-invalid:border-destructive aria-invalid:shadow-ring-error data-[size=sm]:h-8 data-[size=sm]:rounded-[7px]",
-			raised && "border-b-lip shadow-[0_2px_0_var(--lip)]"
+			fieldElevation[level.current]
 		)}
 		{...restProps}
 	>

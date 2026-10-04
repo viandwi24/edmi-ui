@@ -3,14 +3,22 @@ import type { HTMLAttributes } from 'vue'
 import type { OTPInputEmits, OTPInputProps } from 'vue-input-otp'
 import { reactiveOmit } from '@vueuse/core'
 import { useForwardPropsEmits } from 'reka-ui'
+import { provide } from 'vue'
 import { OTPInput } from 'vue-input-otp'
 import { cn } from '@/registry/edmi/lib/utils'
+import type { Elevation } from '@/registry/edmi/ui/elevation'
 
-const props = defineProps<OTPInputProps & { class?: HTMLAttributes['class'] }>()
+const props = withDefaults(defineProps<OTPInputProps & {
+  class?: HTMLAttributes['class']
+  /** ✦ depth for every slot: sunken -1, flat 0, raised +1, floating +2 */
+  elevation?: Elevation
+}>(), { elevation: undefined })
+
+provide('inputOTPElevation', { get value() { return props.elevation } })
 
 const emits = defineEmits<OTPInputEmits>()
 
-const delegatedProps = reactiveOmit(props, 'class')
+const delegatedProps = reactiveOmit(props, 'class', 'elevation')
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
 </script>

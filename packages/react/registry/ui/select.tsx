@@ -5,6 +5,17 @@ import { cn } from "cn";
 import type * as React from "react";
 import { IconPlaceholder } from "@/edmi/icon-placeholder";
 
+import { type Elevation, useElevation } from "@/registry/edmi/ui/elevation";
+
+// ✦ depth (v4): fields sink (-1) in layered mode; focus swaps the edge for the ring
+const fieldElevation = {
+	sunken:
+		"border-sk-bd bg-sk-bg shadow-sunken data-[popup-open]:bg-card focus-visible:bg-card",
+	flat: "",
+	raised: "border-transparent shadow-raised",
+	floating: "border-transparent shadow-floating",
+};
+
 const Select = SelectPrimitive.Root;
 
 function SelectGroup({ className, ...props }: SelectPrimitive.Group.Props) {
@@ -30,22 +41,22 @@ function SelectValue({ className, ...props }: SelectPrimitive.Value.Props) {
 function SelectTrigger({
 	className,
 	size = "default",
-	raised = false,
+	elevation,
 	children,
 	...props
 }: SelectPrimitive.Trigger.Props & {
 	size?: "sm" | "default";
-	/** ✦ one-step 3D look (trigger only; the popup stays flat). */
-	raised?: boolean;
+	/** ✦ depth for the trigger (the popup stays floating): sunken -1, flat 0, raised +1, floating +2. */
+	elevation?: Elevation;
 }) {
+	const level = useElevation(elevation, "field");
 	return (
 		<SelectPrimitive.Trigger
 			data-slot="select-trigger"
 			data-size={size}
 			className={cn(
 				"flex w-fit items-center justify-between gap-2 rounded-md border border-input bg-card pr-2.5 pl-3 text-sm whitespace-nowrap text-foreground outline-none select-none focus-visible:border-ring focus-visible:shadow-ring disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:shadow-ring-error data-[popup-open]:border-ring data-[popup-open]:shadow-ring data-[placeholder]:text-muted-foreground data-[size=default]:h-9 data-[size=sm]:h-8 data-[size=sm]:rounded-[7px] *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-				raised &&
-					"border-b-lip shadow-[0_2px_0_var(--lip)] data-[popup-open]:border-b-ring",
+				fieldElevation[level],
 				className,
 			)}
 			{...props}

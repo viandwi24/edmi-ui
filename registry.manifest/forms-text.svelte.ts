@@ -81,7 +81,7 @@ export const entries: Record<string, FrameworkEntry> = {
 			{ path: "src/lib/registry/ui/select/select.svelte" },
 			{ path: "src/lib/registry/ui/select/index.ts" },
 		],
-		registryDependencies: ["separator"],
+		registryDependencies: ["separator", "elevation"],
 	},
 	combobox: {
 		files: [

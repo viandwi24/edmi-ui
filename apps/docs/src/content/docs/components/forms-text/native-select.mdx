@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="native-select" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look (3D look: hard lip + soft top highlight).
+Same levels as Input, applied to the select box: `sunken` (-1), `flat`, `raised` (+1), `floating` (+2).
 
 <ComponentDemo name="native-select" demo="native-select-raised" />
 
@@ -31,7 +31,7 @@ Flat by default. Pass `raised` for the one-step 3D look (3D look: hard lip + sof
 | Prop | Type | Default |
 | --- | --- | --- |
 | size | `sm \| default` | `default` |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 ## ✦ Edmi additions
 - `NativeSelectOption` and `NativeSelectOptGroup` wrap the native elements.

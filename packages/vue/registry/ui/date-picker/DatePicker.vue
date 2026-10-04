@@ -7,6 +7,7 @@ import { useVModel } from "@vueuse/core"
 import { computed, ref } from "vue"
 import { cn } from "@/registry/edmi/lib/utils"
 import { Button } from "@/registry/edmi/ui/button"
+import type { Elevation } from "@/registry/edmi/ui/elevation"
 import { Calendar } from "@/registry/edmi/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/registry/edmi/ui/popover"
 
@@ -19,10 +20,10 @@ const props = withDefaults(
     locale?: string
     disabled?: boolean
     /** ✦ forwarded to the trigger Button and the Calendar */
-    raised?: boolean
+    elevation?: Elevation
     class?: HTMLAttributes["class"]
   }>(),
-  { placeholder: "Pick a date", locale: "en-US", raised: false },
+  { placeholder: "Pick a date", locale: "en-US", elevation: undefined },
 )
 const emits = defineEmits<{ (e: "update:modelValue", value: DateValue | undefined): void }>()
 
@@ -41,7 +42,7 @@ const formatter = computed(() => new DateFormatter(props.locale, { dateStyle: "l
     <PopoverTrigger as-child>
       <Button
         variant="outline"
-        :raised="raised"
+        :elevation="elevation"
         :disabled="disabled"
         :data-empty="!date"
         :class="cn('w-[240px] justify-start text-left font-normal data-[empty=true]:text-muted-foreground', props.class)"
@@ -53,7 +54,7 @@ const formatter = computed(() => new DateFormatter(props.locale, { dateStyle: "l
     <PopoverContent class="w-auto p-0" align="start">
       <Calendar
         v-model="date"
-        :raised="raised"
+        :elevation="elevation"
         layout="month-and-year"
         :locale="locale"
         :default-placeholder="date"

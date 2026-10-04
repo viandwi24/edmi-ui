@@ -3,6 +3,7 @@
 	import IconPlaceholder from "$lib/components/icon-placeholder/icon-placeholder.svelte";
 	import { cn, type WithoutChildrenOrChild } from "$lib/utils.js";
 	import { buttonVariants } from "$lib/registry/ui/button/index.js";
+	import { type Elevation, useElevation } from "$lib/registry/ui/elevation/index.js";
 	import CalendarCaption from "./calendar-caption.svelte";
 	import {
 		calendarDayClass,
@@ -13,6 +14,8 @@
 		calendarRangeEdgeRaisedClass,
 		calendarRangeMiddleClass,
 		calendarRootClass,
+		calendarShellElevation,
+		calendarShellInHost,
 	} from "./classes.js";
 
 	// ✦ Range selection (React `Calendar mode="range"`): start/end raised, days between on `bg-accent`.
@@ -25,13 +28,17 @@
 		captionLayout = "label",
 		locale = "en-US",
 		disableDaysOutsideMonth = false,
-		raised = false,
+		elevation = "auto",
 		...restProps
 	}: WithoutChildrenOrChild<RangeCalendarPrimitive.RootProps> & {
 		captionLayout?: "dropdown" | "dropdown-months" | "dropdown-years" | "label";
-		/** ✦ opt-in one-step 3D look for the range ends. */
-		raised?: boolean;
+		/** ✦ depth of the calendar shell: sunken -1, flat 0, raised +1, floating +2 (selected day rises when raised). */
+		elevation?: Elevation;
 	} = $props();
+
+	const shell = useElevation(() => elevation, "surface");
+	const handle = useElevation(() => (elevation === "sunken" ? "flat" : elevation), "handle");
+	const raised = $derived(handle.current === "raised" || handle.current === "floating");
 </script>
 
 <RangeCalendarPrimitive.Root
@@ -42,7 +49,7 @@
 	{disableDaysOutsideMonth}
 	{locale}
 	data-slot="calendar"
-	class={cn(calendarRootClass, className)}
+	class={cn(calendarRootClass, calendarShellElevation[shell.current], calendarShellInHost, className)}
 	{...restProps}
 >
 	{#snippet children({ months, weekdays })}

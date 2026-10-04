@@ -24,9 +24,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 ## Range with presets
 <ComponentDemo name="date-picker" demo="date-picker-range" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look; it is forwarded to the trigger button and the calendar's selected day.
+`elevation` is forwarded to the trigger button and the calendar (the selected day rises when raised or floating); the popover stays floating.
 
 <ComponentDemo name="date-picker" demo="date-picker-raised" />
 
@@ -38,11 +38,11 @@ Shipped as a `registry:block` (shadcn documents it as a composition): `Popover` 
 | `DatePicker` | `value` / `defaultValue` | `Date` | - |
 | | `onValueChange` | `(date?: Date) => void` | - |
 | | `placeholder` | `string` | `"Pick a date"` |
-| | `raised` ✦ | `boolean` | `false` |
+| | `elevation` ✦ | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 | `DateRangePicker` ✦ | `value` / `defaultValue` | `DateRange` | - |
 | | `onValueChange` | `(range?: DateRange) => void` | - |
 | | `presets` | `boolean \| { label; range() }[]` | - |
-| | `raised` ✦ | `boolean` | `false` |
+| | `elevation` ✦ | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 ## ✦ Edmi additions
 - `DateRangePicker` with an optional preset column (Today, Last 7 days, Last 30 days, This month).

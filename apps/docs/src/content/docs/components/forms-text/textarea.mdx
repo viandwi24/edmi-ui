@@ -21,10 +21,17 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="textarea" />
 
+## Elevation ✦
+
+Same levels as Input: `sunken` (-1, the layered default), `flat`, `raised` (+1), `floating` (+2).
+
+<ComponentDemo name="textarea" demo="textarea-raised" />
+
 ## API
 | Prop | Type | Default |
 | --- | --- | --- |
 | Props | `React.ComponentProps<"textarea">` | none |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 ## ✦ Edmi additions
-- Same sunken surface, halo and invalid state as Input.
+- Same elevation levels, halo and invalid state as Input.

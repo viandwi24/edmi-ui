@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="radio-group" />
 
-## Raised ✦
+## Elevation ✦
 
-Choice cards are `FieldLabel`s wrapping a `Field` and a radio. Flat by default; pass `raised` on the `FieldLabel` for the one-step 3D look.
+Radio items stay flat; for choice cards set `elevation` on the `FieldLabel` that wraps the `Field` (sunken -1, flat, raised +1, floating +2). A checked card keeps the ring.
 
 <ComponentDemo name="radio-group" demo="radio-group-raised" />
 
@@ -36,6 +36,7 @@ Built on Base UI `RadioGroup` / `Radio`. Same anatomy as shadcn: `RadioGroup`, `
 | `onValueChange` | `(value: string, event) => void` | - |
 | `disabled` | `boolean` | `false` |
 | `RadioGroupItem value` | `string` | required |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 ## ✦ Edmi additions
 - Checked radio has a primary border and a 9px primary dot; pair with a bordered label for choice cards.

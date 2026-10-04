@@ -5,15 +5,19 @@ import { computed } from "vue"
 import { reactiveOmit } from "@vueuse/core"
 import { SwitchRoot, SwitchThumb, useForwardPropsEmits } from "reka-ui"
 import { cn } from "@/registry/edmi/lib/utils"
+import { type Elevation, useElevation } from "@/registry/edmi/ui/elevation"
 
 // On uses --brand so live settings read as active at a glance. Sizes: default 40x24, sm 32x18.
 const props = withDefaults(
-  defineProps<SwitchRootProps & { class?: HTMLAttributes["class"], size?: "sm" | "default", raised?: boolean }>(),
-  { size: "default", raised: false },
+  defineProps<SwitchRootProps & { class?: HTMLAttributes["class"], size?: "sm" | "default", elevation?: Elevation }>(),
+  { size: "default", elevation: undefined },
 )
 const emits = defineEmits<SwitchRootEmits>()
 
-const delegatedProps = reactiveOmit(props, "class", "size", "raised")
+const delegatedProps = reactiveOmit(props, "class", "size", "elevation")
+
+const level = useElevation(() => props.elevation, "handle")
+const raised = computed(() => level.value === "raised" || level.value === "floating")
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
 
@@ -40,7 +44,7 @@ const defaultValue = computed(() => ((props.defaultValue as unknown) === "" ? tr
       data-slot="switch-thumb"
       :class="cn(
         'pointer-events-none ml-[3px] block rounded-full bg-white shadow-[0_0_0_1px_rgb(0_0_0/0.1)] transition-transform group-data-[size=default]/switch:size-[18px] group-data-[size=sm]/switch:size-3 group-data-[size=default]/switch:data-[state=checked]:translate-x-4 group-data-[size=sm]/switch:data-[state=checked]:translate-x-3.5',
-        props.raised && 'bg-linear-to-b from-white to-[#f1f0ec] shadow-[0_1px_0_rgb(0_0_0/0.25)]',
+        raised && 'bg-linear-to-b from-white to-[#eeede9] shadow-thumb',
       )"
     >
       <slot name="thumb" v-bind="slotProps" />

@@ -21,12 +21,19 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="input-otp" />
 
+## Elevation ✦
+
+Set `elevation` on `InputOTP` for every slot, or on a single `InputOTPSlot`. `sunken` is the layered default; the active slot swaps its edge for the ring.
+
+<ComponentDemo name="input-otp" demo="input-otp-raised" />
+
 ## API
 | Prop | Type | Default |
 | --- | --- | --- |
 | maxLength | `number` | required |
 | pattern | `string` | none |
 | InputOTPSlot index | `number` | required |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 ## ✦ Edmi additions
-- Slots are separate sunken boxes; the active slot gets the focus halo.
+- Slots are separate boxes; the active slot gets the focus halo.

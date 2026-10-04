@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Slider as SliderPrimitive } from "bits-ui";
 	import { cn, type WithoutChildrenOrChild } from "$lib/utils.js";
+	import { type Elevation, useElevation } from "$lib/registry/ui/elevation/index.js";
 
 	// Array value: 1 = single, 2 = range, 3+ = multiple thumbs.
 	let {
@@ -8,12 +9,15 @@
 		value = $bindable(),
 		orientation = "horizontal",
 		class: className,
-		raised = false,
+		elevation = "auto",
 		...restProps
 	}: WithoutChildrenOrChild<SliderPrimitive.RootProps> & {
-		/** ✦ opt-in one-step 3D look for the thumbs. */
-		raised?: boolean;
+		/** ✦ depth: raised +1 / floating +2 make the thumbs rise (never the track). */
+		elevation?: Elevation;
 	} = $props();
+
+	const level = useElevation(() => elevation, "handle");
+	const raised = $derived(level.current === "raised" || level.current === "floating");
 </script>
 
 <!--
@@ -49,7 +53,7 @@ get along, so we shut typescript up by casting `value` to `never`.
 				class={cn(
 					"relative block size-[18px] shrink-0 rounded-full border border-brand-edge bg-white transition-shadow outline-none select-none after:absolute after:-inset-2 focus-visible:shadow-[0_0_0_4px_var(--ring-soft)] data-[active]:shadow-[0_0_0_4px_var(--ring-soft)] disabled:pointer-events-none",
 					raised &&
-						"border-b-brand-lip bg-linear-to-b from-white to-[#f1f0ec] shadow-[0_2px_0_var(--brand-lip)] [background-origin:border-box] focus-visible:shadow-[0_0_0_4px_var(--ring-soft),0_2px_0_var(--brand-lip)] data-[active]:shadow-[0_0_0_4px_var(--ring-soft),0_2px_0_var(--brand-lip)]"
+						"border-transparent bg-linear-to-b from-white to-[#eeede9] shadow-thumb focus-visible:shadow-[0_0_0_4px_var(--ring-soft),0_0_1.5px_rgb(0_0_0/0.45)] data-[active]:shadow-[0_0_0_4px_var(--ring-soft),0_0_1.5px_rgb(0_0_0/0.45)]"
 				)}
 			/>
 		{/each}

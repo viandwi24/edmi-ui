@@ -21,12 +21,19 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="input-group" />
 
+## Elevation ✦
+
+The group is the field: `elevation` applies to the whole group (inner input and addons stay flat). `sunken` is the layered default.
+
+<ComponentDemo name="input-group" demo="input-group-raised" />
+
 ## API
 | Prop | Type | Default |
 | --- | --- | --- |
 | InputGroupAddon align | `inline-start \| inline-end \| block-start \| block-end` | `inline-start` |
 | InputGroupButton size | `xs \| sm \| icon-xs \| icon-sm` | `xs` |
 | InputGroupButton variant | Button variants | `ghost` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 ## ✦ Edmi additions
 - `InputGroupText` addons render as a muted segment with a divider.

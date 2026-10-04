@@ -20,14 +20,18 @@ import {
   CalendarRoot,
   useForwardPropsEmits,
 } from "reka-ui"
+import { computed } from "vue"
 import { cn } from "@/registry/edmi/lib/utils"
 import { buttonVariants } from "@/registry/edmi/ui/button"
+import { type Elevation, useElevation } from "@/registry/edmi/ui/elevation"
 import CalendarCaption from "./CalendarCaption.vue"
 import {
   calendarCellClass,
   calendarHeadCellClass,
   calendarNavButtonClass,
   calendarRootClass,
+  calendarShellElevation,
+  calendarShellInHost,
   calendarSingleSelectedClass,
   calendarSingleSelectedRaisedClass,
   calendarTriggerClass,
@@ -40,15 +44,19 @@ const props = withDefaults(
       /** ✦ month/year dropdowns instead of a text heading. */
       layout?: LayoutTypes
       yearRange?: DateValue[]
-      /** ✦ selected day(s) get the one-step 3D look */
-      raised?: boolean
+      /** ✦ depth of the calendar shell: sunken -1, flat 0, raised +1, floating +2 (selected day rises when raised) */
+      elevation?: Elevation
     }
   >(),
-  { modelValue: undefined, layout: undefined, raised: false },
+  { modelValue: undefined, layout: undefined, elevation: undefined },
 )
 const emits = defineEmits<CalendarRootEmits>()
 
-const delegatedProps = reactiveOmit(props, "class", "layout", "placeholder", "yearRange", "raised")
+const delegatedProps = reactiveOmit(props, "class", "layout", "placeholder", "yearRange", "elevation")
+
+const shell = useElevation(() => props.elevation, "surface")
+const handle = useElevation(() => (props.elevation === "sunken" ? "flat" : props.elevation), "handle")
+const raised = computed(() => handle.value === "raised" || handle.value === "floating")
 
 const placeholder = useVModel(props, "placeholder", emits, {
   passive: true,
@@ -65,7 +73,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     :weekday-format="props.weekdayFormat ?? 'short'"
     v-model:placeholder="placeholder"
     data-slot="calendar"
-    :class="cn(calendarRootClass, props.class)"
+    :class="cn(calendarRootClass, calendarShellElevation[shell], calendarShellInHost, props.class)"
   >
     <CalendarHeader data-slot="calendar-header" class="relative flex h-7 w-full items-center justify-center px-9">
       <CalendarCaption
@@ -118,7 +126,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
                 :day="weekDate"
                 :month="month.value"
                 data-slot="calendar-cell-trigger"
-                :class="cn(buttonVariants({ variant: 'ghost', size: 'icon' }), calendarTriggerClass, calendarSingleSelectedClass, props.raised && calendarSingleSelectedRaisedClass)"
+                :class="cn(buttonVariants({ variant: 'ghost', size: 'icon' }), calendarTriggerClass, calendarSingleSelectedClass, raised && calendarSingleSelectedRaisedClass)"
               />
             </CalendarCell>
           </CalendarGridRow>

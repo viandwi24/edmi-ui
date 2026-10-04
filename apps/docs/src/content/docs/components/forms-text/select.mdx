@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="select" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look (on `SelectTrigger` (the popup stays flat)).
+`elevation` applies to the trigger only (sunken -1, flat, raised +1, floating +2); the popup stays floating.
 
 <ComponentDemo name="select" demo="select-raised" />
 
@@ -34,10 +34,10 @@ Flat by default. Pass `raised` for the one-step 3D look (on `SelectTrigger` (the
 | SelectContent alignItemWithTrigger | `boolean` | `true` |
 | value / defaultValue | `string` | none |
 | items (React) | `{ value, label }[]` | none |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 ## ✦ Edmi additions
-- Flat popover surface; `raised` affects only the trigger; highlighted item uses the accent fill.
+- Flat popover surface; `elevation` affects only the trigger; highlighted item uses the accent fill.
 
 ## Vue / Svelte differences
 - **React**: Base UI shows the raw `value` in `SelectValue` unless the root gets `items={[{ value, label }]}` (or `SelectValue` a render function), so pass `items` with the labels. Vue and Svelte show the selected item text automatically.

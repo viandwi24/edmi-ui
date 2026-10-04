@@ -5,17 +5,36 @@ import { cn } from "cn";
 import type * as React from "react";
 
 import { Button } from "@/registry/edmi/ui/button";
+import { type Elevation, useElevation } from "@/registry/edmi/ui/elevation";
 import { Input } from "@/registry/edmi/ui/input";
 import { Textarea } from "@/registry/edmi/ui/textarea";
 
-function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
+// ✦ depth (v4): the group is the field; focus-within swaps the edge for the ring
+const groupElevation = {
+	sunken:
+		"border-sk-bd bg-sk-bg shadow-sunken has-[[data-slot=input-group-control]:focus-visible]:bg-card",
+	flat: "",
+	raised: "border-transparent shadow-raised",
+	floating: "border-transparent shadow-floating",
+};
+
+function InputGroup({
+	className,
+	elevation,
+	...props
+}: React.ComponentProps<"div"> & {
+	/** ✦ depth: sunken -1, flat 0, raised +1, floating +2. */
+	elevation?: Elevation;
+}) {
+	const level = useElevation(elevation, "field");
 	return (
 		// biome-ignore lint/a11y/useSemanticElements: stock markup; div keeps layout predictable
 		<div
 			data-slot="input-group"
 			role="group"
 			className={cn(
-				"group/input-group relative flex h-9 w-full min-w-0 items-stretch overflow-hidden rounded-md border border-input bg-card shadow-sunk outline-none in-data-[slot=combobox-content]:focus-within:border-inherit in-data-[slot=combobox-content]:focus-within:shadow-none has-disabled:bg-muted has-disabled:opacity-50 has-[[data-slot=input-group-control]:focus-visible]:border-ring has-[[data-slot=input-group-control]:focus-visible]:shadow-ring has-[[data-slot][aria-invalid=true]]:border-destructive has-[[data-slot][aria-invalid=true]]:shadow-ring-error has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-start]]:h-auto has-[>[data-align=block-start]]:flex-col has-[>textarea]:h-auto has-[>[data-align=block-end]]:[&>input]:pt-3 has-[>[data-align=block-start]]:[&>input]:pb-3",
+				"group/input-group relative flex h-9 w-full min-w-0 items-stretch overflow-hidden rounded-md border border-input bg-card outline-none in-data-[slot=combobox-content]:focus-within:border-inherit in-data-[slot=combobox-content]:focus-within:shadow-none has-disabled:bg-muted has-disabled:opacity-50 has-[[data-slot=input-group-control]:focus-visible]:border-ring has-[[data-slot=input-group-control]:focus-visible]:shadow-ring has-[[data-slot][aria-invalid=true]]:border-destructive has-[[data-slot][aria-invalid=true]]:shadow-ring-error has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-start]]:h-auto has-[>[data-align=block-start]]:flex-col has-[>textarea]:h-auto has-[>[data-align=block-end]]:[&>input]:pt-3 has-[>[data-align=block-start]]:[&>input]:pb-3",
+				groupElevation[level],
 				className,
 			)}
 			{...props}
@@ -126,6 +145,7 @@ function InputGroupInput({
 	return (
 		<Input
 			data-slot="input-group-control"
+			elevation="flat"
 			className={cn(
 				"h-auto flex-1 rounded-none border-0 bg-transparent shadow-none! focus-visible:shadow-none! disabled:bg-transparent aria-invalid:shadow-none! data-[invalid]:shadow-none!",
 				className,
@@ -142,6 +162,7 @@ function InputGroupTextarea({
 	return (
 		<Textarea
 			data-slot="input-group-control"
+			elevation="flat"
 			className={cn(
 				"flex-1 resize-none rounded-none border-0 bg-transparent py-2.5 shadow-none! focus-visible:shadow-none! disabled:bg-transparent aria-invalid:shadow-none!",
 				className,

@@ -3,6 +3,7 @@
 	import IconPlaceholder from "$lib/components/icon-placeholder/icon-placeholder.svelte";
 	import { cn } from "$lib/utils.js";
 	import { Button } from "$lib/registry/ui/button/index.js";
+	import type { Elevation } from "$lib/registry/ui/elevation/index.js";
 	import { Calendar } from "$lib/registry/ui/calendar/index.js";
 	import * as Popover from "$lib/registry/ui/popover/index.js";
 
@@ -12,15 +13,15 @@
 		placeholder = "Pick a date",
 		locale = "en-US",
 		disabled = false,
-		raised = false,
+		elevation = "auto",
 		class: className,
 	}: {
 		value?: DateValue;
 		placeholder?: string;
 		locale?: string;
 		disabled?: boolean;
-		/** ✦ opt-in one-step 3D look; forwarded to the trigger button and the calendar. */
-		raised?: boolean;
+		/** ✦ depth; forwarded to the trigger button and the calendar. */
+		elevation?: Elevation;
 		class?: string;
 	} = $props();
 
@@ -34,7 +35,7 @@
 		{#snippet child({ props })}
 			<Button
 				variant="outline"
-				{raised}
+				{elevation}
 				{disabled}
 				data-empty={!value}
 				class={cn(
@@ -60,7 +61,7 @@
 			bind:value
 			captionLayout="dropdown"
 			{locale}
-			{raised}
+			{elevation}
 			onValueChange={() => (open = false)}
 		/>
 	</Popover.Content>

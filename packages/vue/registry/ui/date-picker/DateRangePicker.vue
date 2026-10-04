@@ -8,6 +8,7 @@ import { useVModel } from "@vueuse/core"
 import { computed } from "vue"
 import { cn } from "@/registry/edmi/lib/utils"
 import { Button } from "@/registry/edmi/ui/button"
+import type { Elevation } from "@/registry/edmi/ui/elevation"
 import { RangeCalendar } from "@/registry/edmi/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/registry/edmi/ui/popover"
 
@@ -23,10 +24,10 @@ const props = withDefaults(
     /** ✦ `true` for the default presets, or your own list. */
     presets?: boolean | DateRangePickerPreset[]
     /** ✦ forwarded to the trigger Button and the RangeCalendar */
-    raised?: boolean
+    elevation?: Elevation
     class?: HTMLAttributes["class"]
   }>(),
-  { placeholder: "Pick a date range", locale: "en-US", raised: false },
+  { placeholder: "Pick a date range", locale: "en-US", elevation: undefined },
 )
 const emits = defineEmits<{ (e: "update:modelValue", value: DateRange | undefined): void }>()
 
@@ -59,7 +60,7 @@ const label = computed(() => {
     <PopoverTrigger as-child>
       <Button
         variant="outline"
-        :raised="raised"
+        :elevation="elevation"
         :disabled="disabled"
         :data-empty="!range?.start"
         :class="cn('w-[260px] justify-start text-left font-normal data-[empty=true]:text-muted-foreground', props.class)"
@@ -83,7 +84,7 @@ const label = computed(() => {
       </div>
       <RangeCalendar
         v-model="range as any"
-        :raised="raised"
+        :elevation="elevation"
         layout="month-and-year"
         :locale="locale"
         :number-of-months="1"

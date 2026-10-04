@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="checkbox" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look (3D look: hard lip + soft top highlight).
+Only the checked (and indeterminate) box rises: `raised` (+1) or `floating` (+2) gives it a bevel. The unchecked box stays flat.
 
 <ComponentDemo name="checkbox" demo="checkbox-raised" />
 
@@ -37,7 +37,7 @@ Built on Base UI `Checkbox`. Same props as shadcn.
 | `onCheckedChange` | `(checked: boolean, event) => void` | - |
 | `disabled` | `boolean` | `false` |
 | `aria-invalid` | `boolean` | - |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 ## ✦ Edmi additions
-- Checked and indeterminate use a solid `--primary` fill (`raised` adds the gradient) with a check/minus icon.
+- Checked and indeterminate use a solid `--primary` fill (`elevation` raises the checked box) with a check/minus icon.

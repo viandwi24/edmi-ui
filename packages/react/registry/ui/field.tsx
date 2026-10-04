@@ -4,8 +4,19 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
 import { useMemo } from "react";
 
+import { type Elevation, useElevation } from "@/registry/edmi/ui/elevation";
 import { Label } from "@/registry/edmi/ui/label";
 import { Separator } from "@/registry/edmi/ui/separator";
+
+// ✦ choice-card depth (v4); a checked card keeps its ring
+const ck =
+	"has-[>[data-slot=field]]:has-data-[checked]:border-ring has-[>[data-slot=field]]:has-data-[checked]:shadow-[0_0_0_1px_var(--ring)]";
+const choiceCardElevation = {
+	sunken: `has-[>[data-slot=field]]:border-sk-bd has-[>[data-slot=field]]:bg-sk-bg has-[>[data-slot=field]]:shadow-sunken ${ck}`,
+	flat: "",
+	raised: `has-[>[data-slot=field]]:border-transparent has-[>[data-slot=field]]:shadow-raised ${ck}`,
+	floating: `has-[>[data-slot=field]]:border-transparent has-[>[data-slot=field]]:shadow-floating ${ck}`,
+};
 
 function FieldSet({ className, ...props }: React.ComponentProps<"fieldset">) {
 	return (
@@ -101,19 +112,19 @@ function FieldContent({ className, ...props }: React.ComponentProps<"div">) {
 
 function FieldLabel({
 	className,
-	raised = false,
+	elevation,
 	...props
 }: React.ComponentProps<typeof Label> & {
-	/** ✦ choice-card look: one-step 3D (only when the label wraps a Field) */
-	raised?: boolean;
+	/** ✦ choice-card depth (only when the label wraps a Field): sunken -1, flat 0, raised +1, floating +2. */
+	elevation?: Elevation;
 }) {
+	const level = useElevation(elevation, "control");
 	return (
 		<Label
 			data-slot="field-label"
 			className={cn(
 				"group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50 has-[>[data-slot=field]]:rounded-lg has-[>[data-slot=field]]:border has-[>[data-slot=field]]:border-border has-[>[data-slot=field]]:bg-card has-[>[data-slot=field]]:not-has-[:disabled,[data-disabled]]:hover:bg-muted has-[>[data-slot=field]]:has-[:focus-visible]:border-ring has-[>[data-slot=field]]:has-[:focus-visible]:shadow-ring has-data-[checked]:border-ring has-data-[checked]:shadow-[0_0_0_1px_var(--ring)] *:data-[slot=field]:p-3.5",
-				raised &&
-					"has-[>[data-slot=field]]:border-b-lip has-[>[data-slot=field]]:shadow-card has-[>[data-slot=field]]:has-data-[checked]:border-b-ring",
+				choiceCardElevation[level],
 				"has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col",
 				className,
 			)}

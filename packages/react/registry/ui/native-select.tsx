@@ -1,19 +1,32 @@
+"use client";
+
 import { cn } from "cn";
 import type * as React from "react";
 import { IconPlaceholder } from "@/edmi/icon-placeholder";
 
+import { type Elevation, useElevation } from "@/registry/edmi/ui/elevation";
+
+// ✦ depth (v4): fields sink (-1) in layered mode; focus swaps the edge for the ring
+const fieldElevation = {
+	sunken: "border-sk-bd bg-sk-bg shadow-sunken focus-visible:bg-card",
+	flat: "",
+	raised: "border-transparent shadow-raised",
+	floating: "border-transparent shadow-floating",
+};
+
 type NativeSelectProps = Omit<React.ComponentProps<"select">, "size"> & {
 	size?: "sm" | "default";
-	/** ✦ one-step 3D look. */
-	raised?: boolean;
+	/** ✦ depth: sunken -1, flat 0, raised +1, floating +2. */
+	elevation?: Elevation;
 };
 
 function NativeSelect({
 	className,
 	size = "default",
-	raised = false,
+	elevation,
 	...props
 }: NativeSelectProps) {
+	const level = useElevation(elevation, "field");
 	return (
 		<div
 			className={cn(
@@ -28,7 +41,7 @@ function NativeSelect({
 				data-size={size}
 				className={cn(
 					"h-9 w-full min-w-0 appearance-none rounded-md border border-input bg-card pr-8 pl-3 text-sm text-foreground outline-none select-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:shadow-ring disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-muted aria-invalid:border-destructive aria-invalid:shadow-ring-error data-[size=sm]:h-8 data-[size=sm]:rounded-[7px]",
-					raised && "border-b-lip shadow-[0_2px_0_var(--lip)]",
+					fieldElevation[level],
 				)}
 				{...props}
 			/>

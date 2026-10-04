@@ -5,10 +5,10 @@ export const items: Item[] = [
 		name: "checkbox",
 		title: "Checkbox",
 		description:
-			"Toggle one option on or off. Checked and indeterminate states are raised controls.",
+			"Toggle one option on or off. The elevation prop raises the checked box.",
 		type: "registry:ui",
 		categories: ["Forms"],
-		registryDependencies: [],
+		registryDependencies: ["elevation"],
 		docs: "Replaces the stock checkbox: `shadcn add @edmi-ui/checkbox --overwrite`.",
 		frameworks: {
 			react: {
@@ -39,7 +39,7 @@ export const items: Item[] = [
 			"Instant on/off for a setting. Brand-colored when on; sizes default and sm.",
 		type: "registry:ui",
 		categories: ["Forms"],
-		registryDependencies: [],
+		registryDependencies: ["elevation"],
 		docs: "Replaces the stock switch: `shadcn add @edmi-ui/switch --overwrite`.",
 		frameworks: {
 			react: {
@@ -55,7 +55,7 @@ export const items: Item[] = [
 			"Pick a value or range by dragging. Array value: 1 single, 2 range, 3+ multiple thumbs.",
 		type: "registry:ui",
 		categories: ["Forms"],
-		registryDependencies: [],
+		registryDependencies: ["elevation"],
 		docs: "Replaces the stock slider: `shadcn add @edmi-ui/slider --overwrite`.",
 		frameworks: {
 			react: {
@@ -68,10 +68,10 @@ export const items: Item[] = [
 		name: "calendar",
 		title: "Calendar",
 		description:
-			"Month grid for picking a date or range (react-day-picker). Selected day is a raised control.",
+			"Month grid for picking a date or range (react-day-picker). Elevation sits on the calendar shell; the selected day rises with it.",
 		type: "registry:ui",
 		categories: ["Forms"],
-		registryDependencies: ["button"],
+		registryDependencies: ["button", "elevation"],
 		docs: "Replaces the stock calendar: `shadcn add @edmi-ui/calendar --overwrite`.",
 		frameworks: {
 			react: {
@@ -87,7 +87,7 @@ export const items: Item[] = [
 			"Popover + outline Button + Calendar. DatePicker for a single date, DateRangePicker with optional presets.",
 		type: "registry:block",
 		categories: ["Forms"],
-		registryDependencies: ["button", "calendar", "popover"],
+		registryDependencies: ["button", "calendar", "popover", "elevation"],
 		docs: "Composition block: `shadcn add @edmi-ui/date-picker`.",
 		frameworks: {
 			react: {
