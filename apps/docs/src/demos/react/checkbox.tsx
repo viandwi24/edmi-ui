@@ -22,7 +22,8 @@ export default function Demo() {
 					onCheckedChange={(checked) =>
 						setSome({ checked, indeterminate: false })
 					}
-				/> Some selected
+				/>{" "}
+				Some selected
 			</Label>
 			<Label className="flex items-center gap-2.5 text-sm">
 				<Checkbox disabled /> Disabled

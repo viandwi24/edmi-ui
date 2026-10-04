@@ -17,12 +17,14 @@ export default function Demo() {
 			</Label>
 			<Label className="flex items-center gap-2.5 text-sm">
 				<Checkbox
-					raised checked={some.checked}
+					raised
+					checked={some.checked}
 					indeterminate={some.indeterminate}
 					onCheckedChange={(checked) =>
 						setSome({ checked, indeterminate: false })
 					}
-				/> Some selected
+				/>{" "}
+				Some selected
 			</Label>
 			<Label className="flex items-center gap-2.5 text-sm">
 				<Checkbox raised disabled /> Disabled
