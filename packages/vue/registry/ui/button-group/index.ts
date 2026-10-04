@@ -6,7 +6,7 @@ export { default as ButtonGroupSeparator } from "./ButtonGroupSeparator.vue";
 export { default as ButtonGroupText } from "./ButtonGroupText.vue";
 
 export const buttonGroupVariants = cva(
-	"flex w-fit items-stretch [&>[data-variant=default]+[data-slot=button-group-separator]]:bg-primary-lip [&>[data-variant=secondary]+[data-slot=button-group-separator]]:bg-secondary-lip [&>[data-variant=brand]+[data-slot=button-group-separator]]:bg-brand-lip [&>[data-variant=destructive]+[data-slot=button-group-separator]]:bg-destructive-lip *:focus-visible:relative *:focus-visible:z-10 has-[>[data-slot=button-group]]:gap-2 has-[select[aria-hidden=true]:last-child]:[&>[data-slot=select-trigger]:last-of-type]:rounded-r-lg [&>[data-slot=select-trigger]:not([class*='w-'])]:w-fit [&>input]:flex-1 [&>[data-slot=input]]:shadow-none [&>[data-slot=input-group]]:shadow-none",
+	"flex w-fit items-stretch [&>[data-variant=default]+[data-slot=button-group-separator]]:bg-[color-mix(in_srgb,var(--primary-foreground)_25%,var(--primary))] [&>[data-variant=brand]+[data-slot=button-group-separator]]:bg-[color-mix(in_srgb,var(--brand-foreground)_25%,var(--brand))] [&>[data-variant=destructive]+[data-slot=button-group-separator]]:bg-[color-mix(in_srgb,white_25%,var(--destructive))] *:focus-visible:relative *:focus-visible:z-10 has-[>[data-slot=button-group]]:gap-2 has-[select[aria-hidden=true]:last-child]:[&>[data-slot=select-trigger]:last-of-type]:rounded-r-lg [&>[data-slot=select-trigger]:not([class*='w-'])]:w-fit [&>input]:flex-1 [&>[data-slot=input]]:shadow-none [&>[data-slot=input-group]]:shadow-none",
 	{
 		variants: {
 			orientation: {

@@ -1,6 +1,6 @@
 ---
 title: Button
-description: Pressable action control; flat by default, `raised` adds one-step 3D depth.
+description: Pressable action control; flat by default, `elevation` adds sunken, raised and floating depth.
 ---
 import ComponentDemo from "../../../../components/ComponentDemo.astro";
 import ComponentInstall from "../../../../components/ComponentInstall.astro";
@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="button" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look (3D look: hard lip + soft top highlight).
+Flat by default. `elevation` adds depth: `raised` (+1) is a bevel (inner rim, top highlight, dark hairline), `floating` (+2) adds one soft drop for a hero action, `sunken` (-1) presses the button into a well (filled variants keep their colour, 8% darker). `ghost` follows the neutral faces; `link` never gets depth. Pressed sinks 1px. `auto` follows the nearest `ElevationProvider` (layered mode: filled variants resolve to raised).
 
 <ComponentDemo name="button" demo="button-raised" />
 
@@ -33,9 +33,9 @@ Flat by default. Pass `raised` for the one-step 3D look (3D look: hard lip + sof
 | variant | `default \| secondary \| outline \| ghost \| destructive \| link \| brand` | `default` |
 | size | `xs \| sm \| default \| lg \| icon-xs \| icon-sm \| icon \| icon-lg` | `default` |
 | render | `ReactElement` | none |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 ## ✦ Edmi additions
 - `brand` variant (green).
-- `raised` prop: gradient face plus a hard lip that sinks 2px on press. `ghost` and `link` ignore it. `outline` raised uses the `--outline-hi → --outline-face` gradient and `--outline-lip` (a visible gray lip in dark mode).
+- `elevation` prop: a bevel (no hard lip) that sinks 1px on press. `link` ignores it; `ghost` follows the neutral faces.
 - Style links with `buttonVariants()` on a plain `<a>`.

@@ -1,5 +1,6 @@
 <script lang="ts" module>
 	import { getContext, setContext } from "svelte";
+	import { type Elevation, type ElevationLevel, useElevation } from "$lib/registry/ui/elevation/index.js";
 	import { toggleVariants } from "$lib/registry/ui/toggle/index.js";
 	import type { VariantProps } from "tailwind-variants";
 
@@ -8,7 +9,7 @@
 	interface ToggleGroupContext extends ToggleVariants {
 		spacing?: number;
 		orientation?: "horizontal" | "vertical";
-		raised?: boolean;
+		elevation?: ElevationLevel;
 	}
 
 	export function setToggleGroupCtx(props: ToggleGroupContext) {
@@ -32,15 +33,17 @@
 		spacing = 2,
 		orientation = "horizontal",
 		variant = "default",
-		raised = false,
+		elevation = "auto",
 		...restProps
 	}: ToggleGroupPrimitive.RootProps &
-		Omit<ToggleVariants, "raised"> & {
+		Omit<ToggleVariants, "elevation"> & {
 			spacing?: number;
 			orientation?: "horizontal" | "vertical";
-			/** ✦ opt-in one-step 3D look, passed down to every item. */
-			raised?: boolean;
+			/** ✦ depth passed down to every item (segmented: only the ON item rises). */
+			elevation?: Elevation;
 		} = $props();
+
+	const level = useElevation(() => elevation, "control");
 
 	setToggleGroupCtx({
 		get variant() {
@@ -55,8 +58,8 @@
 		get orientation() {
 			return orientation;
 		},
-		get raised() {
-			return raised;
+		get elevation() {
+			return level.current;
 		},
 	});
 
@@ -75,12 +78,12 @@ get along, so we shut typescript up by casting `value` to `never`.
 	data-slot="toggle-group"
 	data-variant={variant}
 	data-size={size}
-	data-raised={raised ? "" : undefined}
+	data-elevation={level.current === "flat" ? undefined : level.current}
 	data-spacing={segmented ? 0.5 : spacing}
 	style={`--gap: ${segmented ? 0.5 : spacing}`}
 	class={cn(
 		"group/toggle-group flex w-fit flex-row items-center gap-[--spacing(var(--gap))] rounded-lg data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-stretch",
-		segmented && "rounded-[10px] border border-border bg-muted p-[3px] shadow-sunk",
+		segmented && "rounded-[10px] border border-border bg-muted p-[3px] shadow-[inset_0_1px_2px_rgb(0_0_0/0.04)]",
 		className
 	)}
 	{...restProps}

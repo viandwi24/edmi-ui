@@ -1,73 +1,35 @@
 import { Toggle } from "@edmi-react/ui/toggle";
-import { IconPlaceholder } from "@/edmi/icon-placeholder";
+
+const levels = [
+	{ value: "flat", label: "Flat (0)" },
+	{ value: "raised", label: "Raised (+1)" },
+	{ value: "floating", label: "Floating (+2)" },
+] as const;
 
 export default function Demo() {
 	return (
-		<div className="flex flex-wrap items-center gap-3">
-			<Toggle raised aria-label="Bold">
-				<IconPlaceholder
-					lucide="BoldIcon"
-					tabler="IconBold"
-					hugeicons="TextBoldIcon"
-					phosphor="TextBIcon"
-					remixicon="RiBold"
-				/>
-			</Toggle>
-			<Toggle raised aria-label="Bold" defaultPressed>
-				<IconPlaceholder
-					lucide="BoldIcon"
-					tabler="IconBold"
-					hugeicons="TextBoldIcon"
-					phosphor="TextBIcon"
-					remixicon="RiBold"
-				/>
-			</Toggle>
-			<Toggle raised variant="outline" aria-label="Italic">
-				<IconPlaceholder
-					lucide="ItalicIcon"
-					tabler="IconItalic"
-					hugeicons="TextItalicIcon"
-					phosphor="TextItalicIcon"
-					remixicon="RiItalic"
-				/>
-			</Toggle>
-			<Toggle raised variant="outline">
-				<IconPlaceholder
-					lucide="StarIcon"
-					tabler="IconStar"
-					hugeicons="StarIcon"
-					phosphor="StarIcon"
-					remixicon="RiStarLine"
-				/>
-				Watch
-			</Toggle>
-			<Toggle raised size="sm" aria-label="Bold">
-				<IconPlaceholder
-					lucide="BoldIcon"
-					tabler="IconBold"
-					hugeicons="TextBoldIcon"
-					phosphor="TextBIcon"
-					remixicon="RiBold"
-				/>
-			</Toggle>
-			<Toggle raised size="lg" aria-label="Bold">
-				<IconPlaceholder
-					lucide="BoldIcon"
-					tabler="IconBold"
-					hugeicons="TextBoldIcon"
-					phosphor="TextBIcon"
-					remixicon="RiBold"
-				/>
-			</Toggle>
-			<Toggle raised disabled aria-label="Bold">
-				<IconPlaceholder
-					lucide="BoldIcon"
-					tabler="IconBold"
-					hugeicons="TextBoldIcon"
-					phosphor="TextBIcon"
-					remixicon="RiBold"
-				/>
-			</Toggle>
+		<div className="flex flex-col gap-5">
+			{levels.map(({ value, label }) => (
+				<div key={value} className="flex flex-col gap-2">
+					<p className="text-xs font-medium text-muted-foreground">{label}</p>
+					<div className="flex flex-wrap items-center gap-3">
+						<Toggle elevation={value} aria-label="Bold" defaultPressed>
+							<b>B</b>
+						</Toggle>
+						<Toggle elevation={value} variant="outline" aria-label="Italic">
+							<i>I</i>
+						</Toggle>
+						<Toggle
+							elevation={value}
+							variant="outline"
+							aria-label="Underline"
+							defaultPressed
+						>
+							<u>U</u>
+						</Toggle>
+					</div>
+				</div>
+			))}
 		</div>
 	);
 }

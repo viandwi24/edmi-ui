@@ -32,10 +32,19 @@ export const badgeVariants = cva(
 				pill: "rounded-full",
 				number: "min-w-[22px] justify-center px-1.5 font-mono text-[11px]",
 			},
+			// ✦ depth (v4): badges keep their fill and tinted border at every level, only the edge changes
+			elevation: {
+				flat: "",
+				sunken: "shadow-[inset_0_1px_2px_rgb(0_0_0/0.22)]",
+				raised: "shadow-raised",
+				floating:
+					"shadow-[inset_0_1px_0_var(--bv-top),0_0_1.5px_var(--bv-out),0_2px_5px_rgb(0_0_0/0.14)]",
+			},
 		},
 		defaultVariants: {
 			variant: "default",
 			shape: "default",
+			elevation: "flat",
 		},
 	},
 );

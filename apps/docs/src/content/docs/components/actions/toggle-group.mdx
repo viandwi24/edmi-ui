@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="toggle-group" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look (on the group, flows to every item).
+`elevation` on the group flows to every item. For `variant="segmented"` only the ON item rises (the track never bevels). Raised (+1) and floating (+2) are equivalent on items.
 
 <ComponentDemo name="toggle-group" demo="toggle-group-raised" />
 
@@ -36,7 +36,7 @@ Flat by default. Pass `raised` for the one-step 3D look (on the group, flows to 
 | orientation | `horizontal \| vertical` | `horizontal` |
 | multiple | `boolean` | `false` |
 | value / defaultValue | `string[]` | none |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 ## ✦ Edmi additions
 - `variant="segmented"`: flat track with a tab-active fill (for single selection such as ranges).

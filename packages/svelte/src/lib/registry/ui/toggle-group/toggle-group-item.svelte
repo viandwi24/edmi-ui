@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { ToggleGroup as ToggleGroupPrimitive } from "bits-ui";
-	import { segmentedRaised, type ToggleVariants, toggleVariants } from "$lib/registry/ui/toggle/index.js";
+	import { type ToggleVariants, toggleVariants } from "$lib/registry/ui/toggle/index.js";
+	import type { Elevation } from "$lib/registry/ui/elevation/index.js";
 	import { cn } from "$lib/utils.js";
 	import { getToggleGroupCtx } from "./toggle-group.svelte";
 
@@ -10,12 +11,13 @@
 		class: className,
 		size,
 		variant,
-		raised,
+		elevation,
 		...restProps
-	}: ToggleGroupPrimitive.ItemProps & ToggleVariants & { raised?: boolean } = $props();
+	}: ToggleGroupPrimitive.ItemProps &
+		Omit<ToggleVariants, "elevation"> & { elevation?: Elevation } = $props();
 
 	const ctx = getToggleGroupCtx();
-	const isRaised = $derived(raised ?? ctx.raised ?? false);
+	const itemElevation = $derived(elevation && elevation !== "auto" ? elevation : ctx.elevation);
 	const itemVariant = $derived(ctx.variant || variant);
 </script>
 
@@ -30,10 +32,8 @@
 		toggleVariants({
 			variant: itemVariant,
 			size: ctx.size || size,
-			// outline → toggle raised compound; other variants → segmented.itemRaised below
-			raised: isRaised && itemVariant === "outline",
+			elevation: itemElevation,
 		}),
-		isRaised && itemVariant !== "outline" && `${segmentedRaised} data-[state=on]:translate-y-0 data-[state=on]:shadow-btn-secondary`,
 		className
 	)}
 	{value}

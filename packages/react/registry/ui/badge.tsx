@@ -1,7 +1,11 @@
+"use client";
+
 import { mergeProps } from "@base-ui/react/merge-props";
 import { useRender } from "@base-ui/react/use-render";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
+
+import { type Elevation, useElevation } from "@/registry/edmi/ui/elevation";
 
 const badgeVariants = cva(
 	"group/badge inline-flex h-[22px] w-fit shrink-0 items-center justify-center gap-1.5 overflow-hidden rounded-md border border-transparent px-2 text-xs font-medium whitespace-nowrap transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring aria-invalid:border-destructive [&>svg]:pointer-events-none [&_svg]:size-3",
@@ -32,10 +36,19 @@ const badgeVariants = cva(
 				pill: "rounded-full",
 				number: "min-w-[22px] justify-center px-1.5 font-mono text-[11px]",
 			},
+			// ✦ depth (v4): badges keep their fill and tinted border at every level, only the edge changes
+			elevation: {
+				flat: "",
+				sunken: "shadow-[inset_0_1px_2px_rgb(0_0_0/0.22)]",
+				raised: "shadow-raised",
+				floating:
+					"shadow-[inset_0_1px_0_var(--bv-top),0_0_1.5px_var(--bv-out),0_2px_5px_rgb(0_0_0/0.14)]",
+			},
 		},
 		defaultVariants: {
 			variant: "default",
 			shape: "default",
+			elevation: "flat",
 		},
 	},
 );
@@ -44,14 +57,23 @@ function Badge({
 	className,
 	variant = "default",
 	shape = "default",
+	elevation,
 	render,
 	...props
-}: useRender.ComponentProps<"span"> & VariantProps<typeof badgeVariants>) {
+}: useRender.ComponentProps<"span"> &
+	Omit<VariantProps<typeof badgeVariants>, "elevation"> & {
+		/** ✦ depth: sunken -1, flat 0, raised +1, floating +2 (fill and tint stay). */
+		elevation?: Elevation;
+	}) {
+	const level = useElevation(elevation, "control");
 	return useRender({
 		defaultTagName: "span",
 		props: mergeProps<"span">(
 			{
-				className: cn(badgeVariants({ variant, shape }), className),
+				className: cn(
+					badgeVariants({ variant, shape, elevation: level }),
+					className,
+				),
 			},
 			props,
 		),

@@ -7,6 +7,7 @@ import { reactiveOmit } from '@vueuse/core'
 import { ToggleGroupRoot, useForwardPropsEmits } from 'reka-ui'
 import { computed, provide } from 'vue'
 import { cn } from '@/registry/edmi/lib/utils'
+import { type Elevation, useElevation } from '@/registry/edmi/ui/elevation'
 
 type ToggleGroupVariants = VariantProps<typeof toggleVariants>
 
@@ -15,28 +16,30 @@ const props = withDefaults(defineProps<ToggleGroupRootProps & {
   variant?: ToggleGroupVariants['variant']
   size?: ToggleGroupVariants['size']
   spacing?: number
-  /** ✦ one-step 3D look, passed to every item (items may override) */
-  raised?: boolean
+  /** ✦ depth passed to every item (items may override); segmented: only the ON item rises */
+  elevation?: Elevation
 }>(), {
   spacing: 2,
-  raised: false,
+  elevation: undefined,
   orientation: 'horizontal',
 })
 
 const emits = defineEmits<ToggleGroupRootEmits>()
+
+const level = useElevation(() => props.elevation, 'control')
 
 provide('toggleGroup', {
   get variant() { return props.variant },
   get size() { return props.size },
   get spacing() { return props.spacing },
   get orientation() { return props.orientation },
-  get raised() { return props.raised },
+  get elevation() { return level.value },
 })
 
 // ✦ `variant="segmented"` renders a flat track (DESIGN §4.5); gap is fixed at 2px.
 const segmented = computed(() => props.variant === 'segmented')
 
-const delegatedProps = reactiveOmit(props, 'class', 'size', 'variant', 'spacing', 'raised')
+const delegatedProps = reactiveOmit(props, 'class', 'size', 'variant', 'spacing', 'elevation')
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
 </script>
 
@@ -53,7 +56,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     v-bind="forwarded"
     :class="cn(
       'group/toggle-group flex w-fit flex-row items-center gap-[--spacing(var(--gap))] rounded-lg data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-stretch',
-      segmented && 'rounded-[10px] border border-border bg-muted p-[3px] shadow-sunk',
+      segmented && 'rounded-[10px] border border-border bg-muted p-[3px] shadow-[inset_0_1px_2px_rgb(0_0_0/0.04)]',
       props.class,
     )"
   >

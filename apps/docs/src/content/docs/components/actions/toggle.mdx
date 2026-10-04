@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="toggle" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look (3D look: hard lip + soft top highlight).
+Flat by default. Raised (+1) and floating (+2) apply to `outline` toggles as a whole; a default toggle only shows depth while it is ON (pressed in). Sunken is not supported.
 
 <ComponentDemo name="toggle" demo="toggle-raised" />
 
@@ -33,7 +33,7 @@ Flat by default. Pass `raised` for the one-step 3D look (3D look: hard lip + sof
 | variant | `default \| outline` | `default` |
 | size | `sm \| default \| lg` | `default` |
 | pressed / defaultPressed | `boolean` | `false` |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 ## ✦ Edmi additions
-- Pressed state: accent fill; with `raised` it also sinks 1px with an inner shadow. `outline` raised uses the `--outline-*` gradient and gray `--outline-lip`, also for toggle-group items.
+- Pressed state: accent fill; with `elevation` raised or floating it also sinks with an inner shadow. `outline` raised uses the neutral bevel face, also for toggle-group items.

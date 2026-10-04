@@ -23,10 +23,18 @@
 				pill: "rounded-full",
 				number: "min-w-[22px] justify-center px-1.5 font-mono text-[11px]",
 			},
+			// ✦ depth (v4): badges keep their fill and tinted border at every level, only the edge changes
+			elevation: {
+				flat: "",
+				sunken: "shadow-[inset_0_1px_2px_rgb(0_0_0/0.22)]",
+				raised: "shadow-raised",
+				floating: "shadow-[inset_0_1px_0_var(--bv-top),0_0_1.5px_var(--bv-out),0_2px_5px_rgb(0_0_0/0.14)]",
+			},
 		},
 		defaultVariants: {
 			variant: "default",
 			shape: "default",
+			elevation: "flat",
 		},
 	});
 
@@ -35,6 +43,7 @@
 </script>
 
 <script lang="ts">
+	import { type Elevation, useElevation } from "$lib/registry/ui/elevation/index.js";
 	import { cn, type WithElementRef } from "$lib/utils.js";
 	import type { HTMLAnchorAttributes } from "svelte/elements";
 
@@ -44,12 +53,17 @@
 		class: className,
 		variant = "default",
 		shape = "default",
+		elevation = "auto",
 		children,
 		...restProps
 	}: WithElementRef<HTMLAnchorAttributes> & {
 		variant?: BadgeVariant;
 		shape?: BadgeShape;
+		/** ✦ depth: sunken -1, flat 0, raised +1, floating +2 (fill and tint stay). */
+		elevation?: Elevation;
 	} = $props();
+
+	const level = useElevation(() => elevation, "control");
 </script>
 
 <svelte:element
@@ -57,7 +71,7 @@
 	bind:this={ref}
 	data-slot="badge"
 	{href}
-	class={cn(badgeVariants({ variant, shape }), className)}
+	class={cn(badgeVariants({ variant, shape, elevation: level.current }), className)}
 	{...restProps}
 >
 	{@render children?.()}

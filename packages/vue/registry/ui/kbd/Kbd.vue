@@ -1,22 +1,22 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
 import { cn } from '@/registry/edmi/lib/utils'
+import { type Elevation, useElevation } from '@/registry/edmi/ui/elevation'
+import { kbdVariants } from '.'
 
 const props = withDefaults(defineProps<{
   class?: HTMLAttributes['class']
-  /** ✦ one-step 3D look */
-  raised?: boolean
-}>(), { raised: false })
+  /** ✦ depth: flat 0, raised +1, floating +2 */
+  elevation?: Elevation
+}>(), { elevation: undefined })
+
+const level = useElevation(() => props.elevation, 'handle')
 </script>
 
 <template>
   <kbd
     data-slot="kbd"
-    :class="cn(
-      'pointer-events-none inline-flex h-[22px] w-fit min-w-[22px] items-center justify-center gap-1 rounded-[5px] border border-input bg-muted px-1.5 font-mono text-[11.5px] font-medium text-muted-foreground select-none in-data-[slot=tooltip-content]:border-[color-mix(in_srgb,var(--background)_20%,var(--primary))] in-data-[slot=tooltip-content]:bg-[color-mix(in_srgb,var(--background)_15%,var(--primary))] in-data-[slot=tooltip-content]:bg-none in-data-[slot=tooltip-content]:text-background in-data-[slot=tooltip-content]:shadow-none [&_svg:not([class*=\'size-\'])]:size-3',
-      props.raised && 'border-b-secondary-lip bg-linear-to-b from-secondary-hi to-muted shadow-[0_1px_0_var(--secondary-lip)] [background-origin:border-box]',
-      props.class,
-    )"
+    :class="cn(kbdVariants({ elevation: level }), props.class)"
   >
     <slot />
   </kbd>

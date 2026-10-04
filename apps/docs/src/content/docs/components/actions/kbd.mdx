@@ -1,6 +1,6 @@
 ---
 title: Kbd
-description: Keyboard key cap; flat by default, `raised` adds a lip.
+description: Keyboard key cap; flat by default, `elevation` raises the key.
 ---
 import ComponentDemo from "../../../../components/ComponentDemo.astro";
 import ComponentInstall from "../../../../components/ComponentInstall.astro";
@@ -21,9 +21,9 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="kbd" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. Pass `raised` for the one-step 3D look (on `Kbd`).
+Set it on `Kbd` (not `KbdGroup`). `raised` (+1) bevels the key cap, `floating` (+2) adds a soft drop. Inside a tooltip the key stays flat.
 
 <ComponentDemo name="kbd" demo="kbd-raised" />
 
@@ -31,9 +31,9 @@ Flat by default. Pass `raised` for the one-step 3D look (on `Kbd`).
 | Prop | Type | Default |
 | --- | --- | --- |
 | className | `string` | none |
-| `raised` | `boolean` | `false` |
+| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 Parts: `Kbd`, `KbdGroup`.
 
 ## ✦ Edmi additions
-- Flat key cap (`--muted`, 1px border, mono); `raised` adds gradient and lip. Adapts inside `data-slot=tooltip-content`.
+- Flat key cap (`--muted`, 1px border, mono); `elevation` adds the bevel. Adapts inside `data-slot=tooltip-content`.

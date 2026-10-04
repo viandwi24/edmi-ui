@@ -1,6 +1,12 @@
 import { ToggleGroup, ToggleGroupItem } from "@edmi-react/ui/toggle-group";
 import { useState } from "react";
-import { IconPlaceholder } from "@/edmi/icon-placeholder";
+
+const levels = [
+	{ value: "flat", label: "Flat (0)" },
+	{ value: "raised", label: "Raised (+1): only the ON item rises" },
+] as const;
+
+const ranges = ["1D", "1W", "1M", "1Y", "All"];
 
 export default function Demo() {
 	const [range, setRange] = useState("1M");
@@ -10,70 +16,33 @@ export default function Demo() {
 		onValueChange: (v: string[]) => v[0] && setRange(v[0]),
 	};
 	return (
-		<div className="flex flex-wrap items-start gap-6">
-			<ToggleGroup raised multiple defaultValue={["b"]}>
-				<ToggleGroupItem value="b" aria-label="Bold">
-					<IconPlaceholder
-						lucide="BoldIcon"
-						tabler="IconBold"
-						hugeicons="TextBoldIcon"
-						phosphor="TextBIcon"
-						remixicon="RiBold"
-					/>
-				</ToggleGroupItem>
-				<ToggleGroupItem value="i" aria-label="Italic">
-					<IconPlaceholder
-						lucide="ItalicIcon"
-						tabler="IconItalic"
-						hugeicons="TextItalicIcon"
-						phosphor="TextItalicIcon"
-						remixicon="RiItalic"
-					/>
-				</ToggleGroupItem>
-				<ToggleGroupItem value="u" aria-label="Underline">
-					<IconPlaceholder
-						lucide="UnderlineIcon"
-						tabler="IconUnderline"
-						hugeicons="TextUnderlineIcon"
-						phosphor="TextUnderlineIcon"
-						remixicon="RiUnderline"
-					/>
-				</ToggleGroupItem>
-			</ToggleGroup>
-			<ToggleGroup raised variant="outline" spacing={0} {...rangeProps}>
-				{["1D", "1W", "1M", "1Y", "All"].map((v) => (
-					<ToggleGroupItem key={v} value={v}>
-						{v}
-					</ToggleGroupItem>
-				))}
-			</ToggleGroup>
-			<ToggleGroup raised variant="segmented" {...rangeProps}>
-				{["1D", "1W", "1M", "1Y", "All"].map((v) => (
-					<ToggleGroupItem key={v} value={v}>
-						{v}
-					</ToggleGroupItem>
-				))}
-			</ToggleGroup>
-			<ToggleGroup raised orientation="vertical" variant="outline">
-				<ToggleGroupItem value="b" aria-label="Bold">
-					<IconPlaceholder
-						lucide="BoldIcon"
-						tabler="IconBold"
-						hugeicons="TextBoldIcon"
-						phosphor="TextBIcon"
-						remixicon="RiBold"
-					/>
-				</ToggleGroupItem>
-				<ToggleGroupItem value="i" aria-label="Italic">
-					<IconPlaceholder
-						lucide="ItalicIcon"
-						tabler="IconItalic"
-						hugeicons="TextItalicIcon"
-						phosphor="TextItalicIcon"
-						remixicon="RiItalic"
-					/>
-				</ToggleGroupItem>
-			</ToggleGroup>
+		<div className="flex flex-col gap-5">
+			{levels.map(({ value, label }) => (
+				<div key={value} className="flex flex-col gap-2">
+					<p className="text-xs font-medium text-muted-foreground">{label}</p>
+					<div className="flex flex-wrap items-start gap-6">
+						<ToggleGroup elevation={value} variant="segmented" {...rangeProps}>
+							{ranges.map((v) => (
+								<ToggleGroupItem key={v} value={v}>
+									{v}
+								</ToggleGroupItem>
+							))}
+						</ToggleGroup>
+						<ToggleGroup
+							elevation={value}
+							variant="outline"
+							spacing={0}
+							{...rangeProps}
+						>
+							{ranges.map((v) => (
+								<ToggleGroupItem key={v} value={v}>
+									{v}
+								</ToggleGroupItem>
+							))}
+						</ToggleGroup>
+					</div>
+				</div>
+			))}
 		</div>
 	);
 }

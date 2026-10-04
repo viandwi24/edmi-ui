@@ -1,23 +1,30 @@
+"use client";
+
 import { Toggle as TogglePrimitive } from "@base-ui/react/toggle";
 import { ToggleGroup as ToggleGroupPrimitive } from "@base-ui/react/toggle-group";
 import type { VariantProps } from "class-variance-authority";
 import { cn } from "cn";
 import * as React from "react";
 
+import {
+	type Elevation,
+	type ElevationLevel,
+	useElevation,
+} from "@/registry/edmi/ui/elevation";
 import { toggleVariants } from "@/registry/edmi/ui/toggle";
 
 const ToggleGroupContext = React.createContext<
 	VariantProps<typeof toggleVariants> & {
 		spacing?: number;
 		orientation?: "horizontal" | "vertical";
-		raised?: boolean;
+		elevation?: ElevationLevel;
 	}
 >({
 	size: "default",
 	variant: "default",
 	spacing: 2,
 	orientation: "horizontal",
-	raised: false,
+	elevation: undefined,
 });
 
 function ToggleGroup({
@@ -26,16 +33,17 @@ function ToggleGroup({
 	size,
 	spacing = 2,
 	orientation = "horizontal",
-	raised = false,
+	elevation,
 	children,
 	...props
 }: ToggleGroupPrimitive.Props &
 	VariantProps<typeof toggleVariants> & {
 		spacing?: number;
 		orientation?: "horizontal" | "vertical";
-		/** ✦ one-step 3D look, passed down to every item. */
-		raised?: boolean;
+		/** ✦ depth, passed down to every item (segmented: only the ON item rises). */
+		elevation?: Elevation;
 	}) {
+	const level = useElevation(elevation, "control");
 	// ✦ `variant="segmented"` renders a flat track (DESIGN §4.5); gap is fixed at 2px.
 	const segmented = variant === "segmented";
 	return (
@@ -49,13 +57,13 @@ function ToggleGroup({
 			className={cn(
 				"group/toggle-group flex w-fit flex-row items-center gap-[--spacing(var(--gap))] rounded-lg data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-stretch",
 				segmented &&
-					"rounded-[10px] border border-border bg-muted p-[3px] shadow-sunk",
+					"rounded-[10px] border border-border bg-muted p-[3px] shadow-[inset_0_1px_2px_rgb(0_0_0/0.04)]",
 				className,
 			)}
 			{...props}
 		>
 			<ToggleGroupContext.Provider
-				value={{ variant, size, spacing, orientation, raised }}
+				value={{ variant, size, spacing, orientation, elevation: level }}
 			>
 				{children}
 			</ToggleGroupContext.Provider>
@@ -68,9 +76,12 @@ function ToggleGroupItem({
 	children,
 	variant = "default",
 	size = "default",
-	raised,
+	elevation,
 	...props
-}: TogglePrimitive.Props & VariantProps<typeof toggleVariants>) {
+}: TogglePrimitive.Props &
+	Omit<VariantProps<typeof toggleVariants>, "elevation"> & {
+		elevation?: Elevation;
+	}) {
 	const context = React.useContext(ToggleGroupContext);
 
 	return (
@@ -84,7 +95,8 @@ function ToggleGroupItem({
 				toggleVariants({
 					variant: context.variant || variant,
 					size: context.size || size,
-					raised: raised ?? context.raised,
+					elevation:
+						elevation && elevation !== "auto" ? elevation : context.elevation,
 				}),
 				className,
 			)}

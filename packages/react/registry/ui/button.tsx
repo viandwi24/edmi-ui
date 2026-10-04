@@ -1,10 +1,24 @@
+"use client";
+
 import { Button as ButtonPrimitive } from "@base-ui/react/button";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
+import * as React from "react";
 
-// Flat by default. `raised` ✦ adds the one-step 3D look: gradient fill + 1px top highlight + ONE hard lip.
-// `background-origin: border-box` keeps the gradient from repeating under the border.
-const raised = "border bg-linear-to-b [background-origin:border-box]";
+import {
+	type Elevation,
+	type ElevationLevel,
+	useElevation,
+} from "@/registry/edmi/ui/elevation";
+
+// Flat by default. `elevation` ✦ adds depth (v4): sunken -1, raised +1 (bevel), floating +2 (bevel + soft drop).
+// `background-origin: border-box` keeps the gradient from repeating under the transparent border.
+const face = "border-transparent [background-origin:border-box]";
+
+// Level passed down by a ButtonGroup (items resolve: own prop, group level, scope).
+const ButtonElevationContext = React.createContext<ElevationLevel | undefined>(
+	undefined,
+);
 
 const buttonVariants = cva(
 	"group/button relative inline-flex shrink-0 items-center justify-center gap-2 font-medium whitespace-nowrap transition-[filter,transform,box-shadow] outline-none select-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
@@ -25,8 +39,13 @@ const buttonVariants = cva(
 				brand:
 					"border border-transparent bg-brand text-brand-foreground hover:bg-[color-mix(in_srgb,var(--brand)_90%,var(--background))]",
 			},
-			// ✦ opt-in one-step 3D look
-			raised: { false: "", true: "active:translate-y-[2px]" },
+			// ✦ depth (v4)
+			elevation: {
+				flat: "",
+				sunken: "",
+				raised: "active:translate-y-px",
+				floating: "active:translate-y-px",
+			},
 			size: {
 				default:
 					"h-9 rounded-md px-3.5 text-[13.5px] has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3",
@@ -42,43 +61,83 @@ const buttonVariants = cva(
 			},
 		},
 		compoundVariants: [
+			// +1 raised
 			{
-				raised: true,
+				elevation: "raised",
 				variant: "default",
-				class: `${raised} border-primary-edge border-b-primary-lip from-primary-hi to-primary shadow-btn-primary hover:brightness-105 active:border-b-primary-edge active:shadow-pressed`,
+				class: `${face} [background-image:var(--r1-p-face)] shadow-btn-raised-primary hover:brightness-105 active:shadow-pressed`,
 			},
 			{
-				raised: true,
-				variant: "secondary",
-				class: `${raised} border-input border-b-secondary-lip from-secondary-hi to-secondary shadow-btn-secondary hover:from-accent hover:to-accent data-[popup-open]:from-accent data-[popup-open]:to-accent active:shadow-pressed`,
+				elevation: "raised",
+				variant: ["secondary", "outline", "ghost"],
+				class: `${face} [background-image:var(--r1-s-face)] shadow-btn-raised-neutral active:shadow-pressed`,
 			},
 			{
-				raised: true,
-				variant: "outline",
-				class:
-					"bg-linear-to-b from-outline-hi to-outline-face [background-origin:border-box] border-b-outline-lip shadow-btn-outline hover:from-accent hover:to-accent data-[popup-open]:from-accent data-[popup-open]:to-accent active:shadow-none active:bg-none active:bg-outline-face",
-			},
-			{
-				raised: true,
+				elevation: "raised",
 				variant: "destructive",
-				class: `${raised} border-destructive-edge border-b-destructive-lip from-destructive-hi to-destructive shadow-btn-destructive hover:brightness-105 active:shadow-pressed`,
+				class: `${face} bg-linear-to-b from-destructive-hi to-destructive shadow-btn-raised-color hover:brightness-105 active:shadow-pressed`,
 			},
 			{
-				raised: true,
+				elevation: "raised",
 				variant: "brand",
-				class: `${raised} border-brand-edge border-b-brand-lip from-brand-hi to-brand shadow-btn-brand hover:brightness-105 active:shadow-pressed`,
+				class: `${face} bg-linear-to-b from-brand-hi to-brand shadow-btn-raised-color hover:brightness-105 active:shadow-pressed`,
 			},
-			// ghost & link never get raised
+			// +2 floating (one hero action per view)
 			{
-				raised: true,
-				variant: ["ghost", "link"],
-				class: "active:translate-y-0",
+				elevation: "floating",
+				variant: "default",
+				class: `${face} [background-image:var(--fl-p-face)] shadow-btn-float-primary active:shadow-pressed-float`,
+			},
+			{
+				elevation: "floating",
+				variant: ["secondary", "outline", "ghost"],
+				class: `${face} [background-image:var(--fl-s-face)] shadow-btn-float-neutral active:shadow-pressed-float`,
+			},
+			{
+				elevation: "floating",
+				variant: "destructive",
+				class: `${face} bg-linear-to-b from-destructive-hi to-destructive shadow-btn-float-color active:shadow-pressed-float`,
+			},
+			{
+				elevation: "floating",
+				variant: "brand",
+				class: `${face} bg-linear-to-b from-brand-hi to-brand shadow-btn-float-color active:shadow-pressed-float`,
+			},
+			// -1 sunken: filled variants keep their colour (8% darker) + inset, neutral ones become a well
+			{
+				elevation: "sunken",
+				variant: "default",
+				class:
+					"border-transparent bg-[color-mix(in_srgb,var(--primary)_92%,#000)] shadow-btn-sunken-filled",
+			},
+			{
+				elevation: "sunken",
+				variant: "destructive",
+				class:
+					"border-transparent bg-[color-mix(in_srgb,var(--destructive)_92%,#000)] shadow-btn-sunken-filled",
+			},
+			{
+				elevation: "sunken",
+				variant: "brand",
+				class:
+					"border-transparent bg-[color-mix(in_srgb,var(--brand)_92%,#000)] shadow-btn-sunken-filled",
+			},
+			{
+				elevation: "sunken",
+				variant: ["secondary", "outline", "ghost"],
+				class: "border-sk-bd bg-sk-bg shadow-sunken",
+			},
+			// link never gets depth
+			{
+				elevation: ["raised", "floating", "sunken"],
+				variant: "link",
+				class: "bg-none shadow-none active:translate-y-0",
 			},
 		],
 		defaultVariants: {
 			variant: "default",
 			size: "default",
-			raised: false,
+			elevation: "flat",
 		},
 	},
 );
@@ -87,17 +146,34 @@ function Button({
 	className,
 	variant = "default",
 	size = "default",
-	raised = false,
+	elevation,
 	...props
-}: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
+}: ButtonPrimitive.Props &
+	Omit<VariantProps<typeof buttonVariants>, "elevation"> & {
+		/** ✦ depth: sunken -1, flat 0, raised +1, floating +2. `auto` follows the group / provider. */
+		elevation?: Elevation;
+	}) {
+	const group = React.useContext(ButtonElevationContext);
+	const own = elevation && elevation !== "auto" ? elevation : group;
+	const level = useElevation(
+		own,
+		variant === "default" ||
+			variant === "secondary" ||
+			variant === "destructive" ||
+			variant === "brand"
+			? "button-filled"
+			: "button-quiet",
+	);
 	return (
 		<ButtonPrimitive
 			data-slot="button"
 			data-variant={variant}
-			className={cn(buttonVariants({ variant, size, raised, className }))}
+			className={cn(
+				buttonVariants({ variant, size, elevation: level, className }),
+			)}
 			{...props}
 		/>
 	);
 }
 
-export { Button, buttonVariants };
+export { Button, ButtonElevationContext, buttonVariants };
