@@ -24,10 +24,12 @@
 		class?: string;
 	} = $props();
 
+	let open = $state(false);
+
 	const formatter = $derived(new DateFormatter(locale, { dateStyle: "long" }));
 </script>
 
-<Popover.Root>
+<Popover.Root bind:open>
 	<Popover.Trigger>
 		{#snippet child({ props })}
 			<Button
@@ -53,6 +55,13 @@
 		{/snippet}
 	</Popover.Trigger>
 	<Popover.Content class="w-auto p-0" align="start">
-		<Calendar type="single" bind:value captionLayout="dropdown" {locale} {raised} />
+		<Calendar
+			type="single"
+			bind:value
+			captionLayout="dropdown"
+			{locale}
+			{raised}
+			onValueChange={() => (open = false)}
+		/>
 	</Popover.Content>
 </Popover.Root>

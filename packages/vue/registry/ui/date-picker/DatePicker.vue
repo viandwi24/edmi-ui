@@ -4,7 +4,7 @@ import type { HTMLAttributes, Ref } from "vue"
 import { DateFormatter, getLocalTimeZone } from "@internationalized/date"
 import { CalendarIcon } from "@lucide/vue"
 import { useVModel } from "@vueuse/core"
-import { computed } from "vue"
+import { computed, ref } from "vue"
 import { cn } from "@/registry/edmi/lib/utils"
 import { Button } from "@/registry/edmi/ui/button"
 import { Calendar } from "@/registry/edmi/ui/calendar"
@@ -31,11 +31,13 @@ const date = useVModel(props, "modelValue", emits, {
   defaultValue: props.defaultValue,
 }) as Ref<DateValue | undefined>
 
+const open = ref(false)
+
 const formatter = computed(() => new DateFormatter(props.locale, { dateStyle: "long" }))
 </script>
 
 <template>
-  <Popover>
+  <Popover v-model:open="open">
     <PopoverTrigger as-child>
       <Button
         variant="outline"
@@ -55,6 +57,7 @@ const formatter = computed(() => new DateFormatter(props.locale, { dateStyle: "l
         layout="month-and-year"
         :locale="locale"
         :default-placeholder="date"
+        @update:model-value="open = false"
       />
     </PopoverContent>
   </Popover>

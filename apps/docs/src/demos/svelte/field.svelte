@@ -13,7 +13,7 @@
 	import { Input } from "@edmi-svelte/ui/input";
 	import { Switch } from "@edmi-svelte/ui/switch";
 
-	let ticker = $state("MAG");
+	let ticker = $state("mag 4");
 	let keeper = $state(true);
 	const invalid = $derived(!/^[A-Z]{2,6}$/.test(ticker));
 </script>

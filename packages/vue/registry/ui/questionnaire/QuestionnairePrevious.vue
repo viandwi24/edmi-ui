@@ -64,7 +64,7 @@ function handleClick(event: MouseEvent) {
     :tabindex="visible ? undefined : -1"
     :class="cn(
       buttonVariants({ size: props.size, variant: props.variant }),
-      'col-start-1 row-start-1 justify-self-start',
+      'col-start-1 row-start-1 justify-self-start [&[hidden]]:hidden',
       props.class,
     )"
     @click="handleClick"

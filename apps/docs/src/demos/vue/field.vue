@@ -25,7 +25,7 @@ import { Switch } from "@edmi-vue/ui/switch";
       </Field>
       <Field data-invalid="true">
         <FieldLabel for="field-ticker">Ticker</FieldLabel>
-        <Input id="field-ticker" aria-invalid="true" default-value="MAG" />
+        <Input id="field-ticker" aria-invalid="true" default-value="mag 4" />
         <FieldError>Use 2-6 capital letters.</FieldError>
       </Field>
       <Field orientation="horizontal">

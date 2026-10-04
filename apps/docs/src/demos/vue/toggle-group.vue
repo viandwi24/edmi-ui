@@ -1,8 +1,14 @@
 <script setup lang="ts">
 import { Bold, Italic, Underline } from "@lucide/vue";
 import { ToggleGroup, ToggleGroupItem } from "@edmi-vue/ui/toggle-group";
+import { ref } from "vue";
 
 const ranges = ["1D", "1W", "1M", "1Y", "All"];
+const range = ref("1M");
+// A range always has one value: ignore the empty value a second click on the active item produces.
+function setRange(v: unknown) {
+  if (typeof v === "string" && v) range.value = v;
+}
 </script>
 
 <template>
@@ -12,10 +18,10 @@ const ranges = ["1D", "1W", "1M", "1Y", "All"];
       <ToggleGroupItem value="i" aria-label="Italic"><Italic /></ToggleGroupItem>
       <ToggleGroupItem value="u" aria-label="Underline"><Underline /></ToggleGroupItem>
     </ToggleGroup>
-    <ToggleGroup type="single" variant="outline" :spacing="0" default-value="1M">
+    <ToggleGroup type="single" variant="outline" :spacing="0" :model-value="range" @update:model-value="setRange">
       <ToggleGroupItem v-for="v in ranges" :key="v" :value="v">{{ v }}</ToggleGroupItem>
     </ToggleGroup>
-    <ToggleGroup type="single" variant="segmented" default-value="1M">
+    <ToggleGroup type="single" variant="segmented" :model-value="range" @update:model-value="setRange">
       <ToggleGroupItem v-for="v in ranges" :key="v" :value="v">{{ v }}</ToggleGroupItem>
     </ToggleGroup>
     <ToggleGroup type="multiple" orientation="vertical" variant="outline">

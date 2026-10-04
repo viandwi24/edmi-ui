@@ -33,10 +33,12 @@ Flat by default. Pass `raised` for the one-step 3D look (on `SelectTrigger` (the
 | SelectTrigger size | `sm \| default` | `default` |
 | SelectContent alignItemWithTrigger | `boolean` | `true` |
 | value / defaultValue | `string` | none |
+| items (React) | `{ value, label }[]` | none |
 | `raised` | `boolean` | `false` |
 
 ## ✦ Edmi additions
 - Flat popover surface; `raised` affects only the trigger; highlighted item uses the accent fill.
 
 ## Vue / Svelte differences
+- **React**: Base UI shows the raw `value` in `SelectValue` unless the root gets `items={[{ value, label }]}` (or `SelectValue` a render function), so pass `items` with the labels. Vue and Svelte show the selected item text automatically.
 - **Svelte**: the root requires `type="single"` (or `"multiple"`); React and Vue infer single selection.

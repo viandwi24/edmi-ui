@@ -24,6 +24,7 @@
 					<Questionnaire.Choice value="schedule">On a schedule</Questionnaire.Choice>
 					<Questionnaire.Choice value="sign">When I sign</Questionnaire.Choice>
 				</Questionnaire.Choices>
+				<Questionnaire.Input placeholder="Other…" />
 			</Questionnaire.Item>
 		</Questionnaire.Root>
 	{/each}

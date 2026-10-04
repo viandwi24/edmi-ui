@@ -1,18 +1,24 @@
 <script setup lang="ts">
 import { ToggleGroup, ToggleGroupItem } from "@edmi-vue/ui/toggle-group";
+import { ref } from "vue";
 
 const ranges = ["1D", "1W", "1M", "1Y", "All"];
+const range = ref("1M");
+// A range always has one value: ignore the empty value a second click on the active item produces.
+function setRange(v: unknown) {
+  if (typeof v === "string" && v) range.value = v;
+}
 </script>
 
 <template>
   <div class="flex flex-wrap items-start gap-6">
-    <ToggleGroup type="single" variant="segmented" default-value="1M">
+    <ToggleGroup type="single" variant="segmented" :model-value="range" @update:model-value="setRange">
       <ToggleGroupItem v-for="v in ranges" :key="v" :value="v">{{ v }}</ToggleGroupItem>
     </ToggleGroup>
-    <ToggleGroup type="single" variant="segmented" raised default-value="1M">
+    <ToggleGroup type="single" variant="segmented" raised :model-value="range" @update:model-value="setRange">
       <ToggleGroupItem v-for="v in ranges" :key="v" :value="v">{{ v }}</ToggleGroupItem>
     </ToggleGroup>
-    <ToggleGroup type="single" variant="outline" raised :spacing="0" default-value="1M">
+    <ToggleGroup type="single" variant="outline" raised :spacing="0" :model-value="range" @update:model-value="setRange">
       <ToggleGroupItem v-for="v in ranges" :key="v" :value="v">{{ v }}</ToggleGroupItem>
     </ToggleGroup>
   </div>

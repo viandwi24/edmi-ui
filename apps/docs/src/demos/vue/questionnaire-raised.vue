@@ -3,6 +3,7 @@ import {
   Questionnaire,
   QuestionnaireChoice,
   QuestionnaireChoices,
+  QuestionnaireInput,
   QuestionnaireItem,
   QuestionnaireTitle,
 } from "@edmi-vue/ui/questionnaire";
@@ -16,6 +17,7 @@ import {
         <QuestionnaireChoice value="drift">When any weight drifts past a limit</QuestionnaireChoice>
         <QuestionnaireChoice value="schedule">On a fixed schedule</QuestionnaireChoice>
       </QuestionnaireChoices>
+      <QuestionnaireInput placeholder="Other…" />
     </QuestionnaireItem>
   </Questionnaire>
 </template>

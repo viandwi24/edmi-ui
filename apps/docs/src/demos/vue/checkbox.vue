@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { Checkbox } from "@edmi-vue/ui/checkbox";
+import { ref } from "vue";
+
+const some = ref<boolean | "indeterminate">("indeterminate");
 </script>
 
 <template>
@@ -12,7 +15,7 @@ import { Checkbox } from "@edmi-vue/ui/checkbox";
       </span>
     </label>
     <label class="flex items-center gap-2.5 text-sm">
-      <Checkbox model-value="indeterminate" /> Some selected
+      <Checkbox v-model="some" /> Some selected
     </label>
     <label class="flex items-center gap-2.5 text-sm">
       <Checkbox disabled /> Disabled

@@ -26,7 +26,7 @@ export default function Demo() {
 				</Field>
 				<Field data-invalid="true">
 					<FieldLabel htmlFor="field-ticker">Ticker</FieldLabel>
-					<Input id="field-ticker" aria-invalid defaultValue="MAG" />
+					<Input id="field-ticker" aria-invalid defaultValue="mag 4" />
 					<FieldError>Use 2-6 capital letters.</FieldError>
 				</Field>
 				<Field orientation="horizontal">

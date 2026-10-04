@@ -9,9 +9,17 @@ import {
 	SelectValue,
 } from "@edmi-react/ui/select";
 
+const tokens = [
+	{ value: "nvdax", label: "NVDAx" },
+	{ value: "msftx", label: "MSFTx" },
+	{ value: "aaplx", label: "AAPLx" },
+	{ value: "anthrop", label: "ANTHRP-pre" },
+	{ value: "openai", label: "OPENAI-pre" },
+];
+
 export default function Demo() {
 	return (
-		<Select defaultValue="nvdax">
+		<Select defaultValue="nvdax" items={tokens}>
 			<SelectTrigger raised className="w-52">
 				<SelectValue placeholder="Select a token" />
 			</SelectTrigger>

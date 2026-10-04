@@ -38,6 +38,8 @@ Flat by default. Pass `raised` for the one-step 3D look (on `Questionnaire`, app
 | QuestionnairePrevious, Skip, Next, Submit | size, variant | Button props | |
 | `raised` | `boolean` | `false` | One-step 3D look ✦ (on `Questionnaire`, applies to every choice and input) |
 
+Put a `QuestionnaireInput` inside an item next to its choices for an "Other: ____" answer: typing selects the input and clears the choices, picking a choice selects it again (the typed text is kept but no longer submitted).
+
 Built on `@shadcn/react/questionnaire`.
 
 ## ✦ Edmi additions

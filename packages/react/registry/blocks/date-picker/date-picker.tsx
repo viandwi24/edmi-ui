@@ -33,9 +33,10 @@ function DatePicker({
 	raised?: boolean;
 }) {
 	const [inner, setInner] = React.useState<Date | undefined>(defaultValue);
+	const [open, setOpen] = React.useState(false);
 	const date = value ?? inner;
 	return (
-		<Popover>
+		<Popover open={open} onOpenChange={setOpen}>
 			<PopoverTrigger
 				render={
 					<Button
@@ -69,6 +70,7 @@ function DatePicker({
 					onSelect={(next) => {
 						setInner(next);
 						onValueChange?.(next);
+						setOpen(false);
 					}}
 				/>
 			</PopoverContent>

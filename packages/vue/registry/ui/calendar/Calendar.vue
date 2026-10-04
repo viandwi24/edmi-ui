@@ -62,6 +62,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
   <CalendarRoot
     v-slot="{ grid, weekDays, date }"
     v-bind="forwarded"
+    :weekday-format="props.weekdayFormat ?? 'short'"
     v-model:placeholder="placeholder"
     data-slot="calendar"
     :class="cn(calendarRootClass, props.class)"
@@ -100,7 +101,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
         <CalendarGridHead>
           <CalendarGridRow class="flex">
             <CalendarHeadCell v-for="day in weekDays" :key="day" :class="calendarHeadCellClass">
-              {{ day }}
+              {{ day.slice(0, 2) }}
             </CalendarHeadCell>
           </CalendarGridRow>
         </CalendarGridHead>

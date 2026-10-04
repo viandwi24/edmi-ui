@@ -29,10 +29,11 @@
 			<Questionnaire.Choice value="schedule">On a fixed schedule</Questionnaire.Choice>
 			<Questionnaire.Choice value="sign">Only when I sign</Questionnaire.Choice>
 		</Questionnaire.Choices>
+		<Questionnaire.Input placeholder="Other…" />
 	</Questionnaire.Item>
 	<Questionnaire.Item name="notes">
-		<Questionnaire.Title>Anything else?</Questionnaire.Title>
-		<Questionnaire.Input placeholder="Something else…" />
+		<Questionnaire.Title>Any notes for the desk?</Questionnaire.Title>
+		<Questionnaire.Input placeholder="Add a note…" />
 	</Questionnaire.Item>
 	<Questionnaire.Actions>
 		<Questionnaire.Previous />

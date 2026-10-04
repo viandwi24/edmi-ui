@@ -45,10 +45,11 @@ function onSubmit(event: Event) {
         <QuestionnaireChoice value="schedule">On a fixed schedule</QuestionnaireChoice>
         <QuestionnaireChoice value="sign">Only when I sign</QuestionnaireChoice>
       </QuestionnaireChoices>
+      <QuestionnaireInput placeholder="Other…" />
     </QuestionnaireItem>
     <QuestionnaireItem name="notes">
-      <QuestionnaireTitle>Anything else?</QuestionnaireTitle>
-      <QuestionnaireInput placeholder="Something else…" />
+      <QuestionnaireTitle>Any notes for the desk?</QuestionnaireTitle>
+      <QuestionnaireInput placeholder="Add a note…" />
     </QuestionnaireItem>
     <QuestionnaireActions>
       <QuestionnairePrevious />

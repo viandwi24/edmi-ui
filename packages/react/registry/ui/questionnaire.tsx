@@ -52,7 +52,7 @@ function QuestionnaireItem({
 		<QuestionnairePrimitive.Item
 			data-slot="questionnaire-item"
 			className={cn(
-				"flex min-w-0 flex-col gap-4 border-0 p-0 outline-none",
+				"flex min-w-0 flex-col gap-4 border-0 p-0 outline-none [&[hidden]]:hidden",
 				className,
 			)}
 			{...props}
@@ -244,7 +244,7 @@ function QuestionnairePrevious({
 			data-variant={variant}
 			className={cn(
 				buttonVariants({ size, variant }),
-				"col-start-1 row-start-1 justify-self-start",
+				"col-start-1 row-start-1 justify-self-start [&[hidden]]:hidden",
 				className,
 			)}
 			{...props}
@@ -269,7 +269,7 @@ function QuestionnaireSkip({
 			data-variant={variant}
 			className={cn(
 				buttonVariants({ size, variant }),
-				"col-start-2 row-start-1 justify-self-end",
+				"col-start-2 row-start-1 justify-self-end [&[hidden]]:hidden",
 				className,
 			)}
 			{...props}
@@ -294,7 +294,7 @@ function QuestionnaireNext({
 			data-variant={variant}
 			className={cn(
 				buttonVariants({ size, variant }),
-				"col-start-3 row-start-1 justify-self-end",
+				"col-start-3 row-start-1 justify-self-end [&[hidden]]:hidden",
 				className,
 			)}
 			{...props}
@@ -319,7 +319,7 @@ function QuestionnaireSubmit({
 			data-variant={variant}
 			className={cn(
 				buttonVariants({ size, variant }),
-				"col-start-3 row-start-1 justify-self-end",
+				"col-start-3 row-start-1 justify-self-end [&[hidden]]:hidden",
 				className,
 			)}
 			{...props}

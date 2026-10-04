@@ -1,7 +1,9 @@
 import { Checkbox } from "@edmi-react/ui/checkbox";
 import { Label } from "@edmi-react/ui/label";
+import { useState } from "react";
 
 export default function Demo() {
+	const [some, setSome] = useState({ checked: false, indeterminate: true });
 	return (
 		<div className="flex flex-col gap-4">
 			<Label className="flex items-start gap-2.5 text-sm">
@@ -14,7 +16,13 @@ export default function Demo() {
 				</span>
 			</Label>
 			<Label className="flex items-center gap-2.5 text-sm">
-				<Checkbox indeterminate /> Some selected
+				<Checkbox
+					checked={some.checked}
+					indeterminate={some.indeterminate}
+					onCheckedChange={(checked) =>
+						setSome({ checked, indeterminate: false })
+					}
+				/> Some selected
 			</Label>
 			<Label className="flex items-center gap-2.5 text-sm">
 				<Checkbox disabled /> Disabled

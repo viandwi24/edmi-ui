@@ -48,7 +48,7 @@ const shortcut = computed(() => (visible.value && !props.disabled ? "Enter" : nu
     :tabindex="visible ? undefined : -1"
     :class="cn(
       buttonVariants({ size: props.size, variant: props.variant }),
-      'col-start-3 row-start-1 justify-self-end',
+      'col-start-3 row-start-1 justify-self-end [&[hidden]]:hidden',
       props.class,
     )"
   >
