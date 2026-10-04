@@ -6,13 +6,42 @@ import { Toaster, toast } from "@edmi-vue/ui/sonner";
 <template>
   <div class="flex flex-wrap gap-2">
     <Toaster raised />
-    <Button variant="outline" raised @click="toast('Copied to clipboard')">Default</Button>
+    <Button variant="outline" @click="toast('Copied to clipboard')">Default</Button>
     <Button
       variant="outline"
-      raised
       @click="toast.success('Joined MAG4', { description: '98,209 shares - tx 4f9a...c21' })"
     >
       Success
+    </Button>
+    <Button
+      variant="outline"
+      @click="toast.info('Rebalance scheduled', { description: 'Next keeper run at 09:00 UTC' })"
+    >
+      Info
+    </Button>
+    <Button
+      variant="outline"
+      @click="toast.warning('Drift is 6.2%', { description: 'Above your 5% limit.' })"
+    >
+      Warning
+    </Button>
+    <Button
+      variant="outline"
+      @click="toast.error('Signature rejected', { description: 'The wallet closed the request.' })"
+    >
+      Error
+    </Button>
+    <Button
+      variant="outline"
+      @click="
+        toast.promise(new Promise((r) => setTimeout(r, 2000)), {
+          loading: 'Deploying vault...',
+          success: () => 'Vault deployed',
+          error: () => 'Deploy failed',
+        })
+      "
+    >
+      Promise
     </Button>
   </div>
 </template>

@@ -1,17 +1,32 @@
 <script setup lang="ts">
 import { Button } from "@edmi-vue/ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "@edmi-vue/ui/popover";
+import { Input } from "@edmi-vue/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverDescription,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger,
+} from "@edmi-vue/ui/popover";
 </script>
 
 <template>
-  <div class="flex gap-3">
-    <Popover>
-      <PopoverTrigger as-child><Button variant="outline">Flat</Button></PopoverTrigger>
-      <PopoverContent class="text-[13px]">Default popover.</PopoverContent>
-    </Popover>
-    <Popover>
-      <PopoverTrigger as-child><Button variant="outline" raised>Raised</Button></PopoverTrigger>
-      <PopoverContent raised class="text-[13px]">Popover with a hard lip.</PopoverContent>
-    </Popover>
-  </div>
+  <Popover>
+    <PopoverTrigger as-child>
+      <Button variant="outline">Set limits</Button>
+    </PopoverTrigger>
+    <PopoverContent raised align="start" class="w-80">
+      <PopoverHeader>
+        <PopoverTitle>Rebalance limits</PopoverTitle>
+        <PopoverDescription>Applied to the next keeper run.</PopoverDescription>
+      </PopoverHeader>
+      <div class="grid grid-cols-[1fr_120px] items-center gap-2 text-[13px]">
+        <span>Drift</span>
+        <Input default-value="5%" />
+        <span>Max slippage</span>
+        <Input default-value="1%" />
+      </div>
+    </PopoverContent>
+  </Popover>
 </template>

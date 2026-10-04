@@ -119,7 +119,7 @@ function BreadcrumbEllipsis({
 				lucide="MoreHorizontalIcon"
 				tabler="IconDots"
 				hugeicons="MoreHorizontalCircle01Icon"
-				phosphor="DotsThreeOutlineIcon"
+				phosphor="DotsThreeIcon"
 				remixicon="RiMoreLine"
 			/>
 			<span className="sr-only">More</span>

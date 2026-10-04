@@ -16,7 +16,7 @@ import {
 <template>
   <ContextMenu>
     <ContextMenuTrigger
-      class="flex h-40 w-72 items-center justify-center rounded-lg border border-dashed border-border text-sm text-muted-foreground"
+      class="flex h-40 w-72 select-none items-center justify-center rounded-lg border border-dashed border-border text-sm text-muted-foreground"
     >
       Right-click an index row
     </ContextMenuTrigger>

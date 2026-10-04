@@ -1,28 +1,57 @@
 <script setup lang="ts">
-import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from "@edmi-vue/ui/menubar";
+import { ref } from "vue";
+import {
+  Menubar,
+  MenubarCheckboxItem,
+  MenubarContent,
+  MenubarGroup,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarTrigger,
+} from "@edmi-vue/ui/menubar";
+
+const sidebar = ref(true);
+const grid = ref(false);
 </script>
 
 <template>
-  <div class="flex flex-col gap-4">
-    <Menubar>
-      <MenubarMenu>
-        <MenubarTrigger>File</MenubarTrigger>
-        <MenubarContent><MenubarItem>New index</MenubarItem></MenubarContent>
-      </MenubarMenu>
-      <MenubarMenu>
-        <MenubarTrigger>View</MenubarTrigger>
-        <MenubarContent><MenubarItem>Zoom in</MenubarItem></MenubarContent>
-      </MenubarMenu>
-    </Menubar>
-    <Menubar raised>
-      <MenubarMenu>
-        <MenubarTrigger>File</MenubarTrigger>
-        <MenubarContent><MenubarItem>New index</MenubarItem></MenubarContent>
-      </MenubarMenu>
-      <MenubarMenu>
-        <MenubarTrigger>View</MenubarTrigger>
-        <MenubarContent><MenubarItem>Zoom in</MenubarItem></MenubarContent>
-      </MenubarMenu>
-    </Menubar>
-  </div>
+  <Menubar raised>
+    <MenubarMenu>
+      <MenubarTrigger>File</MenubarTrigger>
+      <MenubarContent>
+        <MenubarGroup>
+          <MenubarItem>
+            New index <MenubarShortcut>⌘N</MenubarShortcut>
+          </MenubarItem>
+          <MenubarItem>Open…</MenubarItem>
+        </MenubarGroup>
+        <MenubarSeparator />
+        <MenubarItem variant="destructive">Discard draft</MenubarItem>
+      </MenubarContent>
+    </MenubarMenu>
+    <MenubarMenu>
+      <MenubarTrigger>View</MenubarTrigger>
+      <MenubarContent>
+        <MenubarGroup>
+          <MenubarCheckboxItem v-model="sidebar">Show sidebar</MenubarCheckboxItem>
+          <MenubarCheckboxItem v-model="grid">Show grid</MenubarCheckboxItem>
+        </MenubarGroup>
+        <MenubarSeparator />
+        <MenubarItem>
+          Zoom in <MenubarShortcut>⌘+</MenubarShortcut>
+        </MenubarItem>
+        <MenubarItem>
+          Zoom out <MenubarShortcut>⌘-</MenubarShortcut>
+        </MenubarItem>
+      </MenubarContent>
+    </MenubarMenu>
+    <MenubarMenu>
+      <MenubarTrigger>Help</MenubarTrigger>
+      <MenubarContent>
+        <MenubarItem>Docs</MenubarItem>
+      </MenubarContent>
+    </MenubarMenu>
+  </Menubar>
 </template>

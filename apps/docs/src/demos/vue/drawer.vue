@@ -18,19 +18,21 @@ import {
       <Button variant="outline">Join MAG4</Button>
     </DrawerTrigger>
     <DrawerContent show-handle>
-      <DrawerHeader>
-        <DrawerTitle>Join MAG4</DrawerTitle>
-        <DrawerDescription>Amount in USDC</DrawerDescription>
-      </DrawerHeader>
-      <p class="text-center font-mono text-4xl">1,000</p>
-      <DrawerFooter class="flex-row">
-        <DrawerClose as-child>
-          <Button variant="outline" class="flex-1">Cancel</Button>
-        </DrawerClose>
-        <DrawerClose as-child>
-          <Button class="flex-1">Join</Button>
-        </DrawerClose>
-      </DrawerFooter>
+      <div class="mx-auto w-full max-w-sm">
+        <DrawerHeader>
+          <DrawerTitle>Join MAG4</DrawerTitle>
+          <DrawerDescription>Amount in USDC</DrawerDescription>
+        </DrawerHeader>
+        <p class="text-center font-mono text-4xl">1,000</p>
+        <DrawerFooter class="flex-row">
+          <DrawerClose as-child>
+            <Button variant="outline" class="flex-1">Cancel</Button>
+          </DrawerClose>
+          <DrawerClose as-child>
+            <Button class="flex-1">Join</Button>
+          </DrawerClose>
+        </DrawerFooter>
+      </div>
     </DrawerContent>
   </Drawer>
 </template>

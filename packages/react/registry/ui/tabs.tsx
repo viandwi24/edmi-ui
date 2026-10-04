@@ -77,6 +77,7 @@ function TabsList({
 	className,
 	variant = "default",
 	raised = false,
+	activateOnFocus = true,
 	...props
 }: TabsPrimitive.List.Props &
 	VariantProps<typeof tabsListVariants> & {
@@ -88,6 +89,7 @@ function TabsList({
 			<TabsPrimitive.List
 				data-slot="tabs-list"
 				data-variant={variant}
+				activateOnFocus={activateOnFocus}
 				className={cn(tabsListVariants({ variant }), className)}
 				{...props}
 			/>

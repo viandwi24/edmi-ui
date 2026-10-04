@@ -91,7 +91,9 @@ export default function Demo() {
 										phosphor="HouseIcon"
 										remixicon="RiHomeLine"
 									/>
-									<span className="font-semibold">stockbreak</span>
+									<span className="font-semibold group-data-[collapsible=icon]:hidden">
+										stockbreak
+									</span>
 								</SidebarMenuButton>
 							</SidebarMenuItem>
 						</SidebarMenu>

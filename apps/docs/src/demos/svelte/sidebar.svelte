@@ -64,7 +64,7 @@
 								phosphor="HouseIcon"
 								remixicon="RiHomeLine"
 							/>
-							<span class="font-semibold">stockbreak</span>
+							<span class="font-semibold group-data-[collapsible=icon]:hidden">stockbreak</span>
 						</Sidebar.MenuButton>
 					</Sidebar.MenuItem>
 				</Sidebar.Menu>

@@ -2,7 +2,7 @@
 	import * as Pagination from "@edmi-svelte/ui/pagination";
 </script>
 
-<Pagination.Root count={100} perPage={10} page={2}>
+<Pagination.Root count={100} perPage={10} page={4}>
 	{#snippet children({ pages, currentPage })}
 		<Pagination.Content>
 			<Pagination.Item>

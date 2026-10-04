@@ -23,7 +23,7 @@
 >
 	{#snippet children({ checked })}
 		<span
-			class="pointer-events-none absolute right-2 flex items-center justify-center"
+			class="pointer-events-none absolute left-1.5 flex size-4 items-center justify-center"
 			data-slot="dropdown-menu-radio-item-indicator"
 		>
 			{#if checked}

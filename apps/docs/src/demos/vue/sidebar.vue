@@ -42,7 +42,7 @@ const platform = [
             <SidebarMenuItem>
               <SidebarMenuButton size="lg" tooltip="stockbreak">
                 <HomeIcon />
-                <span class="font-semibold">stockbreak</span>
+                <span class="font-semibold group-data-[collapsible=icon]:hidden">stockbreak</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>

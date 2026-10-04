@@ -151,7 +151,7 @@ function PaginationEllipsis({
 				lucide="MoreHorizontalIcon"
 				tabler="IconDots"
 				hugeicons="MoreHorizontalCircle01Icon"
-				phosphor="DotsThreeOutlineIcon"
+				phosphor="DotsThreeIcon"
 				remixicon="RiMoreLine"
 			/>
 			<span className="sr-only">More pages</span>

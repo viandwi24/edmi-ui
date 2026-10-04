@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import {
   Menubar,
   MenubarCheckboxItem,
@@ -10,6 +11,9 @@ import {
   MenubarShortcut,
   MenubarTrigger,
 } from "@edmi-vue/ui/menubar";
+
+const sidebar = ref(true);
+const grid = ref(false);
 </script>
 
 <template>
@@ -31,8 +35,8 @@ import {
       <MenubarTrigger>View</MenubarTrigger>
       <MenubarContent>
         <MenubarGroup>
-          <MenubarCheckboxItem :default-value="true">Show sidebar</MenubarCheckboxItem>
-          <MenubarCheckboxItem>Show grid</MenubarCheckboxItem>
+          <MenubarCheckboxItem v-model="sidebar">Show sidebar</MenubarCheckboxItem>
+          <MenubarCheckboxItem v-model="grid">Show grid</MenubarCheckboxItem>
         </MenubarGroup>
         <MenubarSeparator />
         <MenubarItem>

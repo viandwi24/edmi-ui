@@ -10,7 +10,7 @@ import {
 </script>
 
 <template>
-  <Pagination v-slot="{ page }" raised :total="100" :items-per-page="10" :default-page="2">
+  <Pagination v-slot="{ page }" raised :total="100" :items-per-page="10" :default-page="4" :sibling-count="1" show-edges>
     <PaginationContent v-slot="{ items }">
       <PaginationPrevious />
       <template v-for="(item, index) in items" :key="index">

@@ -26,7 +26,7 @@
 	{...restProps}
 >
 	{#snippet children({ checked })}
-		<span class="absolute right-2 pointer-events-none">
+		<span class="pointer-events-none absolute left-1.5 flex size-4 items-center justify-center">
 			{#if checked}
 				<span class="size-1.5 rounded-full bg-current"></span>
 			{/if}
