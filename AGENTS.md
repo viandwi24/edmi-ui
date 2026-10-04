@@ -86,6 +86,8 @@ Generated, gitignored, never hand-edited: every `registry.json`, `apps/docs/publ
 
 ## 5. Design rules and `raised`
 
+**Design changes need a handoff document (maintainer rule).** Agents (and the maintainer, from this repo) never design or restyle components here: no new looks, elevation schemes, tokens, variants or visual tweaks on their own initiative. Design is done in the design app; the maintainer exports a handoff document into `refs/*`, and only then do agents implement that revision, so the code always stays in sync with the design app. Allowed without a handoff: bug fixes that restore the documented spec (wrong state, broken layout, port mismatch, docs-site CSS leaks), docs-site/tooling work, and behaviour fixes. If a request would change the look and there is no handoff, stop and ask for one.
+
 Binding spec (v2.1, `refs/edmi-ui` incl. `REVISIONS.md`, the changelog of v1 → v2.1): `refs/edmi-ui/DESIGN.md` (§1 stack, §3 theming, §4 rules, §5 components). **Read §4 before touching any component.** Classes come from `packages/tokens/src/recipes.ts` (inline the strings into each component; registry files cannot import `@edmi-ui/tokens`). Compare with the boards in `refs/edmi-ui/screens/edmi-ui-kit/<NN-board>-{light,dark}.png` (each board has a "Raised ✦" row) and `refs/edmi-ui/reference/*.dc.html` for exact values. Do not "improve" §4.
 
 Theming (spec §3, v2.1): four knobs on `<html>`: mode `class="dark"`, `data-base` (stone default, slate), `data-theme` (green default, ocean), `--radius`. Load order tokens → base → themes. `@edmi-ui/tokens` ships `base/slate.css` and `themes/ocean.css` (exports `./base/slate.css`, `./themes/ocean.css`); distribution/customizer wiring is a separate task. Components use tokens only, never a theme name.
@@ -296,6 +298,7 @@ Environment and process
 - Decisions not covered here: choose the option closest to stock shadcn behaviour and record it in this section.
 
 Spec and design
+- Design changes come only from a handoff document exported from the design app into `refs/*`; no in-repo redesigns (e.g. the proposed InsetPanel raised-body "elevation scale" was cancelled for this reason). Why: user decision, keeps code and design app in sync.
 - Binding spec is `refs/edmi-ui` v2 (flat by default, `raised` opt-in, control height `h-9`). Why: user replaced the spec; the new DESIGN.md has no distribution section, so the registry distribution below stays unchanged.
 - Flat default is a default-look change ⇒ minor while 0.x. Ghost/link/Tabs-line never raised.
 - Menubar raised has no recipe string: `border-b-lip shadow-btn-outline` derived from board 08; bar `rounded-[10px] p-[3px]`, triggers `h-[30px] px-3`. AlertDialog accepts `raised` like Dialog (it is a dialog); Sheet/Drawer/HoverCard/menus are flat only.
@@ -386,7 +389,7 @@ How to approach a task
 3. Use official CLIs and **open the tool's current docs for the command and flags**; do not run from memory. Prefer non-interactive flags with `</dev/null`.
 4. Keep the ports in sync; the same recipe strings, differing only by primitive selectors and framework idioms.
 5. Never hand-edit generated files (`registry.json`, `apps/docs/public/r/**`, `islands/**`, `packages/registry-*/r`). Do not edit `package.json`/`bun.lock`/`components.json`/`tsconfig*`/`.github/**` unless the task is about them; if a CLI touched them by accident, revert.
-6. Do not "improve" §4 rules or invent tokens/variants. Additions are ✦, additive, and listed in the docs mdx.
+6. Do not "improve" §4 rules, invent tokens/variants or change any component design without a handoff document in `refs/*` (section 5). Additions are ✦, additive, and listed in the docs mdx.
 7. Run the gates in 8 before saying you are done; run the smoke script of every port you changed. Report honestly: what you ran, exit codes, what you did not verify (hover/focus/pressed states, dark portals, StackBlitz). Do not claim checks you skipped.
 8. Clean up: kill dev servers/preview processes and CLIs you started, remove temp dirs, do not leave untracked stock deps behind.
 9. Scope: stay inside the repo and OS temp dirs; do not install global tools or Node. Ask the user before outward-facing or irreversible actions: publishing to npm, pushing, creating releases, editing GitHub settings, force operations, deleting data.
