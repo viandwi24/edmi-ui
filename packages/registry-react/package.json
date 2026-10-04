@@ -1,6 +1,6 @@
 {
 	"name": "@edmi-ui/registry-react",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"description": "Edmi UI react registry (built shadcn registry JSON, served via CDN)",
 	"license": "MIT",
 	"files": [
