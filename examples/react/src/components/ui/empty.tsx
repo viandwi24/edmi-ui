@@ -1,6 +1,10 @@
+"use client";
+
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
 import type * as React from "react";
+
+import { type Elevation, useElevation } from "@/components/ui/elevation";
 
 // Outline = dashed: add `border border-input` (or `border-[1.5px]`) via className; the dashed style is built in.
 function Empty({ className, ...props }: React.ComponentProps<"div">) {
@@ -34,19 +38,24 @@ const emptyMediaVariants = cva(
 				default: "bg-transparent",
 				icon: "size-12 rounded-xl border border-border bg-card text-foreground [&_svg:not([class*='size-'])]:size-5",
 			},
-			// ✦ opt-in one-step 3D look (only affects variant="icon")
-			raised: { false: "", true: "" },
+			// ✦ depth (only affects variant="icon"): the media tile rises
+			elevation: { flat: "", raised: "", floating: "" },
 		},
 		compoundVariants: [
 			{
 				variant: "icon",
-				raised: true,
-				class: "border-b-lip shadow-[0_2px_0_var(--lip)]",
+				elevation: "raised",
+				class: "border-transparent shadow-raised",
+			},
+			{
+				variant: "icon",
+				elevation: "floating",
+				class: "border-transparent shadow-floating",
 			},
 		],
 		defaultVariants: {
 			variant: "default",
-			raised: false,
+			elevation: "flat",
 		},
 	},
 );
@@ -54,14 +63,25 @@ const emptyMediaVariants = cva(
 function EmptyMedia({
 	className,
 	variant = "default",
-	raised = false,
+	elevation,
 	...props
-}: React.ComponentProps<"div"> & VariantProps<typeof emptyMediaVariants>) {
+}: React.ComponentProps<"div"> &
+	Pick<VariantProps<typeof emptyMediaVariants>, "variant"> & {
+		/** ✦ depth for variant="icon": raised +1 / floating +2 make the media tile rise. */
+		elevation?: Elevation;
+	}) {
+	const level = useElevation(elevation, "handle");
 	return (
 		<div
 			data-slot="empty-icon"
 			data-variant={variant}
-			className={cn(emptyMediaVariants({ variant, raised, className }))}
+			className={cn(
+				emptyMediaVariants({
+					variant,
+					elevation: level === "sunken" ? "flat" : level,
+					className,
+				}),
+			)}
 			{...props}
 		/>
 	);

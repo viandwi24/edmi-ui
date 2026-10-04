@@ -14,7 +14,7 @@ function toggle() {
 </script>
 
 <template>
-	<Button variant="outline" raised size="icon" aria-label="Toggle theme" @click="toggle">
+	<Button variant="outline"  size="icon" aria-label="Toggle theme" @click="toggle">
 		<PhSun v-if="theme === 'dark'" />
 		<PhMoon v-else />
 	</Button>

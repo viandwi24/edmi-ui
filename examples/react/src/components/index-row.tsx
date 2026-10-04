@@ -84,10 +84,15 @@ type IndexRowData = {
 // Header row matching the IndexRow columns. Place it in `<TableHeader>`.
 function IndexRowHeader({
 	className,
+	rank = false,
 	...props
-}: React.ComponentProps<typeof TableRow>) {
+}: React.ComponentProps<typeof TableRow> & {
+	/** ✦ Leading empty cell for the `rank` column of IndexRow. */
+	rank?: boolean;
+}) {
 	return (
 		<TableRow className={className} {...props}>
+			{rank ? <TableHead className="w-10" /> : null}
 			<TableHead>Index</TableHead>
 			<TableHead>Creator</TableHead>
 			<TableHead className="text-right">Price</TableHead>
@@ -103,13 +108,24 @@ function IndexRowHeader({
 function IndexRow({
 	className,
 	index,
+	rank,
+	delta = "text",
 	...props
 }: Omit<React.ComponentProps<typeof TableRow>, "children"> & {
 	index: IndexRowData;
+	/** ✦ Leading mono rank column (pair with `<IndexRowHeader rank />`). */
+	rank?: number | string;
+	/** ✦ `text` (default) or `pill`: soft tinted pill for the 7d delta. */
+	delta?: "text" | "pill";
 }) {
 	const down = isDown(index.change);
 	return (
 		<TableRow data-slot="index-row" className={className} {...props}>
+			{rank !== undefined ? (
+				<TableCell className="w-10 pr-0 font-mono text-[13px] text-muted-foreground">
+					{rank}
+				</TableCell>
+			) : null}
 			<TableCell>
 				<div className="flex items-center gap-3">
 					<AvatarGroup>
@@ -160,10 +176,24 @@ function IndexRow({
 			<TableCell
 				className={cn(
 					"text-right font-mono text-[12.5px]",
-					down ? "text-destructive-text" : "text-success-text",
+					delta === "text" &&
+						(down ? "text-destructive-text" : "text-success-text"),
 				)}
 			>
-				{index.change}
+				{delta === "pill" ? (
+					<span
+						className={cn(
+							"inline-block rounded-md px-2 py-[3px] text-xs",
+							down
+								? "bg-destructive-soft text-destructive-text"
+								: "bg-brand-soft text-brand-text",
+						)}
+					>
+						{index.change}
+					</span>
+				) : (
+					index.change
+				)}
 			</TableCell>
 			<TableCell className="text-right font-mono text-[12.5px]">
 				{index.aum}

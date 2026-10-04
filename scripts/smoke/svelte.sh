@@ -55,7 +55,7 @@ for n in $ITEMS; do ARGS="$ARGS $URL/$n.json"; done
 for n in $ITEMS; do
 	test -d "$APP/src/lib/components/ui/$n" || { echo "missing components/ui/$n"; exit 1; }
 done
-grep -q "raised" "$APP/src/lib/components/ui/button/button.svelte" || { echo "button.svelte is not the Edmi v2 version (raised)"; exit 1; }
+grep -q "shadow-btn-raised-primary" "$APP/src/lib/components/ui/button/button.svelte" || { echo "button.svelte is not the Edmi v4 version (elevation)"; exit 1; }
 grep -q -- "--brand-hi" "$APP/src/routes/layout.css" || { echo "theme cssVars missing from layout.css"; exit 1; }
 
 # Edmi AI pack: once `ai-all` has dependencies (items ported), install it too; every item must land in
@@ -82,10 +82,10 @@ cat >"$APP/src/routes/+page.svelte" <<'SVELTE'
 	import { Input } from "#lib/components/ui/input/index.js";
 </script>
 
-<Card.Root raised><Card.Header><Card.Title>Edmi</Card.Title></Card.Header></Card.Root>
-<InsetPanel.Root raised><InsetPanel.Header>h</InsetPanel.Header><InsetPanel.Body fade>b</InsetPanel.Body></InsetPanel.Root>
-<Tabs.Root value="a"><Tabs.List variant="pills" raised><Tabs.Trigger value="a">A</Tabs.Trigger></Tabs.List><Tabs.Content value="a">a</Tabs.Content></Tabs.Root>
-<Button variant="brand" raised>Brand</Button>
+<Card.Root elevation="raised"><Card.Header><Card.Title>Edmi</Card.Title></Card.Header></Card.Root>
+<InsetPanel.Root elevation="raised"><InsetPanel.Header>h</InsetPanel.Header><InsetPanel.Body fade>b</InsetPanel.Body></InsetPanel.Root>
+<Tabs.Root value="a"><Tabs.List variant="pills" elevation="raised"><Tabs.Trigger value="a">A</Tabs.Trigger></Tabs.List><Tabs.Content value="a">a</Tabs.Content></Tabs.Root>
+<Button variant="brand" elevation="raised">Brand</Button>
 <Badge variant="info" shape="pill">Info</Badge>
 <Input placeholder="x" />
 SVELTE

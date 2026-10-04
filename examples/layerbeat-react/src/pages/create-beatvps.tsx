@@ -350,7 +350,7 @@ export function CreateBeatVpsPage() {
 					>
 						<div className="flex flex-wrap items-center justify-between gap-4">
 							<ToggleGroup
-								raised
+								elevation="raised"
 								variant="segmented"
 								className="flex-wrap"
 								value={[months]}

@@ -1,5 +1,9 @@
+"use client";
+
 import { Slider as SliderPrimitive } from "@base-ui/react/slider";
 import { cn } from "cn";
+
+import { type Elevation, useElevation } from "@/components/ui/elevation";
 
 // Array value: 1 = single, 2 = range, 3+ = multiple thumbs.
 function Slider({
@@ -8,12 +12,14 @@ function Slider({
 	value,
 	min = 0,
 	max = 100,
-	raised = false,
+	elevation,
 	...props
 }: SliderPrimitive.Root.Props & {
-	/** ✦ one-step 3D look for the thumbs. */
-	raised?: boolean;
+	/** ✦ depth: raised +1 / floating +2 make the thumbs rise (never the track). */
+	elevation?: Elevation;
 }) {
+	const level = useElevation(elevation, "handle");
+	const raised = level === "raised" || level === "floating";
 	const _values = Array.isArray(value)
 		? value
 		: Array.isArray(defaultValue)
@@ -53,7 +59,7 @@ function Slider({
 						className={cn(
 							"relative block size-[18px] shrink-0 rounded-full border border-brand-edge bg-white transition-shadow outline-none select-none after:absolute after:-inset-2 focus-visible:shadow-[0_0_0_4px_var(--ring-soft)] data-[dragging]:shadow-[0_0_0_4px_var(--ring-soft)]",
 							raised &&
-								"border-b-brand-lip bg-linear-to-b from-white to-[#f1f0ec] shadow-[0_2px_0_var(--brand-lip)] [background-origin:border-box] focus-visible:shadow-[0_0_0_4px_var(--ring-soft),0_2px_0_var(--brand-lip)] data-[dragging]:shadow-[0_0_0_4px_var(--ring-soft),0_2px_0_var(--brand-lip)]",
+								"border-transparent bg-linear-to-b from-white to-[#eeede9] shadow-thumb focus-visible:shadow-[0_0_0_4px_var(--ring-soft),0_0_1.5px_rgb(0_0_0/0.45)] data-[dragging]:shadow-[0_0_0_4px_var(--ring-soft),0_0_1.5px_rgb(0_0_0/0.45)]",
 						)}
 					/>
 				))}

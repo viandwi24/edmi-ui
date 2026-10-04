@@ -13,6 +13,7 @@
 		InputGroupInput,
 	} from "#lib/components/ui/input-group/index.js";
 	import { Kbd } from "#lib/components/ui/kbd/index.js";
+	import { type Elevation, useElevation } from "#lib/components/ui/elevation/index.js";
 	import { cn, type WithElementRef } from "#lib/utils.js";
 	import type { HTMLAttributes } from "svelte/elements";
 	import type { Snippet } from "svelte";
@@ -33,7 +34,7 @@
 		connectLabel = "Connect",
 		onConnect,
 		onNetworkClick,
-		raised = false,
+		elevation = "auto",
 		...restProps
 	}: WithElementRef<Omit<HTMLAttributes<HTMLElement>, "children">> & {
 		logo?: Snippet;
@@ -51,9 +52,24 @@
 		connectLabel?: string;
 		onConnect?: () => void;
 		onNetworkClick?: () => void;
-		/** ✦ opt-in one-step 3D look (bar, mark, active pill, Connect button). */
-		raised?: boolean;
+		/** ✦ depth of the bar; raised +1 / floating +2 also raise the mark, active pill and buttons. */
+		elevation?: Elevation;
 	} = $props();
+
+	const level = useElevation(() => elevation, "surface");
+	const raised = $derived(level.current === "raised" || level.current === "floating");
+	// Controls follow an explicit bar level (flat/sunken keep them flat); auto leaves them to their own role.
+	const control = $derived<Elevation | undefined>(
+		elevation !== "auto" ? (raised ? "raised" : "flat") : undefined
+	);
+	const markLevel = useElevation(() => control ?? "auto", "handle");
+	const markRaised = $derived(markLevel.current === "raised" || markLevel.current === "floating");
+	const surfaceElevation = {
+		sunken: "border-sk-bd bg-sk-bg shadow-sunken",
+		flat: "",
+		raised: "border-transparent shadow-raised",
+		floating: "border-transparent shadow-floating",
+	};
 </script>
 
 <!-- App top bar (navbar layout): brand + nav pills, then search, network and wallet. -->
@@ -61,8 +77,8 @@
 	bind:this={ref}
 	data-slot="app-header"
 	class={cn(
-		"flex w-full items-center justify-between gap-4 rounded-xl border border-border bg-card px-5 py-3 text-sm text-card-foreground",
-		raised && "border-b-lip shadow-card",
+		"@container/app-header flex w-full items-center justify-between gap-4 rounded-xl border border-border bg-card px-5 py-3 text-sm text-card-foreground",
+		surfaceElevation[level.current],
 		className
 	)}
 	{...restProps}
@@ -75,8 +91,8 @@
 				<span
 					class={cn(
 						"inline-flex size-7 items-center justify-center rounded-lg border border-primary bg-primary text-primary-foreground",
-						raised &&
-							"border-primary-edge border-b-primary-lip bg-linear-to-b from-primary-hi to-primary shadow-[0_2px_0_var(--primary-lip)] [background-origin:border-box]"
+						markRaised &&
+							"[background-image:var(--r1-p-face)] shadow-btn-raised-primary [background-origin:border-box]"
 					)}
 				>
 					<ChartLineUpIcon class="size-[15px]" />
@@ -86,7 +102,7 @@
 		</a>
 		<nav class="flex items-center gap-0.5 max-lg:hidden" aria-label="App">
 			{#each items as item (item.href)}
-				<AppHeaderNavItem href={item.href} active={item.href === active} {raised}>
+				<AppHeaderNavItem href={item.href} active={item.href === active} elevation={control}>
 					{item.label}
 				</AppHeaderNavItem>
 			{/each}
@@ -94,7 +110,7 @@
 	</div>
 	<div class="flex items-center gap-2">
 		{#if search}
-			<InputGroup class="h-9 w-[180px] max-md:hidden">
+			<InputGroup class="h-9 w-[180px] @max-[960px]/app-header:hidden">
 				<InputGroupAddon>
 					<MagnifyingGlassIcon  />
 				</InputGroupAddon>
@@ -104,14 +120,14 @@
 					class="text-[13px]"
 				/>
 				<InputGroupAddon align="inline-end">
-					<Kbd>{shortcut}</Kbd>
+					<Kbd elevation={control}>{shortcut}</Kbd>
 				</InputGroupAddon>
 			</InputGroup>
 		{/if}
 		{#if network}
-			<Button variant="secondary" {raised} onclick={onNetworkClick}>{network}</Button>
+			<Button variant="secondary" elevation={control} onclick={onNetworkClick}>{network}</Button>
 		{/if}
-		<Button {raised} onclick={onConnect}>
+		<Button elevation={control} onclick={onConnect}>
 			<WalletIcon  />
 			{connectLabel}
 		</Button>

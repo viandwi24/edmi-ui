@@ -79,7 +79,7 @@ check_files() {
 		test -f "$dir/src/components/ui/$d/$f.vue" || { echo "missing components/ui/$d/$f.vue"; exit 1; }
 		test -f "$dir/src/components/ui/$d/index.ts" || { echo "missing components/ui/$d/index.ts"; exit 1; }
 	done
-	grep -q "shadow-btn-primary" "$dir/src/components/ui/button/index.ts" || { echo "button is not the Edmi version"; exit 1; }
+	grep -q "shadow-btn-raised-primary" "$dir/src/components/ui/button/index.ts" || { echo "button is not the Edmi version"; exit 1; }
 	grep -q -- "--brand-hi" "$dir/src/style.css" || { echo "theme cssVars missing from src/style.css"; exit 1; }
 	test -f "$dir/src/lib/utils.ts" || { echo "missing src/lib/utils.ts"; exit 1; }
 	test ! -e "$dir/src/lib/registry" || { echo "registry:lib file written to src/lib/registry"; exit 1; }

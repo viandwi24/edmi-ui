@@ -43,7 +43,13 @@ function TickerCell({ item }: { item: TickerItem }) {
 	const cls =
 		"block min-w-[150px] flex-1 px-[18px] py-3.5 not-first:border-l not-first:border-border";
 	return item.href ? (
-		<a href={item.href} className={cn(cls, "hover:bg-accent/50")}>
+		<a
+			href={item.href}
+			className={cn(
+				cls,
+				"hover:bg-[color-mix(in_srgb,var(--accent)_50%,var(--background))]",
+			)}
+		>
 			{content}
 		</a>
 	) : (
@@ -55,17 +61,13 @@ function TickerCell({ item }: { item: TickerItem }) {
 function TickerStrip({
 	className,
 	items,
-	raised = false,
 	...props
 }: Omit<React.ComponentProps<typeof Card>, "children"> & {
 	items: TickerItem[];
-	/** ✦ forwarded to the Card. */
-	raised?: boolean;
 }) {
 	return (
 		<Card
 			data-slot="ticker-strip"
-			raised={raised}
 			className={cn("flex-row gap-0 overflow-x-auto p-0", className)}
 			{...props}
 		>

@@ -4,9 +4,10 @@ import type { HTMLAttributes, Ref } from "vue"
 import { DateFormatter, getLocalTimeZone } from "@internationalized/date"
 import { PhCalendarBlank } from '@phosphor-icons/vue'
 import { useVModel } from "@vueuse/core"
-import { computed } from "vue"
+import { computed, ref } from "vue"
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+import type { Elevation } from '@/components/ui/elevation'
 import { Calendar } from '@/components/ui/calendar'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 
@@ -19,10 +20,10 @@ const props = withDefaults(
     locale?: string
     disabled?: boolean
     /** ✦ forwarded to the trigger Button and the Calendar */
-    raised?: boolean
+    elevation?: Elevation
     class?: HTMLAttributes["class"]
   }>(),
-  { placeholder: "Pick a date", locale: "en-US", raised: false },
+  { placeholder: "Pick a date", locale: "en-US", elevation: undefined },
 )
 const emits = defineEmits<{ (e: "update:modelValue", value: DateValue | undefined): void }>()
 
@@ -31,15 +32,17 @@ const date = useVModel(props, "modelValue", emits, {
   defaultValue: props.defaultValue,
 }) as Ref<DateValue | undefined>
 
+const open = ref(false)
+
 const formatter = computed(() => new DateFormatter(props.locale, { dateStyle: "long" }))
 </script>
 
 <template>
-  <Popover>
+  <Popover v-model:open="open">
     <PopoverTrigger as-child>
       <Button
         variant="outline"
-        :raised="raised"
+        :elevation="elevation"
         :disabled="disabled"
         :data-empty="!date"
         :class="cn('w-[240px] justify-start text-left font-normal data-[empty=true]:text-muted-foreground', props.class)"
@@ -51,10 +54,11 @@ const formatter = computed(() => new DateFormatter(props.locale, { dateStyle: "l
     <PopoverContent class="w-auto p-0" align="start">
       <Calendar
         v-model="date"
-        :raised="raised"
+        :elevation="elevation"
         layout="month-and-year"
         :locale="locale"
         :default-placeholder="date"
+        @update:model-value="open = false"
       />
     </PopoverContent>
   </Popover>

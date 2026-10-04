@@ -1,17 +1,23 @@
+"use client";
+
 import { Switch as SwitchPrimitive } from "@base-ui/react/switch";
 import { cn } from "cn";
+
+import { type Elevation, useElevation } from "@/components/ui/elevation";
 
 // On uses --brand so live settings read as active at a glance. Sizes: default 40x24, sm 32x18.
 function Switch({
 	className,
 	size = "default",
-	raised = false,
+	elevation,
 	...props
 }: SwitchPrimitive.Root.Props & {
 	size?: "sm" | "default";
-	/** ✦ one-step 3D look for the thumb. */
-	raised?: boolean;
+	/** ✦ depth: raised +1 / floating +2 make the thumb rise (never the track). */
+	elevation?: Elevation;
 }) {
+	const level = useElevation(elevation, "handle");
+	const raised = level === "raised" || level === "floating";
 	return (
 		<SwitchPrimitive.Root
 			data-slot="switch"
@@ -26,8 +32,7 @@ function Switch({
 				data-slot="switch-thumb"
 				className={cn(
 					"pointer-events-none ml-[3px] block rounded-full bg-white shadow-[0_0_0_1px_rgb(0_0_0/0.1)] transition-transform group-data-[size=default]/switch:size-[18px] group-data-[size=sm]/switch:size-3 group-data-[size=default]/switch:data-[checked]:translate-x-4 group-data-[size=sm]/switch:data-[checked]:translate-x-3.5",
-					raised &&
-						"bg-linear-to-b from-white to-[#f1f0ec] shadow-[0_1px_0_rgb(0_0_0/0.25)]",
+					raised && "bg-linear-to-b from-white to-[#eeede9] shadow-thumb",
 				)}
 			/>
 		</SwitchPrimitive.Root>

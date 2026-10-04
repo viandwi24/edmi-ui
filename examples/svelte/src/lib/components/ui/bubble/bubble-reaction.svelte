@@ -9,10 +9,10 @@
 				true: "border-[color-mix(in_srgb,var(--brand)_45%,var(--popover))] bg-[color-mix(in_srgb,var(--brand)_14%,var(--popover))] text-brand-text",
 				false: "",
 			},
-			// ✦ opt-in one-step 3D look
-			raised: { false: "", true: "border-b-lip shadow-[0_1px_0_var(--lip)]" },
+			// ✦ elevation: the chip bevels (flat is the default)
+			elevation: { flat: "", raised: "border-transparent shadow-btn-raised-neutral" },
 		},
-		defaultVariants: { active: false, raised: false },
+		defaultVariants: { active: false, elevation: "flat" },
 	});
 
 	export type BubbleReactionVariants = VariantProps<typeof bubbleReactionVariants>;
@@ -21,18 +21,26 @@
 <script lang="ts">
 	import { cn, type WithElementRef } from "#lib/utils.js";
 	import type { HTMLButtonAttributes } from "svelte/elements";
+	import type { Elevation } from "#lib/components/ui/elevation/index.js";
 	import { getBubbleReactionsCtx } from "./bubble-reactions.svelte";
 
 	let {
 		ref = $bindable(null),
 		class: className,
 		active = false,
-		raised,
+		elevation = "auto",
 		children,
 		...restProps
-	}: WithElementRef<HTMLButtonAttributes> & { active?: boolean; raised?: boolean } = $props();
+	}: WithElementRef<HTMLButtonAttributes> & {
+		active?: boolean;
+		/** ✦ overrides the BubbleReactions `elevation` for this chip. */
+		elevation?: Elevation;
+	} = $props();
 
 	const ctx = getBubbleReactionsCtx();
+	const isRaised = $derived(
+		elevation !== "auto" ? elevation === "raised" || elevation === "floating" : (ctx?.raised ?? false)
+	);
 </script>
 
 <button
@@ -41,7 +49,7 @@
 	data-active={active ? "" : undefined}
 	type="button"
 	aria-pressed={active}
-	class={cn(bubbleReactionVariants({ active, raised: raised ?? ctx?.raised ?? false }), className)}
+	class={cn(bubbleReactionVariants({ active, elevation: isRaised ? "raised" : "flat" }), className)}
 	{...restProps}
 >
 	{@render children?.()}

@@ -4,10 +4,11 @@ import type { TickerItem } from '.'
 import { cn } from '@/lib/utils'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Card } from '@/components/ui/card'
+import type { Elevation } from '@/components/ui/elevation'
 
 const props = defineProps<{
-  /** ✦ one-step 3D look, forwarded to the card */
-  raised?: boolean
+  /** ✦ depth of the card (sunken -1, flat 0, raised +1, floating +2) */
+  elevation?: Elevation
   items: TickerItem[]
   class?: HTMLAttributes['class']
 }>()
@@ -18,13 +19,13 @@ const cell = 'block min-w-[150px] flex-1 px-[18px] py-3.5 not-first:border-l not
 
 <template>
   <!-- Horizontal row of price cells (avatar + symbol, mono price, up/down change). -->
-  <Card :raised="raised" data-slot="ticker-strip" :class="cn('flex-row gap-0 overflow-x-auto p-0', props.class)">
+  <Card :elevation="elevation" data-slot="ticker-strip" :class="cn('flex-row gap-0 overflow-x-auto p-0', props.class)">
     <component
       :is="item.href ? 'a' : 'div'"
       v-for="item in items"
       :key="item.symbol"
       :href="item.href"
-      :class="item.href ? cn(cell, 'hover:bg-accent/50') : cell"
+      :class="item.href ? cn(cell, 'hover:bg-[color-mix(in_srgb,var(--accent)_50%,var(--background))]') : cell"
     >
       <div class="flex items-center gap-2">
         <Avatar class="size-[22px]">

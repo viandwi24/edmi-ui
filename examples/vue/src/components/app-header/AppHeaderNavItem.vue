@@ -1,17 +1,22 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
+import { computed } from 'vue'
 import { cn } from '@/lib/utils'
+import { type Elevation, useElevation } from '@/components/ui/elevation'
 
 const props = withDefaults(defineProps<{
   active?: boolean
-  /** ✦ one-step 3D active pill */
-  raised?: boolean
+  /** ✦ raised +1 / floating +2 raise the active pill */
+  elevation?: Elevation
   class?: HTMLAttributes['class']
-}>(), { raised: false })
+}>(), { elevation: undefined })
+
+const level = useElevation(() => props.elevation, 'control')
+const raised = computed(() => level.value === 'raised' || level.value === 'floating')
 </script>
 
 <template>
-  <!-- Nav pills stand alone (no track): the pills look of Tabs; `raised` makes the active one 3D. -->
+  <!-- Nav pills stand alone (no track): the pills look of Tabs; `elevation` raises the active one. -->
   <a
     data-slot="app-header-nav-item"
     :data-active="active ? '' : undefined"
@@ -19,7 +24,7 @@ const props = withDefaults(defineProps<{
     :class="cn(
       'inline-flex h-8 items-center rounded-[7px] border border-transparent px-[11px] text-[13.5px] font-medium whitespace-nowrap text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
       'data-[active]:border-border data-[active]:bg-tab-active data-[active]:text-foreground',
-      props.raised && 'data-[active]:border-input data-[active]:border-b-secondary-lip data-[active]:bg-linear-to-b data-[active]:from-secondary-hi data-[active]:to-secondary data-[active]:shadow-btn-secondary data-[active]:[background-origin:border-box]',
+      raised && 'data-[active]:border-transparent data-[active]:[background-image:var(--r1-s-face)] data-[active]:shadow-btn-raised-neutral data-[active]:[background-origin:border-box]',
       props.class,
     )"
   >

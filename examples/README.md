@@ -2,7 +2,7 @@
 
 Two apps per framework: Stockbreak Markets (page + app shell) and Layerbeat (Create a BeatVPS, theme
 Slate · Ocean with a scoped always-dark sidebar). Light and dark. Each installs Edmi through the shadcn CLI
-only, never from `packages/*`.
+only, never from `packages/*`. The Stockbreak apps wrap the app shell in `<ElevationProvider mode="layered">`; Layerbeat sets explicit levels (`elevation="raised"`) on a few elements.
 
 | Example | Install |
 | --- | --- |

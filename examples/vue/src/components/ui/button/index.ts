@@ -3,9 +3,10 @@ import { cva } from "class-variance-authority";
 
 export { default as Button } from "./Button.vue";
 
-// Flat by default (plain shadcn look). `raised` ✦ = one-step 3D: gradient fill + top highlight + ONE hard lip.
-// `background-origin: border-box` keeps the gradient from repeating under the border.
-const raised = "border bg-linear-to-b [background-origin:border-box]";
+// Flat by default (plain shadcn look). `elevation` ✦ adds depth (v4): sunken -1, raised +1 (bevel), floating +2 (bevel + soft drop).
+// `background-origin: border-box` keeps the gradient from repeating under the transparent border.
+// ButtonGroup provides its level to the buttons it contains through this key (a getter object).
+export const BUTTON_ELEVATION_KEY = Symbol("EDMI_BUTTON_ELEVATION");
 
 export const buttonVariants = cva(
     "group/button relative inline-flex shrink-0 items-center justify-center gap-2 font-medium whitespace-nowrap transition-[filter,transform,box-shadow] outline-none select-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=size-])]:size-4",
@@ -13,21 +14,26 @@ export const buttonVariants = cva(
         variants: {
             variant: {
                 default:
-                    "border border-transparent bg-primary text-primary-foreground hover:bg-primary/90 active:brightness-95",
+                    "border border-transparent bg-primary text-primary-foreground hover:bg-[color-mix(in_srgb,var(--primary)_90%,var(--background))] active:brightness-95",
                 secondary:
                     "border border-transparent bg-secondary text-secondary-foreground hover:bg-accent data-[state=open]:bg-accent",
                 outline:
                     "border border-input bg-background text-foreground hover:bg-accent data-[state=open]:bg-accent",
                 ghost: "text-foreground hover:bg-accent data-[state=open]:bg-accent",
                 destructive:
-                    "border border-transparent bg-destructive text-white hover:bg-destructive/90",
+                    "border border-transparent bg-destructive text-white hover:bg-[color-mix(in_srgb,var(--destructive)_90%,var(--background))]",
                 link: "px-1 text-foreground underline underline-offset-4",
                 // ✦ Edmi addition
                 brand:
-                    "border border-transparent bg-brand text-brand-foreground hover:bg-brand/90",
+                    "border border-transparent bg-brand text-brand-foreground hover:bg-[color-mix(in_srgb,var(--brand)_90%,var(--background))]",
             },
-            // ✦ opt-in one-step 3D look
-            raised: { false: "", true: "active:translate-y-[2px]" },
+            // ✦ depth (v4)
+            elevation: {
+                flat: "",
+                sunken: "",
+                raised: "active:translate-y-px",
+                floating: "active:translate-y-px",
+            },
             size: {
                 default:
                     "h-9 rounded-md px-3.5 text-[13.5px] has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3",
@@ -43,43 +49,91 @@ export const buttonVariants = cva(
             },
         },
         compoundVariants: [
+            // +1 raised
             {
-                raised: true,
+                elevation: "raised",
                 variant: "default",
-                class: `${raised} border-primary-edge from-primary-hi to-primary border-b-primary-lip shadow-btn-primary hover:brightness-105 active:shadow-pressed active:border-b-primary-edge`,
-            },
-            {
-                raised: true,
-                variant: "secondary",
-                class: `${raised} border-input from-secondary-hi to-secondary border-b-secondary-lip shadow-btn-secondary hover:from-accent hover:to-accent data-[state=open]:from-accent data-[state=open]:to-accent active:shadow-pressed`,
-            },
-            {
-                raised: true,
-                variant: "outline",
                 class:
-                    "bg-linear-to-b from-outline-hi to-outline-face [background-origin:border-box] border-b-outline-lip shadow-btn-outline hover:from-accent hover:to-accent data-[state=open]:from-accent data-[state=open]:to-accent active:shadow-none active:bg-none active:bg-outline-face",
+                    "border-transparent [background-origin:border-box] [background-image:var(--r1-p-face)] shadow-btn-raised-primary hover:brightness-105 active:shadow-pressed",
             },
             {
-                raised: true,
+                elevation: "raised",
+                variant: ["secondary", "outline", "ghost"],
+                class:
+                    "border-transparent [background-origin:border-box] [background-image:var(--r1-s-face)] shadow-btn-raised-neutral active:shadow-pressed",
+            },
+            {
+                elevation: "raised",
                 variant: "destructive",
-                class: `${raised} border-destructive-edge from-destructive-hi to-destructive border-b-destructive-lip shadow-btn-destructive hover:brightness-105 active:shadow-pressed`,
+                class:
+                    "border-transparent [background-origin:border-box] bg-linear-to-b from-destructive-hi to-destructive shadow-btn-raised-color hover:brightness-105 active:shadow-pressed",
             },
             {
-                raised: true,
+                elevation: "raised",
                 variant: "brand",
-                class: `${raised} border-brand-edge from-brand-hi to-brand border-b-brand-lip shadow-btn-brand hover:brightness-105 active:shadow-pressed`,
+                class:
+                    "border-transparent [background-origin:border-box] bg-linear-to-b from-brand-hi to-brand shadow-btn-raised-color hover:brightness-105 active:shadow-pressed",
             },
-            // ghost & link are never raised
+            // +2 floating (one hero action per view)
             {
-                raised: true,
-                variant: ["ghost", "link"],
-                class: "active:translate-y-0",
+                elevation: "floating",
+                variant: "default",
+                class:
+                    "border-transparent [background-origin:border-box] [background-image:var(--fl-p-face)] shadow-btn-float-primary active:shadow-pressed-float",
+            },
+            {
+                elevation: "floating",
+                variant: ["secondary", "outline", "ghost"],
+                class:
+                    "border-transparent [background-origin:border-box] [background-image:var(--fl-s-face)] shadow-btn-float-neutral active:shadow-pressed-float",
+            },
+            {
+                elevation: "floating",
+                variant: "destructive",
+                class:
+                    "border-transparent [background-origin:border-box] bg-linear-to-b from-destructive-hi to-destructive shadow-btn-float-color active:shadow-pressed-float",
+            },
+            {
+                elevation: "floating",
+                variant: "brand",
+                class:
+                    "border-transparent [background-origin:border-box] bg-linear-to-b from-brand-hi to-brand shadow-btn-float-color active:shadow-pressed-float",
+            },
+            // -1 sunken: filled variants keep their colour (8% darker) + inset, neutral ones become a well
+            {
+                elevation: "sunken",
+                variant: "default",
+                class:
+                    "border-transparent bg-[color-mix(in_srgb,var(--primary)_92%,#000)] shadow-btn-sunken-filled",
+            },
+            {
+                elevation: "sunken",
+                variant: "destructive",
+                class:
+                    "border-transparent bg-[color-mix(in_srgb,var(--destructive)_92%,#000)] shadow-btn-sunken-filled",
+            },
+            {
+                elevation: "sunken",
+                variant: "brand",
+                class:
+                    "border-transparent bg-[color-mix(in_srgb,var(--brand)_92%,#000)] shadow-btn-sunken-filled",
+            },
+            {
+                elevation: "sunken",
+                variant: ["secondary", "outline", "ghost"],
+                class: "border-sk-bd bg-sk-bg shadow-sunken",
+            },
+            // link never gets depth
+            {
+                elevation: ["raised", "floating", "sunken"],
+                variant: "link",
+                class: "bg-none shadow-none active:translate-y-0",
             },
         ],
         defaultVariants: {
             variant: "default",
             size: "default",
-            raised: false,
+            elevation: "flat",
         },
     },
 );

@@ -1,6 +1,22 @@
+"use client";
+
 import { Popover as PopoverPrimitive } from "@base-ui/react/popover";
 import { cn } from "cn";
 import type * as React from "react";
+
+import {
+	type Elevation,
+	SurfaceProvider,
+	useElevation,
+} from "@/components/ui/elevation";
+
+// ✦ depth (v4): overlay role. Natural level is floating in layered mode; flat otherwise.
+const overlayElevation = {
+	sunken: "",
+	flat: "",
+	raised: "border-transparent shadow-raised",
+	floating: "border-transparent shadow-floating",
+};
 
 function Popover({ ...props }: PopoverPrimitive.Root.Props) {
 	return <PopoverPrimitive.Root data-slot="popover" {...props} />;
@@ -16,16 +32,18 @@ function PopoverContent({
 	alignOffset = 0,
 	side = "bottom",
 	sideOffset = 6,
-	raised = false,
+	elevation,
+	children,
 	...props
 }: PopoverPrimitive.Popup.Props &
 	Pick<
 		PopoverPrimitive.Positioner.Props,
 		"align" | "alignOffset" | "side" | "sideOffset"
 	> & {
-		/** ✦ one-step 3D look: lip + pop shadow. */
-		raised?: boolean;
+		/** ✦ depth: flat 0, raised +1 (bevel), floating +2 (bevel + drop). */
+		elevation?: Elevation;
 	}) {
+	const level = useElevation(elevation, "overlay");
 	return (
 		<PopoverPrimitive.Portal>
 			<PopoverPrimitive.Positioner
@@ -38,13 +56,15 @@ function PopoverContent({
 				<PopoverPrimitive.Popup
 					data-slot="popover-content"
 					className={cn(
-						// Flat (recipes.surface.popover); `raised` adds the lip.
+						// Flat (recipes.surface.popover); `elevation` adds the bevel / drop.
 						"z-50 flex w-72 origin-(--transform-origin) flex-col gap-2.5 rounded-xl border border-border bg-popover p-3 text-sm text-popover-foreground outline-hidden transition-[opacity,scale] duration-100 data-[ending-style]:scale-95 data-[ending-style]:opacity-0 data-[starting-style]:scale-95 data-[starting-style]:opacity-0",
-						raised && "border-b-lip shadow-pop",
+						overlayElevation[level],
 						className,
 					)}
 					{...props}
-				/>
+				>
+					<SurfaceProvider level={level}>{children}</SurfaceProvider>
+				</PopoverPrimitive.Popup>
 			</PopoverPrimitive.Positioner>
 		</PopoverPrimitive.Portal>
 	);

@@ -4,6 +4,7 @@ import { PhPlus } from '@phosphor-icons/vue';
 import { computed } from "vue";
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import type { Elevation } from '@/components/ui/elevation';
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
@@ -17,16 +18,16 @@ import type { DataTableFeatures } from "./dataTableFeatures";
 
 /**
  * ✦ Dashed "+ Status" filter button with a checkbox menu. The column must set
- * `filterFn: "arrIncludesSome"`.
+ * `filterFn: "arrHas"`.
  */
 const props = withDefaults(defineProps<{
     column?: Column<DataTableFeatures, TData, TValue>;
     title: string;
-    /** ✦ raised trigger button */
-    raised?: boolean;
+    /** ✦ depth of the toolbar and pagination controls (the table container stays flat). */
+    elevation?: Elevation;
     /** Defaults to the unique values found in the column. */
     options?: { label: string; value: string }[];
-}>(), { raised: false });
+}>(), { elevation: undefined });
 
 const facets = computed(() => props.column?.getFacetedUniqueValues());
 const items = computed(
@@ -52,7 +53,7 @@ function toggle(value: string, checked: boolean) {
 <template>
 	<DropdownMenu v-if="column">
 		<DropdownMenuTrigger as-child>
-			<Button variant="outline" size="sm" :raised="raised" class="border-dashed">
+			<Button variant="outline" size="sm" :elevation="elevation" class="border-dashed">
 				<PhPlus />
 				{{ title }}
 				<Badge v-if="selected.size > 0" variant="brand" shape="number">
@@ -67,6 +68,7 @@ function toggle(value: string, checked: boolean) {
 				<DropdownMenuCheckboxItem
 					v-for="option in items"
 					:key="option.value"
+					class="capitalize"
 					:model-value="selected.has(option.value)"
 					@update:model-value="(checked: boolean) => toggle(option.value, !!checked)"
 				>

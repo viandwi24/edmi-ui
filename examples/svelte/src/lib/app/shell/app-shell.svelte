@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from "svelte";
 	import { LayoutPickerToast, type Layout } from "#lib/components/ui/layout-picker/index.js";
+	import { ElevationProvider } from "#lib/components/ui/elevation/index.js";
 	import DashboardLayout from "./dashboard-layout.svelte";
 	import NavbarLayout from "./navbar-layout.svelte";
 
@@ -12,9 +13,11 @@
 	});
 </script>
 
-{#if layout === "navbar"}
-	<NavbarLayout {children} />
-{:else}
-	<DashboardLayout {children} />
-{/if}
-<LayoutPickerToast raised onValueChange={(v) => (layout = v)} />
+<ElevationProvider mode="layered">
+	{#if layout === "navbar"}
+		<NavbarLayout {children} />
+	{:else}
+		<DashboardLayout {children} />
+	{/if}
+	<LayoutPickerToast onValueChange={(v) => (layout = v)} />
+</ElevationProvider>

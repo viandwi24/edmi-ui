@@ -9,19 +9,25 @@ import {
 } from "reka-ui"
 import { cn } from '@/lib/utils'
 
-const props = defineProps<DropdownMenuRadioItemProps & { class?: HTMLAttributes["class"] }>()
+const props = defineProps<DropdownMenuRadioItemProps & { class?: HTMLAttributes["class"], closeOnSelect?: boolean }>()
 
 const emits = defineEmits<DropdownMenuRadioItemEmits>()
 
-const delegatedProps = reactiveOmit(props, "class")
+const delegatedProps = reactiveOmit(props, "class", "closeOnSelect")
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
+
+// Checkbox and radio items keep the menu open (like Base UI and Bits); pass close-on-select to close it.
+function keepOpen(event: Event) {
+  if (!props.closeOnSelect) event.preventDefault()
+}
 </script>
 
 <template>
   <DropdownMenuRadioItem
     data-slot="dropdown-menu-radio-item"
     v-bind="forwarded"
+    @select="keepOpen"
     :class="cn(
       `relative flex h-8 cursor-default items-center gap-2.5 rounded-[7px] px-2 text-[13.5px] outline-none select-none data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground data-[inset]:pl-8 data-[disabled]:pointer-events-none data-[disabled]:opacity-45 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-[15px] [&_svg:not([class*='text-'])]:text-muted-foreground pl-8`,
       props.class,

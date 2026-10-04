@@ -22,15 +22,15 @@ import { activity, creators, humanVsAi, indexes, tickers } from "@/data/markets"
 					Tokenized stock indexes. Create one, share it, or join someone else’s.
 				</p>
 			</div>
-			<Button raised size="lg">
+			<Button size="lg">
 				Create index
 				<PhPlus />
 			</Button>
 		</div>
 
-		<TickerStrip raised :items="tickers" />
+		<TickerStrip  :items="tickers" />
 
-		<Card raised class="gap-4 px-6">
+		<Card class="gap-4 px-6">
 			<div class="flex items-baseline justify-between">
 				<h2 class="text-xl font-normal tracking-[-0.3px]">Top indexes</h2>
 				<a href="#all" class="text-[13px] text-muted-foreground hover:text-foreground">View all</a>
@@ -46,7 +46,7 @@ import { activity, creators, humanVsAi, indexes, tickers } from "@/data/markets"
 		</Card>
 
 		<div class="grid items-start gap-6 lg:grid-cols-3">
-			<Card raised class="@container gap-4 px-6">
+			<Card class="@container gap-4 px-6">
 				<div class="flex items-baseline justify-between">
 					<h2 class="text-xl font-normal tracking-[-0.3px]">Human vs AI</h2>
 				</div>
@@ -59,7 +59,7 @@ import { activity, creators, humanVsAi, indexes, tickers } from "@/data/markets"
 				</div>
 			</Card>
 
-			<Card raised class="gap-3 px-6">
+			<Card class="gap-3 px-6">
 				<div class="flex items-baseline justify-between">
 					<h2 class="text-xl font-normal tracking-[-0.3px]">Top creators</h2>
 					<a href="#all" class="text-[13px] text-muted-foreground hover:text-foreground">See all</a>
@@ -79,7 +79,7 @@ import { activity, creators, humanVsAi, indexes, tickers } from "@/data/markets"
 				</ul>
 			</Card>
 
-			<Card raised class="gap-3 px-6">
+			<Card class="gap-3 px-6">
 				<div class="flex items-baseline justify-between">
 					<h2 class="text-xl font-normal tracking-[-0.3px]">Latest activity</h2>
 				</div>

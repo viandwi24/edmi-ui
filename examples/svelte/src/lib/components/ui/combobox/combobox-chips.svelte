@@ -15,7 +15,7 @@
 	bind:this={ref}
 	data-slot="combobox-chips"
 	class={cn(
-		"flex min-h-9 flex-wrap items-center gap-1 rounded-md border border-input bg-card bg-clip-padding px-3 py-1 text-sm shadow-sunk focus-within:border-ring focus-within:shadow-ring has-aria-invalid:border-destructive has-aria-invalid:shadow-ring-error has-data-[slot=combobox-chip]:px-1.5",
+		"flex min-h-9 flex-wrap items-center gap-1 rounded-md border border-input bg-card bg-clip-padding px-3 py-1 text-sm focus-within:border-ring focus-within:shadow-ring has-aria-invalid:border-destructive has-aria-invalid:shadow-ring-error has-data-[slot=combobox-chip]:px-1.5",
 		className
 	)}
 	{...restProps}

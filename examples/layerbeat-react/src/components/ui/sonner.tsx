@@ -1,16 +1,28 @@
+"use client";
+
 import { useTheme } from "next-themes";
 import { Toaster as Sonner, type ToasterProps, toast } from "sonner";
+import { type Elevation, useElevation } from "@/components/ui/elevation";
 import { CheckCircleIcon, InfoIcon, WarningIcon, XCircleIcon, SpinnerIcon } from "@phosphor-icons/react";
+
+// ✦ depth (v4): floating is the natural level of a toast (overlay role in layered mode).
+const toastElevation = {
+	sunken: "shadow-none!",
+	flat: "shadow-none!",
+	raised: "border-transparent! shadow-raised!",
+	floating: "border-transparent! shadow-floating!",
+};
 
 // Soft fill + tinted 40% border per type (DESIGN §4.12); default stays a solid popover chip.
 // Sonner's own selectors are more specific than utilities, hence the important modifier.
 const Toaster = ({
-	raised = false,
+	elevation,
 	...props
 }: ToasterProps & {
-	/** ✦ one-step 3D look for every toast (`border-b-lip` + 3px lip). */
-	raised?: boolean;
+	/** ✦ depth for every toast: flat 0, raised +1 (bevel), floating +2 (bevel + drop). */
+	elevation?: Elevation;
 }) => {
+	const level = useElevation(elevation, "overlay");
 	// next-themes is optional in a Vite app: without a ThemeProvider useTheme() returns "system".
 	const { theme = "system" } = useTheme();
 
@@ -46,15 +58,16 @@ const Toaster = ({
 			}
 			toastOptions={{
 				classNames: {
-					toast: raised
-						? "cn-toast border-b-lip! shadow-[0_3px_0_var(--lip)]! text-[13.5px] font-sans"
-						: "cn-toast shadow-none! text-[13.5px] font-sans",
+					toast: `cn-toast ${toastElevation[level]} text-[13.5px] font-sans`,
 					title: "font-medium",
 					description: "text-muted-foreground!",
-					success: "bg-success-soft! border-success/40!",
-					info: "bg-info-soft! border-info/40!",
-					warning: "bg-warning-soft! border-warning/40!",
-					error: "bg-destructive-soft! border-destructive/40!",
+					success:
+						"bg-success-soft! border-[color-mix(in_srgb,var(--success)_40%,var(--popover))]!",
+					info: "bg-info-soft! border-[color-mix(in_srgb,var(--info)_40%,var(--popover))]!",
+					warning:
+						"bg-warning-soft! border-[color-mix(in_srgb,var(--warning)_40%,var(--popover))]!",
+					error:
+						"bg-destructive-soft! border-[color-mix(in_srgb,var(--destructive)_40%,var(--popover))]!",
 				},
 			}}
 			{...props}

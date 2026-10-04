@@ -17,6 +17,7 @@ import { PhMagnifyingGlass } from '@phosphor-icons/vue';
 import { computed } from "vue";
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
+import type { Elevation } from '@/components/ui/elevation';
 import {
     Table,
     TableBody,
@@ -38,18 +39,18 @@ const props = withDefaults(
         /** Column id the toolbar filter input searches. Omit to hide the input. */
         filterColumn?: string;
         filterPlaceholder?: string;
-        /** ✦ Faceted filter buttons; columns need `filterFn: "arrIncludesSome"`. */
+        /** ✦ Faceted filter buttons; columns need `filterFn: "arrHas"`. */
         facetedFilters?: {
             column: string;
             title: string;
             options?: { label: string; value: string }[];
         }[];
         pageSize?: number;
-        /** ✦ one-step 3D look on the table card, toolbar buttons and pagination. */
-        raised?: boolean;
+        /** ✦ depth of the toolbar and pagination controls (the table container stays flat). */
+        elevation?: Elevation;
         class?: HTMLAttributes["class"];
     }>(),
-    { filterPlaceholder: "Filter…", pageSize: 10, raised: false },
+    { filterPlaceholder: "Filter…", pageSize: 10 },
 );
 
 const table = useTable({
@@ -86,11 +87,11 @@ const filterInput = computed(() =>
 				:column="table.getColumn(f.column)"
 				:title="f.title"
 				:options="f.options"
-				:raised="raised"
+				:elevation="elevation"
 			/>
-			<DataTableViewOptions :table="table" :raised="raised" />
+			<DataTableViewOptions :table="table" :elevation="elevation" />
 		</div>
-		<div :class="cn('overflow-hidden rounded-xl border border-border bg-card', raised && 'border-b-lip shadow-card')">
+		<div class="overflow-hidden rounded-xl border border-border bg-card">
 			<Table>
 				<TableHeader>
 					<TableRow
@@ -119,6 +120,6 @@ const filterInput = computed(() =>
 				</TableBody>
 			</Table>
 		</div>
-		<DataTablePagination :table="table" :raised="raised" />
+		<DataTablePagination :table="table" :elevation="elevation" />
 	</div>
 </template>

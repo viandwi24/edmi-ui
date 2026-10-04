@@ -6,27 +6,28 @@ import { reactiveOmit } from '@vueuse/core'
 import { ToggleGroupItem, useForwardProps } from 'reka-ui'
 import { inject } from 'vue'
 import { cn } from '@/lib/utils'
+import type { Elevation, ElevationLevel } from '@/components/ui/elevation'
 import { toggleVariants } from '@/components/ui/toggle'
 
 type ToggleGroupVariants = VariantProps<typeof toggleVariants> & {
   spacing?: number
   orientation?: 'horizontal' | 'vertical'
-  raised?: boolean
+  elevation?: ElevationLevel
 }
 
 const props = withDefaults(defineProps<ToggleGroupItemProps & {
   class?: HTMLAttributes['class']
   variant?: ToggleGroupVariants['variant']
   size?: ToggleGroupVariants['size']
-  /** ✦ overrides the group's `raised` */
-  raised?: boolean
+  /** ✦ overrides the group's `elevation` */
+  elevation?: Elevation
 }>(), {
-  raised: undefined,
+  elevation: undefined,
 })
 
 const context = inject<ToggleGroupVariants>('toggleGroup')
 
-const delegatedProps = reactiveOmit(props, 'class', 'size', 'variant', 'raised')
+const delegatedProps = reactiveOmit(props, 'class', 'size', 'variant', 'elevation')
 const forwardedProps = useForwardProps(delegatedProps)
 </script>
 
@@ -43,7 +44,7 @@ const forwardedProps = useForwardProps(delegatedProps)
       toggleVariants({
         variant: context?.variant || variant,
         size: context?.size || size,
-        raised: raised ?? context?.raised ?? false,
+        elevation: elevation && elevation !== 'auto' ? elevation : context?.elevation,
       }),
       props.class)"
   >

@@ -3,7 +3,25 @@
 import { Select as SelectPrimitive } from "@base-ui/react/select";
 import { cn } from "cn";
 import type * as React from "react";
+import { type Elevation, useElevation } from "@/components/ui/elevation";
 import { CaretDownIcon, CheckIcon, CaretUpIcon } from "@phosphor-icons/react";
+
+// ✦ depth (v4): fields sink (-1) in layered mode; focus swaps the edge for the ring
+const fieldElevation = {
+	sunken:
+		"border-sk-bd bg-sk-bg shadow-sunken data-[popup-open]:bg-card focus-visible:bg-card",
+	flat: "",
+	raised: "border-transparent shadow-raised",
+	floating: "border-transparent shadow-floating",
+};
+
+// ✦ depth (v4): overlay role for the menu popup. Natural level is floating in layered mode; flat otherwise.
+const overlayElevation = {
+	sunken: "",
+	flat: "",
+	raised: "border-transparent shadow-raised",
+	floating: "border-transparent shadow-floating",
+};
 
 const Select = SelectPrimitive.Root;
 
@@ -30,22 +48,22 @@ function SelectValue({ className, ...props }: SelectPrimitive.Value.Props) {
 function SelectTrigger({
 	className,
 	size = "default",
-	raised = false,
+	elevation,
 	children,
 	...props
 }: SelectPrimitive.Trigger.Props & {
 	size?: "sm" | "default";
-	/** ✦ one-step 3D look (trigger only; the popup stays flat). */
-	raised?: boolean;
+	/** ✦ depth for the trigger (the popup stays floating): sunken -1, flat 0, raised +1, floating +2. */
+	elevation?: Elevation;
 }) {
+	const level = useElevation(elevation, "field");
 	return (
 		<SelectPrimitive.Trigger
 			data-slot="select-trigger"
 			data-size={size}
 			className={cn(
 				"flex w-fit items-center justify-between gap-2 rounded-md border border-input bg-card pr-2.5 pl-3 text-sm whitespace-nowrap text-foreground outline-none select-none focus-visible:border-ring focus-visible:shadow-ring disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:shadow-ring-error data-[popup-open]:border-ring data-[popup-open]:shadow-ring data-[placeholder]:text-muted-foreground data-[size=default]:h-9 data-[size=sm]:h-8 data-[size=sm]:rounded-[7px] *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-				raised &&
-					"border-b-lip shadow-[0_2px_0_var(--lip)] data-[popup-open]:border-b-ring",
+				fieldElevation[level],
 				className,
 			)}
 			{...props}
@@ -68,12 +86,17 @@ function SelectContent({
 	align = "center",
 	alignOffset = 0,
 	alignItemWithTrigger = true,
+	elevation,
 	...props
 }: SelectPrimitive.Popup.Props &
 	Pick<
 		SelectPrimitive.Positioner.Props,
 		"align" | "alignOffset" | "side" | "sideOffset" | "alignItemWithTrigger"
-	>) {
+	> & {
+		/** ✦ depth of the menu popup: flat 0, raised +1 (bevel), floating +2 (bevel + drop). */
+		elevation?: Elevation;
+	}) {
+	const level = useElevation(elevation, "overlay");
 	return (
 		<SelectPrimitive.Portal>
 			<SelectPrimitive.Positioner
@@ -89,6 +112,7 @@ function SelectContent({
 					data-align-trigger={alignItemWithTrigger}
 					className={cn(
 						"relative isolate z-50 max-h-(--available-height) w-(--anchor-width) min-w-36 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-xl border border-border bg-popover p-1.5 text-popover-foreground duration-100 data-[align-trigger=true]:animate-none data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2 data-[open]:animate-in data-[open]:fade-in-0 data-[open]:zoom-in-95 data-[closed]:animate-out data-[closed]:fade-out-0 data-[closed]:zoom-out-95",
+						overlayElevation[level],
 						className,
 					)}
 					{...props}
@@ -132,7 +156,7 @@ function SelectItem({
 			)}
 			{...props}
 		>
-			<SelectPrimitive.ItemText className="flex flex-1 shrink-0 gap-2 whitespace-nowrap">
+			<SelectPrimitive.ItemText className="flex flex-1 shrink-0 items-center gap-2 whitespace-nowrap">
 				{children}
 			</SelectPrimitive.ItemText>
 			<SelectPrimitive.ItemIndicator

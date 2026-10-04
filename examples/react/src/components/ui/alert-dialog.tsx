@@ -1,8 +1,23 @@
+"use client";
+
 import { AlertDialog as AlertDialogPrimitive } from "@base-ui/react/alert-dialog";
 import { cn } from "cn";
 import type * as React from "react";
 
 import { Button } from "@/components/ui/button";
+import {
+	type Elevation,
+	SurfaceProvider,
+	useElevation,
+} from "@/components/ui/elevation";
+
+// ✦ depth (v4): overlay role. Natural level is floating in layered mode; flat otherwise.
+const overlayElevation = {
+	sunken: "",
+	flat: "",
+	raised: "border-transparent shadow-raised",
+	floating: "border-transparent shadow-floating",
+};
 
 function AlertDialog({ ...props }: AlertDialogPrimitive.Root.Props) {
 	return <AlertDialogPrimitive.Root data-slot="alert-dialog" {...props} />;
@@ -39,13 +54,15 @@ function AlertDialogOverlay({
 function AlertDialogContent({
 	className,
 	size = "default",
-	raised = false,
+	elevation,
+	children,
 	...props
 }: AlertDialogPrimitive.Popup.Props & {
 	size?: "default" | "sm";
-	/** ✦ one-step 3D look: strong lip + dialog shadow. */
-	raised?: boolean;
+	/** ✦ depth: flat 0, raised +1 (bevel), floating +2 (bevel + drop). */
+	elevation?: Elevation;
 }) {
+	const level = useElevation(elevation, "overlay");
 	return (
 		<AlertDialogPortal>
 			<AlertDialogOverlay />
@@ -54,11 +71,13 @@ function AlertDialogContent({
 				data-size={size}
 				className={cn(
 					"group/alert-dialog-content fixed top-1/2 left-1/2 z-50 grid w-full -translate-x-1/2 -translate-y-1/2 gap-4 rounded-2xl border border-border bg-popover p-[22px] text-popover-foreground outline-none transition-[opacity,scale] duration-150 data-[ending-style]:scale-95 data-[ending-style]:opacity-0 data-[starting-style]:scale-95 data-[starting-style]:opacity-0 data-[size=default]:max-w-xs data-[size=sm]:max-w-xs data-[size=default]:sm:max-w-sm",
-					raised && "border-b-lip-strong shadow-dialog",
+					overlayElevation[level],
 					className,
 				)}
 				{...props}
-			/>
+			>
+				<SurfaceProvider level={level}>{children}</SurfaceProvider>
+			</AlertDialogPrimitive.Popup>
 		</AlertDialogPortal>
 	);
 }

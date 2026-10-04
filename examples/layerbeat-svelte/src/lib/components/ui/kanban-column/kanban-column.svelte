@@ -1,12 +1,13 @@
 <script lang="ts" module>
 	import { getContext, setContext } from "svelte";
+	import type { Elevation } from "#lib/components/ui/elevation/index.js";
 
-	export function setKanbanColumnCtx(ctx: { raised: boolean }) {
+	export function setKanbanColumnCtx(ctx: { elevation: Elevation | undefined }) {
 		setContext("kanbanColumn", ctx);
 	}
 
 	export function getKanbanColumnCtx() {
-		return getContext<{ raised: boolean } | undefined>("kanbanColumn");
+		return getContext<{ elevation: Elevation | undefined } | undefined>("kanbanColumn");
 	}
 </script>
 
@@ -19,21 +20,21 @@
 		class: className,
 		title,
 		meta,
-		raised = false,
+		elevation = "auto",
 		children,
 		...restProps
 	}: Omit<HTMLAttributes<HTMLDivElement>, "title" | "children"> & {
 		title: string;
 		/** Right header meta, e.g. "1/3". */
 		meta?: string;
-		/** ✦ opt-in one-step 3D look, forwarded to every `KanbanItem`. */
-		raised?: boolean;
+		/** ✦ depth of every `KanbanItem` (items may override). */
+		elevation?: Elevation;
 		children?: Snippet;
 	} = $props();
 
 	setKanbanColumnCtx({
-		get raised() {
-			return raised;
+		get elevation() {
+			return elevation === "auto" ? undefined : elevation;
 		},
 	});
 </script>
@@ -42,7 +43,7 @@
 <div
 	data-slot="kanban-column"
 	class={cn(
-		"flex w-[282px] flex-col gap-2 rounded-lg border border-border-2 bg-muted p-2.5 shadow-sunk",
+		"flex w-[282px] flex-col gap-2 rounded-lg border border-sk-bd bg-sk-bg p-2.5 shadow-sunken",
 		className
 	)}
 	{...restProps}

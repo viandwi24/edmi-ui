@@ -1,1 +1,6 @@
-export { default as JoinPanel, type JoinPanelRow } from "./join-panel.svelte";
+export {
+	default as JoinPanel,
+	type JoinPanelQuickAmount,
+	type JoinPanelRow,
+	type JoinPanelTab,
+} from "./join-panel.svelte";

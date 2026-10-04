@@ -3,22 +3,26 @@
 	import PlusIcon from 'phosphor-svelte/lib/Plus';
 	import { Badge } from "#lib/components/ui/badge/index.js";
 	import { Button } from "#lib/components/ui/button/index.js";
+	import type { Elevation } from "#lib/components/ui/elevation/index.js";
 	import * as DropdownMenu from "#lib/components/ui/dropdown-menu/index.js";
 	import type { DataTableFeatures } from "./data-table-features.js";
 
 	/**
 	 * ✦ Dashed "+ Status" filter button with a checkbox menu. The column must set
-	 * `filterFn: "arrIncludesSome"`.
+	 * `filterFn: "arrHas"`.
 	 */
 	let {
 		column,
 		title,
 		options,
+		elevation = "auto",
 	}: {
 		column?: Column<DataTableFeatures, TData, TValue>;
 		title: string;
 		/** Defaults to the unique values found in the column. */
 		options?: { label: string; value: string }[];
+		/** ✦ depth of the toolbar and pagination controls (the table container stays flat). */
+		elevation?: Elevation;
 	} = $props();
 
 	const facets = $derived(column?.getFacetedUniqueValues());
@@ -43,7 +47,7 @@
 	<DropdownMenu.Root>
 		<DropdownMenu.Trigger>
 			{#snippet child({ props })}
-				<Button {...props} variant="outline" size="sm" class="border-dashed">
+				<Button {...props} variant="outline" size="sm" {elevation} class="border-dashed">
 					<PlusIcon  />
 					{title}
 					{#if selected.size > 0}
@@ -58,6 +62,7 @@
 				<DropdownMenu.Separator />
 				{#each items as option (option.value)}
 					<DropdownMenu.CheckboxItem
+						class="capitalize"
 						checked={selected.has(option.value)}
 						onCheckedChange={(checked) => toggle(option.value, !!checked)}
 					>

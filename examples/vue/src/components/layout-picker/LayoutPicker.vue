@@ -3,19 +3,29 @@ import type { HTMLAttributes } from 'vue'
 import type { Layout } from './layout'
 import { computed, ref, useId } from 'vue'
 import { cn } from '@/lib/utils'
+import { type Elevation, useElevation } from '@/components/ui/elevation'
 import LayoutPickerWireframe from './LayoutPickerWireframe.vue'
 
 const props = withDefaults(defineProps<{
   modelValue?: Layout
   defaultValue?: Layout
   name?: string
-  /** ✦ one-step 3D look on the option cards */
-  raised?: boolean
+  /** ✦ depth of the option cards: sunken -1, flat 0, raised +1, floating +2 (the checked card keeps its ring) */
+  elevation?: Elevation
   class?: HTMLAttributes['class']
 }>(), {
   defaultValue: 'dashboard',
-  raised: false,
+  elevation: undefined,
 })
+
+const level = useElevation(() => props.elevation, 'control')
+// ✦ choice-card depth (v4); the checked card keeps its ring.
+const choiceElevation = {
+  sunken: 'border-sk-bd bg-sk-bg shadow-sunken',
+  flat: '',
+  raised: 'border-transparent shadow-raised',
+  floating: 'border-transparent shadow-floating',
+}
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: Layout): void
@@ -44,7 +54,7 @@ function choose(v: Layout) {
       :key="o.value"
       :class="cn(
         'group/lp flex w-[220px] cursor-pointer flex-col gap-2.5 rounded-xl border border-border bg-card p-3.5 has-[:checked]:border-ring has-[:checked]:bg-[color-mix(in_srgb,var(--brand)_5%,var(--card))] has-[:checked]:shadow-[0_0_0_1px_var(--ring)] has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ring',
-        props.raised && 'border-b-lip shadow-card has-[:checked]:border-b-ring',
+        choiceElevation[level],
       )"
     >
       <input
@@ -58,7 +68,7 @@ function choose(v: Layout) {
       <LayoutPickerWireframe :layout="o.value" />
       <span class="flex w-full items-center justify-between">
         <span class="text-sm font-medium">{{ o.label }}</span>
-        <span class="flex size-[18px] items-center justify-center rounded-full border border-input bg-card shadow-sunk group-has-[:checked]/lp:border-primary group-has-[:checked]/lp:after:size-[9px] group-has-[:checked]/lp:after:rounded-full group-has-[:checked]/lp:after:bg-primary group-has-[:checked]/lp:after:content-['']" />
+        <span class="flex size-[18px] items-center justify-center rounded-full border border-input bg-card group-has-[:checked]/lp:border-primary group-has-[:checked]/lp:after:size-[9px] group-has-[:checked]/lp:after:rounded-full group-has-[:checked]/lp:after:bg-primary group-has-[:checked]/lp:after:content-['']" />
       </span>
     </label>
   </div>

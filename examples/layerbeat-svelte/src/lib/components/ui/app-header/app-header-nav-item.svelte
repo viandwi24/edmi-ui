@@ -1,22 +1,26 @@
 <script lang="ts">
 	import { cn, type WithElementRef } from "#lib/utils.js";
 	import type { HTMLAnchorAttributes } from "svelte/elements";
+	import { type Elevation, useElevation } from "#lib/components/ui/elevation/index.js";
 
 	let {
 		ref = $bindable(null),
 		class: className,
 		active,
-		raised = false,
+		elevation = "auto",
 		children,
 		...restProps
 	}: WithElementRef<HTMLAnchorAttributes, HTMLAnchorElement> & {
 		active?: boolean;
-		/** ✦ opt-in one-step 3D look for the active pill. */
-		raised?: boolean;
+		/** ✦ raised +1 / floating +2 raise the active pill. */
+		elevation?: Elevation;
 	} = $props();
+
+	const level = useElevation(() => elevation, "control");
+	const raised = $derived(level.current === "raised" || level.current === "floating");
 </script>
 
-<!-- Nav pills = `TabsList variant="pills"` look: flat active pill, raised ✦ makes it a 3D secondary button. -->
+<!-- Nav pills = `TabsList variant="pills"` look: flat active pill, `elevation` raises the active pill. -->
 <a
 	bind:this={ref}
 	data-slot="app-header-nav-item"
@@ -26,7 +30,7 @@
 		"inline-flex h-8 items-center rounded-[7px] border border-transparent px-[11px] text-[13.5px] font-medium whitespace-nowrap text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
 		"data-[active]:border-border data-[active]:bg-tab-active data-[active]:text-foreground",
 		raised &&
-			"data-[active]:border-input data-[active]:border-b-secondary-lip data-[active]:bg-linear-to-b data-[active]:from-secondary-hi data-[active]:to-secondary data-[active]:shadow-btn-secondary data-[active]:[background-origin:border-box]",
+			"data-[active]:border-transparent data-[active]:[background-image:var(--r1-s-face)] data-[active]:shadow-btn-raised-neutral data-[active]:[background-origin:border-box]",
 		className
 	)}
 	{...restProps}

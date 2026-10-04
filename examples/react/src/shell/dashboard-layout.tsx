@@ -100,7 +100,6 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 							{watchlist.map((w, i) => (
 								<WatchlistItem
 									key={w.symbol}
-									raised
 									href="#watch"
 									active={i === -1}
 									{...w}
@@ -139,7 +138,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 						</Breadcrumb>
 					</div>
 					<div className="flex items-center gap-2">
-						<Button raised variant="outline">
+						<Button variant="outline">
 							Devnet
 						</Button>
 						<ThemeToggle />

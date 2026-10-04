@@ -1,25 +1,30 @@
+"use client";
+
 import { Checkbox as CheckboxPrimitive } from "@base-ui/react/checkbox";
 import { cn } from "cn";
+import { type Elevation, useElevation } from "@/components/ui/elevation";
 import { MinusIcon, CheckIcon } from "@phosphor-icons/react";
 
-// Flat by default: checked = solid --primary fill. ✦ `raised` adds the gradient + top highlight.
+// Flat by default: checked = solid --primary fill. ✦ `elevation` raised/floating: only the checked box rises (bevel).
 // Indeterminate uses the same fill.
 function Checkbox({
 	className,
-	raised = false,
+	elevation,
 	...props
 }: CheckboxPrimitive.Root.Props & {
-	/** ✦ one-step 3D look for the checked state. */
-	raised?: boolean;
+	/** ✦ depth: raised +1 / floating +2 make the checked box rise. */
+	elevation?: Elevation;
 }) {
+	const level = useElevation(elevation, "control");
+	const raised = level === "raised" || level === "floating";
 	return (
 		<CheckboxPrimitive.Root
 			data-slot="checkbox"
 			className={cn(
-				"peer relative flex size-[18px] shrink-0 items-center justify-center rounded-[5px] border border-input bg-card text-primary-foreground shadow-sunk transition-[box-shadow] outline-none after:absolute after:-inset-x-3 after:-inset-y-2 focus-visible:border-ring focus-visible:shadow-ring disabled:cursor-not-allowed disabled:opacity-50 data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50 aria-invalid:border-destructive aria-invalid:shadow-ring-error data-[invalid]:border-destructive data-[invalid]:shadow-ring-error group-has-disabled/field:opacity-50",
+				"peer relative flex size-[18px] shrink-0 items-center justify-center rounded-[5px] border border-input bg-card text-primary-foreground transition-[box-shadow] outline-none after:absolute after:-inset-x-3 after:-inset-y-2 focus-visible:border-ring focus-visible:shadow-ring disabled:cursor-not-allowed disabled:opacity-50 data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50 aria-invalid:border-destructive aria-invalid:shadow-ring-error data-[invalid]:border-destructive data-[invalid]:shadow-ring-error group-has-disabled/field:opacity-50",
 				"data-[checked]:border-primary data-[checked]:bg-primary data-[indeterminate]:border-primary data-[indeterminate]:bg-primary",
 				raised &&
-					"data-[checked]:border-primary-edge data-[checked]:bg-linear-to-b data-[checked]:from-primary-hi data-[checked]:to-primary data-[checked]:shadow-[inset_0_1px_0_var(--primary-inset)] data-[checked]:[background-origin:border-box] data-[indeterminate]:border-primary-edge data-[indeterminate]:bg-linear-to-b data-[indeterminate]:from-primary-hi data-[indeterminate]:to-primary data-[indeterminate]:shadow-[inset_0_1px_0_var(--primary-inset)] data-[indeterminate]:[background-origin:border-box] data-[checked]:focus-visible:shadow-[inset_0_1px_0_var(--primary-inset),0_0_0_3px_var(--ring-soft)] data-[indeterminate]:focus-visible:shadow-[inset_0_1px_0_var(--primary-inset),0_0_0_3px_var(--ring-soft)]",
+					"data-[checked]:border-transparent data-[checked]:[background-image:var(--r1-p-face)] data-[checked]:shadow-btn-raised-primary data-[indeterminate]:border-transparent data-[indeterminate]:[background-image:var(--r1-p-face)] data-[indeterminate]:shadow-btn-raised-primary",
 				className,
 			)}
 			{...props}

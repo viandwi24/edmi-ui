@@ -41,7 +41,7 @@
 	hidden={!visible}
 	inert={!visible}
 	tabindex={visible ? undefined : -1}
-	class={cn(buttonVariants({ size, variant }), "col-start-3 row-start-1 justify-self-end", className)}
+	class={cn(buttonVariants({ size, variant }), "col-start-3 row-start-1 justify-self-end [&[hidden]]:hidden", className)}
 	{...restProps}
 >
 	{#if children}

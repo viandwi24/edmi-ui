@@ -8,5 +8,5 @@ import AppShell from "@/shell/AppShell.vue";
 	<AppShell>
 		<CreateBeatVps />
 	</AppShell>
-	<Toaster raised position="bottom-right" />
+	<Toaster elevation="raised" position="bottom-right" />
 </template>

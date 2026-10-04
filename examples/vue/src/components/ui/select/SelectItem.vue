@@ -29,7 +29,7 @@ const forwardedProps = useForwardProps(delegatedProps)
       )
     "
   >
-    <SelectItemText class="flex flex-1 shrink-0 gap-2 whitespace-nowrap">
+    <SelectItemText class="flex flex-1 shrink-0 items-center gap-2 whitespace-nowrap">
       <slot />
     </SelectItemText>
 

@@ -4,6 +4,7 @@
 	import CaretRightIcon from 'phosphor-svelte/lib/CaretRight';
 	import { cn, type WithoutChildrenOrChild } from "#lib/utils.js";
 	import { buttonVariants } from "#lib/components/ui/button/index.js";
+	import { type Elevation, useElevation } from "#lib/components/ui/elevation/index.js";
 	import CalendarCaption from "./calendar-caption.svelte";
 	import {
 		calendarCellClass,
@@ -11,6 +12,8 @@
 		calendarHeadCellClass,
 		calendarNavButtonClass,
 		calendarRootClass,
+		calendarShellElevation,
+		calendarShellInHost,
 		calendarSingleSelectedClass,
 		calendarSingleSelectedRaisedClass,
 	} from "./classes.js";
@@ -24,14 +27,18 @@
 		captionLayout = "label",
 		locale = "en-US",
 		disableDaysOutsideMonth = false,
-		raised = false,
+		elevation = "auto",
 		...restProps
 	}: WithoutChildrenOrChild<CalendarPrimitive.RootProps> & {
 		/** ✦ `dropdown*` renders month/year selects instead of a text heading. */
 		captionLayout?: "dropdown" | "dropdown-months" | "dropdown-years" | "label";
-		/** ✦ opt-in one-step 3D look for the selected day. */
-		raised?: boolean;
+		/** ✦ depth of the calendar shell: sunken -1, flat 0, raised +1, floating +2 (selected day rises when raised). */
+		elevation?: Elevation;
 	} = $props();
+
+	const shell = useElevation(() => elevation, "surface");
+	const handle = useElevation(() => (elevation === "sunken" ? "flat" : elevation), "handle");
+	const raised = $derived(handle.current === "raised" || handle.current === "floating");
 </script>
 
 <!--
@@ -46,7 +53,7 @@ get along, so we shut typescript up by casting `value` to `never`.
 	{disableDaysOutsideMonth}
 	{locale}
 	data-slot="calendar"
-	class={cn(calendarRootClass, className)}
+	class={cn(calendarRootClass, calendarShellElevation[shell.current], calendarShellInHost, className)}
 	{...restProps}
 >
 	{#snippet children({ months, weekdays })}

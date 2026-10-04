@@ -7,6 +7,7 @@ import type {
 } from "./useQuestionnaire"
 import { computed, onBeforeUnmount, onMounted, ref, shallowRef, watch } from "vue"
 import { cn } from '@/lib/utils'
+import type { Elevation } from '@/components/ui/elevation'
 import {
   compareDocumentOrder,
   createQuestionnaireCollection,
@@ -28,13 +29,13 @@ const props = withDefaults(defineProps<{
   items?: readonly QuestionnaireItemDefinition[]
   /** Set to `false` to run native constraint validation on answered items. */
   noValidate?: boolean
-  /** ✦ one-step 3D look on every choice and input */
-  raised?: boolean
+  /** ✦ depth of every choice and input: sunken -1, flat 0, raised +1, floating +2 */
+  elevation?: Elevation
   /** Assigns a keyboard shortcut to every choice. */
   shortcuts?: QuestionnaireShortcutMode
 }>(), {
   noValidate: true,
-  raised: false,
+  elevation: undefined,
 })
 
 const emits = defineEmits<{
@@ -433,7 +434,7 @@ provideQuestionnaireRootContext({
   itemDefinitionByName: computed(() => collection.value?.itemByName ?? null),
   last,
   nativeValidation,
-  raised: computed(() => props.raised),
+  elevation: computed(() => props.elevation),
   registerItem,
   shortcuts,
   skipCurrent,

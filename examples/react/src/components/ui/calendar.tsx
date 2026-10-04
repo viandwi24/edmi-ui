@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "cn";
 import * as React from "react";
 import {
@@ -7,10 +9,18 @@ import {
 	type Locale,
 } from "react-day-picker";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { type Elevation, useElevation } from "@/components/ui/elevation";
 import { CaretLeftIcon, CaretRightIcon, CaretDownIcon } from "@phosphor-icons/react";
 
-// Selected day (single, range start/end) is a flat --primary fill. ✦ `raised` adds the gradient + hard
-// 2px primary lip. Class strings are literal for Tailwind's scanner.
+// Selected day (single, range start/end) is a flat --primary fill. ✦ `elevation` sits on the calendar SHELL
+// (sunken / raised / floating); when raised or floating the selected day rises with the handle recipe.
+// Class strings are literal for Tailwind's scanner.
+const shellElevation = {
+	sunken: "rounded-xl border border-sk-bd bg-sk-bg shadow-sunken",
+	flat: "",
+	raised: "rounded-xl border border-transparent shadow-raised",
+	floating: "rounded-xl border border-transparent shadow-floating",
+};
 function Calendar({
 	className,
 	classNames,
@@ -20,14 +30,19 @@ function Calendar({
 	locale,
 	formatters,
 	components,
-	raised = false,
+	elevation,
 	...props
 }: React.ComponentProps<typeof DayPicker> & {
 	buttonVariant?: React.ComponentProps<typeof Button>["variant"];
-	/** ✦ one-step 3D look for the selected day (range ends). */
-	raised?: boolean;
+	/** ✦ depth of the calendar shell: sunken -1, flat 0, raised +1, floating +2 (selected day rises when raised). */
+	elevation?: Elevation;
 }) {
 	const defaultClassNames = getDefaultClassNames();
+	const shell = useElevation(elevation, "surface");
+	const handle = useElevation(
+		elevation === "sunken" ? "flat" : elevation,
+		"handle",
+	);
 
 	return (
 		<DayPicker
@@ -36,6 +51,8 @@ function Calendar({
 				"group/calendar bg-card p-3 [--cell-radius:8px] [--cell-size:36px] in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent",
 				String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
 				String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`,
+				shellElevation[shell],
+				"in-data-[slot=popover-content]:border-0 in-data-[slot=popover-content]:shadow-none",
 				className,
 			)}
 			captionLayout={captionLayout}
@@ -117,10 +134,7 @@ function Calendar({
 					"relative isolate z-0 rounded-r-(--cell-radius) bg-accent",
 					defaultClassNames.range_end,
 				),
-				today: cn(
-					"rounded-(--cell-radius) bg-accent font-semibold text-foreground data-[selected=true]:rounded-none",
-					defaultClassNames.today,
-				),
+				today: cn("rounded-(--cell-radius)", defaultClassNames.today),
 				outside: cn(
 					"text-muted-foreground opacity-50 aria-selected:text-muted-foreground",
 					defaultClassNames.outside,
@@ -159,7 +173,7 @@ function Calendar({
 					);
 				},
 				DayButton: ({ ...props }) => (
-					<CalendarDayButton locale={locale} raised={raised} {...props} />
+					<CalendarDayButton locale={locale} elevation={handle} {...props} />
 				),
 				WeekNumber: ({ children, ...props }) => {
 					return (
@@ -182,12 +196,14 @@ function CalendarDayButton({
 	day,
 	modifiers,
 	locale,
-	raised = false,
+	elevation = "flat",
 	...props
 }: React.ComponentProps<typeof DayButton> & {
 	locale?: Partial<Locale>;
-	raised?: boolean;
+	/** selected day depth: raised or floating make it rise */
+	elevation?: Elevation;
 }) {
+	const raised = elevation === "raised" || elevation === "floating";
 	const defaultClassNames = getDefaultClassNames();
 
 	const ref = React.useRef<HTMLButtonElement>(null);
@@ -210,13 +226,14 @@ function CalendarDayButton({
 			data-range-start={modifiers.range_start}
 			data-range-end={modifiers.range_end}
 			data-range-middle={modifiers.range_middle}
+			data-today={modifiers.today && !modifiers.selected}
 			className={cn(
-				"relative isolate z-10 flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 rounded-(--cell-radius) border-0 text-[13px] leading-none font-normal group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:shadow-ring data-[range-middle=true]:rounded-none data-[range-middle=true]:bg-accent data-[range-middle=true]:text-foreground [&>span]:text-xs [&>span]:opacity-70",
+				"relative isolate z-10 flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 rounded-(--cell-radius) border-0 text-[13px] leading-none font-normal data-[today=true]:bg-accent data-[today=true]:font-semibold data-[today=true]:text-foreground group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:shadow-ring data-[range-middle=true]:rounded-none data-[range-middle=true]:bg-accent data-[range-middle=true]:text-foreground [&>span]:text-xs [&>span]:opacity-70",
 				"data-[selected-single=true]:bg-primary data-[selected-single=true]:text-primary-foreground data-[selected-single=true]:hover:bg-primary data-[selected-single=true]:hover:text-primary-foreground",
 				"data-[range-start=true]:bg-primary data-[range-start=true]:text-primary-foreground data-[range-start=true]:hover:bg-primary data-[range-start=true]:hover:text-primary-foreground",
 				"data-[range-end=true]:bg-primary data-[range-end=true]:text-primary-foreground data-[range-end=true]:hover:bg-primary data-[range-end=true]:hover:text-primary-foreground",
 				raised &&
-					"data-[selected-single=true]:border-b-primary-lip data-[selected-single=true]:bg-linear-to-b data-[selected-single=true]:from-primary-hi data-[selected-single=true]:to-primary data-[selected-single=true]:shadow-[0_2px_0_var(--primary-lip)] data-[selected-single=true]:hover:from-primary-hi data-[selected-single=true]:hover:to-primary data-[range-start=true]:border-b-primary-lip data-[range-start=true]:bg-linear-to-b data-[range-start=true]:from-primary-hi data-[range-start=true]:to-primary data-[range-start=true]:shadow-[0_2px_0_var(--primary-lip)] data-[range-start=true]:hover:from-primary-hi data-[range-start=true]:hover:to-primary data-[range-end=true]:border-b-primary-lip data-[range-end=true]:bg-linear-to-b data-[range-end=true]:from-primary-hi data-[range-end=true]:to-primary data-[range-end=true]:shadow-[0_2px_0_var(--primary-lip)] data-[range-end=true]:hover:from-primary-hi data-[range-end=true]:hover:to-primary",
+					"data-[selected-single=true]:border-transparent data-[selected-single=true]:[background-image:var(--r1-p-face)] data-[selected-single=true]:shadow-btn-raised-primary data-[range-start=true]:border-transparent data-[range-start=true]:[background-image:var(--r1-p-face)] data-[range-start=true]:shadow-btn-raised-primary data-[range-end=true]:border-transparent data-[range-end=true]:[background-image:var(--r1-p-face)] data-[range-end=true]:shadow-btn-raised-primary",
 				defaultClassNames.day,
 				className,
 			)}

@@ -1,5 +1,6 @@
 import { cn } from "cn";
 import type * as React from "react";
+import { type Elevation, useElevation } from "@/components/ui/elevation";
 
 const isDown = (s: string) => /^[-−–]/.test(s.trim());
 
@@ -12,7 +13,7 @@ function WatchlistItem({
 	color = "var(--chart-1)",
 	letter,
 	active,
-	raised = false,
+	elevation,
 	...props
 }: Omit<React.ComponentProps<"a">, "children"> & {
 	symbol: string;
@@ -23,9 +24,10 @@ function WatchlistItem({
 	color?: string;
 	letter?: string;
 	active?: boolean;
-	/** ✦ the active row gets a one-step lip. */
-	raised?: boolean;
+	/** ✦ depth of the active row (raised +1 / floating +2 bevel it). */
+	elevation?: Elevation;
 }) {
+	const level = useElevation(elevation, "control");
 	return (
 		<a
 			data-slot="watchlist-item"
@@ -33,8 +35,10 @@ function WatchlistItem({
 			className={cn(
 				"flex h-10 items-center gap-2.5 rounded-lg px-2.5 text-[13.5px] text-sidebar-foreground outline-none hover:bg-sidebar-accent focus-visible:outline-2 focus-visible:outline-ring",
 				"data-[active]:bg-sidebar-accent data-[active]:font-medium data-[active]:shadow-[inset_0_0_0_1px_var(--sidebar-border)]",
-				raised &&
-					"border border-transparent data-[active]:border-sidebar-border data-[active]:border-b-lip data-[active]:shadow-[0_2px_0_var(--lip)]",
+				level === "raised" &&
+					"border border-transparent data-[active]:border-transparent data-[active]:shadow-raised",
+				level === "floating" &&
+					"border border-transparent data-[active]:border-transparent data-[active]:shadow-floating",
 				className,
 			)}
 			{...props}

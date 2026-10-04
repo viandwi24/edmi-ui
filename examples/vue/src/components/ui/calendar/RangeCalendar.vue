@@ -20,8 +20,10 @@ import {
   RangeCalendarRoot,
   useForwardPropsEmits,
 } from "reka-ui"
+import { computed } from "vue"
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
+import { type Elevation, useElevation } from '@/components/ui/elevation'
 import CalendarCaption from "./CalendarCaption.vue"
 import {
   calendarHeadCellClass,
@@ -31,6 +33,8 @@ import {
   calendarRangeEdgeRaisedClass,
   calendarRangeMiddleClass,
   calendarRootClass,
+  calendarShellElevation,
+  calendarShellInHost,
   calendarTriggerClass,
 } from "./classes"
 
@@ -41,15 +45,19 @@ const props = withDefaults(
       class?: HTMLAttributes["class"]
       layout?: LayoutTypes
       yearRange?: DateValue[]
-      /** ✦ selected day(s) get the one-step 3D look */
-      raised?: boolean
+      /** ✦ depth of the calendar shell: sunken -1, flat 0, raised +1, floating +2 (selected day rises when raised) */
+      elevation?: Elevation
     }
   >(),
-  { modelValue: undefined, layout: undefined, raised: false },
+  { modelValue: undefined, layout: undefined, elevation: undefined },
 )
 const emits = defineEmits<RangeCalendarRootEmits>()
 
-const delegatedProps = reactiveOmit(props, "class", "layout", "placeholder", "yearRange", "raised")
+const delegatedProps = reactiveOmit(props, "class", "layout", "placeholder", "yearRange", "elevation")
+
+const shell = useElevation(() => props.elevation, "surface")
+const handle = useElevation(() => (props.elevation === "sunken" ? "flat" : props.elevation), "handle")
+const raised = computed(() => handle.value === "raised" || handle.value === "floating")
 
 const placeholder = useVModel(props, "placeholder", emits, {
   passive: true,
@@ -63,9 +71,10 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
   <RangeCalendarRoot
     v-slot="{ grid, weekDays, date }"
     v-bind="forwarded"
+    :weekday-format="props.weekdayFormat ?? 'short'"
     v-model:placeholder="placeholder"
     data-slot="calendar"
-    :class="cn(calendarRootClass, props.class)"
+    :class="cn(calendarRootClass, calendarShellElevation[shell], calendarShellInHost, props.class)"
   >
     <RangeCalendarHeader data-slot="calendar-header" class="relative flex h-7 w-full items-center justify-center px-9">
       <CalendarCaption
@@ -101,7 +110,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
         <RangeCalendarGridHead>
           <RangeCalendarGridRow class="flex">
             <RangeCalendarHeadCell v-for="day in weekDays" :key="day" :class="calendarHeadCellClass">
-              {{ day }}
+              {{ day.slice(0, 2) }}
             </RangeCalendarHeadCell>
           </RangeCalendarGridRow>
         </RangeCalendarGridHead>
@@ -118,7 +127,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
                 :day="weekDate"
                 :month="month.value"
                 data-slot="calendar-cell-trigger"
-                :class="cn(buttonVariants({ variant: 'ghost', size: 'icon' }), calendarTriggerClass, calendarRangeMiddleClass, calendarRangeEdgeClass, props.raised && calendarRangeEdgeRaisedClass)"
+                :class="cn(buttonVariants({ variant: 'ghost', size: 'icon' }), calendarTriggerClass, calendarRangeMiddleClass, calendarRangeEdgeClass, raised && calendarRangeEdgeRaisedClass)"
               />
             </RangeCalendarCell>
           </RangeCalendarGridRow>

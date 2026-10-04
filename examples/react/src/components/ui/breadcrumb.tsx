@@ -2,7 +2,7 @@ import { mergeProps } from "@base-ui/react/merge-props";
 import { useRender } from "@base-ui/react/use-render";
 import { cn } from "cn";
 import type * as React from "react";
-import { CaretRightIcon, DotsThreeOutlineIcon } from "@phosphor-icons/react";
+import { CaretRightIcon, DotsThreeIcon } from "@phosphor-icons/react";
 
 function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
 	return (
@@ -108,7 +108,7 @@ function BreadcrumbEllipsis({
 			)}
 			{...props}
 		>
-			<DotsThreeOutlineIcon
+			<DotsThreeIcon
 			/>
 			<span className="sr-only">More</span>
 		</span>

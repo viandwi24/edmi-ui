@@ -42,7 +42,7 @@ function onKeyDown(event: KeyboardEvent) {
 <template>
   <div
     data-slot="carousel"
-    :class="cn('relative', props.class)"
+    :class="cn('relative outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring', props.class)"
     role="region"
     aria-roledescription="carousel"
     tabindex="0"

@@ -135,7 +135,7 @@ const isSelected = (p: Plan) => p.sku === sku.value;
 				<StepCard step="03" title="Choose your configuration">
 					<div class="mt-3.5 flex flex-wrap items-center justify-between gap-3">
 						<span class="text-[13.5px] text-muted-foreground">{{ configurationCount }} configurations · monthly prices</span>
-						<ToggleGroup type="single" variant="segmented" raised :model-value="view" aria-label="View" @update:model-value="pickView">
+						<ToggleGroup type="single" variant="segmented" elevation="raised" :model-value="view" aria-label="View" @update:model-value="pickView">
 							<ToggleGroupItem value="cards" class="px-3">Cards</ToggleGroupItem>
 							<ToggleGroupItem value="list" class="px-3">List</ToggleGroupItem>
 						</ToggleGroup>
@@ -228,7 +228,7 @@ const isSelected = (p: Plan) => p.sku === sku.value;
 					<p class="mt-3 text-sm text-muted-foreground">Pay for the full term up front. Longer terms are cheaper.</p>
 					<div class="mt-[18px] flex flex-wrap items-center justify-between gap-4">
 						<div class="max-w-full overflow-x-auto">
-							<ToggleGroup type="single" variant="segmented" raised :model-value="String(months)" aria-label="Billing term" @update:model-value="pickTerm">
+							<ToggleGroup type="single" variant="segmented" elevation="raised" :model-value="String(months)" aria-label="Billing term" @update:model-value="pickTerm">
 								<ToggleGroupItem v-for="t in terms" :key="t.months" :value="String(t.months)" class="gap-1 px-3.5">
 									{{ t.label }}
 									<Badge v-if="t.discount" variant="success" shape="number" class="ml-1 h-[18px]">−{{ t.discount }}%</Badge>
@@ -236,7 +236,7 @@ const isSelected = (p: Plan) => p.sku === sku.value;
 							</ToggleGroup>
 						</div>
 						<div class="flex items-center gap-2.5 text-[13.5px]">
-							<Switch id="auto-renew" v-model="autoRenew" raised />
+							<Switch id="auto-renew" v-model="autoRenew" elevation="raised" />
 							<Label for="auto-renew">Auto-renew</Label>
 						</div>
 					</div>

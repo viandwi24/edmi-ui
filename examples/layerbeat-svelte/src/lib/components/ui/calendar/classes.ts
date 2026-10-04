@@ -1,6 +1,6 @@
 // Class strings shared by Calendar and RangeCalendar. Literal for Tailwind's scanner.
-// Selected day (single, range start/end) is flat primary; the raised ✦ strings add a gradient,
-// hard 2px lip and `background-origin: border-box`.
+// Selected day (single, range start/end) is flat primary; the raised strings (v4 handle recipe) apply when the
+// calendar elevation is raised or floating. The calendar SHELL takes the elevation, never the day grid.
 
 export const calendarRootClass =
 	"group/calendar w-fit bg-card p-3 [--cell-radius:8px] [--cell-size:36px] in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent";
@@ -26,12 +26,23 @@ export const calendarSingleSelectedClass =
 export const calendarRangeEdgeClass =
 	"data-[selection-start]:bg-primary data-[selection-start]:text-primary-foreground data-[selection-start]:hover:bg-primary data-[selection-start]:hover:text-primary-foreground data-[selection-end]:bg-primary data-[selection-end]:text-primary-foreground data-[selection-end]:hover:bg-primary data-[selection-end]:hover:text-primary-foreground";
 
-// raised ✦ (calendarSelected raised): gradient + hard primary lip on the selected day.
+export const calendarShellElevation = {
+	sunken: "rounded-xl border border-sk-bd bg-sk-bg shadow-sunken",
+	flat: "",
+	raised: "rounded-xl border border-transparent shadow-raised",
+	floating: "rounded-xl border border-transparent shadow-floating",
+};
+
+// popover / card hosts own the shell: the calendar drops its own edge there
+export const calendarShellInHost =
+	"in-data-[slot=popover-content]:border-0 in-data-[slot=popover-content]:shadow-none";
+
+// handle recipe: the selected day rises
 export const calendarSingleSelectedRaisedClass =
-	"data-[selected]:bg-linear-to-b data-[selected]:from-primary-hi data-[selected]:to-primary data-[selected]:border-b-primary-lip data-[selected]:shadow-[0_2px_0_var(--primary-lip)] data-[selected]:[background-origin:border-box] data-[selected]:hover:from-primary-hi data-[selected]:hover:to-primary";
+	"data-[selected]:border-transparent data-[selected]:[background-image:var(--r1-p-face)] data-[selected]:shadow-btn-raised-primary";
 
 export const calendarRangeEdgeRaisedClass =
-	"data-[selection-start]:bg-linear-to-b data-[selection-start]:from-primary-hi data-[selection-start]:to-primary data-[selection-start]:border-b-primary-lip data-[selection-start]:shadow-[0_2px_0_var(--primary-lip)] data-[selection-start]:[background-origin:border-box] data-[selection-start]:hover:from-primary-hi data-[selection-start]:hover:to-primary data-[selection-end]:bg-linear-to-b data-[selection-end]:from-primary-hi data-[selection-end]:to-primary data-[selection-end]:border-b-primary-lip data-[selection-end]:shadow-[0_2px_0_var(--primary-lip)] data-[selection-end]:[background-origin:border-box] data-[selection-end]:hover:from-primary-hi data-[selection-end]:hover:to-primary";
+	"data-[selection-start]:border-transparent data-[selection-start]:[background-image:var(--r1-p-face)] data-[selection-start]:shadow-btn-raised-primary data-[selection-end]:border-transparent data-[selection-end]:[background-image:var(--r1-p-face)] data-[selection-end]:shadow-btn-raised-primary";
 
 export const calendarRangeMiddleClass =
 	"[&[data-selected]:not([data-selection-start]):not([data-selection-end])]:rounded-none [&[data-selected]:not([data-selection-start]):not([data-selection-end])]:bg-accent [&[data-selected]:not([data-selection-start]):not([data-selection-end])]:text-foreground data-[highlighted]:rounded-none data-[highlighted]:bg-accent";

@@ -4,6 +4,7 @@ import type { HTMLAttributes } from 'vue'
 import { PhCaretDown } from '@phosphor-icons/vue'
 import { reactiveOmit, useVModel } from '@vueuse/core'
 import { cn } from '@/lib/utils'
+import { type Elevation, useElevation } from '@/components/ui/elevation'
 
 defineOptions({
   inheritAttrs: false,
@@ -12,12 +13,12 @@ defineOptions({
 const props = withDefaults(defineProps<{
   modelValue?: AcceptableValue | AcceptableValue[]
   size?: 'sm' | 'default'
-  /** ✦ one-step 3D look */
-  raised?: boolean
+  /** ✦ depth: sunken -1, flat 0, raised +1, floating +2 */
+  elevation?: Elevation
   class?: HTMLAttributes['class']
 }>(), {
   size: 'default',
-  raised: false,
+  elevation: undefined,
 })
 
 const emit = defineEmits<{
@@ -29,7 +30,16 @@ const modelValue = useVModel(props, 'modelValue', emit, {
   defaultValue: '',
 })
 
-const delegatedProps = reactiveOmit(props, 'class', 'size', 'raised')
+const delegatedProps = reactiveOmit(props, 'class', 'size', 'elevation')
+// ✦ depth (v4): fields sink (-1) in layered mode; focus swaps the edge for the ring
+const fieldElevation = {
+  sunken: 'border-sk-bd bg-sk-bg shadow-sunken focus-visible:bg-card',
+  flat: '',
+  raised: 'border-transparent shadow-raised',
+  floating: 'border-transparent shadow-floating',
+}
+
+const level = useElevation(() => props.elevation, 'field')
 </script>
 
 <template>
@@ -43,7 +53,7 @@ const delegatedProps = reactiveOmit(props, 'class', 'size', 'raised')
       v-model="modelValue"
       data-slot="native-select"
       :data-size="size"
-      :class="cn('h-9 w-full min-w-0 appearance-none rounded-md border border-input bg-card pr-8 pl-3 text-sm text-foreground outline-none select-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:shadow-ring disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-muted aria-invalid:border-destructive aria-invalid:shadow-ring-error data-[size=sm]:h-8 data-[size=sm]:rounded-[7px]', props.raised && 'border-b-lip shadow-[0_2px_0_var(--lip)]')"
+      :class="cn('h-9 w-full min-w-0 appearance-none rounded-md border border-input bg-card pr-8 pl-3 text-sm text-foreground outline-none select-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:shadow-ring disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-muted aria-invalid:border-destructive aria-invalid:shadow-ring-error data-[size=sm]:h-8 data-[size=sm]:rounded-[7px]', fieldElevation[level])"
     >
       <slot />
     </select>

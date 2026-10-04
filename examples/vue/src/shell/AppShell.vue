@@ -5,6 +5,7 @@ import {
 	type Layout,
 	LayoutPickerToast,
 } from "@/components/layout-picker";
+import { ElevationProvider } from "@/components/ui/elevation";
 import DashboardLayout from "./DashboardLayout.vue";
 import NavbarLayout from "./NavbarLayout.vue";
 
@@ -16,8 +17,10 @@ const shell = computed(() =>
 </script>
 
 <template>
-	<component :is="shell">
-		<slot />
-	</component>
-	<LayoutPickerToast raised @value-change="(v: Layout) => (layout = v)" />
+	<ElevationProvider mode="layered">
+		<component :is="shell">
+			<slot />
+		</component>
+		<LayoutPickerToast @value-change="(v: Layout) => (layout = v)" />
+	</ElevationProvider>
 </template>

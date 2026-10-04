@@ -78,7 +78,7 @@ const items = [
 				<SidebarGroup class="group-data-[collapsible=icon]:hidden">
 					<SidebarGroupLabel class="tracking-[1px] uppercase">My watchlist</SidebarGroupLabel>
 					<SidebarGroupContent>
-						<WatchlistItem raised v-for="w in watchlist" :key="w.symbol" href="#watch" v-bind="w" />
+						<WatchlistItem  v-for="w in watchlist" :key="w.symbol" href="#watch" v-bind="w" />
 					</SidebarGroupContent>
 				</SidebarGroup>
 			</SidebarContent>
@@ -110,7 +110,7 @@ const items = [
 					</Breadcrumb>
 				</div>
 				<div class="flex items-center gap-2">
-					<Button raised variant="outline">Devnet</Button>
+					<Button variant="outline">Devnet</Button>
 					<ThemeToggle />
 				</div>
 			</header>

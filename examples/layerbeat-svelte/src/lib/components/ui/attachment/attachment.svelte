@@ -2,7 +2,7 @@
 	import { tv, type VariantProps } from "tailwind-variants";
 
 	export const attachmentVariants = tv({
-		base: "group/attachment relative flex w-fit max-w-full min-w-0 shrink-0 flex-wrap rounded-xl border border-border bg-card text-card-foreground transition-colors focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-ring has-[>a,>button]:hover:bg-accent data-[state=error]:border-destructive/30 data-[state=idle]:border-dashed",
+		base: "group/attachment relative flex w-fit max-w-full min-w-0 shrink-0 flex-wrap rounded-xl border border-border bg-card text-card-foreground transition-colors focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-ring has-[>a,>button]:hover:bg-accent data-[state=error]:border-[color-mix(in_srgb,var(--destructive)_30%,var(--popover))] data-[state=idle]:border-dashed",
 		variants: {
 			size: {
 				default: "gap-2 text-sm has-data-[slot=attachment-content]:px-2.5 has-data-[slot=attachment-content]:py-2 has-data-[slot=attachment-media]:p-2",

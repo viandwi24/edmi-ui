@@ -12,7 +12,7 @@
 :root {
 	--background: oklch(0.976 0.006 264.5);
 	--foreground: oklch(0.223 0.052 258.3);
-	--card: oklch(0.991 0.003 264.5);
+	--card: oklch(1.000 0 0);
 	--card-foreground: oklch(0.223 0.052 258.3);
 	--popover: oklch(1.000 0 0);
 	--popover-foreground: oklch(0.223 0.052 258.3);
@@ -84,9 +84,26 @@
 	--border-2: oklch(0.947 0.011 256.7);
 	--success-soft: oklch(0.953 0.022 151.6);
 	--success-text: oklch(0.526 0.122 147.7);
-	--outline-hi: oklch(0.976 0.006 264.5);
-	--outline-face: oklch(0.976 0.006 264.5);
+	--outline-hi: oklch(1.000 0 0);
+	--outline-face: oklch(1.000 0 0);
 	--outline-lip: oklch(0.913 0.017 256.3);
+	--r1-p: inset 0 0 0 transparent;
+	--r1-p-face: linear-gradient(180deg,var(--primary-hi),var(--primary));
+	--r1-s: inset 0 1px 0 #fff,inset 0 -1px 0 rgba(0,0,0,.06);
+	--r1-s-face: linear-gradient(180deg,color-mix(in srgb,var(--foreground) 3%,var(--card)),color-mix(in srgb,var(--foreground) 6%,var(--card)));
+	--fl-p: inset 0 2px 0 rgba(255,255,255,.22),inset 0 -2px 0 rgba(0,0,0,.18);
+	--fl-s: inset 0 2px 0 #fff,inset 0 -2px 0 rgba(0,0,0,.07);
+	--fl-s-face: linear-gradient(180deg,color-mix(in srgb,var(--foreground) 6%,var(--card)),color-mix(in srgb,var(--foreground) 10%,var(--card)));
+	--fl-p-face: linear-gradient(180deg,var(--primary-hi),var(--primary));
+	--bv-ring: rgba(255,255,255,0.35);
+	--bv-top: oklch(1.000 0 0);
+	--bv-out: rgba(0,0,0,0.25);
+	--bv-face-a: color-mix(in srgb,var(--foreground) 6%,var(--card));
+	--bv-face-b: color-mix(in srgb,var(--foreground) 2%,var(--card));
+	--bv-float: 0 10px 15px -3px rgba(0,0,0,0.10),0 4px 6px -4px rgba(0,0,0,0.10);
+	--sk-bg: color-mix(in srgb,#000 3.5%,var(--card));
+	--sk-bd: color-mix(in srgb,#000 6%,var(--card));
+	--sk-sh: inset 0 2px 4px rgba(0,0,0,0.07),inset 0 -1px 0 rgba(255,255,255,0.8),inset 0 0 0 1px rgba(0,0,0,0.03);
 }
 
 .dark {
@@ -139,16 +156,16 @@
 	--destructive-hi: oklch(0.724 0.150 12.8);
 	--destructive-edge: oklch(0.579 0.167 14.7);
 	--destructive-lip: oklch(0.398 0.119 14.2);
-	--destructive-soft: rgba(239,91,112,0.14);
+	--destructive-soft: oklch(0.307 0.044 303.0);
 	--destructive-text: oklch(0.746 0.133 11.5);
 	--brand-hi: oklch(0.715 0.149 258.4);
 	--brand-edge: oklch(0.560 0.188 258.5);
 	--brand-lip: oklch(0.413 0.147 259.4);
-	--brand-soft: rgba(61,139,255,0.15);
+	--brand-soft: oklch(0.320 0.074 259.9);
 	--brand-text: oklch(0.759 0.124 258.4);
-	--warning-soft: rgba(232,166,74,0.14);
+	--warning-soft: oklch(0.328 0.016 280.5);
 	--warning-text: oklch(0.824 0.115 76.3);
-	--info-soft: rgba(91,140,255,0.15);
+	--info-soft: oklch(0.322 0.072 263.7);
 	--info-text: oklch(0.764 0.120 265.9);
 	--ring-soft: rgba(61,139,255,0.3);
 	--overlay: rgba(2,6,15,0.65);
@@ -161,11 +178,28 @@
 	--tab-active: oklch(0.291 0.055 262.1);
 	--muted-foreground-2: oklch(0.534 0.046 258.8);
 	--border-2: oklch(0.264 0.056 264.1);
-	--success-soft: rgba(62,207,142,0.14);
+	--success-soft: oklch(0.331 0.043 227.6);
 	--success-text: oklch(0.806 0.138 161.3);
 	--outline-hi: oklch(0.295 0.055 262.1);
 	--outline-face: oklch(0.254 0.051 262.5);
 	--outline-lip: oklch(0.399 0.069 262.5);
+	--r1-p: inset 0 1px 0 #fff,inset 0 -1px 0 rgba(0,0,0,.10);
+	--r1-p-face: linear-gradient(180deg,color-mix(in srgb,var(--primary) 98%,#000),color-mix(in srgb,var(--primary) 93%,#000));
+	--r1-s: inset 0 0 0 transparent;
+	--r1-s-face: linear-gradient(180deg,var(--bv-face-a),var(--bv-face-b));
+	--fl-p: inset 0 2px 0 #fff,inset 0 -2px 0 rgba(0,0,0,.12);
+	--fl-s: inset 0 2px 0 rgba(255,255,255,.08),inset 0 -2px 0 rgba(0,0,0,.25);
+	--fl-s-face: linear-gradient(180deg,var(--bv-face-a),var(--bv-face-b));
+	--fl-p-face: linear-gradient(180deg,color-mix(in srgb,var(--primary) 96%,#000),color-mix(in srgb,var(--primary) 90%,#000));
+	--bv-ring: rgba(255,255,255,0.06);
+	--bv-top: rgba(255,255,255,0.08);
+	--bv-out: rgba(0,0,0,0.55);
+	--bv-face-a: color-mix(in srgb,#fff 7%,var(--card));
+	--bv-face-b: color-mix(in srgb,#fff 3.5%,var(--card));
+	--bv-float: 0 8px 24px rgba(0,0,0,0.5);
+	--sk-bg: color-mix(in srgb,#000 14%,var(--card));
+	--sk-bd: color-mix(in srgb,#fff 4%,var(--card));
+	--sk-sh: inset 0 2px 5px rgba(0,0,0,0.45),inset 0 -1px 0 rgba(255,255,255,0.04),inset 0 0 0 1px rgba(0,0,0,0.22);
 }
 
 @theme inline {
@@ -261,7 +295,7 @@
 	--shadow-btn-outline: 0 2px 0 var(--outline-lip);
 	--shadow-btn-brand: inset 0 1px 0 rgb(255 255 255 / 0.35), 0 2px 0 var(--brand-lip);
 	--shadow-btn-destructive: inset 0 1px 0 rgb(255 255 255 / 0.28), 0 2px 0 var(--destructive-lip);
-	--shadow-pressed: inset 0 2px 3px rgb(0 0 0 / 0.22);
+	--shadow-pressed: inset 0 1px 3px rgb(0 0 0 / .28), 0 0 1.47px var(--bv-out);
 	--shadow-ring: 0 0 0 3px var(--ring-soft);
 	--shadow-ring-error: 0 0 0 3px var(--destructive-soft);
 	--color-success-soft: var(--success-soft);
@@ -269,6 +303,38 @@
 	--color-outline-hi: var(--outline-hi);
 	--color-outline-face: var(--outline-face);
 	--color-outline-lip: var(--outline-lip);
+	--color-sk-bg: var(--sk-bg);
+	--color-sk-bd: var(--sk-bd);
+	--shadow-raised: inset 0 1px 0 var(--bv-top), 0 0 1.5px var(--bv-out);
+	--shadow-floating: inset 0 1px 0 var(--bv-top), 0 0 1.5px var(--bv-out), var(--bv-float);
+	--shadow-sunken: var(--sk-sh);
+	--shadow-btn-raised-primary: inset 0 0 .26px 1.1px rgb(255 255 255 / .14), inset 0 1px 0 var(--primary-inset), 0 0 1.5px rgb(0 0 0 / .5), 0 1px 2px rgb(0 0 0 / .16), var(--r1-p);
+	--shadow-btn-raised-neutral: inset 0 0 .26px 1.1px var(--bv-ring), inset 0 1px 0 var(--bv-top), 0 0 1.47px var(--bv-out), var(--r1-s);
+	--shadow-btn-raised-color: inset 0 0 .26px 1.1px rgb(255 255 255 / .16), inset 0 1px 0 rgb(255 255 255 / .32), 0 0 1.5px rgb(0 0 0 / .38), 0 1px 2px rgb(0 0 0 / .14);
+	--shadow-btn-float-primary: inset 0 0 .26px 1.1px rgb(255 255 255 / .14), var(--fl-p), 0 0 1.5px var(--bv-out), 0 2px 5px rgb(0 0 0 / .18), 0 8px 14px -6px rgb(0 0 0 / .3);
+	--shadow-btn-float-neutral: inset 0 0 .26px 1.1px var(--bv-ring), var(--fl-s), 0 0 1.5px var(--bv-out), 0 2px 5px rgb(0 0 0 / .18), 0 8px 14px -6px rgb(0 0 0 / .3);
+	--shadow-btn-float-color: inset 0 0 .26px 1.1px rgb(255 255 255 / .16), inset 0 2px 0 rgb(255 255 255 / .4), inset 0 -2px 0 rgb(0 0 0 / .12), 0 0 1.5px var(--bv-out), 0 2px 5px rgb(0 0 0 / .18), 0 8px 14px -6px rgb(0 0 0 / .3);
+	--shadow-btn-sunken-filled: inset 0 2px 5px rgb(0 0 0 / .4), 0 0 1.5px var(--bv-out);
+	--shadow-pressed-float: inset 0 2px 4px rgb(0 0 0 / .3), 0 0 1.47px var(--bv-out);
+	--shadow-thumb: inset 0 1px 0 #fff, 0 0 1.5px rgb(0 0 0 / .45);
+	--shadow-group-float: 0 2px 5px rgb(0 0 0 / .18), 0 8px 14px -6px rgb(0 0 0 / .3);
+	--sk-sh: var(--sk-sh);
+	--sk-bd: var(--sk-bd);
+	--sk-bg: var(--sk-bg);
+	--bv-float: var(--bv-float);
+	--bv-face-b: var(--bv-face-b);
+	--bv-face-a: var(--bv-face-a);
+	--color-bv-out: var(--bv-out);
+	--color-bv-top: var(--bv-top);
+	--color-bv-ring: var(--bv-ring);
+	--fl-p-face: var(--fl-p-face);
+	--fl-s-face: var(--fl-s-face);
+	--fl-s: var(--fl-s);
+	--fl-p: var(--fl-p);
+	--r1-s-face: var(--r1-s-face);
+	--r1-s: var(--r1-s);
+	--r1-p-face: var(--r1-p-face);
+	--r1-p: var(--r1-p);
 }
 
 @layer base {
@@ -285,7 +351,7 @@
 	html {
 		@apply font-sans;
 	}
-	[data-raised] {
+	[data-elevation=raised], [data-elevation=floating] {
 		background-origin: border-box;
 	}
 }

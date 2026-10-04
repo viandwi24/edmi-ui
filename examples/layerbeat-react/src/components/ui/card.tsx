@@ -1,16 +1,34 @@
+"use client";
+
 import { cn } from "cn";
 import type * as React from "react";
+
+import {
+	type Elevation,
+	SurfaceProvider,
+	useElevation,
+} from "@/components/ui/elevation";
+
+// ✦ depth (v4): surface role. A card inside a raised/floating surface resolves flat (no bevel on bevel).
+const cardElevation = {
+	sunken: "border-sk-bd bg-sk-bg shadow-sunken",
+	flat: "",
+	raised: "border-transparent shadow-raised",
+	floating: "border-transparent shadow-floating",
+};
 
 function Card({
 	className,
 	size = "default",
-	raised = false,
+	elevation,
+	children,
 	...props
 }: React.ComponentProps<"div"> & {
 	size?: "default" | "sm";
-	/** ✦ one-step 3D look: hard lip + soft shadow. */
-	raised?: boolean;
+	/** ✦ depth: sunken -1, flat 0, raised +1 (bevel), floating +2 (bevel + drop). */
+	elevation?: Elevation;
 }) {
+	const level = useElevation(elevation, "surface");
 	return (
 		<div
 			data-slot="card"
@@ -18,11 +36,13 @@ function Card({
 			className={cn(
 				// Flat by default (border only). Spacing: 22px default, 16px sm.
 				"group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-xl border border-border bg-card py-(--card-spacing) text-sm text-card-foreground [--card-spacing:22px] has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:16px] data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl",
-				raised && "border-b-lip shadow-card",
+				cardElevation[level],
 				className,
 			)}
 			{...props}
-		/>
+		>
+			<SurfaceProvider level={level}>{children}</SurfaceProvider>
+		</div>
 	);
 }
 
@@ -90,7 +110,7 @@ function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
 		<div
 			data-slot="card-footer"
 			className={cn(
-				"flex items-center gap-2 rounded-b-xl border-t border-border bg-muted/60 p-(--card-spacing)",
+				"flex items-center gap-2 rounded-b-xl border-t border-border bg-[color-mix(in_srgb,var(--muted)_60%,var(--card))] p-(--card-spacing)",
 				className,
 			)}
 			{...props}

@@ -3,6 +3,7 @@
 	import type { HTMLLabelAttributes } from "svelte/elements";
 	import CheckIcon from 'phosphor-svelte/lib/Check';
 	import { untrack, type Snippet } from "svelte";
+	import { type Elevation, useElevation } from "#lib/components/ui/elevation/index.js";
 	import {
 		type AnswerControlRegistration,
 		getAnswerKeyShortcuts,
@@ -20,8 +21,8 @@
 		disabled: disabledProp = false,
 		/** Submitted as the answer of the parent item. */
 		value,
-		/** ✦ opt-in one-step 3D look; defaults to the Questionnaire `raised`. */
-		raised: raisedProp = undefined,
+		/** ✦ depth of this option; defaults to the Questionnaire `elevation`. */
+		elevation = "auto",
 		onchange,
 		children,
 		...restProps
@@ -30,7 +31,7 @@
 		defaultChecked?: boolean;
 		disabled?: boolean;
 		value: string;
-		raised?: boolean;
+		elevation?: Elevation;
 		onchange?: (event: Event) => void;
 		children?: Snippet<
 			[{ checked: boolean; disabled: boolean; shortcut: string | null; type: "checkbox" | "radio" }]
@@ -39,7 +40,16 @@
 
 	const item = getQuestionnaireItemContext();
 	const root = getQuestionnaireRootContext();
-	const raised = $derived(raisedProp ?? root.raised);
+	const level = useElevation(
+		() => (elevation !== "auto" ? elevation : root.elevation),
+		"control"
+	);
+	const choiceElevation = {
+		sunken: "border-sk-bd bg-sk-bg shadow-sunken",
+		flat: "",
+		raised: "border-transparent shadow-raised",
+		floating: "border-transparent shadow-floating",
+	};
 	const answerId = $props.id();
 	let inputElement = $state<HTMLInputElement | null>(null);
 	const initialDefaultChecked = untrack(() => defaultChecked);
@@ -128,7 +138,7 @@
 	data-unchecked={checked ? undefined : ""}
 	class={cn(
 		"group/questionnaire-choice relative flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border border-border bg-card px-3.5 py-2 text-start text-sm transition-colors outline-none select-none hover:bg-accent has-[>input:focus-visible]:outline-2 has-[>input:focus-visible]:outline-offset-2 has-[>input:focus-visible]:outline-ring data-[invalid]:border-destructive data-[checked]:border-ring data-[checked]:bg-[color-mix(in_srgb,var(--brand)_5%,var(--card))] data-[checked]:shadow-[0_0_0_1px_var(--ring)]",
-		raised && "border-b-lip shadow-card data-[checked]:border-b-ring",
+		choiceElevation[level.current],
 		"data-[disabled]:pointer-events-none data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50",
 		className
 	)}

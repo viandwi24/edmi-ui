@@ -1,4 +1,5 @@
 import Root, {
+	BUTTON_ELEVATION_CONTEXT,
 	type ButtonProps,
 	type ButtonSize,
 	type ButtonVariant,
@@ -6,6 +7,7 @@ import Root, {
 } from "./button.svelte";
 
 export {
+	BUTTON_ELEVATION_CONTEXT,
 	type ButtonProps as Props,
 	type ButtonProps,
 	type ButtonSize,

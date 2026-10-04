@@ -3,6 +3,7 @@
 	import CalendarBlankIcon from 'phosphor-svelte/lib/CalendarBlank';
 	import { cn } from "#lib/utils.js";
 	import { Button } from "#lib/components/ui/button/index.js";
+	import type { Elevation } from "#lib/components/ui/elevation/index.js";
 	import { Calendar } from "#lib/components/ui/calendar/index.js";
 	import * as Popover from "#lib/components/ui/popover/index.js";
 
@@ -12,27 +13,29 @@
 		placeholder = "Pick a date",
 		locale = "en-US",
 		disabled = false,
-		raised = false,
+		elevation = "auto",
 		class: className,
 	}: {
 		value?: DateValue;
 		placeholder?: string;
 		locale?: string;
 		disabled?: boolean;
-		/** ✦ opt-in one-step 3D look; forwarded to the trigger button and the calendar. */
-		raised?: boolean;
+		/** ✦ depth; forwarded to the trigger button and the calendar. */
+		elevation?: Elevation;
 		class?: string;
 	} = $props();
+
+	let open = $state(false);
 
 	const formatter = $derived(new DateFormatter(locale, { dateStyle: "long" }));
 </script>
 
-<Popover.Root>
+<Popover.Root bind:open>
 	<Popover.Trigger>
 		{#snippet child({ props })}
 			<Button
 				variant="outline"
-				{raised}
+				{elevation}
 				{disabled}
 				data-empty={!value}
 				class={cn(
@@ -47,6 +50,13 @@
 		{/snippet}
 	</Popover.Trigger>
 	<Popover.Content class="w-auto p-0" align="start">
-		<Calendar type="single" bind:value captionLayout="dropdown" {locale} {raised} />
+		<Calendar
+			type="single"
+			bind:value
+			captionLayout="dropdown"
+			{locale}
+			{elevation}
+			onValueChange={() => (open = false)}
+		/>
 	</Popover.Content>
 </Popover.Root>

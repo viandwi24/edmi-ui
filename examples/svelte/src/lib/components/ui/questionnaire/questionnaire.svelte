@@ -2,6 +2,7 @@
 	import { cn, type WithElementRef } from "#lib/utils.js";
 	import type { HTMLFormAttributes } from "svelte/elements";
 	import { onMount, untrack, type Snippet } from "svelte";
+	import type { Elevation } from "#lib/components/ui/elevation/index.js";
 	import {
 		type ItemRegistration,
 		type QuestionnaireItemDefinition,
@@ -30,8 +31,8 @@
 		noValidate = true,
 		/** Assigns a keyboard shortcut to every choice. */
 		shortcuts = undefined,
-		/** ✦ opt-in one-step 3D look, applied to every option. */
-		raised = false,
+		/** ✦ depth of every option and input: sunken -1, flat 0, raised +1, floating +2. */
+		elevation = "auto",
 		onItemChange = undefined,
 		onsubmit,
 		onreset,
@@ -43,7 +44,7 @@
 		items?: readonly QuestionnaireItemDefinition[];
 		noValidate?: boolean;
 		shortcuts?: QuestionnaireShortcutMode;
-		raised?: boolean;
+		elevation?: Elevation;
 		onItemChange?: (item: string) => void;
 		onsubmit?: (event: SubmitEvent) => void;
 		onreset?: (event: Event) => void;
@@ -301,8 +302,8 @@
 	});
 
 	setQuestionnaireRootContext({
-		get raised() {
-			return raised;
+		get elevation() {
+			return elevation === "auto" ? undefined : elevation;
 		},
 		get activeItem() {
 			return activeItem;
@@ -351,7 +352,6 @@
 	bind:this={ref}
 	data-slot="questionnaire"
 	data-shortcuts={resolvedShortcuts ?? undefined}
-	data-raised={raised ? "" : undefined}
 	novalidate={noValidate}
 	class={cn("flex w-full min-w-0 flex-col gap-4", className)}
 	onkeydown={handleKeydown}

@@ -12,7 +12,6 @@
 
 <Button
 	variant="outline"
-	raised
 	size="icon"
 	aria-label="Toggle theme"
 	onclick={() => {

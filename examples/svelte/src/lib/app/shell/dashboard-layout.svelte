@@ -72,7 +72,7 @@
 				<Sidebar.GroupLabel class="tracking-[1px] uppercase">My watchlist</Sidebar.GroupLabel>
 				<Sidebar.GroupContent>
 					{#each watchlist as w (w.symbol)}
-						<WatchlistItem raised href="#watch" {...w} />
+						<WatchlistItem  href="#watch" {...w} />
 					{/each}
 				</Sidebar.GroupContent>
 			</Sidebar.Group>
@@ -107,7 +107,7 @@
 				</Breadcrumb.Root>
 			</div>
 			<div class="flex items-center gap-2">
-				<Button raised variant="outline">Devnet</Button>
+				<Button variant="outline">Devnet</Button>
 				<ThemeToggle />
 			</div>
 		</header>

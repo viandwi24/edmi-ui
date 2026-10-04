@@ -43,7 +43,7 @@ echo "== examples/install.sh vue"
 EXAMPLE_DIR="$APP" EDMI_URL="http://localhost:$PORT" bash "$ROOT/examples/install.sh" vue
 
 test -f "$APP/src/components/ui/button/Button.vue" || test -f "$APP/src/components/ui/button/index.ts" || { echo "button was not installed"; exit 1; }
-grep -q "shadow-btn-primary" "$APP/src/components/ui/button/index.ts" || { echo "button is not the Edmi version"; exit 1; }
+grep -q "shadow-btn-raised-primary" "$APP/src/components/ui/button/index.ts" || { echo "button is not the Edmi version"; exit 1; }
 for b in ticker-strip index-row watchlist-item app-header layout-picker; do test -d "$APP/src/components/$b" || { echo "missing block $b"; exit 1; }; done
 grep -q "@phosphor-icons/vue" "$APP/src/components/ui/sidebar/SidebarTrigger.vue" || { echo "icons were not rewritten to phosphor"; exit 1; }
 if grep -rq "@/registry/edmi" "$APP/src/components" "$APP/src/lib"; then echo "unrewritten @/registry/edmi import left in the project"; exit 1; fi

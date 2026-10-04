@@ -3,6 +3,7 @@ import type { HTMLAttributes } from "vue"
 import type { QuestionnaireInputType } from "./useQuestionnaire"
 import { computed, nextTick, onBeforeUnmount, ref, useId, watch } from "vue"
 import { cn } from '@/lib/utils'
+import { useElevation } from '@/components/ui/elevation'
 import {
   getAnswerKeyShortcuts,
   hasInputValue,
@@ -34,6 +35,13 @@ const emits = defineEmits<{
 
 const item = injectQuestionnaireItemContext()
 const root = injectQuestionnaireRootContext()
+const level = useElevation(() => root.elevation.value, "field")
+const inputElevation = {
+  sunken: "border-sk-bd bg-sk-bg shadow-sunken",
+  flat: "",
+  raised: "border-transparent shadow-raised",
+  floating: "border-transparent shadow-floating",
+}
 
 const answerId = useId()
 const inputElement = ref<HTMLInputElement | null>(null)
@@ -154,7 +162,7 @@ onBeforeUnmount(() => {
       :class="cn(
         'h-12 w-full min-w-0 rounded-xl border border-border bg-card px-3.5 text-sm transition-colors outline-none focus-visible:border-ring focus-visible:shadow-[0_0_0_1px_var(--ring)] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive',
         'placeholder:text-muted-foreground',
-        root.raised.value && 'border-b-lip shadow-card focus-visible:border-b-ring',
+        inputElevation[level],
         props.class,
       )"
       @input="handleInput"

@@ -42,7 +42,7 @@ EXAMPLE_DIR="$APP" EDMI_URL="http://localhost:$PORT" bash "$ROOT/examples/instal
 
 U="$APP/src/lib/components/ui"
 test -f "$U/button/button.svelte"
-grep -q "shadow-btn-primary" "$U/button/button.svelte" || { echo "button.svelte is not the Edmi version"; exit 1; }
+grep -q "shadow-btn-raised-primary" "$U/button/button.svelte" || { echo "button.svelte is not the Edmi version"; exit 1; }
 for b in ticker-strip index-row watchlist-item app-header layout-picker; do test -f "$U/$b/index.ts" || { echo "missing block $b"; exit 1; }; done
 grep -q "phosphor-svelte/lib/" "$U/sidebar/sidebar-trigger.svelte" || { echo "icons were not rewritten to phosphor"; exit 1; }
 

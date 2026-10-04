@@ -3,6 +3,7 @@
 	import { Card } from "#lib/components/ui/card/index.js";
 	import ArrowUpRightIcon from 'phosphor-svelte/lib/ArrowUpRight';
 	import type { ComponentProps, Snippet } from "svelte";
+	import type { Elevation } from "#lib/components/ui/elevation/index.js";
 	import { getKanbanColumnCtx } from "./kanban-column.svelte";
 
 	let {
@@ -12,7 +13,7 @@
 		icon,
 		action,
 		disabled,
-		raised,
+		elevation = "auto",
 		...restProps
 	}: Omit<ComponentProps<typeof Card>, "title" | "children"> & {
 		title: string;
@@ -23,6 +24,8 @@
 		action?: Snippet;
 		/** Dims the card (not yet reachable). */
 		disabled?: boolean;
+		/** ✦ depth of this card; defaults to the column's `elevation`. */
+		elevation?: Elevation;
 	} = $props();
 
 	const ctx = getKanbanColumnCtx();
@@ -30,7 +33,7 @@
 
 <Card
 	data-slot="kanban-item"
-	raised={raised ?? ctx?.raised ?? false}
+	elevation={elevation !== "auto" ? elevation : ctx?.elevation}
 	data-disabled={disabled ? "" : undefined}
 	class={cn("flex-row items-center gap-2.5 px-3 py-2.5 data-[disabled]:opacity-60", className)}
 	{...restProps}

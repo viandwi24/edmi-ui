@@ -2,6 +2,7 @@
 	import { mode } from "mode-watcher";
 	import { Toaster as Sonner, type ToasterProps as SonnerProps } from "svelte-sonner";
 	import { cn } from "#lib/utils.js";
+	import { type Elevation, useElevation } from "#lib/components/ui/elevation/index.js";
 	import SpinnerIcon from 'phosphor-svelte/lib/Spinner';
 	import CheckCircleIcon from 'phosphor-svelte/lib/CheckCircle';
 	import XCircleIcon from 'phosphor-svelte/lib/XCircle';
@@ -9,12 +10,21 @@
 	import WarningIcon from 'phosphor-svelte/lib/Warning';
 
 	let {
-		raised = false,
+		elevation = "auto",
 		...restProps
 	}: SonnerProps & {
-		/** ✦ opt-in one-step 3D look for every toast (hard lip). */
-		raised?: boolean;
+		/** ✦ depth for every toast: flat 0, raised +1 (bevel), floating +2 (bevel + drop). */
+		elevation?: Elevation;
 	} = $props();
+
+	// ✦ depth (v4): floating is the natural level of a toast (overlay role in layered mode).
+	const toastElevation = {
+		sunken: "shadow-none!",
+		flat: "shadow-none!",
+		raised: "border-transparent! shadow-raised!",
+		floating: "border-transparent! shadow-floating!",
+	};
+	const level = useElevation(() => elevation, "overlay");
 
 	// Soft fill + tinted 40% border per type (DESIGN 4.12); default stays a solid popover chip.
 	// svelte-sonner's own selectors are more specific than utilities, hence the important modifier.
@@ -26,13 +36,13 @@
 	style="--normal-bg: var(--popover); --normal-text: var(--popover-foreground); --normal-border: var(--border); --border-radius: var(--radius-xl); --width: 360px;"
 	toastOptions={{
 		classes: {
-			toast: cn("cn-toast text-[13.5px] font-sans", raised && "border-b-lip! shadow-[0_3px_0_var(--lip)]!"),
+			toast: cn("cn-toast text-[13.5px] font-sans", toastElevation[level.current]),
 			title: "font-medium",
 			description: "text-muted-foreground!",
-			success: "bg-success-soft! border-success/40!",
-			info: "bg-info-soft! border-info/40!",
-			warning: "bg-warning-soft! border-warning/40!",
-			error: "bg-destructive-soft! border-destructive/40!",
+			success: "bg-success-soft! border-[color-mix(in_srgb,var(--success)_40%,var(--popover))]!",
+			info: "bg-info-soft! border-[color-mix(in_srgb,var(--info)_40%,var(--popover))]!",
+			warning: "bg-warning-soft! border-[color-mix(in_srgb,var(--warning)_40%,var(--popover))]!",
+			error: "bg-destructive-soft! border-[color-mix(in_srgb,var(--destructive)_40%,var(--popover))]!",
 		},
 	}}
 	{...restProps}

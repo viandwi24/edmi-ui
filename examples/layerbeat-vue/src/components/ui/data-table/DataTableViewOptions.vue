@@ -2,6 +2,7 @@
 import type { RowData, Table } from "@tanstack/vue-table";
 import { PhCaretDown, PhSidebarSimple } from '@phosphor-icons/vue';
 import { Button } from '@/components/ui/button';
+import type { Elevation } from '@/components/ui/elevation';
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
@@ -13,20 +14,28 @@ import {
 } from '@/components/ui/dropdown-menu';
 import type { DataTableFeatures } from "./dataTableFeatures";
 
+/** Column menu label: `meta.label`, else a string header, else the column id. */
+function columnLabel(column: { id: string; columnDef: { header?: unknown; meta?: unknown } }) {
+    const label = (column.columnDef.meta as { label?: string } | undefined)?.label;
+    if (label) return label;
+    const header = column.columnDef.header;
+    return typeof header === "string" ? header : column.id;
+}
+
 withDefaults(
     defineProps<{
         table: Table<DataTableFeatures, TData>;
-        /** ✦ raised trigger button */
-        raised?: boolean;
+        /** ✦ depth of the toolbar and pagination controls (the table container stays flat). */
+        elevation?: Elevation;
     }>(),
-    { raised: false },
+    { elevation: undefined },
 );
 </script>
 
 <template>
 	<DropdownMenu>
 		<DropdownMenuTrigger as-child>
-			<Button variant="outline" size="sm" :raised="raised" class="ml-auto">
+			<Button variant="outline" size="sm" :elevation="elevation" class="ml-auto">
 				<PhSidebarSimple />
 				Columns
 				<PhCaretDown />
@@ -45,7 +54,7 @@ withDefaults(
 					:model-value="column.getIsVisible()"
 					@update:model-value="(value: boolean) => column.toggleVisibility(!!value)"
 				>
-					{{ column.id }}
+					{{ columnLabel(column) }}
 				</DropdownMenuCheckboxItem>
 			</DropdownMenuGroup>
 		</DropdownMenuContent>

@@ -2,6 +2,7 @@
 	import { Pagination as PaginationPrimitive } from "bits-ui";
 	import { buttonVariants, type ButtonSize } from "#lib/components/ui/button/index.js";
 	import { cn } from "#lib/utils.js";
+	import type { Elevation } from "#lib/components/ui/elevation/index.js";
 	import { getPaginationCtx } from "./pagination.svelte";
 	let {
 		ref = $bindable(null),
@@ -9,18 +10,20 @@
 		size = "icon",
 		isActive,
 		page,
-		raised,
+		elevation = "auto",
 		children,
 		...restProps
 	}: PaginationPrimitive.PageProps & {
 		size?: ButtonSize;
 		isActive: boolean;
-		/** ✦ overrides the Pagination `raised` (active link only). */
-		raised?: boolean;
+		/** ✦ overrides the Pagination `elevation` (the active link rises). */
+		elevation?: Elevation;
 	} = $props();
 
 	const ctx = getPaginationCtx();
-	const isRaised = $derived(raised ?? ctx?.raised ?? false);
+	const isRaised = $derived(
+		elevation !== "auto" ? elevation === "raised" || elevation === "floating" : (ctx?.raised ?? false)
+	);
 </script>
 
 {#snippet Fallback()}
@@ -36,9 +39,9 @@
 	data-size={size}
 	class={cn(
 		buttonVariants({ size, variant: isActive ? "outline" : "ghost" }),
-		// paginationActive: flat outline, raised ✦ adds the lip
+		// paginationActive: flat outline, elevation ✦ raises it
 		isActive && "bg-card font-semibold",
-		isActive && isRaised && "border-b-lip shadow-[0_2px_0_var(--lip)]",
+		isActive && isRaised && "border-transparent shadow-btn-raised-neutral",
 		className
 	)}
 	{...restProps}

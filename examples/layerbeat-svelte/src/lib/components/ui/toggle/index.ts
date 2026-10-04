@@ -1,7 +1,7 @@
 import Root from "./toggle.svelte";
 
 export {
-	segmentedRaised,
+	raisedActive,
 	type ToggleSize,
 	type ToggleVariant,
 	type ToggleVariants,

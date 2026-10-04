@@ -36,7 +36,7 @@ check_files() {
 	for n in $ITEMS; do
 		test -f "$dir/src/components/ui/$n.tsx" || { echo "missing components/ui/$n.tsx"; exit 1; }
 	done
-	grep -q "shadow-btn-primary" "$dir/src/components/ui/button.tsx" || { echo "button.tsx is not the Edmi version"; exit 1; }
+	grep -q "shadow-btn-raised-primary" "$dir/src/components/ui/button.tsx" || { echo "button.tsx is not the Edmi version"; exit 1; }
 	for f in instrument-sans jetbrains-mono sora; do
 		grep -q "@import \"@fontsource-variable/$f\"" "$dir/src/index.css" || { echo "index.css does not import @fontsource-variable/$f"; exit 1; }
 		grep -q "\"@fontsource-variable/$f\"" "$dir/package.json" || { echo "package.json lacks @fontsource-variable/$f"; exit 1; }

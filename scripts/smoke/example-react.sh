@@ -43,7 +43,7 @@ echo "== examples/install.sh react"
 EXAMPLE_DIR="$APP" EDMI_URL="http://localhost:$PORT" bash "$ROOT/examples/install.sh" react
 
 test -f "$APP/src/components/ui/button.tsx"
-grep -q "shadow-btn-primary" "$APP/src/components/ui/button.tsx" || { echo "button.tsx is not the Edmi version"; exit 1; }
+grep -q "shadow-btn-raised-primary" "$APP/src/components/ui/button.tsx" || { echo "button.tsx is not the Edmi version"; exit 1; }
 for b in ticker-strip index-row watchlist-item app-header layout-picker; do test -f "$APP/src/components/$b.tsx" || { echo "missing block $b"; exit 1; }; done
 grep -q "from ['\"]@phosphor-icons/react['\"]" "$APP/src/components/ui/sidebar.tsx" || { echo "icons were not rewritten to phosphor"; exit 1; }
 

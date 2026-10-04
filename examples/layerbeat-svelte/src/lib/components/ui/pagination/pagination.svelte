@@ -17,6 +17,7 @@
 <script lang="ts">
 	import { Pagination as PaginationPrimitive } from "bits-ui";
 	import { cn } from "#lib/utils.js";
+	import { type Elevation, useElevation } from "#lib/components/ui/elevation/index.js";
 
 	let {
 		ref = $bindable(null),
@@ -25,12 +26,15 @@
 		perPage = 10,
 		page = $bindable(1),
 		siblingCount = 1,
-		raised = false,
+		elevation = "auto",
 		...restProps
 	}: PaginationPrimitive.RootProps & {
-		/** ✦ opt-in one-step 3D look for the active link. */
-		raised?: boolean;
+		/** ✦ depth: raised +1 / floating +2 make the active link rise. */
+		elevation?: Elevation;
 	} = $props();
+
+	const level = useElevation(() => elevation, "control");
+	const raised = $derived(level.current === "raised" || level.current === "floating");
 
 	setPaginationCtx({
 		get raised() {

@@ -267,7 +267,7 @@
 					<ToggleGroup.Root
 						type="single"
 						variant="segmented"
-						raised
+						elevation="raised"
 						value={months}
 						onValueChange={(v) => v && (months = v)}
 						aria-label="Billing term"
@@ -291,7 +291,7 @@
 		</div>
 
 		<!-- Summary -->
-		<Card raised class="w-full shrink-0 gap-0 overflow-hidden p-0 lg:sticky lg:top-6 lg:w-[330px]">
+		<Card elevation="raised" class="w-full shrink-0 gap-0 overflow-hidden p-0 lg:sticky lg:top-6 lg:w-[330px]">
 			<div class="relative overflow-hidden border-b border-border-2 bg-[linear-gradient(160deg,var(--brand-soft),var(--card)_75%)] px-5 pt-5 pb-[18px]">
 				<span class="absolute -right-[26px] -bottom-[30px] size-[110px] rounded-full bg-[color-mix(in_srgb,var(--chart-2)_35%,transparent)]"></span>
 				<span class="absolute right-[30px] -bottom-10 h-[90px] w-[70px] rounded-[40px] bg-[color-mix(in_srgb,var(--chart-1)_30%,transparent)]"></span>
@@ -344,7 +344,7 @@
 					Review your configuration before purchasing. Credit is used only when you confirm.
 				</p>
 				<Button
-					raised
+					elevation="raised"
 					size="lg"
 					class="w-full"
 					onclick={() => toast.success("Server ordered", { description: `${plan.id} in ${location.city}, ${usd(total)} (demo, nothing was purchased).` })}

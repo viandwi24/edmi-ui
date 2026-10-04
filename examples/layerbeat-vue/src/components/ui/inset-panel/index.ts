@@ -1,3 +1,4 @@
+export { INSET_PANEL_KEY, insetPanelElevation } from "./context";
 export { default as InsetPanel } from "./InsetPanel.vue";
 export { default as InsetPanelBody } from "./InsetPanelBody.vue";
 export { default as InsetPanelFooter } from "./InsetPanelFooter.vue";

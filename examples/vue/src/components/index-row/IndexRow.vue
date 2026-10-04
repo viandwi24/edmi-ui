@@ -8,10 +8,17 @@ import { Badge } from '@/components/ui/badge'
 import { TableCell, TableRow } from '@/components/ui/table'
 import Sparkline from './Sparkline.vue'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   index: IndexRowData
+  /** ✦ Leading mono rank column (pair with `<IndexRowHeader rank />`). */
+  rank?: number | string
+  /** ✦ `text` (default) or `pill`: soft tinted pill for the 7d delta. */
+  delta?: 'text' | 'pill'
   class?: HTMLAttributes['class']
-}>()
+}>(), {
+  rank: undefined,
+  delta: 'text',
+})
 
 const down = computed(() => /^[-−–]/.test(props.index.change.trim()))
 </script>
@@ -19,6 +26,9 @@ const down = computed(() => /^[-−–]/.test(props.index.change.trim()))
 <template>
   <!-- One market row: avatar stack, name + ticker + tags, mono numbers, delta, sparkline. Use inside `<TableBody>`. -->
   <TableRow data-slot="index-row" :class="props.class">
+    <TableCell v-if="props.rank !== undefined" class="w-10 pr-0 font-mono text-[13px] text-muted-foreground">
+      {{ props.rank }}
+    </TableCell>
     <TableCell>
       <div class="flex items-center gap-3">
         <AvatarGroup>
@@ -49,8 +59,16 @@ const down = computed(() => /^[-−–]/.test(props.index.change.trim()))
     <TableCell class="text-right font-mono text-[12.5px] font-semibold">
       {{ index.price }}
     </TableCell>
-    <TableCell :class="cn('text-right font-mono text-[12.5px]', down ? 'text-destructive-text' : 'text-success-text')">
-      {{ index.change }}
+    <TableCell
+      :class="cn('text-right font-mono text-[12.5px]', props.delta === 'text' && (down ? 'text-destructive-text' : 'text-success-text'))"
+    >
+      <span
+        v-if="props.delta === 'pill'"
+        :class="cn('inline-block rounded-md px-2 py-[3px] text-xs', down ? 'bg-destructive-soft text-destructive-text' : 'bg-brand-soft text-brand-text')"
+      >{{ index.change }}</span>
+      <template v-else>
+        {{ index.change }}
+      </template>
     </TableCell>
     <TableCell class="text-right font-mono text-[12.5px]">
       {{ index.aum }}

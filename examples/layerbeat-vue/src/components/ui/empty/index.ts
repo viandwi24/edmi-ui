@@ -16,19 +16,24 @@ export const emptyMediaVariants = cva(
                 default: "bg-transparent",
                 icon: "size-12 rounded-xl border border-border bg-card text-foreground [&_svg:not([class*=size-])]:size-5",
             },
-            // ✦ opt-in one-step 3D look (icon variant only)
-            raised: { false: "", true: "" },
+            // ✦ depth (icon variant only): the media tile rises
+            elevation: { flat: "", raised: "", floating: "" },
         },
         compoundVariants: [
             {
                 variant: "icon",
-                raised: true,
-                class: "border-b-lip shadow-[0_2px_0_var(--lip)]",
+                elevation: "raised",
+                class: "border-transparent shadow-raised",
+            },
+            {
+                variant: "icon",
+                elevation: "floating",
+                class: "border-transparent shadow-floating",
             },
         ],
         defaultVariants: {
             variant: "default",
-            raised: false,
+            elevation: "flat",
         },
     },
 );

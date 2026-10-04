@@ -30,7 +30,7 @@
 				<CheckIcon class="pointer-events-none" />
 			{/if}
 		</span>
-		<span class="flex flex-1 shrink-0 gap-2 whitespace-nowrap">
+		<span class="flex flex-1 shrink-0 items-center gap-2 whitespace-nowrap">
 			{#if childrenProp}
 				{@render childrenProp({ selected, highlighted })}
 			{:else}

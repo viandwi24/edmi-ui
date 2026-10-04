@@ -13,6 +13,8 @@
 		priceNote,
 		action,
 		features,
+		featuresLead,
+		feature,
 		...restProps
 	}: Omit<ComponentProps<typeof Card>, "title" | "children"> & {
 		name: string;
@@ -24,6 +26,10 @@
 		/** Call to action, usually a full-width `Button`. */
 		action?: Snippet;
 		features?: string[];
+		/** ✦ Lead row above the features, e.g. "Included:" or "Everything in Holder, plus:". */
+		featuresLead?: string | Snippet;
+		/** ✦ Rich content for a feature row (default: the text). */
+		feature?: Snippet<[string, number]>;
 	} = $props();
 </script>
 
@@ -37,11 +43,16 @@
 	{/if}
 	{#if features?.length}
 		<Separator class="my-[18px]" />
+		{#if featuresLead}
+			<div data-slot="pricing-plan-lead" class="mb-3.5 text-[15px] font-semibold">
+				{#if typeof featuresLead === "function"}{@render featuresLead()}{:else}{featuresLead}{/if}
+			</div>
+		{/if}
 		<ul class="flex flex-col gap-2.5 text-[13.5px]">
 			{#each features as f, i (i)}
 				<li class="flex items-center gap-2.5">
 					<CheckIcon class="size-3.5 text-muted-foreground" />
-					{f}
+					{#if feature}{@render feature(f, i)}{:else}{f}{/if}
 				</li>
 			{/each}
 		</ul>

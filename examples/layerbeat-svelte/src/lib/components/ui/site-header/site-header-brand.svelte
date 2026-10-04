@@ -2,6 +2,7 @@
 	import { cn, type WithElementRef } from "#lib/utils.js";
 	import type { HTMLAnchorAttributes } from "svelte/elements";
 	import type { Snippet } from "svelte";
+	import type { Elevation } from "#lib/components/ui/elevation/index.js";
 	import SiteHeaderMark from "./site-header-mark.svelte";
 
 	let {
@@ -10,14 +11,14 @@
 		logo,
 		name = "Stockbreak",
 		href = "/",
-		raised = false,
+		elevation = "auto",
 		...restProps
 	}: WithElementRef<Omit<HTMLAnchorAttributes, "children">, HTMLAnchorElement> & {
 		/** Replaces the default mark. */
 		logo?: Snippet;
 		name?: string;
-		/** ✦ forwarded to the default mark. */
-		raised?: boolean;
+		/** ✦ depth of the default mark. */
+		elevation?: Elevation;
 	} = $props();
 </script>
 
@@ -28,6 +29,6 @@
 	class={cn("flex items-center gap-2.5 whitespace-nowrap", className)}
 	{...restProps}
 >
-	{#if logo}{@render logo()}{:else}<SiteHeaderMark {raised} />{/if}
+	{#if logo}{@render logo()}{:else}<SiteHeaderMark {elevation} />{/if}
 	<span class="font-brand text-xl font-semibold tracking-[-0.4px]">{name}</span>
 </a>

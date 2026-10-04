@@ -6,4 +6,4 @@
 - Same scaffold as `examples/svelte`; Edmi installed with the CLI only (`examples/install.sh svelte`), then `theme-slate-ocean.json` after `theme.json`.
 - Theme Slate · Ocean; light/dark switch stored in a cookie and read in SSR (`hooks.server.ts`), so no flash.
 - The sidebar is always dark navy through a scoped `class="dark"` on the sidebar subtree.
-- Page: `src/lib/pages/create-beatvps.svelte`, mock data in `src/lib/data/layerbeat.ts`. Flat by default, `raised` on the summary card, CTA and billing term control.
+- Page: `src/lib/pages/create-beatvps.svelte`, mock data in `src/lib/data/layerbeat.ts`. Flat by default, `elevation="raised"` on the summary card, CTA and billing term control.

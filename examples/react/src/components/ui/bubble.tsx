@@ -3,6 +3,7 @@ import { useRender } from "@base-ui/react/use-render";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
 import * as React from "react";
+import { type Elevation, useElevation } from "@/components/ui/elevation";
 
 function BubbleGroup({ className, ...props }: React.ComponentProps<"div">) {
 	return (
@@ -20,20 +21,20 @@ const bubbleVariants = cva(
 		variants: {
 			variant: {
 				default:
-					"*:data-[slot=bubble-content]:bg-primary *:data-[slot=bubble-content]:text-primary-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:bg-primary/85",
+					"*:data-[slot=bubble-content]:bg-primary *:data-[slot=bubble-content]:text-primary-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:bg-[color-mix(in_srgb,var(--primary)_85%,var(--background))]",
 				secondary:
 					"*:data-[slot=bubble-content]:border-border *:data-[slot=bubble-content]:bg-secondary *:data-[slot=bubble-content]:text-secondary-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:bg-accent",
 				muted:
 					"*:data-[slot=bubble-content]:bg-muted *:data-[slot=bubble-content]:text-muted-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:bg-accent",
 				tinted:
-					"*:data-[slot=bubble-content]:border-brand/25 *:data-[slot=bubble-content]:bg-brand-soft *:data-[slot=bubble-content]:text-foreground",
+					"*:data-[slot=bubble-content]:border-[color-mix(in_srgb,var(--brand)_25%,var(--popover))] *:data-[slot=bubble-content]:bg-brand-soft *:data-[slot=bubble-content]:text-foreground",
 				outline:
 					"*:data-[slot=bubble-content]:border-input *:data-[slot=bubble-content]:bg-transparent [&>[data-slot=bubble-content]:is(button,a):hover]:bg-accent",
 				// Ghost keeps its vertical padding so avatars line up with the first line.
 				ghost:
 					"*:data-[slot=bubble-content]:rounded-none *:data-[slot=bubble-content]:bg-transparent *:data-[slot=bubble-content]:px-0 [&>[data-slot=bubble-content]:is(button,a):hover]:bg-accent",
 				destructive:
-					"*:data-[slot=bubble-content]:border-destructive/30 *:data-[slot=bubble-content]:bg-destructive-soft *:data-[slot=bubble-content]:text-destructive-text",
+					"*:data-[slot=bubble-content]:border-[color-mix(in_srgb,var(--destructive)_30%,var(--popover))] *:data-[slot=bubble-content]:bg-destructive-soft *:data-[slot=bubble-content]:text-destructive-text",
 			},
 		},
 		defaultVariants: {
@@ -105,22 +106,28 @@ const bubbleReactionsVariants = cva(
 	},
 );
 
-// ✦ `raised` on BubbleReactions flows to every BubbleReaction chip.
-const BubbleReactionsContext = React.createContext({ raised: false });
+// ✦ `elevation` on BubbleReactions flows to every BubbleReaction chip.
+const BubbleReactionsContext = React.createContext<{ raised: boolean }>({
+	raised: false,
+});
 
 function BubbleReactions({
 	side = "bottom",
 	align = "end",
-	raised = false,
+	elevation,
 	className,
 	...props
 }: React.ComponentProps<"div"> & {
-	raised?: boolean;
+	/** ✦ depth of the chips: raised +1 / floating +2 bevel every chip (`active` kept). */
+	elevation?: Elevation;
 	align?: "start" | "end";
 	side?: "top" | "bottom";
 }) {
+	const level = useElevation(elevation, "control");
 	return (
-		<BubbleReactionsContext.Provider value={{ raised }}>
+		<BubbleReactionsContext.Provider
+			value={{ raised: level === "raised" || level === "floating" }}
+		>
 			<div
 				data-slot="bubble-reactions"
 				data-align={align}
@@ -141,22 +148,32 @@ const bubbleReactionVariants = cva(
 				true: "border-[color-mix(in_srgb,var(--brand)_45%,var(--popover))] bg-[color-mix(in_srgb,var(--brand)_14%,var(--popover))] text-brand-text",
 				false: "",
 			},
-			// ✦ opt-in one-step 3D look
-			raised: { false: "", true: "border-b-lip shadow-[0_1px_0_var(--lip)]" },
+			// ✦ elevation: the chip bevels (flat is the default)
+			elevation: {
+				flat: "",
+				raised: "border-transparent shadow-btn-raised-neutral",
+			},
 		},
-		defaultVariants: { active: false, raised: false },
+		defaultVariants: { active: false, elevation: "flat" },
 	},
 );
 
 function BubbleReaction({
 	active = false,
-	raised,
+	elevation,
 	className,
 	render,
 	...props
-}: useRender.ComponentProps<"button"> &
-	VariantProps<typeof bubbleReactionVariants>) {
+}: useRender.ComponentProps<"button"> & {
+	active?: boolean;
+	/** ✦ depth of this chip; defaults to the BubbleReactions level. */
+	elevation?: Elevation;
+}) {
 	const context = React.useContext(BubbleReactionsContext);
+	const own =
+		elevation && elevation !== "auto"
+			? elevation === "raised" || elevation === "floating"
+			: undefined;
 	return useRender({
 		defaultTagName: "button",
 		props: mergeProps<"button">(
@@ -164,7 +181,10 @@ function BubbleReaction({
 				type: "button",
 				"aria-pressed": !!active,
 				className: cn(
-					bubbleReactionVariants({ active, raised: raised ?? context.raised }),
+					bubbleReactionVariants({
+						active,
+						elevation: (own ?? context.raised) ? "raised" : "flat",
+					}),
 					"outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
 					className,
 				),

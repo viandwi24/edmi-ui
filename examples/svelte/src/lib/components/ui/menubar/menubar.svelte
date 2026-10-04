@@ -1,16 +1,26 @@
 <script lang="ts">
 	import { Menubar as MenubarPrimitive } from "bits-ui";
 	import { cn } from "#lib/utils.js";
+	import { type Elevation, useElevation } from "#lib/components/ui/elevation/index.js";
 
 	let {
 		ref = $bindable(null),
 		class: className,
-		raised = false,
+		elevation = "auto",
 		...restProps
 	}: MenubarPrimitive.RootProps & {
-		/** ✦ opt-in one-step 3D look for the bar. */
-		raised?: boolean;
+		/** ✦ depth for the bar: flat 0, raised +1 (bevel), floating +2. */
+		elevation?: Elevation;
 	} = $props();
+
+	// ✦ depth (v4): the bar itself rises.
+	const barElevation = {
+		sunken: "",
+		flat: "",
+		raised: "border-transparent shadow-raised",
+		floating: "border-transparent shadow-floating",
+	};
+	const level = useElevation(() => elevation, "control");
 </script>
 
 <MenubarPrimitive.Root
@@ -18,7 +28,7 @@
 	data-slot="menubar"
 	class={cn(
 		"flex items-center gap-0.5 rounded-[10px] border border-border bg-card p-[3px]",
-		raised && "border-b-lip shadow-[0_2px_0_var(--lip)]",
+		barElevation[level.current],
 		className
 	)}
 	{...restProps}

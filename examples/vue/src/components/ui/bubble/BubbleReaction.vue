@@ -2,25 +2,31 @@
 import type { PrimitiveProps } from "reka-ui"
 import type { HTMLAttributes } from "vue"
 import { Primitive } from "reka-ui"
-import { inject } from "vue"
+import { computed, inject } from "vue"
 import { cn } from '@/lib/utils'
+import type { Elevation } from '@/components/ui/elevation'
 import { bubbleReactionVariants } from "."
 
 /** ✦ Edmi addition: a single floating reaction chip. */
 interface Props extends PrimitiveProps {
   active?: boolean
-  /** ✦ overrides the BubbleReactions `raised` */
-  raised?: boolean
+  /** ✦ overrides the BubbleReactions `elevation` for this chip */
+  elevation?: Elevation
   class?: HTMLAttributes["class"]
 }
 
 const props = withDefaults(defineProps<Props>(), {
   active: false,
   as: "button",
-  raised: undefined,
+  elevation: undefined,
 })
 
 const context = inject<{ raised?: boolean } | null>("bubbleReactions", null)
+const raised = computed(() =>
+  props.elevation && props.elevation !== "auto"
+    ? props.elevation === "raised" || props.elevation === "floating"
+    : !!context?.raised,
+)
 </script>
 
 <template>
@@ -31,7 +37,7 @@ const context = inject<{ raised?: boolean } | null>("bubbleReactions", null)
     :aria-pressed="active"
     :as="as"
     :as-child="asChild"
-    :class="cn(bubbleReactionVariants({ active, raised: props.raised ?? context?.raised ?? false }), props.class)"
+    :class="cn(bubbleReactionVariants({ active, elevation: raised ? 'raised' : 'flat' }), props.class)"
   >
     <slot />
   </Primitive>

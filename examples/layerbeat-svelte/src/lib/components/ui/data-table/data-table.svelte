@@ -14,6 +14,7 @@
 	import { createTable, FlexRender } from "@tanstack/svelte-table";
 	import { cn } from "#lib/utils.js";
 	import MagnifyingGlassIcon from 'phosphor-svelte/lib/MagnifyingGlass';
+	import type { Elevation } from "#lib/components/ui/elevation/index.js";
 	import { Input } from "#lib/components/ui/input/index.js";
 	import * as Table from "#lib/components/ui/table/index.js";
 	import DataTableFacetedFilter from "./data-table-faceted-filter.svelte";
@@ -28,7 +29,7 @@
 		filterPlaceholder = "Filter…",
 		facetedFilters,
 		pageSize = 10,
-		raised = false,
+		elevation = "auto",
 		class: className,
 	}: {
 		columns: DataTableColumnDef<TData>[];
@@ -36,15 +37,15 @@
 		/** Column id the toolbar filter input searches. Omit to hide the input. */
 		filterColumn?: string;
 		filterPlaceholder?: string;
-		/** ✦ Faceted filter buttons; columns need `filterFn: "arrIncludesSome"`. */
+		/** ✦ Faceted filter buttons; columns need `filterFn: "arrHas"`. */
 		facetedFilters?: {
 			column: string;
 			title: string;
 			options?: { label: string; value: string }[];
 		}[];
 		pageSize?: number;
-		/** ✦ opt-in one-step 3D look for the table container. */
-		raised?: boolean;
+		/** ✦ depth of the toolbar and pagination controls (the table container stays flat). */
+		elevation?: Elevation;
 		class?: string;
 	} = $props();
 
@@ -72,16 +73,17 @@
 					placeholder={filterPlaceholder}
 					value={(filterInput.getFilterValue() as string) ?? ""}
 					oninput={(event) => filterInput.setFilterValue(event.currentTarget.value)}
+					{elevation}
 					class="h-[34px] pl-8"
 				/>
 			</div>
 		{/if}
 		{#each facetedFilters ?? [] as f (f.column)}
-			<DataTableFacetedFilter column={table.getColumn(f.column)} title={f.title} options={f.options} />
+			<DataTableFacetedFilter column={table.getColumn(f.column)} title={f.title} options={f.options} {elevation} />
 		{/each}
-		<DataTableViewOptions {table} />
+		<DataTableViewOptions {table} {elevation} />
 	</div>
-	<div class={cn("overflow-hidden rounded-xl border border-border bg-card", raised && "border-b-lip shadow-card")}>
+	<div class="overflow-hidden rounded-xl border border-border bg-card">
 		<Table.Root>
 			<Table.Header>
 				{#each table.getHeaderGroups() as headerGroup (headerGroup.id)}
@@ -111,5 +113,5 @@
 			</Table.Body>
 		</Table.Root>
 	</div>
-	<DataTablePagination {table} />
+	<DataTablePagination {table} {elevation} />
 </div>

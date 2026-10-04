@@ -4,12 +4,17 @@
 
 	let {
 		ref = $bindable(null),
+		rank = false,
 		...restProps
-	}: Omit<ComponentProps<typeof TableRow>, "children"> = $props();
+	}: Omit<ComponentProps<typeof TableRow>, "children"> & {
+		/** ✦ Leading empty cell for the `rank` column of IndexRow. */
+		rank?: boolean;
+	} = $props();
 </script>
 
 <!-- Header row matching the IndexRow columns. Place it in `<TableHeader>`. -->
 <TableRow bind:ref {...restProps}>
+	{#if rank}<TableHead class="w-10" />{/if}
 	<TableHead>Index</TableHead>
 	<TableHead>Creator</TableHead>
 	<TableHead class="text-right">Price</TableHead>

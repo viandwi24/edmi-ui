@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { cn, type WithElementRef } from "#lib/utils.js";
 	import type { HTMLAnchorAttributes } from "svelte/elements";
+	import { type Elevation, useElevation } from "#lib/components/ui/elevation/index.js";
 
 	let {
 		ref = $bindable(null),
@@ -11,7 +12,7 @@
 		color = "var(--chart-1)",
 		letter,
 		active,
-		raised = false,
+		elevation = "auto",
 		...restProps
 	}: WithElementRef<Omit<HTMLAnchorAttributes, "children">, HTMLAnchorElement> & {
 		symbol: string;
@@ -22,9 +23,11 @@
 		color?: string;
 		letter?: string;
 		active?: boolean;
-		/** ✦ the active row gets a one-step lip. */
-		raised?: boolean;
+		/** ✦ depth of the active row (raised +1 / floating +2 bevel it). */
+		elevation?: Elevation;
 	} = $props();
+
+	const level = useElevation(() => elevation, "control");
 
 	const down = $derived(/^[-−–]/.test(change.trim()));
 </script>
@@ -37,8 +40,10 @@
 	class={cn(
 		"flex h-10 items-center gap-2.5 rounded-lg px-2.5 text-[13.5px] text-sidebar-foreground outline-none hover:bg-sidebar-accent focus-visible:outline-2 focus-visible:outline-ring",
 		"data-[active]:bg-sidebar-accent data-[active]:font-medium data-[active]:shadow-[inset_0_0_0_1px_var(--sidebar-border)]",
-		raised &&
-			"border border-transparent data-[active]:border-sidebar-border data-[active]:border-b-lip data-[active]:shadow-[0_2px_0_var(--lip)]",
+		level.current === "raised" &&
+			"border border-transparent data-[active]:border-transparent data-[active]:shadow-raised",
+		level.current === "floating" &&
+			"border border-transparent data-[active]:border-transparent data-[active]:shadow-floating",
 		className
 	)}
 	{...restProps}

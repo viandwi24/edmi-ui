@@ -66,15 +66,15 @@ export function MarketsPage() {
 						else’s.
 					</p>
 				</div>
-				<Button raised size="lg">
+				<Button size="lg">
 					Create index
 					<PlusIcon />
 				</Button>
 			</div>
 
-			<TickerStrip raised items={tickers} />
+			<TickerStrip  items={tickers} />
 
-			<Card raised className="gap-4 px-6">
+			<Card className="gap-4 px-6">
 				<CardTop title="Top indexes" action="View all" />
 				<Table>
 					<TableHeader>
@@ -89,7 +89,7 @@ export function MarketsPage() {
 			</Card>
 
 			<div className="grid items-start gap-6 lg:grid-cols-3">
-				<Card raised className="@container gap-4 px-6">
+				<Card className="@container gap-4 px-6">
 					<CardTop title="Human vs AI" />
 					<div className="grid gap-3 @[400px]:grid-cols-2">
 						<Mini {...humanVsAi.human} />
@@ -97,7 +97,7 @@ export function MarketsPage() {
 					</div>
 				</Card>
 
-				<Card raised className="gap-3 px-6">
+				<Card className="gap-3 px-6">
 					<CardTop title="Top creators" action="See all" />
 					<ul>
 						{creators.map((c) => (
@@ -127,7 +127,7 @@ export function MarketsPage() {
 					</ul>
 				</Card>
 
-				<Card raised className="gap-3 px-6">
+				<Card className="gap-3 px-6">
 					<CardTop title="Latest activity" />
 					<ul>
 						{activity.map((a, i) => (

@@ -3,21 +3,25 @@ import type { PaginationRootEmits, PaginationRootProps } from "reka-ui"
 import type { HTMLAttributes } from "vue"
 import { reactiveOmit } from "@vueuse/core"
 import { PaginationRoot, useForwardPropsEmits } from "reka-ui"
-import { provide } from "vue"
+import { computed, provide } from "vue"
 import { cn } from '@/lib/utils'
+import { type Elevation, useElevation } from '@/components/ui/elevation'
 
 const props = withDefaults(defineProps<PaginationRootProps & {
   class?: HTMLAttributes["class"]
-  /** ✦ the active page link gets the one-step 3D look */
-  raised?: boolean
-}>(), { raised: false })
+  /** ✦ depth: raised +1 / floating +2 make the active page link rise */
+  elevation?: Elevation
+}>(), { elevation: undefined })
+
+const level = useElevation(() => props.elevation, "control")
+const raised = computed(() => level.value === "raised" || level.value === "floating")
 
 provide("pagination", {
-  get raised() { return props.raised },
+  get raised() { return raised.value },
 })
 const emits = defineEmits<PaginationRootEmits>()
 
-const delegatedProps = reactiveOmit(props, "class", "raised")
+const delegatedProps = reactiveOmit(props, "class", "elevation")
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
 </script>
 

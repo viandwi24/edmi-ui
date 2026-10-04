@@ -16,7 +16,7 @@
 		"@internationalized/date": "^3.12.4",
 		"@phosphor-icons/vue": "^2.2.1",
 		"@tailwindcss/vite": "^4.3.3",
-		"@tanstack/vue-table": "^9.2.4",
+		"@tanstack/vue-table": "^9.2.5",
 		"@unovis/ts": "^1.7.1",
 		"@unovis/vue": "^1.7.1",
 		"@vueuse/core": "^15.0.0",

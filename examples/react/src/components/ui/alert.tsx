@@ -10,11 +10,14 @@ const alertVariants = cva(
 			variant: {
 				default: "border-border bg-card text-card-foreground",
 				destructive:
-					"border-destructive/40 bg-destructive-soft text-destructive-text",
-				brand: "border-brand/40 bg-brand-soft text-brand-text", // ✦
-				success: "border-success/40 bg-success-soft text-success-text", // ✦
-				warning: "border-warning/40 bg-warning-soft text-warning-text", // ✦
-				info: "border-info/40 bg-info-soft text-info-text", // ✦
+					"border-[color-mix(in_srgb,var(--destructive)_40%,var(--popover))] bg-destructive-soft text-destructive-text",
+				brand:
+					"border-[color-mix(in_srgb,var(--brand)_40%,var(--popover))] bg-brand-soft text-brand-text", // ✦
+				success:
+					"border-[color-mix(in_srgb,var(--success)_40%,var(--popover))] bg-success-soft text-success-text", // ✦
+				warning:
+					"border-[color-mix(in_srgb,var(--warning)_40%,var(--popover))] bg-warning-soft text-warning-text", // ✦
+				info: "border-[color-mix(in_srgb,var(--info)_40%,var(--popover))] bg-info-soft text-info-text", // ✦
 			},
 		},
 		defaultVariants: {

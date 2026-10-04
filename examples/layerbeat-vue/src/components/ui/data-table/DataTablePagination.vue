@@ -1,7 +1,9 @@
 <script setup lang="ts" generic="TData extends RowData">
 import type { RowData, Table } from "@tanstack/vue-table";
 import { PhCaretLeft, PhCaretRight, PhCaretDoubleLeft, PhCaretDoubleRight } from '@phosphor-icons/vue';
+import { computed } from "vue";
 import { Button } from '@/components/ui/button';
+import type { Elevation } from '@/components/ui/elevation';
 import {
     Select,
     SelectContent,
@@ -11,15 +13,23 @@ import {
 } from '@/components/ui/select';
 import type { DataTableFeatures } from "./dataTableFeatures";
 
-withDefaults(
+const props = withDefaults(
     defineProps<{
         table: Table<DataTableFeatures, TData>;
         pageSizes?: number[];
-        /** ✦ raised select trigger and buttons */
-        raised?: boolean;
+        /** ✦ depth of the toolbar and pagination controls (the table container stays flat). */
+        elevation?: Elevation;
     }>(),
-    { pageSizes: () => [10, 20, 30, 40, 50], raised: false },
+    { pageSizes: () => [10, 20, 30, 40, 50] },
 );
+
+// The current size (e.g. `DataTable :page-size="5"`) must be an option, or the trigger renders blank.
+const sizes = computed(() => {
+    const current = props.table.atoms.pagination.get().pageSize;
+    return props.pageSizes.includes(current)
+        ? props.pageSizes
+        : [...props.pageSizes, current].sort((a, b) => a - b);
+});
 </script>
 
 <template>
@@ -35,11 +45,11 @@ withDefaults(
 					:model-value="`${table.atoms.pagination.get().pageSize}`"
 					@update:model-value="(value) => table.setPageSize(Number(value))"
 				>
-					<SelectTrigger size="sm" :raised="raised" class="w-[72px]">
+					<SelectTrigger size="sm" :elevation="elevation" class="w-[72px]">
 						<SelectValue />
 					</SelectTrigger>
 					<SelectContent side="top">
-						<SelectItem v-for="size in pageSizes" :key="size" :value="`${size}`">
+						<SelectItem v-for="size in sizes" :key="size" :value="`${size}`">
 							{{ size }}
 						</SelectItem>
 					</SelectContent>
@@ -53,7 +63,7 @@ withDefaults(
 				<Button
 					variant="outline"
 					size="icon-sm"
-					:raised="raised"
+					:elevation="elevation"
 					class="hidden lg:inline-flex"
 					:disabled="!table.getCanPreviousPage()"
 					@click="table.setPageIndex(0)"
@@ -64,7 +74,7 @@ withDefaults(
 				<Button
 					variant="outline"
 					size="icon-sm"
-					:raised="raised"
+					:elevation="elevation"
 					:disabled="!table.getCanPreviousPage()"
 					@click="table.previousPage()"
 				>
@@ -74,7 +84,7 @@ withDefaults(
 				<Button
 					variant="outline"
 					size="icon-sm"
-					:raised="raised"
+					:elevation="elevation"
 					:disabled="!table.getCanNextPage()"
 					@click="table.nextPage()"
 				>
@@ -84,7 +94,7 @@ withDefaults(
 				<Button
 					variant="outline"
 					size="icon-sm"
-					:raised="raised"
+					:elevation="elevation"
 					class="hidden lg:inline-flex"
 					:disabled="!table.getCanNextPage()"
 					@click="table.setPageIndex(table.getPageCount() - 1)"

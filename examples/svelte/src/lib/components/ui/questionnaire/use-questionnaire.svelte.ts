@@ -1,4 +1,5 @@
 import { getContext, setContext } from "svelte";
+import type { Elevation } from "#lib/components/ui/elevation/index.js";
 
 export type QuestionnaireItemStatus = "unanswered" | "answered" | "skipped";
 export type QuestionnaireShortcutMode = "letters" | "numbers";
@@ -78,8 +79,8 @@ export interface QuestionnaireRootContext {
 	> | null;
 	readonly last: boolean;
 	readonly nativeValidation: boolean;
-	/** ✦ one-step 3D look for every option. */
-	readonly raised: boolean;
+	/** ✦ depth of every option and input (undefined = auto). */
+	readonly elevation: Elevation | undefined;
 	readonly shortcuts: QuestionnaireShortcutMode | null;
 	readonly total: number;
 	goNext: () => void;

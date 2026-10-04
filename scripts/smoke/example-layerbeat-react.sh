@@ -44,7 +44,7 @@ echo "== theme-slate-ocean (after @edmi-ui/theme)"
 grep -q "oklch(0.569 0.237 260.4)" "$APP/src/index.css" || { echo "theme-slate-ocean was not applied"; exit 1; }
 
 test -f "$APP/src/components/ui/button.tsx"
-grep -q "shadow-btn-primary" "$APP/src/components/ui/button.tsx" || { echo "button.tsx is not the Edmi version"; exit 1; }
+grep -q "shadow-btn-raised-primary" "$APP/src/components/ui/button.tsx" || { echo "button.tsx is not the Edmi version"; exit 1; }
 grep -q "from ['\"]@phosphor-icons/react['\"]" "$APP/src/components/ui/sidebar.tsx" || { echo "icons were not rewritten to phosphor"; exit 1; }
 
 echo "== typecheck + build"

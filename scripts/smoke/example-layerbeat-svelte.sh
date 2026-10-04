@@ -47,7 +47,7 @@ grep -q "oklch(0.569 0.237 260.4)" "$APP/src/routes/layout.css" || { echo "slate
 
 U="$APP/src/lib/components/ui"
 test -f "$U/button/button.svelte"
-grep -q "shadow-btn-primary" "$U/button/button.svelte" || { echo "button.svelte is not the Edmi version"; exit 1; }
+grep -q "shadow-btn-raised-primary" "$U/button/button.svelte" || { echo "button.svelte is not the Edmi version"; exit 1; }
 grep -q "phosphor-svelte/lib/" "$U/sidebar/sidebar-trigger.svelte" || { echo "icons were not rewritten to phosphor"; exit 1; }
 
 echo "== svelte-check + build"

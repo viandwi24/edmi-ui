@@ -2,11 +2,16 @@
 	import type { Snippet } from "svelte";
 
 	export type JoinPanelRow = { label: string; value: string | number };
+	/** ✦ Quick-amount chip: sets the amount to `value`; without `value` it calls `onMax`. */
+	export type JoinPanelQuickAmount = { label: string; value?: string };
+	/** ✦ Mode tab, e.g. Join / Redeem. */
+	export type JoinPanelTab = { value: string; label: string };
 </script>
 
 <script lang="ts">
 	import { Button } from "#lib/components/ui/button/index.js";
 	import { Card } from "#lib/components/ui/card/index.js";
+	import type { Elevation } from "#lib/components/ui/elevation/index.js";
 	import {
 		InputGroup,
 		InputGroupAddon,
@@ -14,6 +19,7 @@
 		InputGroupInput,
 		InputGroupText,
 	} from "#lib/components/ui/input-group/index.js";
+	import { Tabs, TabsList, TabsTrigger } from "#lib/components/ui/tabs/index.js";
 	import { cn } from "#lib/utils.js";
 	import type { ComponentProps } from "svelte";
 
@@ -26,10 +32,17 @@
 		onAmountChange,
 		onMax,
 		rows = [],
+		tabs,
+		tab = $bindable(),
+		onTabChange,
+		quickAmounts,
+		footnote,
+		amountSize = "default",
+		maxLabel,
 		joinLabel = "Join",
 		onJoin,
 		disabled,
-		raised = false,
+		elevation = "auto",
 		...restProps
 	}: Omit<ComponentProps<typeof Card>, "children" | "size"> & {
 		label?: string;
@@ -40,37 +53,102 @@
 		onMax?: () => void;
 		/** Summary rows (estimated shares, fee, …). Values render mono. */
 		rows?: JoinPanelRow[];
+		/** ✦ Join / Redeem style mode tabs above the amount (the IndexDetail board). */
+		tabs?: JoinPanelTab[];
+		/** ✦ Two-way bindable tab value (`bind:tab`); defaults to the first tab. */
+		tab?: string;
+		onTabChange?: (value: string) => void;
+		/** ✦ Chips under the amount field, e.g. `[{ label: "$10", value: "10" }, { label: "Max" }]`. */
+		quickAmounts?: JoinPanelQuickAmount[];
+		/** ✦ Small centred note under the action. */
+		footnote?: string | Snippet;
+		/** ✦ `lg`: taller field with a 26px mono amount (the IndexDetail board). */
+		amountSize?: "default" | "lg";
+		/** ✦ Plain muted text in the field (e.g. `Max 1,240`) instead of the Max button and currency. */
+		maxLabel?: string;
 		joinLabel?: string | Snippet;
 		onJoin?: () => void;
 		disabled?: boolean;
-		/** ✦ opt-in one-step 3D look; forwarded to the Card and the Join button. */
-		raised?: boolean;
+		/** ✦ depth of the card; raised +1 / floating +2 also raise the tabs, chips and Join button. */
+		elevation?: Elevation;
 	} = $props();
 
+	// Controls follow an explicit card level (flat/sunken keep them flat); auto leaves them to their own role.
+	const control = $derived<Elevation>(
+		elevation !== "auto" ? (elevation === "raised" || elevation === "floating" ? "raised" : "flat") : "auto"
+	);
+
 	const id = $props.id();
+
 </script>
 
 <!-- Amount field (mono, Max button, currency) + summary rows + one big action. -->
-<Card bind:ref data-slot="join-panel" size="sm" {raised} class={cn("w-80 gap-0", className)} {...restProps}>
+<Card bind:ref data-slot="join-panel" size="sm" {elevation} class={cn("w-80 gap-0", className)} {...restProps}>
+	{#if tabs?.length}
+		<div class="mb-5 px-(--card-spacing)">
+			<Tabs
+				value={tab ?? tabs[0].value}
+				onValueChange={(v) => {
+					tab = v;
+					onTabChange?.(v);
+				}}
+			>
+				<TabsList elevation={control} class="w-full">
+					{#each tabs as t (t.value)}
+						<TabsTrigger value={t.value}>{t.label}</TabsTrigger>
+					{/each}
+				</TabsList>
+			</Tabs>
+		</div>
+	{/if}
 	<label for={id} class="px-(--card-spacing) text-xs text-muted-foreground">
 		{label} ({currency})
 	</label>
 	<div class="px-(--card-spacing)">
-		<InputGroup class="mt-2 h-11">
+		<InputGroup class={cn("mt-2", amountSize === "lg" ? "h-14" : "h-11")}>
 			<InputGroupInput
 				{id}
 				inputmode="decimal"
 				autocomplete="off"
 				bind:value={amount}
-				oninput={() => onAmountChange?.(amount)}
-				class="font-mono text-[17px]"
+				oninput={() => {
+					// Digits, thousands separators and a decimal point only.
+					amount = amount.replace(/[^\d.,]/g, "");
+					onAmountChange?.(amount);
+				}}
+				class={cn("font-mono", amountSize === "lg" ? "text-[26px]" : "text-[17px]")}
 			/>
 			<InputGroupAddon align="inline-end">
-				<InputGroupButton variant="secondary" onclick={onMax}>Max</InputGroupButton>
-				<InputGroupText class="bg-transparent px-1.5 text-xs">{currency}</InputGroupText>
+				{#if maxLabel}
+					<InputGroupText class="bg-transparent text-xs">{maxLabel}</InputGroupText>
+				{:else}
+					<InputGroupButton variant="secondary" onclick={onMax}>Max</InputGroupButton>
+					<InputGroupText class="bg-transparent px-1.5 text-xs">{currency}</InputGroupText>
+				{/if}
 			</InputGroupAddon>
 		</InputGroup>
 	</div>
+	{#if quickAmounts?.length}
+		<div class="mt-3 flex gap-2 px-(--card-spacing)">
+			{#each quickAmounts as q, i (i)}
+				<Button
+					type="button"
+					variant="secondary"
+					size="sm"
+					elevation={control}
+					class="flex-1 font-mono"
+					onclick={() => {
+						if (q.value !== undefined) {
+							amount = q.value;
+							onAmountChange?.(q.value);
+						} else onMax?.();
+					}}
+				>
+					{q.label}
+				</Button>
+			{/each}
+		</div>
+	{/if}
 	{#each rows as r, i (i)}
 		<div class={cn("flex items-center justify-between px-(--card-spacing) text-[13px]", i === 0 ? "mt-3" : "mt-1.5")}>
 			<span class="text-muted-foreground">{r.label}</span>
@@ -78,8 +156,13 @@
 		</div>
 	{/each}
 	<div class="mt-3.5 px-(--card-spacing)">
-		<Button size="lg" {raised} class="w-full" onclick={onJoin} {disabled}>
+		<Button size="lg" elevation={control} class="w-full" onclick={onJoin} {disabled}>
 			{#if typeof joinLabel === "function"}{@render joinLabel()}{:else}{joinLabel}{/if}
 		</Button>
 	</div>
+	{#if footnote}
+		<div class="mt-3 px-(--card-spacing) text-center text-xs text-muted-foreground-2">
+			{#if typeof footnote === "function"}{@render footnote()}{:else}{footnote}{/if}
+		</div>
+	{/if}
 </Card>

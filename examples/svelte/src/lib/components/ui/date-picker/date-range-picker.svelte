@@ -17,6 +17,7 @@
 	import CalendarBlankIcon from 'phosphor-svelte/lib/CalendarBlank';
 	import { cn } from "#lib/utils.js";
 	import { Button } from "#lib/components/ui/button/index.js";
+	import type { Elevation } from "#lib/components/ui/elevation/index.js";
 	import { RangeCalendar } from "#lib/components/ui/calendar/index.js";
 	import * as Popover from "#lib/components/ui/popover/index.js";
 
@@ -27,7 +28,7 @@
 		locale = "en-US",
 		disabled = false,
 		presets,
-		raised = false,
+		elevation = "auto",
 		class: className,
 	}: {
 		value?: DateRange;
@@ -36,8 +37,8 @@
 		disabled?: boolean;
 		/** ✦ `true` for the default presets, or your own list. */
 		presets?: boolean | DateRangePickerPreset[];
-		/** ✦ opt-in one-step 3D look; forwarded to the trigger button and the calendar. */
-		raised?: boolean;
+		/** ✦ depth; forwarded to the trigger button and the calendar. */
+		elevation?: Elevation;
 		class?: string;
 	} = $props();
 
@@ -73,7 +74,7 @@
 		{#snippet child({ props })}
 			<Button
 				variant="outline"
-				{raised}
+				{elevation}
 				{disabled}
 				data-empty={!value?.start}
 				class={cn(
@@ -102,6 +103,6 @@
 				{/each}
 			</div>
 		{/if}
-		<RangeCalendar bind:value numberOfMonths={1} captionLayout="dropdown" {locale} {raised} />
+		<RangeCalendar bind:value numberOfMonths={1} captionLayout="dropdown" {locale} {elevation} />
 	</Popover.Content>
 </Popover.Root>

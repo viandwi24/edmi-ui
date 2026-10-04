@@ -6,22 +6,30 @@ import { computed } from 'vue'
 import { Toaster as Sonner } from 'vue-sonner'
 import 'vue-sonner/style.css'
 import { cn } from '@/lib/utils'
+import { type Elevation, useElevation } from '@/components/ui/elevation'
 
-const props = withDefaults(defineProps<ToasterProps & { raised?: boolean }>(), { raised: false })
+const props = withDefaults(defineProps<ToasterProps & { elevation?: Elevation }>(), { elevation: undefined })
 
-// `raised` ✦ adds the one-step lip to every toast (flat by default).
-const delegatedProps = reactiveOmit(props, 'raised')
+// ✦ depth (v4): floating is the natural level of a toast (overlay role in layered mode).
+const toastElevation = {
+  sunken: 'shadow-none!',
+  flat: 'shadow-none!',
+  raised: 'border-transparent! shadow-raised!',
+  floating: 'border-transparent! shadow-floating!',
+}
+const level = useElevation(() => props.elevation, 'overlay')
+const delegatedProps = reactiveOmit(props, 'elevation')
 
 // Soft fill + tinted 40% border per type (DESIGN 4.12); default stays a solid popover chip.
 // vue-sonner's own selectors are more specific than utilities, hence the important modifier.
 const toastClasses = computed(() => ({
-  toast: cn('cn-toast shadow-none! text-[13.5px] font-sans', props.raised && 'border-b-lip! shadow-[0_3px_0_var(--lip)]!'),
+  toast: cn('cn-toast text-[13.5px] font-sans', toastElevation[level.value]),
   title: 'font-medium',
   description: 'text-muted-foreground!',
-  success: 'bg-success-soft! border-success/40!',
-  info: 'bg-info-soft! border-info/40!',
-  warning: 'bg-warning-soft! border-warning/40!',
-  error: 'bg-destructive-soft! border-destructive/40!',
+  success: 'bg-success-soft! border-[color-mix(in_srgb,var(--success)_40%,var(--popover))]!',
+  info: 'bg-info-soft! border-[color-mix(in_srgb,var(--info)_40%,var(--popover))]!',
+  warning: 'bg-warning-soft! border-[color-mix(in_srgb,var(--warning)_40%,var(--popover))]!',
+  error: 'bg-destructive-soft! border-[color-mix(in_srgb,var(--destructive)_40%,var(--popover))]!',
 }))
 </script>
 

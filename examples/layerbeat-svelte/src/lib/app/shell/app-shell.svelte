@@ -15,4 +15,4 @@
 		<div class="flex-1">{@render children()}</div>
 	</Sidebar.Inset>
 </Sidebar.Provider>
-<Toaster raised />
+<Toaster elevation="raised" />

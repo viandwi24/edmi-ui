@@ -57,7 +57,7 @@ function Row({ label, value }: { label: string; value: string }) {
 	);
 }
 
-// Sticky raised summary: the only raised surface besides the CTA and the billing segmented control.
+// Sticky summary (elevation raised): the only raised surface besides the CTA and the billing segmented control.
 export function SummaryCard({
 	category,
 	location,
@@ -76,7 +76,7 @@ export function SummaryCard({
 	total: number;
 }) {
 	return (
-		<Card raised className="gap-0 p-0">
+		<Card elevation="raised" className="gap-0 p-0">
 			<div className="relative overflow-hidden border-b border-border-2 bg-[linear-gradient(160deg,var(--brand-soft),var(--card)_75%)] px-5 pt-5 pb-[18px]">
 				<span className="absolute -right-[26px] -bottom-[30px] size-[110px] rounded-full bg-[color-mix(in_srgb,var(--chart-2)_35%,transparent)]" />
 				<span className="absolute right-[30px] -bottom-10 h-[90px] w-[70px] rounded-[40px] bg-[color-mix(in_srgb,var(--chart-1)_30%,transparent)]" />
@@ -135,7 +135,7 @@ export function SummaryCard({
 					Review your configuration before purchasing. Credit is used only when
 					you confirm.
 				</p>
-				<Button raised size="lg" className="w-full">
+				<Button elevation="raised" size="lg" className="w-full">
 					Purchase server
 				</Button>
 				<Button variant="ghost" className="-mt-1.5 w-full">

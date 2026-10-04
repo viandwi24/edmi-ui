@@ -44,7 +44,7 @@ EXAMPLE_DIR="$APP" EDMI_URL="http://localhost:$PORT" bash "$ROOT/examples/instal
 grep -q "oklch(0.569 0.237 260.4)" "$APP/src/style.css" || { echo "theme-slate-ocean was not applied"; exit 1; }
 
 test -f "$APP/src/components/ui/button/Button.vue" || test -f "$APP/src/components/ui/button/index.ts" || { echo "button was not installed"; exit 1; }
-grep -q "shadow-btn-primary" "$APP/src/components/ui/button/index.ts" || { echo "button is not the Edmi version"; exit 1; }
+grep -q "shadow-btn-raised-primary" "$APP/src/components/ui/button/index.ts" || { echo "button is not the Edmi version"; exit 1; }
 grep -q "@phosphor-icons/vue" "$APP/src/components/ui/sidebar/SidebarTrigger.vue" || { echo "icons were not rewritten to phosphor"; exit 1; }
 if grep -rq "@/registry/edmi" "$APP/src/components" "$APP/src/lib"; then echo "unrewritten @/registry/edmi import left in the project"; exit 1; fi
 
