@@ -1,4 +1,3 @@
-// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 import type { SourceDocumentUIPart } from "ai";
 import { nanoid } from "nanoid";
 import { getContext, setContext } from "svelte";

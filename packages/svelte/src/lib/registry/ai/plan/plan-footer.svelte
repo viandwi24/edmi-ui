@@ -1,4 +1,3 @@
-<!-- Derived from Svelte AI Elements (MIT), modified for Edmi UI. -->
 <script lang="ts">
 	import { cn } from "$lib/utils.js";
 	import { CardFooter } from "$lib/registry/ui/card/index.js";

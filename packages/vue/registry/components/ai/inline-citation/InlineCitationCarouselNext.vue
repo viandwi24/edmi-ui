@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
 import type { HTMLAttributes } from "vue"
 import { ChevronRightIcon } from "@lucide/vue"
 import { Button } from "@/registry/edmi/ui/button"

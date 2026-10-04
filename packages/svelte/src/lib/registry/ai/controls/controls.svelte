@@ -1,5 +1,4 @@
 <script lang="ts">
-	// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 	import { Controls as ControlsPrimitive, type ControlsProps } from "@xyflow/svelte";
 	import { cn } from "$lib/utils.js";
 

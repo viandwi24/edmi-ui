@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
 import type { ToolUIPart } from "ai"
 import type { BadgeVariants } from "@/registry/edmi/ui/badge"
 import { CircleCheckIcon, ClockIcon } from "@lucide/vue"

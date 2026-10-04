@@ -1,5 +1,4 @@
 <script lang="ts">
-	// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 	import IconPlaceholder from "$lib/components/icon-placeholder/icon-placeholder.svelte";
 	import { Button, type ButtonProps } from "$lib/registry/ui/button/index.js";
 	import { onDestroy } from "svelte";

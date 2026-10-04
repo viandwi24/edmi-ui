@@ -1,4 +1,3 @@
-// Derived from Svelte AI Elements (MIT), modified for Edmi UI.
 import { getContext, setContext } from "svelte";
 
 export type OpenInContext = { readonly query: string };

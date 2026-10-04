@@ -1,5 +1,4 @@
 <script lang="ts">
-	// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 	import { Panel as PanelPrimitive, type PanelProps } from "@xyflow/svelte";
 	import { cn } from "$lib/utils.js";
 

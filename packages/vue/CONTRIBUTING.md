@@ -41,7 +41,7 @@ export const entries: Record<string, FrameworkEntry> = {
 ## Edmi AI pack (`ai-*` items)
 Full rules: AGENTS.md section 7b. Short version for Vue:
 - Source `registry/components/ai/<name>/<Part>.vue` + `index.ts` (installs to `components/ai/<name>/`); imports `@/registry/edmi/components/ai/<x>` (AI) and `@/registry/edmi/ui/<x>` (ui); `cn` from `@/registry/edmi/lib/utils`. Item helper: `aiVue(name, ["Message.vue", ...], deps)` in `registry.manifest/ai-<cat>.vue.ts`; remove the item from `vue` in `scripts/ai-pending.json`; never name a dir `ui*`/`lib*`.
-- Stock source: `bun run scripts/ai-fetch-stock.ts`, `.ai-src/vue/<name>.json` (ai-elements-vue, Apache-2.0; no `jsx-preview`, port it from React or write a runtime template renderer) and the React source for anatomy/props. Header `// Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.` (or the Vercel one when ported from React).
+- Stock source: `bun run scripts/ai-fetch-stock.ts`, `.ai-src/vue/<name>.json` (ai-elements-vue, Apache-2.0; no `jsx-preview`, port it from React or write a runtime template renderer) and the React source for anatomy/props.
 - Icons `@lucide/vue` and only names that are keys of the shadcn-vue icon index (`scripts/smoke/vue-icons.ts` checks); controllable state via `useVModel` (`@vueuse/core`); markdown `vue-stream-markdown`; flow `@vue-flow/*`; motion `motion-v`; Rive `@rive-app/webgl2`; ANSI `ansi-to-vue3`.
 - Real booleans for `raised`, `withDefaults(..., { raised: undefined })` where it inherits, `data-[state=...]` selectors (Reka), as in the ui items.
 - Preview `src/preview/ai-<cat>.vue`; smoke `bash scripts/smoke/vue.sh` installs `ai-all` as soon as it has items.

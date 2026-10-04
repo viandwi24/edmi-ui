@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
 import type { LanguageModelUsage } from "ai"
 import type { HoverCardRootProps } from "reka-ui"
 import type { ModelId } from "./context"

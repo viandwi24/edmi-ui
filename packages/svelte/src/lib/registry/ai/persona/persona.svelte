@@ -1,5 +1,4 @@
 <script lang="ts">
-	// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 	import { cn } from "$lib/utils.js";
 	import type { EventCallback, Rive } from "@rive-app/webgl2";
 	import { onMount } from "svelte";

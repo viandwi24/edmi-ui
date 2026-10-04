@@ -1,4 +1,3 @@
-// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 import { getContext, setContext } from "svelte";
 
 /** Getter object so consumers stay reactive when the props change. */

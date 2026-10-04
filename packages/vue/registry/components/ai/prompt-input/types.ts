@@ -1,4 +1,3 @@
-// Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
 import type { FileUIPart, SourceDocumentUIPart } from "ai";
 import type { InjectionKey, Ref } from "vue";
 

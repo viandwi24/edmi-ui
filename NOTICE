@@ -2,9 +2,9 @@ Edmi UI
 Copyright (c) the Edmi UI authors.
 
 This repository's "Edmi AI" pack (registry items named `ai-*`, sources under `components/ai/`) is
-derived from the following third-party works. Each derived source file starts with a header comment
-naming its origin, and states that it was modified for Edmi UI (restyled with Edmi tokens and
-recipes, ported to Base UI / Reka UI / Bits UI, icons via IconPlaceholder, local state hooks).
+derived from the following third-party works. Every derived source file was modified for Edmi UI
+(restyled with Edmi tokens and recipes, ported to Base UI / Reka UI / Bits UI, icons via
+IconPlaceholder, local state hooks).
 
 1. AI Elements (React)
    Copyright 2023 Vercel, Inc.
@@ -34,9 +34,3 @@ Modifications (Apache-2.0 section 4(b)): files derived from the works above were
 authors; the changes are visible in this repository's history. Edmi additions (artifact card/stack/viewer,
 session panel, agent avatar, prompt input agent, chat composer, chat header, Suggestion card and chip
 variants, Conversation home state, response typography) are original work and are not derived.
-
-Per-file header convention (first lines of every derived file):
-  React/Vue/Svelte script:  // Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
-  Vue template files:       <!-- Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI. -->
-  Svelte markup files:      <!-- Derived from Svelte AI Elements (MIT), modified for Edmi UI. -->
-See AGENTS.md "AI pack" for which header to use.

@@ -1,4 +1,3 @@
-// Derived from Svelte AI Elements (MIT), modified for Edmi UI.
 import type { Component } from "svelte";
 import ChatGPTIcon from "./icons/chatgpt.svelte";
 import ClaudeIcon from "./icons/claude.svelte";

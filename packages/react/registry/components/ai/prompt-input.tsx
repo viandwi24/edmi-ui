@@ -1,7 +1,5 @@
 "use client";
 
-// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
-
 import type { ChatStatus, FileUIPart, SourceDocumentUIPart } from "ai";
 import { cn } from "cn";
 import { nanoid } from "nanoid";

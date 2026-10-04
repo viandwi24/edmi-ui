@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
 import type { HTMLAttributes } from "vue"
 import Ansi from "ansi-to-vue3"
 import { nextTick, ref, watch } from "vue"

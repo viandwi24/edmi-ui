@@ -1,4 +1,3 @@
-<!-- Derived from Svelte AI Elements (MIT), modified for Edmi UI. -->
 <script lang="ts">
 	import type { Experimental_GeneratedImage } from "ai";
 	import type { HTMLImgAttributes } from "svelte/elements";

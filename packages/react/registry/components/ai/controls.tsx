@@ -1,6 +1,5 @@
 "use client";
 
-// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 import { Controls as ControlsPrimitive } from "@xyflow/react";
 import { cn } from "cn";
 import type { ComponentProps } from "react";

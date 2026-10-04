@@ -1,5 +1,4 @@
 <script lang="ts">
-	// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 	import { useConnection } from "@xyflow/svelte";
 
 	/** Line drawn while dragging from a handle: ring-colored bezier with an end dot. */

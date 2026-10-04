@@ -1,4 +1,3 @@
-// Derived from Svelte AI Elements (MIT), modified for Edmi UI.
 export interface QueueMessagePart {
 	type: string;
 	text?: string;

@@ -1,6 +1,5 @@
 "use client";
 
-// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 import { cn } from "cn";
 import type { ComponentProps } from "react";
 import { IconPlaceholder } from "@/edmi/icon-placeholder";

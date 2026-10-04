@@ -1,4 +1,3 @@
-// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 import type { ConnectionLineComponent } from "@xyflow/react";
 
 const HALF = 0.5;

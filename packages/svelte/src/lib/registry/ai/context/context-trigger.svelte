@@ -1,5 +1,4 @@
 <script lang="ts">
-	// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 	import { Button, type ButtonProps } from "$lib/registry/ui/button/index.js";
 	import { HoverCardTrigger } from "$lib/registry/ui/hover-card/index.js";
 	import { cn } from "$lib/utils.js";

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
 import type { HTMLAttributes } from "vue"
 import type { PromptInputError, PromptInputMessage } from "./types"
 import { getCurrentInstance, inject, onBeforeUnmount, onMounted, watchEffect } from "vue"

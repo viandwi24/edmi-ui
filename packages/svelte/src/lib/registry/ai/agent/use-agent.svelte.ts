@@ -1,4 +1,3 @@
-// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 import { getContext, setContext } from "svelte";
 
 /** AgentTools counts its AgentTool children through this context ("Tools · 3"). */

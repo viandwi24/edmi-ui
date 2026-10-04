@@ -1,4 +1,3 @@
-<!-- Derived from Svelte AI Elements (MIT), modified for Edmi UI. -->
 <script lang="ts">
 	import IconPlaceholder from "$lib/components/icon-placeholder/icon-placeholder.svelte";
 	import { Button, type ButtonProps } from "$lib/registry/ui/button/index.js";

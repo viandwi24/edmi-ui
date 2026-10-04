@@ -1,7 +1,6 @@
 "use client";
 
 import type { LanguageModelUsage } from "ai";
-// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 import { cn } from "cn";
 import type { ComponentProps } from "react";
 import { createContext, useContext, useMemo } from "react";

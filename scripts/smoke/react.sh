@@ -55,7 +55,6 @@ check_ai() {
 	! grep -rq "@/registry/" "$dir/src/components/ai" "$dir/src/hooks/ai" || { echo "unrewritten @/registry imports in the AI files"; exit 1; }
 	grep -q "@/components/ui/button" "$dir/src/components/ai/conversation.tsx" || { echo "ai imports are not rewritten to @/components/ui"; exit 1; }
 	! grep -rq "IconPlaceholder\|icon-placeholder" "$dir/src/components/ai" || { echo "AI files still have IconPlaceholder"; exit 1; }
-	grep -q "Derived from Vercel AI Elements (Apache-2.0)" "$dir/src/components/ai/message.tsx" || { echo "attribution header missing"; exit 1; }
 	test ! -f "$dir/src/components/ui/ai-message.tsx" || { echo "ai item leaked into components/ui"; exit 1; }
 }
 

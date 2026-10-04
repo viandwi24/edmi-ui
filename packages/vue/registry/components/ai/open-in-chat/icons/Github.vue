@@ -1,4 +1,3 @@
-<!-- Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI. -->
 <template>
   <svg fill="currentColor" role="img" viewBox="0 0 24 24">
     <title>GitHub</title>

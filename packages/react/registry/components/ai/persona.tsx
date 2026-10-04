@@ -8,7 +8,6 @@ import {
 	useViewModelInstance,
 	useViewModelInstanceColor,
 } from "@rive-app/react-webgl2";
-// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 import { cn } from "cn";
 import type { FC, ReactNode } from "react";
 import { memo, useEffect, useMemo, useRef, useState } from "react";

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
 import type { Component, CSSProperties, HTMLAttributes } from "vue"
 import { motion } from "motion-v"
 import { computed, useSlots } from "vue"

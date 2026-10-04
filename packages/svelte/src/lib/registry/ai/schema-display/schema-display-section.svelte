@@ -1,5 +1,4 @@
 <script lang="ts">
-	// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 	// Shared collapsible section (title + body) behind Parameters, Request and Response.
 	import IconPlaceholder from "$lib/components/icon-placeholder/icon-placeholder.svelte";
 	import * as Collapsible from "$lib/registry/ui/collapsible/index.js";

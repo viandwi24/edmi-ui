@@ -1,4 +1,3 @@
-// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 import type { FileUIPart, SourceDocumentUIPart } from "ai";
 
 export interface PromptInputMessage {

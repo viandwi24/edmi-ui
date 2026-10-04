@@ -1,4 +1,3 @@
-<!-- Derived from Svelte AI Elements (MIT), modified for Edmi UI. -->
 <script lang="ts">
 	import { HoverCard } from "$lib/registry/ui/hover-card/index.js";
 	import type { ComponentProps } from "svelte";

@@ -1,5 +1,3 @@
-// Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
-
 import type { ParsedStackTrace, StackFrame } from "./context";
 
 export const STACK_FRAME_WITH_PARENS_REGEX =

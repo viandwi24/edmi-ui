@@ -1,4 +1,3 @@
-// Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
 export interface QueueMessagePart {
 	type: string;
 	text?: string;

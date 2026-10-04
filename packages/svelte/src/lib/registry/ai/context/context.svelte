@@ -1,5 +1,4 @@
 <script lang="ts">
-	// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 	import { HoverCard } from "$lib/registry/ui/hover-card/index.js";
 	import type { LanguageModelUsage } from "ai";
 	import type { ComponentProps } from "svelte";

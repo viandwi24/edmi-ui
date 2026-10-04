@@ -1,4 +1,3 @@
-<!-- Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI. -->
 <template>
   <svg
     fill="currentColor"

@@ -1,4 +1,3 @@
-// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 import { onMount } from "svelte";
 
 /** Enumerates the audio inputs; `loadDevices` asks for microphone permission so the labels are filled in. */

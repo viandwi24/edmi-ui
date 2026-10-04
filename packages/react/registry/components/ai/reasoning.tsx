@@ -1,6 +1,5 @@
 "use client";
 
-// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 import { cjk } from "@streamdown/cjk";
 import { code } from "@streamdown/code";
 import { math } from "@streamdown/math";

@@ -1,4 +1,3 @@
-<!-- Derived from Svelte AI Elements (MIT), modified for Edmi UI. -->
 <script lang="ts">
 	import { ScrollArea } from "$lib/registry/ui/scroll-area/index.js";
 	import { cn } from "$lib/utils.js";

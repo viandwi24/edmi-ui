@@ -1,5 +1,4 @@
 <script lang="ts">
-	// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 	import { Command } from "$lib/registry/ui/command/index.js";
 	import { PopoverContent } from "$lib/registry/ui/popover/index.js";
 	import { cn } from "$lib/utils.js";

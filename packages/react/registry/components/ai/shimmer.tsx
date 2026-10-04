@@ -1,7 +1,6 @@
 "use client";
 
 import { cn } from "cn";
-// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 import type { MotionProps } from "motion/react";
 import { motion } from "motion/react";
 import type { CSSProperties, ElementType, JSX } from "react";

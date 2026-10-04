@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
 import type { HTMLAttributes, VNode } from "vue"
 import { AlertCircleIcon, CircleCheckIcon, CircleIcon, Loader2Icon } from "@lucide/vue"
 import { Text, h, useSlots } from "vue"

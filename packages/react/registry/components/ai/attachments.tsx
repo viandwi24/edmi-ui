@@ -1,6 +1,5 @@
 "use client";
 
-// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 import type { FileUIPart, SourceDocumentUIPart } from "ai";
 import { cn } from "cn";
 import type { ComponentProps, HTMLAttributes, ReactNode } from "react";

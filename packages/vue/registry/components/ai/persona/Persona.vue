@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
 import type { EventCallback, Rive } from "@rive-app/webgl2"
 import type { HTMLAttributes } from "vue"
 import type { PersonaState, PersonaVariant } from "./sources"

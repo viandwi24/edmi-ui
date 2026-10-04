@@ -1,5 +1,4 @@
 <script lang="ts">
-	// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 	import { Accordion } from "$lib/registry/ui/accordion/index.js";
 	import { cn } from "$lib/utils.js";
 	import { type ComponentProps, untrack } from "svelte";

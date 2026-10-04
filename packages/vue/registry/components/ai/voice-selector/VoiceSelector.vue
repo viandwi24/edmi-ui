@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
 import { useVModel } from "@vueuse/core"
 import { computed, provide } from "vue"
 import { Dialog } from "@/registry/edmi/ui/dialog"

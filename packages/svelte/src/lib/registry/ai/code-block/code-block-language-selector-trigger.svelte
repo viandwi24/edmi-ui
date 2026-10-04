@@ -1,5 +1,4 @@
 <script lang="ts">
-	// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 	import { SelectTrigger } from "$lib/registry/ui/select/index.js";
 	import { cn } from "$lib/utils.js";
 	import type { ComponentProps } from "svelte";

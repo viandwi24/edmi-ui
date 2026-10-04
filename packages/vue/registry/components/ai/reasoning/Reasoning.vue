@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
 import type { HTMLAttributes, Ref } from "vue"
 import { useVModel } from "@vueuse/core"
 import { computed, onBeforeUnmount, provide, ref, watch } from "vue"

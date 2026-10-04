@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
 import type { HoverCardRootProps } from "reka-ui"
 import { HoverCard } from "@/registry/edmi/ui/hover-card"
 

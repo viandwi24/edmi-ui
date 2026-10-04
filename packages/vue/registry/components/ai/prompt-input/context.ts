@@ -1,4 +1,3 @@
-// Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
 import type { SourceDocumentUIPart } from "ai";
 import { nanoid } from "nanoid";
 import { inject, onBeforeUnmount, provide, reactive, ref } from "vue";

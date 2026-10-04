@@ -1,4 +1,3 @@
-// Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
 import { onMounted, onUnmounted, ref } from "vue";
 
 /** Enumerates the audio inputs; `loadDevices` asks for microphone permission so the labels are filled in. */

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
 // Shared collapsible section (title + body) behind Parameters, Request and Response.
 import type { HTMLAttributes } from "vue"
 import { ChevronDownIcon } from "@lucide/vue"

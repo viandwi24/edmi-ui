@@ -1,4 +1,3 @@
-// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 import { getContext, setContext } from "svelte";
 
 export type TestStatusType = "passed" | "failed" | "skipped" | "running";

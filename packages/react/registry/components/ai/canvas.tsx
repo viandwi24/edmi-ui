@@ -1,4 +1,3 @@
-// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 import type { ReactFlowProps } from "@xyflow/react";
 import { Background, BackgroundVariant, ReactFlow } from "@xyflow/react";
 import { cn } from "cn";

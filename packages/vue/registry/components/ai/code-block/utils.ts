@@ -1,4 +1,3 @@
-// Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
 import type { BundledLanguage, HighlighterGeneric, ThemedToken } from "shiki";
 import { createCssVariablesTheme, createHighlighter } from "shiki";
 

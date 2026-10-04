@@ -1,5 +1,4 @@
 <script lang="ts">
-	// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 	import { Background, BackgroundVariant, SvelteFlow, type SvelteFlowProps } from "@xyflow/svelte";
 	import type { Snippet } from "svelte";
 	import { cn } from "$lib/utils.js";

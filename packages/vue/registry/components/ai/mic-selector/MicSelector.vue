@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
 import type { PopoverRootProps } from "reka-ui"
 import { useVModel } from "@vueuse/core"
 import { computed, provide, ref, watch } from "vue"

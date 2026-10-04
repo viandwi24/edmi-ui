@@ -1,4 +1,3 @@
-<!-- Derived from Svelte AI Elements (MIT), modified for Edmi UI. -->
 <script lang="ts">
 	import { cn } from "$lib/utils.js";
 	import { CollapsibleTrigger } from "$lib/registry/ui/collapsible/index.js";

@@ -1,4 +1,3 @@
-// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 export const captureScreenshot = async (): Promise<File | null> => {
 	if (
 		typeof navigator === "undefined" ||
