@@ -1,6 +1,7 @@
 import type { ToolUIPart } from "ai";
 import type { InjectionKey, Ref } from "vue";
 import { inject } from "vue";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
 
 export type ToolUIPartApproval =
 	| {
@@ -18,7 +19,7 @@ export type ToolUIPartApproval =
 export interface ConfirmationContextValue {
 	approval: Ref<ToolUIPartApproval>;
 	state: Ref<ToolUIPart["state"]>;
-	raised: Ref<boolean>;
+	elevation: Ref<Elevation | undefined>;
 }
 
 export const ConfirmationKey: InjectionKey<ConfirmationContextValue> = Symbol(

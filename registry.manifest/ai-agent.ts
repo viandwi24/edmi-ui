@@ -36,7 +36,7 @@ export const items: Item[] = [
 		description:
 			"Tool call card with a state badge, collapsible input parameters and output or error.",
 		category: C.agent,
-		deps: ["badge", "collapsible"],
+		deps: ["badge", "collapsible", "elevation"],
 		react: aiReact("tool", ["ai", "cn"]),
 	}),
 	aiItem({
@@ -45,7 +45,7 @@ export const items: Item[] = [
 		description:
 			"Tool approval request with request, accepted and rejected states.",
 		category: C.agent,
-		deps: ["alert", "button"],
+		deps: ["alert", "button", "elevation"],
 		react: aiReact("confirmation", ["ai", "cn"]),
 	}),
 	aiItem({
@@ -71,7 +71,7 @@ export const items: Item[] = [
 		description:
 			"Plan card with streaming title and description and collapsible steps.",
 		category: C.agent,
-		deps: ["button", "card", "collapsible", "ai-shimmer"],
+		deps: ["button", "card", "collapsible", "ai-shimmer", "elevation"],
 		react: aiReact("plan", ["cn"]),
 	}),
 	aiItem({

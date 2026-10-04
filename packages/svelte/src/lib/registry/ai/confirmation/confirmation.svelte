@@ -2,6 +2,7 @@
 	import IconPlaceholder from "$lib/components/icon-placeholder/icon-placeholder.svelte";
 	import { cn } from "$lib/utils.js";
 	import { Alert } from "$lib/registry/ui/alert/index.js";
+	import type { Elevation } from "$lib/registry/ui/elevation/index.js";
 	import type { ToolUIPart } from "ai";
 	import type { Snippet } from "svelte";
 	import type { HTMLAttributes } from "svelte/elements";
@@ -11,15 +12,15 @@
 		class: className,
 		approval,
 		state,
-		raised = false,
+		elevation = "auto",
 		icon,
 		children,
 		...restProps
 	}: Omit<HTMLAttributes<HTMLDivElement>, "children"> & {
 		approval?: ToolUIPartApproval;
 		state: ToolUIPart["state"];
-		/** ✦ raised action buttons (the buttons inherit it, each can override). */
-		raised?: boolean;
+		/** ✦ depth of the action buttons (they inherit it, each can override). The alert itself stays flat. */
+		elevation?: Elevation;
 		/** Leading icon of the request. Defaults to a shield. */
 		icon?: Snippet;
 		children?: Snippet;
@@ -32,8 +33,8 @@
 		get state() {
 			return state;
 		},
-		get raised() {
-			return raised;
+		get elevation() {
+			return elevation;
 		},
 	});
 

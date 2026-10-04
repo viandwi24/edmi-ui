@@ -7,6 +7,7 @@ import { createContext, useContext, useMemo } from "react";
 import { IconPlaceholder } from "@/edmi/icon-placeholder";
 import { Alert } from "@/registry/edmi/ui/alert";
 import { Button } from "@/registry/edmi/ui/button";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
 
 type ToolUIPartApproval =
 	| {
@@ -24,7 +25,7 @@ type ToolUIPartApproval =
 interface ConfirmationContextValue {
 	approval: ToolUIPartApproval;
 	state: ToolUIPart["state"];
-	raised: boolean;
+	elevation: Elevation | undefined;
 }
 
 const ConfirmationContext = createContext<ConfirmationContextValue | null>(
@@ -47,8 +48,8 @@ export type ConfirmationProps = Omit<
 > & {
 	approval?: ToolUIPartApproval;
 	state: ToolUIPart["state"];
-	/** ✦ raised action buttons (the buttons inherit it, each can override). */
-	raised?: boolean;
+	/** ✦ depth of the action buttons (they inherit it, each can override). The alert itself stays flat. */
+	elevation?: Elevation;
 	/** Leading icon of the request. Defaults to a shield. */
 	icon?: ReactNode;
 };
@@ -61,14 +62,14 @@ export const Confirmation = ({
 	className,
 	approval,
 	state,
-	raised = false,
+	elevation,
 	icon,
 	children,
 	...props
 }: ConfirmationProps) => {
 	const contextValue = useMemo(
-		() => ({ approval, raised, state }),
-		[approval, raised, state],
+		() => ({ approval, elevation, state }),
+		[approval, elevation, state],
 	);
 
 	if (!approval || state === "input-streaming" || state === "input-available") {
@@ -244,13 +245,10 @@ export const ConfirmationActions = ({
 	);
 };
 
-export type ConfirmationActionProps = ComponentProps<typeof Button> & {
-	/** legacy prop, forwarded as `elevation="raised"` (the AI pack migration renames it) */
-	raised?: boolean;
-};
+export type ConfirmationActionProps = ComponentProps<typeof Button>;
 
 export const ConfirmationAction = ({
-	raised,
+	elevation,
 	size = "sm",
 	...props
 }: ConfirmationActionProps) => {
@@ -258,7 +256,7 @@ export const ConfirmationAction = ({
 	return (
 		<Button
 			data-slot="ai-confirmation-action"
-			elevation={(raised ?? ctx?.raised ?? false) ? "raised" : undefined}
+			elevation={elevation ?? ctx?.elevation}
 			size={size}
 			type="button"
 			{...props}

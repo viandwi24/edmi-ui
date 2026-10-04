@@ -23,16 +23,16 @@ Built on `badge` and `collapsible`.
 
 <ComponentSource name="ai-tool" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. `raised` gives the one-step 3D look.
+The card are flat by default and take the surface level in layered mode (raised). `sunken` (-1) is a soft inset, `raised` (+1) a bevel and `floating` (+2) a bevel with a soft drop.
 
 <ComponentDemo name="ai-tool" demo="ai-tool-raised" />
 
 ## API
 | Part | Prop | Type | Default |
 | --- | --- | --- | --- |
-| Tool | `raised` | `boolean` | `false` |
+| Tool | `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 | Tool | `open`, `defaultOpen`, `onOpenChange` | collapsible state | closed |
 | ToolHeader | `type`, `state`, `title`, `toolName` | AI SDK `ToolUIPart` / `DynamicToolUIPart` fields | |
 | ToolInput | `input` | `unknown` (shown as JSON) | |
@@ -42,4 +42,4 @@ Flat by default. `raised` gives the one-step 3D look.
 ## ✦ Edmi additions
 - One badge colour per state: pending (secondary), running (info), awaiting approval (warning), responded (secondary), completed (success), denied (outline), error (destructive).
 - The parameters and result render as plain mono blocks on `--muted` (the error block on `--destructive-soft`), so the item does not depend on `ai-code-block`.
-- `raised` ✦ gives the card the one-step 3D look.
+- `elevation` ✦ puts depth on the card (surface role); a nested card drops to flat.

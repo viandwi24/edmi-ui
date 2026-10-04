@@ -1,5 +1,6 @@
 import type { ToolUIPart } from "ai";
 import { getContext, setContext } from "svelte";
+import type { Elevation } from "$lib/registry/ui/elevation/index.js";
 
 export type ToolUIPartApproval =
 	| { id: string; approved?: never; reason?: never }
@@ -10,7 +11,7 @@ export type ToolUIPartApproval =
 export interface ConfirmationContextValue {
 	readonly approval: ToolUIPartApproval;
 	readonly state: ToolUIPart["state"];
-	readonly raised: boolean;
+	readonly elevation: Elevation | undefined;
 }
 
 const KEY = Symbol("ai-confirmation");

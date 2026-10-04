@@ -11,23 +11,41 @@ import {
 	CollapsibleContent,
 	CollapsibleTrigger,
 } from "@/registry/edmi/ui/collapsible";
+import {
+	type Elevation,
+	SurfaceProvider,
+	useElevation,
+} from "@/registry/edmi/ui/elevation";
 
 export type ToolProps = ComponentProps<typeof Collapsible> & {
-	/** ✦ one-step 3D look on the card. */
-	raised?: boolean;
+	/** ✦ depth of the card (sunken -1, flat 0, raised +1, floating +2). */
+	elevation?: Elevation;
 };
 
-export const Tool = ({ className, raised = false, ...props }: ToolProps) => (
-	<Collapsible
-		data-slot="ai-tool"
-		className={cn(
-			"group/tool not-prose w-full overflow-hidden rounded-xl border border-border bg-card text-card-foreground",
-			raised && "border-b-lip shadow-card",
-			className,
-		)}
-		{...props}
-	/>
-);
+// surface role: same faces as the ui card
+const toolElevation = {
+	sunken: "border-sk-bd bg-sk-bg shadow-sunken",
+	flat: "",
+	raised: "border-transparent shadow-raised",
+	floating: "border-transparent shadow-floating",
+};
+
+export const Tool = ({ className, elevation, ...props }: ToolProps) => {
+	const level = useElevation(elevation, "surface");
+	return (
+		<SurfaceProvider level={level}>
+			<Collapsible
+				data-slot="ai-tool"
+				className={cn(
+					"group/tool not-prose w-full overflow-hidden rounded-xl border border-border bg-card text-card-foreground",
+					toolElevation[level],
+					className,
+				)}
+				{...props}
+			/>
+		</SurfaceProvider>
+	);
+};
 
 export type ToolPart = ToolUIPart | DynamicToolUIPart;
 

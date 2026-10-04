@@ -2,13 +2,13 @@
 	import { Button, type ButtonProps } from "$lib/registry/ui/button/index.js";
 	import { useConfirmationOptional } from "./use-confirmation.svelte.js";
 
-	// `raised` falls back to the Confirmation's (an explicit `false` here wins).
+	// `elevation` falls back to the Confirmation's (an explicit value here wins).
 	let {
-		raised,
+		elevation,
 		size = "sm",
 		children,
 		...restProps
-	}: ButtonProps & { raised?: boolean } = $props();
+	}: ButtonProps = $props();
 
 	const confirmation = useConfirmationOptional();
 </script>
@@ -16,7 +16,7 @@
 <Button
 	data-slot="ai-confirmation-action"
 	type="button"
-	elevation={raised ?? confirmation?.raised ?? false ? "raised" : undefined}
+	elevation={elevation && elevation !== "auto" ? elevation : confirmation?.elevation}
 	{size}
 	{...restProps}
 >

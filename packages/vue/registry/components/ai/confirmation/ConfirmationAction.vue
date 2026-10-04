@@ -3,17 +3,18 @@ import type { HTMLAttributes } from "vue"
 import type { ButtonVariants } from "@/registry/edmi/ui/button"
 import { inject } from "vue"
 import { Button } from "@/registry/edmi/ui/button"
+import type { Elevation } from "@/registry/edmi/ui/elevation"
 import { ConfirmationKey } from "./context"
 
-// `raised` falls back to the Confirmation's (an explicit `false` here wins).
+// `elevation` falls back to the Confirmation's (an explicit value here wins).
 const props = withDefaults(defineProps<{
   variant?: ButtonVariants["variant"]
   size?: ButtonVariants["size"]
-  raised?: boolean
+  elevation?: Elevation
   class?: HTMLAttributes["class"]
 }>(), {
   size: "sm",
-  raised: undefined,
+  elevation: undefined,
 })
 
 const ctx = inject(ConfirmationKey, null)
@@ -25,7 +26,7 @@ const ctx = inject(ConfirmationKey, null)
     type="button"
     :variant="props.variant"
     :size="props.size"
-    :elevation="props.raised ?? ctx?.raised.value ?? false ? 'raised' : undefined"
+    :elevation="props.elevation ?? ctx?.elevation.value"
     :class="props.class"
   >
     <slot />

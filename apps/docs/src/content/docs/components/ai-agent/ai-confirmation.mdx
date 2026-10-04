@@ -23,9 +23,9 @@ Built on `alert` and `button`.
 
 <ComponentSource name="ai-confirmation" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. `raised` gives the one-step 3D look.
+The request is a flat warning alert; `elevation` goes to the action buttons (flat, raised +1, floating +2, sunken -1 like a Button) and each `ConfirmationAction` can override it.
 
 <ComponentDemo name="ai-confirmation" demo="ai-confirmation-raised" />
 
@@ -33,14 +33,14 @@ Flat by default. `raised` gives the one-step 3D look.
 | Part | Prop | Type | Default |
 | --- | --- | --- | --- |
 | Confirmation | `approval`, `state` | AI SDK tool approval and `ToolUIPart["state"]` | |
-| Confirmation | `raised` | `boolean` (the action buttons inherit it) | `false` |
+| Confirmation | `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` (the action buttons inherit it) | `"auto"` |
 | Confirmation | `icon` | `ReactNode` | shield |
 | ConfirmationTitle | | request title (put `ConfirmationRequest` / `Accepted` / `Rejected` inside) | |
 | ConfirmationDescription | | muted second line, only while the request is open | |
 | ConfirmationActions | | row of actions, only while the request is open | |
-| ConfirmationAction | `raised`, `variant`, `size` | Button props | `size="sm"` |
+| ConfirmationAction | `elevation`, `variant`, `size` | Button props | `size="sm"` |
 
 ## ✦ Edmi additions
 - The open request is a `warning` alert; once answered it collapses to a plain status line (green check when approved, muted cross when rejected).
 - `ConfirmationDescription` ✦ is the muted line under the title.
-- `raised` ✦ is passed to every `ConfirmationAction` (each can override it).
+- `elevation` ✦ is passed to every `ConfirmationAction` (each can override it); the alert itself stays flat.

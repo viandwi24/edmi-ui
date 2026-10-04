@@ -174,7 +174,7 @@ function ConfirmationRow({
 		<Confirmation
 			approval={{ id: "1", approved }}
 			state={state}
-			raised={raised}
+			elevation={raised ? "raised" : undefined}
 			className="w-full max-w-[440px]"
 		>
 			<ConfirmationTitle>
@@ -365,7 +365,7 @@ export default function AiAgentPreview() {
 					))}
 				</div>
 				<RaisedSection>
-					<Tool raised className="w-full max-w-[440px]">
+					<Tool elevation="raised" className="w-full max-w-[440px]">
 						<ToolHeader type="tool-get_prices" state="output-available" />
 						<ToolContent>
 							<ToolInput input={input} />

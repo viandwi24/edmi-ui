@@ -23,9 +23,9 @@ Built on `card`, `button`, `collapsible` and `ai-shimmer`.
 
 <ComponentSource name="ai-plan" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. `raised` gives the one-step 3D look.
+The plan card are flat by default and take the surface level in layered mode (raised). `sunken` (-1) is a soft inset, `raised` (+1) a bevel and `floating` (+2) a bevel with a soft drop.
 
 <ComponentDemo name="ai-plan" demo="ai-plan-raised" />
 
@@ -33,12 +33,12 @@ Flat by default. `raised` gives the one-step 3D look.
 | Part | Prop | Type | Default |
 | --- | --- | --- | --- |
 | Plan | `isStreaming` | `boolean` (title and description shimmer) | `false` |
-| Plan | `raised` | `boolean` | `false` |
+| Plan | `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 | Plan | `open`, `defaultOpen`, `onOpenChange` | collapsible state | closed |
 | PlanTitle, PlanDescription | `children` | `string` | |
 | PlanTrigger | Collapsible trigger | ghost icon button | |
 | PlanFooter | | card footer | |
 
 ## ✦ Edmi additions
-- `raised` ✦ goes to the Card; pass `raised` to the footer `Button`s as well for the full look.
+- `elevation` ✦ goes to the Card; the footer `Button`s take their own `elevation`.
 - The footer sits on the shell colour, like every Card footer in Edmi.

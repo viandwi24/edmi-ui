@@ -6,22 +6,23 @@ import { ShieldIcon } from "@lucide/vue"
 import { computed, provide, toRef } from "vue"
 import { cn } from "@/registry/edmi/lib/utils"
 import { Alert } from "@/registry/edmi/ui/alert"
+import type { Elevation } from "@/registry/edmi/ui/elevation"
 import { ConfirmationKey } from "./context"
 
 const props = withDefaults(defineProps<{
   approval?: ToolUIPartApproval
   state: ToolUIPart["state"]
-  /** ✦ raised action buttons (the buttons inherit it, each can override). */
-  raised?: boolean
+  /** ✦ depth of the action buttons (they inherit it, each can override). The alert itself stays flat. */
+  elevation?: Elevation
   class?: HTMLAttributes["class"]
 }>(), {
-  raised: false,
+  elevation: undefined,
 })
 
 provide(ConfirmationKey, {
   approval: toRef(props, "approval"),
   state: toRef(props, "state"),
-  raised: toRef(props, "raised"),
+  elevation: toRef(props, "elevation"),
 })
 
 const hidden = computed(() => !props.approval || props.state === "input-streaming" || props.state === "input-available")
