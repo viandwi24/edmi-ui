@@ -120,21 +120,23 @@ import {
 	useSyncExternalStore,
 } from "react";
 
-/* shared flat | layered state (module singleton, shared by every island) ---------------------- */
-let layeredState = false;
-const layeredListeners = new Set<() => void>();
+/* shared flat | layered state: kept on window so every island shares it, even when the bundler
+   instantiates this module more than once ---------------------------------------------------- */
+const LAYERED_EVENT = "edmi-landing-layered";
+type LayeredWindow = Window & { __edmiLayered?: boolean };
 export function setLayered(next: boolean) {
-	if (next === layeredState) return;
-	layeredState = next;
-	for (const l of layeredListeners) l();
+	const w = window as LayeredWindow;
+	if (next === !!w.__edmiLayered) return;
+	w.__edmiLayered = next;
+	window.dispatchEvent(new Event(LAYERED_EVENT));
 }
 export function useLayered() {
 	return useSyncExternalStore(
 		(cb) => {
-			layeredListeners.add(cb);
-			return () => layeredListeners.delete(cb);
+			window.addEventListener(LAYERED_EVENT, cb);
+			return () => window.removeEventListener(LAYERED_EVENT, cb);
 		},
-		() => layeredState,
+		() => !!(window as LayeredWindow).__edmiLayered,
 		() => false,
 	);
 }
@@ -696,7 +698,7 @@ export function LandingFooter() {
 				{
 					title: "Library",
 					links: [
-						{ label: "Components", href: `${base}/components/actions/button/` },
+						{ label: "Components", href: `${base}/components/` },
 						{
 							label: "AI pack",
 							href: `${base}/components/ai-chat/ai-message/`,
@@ -706,19 +708,20 @@ export function LandingFooter() {
 							href: `${base}/components/patterns/stat-tile/`,
 						},
 						{ label: "Theming", href: `${base}/getting-started/theming/` },
+						{ label: "Elevation", href: `${base}/getting-started/elevation/` },
 					],
 				},
 				{
 					title: "Project",
 					links: [
-						{ label: "Design rules", href: `${base}/rules/` },
+						{ label: "Design rules", href: `${base}/getting-started/rules/` },
 						{ label: "Changelog", href: `${base}/changelog/` },
 						{ label: "GitHub", href: "https://github.com/viandwi24/edmi-ui" },
 					],
 				},
 			]}
 			legal="MIT licensed. Copy the code, own it."
-			note="Flat by default · no blurred shadows"
+			note="Flat by default · layered when you want"
 		/>
 	);
 }

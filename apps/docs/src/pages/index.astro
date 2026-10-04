@@ -28,6 +28,7 @@ const why = [
 		n: "02",
 		title: "Flat by default, elevated when you want.",
 		text: "Every component is a quiet 1px-border control. Add elevation for depth: a sunken well, a raised bevel or a floating plate with one soft drop. Layered mode gives every role its natural level.",
+		href: "/getting-started/elevation/",
 	},
 	{
 		n: "03",
@@ -74,7 +75,7 @@ const why = [
 					Get started
 					<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
 				</a>
-				<a class={`${buttonVariants({ size: "lg", variant: "secondary", elevation: "raised" })} no-underline`} href={p("/components/actions/button/")}>Browse components</a>
+				<a class={`${buttonVariants({ size: "lg", variant: "secondary", elevation: "raised" })} no-underline`} href={p("/components/")}>Browse components</a>
 			</div>
 			<div class="mx-auto mt-9 w-[min(32.5rem,100%)]">
 				<InstallCard client:load />
@@ -123,7 +124,7 @@ const why = [
 					<div>
 						<div class="font-mono text-xs text-muted-foreground">{w.n}</div>
 						<div class="mt-[22px] text-[19px] font-medium tracking-[-0.02em] text-ink-soft">{w.title}</div>
-						<p class="m-0 mt-2.5 text-sm leading-[1.65] text-muted-foreground">{w.text}</p>
+						<p class="m-0 mt-2.5 text-sm leading-[1.65] text-muted-foreground">{w.text}{w.href && (<>{" "}<a class="text-foreground underline underline-offset-[3px]" href={p(w.href)}>Elevation guide →</a></>)}</p>
 					</div>
 				))}
 			</div>
