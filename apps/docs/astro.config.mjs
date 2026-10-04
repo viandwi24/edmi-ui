@@ -63,6 +63,9 @@ const darkSync = `(function(){var d=document.documentElement;function s(){d.clas
 const fwSync = `(function(){var d=document.documentElement,K='edmi-framework',v='react';try{v=localStorage.getItem(K)||v}catch(e){}if(['react','vue','svelte'].indexOf(v)<0)v='react';d.dataset.fw=v;window.addEventListener(K,function(e){d.dataset.fw=e.detail});document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-fw-set]');if(b){var f=b.getAttribute('data-fw-set');try{localStorage.setItem(K,f)}catch(x){}window.dispatchEvent(new CustomEvent(K,{detail:f}))}})})();`;
 
 // Global package-manager choice (npm default): set <html data-pm> before paint; any [data-pm-set] button switches it site-wide.
+// cmdk scrolls its initially selected item into view on mount, which moves the whole page when a Command
+// demo sits below the fold. Ignore scrollIntoView inside [cmdk-root] (items and group headings) until the visitor has interacted.
+const cmdkNoAutoScroll = `(function(){var u=false,o=Element.prototype.scrollIntoView;['keydown','pointerdown','wheel','touchstart'].forEach(function(t){window.addEventListener(t,function(){u=true},{capture:true,passive:true,once:true})});Element.prototype.scrollIntoView=function(){if(!u&&this.closest&&this.closest('[cmdk-root]'))return;return o.apply(this,arguments)}})();`;
 const pmSync = `(function(){var d=document.documentElement,K='edmi-pm',v='npm';try{v=localStorage.getItem(K)||v}catch(e){}if(['npm','pnpm','yarn','bun'].indexOf(v)<0)v='npm';d.dataset.pm=v;window.addEventListener(K,function(e){d.dataset.pm=e.detail});document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-pm-set]');if(b){var f=b.getAttribute('data-pm-set');try{localStorage.setItem(K,f)}catch(x){}window.dispatchEvent(new CustomEvent(K,{detail:f}))}})})();`;
 
 // https://astro.build/config
@@ -113,6 +116,7 @@ export default defineConfig({
 				{ tag: "script", content: darkSync },
 				{ tag: "script", content: fwSync },
 				{ tag: "script", content: pmSync },
+				{ tag: "script", content: cmdkNoAutoScroll },
 			],
 			sidebar: buildSidebar(resolve(here, "src/content/docs"), {
 				componentGroups: COMPONENT_GROUPS,
