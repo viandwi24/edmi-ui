@@ -63,10 +63,10 @@ const PILOT: ExampleMeta[] = [
 	},
 	{
 		slug: "markets",
-		title: "Markets dashboard",
+		title: "Markets · navbar layout",
 		tag: "App",
 		description:
-			"Stockbreak Markets: app header, ticker strip, top indexes table with sparklines, Human vs AI tiles, creators and activity lists, all with raised cards.",
+			"Stockbreak Markets in the navbar layout: app header, ticker strip, top indexes table with sparklines, Human vs AI tiles, creators and activity lists, all with raised cards.",
 		board: "Stockbreak · Markets",
 		thumb: "markets",
 		frameworks: ALL,
@@ -79,6 +79,29 @@ const PILOT: ExampleMeta[] = [
 			"Table",
 			"Badge",
 			"Button",
+		],
+	},
+	{
+		slug: "markets-sidebar",
+		title: "Markets · sidebar layout",
+		tag: "App",
+		description:
+			"Stockbreak Markets in the sidebar app shell: inset Sidebar with search, navigation, watchlist and the devnet faucet card, breadcrumb header, then the same ticker strip, index table and Human vs AI tiles with raised cards.",
+		board: "Stockbreak · Markets (sidebar)",
+		thumb: "markets-sidebar",
+		frameworks: ALL,
+		height: 900,
+		uses: [
+			"Sidebar",
+			"WatchlistItem",
+			"TickerStrip",
+			"IndexRow",
+			"Card",
+			"Table",
+			"Badge",
+			"Button",
+			"Input",
+			"Kbd",
 		],
 	},
 ];
