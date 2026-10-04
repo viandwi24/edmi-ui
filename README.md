@@ -347,5 +347,5 @@ bash scripts/smoke/all.sh # install the built registries into fresh React/Vue/Sv
 bun run dev               # docs site
 ```
 
-- Design spec: `refs/edmi-ui/DESIGN.md`
+- Design rules: <https://viandwi24.github.io/edmi-ui/getting-started/rules/>
 - Repo knowledge, conventions, decisions and agent guidance: [AGENTS.md](AGENTS.md)

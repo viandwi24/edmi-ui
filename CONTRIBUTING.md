@@ -10,7 +10,7 @@ Bun (1.4+) is the only package manager and runtime for developing this repo (`bu
 - `apps/docs` — Astro/Starlight docs, `examples/*` — example apps, `scripts/smoke/*` — install smoke tests.
 
 Per-port rules: [packages/react/CONTRIBUTING.md](packages/react/CONTRIBUTING.md) (and the Vue/Svelte equivalents
-where present). Design rules live in `refs/edmi-ui/DESIGN.md`. Repo conventions, the decisions log, the new-component playbook and guidance for AI agents are in [AGENTS.md](AGENTS.md).
+where present). Design rules are on the docs [Rules page](https://viandwi24.github.io/edmi-ui/getting-started/rules/). Repo conventions, the decisions log, the new-component playbook and guidance for AI agents are in [AGENTS.md](AGENTS.md).
 
 ## Everyday commands
 `bun run gen:strict` · `bun run typecheck` · `bun run lint` · `bun test` · `bun run build:registry` · `bash scripts/smoke/all.sh`
