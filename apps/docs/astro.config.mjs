@@ -71,6 +71,10 @@ const cmdkNoAutoScroll = `(function(){var u=false,o=Element.prototype.scrollInto
 const hashRescroll = `(function(){var h=location.hash;if(h.length<2)return;var u=false;['keydown','pointerdown','wheel','touchstart'].forEach(function(t){window.addEventListener(t,function(){u=true},{capture:true,passive:true,once:true})});function go(){if(u||location.hash!==h)return;var id=decodeURIComponent(h.slice(1)),el=document.getElementById(id)||document.querySelector('h2[id^="'+id+'-"],h3[id^="'+id+'-"]');if(el)el.scrollIntoView()}window.addEventListener('load',function(){[400,1200,2500].forEach(function(ms){setTimeout(go,ms)})})})();`;
 const pmSync = `(function(){var d=document.documentElement,K='edmi-pm',v='npm';try{v=localStorage.getItem(K)||v}catch(e){}if(['npm','pnpm','yarn','bun'].indexOf(v)<0)v='npm';d.dataset.pm=v;window.addEventListener(K,function(e){d.dataset.pm=e.detail});document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-pm-set]');if(b){var f=b.getAttribute('data-pm-set');try{localStorage.setItem(K,f)}catch(x){}window.dispatchEvent(new CustomEvent(K,{detail:f}))}})})();`;
 
+const OG_IMAGE = "https://viandwi24.github.io/edmi-ui/og.png";
+const OG_ALT =
+	"Edmi UI: quiet interfaces for React, Vue and Svelte, with four levels of elevation.";
+
 // https://astro.build/config
 export default defineConfig({
 	site: "https://viandwi24.github.io",
@@ -116,6 +120,21 @@ export default defineConfig({
 						href: "https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Sora:wght@600&display=swap",
 					},
 				},
+				// Social card (shared links show a large image). Absolute URL: site + base.
+				...[
+					["property", "og:type", "website"],
+					["property", "og:site_name", "Edmi UI"],
+					["property", "og:image", OG_IMAGE],
+					["property", "og:image:width", "1200"],
+					["property", "og:image:height", "630"],
+					["property", "og:image:alt", OG_ALT],
+					["name", "twitter:card", "summary_large_image"],
+					["name", "twitter:image", OG_IMAGE],
+					["name", "twitter:image:alt", OG_ALT],
+				].map(([k, n, content]) => ({
+					tag: "meta",
+					attrs: { [k]: n, content },
+				})),
 				{ tag: "script", content: darkSync },
 				{ tag: "script", content: fwSync },
 				{ tag: "script", content: pmSync },

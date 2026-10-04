@@ -1,0 +1,50 @@
+---
+// 1200x630 OpenGraph / social card (apps/docs/public/og.png, dark). Regenerate with
+// `bun scripts/render-og.ts --url http://localhost:4321/edmi-ui --page og/card/?theme=dark --size 1200x630 --out apps/docs/public/og.png`.
+import "../../styles/global.css";
+import CardVisual from "../../components/og/CardVisual";
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=1200" />
+		<meta name="robots" content="noindex" />
+		<title>Edmi UI card</title>
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Sora:wght@600&display=swap"
+		/>
+		<script is:inline>
+			(function () {
+				var t = new URLSearchParams(location.search).get("theme");
+				var d = document.documentElement;
+				d.classList.toggle("dark", t !== "light");
+				d.dataset.theme = t === "light" ? "light" : "dark";
+			})();
+		</script>
+		<style is:global>
+			html, body { margin: 0; padding: 0; width: 1200px; height: 630px; overflow: hidden; background: var(--background); }
+			.og { position: relative; width: 1200px; height: 630px; overflow: hidden; padding: 64px; display: flex; flex-direction: column; justify-content: space-between; }
+			.og, .og *, .og ::before, .og ::after { box-sizing: border-box; border-color: var(--border); }
+			.og :where(h1, p) { margin: 0; }
+			.og-mark { font-family: Sora, sans-serif; font-weight: 600; font-size: 34px; letter-spacing: -0.02em; color: var(--foreground); }
+			.og h1 { font-size: 70px; line-height: 1.04; letter-spacing: -0.035em; font-weight: 500; color: var(--foreground); max-width: 640px; }
+			.og-sub { margin-top: 22px !important; font-size: 24px; line-height: 1.45; color: var(--muted-foreground); max-width: 600px; }
+			.og-url { font-family: "JetBrains Mono", monospace; font-size: 20px; color: var(--muted-foreground); }
+			.og-visual { position: absolute; right: 56px; top: 120px; width: 400px; transform: rotate(-3deg); }
+		</style>
+	</head>
+	<body class="edmi-preview">
+		<div class="og edmi-preview">
+			<div class="og-mark">edmi</div>
+			<div>
+				<h1>Quiet interfaces for React, Vue and Svelte</h1>
+				<p class="og-sub">Flat by default, four levels of elevation. A shadcn registry you install with one command.</p>
+			</div>
+			<div class="og-url">viandwi24.github.io/edmi-ui</div>
+			<div class="og-visual"><CardVisual /></div>
+		</div>
+	</body>
+</html>
