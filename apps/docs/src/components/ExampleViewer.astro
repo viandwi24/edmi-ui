@@ -1,6 +1,6 @@
 ---
-// Example page body (one screen): a full-bleed iframe that loads the bare render route. The toolbar (mode / base /
-// theme / radius / framework / viewport / zoom / Code / Info / Open / hide) is moved by the script into the floating
+// Example page body (one screen): a full-bleed iframe that loads the bare render route. The compact toolbar (Back, name,
+// framework, mode, theme popover, viewport, zoom, Code, ⋯ menu with Info / Open / Hide) is moved by the script into the floating
 // docs header; Code is a drawer over the preview and Info a popover (Shiki via Starlight <Code>).
 import { Code } from "@astrojs/starlight/components";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
@@ -57,15 +57,16 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 	<!-- The bar is moved into the floating docs header (slot `data-header-slot`) by the script below. -->
 	<div class="edmi-ex-bar" data-bar>
 		<div class="edmi-ex-title">
+			<a class="edmi-ex-back" href={`${BASE}/examples/`} data-tip="All examples" aria-label="Back to all examples">
+				<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>
+				<span class="edmi-ex-lbl-sm">Back</span>
+			</a>
+			<span class="edmi-ex-sep" aria-hidden="true"></span>
 			<span class="edmi-ex-name" title={example.title}>{example.title}</span>
 			<span class="edmi-ex-tag">{example.tag}</span>
 		</div>
 		<div class="edmi-ex-actions">
-			<button type="button" class="edmi-ex-btn edmi-ex-tools-toggle" data-panel-toggle="tools" aria-expanded="false" aria-haspopup="true">
-				<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"></path><circle cx="16" cy="6" r="2"></circle><circle cx="10" cy="12" r="2"></circle><circle cx="18" cy="18" r="2"></circle></svg>
-				<span>Controls</span>
-			</button>
-			<label class="edmi-ex-select edmi-ex-fw" title="Framework (shared across the site)">
+			<label class="edmi-ex-select edmi-ex-fw edmi-ex-wide">
 				<span class="sr-only">Framework</span>
 				<select data-framework-select aria-label="Framework">
 					{FRAMEWORKS.filter((f) => example.frameworks.includes(f)).map((fw) => (
@@ -73,86 +74,97 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 					))}
 				</select>
 			</label>
-			<button type="button" class="edmi-ex-btn" data-panel-toggle="code" aria-expanded="false" aria-controls="edmi-ex-code">
-				<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"></path></svg>
-				<span>Code</span>
-			</button>
-			<button type="button" class="edmi-ex-btn" data-panel-toggle="info" aria-expanded="false" aria-haspopup="true" aria-label="About this example">
-				<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h0"></path></svg>
-				<span class="edmi-ex-lbl">Info</span>
-			</button>
-			<a class="edmi-ex-btn" data-open href="#" target="_blank" rel="noopener" title="Open the bare render route in a new tab">
-				<span class="edmi-ex-lbl">Open</span>
-				<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M7 17 17 7M8 7h9v9"></path></svg>
-			</a>
-			<button type="button" class="edmi-ex-btn edmi-ex-icon" data-chrome-hide aria-label="Hide the top bar" title="Hide the top bar (Esc restores it)">
-				<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"></path></svg>
-			</button>
-		</div>
-
-		<div class="edmi-ex-panel edmi-ex-tools" data-panel="tools" hidden>
-			<div class="edmi-ex-group">
-				<label class="edmi-ex-select edmi-ex-fw-mobile">
-					<span>Framework</span>
-					<select data-framework-select aria-label="Framework">
-						{FRAMEWORKS.filter((f) => example.frameworks.includes(f)).map((fw) => (
-							<option value={fw}>{FRAMEWORK_LABEL[fw]}</option>
-						))}
-					</select>
-				</label>
-				<div class="edmi-seg edmi-seg-sm" role="group" aria-label="Mode">
-					<button type="button" data-knob="mode" data-value="light">Light</button>
-					<button type="button" data-knob="mode" data-value="dark">Dark</button>
+			<div class="edmi-ex-grp">
+				<button type="button" class="edmi-ex-btn edmi-ex-icon edmi-ex-wide" data-mode-toggle data-tip="Toggle light / dark" aria-label="Toggle light or dark mode">
+					<svg class="edmi-ex-sun" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4"></path></svg>
+					<svg class="edmi-ex-moon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5Z"></path></svg>
+				</button>
+				<div class="edmi-ex-pop">
+					<button type="button" class="edmi-ex-btn edmi-ex-icon edmi-ex-wide" data-panel-toggle="theme" aria-expanded="false" aria-haspopup="true" data-tip="Theme, base and radius" aria-label="Theme, base and radius">
+						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.8-.8 1.8-1.7 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-.9.8-1.7 1.7-1.7H17a4 4 0 0 0 4-4C21 6.6 17 3 12 3Z"></path><circle cx="7.5" cy="11" r="1"></circle><circle cx="10" cy="7" r="1"></circle><circle cx="15" cy="7" r="1"></circle></svg>
+					</button>
+					<div class="edmi-ex-panel edmi-ex-theme" data-panel="theme" hidden>
+						<label class="edmi-ex-select">
+							<span>Base</span>
+							<select data-knob-select="base" aria-label="Base color">
+								{BASES.map((b) => <option value={b}>{b}</option>)}
+							</select>
+						</label>
+						<label class="edmi-ex-select">
+							<span>Theme</span>
+							<select data-knob-select="theme" aria-label="Theme">
+								{THEMES.map((t) => <option value={t}>{t}</option>)}
+							</select>
+						</label>
+						<label class="edmi-ex-select">
+							<span>Radius</span>
+							<select data-knob-select="radius" aria-label="Radius">
+								{RADII.map((r) => <option value={r} selected={r === "0.625"}>{r}</option>)}
+							</select>
+						</label>
+					</div>
 				</div>
-				<label class="edmi-ex-select">
-					<span>Base</span>
-					<select data-knob-select="base" aria-label="Base color">
-						{BASES.map((b) => <option value={b}>{b}</option>)}
-					</select>
-				</label>
-				<label class="edmi-ex-select">
-					<span>Theme</span>
-					<select data-knob-select="theme" aria-label="Theme">
-						{THEMES.map((t) => <option value={t}>{t}</option>)}
-					</select>
-				</label>
-				<label class="edmi-ex-select">
-					<span>Radius</span>
-					<select data-knob-select="radius" aria-label="Radius">
-						{RADII.map((r) => <option value={r} selected={r === "0.625"}>{r}</option>)}
-					</select>
-				</label>
 			</div>
-			<div class="edmi-ex-group">
-				<div class="edmi-seg edmi-seg-sm" role="group" aria-label="Viewport">
-					<button type="button" data-viewport="100%" aria-label="Desktop" title="Desktop">
-						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8M12 16v4"></path></svg>
+			<div class="edmi-seg edmi-seg-sm edmi-ex-wide edmi-ex-lg" role="group" aria-label="Viewport">
+				<button type="button" data-viewport="100%" aria-label="Desktop, responsive" data-tip="Desktop">
+					<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8M12 16v4"></path></svg>
+				</button>
+				<button type="button" data-viewport="820" aria-label="Tablet, 820 pixels" data-tip="Tablet 820px">
+					<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M11 18h2"></path></svg>
+				</button>
+				<button type="button" data-viewport="390" aria-label="Mobile, 390 pixels" data-tip="Mobile 390px">
+					<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"></rect><path d="M11 18h2"></path></svg>
+				</button>
+			</div>
+			<div class="edmi-seg edmi-seg-sm edmi-ex-zoom edmi-ex-wide edmi-ex-lg" role="group" aria-label="Zoom">
+				<button type="button" data-zoom="out" aria-label="Zoom out" data-tip="Zoom out">
+					<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path></svg>
+				</button>
+				<output class="edmi-ex-zoom-value" data-zoom-label aria-live="polite">100%</output>
+				<button type="button" data-zoom="in" aria-label="Zoom in" data-tip="Zoom in">
+					<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5v14"></path></svg>
+				</button>
+			</div>
+			<button type="button" class="edmi-ex-btn" data-panel-toggle="code" aria-expanded="false" aria-controls="edmi-ex-code" data-tip="View source" aria-label="View source code">
+				<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"></path></svg>
+				<span class="edmi-ex-lbl-sm">Code</span>
+			</button>
+			<div class="edmi-ex-pop">
+				<button type="button" class="edmi-ex-btn edmi-ex-icon" data-panel-toggle="menu" aria-expanded="false" aria-haspopup="menu" data-tip="More" data-tip-align="end" aria-label="More actions">
+					<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.6"></circle><circle cx="12" cy="12" r="1.6"></circle><circle cx="19" cy="12" r="1.6"></circle></svg>
+				</button>
+				<div class="edmi-ex-panel edmi-ex-menu" data-panel="menu" role="menu" hidden>
+					<label class="edmi-ex-select edmi-ex-narrow">
+						<span>Framework</span>
+						<select data-framework-select aria-label="Framework">
+							{FRAMEWORKS.filter((f) => example.frameworks.includes(f)).map((fw) => (
+								<option value={fw}>{FRAMEWORK_LABEL[fw]}</option>
+							))}
+						</select>
+					</label>
+					<button type="button" role="menuitem" class="edmi-ex-item edmi-ex-narrow" data-mode-toggle>
+						<span>Toggle light / dark</span>
 					</button>
-					<button type="button" data-viewport="820" aria-label="Tablet" title="Tablet (820px)">
-						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M11 18h2"></path></svg>
+					<button type="button" role="menuitem" class="edmi-ex-item edmi-ex-narrow" data-open-theme>
+						<span>Theme, base and radius</span>
 					</button>
-					<button type="button" data-viewport="390" aria-label="Mobile" title="Mobile (390px)">
-						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><rect x="7" y="2" width="10" height="20" rx="2"></rect><path d="M11 18h2"></path></svg>
+					<button type="button" role="menuitem" class="edmi-ex-item" data-open-info>
+						<span>About this example</span>
+					</button>
+					<a role="menuitem" class="edmi-ex-item" data-open href="#" target="_blank" rel="noopener">
+						<span>Open in new tab</span>
+						<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg>
+					</a>
+					<button type="button" role="menuitem" class="edmi-ex-item" data-chrome-hide>
+						<span>Hide the top bar</span>
+						<kbd>Esc</kbd>
 					</button>
 				</div>
-				<div class="edmi-seg edmi-seg-sm edmi-ex-zoom" role="group" aria-label="Zoom">
-					<button type="button" data-zoom="out" aria-label="Zoom out" title="Zoom out (Ctrl/Cmd -)">
-						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M5 12h14"></path></svg>
-					</button>
-					<output class="edmi-ex-zoom-value" data-zoom-label aria-live="polite" title="Current zoom">100%</output>
-					<button type="button" data-zoom="in" aria-label="Zoom in" title="Zoom in (Ctrl/Cmd +)">
-						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M5 12h14M12 5v14"></path></svg>
-					</button>
-					<button type="button" data-zoom="reset" aria-label="Reset zoom to 100%" title="Reset zoom (Ctrl/Cmd 0)">
-						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>
-					</button>
-				</div>
-				<span class="edmi-ex-width" data-width-label>Responsive</span>
 			</div>
 		</div>
 
 		<div class="edmi-ex-panel edmi-ex-info" data-panel="info" hidden>
-			<p class="edmi-ex-info-meta"><a href={`${BASE}/examples/`}>Examples</a> · {example.tag} · board {example.board}</p>
+			<p class="edmi-ex-info-meta">{example.tag} · board {example.board}</p>
 			<p class="edmi-ex-info-desc">{example.description}</p>
 			<p class="edmi-ex-info-uses">
 				Built only from registry items: {example.uses.join(", ")}. Switch the framework to see the same
@@ -203,36 +215,31 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 	/* the docs main-pane is an isolated stacking context below the header: lift it so the viewer can sit under the header but above the page */
 	.main-pane:has(.edmi-ex) { isolation: auto !important; }
 
-	/* docs header becomes a floating rounded bar on this page only */
+	/* docs header becomes a floating rounded bar on this page only: brand + the viewer bar, nothing else */
 	html:has(.edmi-ex) .page > header.header {
 		top: 0.5rem; inset-inline: 0.5rem; width: auto; height: auto; z-index: 20;
-		padding: 0.25rem 0.625rem; background-color: var(--popover);
+		padding: 0.25rem 0.5rem; background-color: var(--popover);
 		border: 1px solid var(--border); border-radius: 14px;
 	}
 	html:has(.edmi-ex)[data-ex-chrome="hidden"] .page > header.header { display: none; }
-	html:has(.edmi-ex) .edmi-header { height: auto; min-height: 2.75rem; flex-wrap: wrap; gap: 0.5rem 0.75rem; }
-	html:has(.edmi-ex) .edmi-nav { display: none; }
-	html:has(.edmi-ex) .edmi-nav-mobile { display: block; }
-	html:has(.edmi-ex) .edmi-header-end .edmi-fw-select,
-	html:has(.edmi-ex) .edmi-header-end .edmi-header-icons > :not(:last-child) { display: none; }
-	html:has(.edmi-ex) .edmi-search { width: auto; }
-	html:has(.edmi-ex) site-search button[data-open-modal] { width: 34px; padding: 0; justify-content: center; }
-	html:has(.edmi-ex) site-search button[data-open-modal] > kbd,
-	html:has(.edmi-ex) site-search button[data-open-modal] > :not(svg):not(kbd) { display: none; }
-	html:has(.edmi-ex) .edmi-header-slot { flex: 1 1 100%; order: 3; min-width: 0; display: flex; }
-	html:has(.edmi-ex) .edmi-header-end { order: 2; margin-inline-start: auto; }
-	@media (min-width: 62rem) {
-		html:has(.edmi-ex) .edmi-header { flex-wrap: nowrap; }
-		html:has(.edmi-ex) .edmi-header-slot { flex: 1 1 auto; order: 0; }
-		html:has(.edmi-ex) .edmi-header-end { order: 0; margin-inline-start: 0; }
-	}
+	html:has(.edmi-ex) .edmi-header { height: auto; min-height: 2.5rem; flex-wrap: nowrap; gap: 0.5rem; }
+	html:has(.edmi-ex) .edmi-nav, html:has(.edmi-ex) .edmi-nav-mobile, html:has(.edmi-ex) .edmi-header-end { display: none; }
+	html:has(.edmi-ex) .edmi-header-slot { flex: 1 1 auto; min-width: 0; display: flex; }
 	.edmi-header-slot:empty { display: none; }
 
-	.edmi-ex-bar { display: flex; align-items: center; gap: 0.75rem; flex: 1; min-width: 0; }
+	.edmi-ex-bar { display: flex; align-items: center; gap: 0.5rem; flex: 1; min-width: 0; }
 	.edmi-ex-title { display: flex; align-items: center; gap: 0.5rem; min-width: 0; flex: 1; }
+	.edmi-ex-back {
+		display: inline-flex; align-items: center; gap: 0.375rem; flex: none; height: 30px; padding: 0 0.6rem 0 0.45rem; border-radius: 7px; text-decoration: none;
+		font: 500 12.5px/1 var(--sl-font); color: var(--muted-foreground); border: 1px solid var(--border); background: var(--card);
+	}
+	.edmi-ex-back:hover { background: var(--accent); color: var(--foreground); }
+	.edmi-ex-sep { flex: none; width: 1px; height: 16px; background: var(--border); }
 	.edmi-ex-name { font-size: 0.875rem; font-weight: 500; color: var(--foreground); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 	.edmi-ex-tag { flex: none; font: 500 11px/1 var(--sl-font-mono); text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); border: 1px solid var(--border); border-radius: 999px; padding: 0.2rem 0.5rem; }
 	.edmi-ex-actions { display: flex; align-items: center; gap: 0.375rem; flex: none; margin-inline-start: auto; }
+	.edmi-ex-grp { display: inline-flex; align-items: center; gap: 0.125rem; }
+	.edmi-ex-pop { position: relative; display: inline-flex; }
 	.edmi-ex-btn {
 		display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem; height: 30px; padding: 0 0.6rem; border-radius: 7px; cursor: pointer; text-decoration: none;
 		font: 500 12.5px/1 var(--sl-font); color: var(--muted-foreground); background: transparent; border: 1px solid transparent;
@@ -240,29 +247,40 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 	.edmi-ex-btn:hover { background: var(--accent); color: var(--foreground); }
 	.edmi-ex-btn[aria-expanded="true"] { background: var(--tab-active); border-color: var(--border); color: var(--foreground); }
 	.edmi-ex-icon { width: 30px; padding: 0; }
-	.edmi-ex-tools-toggle { display: inline-flex; }
+	/* mode icon follows the example's mode */
+	[data-mode-toggle] .edmi-ex-moon { display: none; }
+	[data-mode="dark"] [data-mode-toggle] .edmi-ex-sun, [data-mode-toggle][data-mode="dark"] .edmi-ex-sun { display: none; }
+	[data-mode="dark"] [data-mode-toggle] .edmi-ex-moon, [data-mode-toggle][data-mode="dark"] .edmi-ex-moon { display: block; }
 
-	/* tools: a dropdown panel below the bar; inline on wide screens */
+	/* tooltips for icon-only controls (data-tip), solid popover surface */
+	[data-tip] { position: relative; }
+	[data-tip]::after {
+		content: attr(data-tip); position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%); z-index: 40; white-space: nowrap; pointer-events: none;
+		padding: 0.3rem 0.5rem; border-radius: 6px; font: 500 11.5px/1.2 var(--sl-font); color: var(--background); background: var(--foreground); opacity: 0; visibility: hidden; transition: opacity 0.12s;
+	}
+	[data-tip][data-tip-align="end"]::after { left: auto; right: 0; transform: none; }
+	[data-tip]:hover::after, [data-tip]:focus-visible::after { opacity: 1; visibility: visible; }
+	[data-tip][aria-expanded="true"]::after { display: none; }
+
+	/* popovers: anchored under their trigger */
 	.edmi-ex-panel {
-		position: absolute; top: calc(100% + 0.5rem); right: 0; z-index: 30; width: min(30rem, 100%);
-		background: var(--popover); border: 1px solid var(--border); border-radius: 14px; padding: 0.75rem;
+		position: absolute; top: calc(100% + 0.5rem); right: 0; z-index: 30;
+		background: var(--popover); border: 1px solid var(--border); border-radius: 12px; padding: 0.5rem;
 		box-shadow: var(--bv-float);
 	}
 	.edmi-ex-panel[hidden] { display: none; }
-	.edmi-ex-tools { display: flex; flex-direction: column; gap: 0.625rem; }
-	.edmi-ex-group { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
-	.edmi-ex-width { font: 500 11.5px/1 var(--sl-font-mono); color: var(--muted-foreground); }
-	@media (min-width: 100rem) {
-		.edmi-ex-tools-toggle { display: none; }
-		.edmi-ex-tools, .edmi-ex-tools[hidden] { position: static; display: flex; flex-direction: row; align-items: center; gap: 0.75rem; width: auto; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; order: -1; }
-		.edmi-ex-bar { flex-wrap: nowrap; }
-		.edmi-ex-bar > .edmi-ex-title { flex: 0 1 auto; }
-		.edmi-ex-bar > .edmi-ex-tools { margin-inline-start: auto; }
-		.edmi-ex-bar > .edmi-ex-actions { margin-inline-start: 0; }
-		.edmi-ex-tools { order: 2; }
-		.edmi-ex-actions { order: 3; }
+	.edmi-ex-bar > .edmi-ex-info { right: 0; }
+	.edmi-ex-theme { display: flex; flex-direction: column; gap: 0.5rem; width: 14rem; padding: 0.75rem; }
+	.edmi-ex-theme .edmi-ex-select, .edmi-ex-menu .edmi-ex-select { justify-content: space-between; }
+	.edmi-ex-menu { display: flex; flex-direction: column; gap: 2px; width: 14.5rem; }
+	.edmi-ex-menu .edmi-ex-select { padding: 0.25rem 0.5rem; }
+	.edmi-ex-item {
+		display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; width: 100%; height: 32px; padding: 0 0.5rem; border-radius: 7px; cursor: pointer; text-decoration: none;
+		font: 500 13px/1 var(--sl-font); color: var(--foreground); background: transparent; border: 0; text-align: left;
 	}
-	.edmi-ex-info { width: min(26rem, 100%); }
+	.edmi-ex-item:hover, .edmi-ex-item:focus-visible { background: var(--accent); }
+	.edmi-ex-item kbd { font: 500 10.5px/1 var(--sl-font-mono); color: var(--muted-foreground); border: 1px solid var(--border); border-radius: 4px; padding: 0.15rem 0.3rem; }
+	.edmi-ex-info { width: min(26rem, calc(100vw - 2rem)); padding: 0.75rem; }
 	.edmi-ex-info p { margin: 0; font-size: 0.8125rem; line-height: 1.55; color: var(--muted-foreground); }
 	.edmi-ex-info p + p { margin-top: 0.5rem; }
 	.edmi-ex-info .edmi-ex-info-desc { color: var(--foreground); font-size: 0.875rem; }
@@ -273,12 +291,30 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 	.edmi-header-slot .edmi-seg button[aria-pressed="true"] { background: var(--tab-active); border-color: var(--border); color: var(--foreground); }
 	.edmi-ex-select { position: relative; display: inline-flex; align-items: center; gap: 0.375rem; font: 500 11px/1 var(--sl-font-mono); text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); }
 	.edmi-ex-select select {
-		appearance: auto; height: 28px; padding: 0 0.4rem; font: 500 12.5px/1 var(--sl-font); text-transform: capitalize;
+		appearance: auto; height: 30px; padding: 0 0.4rem; font: 500 12.5px/1 var(--sl-font); text-transform: capitalize;
 		color: var(--foreground); background: var(--secondary); border: 1px solid var(--input); border-radius: 7px; cursor: pointer;
 	}
 	.edmi-ex-select select:hover { background: var(--accent); }
 	.edmi-header-slot .edmi-ex-zoom button[disabled] { opacity: 0.4; cursor: default; }
-	.edmi-ex-zoom-value { min-width: 3.1em; text-align: center; font: 500 12px/1 var(--sl-font-mono); color: var(--foreground); }
+	.edmi-ex-zoom { align-items: stretch; }
+	.edmi-ex-zoom-value { display: inline-flex; align-items: center; justify-content: center; align-self: stretch; box-sizing: border-box; width: 3.25rem; padding: 0; font: 500 12px/normal var(--sl-font-mono); font-variant-numeric: tabular-nums; color: var(--foreground); }
+	/* narrow-only menu entries (mode, theme, framework) live in the ⋯ menu on small screens */
+	.edmi-ex-narrow { display: none !important; }
+	.edmi-ex-lbl-sm { display: inline; }
+	@media (max-width: 61.99rem) {
+		.edmi-ex-lg { display: none !important; }
+	}
+	@media (max-width: 39.99rem) {
+		.edmi-ex-wide { display: none !important; }
+		.edmi-ex-narrow { display: flex !important; }
+		.edmi-ex-lbl-sm, .edmi-ex-tag, .edmi-ex-sep { display: none; }
+		.edmi-ex-back { padding: 0; width: 30px; justify-content: center; }
+		.edmi-ex-actions { gap: 0.25rem; }
+		.edmi-ex-pop { position: static; }
+		.edmi-ex-bar { position: relative; }
+		html:has(.edmi-ex) .edmi-wordmark { display: none; }
+		.edmi-ex-theme { width: min(14rem, calc(100vw - 2rem)); }
+	}
 
 	.edmi-ex-restore {
 		position: absolute; top: 0.5rem; right: 0.5rem; z-index: 7; display: none; align-items: center; justify-content: center; width: 32px; height: 32px; padding: 0;
@@ -320,19 +356,8 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 	.edmi-ex-code .expressive-code .frame { border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
 	.edmi-ex-code .expressive-code .frame pre { border: 0 !important; border-radius: 0 !important; max-height: none; }
 	.edmi-ex-code .expressive-code .frame .header { border-radius: 0 !important; }
-	.edmi-ex [data-fw-panel] { }
 	@media (max-width: 61.99rem) {
-		.edmi-ex-lbl { display: none; }
 		.edmi-ex-handle { display: none !important; }
-	}
-	.edmi-ex-fw-mobile { display: none; }
-	@media (max-width: 39.99rem) {
-		.edmi-ex-fw { display: none; }
-		.edmi-ex-fw-mobile { display: inline-flex; }
-		.edmi-ex-btn span { display: none; }
-		.edmi-ex-tag { display: none; }
-		html:has(.edmi-ex) .edmi-wordmark { display: none; }
-		.edmi-ex-actions { gap: 0.25rem; }
 	}
 </style>
 <script>
@@ -350,7 +375,6 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 		const iframe = q<HTMLIFrameElement>("[data-iframe]");
 		const frame = q("[data-frame]");
 		const stage = q("[data-stage]");
-		const label = q("[data-width-label]");
 		const open = q<HTMLAnchorElement>("[data-open]");
 		const supported = (root.dataset.frameworks ?? "react").split(" ");
 		const renderBase = root.dataset.renderBase!;
@@ -362,8 +386,8 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 			radius: "0.625",
 		};
 
-		// ---- panels: tools / info (popovers under the bar) and code (drawer over the preview). One open at a time.
-		const panels = ["tools", "info", "code"];
+		// ---- panels: menu / theme / info (popovers under the bar) and code (drawer over the preview). One open at a time.
+		const panels = ["menu", "theme", "info", "code"];
 		const panel = (id: string) => document.querySelector<HTMLElement>(`[data-panel="${id}"]`)!;
 		const setPanel = (id: string | null) => {
 			for (const p of panels) {
@@ -455,20 +479,26 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 
 		// ---- knobs
 		const paintKnobs = () => {
-			for (const b of qa("[data-knob]"))
-				b.setAttribute("aria-pressed", String(state[b.dataset.knob as keyof State] === b.dataset.value));
 			for (const s of qa<HTMLSelectElement>("[data-knob-select]")) s.value = state[s.dataset.knobSelect as keyof State];
+			for (const b of qa("[data-mode-toggle]")) b.dataset.mode = state.mode;
 		};
 		const changed = () => {
 			paintKnobs();
 			post();
 			open.href = `${renderBase}/${fw()}/?${query()}`;
 		};
-		for (const b of qa("[data-knob]"))
+		for (const b of qa("[data-mode-toggle]"))
 			b.addEventListener("click", () => {
-				state[b.dataset.knob as keyof State] = b.dataset.value!;
+				state.mode = state.mode === "dark" ? "light" : "dark";
 				changed();
 			});
+		// menu entries: close the menu (or hand over to another popover) after use
+		for (const [sel, next] of [["[data-open-info]", "info"], ["[data-open-theme]", "theme"]] as const)
+			q(sel).addEventListener("click", (e) => {
+				e.stopPropagation();
+				setPanel(next);
+			});
+		q("[data-open]").addEventListener("click", () => setPanel(null));
 		for (const s of qa<HTMLSelectElement>("[data-knob-select]"))
 			s.addEventListener("change", () => {
 				state[s.dataset.knobSelect as keyof State] = s.value;
@@ -485,10 +515,6 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 		const zoomLabel = q("[data-zoom-label]");
 		const zoomBtn = (k: string) => q<HTMLButtonElement>(`[data-zoom="${k}"]`);
 		const readout = () => {
-			const logical = preset ?? iframe.offsetWidth;
-			const pct = Math.round(zoom * 100);
-			label.textContent =
-				(preset === null && dragged === null ? `Responsive · ${logical}px` : `${logical}px`) + (zoom === 1 ? "" : ` @ ${pct}%`);
 			// the drag handle only makes sense while the frame is narrower than the stage
 			if (frame.offsetWidth < stage.clientWidth - 40) root.dataset.limited = "";
 			else delete root.dataset.limited;
@@ -508,7 +534,6 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 			zoomLabel.textContent = `${Math.round(zoom * 100)}%`;
 			zoomBtn("out").disabled = zoom <= ZOOMS[0];
 			zoomBtn("in").disabled = zoom >= ZOOMS[ZOOMS.length - 1];
-			zoomBtn("reset").disabled = zoom === 1;
 			readout();
 		};
 		const setZoom = (z: number) => {
@@ -521,7 +546,6 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 		};
 		zoomBtn("out").addEventListener("click", () => stepZoom(-1));
 		zoomBtn("in").addEventListener("click", () => stepZoom(1));
-		zoomBtn("reset").addEventListener("click", () => setZoom(1));
 		// Ctrl/Cmd + = / - / 0 zoom the preview (the browser's own zoom is replaced on this page)
 		document.addEventListener("keydown", (e) => {
 			if (!(e.ctrlKey || e.metaKey) || e.altKey) return;
