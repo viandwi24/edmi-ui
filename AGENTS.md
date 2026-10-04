@@ -263,7 +263,7 @@ Spec: `refs/edmi-ui/EXAMPLES.md` (one live page per screen, light/dark, stone/sl
 - **Thumbnails are generated, not copied**: `bun scripts/example-thumbs.ts --url <docs url> [slug…]` (procedure in the examples README) screenshots the live `/examples/<slug>/render/react/` in light and dark (respecting `defaultBase/defaultTheme/defaultMode`) at 1440x1080 and stores 800px PNGs in `public/examples/`. Re-run it after any visual change to an example; thumbnails must match the live render.
 - **Stockbreak layouts**: the page examples render the navbar layout; `markets-sidebar` is the sidebar app shell variant (separate folder, own `data.ts`). Viewer: zoom (logical iframe width stays the preset width via `--z`), full-page overlay (Esc exits, not persisted).
 - **Add one**: README steps; restart `astro dev` after adding files (islands generated at config load). Thumbnails: crop the board with `sips -c H W --cropOffset Y X`. Compare each port in light + dark, stone·green + slate·ocean against the screenshot.
-- Gotchas: the React/Vue conversation items render client-side (SSR HTML is empty until hydration); Vue `MessageResponse` fades words in (screenshots right after load look dim); the Svelte `IconPlaceholder` dev shim renders circles (not real icons) in live previews: known gap, see decisions.
+- Gotchas: the React/Vue conversation items render client-side (SSR HTML is empty until hydration); Vue `MessageResponse` fades words in (screenshots right after load look dim); the Svelte `IconPlaceholder` dev shim renders real Phosphor icons client-side after mount (SSR HTML has none).
 
 ## 8. Verification gates
 
@@ -359,7 +359,14 @@ AI pack (v3, decided with the user)
 
 Docs examples
 - Examples render in an **iframe to a bare route** (real viewport for Sidebar/media queries, own `<html>` so portals follow the knobs), not a scoped container. Knobs travel by query + `postMessage`; framework switch swaps the route. Why: robustness; EXAMPLES.md allowed either.
-- Every example is live in all three frameworks (user decision), shares one `data.ts`, and imports registry aliases only. Known gap: the Svelte `IconPlaceholder` shim (docs dev runtime) draws a circle, so Svelte example icons are placeholders until a docs-side Phosphor shim exists.
+- Every example is live in all three frameworks (user decision), shares one `data.ts`, and imports registry aliases only.
+
+Docs-site and QA wave fixes (still binding)
+- Starlight's fixed `.right-sidebar` spans the full width above z-50 portals and swallowed clicks on the right half of toasts/popovers: it is `pointer-events: none` with `auto` restored on its TOC children (`global.css`).
+- cmdk scrolls its initial item into view on mount and moved the page: `astro.config.mjs` ignores `scrollIntoView` inside `[cmdk-root]` until the visitor interacts. A second head script re-scrolls to the URL hash once after demos hydrate (only before interaction; heading ids carry a trailing `-` for `Raised ✦`, so `#raised` falls back to `[id^=raised-]`).
+- Redirects in `astro.config.mjs` keep the `/edmi-ui` base (target and source).
+- Page subtitles and components-index cards render backticks in descriptions as `<code>`; the meta description stays plain text. Component source shown in docs is passed through `consumerSource` (`lib/demo.ts`): the dev-only `IconPlaceholder` becomes the Phosphor import/element a consumer gets. Components-index thumbnails strip `href`s (inert, no base-less links). Preview stages with a navigation menu get extra height/top alignment so the viewport panel is not clipped.
+- Vue `MessageResponse` `mode` prop defaults to static; Vue menu checkbox/radio items keep the menu open via `closeOnSelect`; the faceted filter uses `arrHas` for array columns.
 
 Agent skill
 - The consumer skill lives in `skills/edmi-ui` (the path the `skills` CLI discovers), not under `.claude/`, so every agent product can install it; catalog and raised list are generated, the guidance is hand-written (7.7). Docs pages: Agent skills and Upgrading under Getting Started. Why: user decision; consumers should get correct installs, themes and `raised` restraint from their own coding agent.

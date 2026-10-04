@@ -549,6 +549,24 @@ site-search dialog::backdrop {
 /* ---------------------------------------- page ---------------------------------------- */
 .right-sidebar {
 	border-inline-start: 1px solid var(--border);
+	/* Starlight's fixed right column spans the full width above z-50 portals (toasts, popovers) and eats their clicks:
+	   let pointer events through the empty column, keep them on the table of contents itself. */
+	pointer-events: none;
+}
+.right-sidebar > *,
+.right-sidebar-panel,
+.right-sidebar a,
+.right-sidebar button,
+.right-sidebar summary {
+	pointer-events: auto;
+}
+.edmi-page-desc code {
+	font-family: var(--sl-font-mono);
+	font-size: 0.875em;
+	padding: 0.1em 0.35em;
+	border-radius: 5px;
+	background: var(--muted);
+	color: var(--foreground);
 }
 .right-sidebar-panel {
 	padding-top: 1.75rem !important;

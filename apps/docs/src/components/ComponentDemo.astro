@@ -143,6 +143,9 @@ const missing = FRAMEWORKS.filter((fw) => !has.includes(fw));
 		background-image: radial-gradient(color-mix(in oklab, var(--foreground) 16%, transparent) 1px, transparent 1.2px); background-size: 16px 16px;
 	}
 
+	/* a navigation menu opens its panel below the trigger inside the stage: leave room so overflow does not clip it */
+	.edmi-preview.edmi-preview-stage:has([data-slot="navigation-menu"]) { align-items: flex-start; min-height: 24rem; padding-top: 2rem; }
+
 	.edmi-demo-card .expressive-code { margin: 0; }
 	.edmi-demo-card .expressive-code .frame { border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
 	.edmi-demo-card .expressive-code .frame pre { border: 0 !important; border-radius: 0 !important; }

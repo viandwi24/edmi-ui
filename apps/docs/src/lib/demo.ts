@@ -51,6 +51,59 @@ export function demoPath(fw: Framework, demo: string) {
 	return resolve(docsRoot, `src/demos/${fw}/${demo}.${DEMO_EXT[fw]}`);
 }
 
+/** Show registry source the way a consumer gets it: the dev-only IconPlaceholder becomes the Phosphor icon (CLI default). */
+export function consumerSource(fw: Framework, code: string): string {
+	if (!code.includes("IconPlaceholder")) return code;
+	const icons = new Set<string>();
+	let out = code.replace(
+		/<IconPlaceholder\b([\s\S]*?)\/>/g,
+		(_m, attrs: string) => {
+			const icon = attrs.match(/phosphor="(\w+)"/)?.[1] ?? "CircleIcon";
+			icons.add(icon);
+			const rest = attrs.replace(
+				/[\t ]*\b(?:lucide|tabler|hugeicons|phosphor|remixicon)="[^"]*"\r?\n?/g,
+				"",
+			);
+			const multiline = rest.includes("\n");
+			const body = multiline
+				? rest.replace(/\s+$/, "\n")
+				: rest.replace(/\s+/g, " ").trimEnd();
+			if (!multiline) return `<${icon}${body} />`;
+			// keep the closing `/>` at the indentation of the original element
+			const closeIndent = attrs.match(/\n([\t ]*)$/)?.[1] ?? "";
+			return `<${icon}${body.replace(/\n$/, "")}\n${closeIndent}/>`;
+		},
+	);
+	const names = [...icons];
+	const importLine =
+		fw === "svelte"
+			? names
+					.map(
+						(n) =>
+							`import ${n} from "phosphor-svelte/lib/${n.replace(/Icon$/, "")}";`,
+					)
+					.join("\n")
+			: `import { ${names.join(", ")} } from "@phosphor-icons/react";`;
+	const imp =
+		/^[\t ]*import\s+(?:\{\s*IconPlaceholder\s*\}|IconPlaceholder)\s+from\s+["'][^"']*icon-placeholder[^"']*["'];?[\t ]*$/m;
+	const indent =
+		out.match(
+			/^([\t ]*)import\s+(?:\{\s*IconPlaceholder|IconPlaceholder)/m,
+		)?.[1] ?? "";
+	out = imp.test(out)
+		? out.replace(
+				imp,
+				names.length
+					? importLine
+							.split("\n")
+							.map((l) => indent + l)
+							.join("\n")
+					: "",
+			)
+		: out;
+	return out;
+}
+
 export async function sourcesFor(name: string, fw: Framework) {
 	const entry = (await getItem(name))?.frameworks[fw];
 	return (entry?.files ?? [])
@@ -59,7 +112,7 @@ export async function sourcesFor(name: string, fw: Framework) {
 			const p = resolve(repoRoot, "packages", fw, f.path);
 			return {
 				path: f.path,
-				code: existsSync(p) ? readFileSync(p, "utf8") : "",
+				code: existsSync(p) ? consumerSource(fw, readFileSync(p, "utf8")) : "",
 			};
 		})
 		.filter((s) => s.code);

@@ -22,17 +22,22 @@ type Card = {
 	name: string;
 	title: string;
 	description: string;
+	descriptionHtml: string;
 	href: string;
 	html: string | null;
 	via: "demo" | "thumb" | "fallback";
 };
+
+const rich = (t: string) =>
+	t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/`([^`]+)`/g, "<code>$1</code>");
 
 const fallbacks: string[] = [];
 
 function render(name: string, node: unknown): string | null {
 	try {
 		const html = renderToString(node as never, { identifierPrefix: `p-${name}-` });
-		return html.trim() ? html : null;
+		// thumbnails are inert previews: drop hrefs so they never point at base-less routes (e.g. a site-header logo "/")
+		return html.trim() ? html.replace(/\shref="[^"]*"/g, "") : null;
 	} catch (e) {
 		console.warn(`[components-index] SSR failed for "${name}": ${(e as Error).message.split("\n")[0]}`);
 		return null;
@@ -47,6 +52,7 @@ async function build(group: string, id: string): Promise<Card> {
 		name,
 		title: item?.title ?? doc?.data.title ?? name,
 		description: (item?.description ?? doc?.data.description ?? "").replaceAll("`", ""),
+		descriptionHtml: rich(item?.description ?? doc?.data.description ?? ""),
 		href: `${BASE}/components/${group}/${name}/`,
 	};
 	let html: string | null = null;
@@ -125,7 +131,7 @@ if (fallbacks.length) console.warn(`[components-index] icon-tile fallbacks: ${fa
 								</div>
 								<div class="cx-meta">
 									<a class="cx-title" href={c.href}>{c.title}</a>
-									<div class="cx-desc">{c.description}</div>
+									<div class="cx-desc" set:html={c.descriptionHtml} />
 								</div>
 							</div>
 						))}

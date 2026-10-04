@@ -66,6 +66,9 @@ const fwSync = `(function(){var d=document.documentElement,K='edmi-framework',v=
 // cmdk scrolls its initially selected item into view on mount, which moves the whole page when a Command
 // demo sits below the fold. Ignore scrollIntoView inside [cmdk-root] (items and group headings) until the visitor has interacted.
 const cmdkNoAutoScroll = `(function(){var u=false,o=Element.prototype.scrollIntoView;['keydown','pointerdown','wheel','touchstart'].forEach(function(t){window.addEventListener(t,function(){u=true},{capture:true,passive:true,once:true})});Element.prototype.scrollIntoView=function(){if(!u&&this.closest&&this.closest('[cmdk-root]'))return;return o.apply(this,arguments)}})();`;
+// Demo islands hydrate after load and shift the layout, so a `#raised` anchor lands in the wrong place. Re-scroll to the hash
+// target once after hydration settles, but only while the visitor has not interacted and the hash did not change.
+const hashRescroll = `(function(){var h=location.hash;if(h.length<2)return;var u=false;['keydown','pointerdown','wheel','touchstart'].forEach(function(t){window.addEventListener(t,function(){u=true},{capture:true,passive:true,once:true})});function go(){if(u||location.hash!==h)return;var id=decodeURIComponent(h.slice(1)),el=document.getElementById(id)||document.querySelector('h2[id^="'+id+'-"],h3[id^="'+id+'-"]');if(el)el.scrollIntoView()}window.addEventListener('load',function(){[400,1200,2500].forEach(function(ms){setTimeout(go,ms)})})})();`;
 const pmSync = `(function(){var d=document.documentElement,K='edmi-pm',v='npm';try{v=localStorage.getItem(K)||v}catch(e){}if(['npm','pnpm','yarn','bun'].indexOf(v)<0)v='npm';d.dataset.pm=v;window.addEventListener(K,function(e){d.dataset.pm=e.detail});document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-pm-set]');if(b){var f=b.getAttribute('data-pm-set');try{localStorage.setItem(K,f)}catch(x){}window.dispatchEvent(new CustomEvent(K,{detail:f}))}})})();`;
 
 // https://astro.build/config
@@ -117,6 +120,7 @@ export default defineConfig({
 				{ tag: "script", content: fwSync },
 				{ tag: "script", content: pmSync },
 				{ tag: "script", content: cmdkNoAutoScroll },
+				{ tag: "script", content: hashRescroll },
 			],
 			sidebar: buildSidebar(resolve(here, "src/content/docs"), {
 				componentGroups: COMPONENT_GROUPS,

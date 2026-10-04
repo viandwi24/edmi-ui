@@ -4,6 +4,8 @@ const PAGE_TITLE_ID = "_top";
 
 const { entry } = Astro.locals.starlightRoute;
 const { title, description, template } = entry.data;
+const escapeHtml = (t: string) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const descriptionHtml = description ? escapeHtml(description).replace(/`([^`]+)`/g, "<code>$1</code>") : "";
 const isSplash = template === "splash";
 ---
 
@@ -13,7 +15,7 @@ const isSplash = template === "splash";
 	) : (
 		<div class="edmi-page-title">
 			<h1 id={PAGE_TITLE_ID}>{title}</h1>
-			{description && <p class="edmi-page-desc">{description}</p>}
+			{description && <p class="edmi-page-desc" set:html={descriptionHtml} />}
 		</div>
 	)
 }
