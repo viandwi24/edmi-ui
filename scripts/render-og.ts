@@ -27,7 +27,10 @@ const PORT = 4792;
 const PUBLIC = resolve(ROOT, "apps/docs/public");
 const DRIVER = resolve(PUBLIC, "__og.html");
 
-const custom = args.flatMap((a, i) => (a === "--job" ? [args[i + 1]] : []));
+const custom = args.flatMap((a, i) => {
+	const next = args[i + 1];
+	return a === "--job" && next ? [next] : [];
+});
 const specs = custom.length
 	? custom
 	: [
@@ -36,8 +39,10 @@ const specs = custom.length
 			"og/card/?theme=dark,1200x630,1,apps/docs/public/og.png",
 		];
 const jobs = specs.map((s, i) => {
-	const [page, size, scale, out] = s.split(",");
-	const [w, h] = size.split("x").map(Number);
+	const [page = "", size = "", scale = "1", out = ""] = s.split(",");
+	if (!page || !size || !out)
+		throw new Error(`bad --job "${s}" (page,WxH,scale,out)`);
+	const [w = 0, h = 0] = size.split("x").map(Number);
 	return { id: i, page, w, h, scale: Number(scale), out: resolve(ROOT, out) };
 });
 
@@ -133,6 +138,8 @@ const server = Bun.serve({
 			return new Response("ok", { headers: cors });
 		}
 		const job = jobs[Number(u.searchParams.get("id"))];
+		if (!job)
+			return new Response("unknown job", { status: 400, headers: cors });
 		await Bun.write(job.out, await req.arrayBuffer());
 		console.log(`ok ${++received}/${jobs.length} ${job.out}`);
 		return new Response("ok", { headers: cors });
