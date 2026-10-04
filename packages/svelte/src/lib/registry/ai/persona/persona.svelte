@@ -1,8 +1,7 @@
 <script lang="ts">
 	// Derived from Vercel AI Elements (Apache-2.0), modified for Edmi UI.
 	import { cn } from "$lib/utils.js";
-	import { Rive } from "@rive-app/webgl2";
-	import type { EventCallback } from "@rive-app/webgl2";
+	import type { EventCallback, Rive } from "@rive-app/webgl2";
 	import { onMount } from "svelte";
 	import { personaSources, type PersonaState, type PersonaVariant } from "./sources.js";
 
@@ -62,8 +61,19 @@
 		}
 	}
 
-	function start() {
-		if (!canvas) return;
+	// @rive-app/webgl2 is CommonJS: load it on the client only (Node SSR cannot see its named exports).
+	type RiveModule = typeof import("@rive-app/webgl2");
+	let riveModule: Promise<RiveModule> | null = null;
+	const loadRive = () =>
+		(riveModule ??= import("@rive-app/webgl2").then((m) =>
+			"Rive" in m ? m : (m as unknown as { default: RiveModule }).default,
+		));
+	let generation = 0;
+
+	async function start() {
+		const run = ++generation;
+		const { Rive } = await loadRive();
+		if (run !== generation || !canvas) return;
 		rive?.cleanup();
 		rive = new Rive({
 			canvas,
@@ -104,6 +114,7 @@
 			observer.disconnect();
 			mql?.removeEventListener("change", syncTheme);
 			resize.disconnect();
+			generation++;
 			rive?.cleanup();
 			rive = null;
 		};

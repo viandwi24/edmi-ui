@@ -1,9 +1,8 @@
 <script setup lang="ts">
 // Derived from AI Elements Vue (Apache-2.0), modified for Edmi UI.
-import type { EventCallback } from "@rive-app/webgl2"
+import type { EventCallback, Rive } from "@rive-app/webgl2"
 import type { HTMLAttributes } from "vue"
 import type { PersonaState, PersonaVariant } from "./sources"
-import { Rive } from "@rive-app/webgl2"
 import { useResizeObserver } from "@vueuse/core"
 import { computed, onBeforeUnmount, onMounted, ref, shallowRef, watch } from "vue"
 import { cn } from "@/registry/edmi/lib/utils"
@@ -75,9 +74,22 @@ function applyColor() {
   }
 }
 
-function start() {
+// @rive-app/webgl2 is CommonJS: load it on the client only (Node SSR cannot see its named exports).
+type RiveModule = typeof import("@rive-app/webgl2")
+let riveModule: Promise<RiveModule> | null = null
+function loadRive() {
+  riveModule ??= import("@rive-app/webgl2").then(m =>
+    "Rive" in m ? m : (m as unknown as { default: RiveModule }).default,
+  )
+  return riveModule
+}
+let generation = 0
+
+async function start() {
+  const run = ++generation
+  const { Rive } = await loadRive()
   const canvas = canvasRef.value
-  if (!canvas)
+  if (run !== generation || !canvas)
     return
   rive.value?.cleanup()
   const instance = new Rive({
@@ -112,6 +124,7 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
+  generation++
   observer?.disconnect()
   mql?.removeEventListener("change", syncTheme)
   rive.value?.cleanup()
