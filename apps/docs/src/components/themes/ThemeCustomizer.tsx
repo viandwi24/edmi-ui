@@ -1,7 +1,26 @@
-// Themes page customizer (mirrors board 02): Base x Theme x Radius x Mode drive a scoped preview of the
+// Themes page (mirrors board 02): a page header with the primary actions (Copy CSS / Install open Edmi
+// Dialogs), a toolbar of Edmi Tabs (Base x Theme x Radius x Mode x Style) and a large scoped preview of the
 // real Edmi landing cards. Only the preview wrapper carries data-base/data-theme/--radius/.dark, so the
 // docs chrome keeps its own theme. The choice persists in localStorage (never the docs chrome theme).
 
+import {
+	CodeBlock,
+	CodeBlockActions,
+	CodeBlockCopyButton,
+	CodeBlockFilename,
+	CodeBlockHeader,
+	CodeBlockTitle,
+} from "@edmi-react/components/ai/code-block";
+import { Button } from "@edmi-react/ui/button";
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+} from "@edmi-react/ui/dialog";
+import { Tabs, TabsList, TabsTrigger } from "@edmi-react/ui/tabs";
+import { CopyIcon, TerminalWindowIcon } from "@phosphor-icons/react";
 import { useEffect, useMemo, useState } from "react";
 import {
 	FRAMEWORK_LABEL,
@@ -9,7 +28,6 @@ import {
 	type Framework,
 	installCommand,
 	type PackageManager,
-	PM_KEY,
 	PMS,
 } from "../../config";
 import {
@@ -25,6 +43,7 @@ import {
 	setRaised,
 	useRaised,
 } from "../landing/cards";
+import { setPm, useFramework, usePm } from "../landing/hooks";
 
 export type ThemeData = {
 	bases: string[];
@@ -49,105 +68,64 @@ type State = {
 	mode: "light" | "dark";
 };
 
-function Seg<T extends string>({
+function Control<T extends string>({
 	label,
 	hint,
 	value,
 	options,
 	onChange,
+	raised,
 }: {
 	label: string;
 	hint: string;
 	value: T;
 	options: { value: T; label: string; swatch?: React.ReactNode }[];
 	onChange: (v: T) => void;
+	raised?: boolean;
 }) {
 	return (
-		<div className="flex flex-col gap-1.5">
+		<div className="flex min-w-0 flex-col gap-1.5">
 			<div className="flex items-baseline gap-2">
 				<span className="text-[13px] font-medium text-foreground">{label}</span>
 				<span className="font-mono text-[11px] text-muted-foreground-2">
 					{hint}
 				</span>
 			</div>
-			{/* biome-ignore lint/a11y/useSemanticElements: a fieldset would bring UA borders into the preview chrome */}
-			<div className="flex flex-wrap gap-1.5" role="group" aria-label={label}>
-				{options.map((o) => (
-					<button
-						key={o.value}
-						type="button"
-						aria-pressed={value === o.value}
-						onClick={() => onChange(o.value)}
-						className={`inline-flex h-8 items-center gap-1.5 rounded-md border px-3 text-[13px] font-medium transition-colors ${
-							value === o.value
-								? "border-ring bg-card text-foreground ring-1 ring-ring"
-								: "border-border bg-transparent text-muted-foreground hover:bg-accent hover:text-foreground"
-						}`}
-					>
-						{o.swatch}
-						{o.label}
-					</button>
-				))}
-			</div>
+			<Tabs value={value} onValueChange={(v) => onChange(v as T)}>
+				<TabsList raised={raised} className="max-w-full flex-wrap">
+					{options.map((o) => (
+						<TabsTrigger key={o.value} value={o.value}>
+							{o.swatch}
+							{o.label}
+						</TabsTrigger>
+					))}
+				</TabsList>
+			</Tabs>
 		</div>
 	);
 }
 
-function useFramework(): [Framework, (f: Framework) => void] {
-	const [fw, setFw] = useState<Framework>("react");
-	useEffect(() => {
-		try {
-			const v = localStorage.getItem("edmi-framework") as Framework | null;
-			if (v && FRAMEWORKS.includes(v)) setFw(v);
-		} catch {}
-		const on = (e: Event) => setFw((e as CustomEvent<Framework>).detail);
-		window.addEventListener("edmi-framework", on);
-		return () => window.removeEventListener("edmi-framework", on);
-	}, []);
-	return [
-		fw,
-		(f) => {
-			setFw(f);
-			try {
-				localStorage.setItem("edmi-framework", f);
-			} catch {}
-			window.dispatchEvent(new CustomEvent("edmi-framework", { detail: f }));
-		},
-	];
-}
-
-function CopyButton({ text, label }: { text: string; label: string }) {
-	const [done, setDone] = useState(false);
+function Snippet({
+	code,
+	language,
+	filename,
+}: {
+	code: string;
+	language: string;
+	filename: string;
+}) {
 	return (
-		<button
-			type="button"
-			onClick={() => {
-				navigator.clipboard?.writeText(text).catch(() => {});
-				setDone(true);
-				setTimeout(() => setDone(false), 1500);
-			}}
-			className="inline-flex h-8 items-center rounded-md border border-border bg-card px-3 text-[13px] font-medium text-foreground hover:bg-accent"
-		>
-			{done ? "Copied" : label}
-		</button>
+		<CodeBlock code={code} language={language as "css"}>
+			<CodeBlockHeader>
+				<CodeBlockTitle>
+					<CodeBlockFilename>{filename}</CodeBlockFilename>
+				</CodeBlockTitle>
+				<CodeBlockActions>
+					<CodeBlockCopyButton aria-label={`Copy ${filename}`} />
+				</CodeBlockActions>
+			</CodeBlockHeader>
+		</CodeBlock>
 	);
-}
-
-/** Current global package manager (head script sets html[data-pm]; synced through the edmi-pm event). */
-function usePm(): PackageManager {
-	const [pm, setPm] = useState<PackageManager>("npm");
-	useEffect(() => {
-		const read = () => {
-			const v = document.documentElement.dataset.pm as
-				| PackageManager
-				| undefined;
-			if (v && PMS.includes(v)) setPm(v);
-		};
-		read();
-		window.addEventListener(PM_KEY, read);
-		return () => window.removeEventListener(PM_KEY, read);
-	}, []);
-	return pm;
 }
 
 export default function ThemeCustomizer({ data }: { data: ThemeData }) {
@@ -157,7 +135,8 @@ export default function ThemeCustomizer({ data }: { data: ThemeData }) {
 		radius: "0.625",
 		mode: "light",
 	});
-	const [tab, setTab] = useState<"css" | "install">("css");
+	const [dialog, setDialog] = useState<"css" | "install" | null>(null);
+	const [cssTab, setCssTab] = useState<"css" | "tailwind">("css");
 	const [fw, setFw] = useFramework();
 	const pm = usePm();
 	const raised = useRaised();
@@ -193,14 +172,49 @@ export default function ThemeCustomizer({ data }: { data: ThemeData }) {
 			),
 		[data.css, s.base, s.theme, s.radius],
 	);
+	const tailwind = `@import "tailwindcss";
+@import "@edmi-ui/tokens/tokens.css";
+@import "@edmi-ui/tokens/theme.css";
+
+${css}`;
+	const install = `# once: the Edmi tokens and Tailwind theme
+${installCommand(fw, "theme", pm)}
+
+# this base + theme (replaces the color variables, light and dark)
+${installCommand(fw, item, pm)}`;
+	const label = `${cap(s.base)} \u00b7 ${cap(s.theme)}`;
 
 	return (
 		<div className="edmi-themes not-content flex flex-col gap-6">
-			<div className="flex flex-wrap gap-x-8 gap-y-4 rounded-xl border border-border bg-card p-5">
-				<Seg
+			<header className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
+				<div className="max-w-2xl">
+					<h2 className="m-0 text-[clamp(2rem,4vw,2.625rem)] leading-[1.08] font-medium tracking-[-0.035em] text-ink-soft">
+						Themes
+					</h2>
+					<p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
+						Pick a base color, a theme, a radius and a mode, then see real Edmi
+						components in it. Copy the CSS or install the matching registry
+						theme. The preview is scoped: the docs chrome keeps its own theme.
+					</p>
+				</div>
+				<div className="flex flex-wrap gap-2">
+					<Button variant="outline" onClick={() => setDialog("css")}>
+						<CopyIcon className="size-4" />
+						Copy CSS
+					</Button>
+					<Button onClick={() => setDialog("install")}>
+						<TerminalWindowIcon className="size-4" />
+						Install
+					</Button>
+				</div>
+			</header>
+
+			<div className="flex flex-wrap gap-x-8 gap-y-4 rounded-xl border border-border bg-card p-4 sm:p-5">
+				<Control
 					label="Base color"
 					hint="data-base"
 					value={s.base}
+					raised={raised}
 					onChange={(v) => set("base", v)}
 					options={data.bases.map((b) => ({
 						value: b,
@@ -213,10 +227,11 @@ export default function ThemeCustomizer({ data }: { data: ThemeData }) {
 						),
 					}))}
 				/>
-				<Seg
+				<Control
 					label="Theme"
 					hint="data-theme"
 					value={s.theme}
+					raised={raised}
 					onChange={(v) => set("theme", v)}
 					options={data.themes.map((t) => ({
 						value: t,
@@ -229,31 +244,34 @@ export default function ThemeCustomizer({ data }: { data: ThemeData }) {
 						),
 					}))}
 				/>
-				<Seg
+				<Control
 					label="Radius"
 					hint="--radius"
 					value={s.radius}
+					raised={raised}
 					onChange={(v) => set("radius", v)}
 					options={RADII.map((r) => ({ value: r, label: r }))}
 				/>
-				<Seg
+				<Control
 					label="Mode"
 					hint="class=dark"
 					value={s.mode}
+					raised={raised}
 					onChange={(v) => set("mode", v)}
 					options={[
 						{ value: "light", label: "Light" },
 						{ value: "dark", label: "Dark" },
 					]}
 				/>
-				<Seg
+				<Control
 					label="Style"
 					hint="raised"
 					value={raised ? "raised" : "flat"}
+					raised={raised}
 					onChange={(v) => setRaised(v === "raised")}
 					options={[
 						{ value: "flat", label: "Flat" },
-						{ value: "raised", label: "Raised ✦" },
+						{ value: "raised", label: "Raised \u2726" },
 					]}
 				/>
 			</div>
@@ -272,7 +290,7 @@ export default function ThemeCustomizer({ data }: { data: ThemeData }) {
 					} as React.CSSProperties
 				}
 			>
-				<div className="columns-1 gap-4 md:columns-2 2xl:columns-3 [&>*]:mb-4 [&>*]:break-inside-avoid">
+				<div className="columns-1 gap-4 md:columns-2 xl:columns-3 [&>*]:mb-4 [&>*]:break-inside-avoid">
 					<ControlsCard />
 					<ChartCard />
 					<FormCard />
@@ -285,103 +303,74 @@ export default function ThemeCustomizer({ data }: { data: ThemeData }) {
 				</div>
 			</div>
 
-			<div className="rounded-xl border border-border bg-card">
-				<div className="flex flex-wrap items-center justify-between gap-2 border-b border-border p-2">
-					<div className="flex gap-1" role="tablist">
-						{(["css", "install"] as const).map((t) => (
-							<button
-								key={t}
-								type="button"
-								role="tab"
-								aria-selected={tab === t}
-								onClick={() => setTab(t)}
-								className={`h-8 rounded-md border px-3 text-[13px] font-medium ${
-									tab === t
-										? "border-border bg-tab-active text-foreground"
-										: "border-transparent text-muted-foreground hover:text-foreground"
-								}`}
-							>
-								{t === "css" ? "Copy CSS" : "Install"}
-							</button>
-						))}
-					</div>
-					{tab === "css" ? (
-						<CopyButton text={css} label="Copy CSS" />
-					) : (
-						<div className="flex gap-1" role="tablist" aria-label="Framework">
-							{FRAMEWORKS.map((f) => (
-								<button
-									key={f}
-									type="button"
-									role="tab"
-									aria-selected={fw === f}
-									onClick={() => setFw(f)}
-									className={`h-8 rounded-md border px-3 text-[13px] font-medium ${
-										fw === f
-											? "border-border bg-tab-active text-foreground"
-											: "border-transparent text-muted-foreground hover:text-foreground"
-									}`}
-								>
-									{FRAMEWORK_LABEL[f]}
-								</button>
-							))}
-						</div>
-					)}
-				</div>
-				{tab === "css" ? (
-					<div className="p-4">
-						<p className="mb-3 text-[13px] text-muted-foreground">
-							Paste into your global CSS after <code>@edmi-ui/tokens</code> (or
+			<Dialog
+				open={dialog === "css"}
+				onOpenChange={(o) => !o && setDialog(null)}
+			>
+				<DialogContent className="sm:max-w-2xl">
+					<DialogHeader>
+						<DialogTitle>Copy CSS</DialogTitle>
+						<DialogDescription>
+							{label}, radius {s.radius}rem. Paste after the Edmi tokens, or
 							replace the <code>:root</code> and <code>.dark</code> blocks the
-							theme item wrote).
-						</p>
-						<pre
-							data-css
-							className="max-h-96 overflow-auto rounded-lg border border-border bg-muted p-3 font-mono text-[12px] leading-5 text-foreground"
-						>
-							{css}
-						</pre>
+							theme item wrote.
+						</DialogDescription>
+					</DialogHeader>
+					<Tabs
+						value={cssTab}
+						onValueChange={(v) => setCssTab(v as "css" | "tailwind")}
+					>
+						<TabsList>
+							<TabsTrigger value="css">CSS</TabsTrigger>
+							<TabsTrigger value="tailwind">Tailwind v4</TabsTrigger>
+						</TabsList>
+					</Tabs>
+					<div className="max-h-[50vh] overflow-auto rounded-lg">
+						{cssTab === "css" ? (
+							<Snippet code={css} language="css" filename="globals.css" />
+						) : (
+							<Snippet code={tailwind} language="css" filename="app.css" />
+						)}
 					</div>
-				) : (
-					<div className="flex flex-col gap-3 p-4">
-						<p className="text-[13px] text-muted-foreground">
-							Install the matching registry theme item after{" "}
-							<code>@edmi-ui/theme</code>. It replaces the color variables
-							(light and dark); your radius stays. The radius above is copied
-							with <b>Copy CSS</b>, not installed.
-						</p>
-						<div className="flex flex-wrap gap-1">
-							{PMS.map((p) => (
-								<button
-									key={p}
-									type="button"
-									data-pm-set={p}
-									aria-pressed={pm === p}
-									className="rounded-md border border-transparent px-2 py-1 text-[12px] font-medium text-muted-foreground aria-pressed:border-border aria-pressed:bg-muted aria-pressed:text-foreground"
-								>
-									{p}
-								</button>
-							))}
-						</div>
-						{PMS.map((p) => (
-							<pre
-								key={p}
-								data-install
-								data-pm-panel={p}
-								className="overflow-x-auto rounded-lg border border-border bg-muted p-3 font-mono text-[12.5px] text-foreground"
-							>
-								{installCommand(fw, item, p)}
-							</pre>
-						))}
-						<div>
-							<CopyButton
-								text={installCommand(fw, item, pm)}
-								label="Copy command"
-							/>
-						</div>
+				</DialogContent>
+			</Dialog>
+
+			<Dialog
+				open={dialog === "install"}
+				onOpenChange={(o) => !o && setDialog(null)}
+			>
+				<DialogContent className="sm:max-w-2xl">
+					<DialogHeader>
+						<DialogTitle>Install {label}</DialogTitle>
+						<DialogDescription>
+							Installs the <code>{item}</code> registry theme. It replaces the
+							color variables (light and dark); your radius stays, so copy the
+							radius with Copy CSS.
+						</DialogDescription>
+					</DialogHeader>
+					<div className="flex flex-wrap gap-3">
+						<Tabs value={fw} onValueChange={(v) => setFw(v as Framework)}>
+							<TabsList>
+								{FRAMEWORKS.map((f) => (
+									<TabsTrigger key={f} value={f}>
+										{FRAMEWORK_LABEL[f]}
+									</TabsTrigger>
+								))}
+							</TabsList>
+						</Tabs>
+						<Tabs value={pm} onValueChange={(v) => setPm(v as PackageManager)}>
+							<TabsList>
+								{PMS.map((p) => (
+									<TabsTrigger key={p} value={p}>
+										{p}
+									</TabsTrigger>
+								))}
+							</TabsList>
+						</Tabs>
 					</div>
-				)}
-			</div>
+					<Snippet code={install} language="bash" filename="terminal" />
+				</DialogContent>
+			</Dialog>
 		</div>
 	);
 }

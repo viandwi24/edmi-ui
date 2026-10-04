@@ -12,10 +12,18 @@ const tags = EXAMPLE_TAGS.filter((t) => EXAMPLES.some((e) => e.tag === t));
 		title: "Examples",
 		description:
 			"Real pages built only from Edmi registry items, live in React, Vue and Svelte. Switch mode, base, theme and radius, resize the frame, read the code.",
+		template: "splash",
 		tableOfContents: false,
 	}}
 >
-	<div class="edmi-exi not-content" data-examples>
+	<div class="edmi-wide edmi-exi not-content" data-examples>
+		<div class="edmi-page-title">
+			<div class="edmi-page-h">Examples</div>
+			<p class="edmi-page-desc">
+				Real pages built only from Edmi registry items, live in React, Vue and Svelte. Switch mode,
+				base, theme and radius, resize the frame, read the code.
+			</p>
+		</div>
 		<div class="edmi-seg" role="group" aria-label="Filter by tag">
 			<button type="button" data-tag="all" aria-pressed="true">All</button>
 			{tags.map((t) => <button type="button" data-tag={t} aria-pressed="false">{t}</button>)}
@@ -45,11 +53,10 @@ const tags = EXAMPLE_TAGS.filter((t) => EXAMPLES.some((e) => e.tag === t));
 </StarlightPage>
 
 <style is:global>
-	html:has(.edmi-exi) { --sl-content-width: 80rem; }
-	.edmi-exi { margin-top: 1rem; }
+	.edmi-exi .edmi-seg { margin-top: 1.5rem; }
 	.edmi-exi .edmi-seg button { padding: .32rem .7rem; }
 	.edmi-exi .edmi-seg button[aria-pressed="true"] { background: var(--tab-active); border-color: var(--border); color: var(--foreground); }
-	.edmi-exi-grid { list-style: none; margin: 1.25rem 0 0; padding: 0; display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr)); }
+	.edmi-exi-grid { list-style: none; margin: 1.25rem 0 0; padding: 0; display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fill, minmax(21rem, 1fr)); }
 	.edmi-exi-grid li { margin: 0; }
 	.edmi-exi-grid li[hidden] { display: none; }
 	.edmi-exi-card { display: flex; flex-direction: column; height: 100%; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: var(--card); text-decoration: none; color: inherit; }

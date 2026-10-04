@@ -1,0 +1,23 @@
+---
+// Themes: full-width page (splash template, no docs sidebar). Header actions, toolbar and preview live in
+// the ThemeCustomizer React island (Edmi Dialog / Tabs / Button).
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import ThemeCustomizer from "../../components/themes/ThemeCustomizer";
+import { loadThemeData } from "../../lib/theme-data";
+
+const data = await loadThemeData();
+---
+
+<StarlightPage
+	frontmatter={{
+		title: "Themes",
+		description:
+			"Pick a base color, a theme, a radius and a mode, preview real Edmi components, then copy the CSS or install the matching registry theme.",
+		template: "splash",
+		tableOfContents: false,
+	}}
+>
+	<div class="edmi-wide edmi-themes-page">
+		<ThemeCustomizer client:load data={data} />
+	</div>
+</StarlightPage>

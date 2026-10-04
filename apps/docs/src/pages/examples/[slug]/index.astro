@@ -14,21 +14,31 @@ const { example } = Astro.props;
 	frontmatter={{
 		title: example.title,
 		description: example.description,
+		template: "splash",
 		tableOfContents: false,
 		pagefind: false,
 	}}
 >
-	<p class="edmi-ex-meta">
-		<a href={`${BASE}/examples/`}>Examples</a> · {example.tag} · board: {example.board}
-	</p>
-	<ExampleViewer example={example} />
-	<p class="edmi-ex-uses">
-		Built only from registry items: {example.uses.join(", ")}. Switch the framework in the toolbar
-		to see the same example in React, Vue or Svelte.
-	</p>
+	<div class="edmi-wide edmi-ex-page">
+		<div class="edmi-ex-head">
+			<p class="edmi-ex-meta">
+				<a href={`${BASE}/examples/`}>Examples</a> · {example.tag} · board: {example.board}
+			</p>
+			<div class="edmi-page-h edmi-ex-h">{example.title}</div>
+			<p class="edmi-ex-desc">{example.description}</p>
+		</div>
+		<ExampleViewer example={example} />
+		<p class="edmi-ex-uses">
+			Built only from registry items: {example.uses.join(", ")}. Switch the framework in the toolbar
+			to see the same example in React, Vue or Svelte.
+		</p>
+	</div>
 </StarlightPage>
 
 <style is:global>
+	.edmi-ex-head { margin-bottom: 1.25rem; }
+	.edmi-ex-h { font-size: clamp(1.75rem, 3vw, 2.25rem); }
+	.edmi-ex-desc { margin: .5rem 0 0; max-width: 48rem; font-size: .9375rem; line-height: 1.55; color: var(--muted-foreground); }
 	.edmi-ex-meta { margin: 0 0 .5rem; font-size: .8125rem; color: var(--muted-foreground); }
 	.edmi-ex-uses { font-size: .8125rem; color: var(--muted-foreground); }
 </style>
