@@ -35,8 +35,6 @@ export interface PromptInputContext {
 	files: Ref<AttachmentFile[]>;
 	referencedSources: Ref<ReferencedSource[]>;
 	isLoading: Ref<boolean>;
-	/** ✦ the composer's `raised` flows to the submit button. */
-	raised: Ref<boolean>;
 	fileInputRef: Ref<HTMLInputElement | null>;
 	options: PromptInputOptions;
 	setTextInput: (val: string) => void;

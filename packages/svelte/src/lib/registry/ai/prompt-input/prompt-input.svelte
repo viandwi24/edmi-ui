@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { type Elevation, useElevation } from "$lib/registry/ui/elevation/index.js";
 	import { InputGroup } from "$lib/registry/ui/input-group/index.js";
 	import { cn } from "$lib/utils.js";
 	import type { Snippet } from "svelte";
@@ -18,7 +19,7 @@
 		maxFiles,
 		maxFileSize,
 		initialInput = "",
-		raised = false,
+		elevation = "auto",
 		onSubmit,
 		onError,
 		children,
@@ -33,8 +34,8 @@
 		/** Bytes. */
 		maxFileSize?: number;
 		initialInput?: string;
-		/** ✦ one-step 3D look on the submit button. */
-		raised?: boolean;
+		/** ✦ depth of the composer plate (overlay role: floating in layered mode). The submit button follows the Button rules. */
+		elevation?: Elevation;
 		/** May be async: the composer clears on success and keeps the text if it throws. */
 		onSubmit: (message: PromptInputMessage) => void | Promise<void>;
 		onError?: (err: PromptInputError) => void;
@@ -53,6 +54,8 @@
 		>;
 	} = $props();
 
+	const level = useElevation(() => elevation, "overlay");
+
 	// Inside a PromptInputProvider the state is lifted; otherwise it is local to this composer.
 	// svelte-ignore state_referenced_locally
 	const controller = getPromptInput() ?? setPromptInput(new PromptInputController(initialInput));
@@ -63,7 +66,6 @@
 		controller.options.maxFileSize = maxFileSize;
 		controller.options.onSubmit = onSubmit;
 		controller.options.onError = onError;
-		controller.raised = raised;
 	});
 
 	$effect(() => () => controller.destroy());
@@ -124,7 +126,8 @@
 	{...restProps}
 >
 	<InputGroup
-		class="h-auto flex-col overflow-hidden rounded-[calc(var(--radius)*1.6)] border-input bg-card shadow-none"
+		elevation={level.current}
+		class="h-auto flex-col overflow-hidden rounded-[calc(var(--radius)*1.6)]"
 	>
 		{@render children?.({
 			files: controller.files,

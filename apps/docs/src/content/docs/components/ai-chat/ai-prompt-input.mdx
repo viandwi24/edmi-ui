@@ -23,9 +23,9 @@ Built on `input-group`, `dropdown-menu`, `select`, `command`, `hover-card`, `too
 
 <ComponentSource name="ai-prompt-input" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. `raised` gives the one-step 3D look.
+The composer plate is an overlay surface: flat by default, floating (+2) in layered mode. `sunken` (-1) is a soft inset, `raised` (+1) a bevel, `floating` (+2) a bevel with a soft drop. The submit button follows the Button rules.
 
 <ComponentDemo name="ai-prompt-input" demo="ai-prompt-input-raised" />
 
@@ -33,7 +33,7 @@ Flat by default. `raised` gives the one-step 3D look.
 | Part | Prop | Type | Default |
 | --- | --- | --- | --- |
 | PromptInput | `onSubmit`, `accept`, `multiple`, `maxFiles`, `maxFileSize`, `globalDrop`, `onError` | `(message, event) => void`, ... | |
-| PromptInput | `raised` | `boolean` | `false` |
+| PromptInput | `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 | PromptInputTextarea | `InputGroupTextarea` props | Enter submits, Shift+Enter newline | |
 | PromptInputSubmit | `status`, `onStop` | `ready \| submitted \| streaming \| error` | |
 | PromptInputProvider | `initialInput` | `string` | lifts text and attachments out of the form |
@@ -50,5 +50,5 @@ Hooks: `usePromptInputAttachments`, `usePromptInputController`, `useProviderAtta
 
 ## ✦ Edmi additions
 - The send icon follows the chat status: arrow up (ready), spinner (submitted), stop (streaming, with `onStop`), x on destructive (error).
-- `raised` applies to the submit button only; the composer shell stays flat.
+- `elevation` ✦ sets the depth of the composer plate (overlay role); the submit button keeps its own Button `elevation`.
 - Focus ring, 16px radius and `--card` fill come from the Edmi tokens.

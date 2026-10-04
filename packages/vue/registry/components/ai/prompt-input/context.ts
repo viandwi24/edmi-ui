@@ -50,7 +50,6 @@ export function createPromptInputState(
 	const referencedSources = ref<ReferencedSource[]>([]);
 	const fileInputRef = ref<HTMLInputElement | null>(null);
 	const isLoading = ref(false);
-	const raised = ref(false);
 	const options = reactive<PromptInputOptions>({ ...initialOptions });
 
 	const revoke = (file: AttachmentFile) => {
@@ -198,7 +197,6 @@ export function createPromptInputState(
 		isLoading,
 		openFileDialog,
 		options,
-		raised,
 		referencedSources,
 		removeFile,
 		removeSource,
@@ -255,10 +253,4 @@ export function usePromptInputReferencedSources() {
 		remove: removeSource,
 		sources: referencedSources,
 	};
-}
-
-/** Whether the surrounding composer is `raised` (read by the submit button). */
-export function usePromptInputRaised() {
-	const context = inject(PROMPT_INPUT_KEY, null);
-	return context ? context.raised : ref(false);
 }

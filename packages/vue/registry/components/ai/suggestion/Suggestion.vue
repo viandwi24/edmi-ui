@@ -4,6 +4,7 @@ import type { ButtonVariants } from "@/registry/edmi/ui/button"
 import { computed } from "vue"
 import { cn } from "@/registry/edmi/lib/utils"
 import { Button } from "@/registry/edmi/ui/button"
+import type { Elevation } from "@/registry/edmi/ui/elevation"
 
 const props = withDefaults(defineProps<{
   suggestion: string
@@ -14,12 +15,12 @@ const props = withDefaults(defineProps<{
    */
   variant?: "chip" | "card" | NonNullable<ButtonVariants["variant"]>
   size?: ButtonVariants["size"]
-  /** ✦ one-step 3D look. */
-  raised?: boolean
+  /** ✦ depth: sunken -1, flat 0, raised +1, floating +2 (follows the Button rules). */
+  elevation?: Elevation
 }>(), {
   variant: "chip",
   size: "sm",
-  raised: false,
+  elevation: undefined,
 })
 
 const emit = defineEmits<{
@@ -38,7 +39,7 @@ const buttonVariant = computed(() =>
     type="button"
     :variant="buttonVariant"
     :size="isCard ? undefined : size"
-    :elevation="raised ? 'raised' : undefined"
+    :elevation="elevation"
     :class="cn(
       isCard
         ? 'h-auto min-w-44 flex-col items-start gap-1 rounded-xl px-4 py-3 text-left whitespace-normal'

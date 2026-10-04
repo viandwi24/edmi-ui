@@ -32,8 +32,6 @@ export type SuggestionProps = Omit<
 	ComponentProps<typeof Button>,
 	"onClick" | "variant"
 > & {
-	/** legacy prop, forwarded as `elevation="raised"` (the AI pack migration renames it) */
-	raised?: boolean;
 	suggestion: string;
 	onClick?: (suggestion: string) => void;
 	/**
@@ -49,7 +47,6 @@ export const Suggestion = ({
 	className,
 	variant = "chip",
 	size = "sm",
-	raised = false,
 	children,
 	...props
 }: SuggestionProps) => {
@@ -67,7 +64,6 @@ export const Suggestion = ({
 					className,
 				)}
 				onClick={handleClick}
-				elevation={raised ? "raised" : undefined}
 				type="button"
 				variant="outline"
 				{...props}
@@ -88,7 +84,6 @@ export const Suggestion = ({
 			data-variant="chip"
 			className={cn("rounded-full px-4", className)}
 			onClick={handleClick}
-			elevation={raised ? "raised" : undefined}
 			size={size}
 			type="button"
 			variant={variant === "chip" ? "outline" : variant}

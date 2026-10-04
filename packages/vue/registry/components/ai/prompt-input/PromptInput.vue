@@ -3,6 +3,7 @@ import type { HTMLAttributes } from "vue"
 import type { PromptInputError, PromptInputMessage } from "./types"
 import { getCurrentInstance, inject, onBeforeUnmount, onMounted, watchEffect } from "vue"
 import { cn } from "@/registry/edmi/lib/utils"
+import { type Elevation, useElevation } from "@/registry/edmi/ui/elevation"
 import { InputGroup } from "@/registry/edmi/ui/input-group"
 import { createPromptInputState, providePromptInput } from "./context"
 import { PROMPT_INPUT_KEY } from "./types"
@@ -20,11 +21,13 @@ const props = withDefaults(defineProps<{
   /** Bytes. */
   maxFileSize?: number
   initialInput?: string
-  /** ✦ one-step 3D look on the submit button. */
-  raised?: boolean
+  /** ✦ depth of the composer plate (overlay role: floating in layered mode). The submit button follows the Button rules. */
+  elevation?: Elevation
 }>(), {
-  raised: false,
+  elevation: undefined,
 })
+
+const level = useElevation(() => props.elevation, "overlay")
 
 const emit = defineEmits<{
   (e: "submit", message: PromptInputMessage): void
@@ -49,7 +52,6 @@ watchEffect(() => {
   state.options.accept = props.accept
   state.options.maxFiles = props.maxFiles
   state.options.maxFileSize = props.maxFileSize
-  state.raised.value = props.raised
 })
 state.options.onSubmit = async (message) => {
   if (instance?.vnode.props?.onSubmit)
@@ -118,7 +120,7 @@ function onFileChange(e: Event) {
     @dragover="!props.globalDrop && handleDragOver($event)"
     @drop="!props.globalDrop && handleDrop($event)"
   >
-    <InputGroup class="h-auto flex-col overflow-hidden rounded-[calc(var(--radius)*1.6)] border-input bg-card shadow-none">
+    <InputGroup :elevation="level" class="h-auto flex-col overflow-hidden rounded-[calc(var(--radius)*1.6)]">
       <!-- Slot props expose the composer state (files, remove, text, ...) so children can render attachments. -->
       <slot
         :files="state.files.value"

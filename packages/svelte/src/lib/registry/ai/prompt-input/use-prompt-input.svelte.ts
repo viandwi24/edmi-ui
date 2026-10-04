@@ -48,8 +48,6 @@ export class PromptInputController {
 	files = $state<AttachmentFile[]>([]);
 	referencedSources = $state<ReferencedSource[]>([]);
 	isLoading = $state(false);
-	/** ✦ the composer's `raised` flows to the submit button. */
-	raised = $state(false);
 	fileInput: HTMLInputElement | null = null;
 	options: PromptInputOptions = {};
 

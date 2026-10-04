@@ -6,20 +6,20 @@ import type { ButtonVariants } from "@/registry/edmi/ui/button"
 import { ArrowUpIcon, XIcon } from "@lucide/vue"
 import { computed, getCurrentInstance } from "vue"
 import { cn } from "@/registry/edmi/lib/utils"
+import type { Elevation } from "@/registry/edmi/ui/elevation"
 import { InputGroupButton } from "@/registry/edmi/ui/input-group"
 import { Spinner } from "@/registry/edmi/ui/spinner"
-import { usePromptInputRaised } from "./context"
 
 const props = withDefaults(defineProps<{
   class?: HTMLAttributes["class"]
   status?: ChatStatus
   variant?: ButtonVariants["variant"]
   size?: InputGroupButtonVariants["size"]
-  /** Defaults to the composer's `raised`. */
-  raised?: boolean
+  /** ✦ depth: follows the Button rules (raised in layered mode). */
+  elevation?: Elevation
 }>(), {
   size: "icon-sm",
-  raised: undefined,
+  elevation: undefined,
 })
 
 const emit = defineEmits<{
@@ -28,7 +28,6 @@ const emit = defineEmits<{
 
 // With a `stop` listener the button turns into a stop button while generating.
 const hasStop = !!getCurrentInstance()?.vnode.props?.onStop
-const inheritedRaised = usePromptInputRaised()
 
 const isGenerating = computed(() => props.status === "submitted" || props.status === "streaming")
 const isStop = computed(() => isGenerating.value && hasStop)
@@ -49,7 +48,7 @@ function handleClick(e: MouseEvent) {
     :type="isStop ? 'button' : 'submit'"
     :size="props.size"
     :variant="props.variant ?? (props.status === 'error' ? 'destructive' : 'default')"
-    :elevation="props.raised ?? inheritedRaised ? 'raised' : undefined"
+    :elevation="props.elevation"
     :class="cn('rounded-[9px]', props.class)"
     @click="handleClick"
   >

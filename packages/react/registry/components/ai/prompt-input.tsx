@@ -42,6 +42,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/registry/edmi/ui/dropdown-menu";
+import { type Elevation, useElevation } from "@/registry/edmi/ui/elevation";
 import {
 	HoverCard,
 	HoverCardContent,
@@ -505,16 +506,13 @@ export type PromptInputProps = Omit<
 		message: PromptInputMessage,
 		event: FormEvent<HTMLFormElement>,
 	) => void | Promise<void>;
-	/** ✦ one-step 3D look on the submit button. */
-	raised?: boolean;
+	/** ✦ depth of the composer plate (overlay role: floating in layered mode). The submit button follows the Button rules. */
+	elevation?: Elevation;
 };
-
-// ✦ `raised` on PromptInput flows to the submit button (the composer itself stays flat).
-const PromptInputRaisedContext = createContext(false);
 
 export const PromptInput = ({
 	className,
-	raised = false,
+	elevation,
 	accept,
 	multiple,
 	globalDrop,
@@ -526,6 +524,7 @@ export const PromptInput = ({
 	children,
 	...props
 }: PromptInputProps) => {
+	const level = useElevation(elevation, "overlay");
 	// Try to use a provider controller if present
 	const controller = useOptionalPromptInputController();
 	const usingProvider = !!controller;
@@ -924,11 +923,12 @@ export const PromptInput = ({
 				ref={formRef}
 				{...props}
 			>
-				<PromptInputRaisedContext.Provider value={raised}>
-					<InputGroup className="h-auto flex-col overflow-hidden rounded-[calc(var(--radius)*1.6)] border-input bg-card shadow-none">
-						{children}
-					</InputGroup>
-				</PromptInputRaisedContext.Provider>
+				<InputGroup
+					elevation={level}
+					className="h-auto flex-col overflow-hidden rounded-[calc(var(--radius)*1.6)]"
+				>
+					{children}
+				</InputGroup>
 			</form>
 		</>
 	);
@@ -1235,7 +1235,6 @@ export const PromptInputActionMenuItem = ({
 // are provided in opt-in modules (e.g., prompt-input-attachments).
 
 export type PromptInputSubmitProps = ComponentProps<typeof InputGroupButton> & {
-	raised?: boolean;
 	status?: ChatStatus;
 	onStop?: () => void;
 };
@@ -1244,7 +1243,6 @@ export const PromptInputSubmit = ({
 	className,
 	variant,
 	size = "icon-sm",
-	raised,
 	status,
 	onStop,
 	onClick,
@@ -1252,7 +1250,6 @@ export const PromptInputSubmit = ({
 	...props
 }: PromptInputSubmitProps) => {
 	const isGenerating = status === "submitted" || status === "streaming";
-	const inheritedRaised = useContext(PromptInputRaisedContext);
 
 	let Icon = (
 		<IconPlaceholder
@@ -1310,7 +1307,6 @@ export const PromptInputSubmit = ({
 			data-status={status}
 			className={cn("rounded-[9px]", className)}
 			onClick={handleClick}
-			elevation={(raised ?? inheritedRaised) ? "raised" : undefined}
 			size={size}
 			type={isGenerating && onStop ? "button" : "submit"}
 			variant={variant ?? (status === "error" ? "destructive" : "default")}

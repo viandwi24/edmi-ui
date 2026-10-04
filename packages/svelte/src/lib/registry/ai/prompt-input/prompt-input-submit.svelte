@@ -5,13 +5,11 @@
 	import { cn } from "$lib/utils.js";
 	import type { ChatStatus } from "ai";
 	import type { ComponentProps } from "svelte";
-	import { getPromptInput } from "./use-prompt-input.svelte.js";
 
 	let {
 		class: className,
 		variant,
 		size = "icon-sm",
-		raised,
 		status,
 		onStop,
 		onclick,
@@ -19,14 +17,11 @@
 		...restProps
 	}: Omit<ComponentProps<typeof InputGroupButton>, "href" | "onclick"> & {
 		status?: ChatStatus;
-		/** legacy prop, forwarded as `elevation="raised"` (the AI pack migration renames it) */
-		raised?: boolean;
 		/** With `onStop` the button turns into a stop button while generating. */
 		onStop?: () => void;
 		onclick?: (event: MouseEvent) => void;
 	} = $props();
 
-	const controller = getPromptInput();
 	const isGenerating = $derived(status === "submitted" || status === "streaming");
 	const isStop = $derived(isGenerating && !!onStop);
 
@@ -47,7 +42,6 @@
 	type={isStop ? "button" : "submit"}
 	{size}
 	variant={variant ?? (status === "error" ? "destructive" : "default")}
-	elevation={raised ?? controller?.raised ?? false ? "raised" : undefined}
 	class={cn("rounded-[9px]", className)}
 	onclick={handleClick}
 	{...restProps}

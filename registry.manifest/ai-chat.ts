@@ -43,6 +43,7 @@ export const items: Item[] = [
 			"select",
 			"spinner",
 			"tooltip",
+			"elevation",
 		],
 		react: aiReact("prompt-input", ["ai", "cn", "nanoid"]),
 	}),
@@ -52,7 +53,7 @@ export const items: Item[] = [
 		description:
 			"Suggested prompts as pills in a scrollable row, with a card variant for the home state.",
 		category: C.chat,
-		deps: ["button", "scroll-area"],
+		deps: ["button", "scroll-area", "elevation"],
 		react: aiReact("suggestion", ["cn"]),
 	}),
 	aiItem({

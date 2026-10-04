@@ -320,7 +320,11 @@ export default function AiChatPreview() {
 					<PromptInputSubmit disabled />
 				</div>
 				<RaisedSection>
-					<PromptInput raised onSubmit={() => {}} className="max-w-xl">
+					<PromptInput
+						elevation="raised"
+						onSubmit={() => {}}
+						className="max-w-xl"
+					>
 						<PromptInputBody>
 							<PromptInputTextarea defaultValue="Rebalance MAG4" />
 						</PromptInputBody>
@@ -354,8 +358,8 @@ export default function AiChatPreview() {
 				</div>
 				<RaisedSection>
 					<div className="flex gap-2">
-						<Suggestion suggestion="Rebalance now" raised />
-						<Suggestion suggestion="Draft a post" raised />
+						<Suggestion suggestion="Rebalance now" elevation="raised" />
+						<Suggestion suggestion="Draft a post" elevation="raised" />
 					</div>
 				</RaisedSection>
 			</section>

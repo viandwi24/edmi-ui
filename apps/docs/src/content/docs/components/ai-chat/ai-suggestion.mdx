@@ -23,9 +23,9 @@ Built on `button` (`outline`, pill).
 
 <ComponentSource name="ai-suggestion" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. `raised` gives the one-step 3D look.
+Suggestions are Buttons, so they follow the Button levels: flat by default, `sunken` (-1), `raised` (+1) and `floating` (+2).
 
 <ComponentDemo name="ai-suggestion" demo="ai-suggestion-raised" />
 
@@ -34,7 +34,7 @@ Flat by default. `raised` gives the one-step 3D look.
 | --- | --- | --- | --- |
 | Suggestion | `suggestion`, `onClick` | `string`, `(suggestion) => void` | |
 | Suggestion | `variant` | `chip \| card \| Button variant` | `chip` |
-| Suggestion | `raised` | `boolean` | `false` |
+| Suggestion | `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 ## ✦ Edmi additions
 - `variant="card"`: a larger tile with a lead-in line; `children` is the muted description.

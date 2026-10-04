@@ -11,13 +11,10 @@
 		class: className,
 		variant = "chip",
 		size = "sm",
-		raised = false,
 		children,
 		...restProps
 	}: Omit<ButtonProps, "onclick" | "variant" | "href"> & {
 		suggestion: string;
-		/** legacy prop, forwarded as `elevation="raised"` (the AI pack migration renames it) */
-		raised?: boolean;
 		onclick?: (suggestion: string) => void;
 		/**
 		 * `chip` (default): pill. `card` ✦: a larger tile with a lead-in line, for the home state
@@ -39,7 +36,6 @@
 	type="button"
 	variant={buttonVariant}
 	size={isCard ? undefined : size}
-	elevation={raised ? "raised" : undefined}
 	class={cn(
 		isCard
 			? "h-auto min-w-44 flex-col items-start gap-1 rounded-xl px-4 py-3 text-left whitespace-normal"
