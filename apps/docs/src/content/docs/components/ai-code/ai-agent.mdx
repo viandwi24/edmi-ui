@@ -23,16 +23,16 @@ Built on `card`, `accordion`, `badge` and `ai-code-block`.
 
 <ComponentSource name="ai-agent" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. `raised` gives the one-step 3D look.
+The agent card are flat by default and take the surface level in layered mode (raised). `sunken` (-1) is a soft inset, `raised` (+1) a bevel and `floating` (+2) a bevel with a soft drop.
 
 <ComponentDemo name="ai-agent" demo="ai-agent-raised" />
 
 ## API
 | Part | Prop | Type | Default |
 | --- | --- | --- | --- |
-| Agent | `raised` | `boolean` | `false` |
+| Agent | `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 | AgentHeader | `name`, `model` | `string`, `string` | |
 | AgentInstructions | `children` | `ReactNode` | |
 | AgentTools | `Accordion` props (`multiple`, `defaultValue`) | | |
@@ -40,7 +40,7 @@ Flat by default. `raised` gives the one-step 3D look.
 | AgentOutput | `schema` | `string` | |
 
 ## ✦ Edmi additions
-- `raised`: the card gets the one-step 3D look.
+- `elevation`: depth of the card (forwarded to the Card).
 - `AgentTool` `name`: tool name shown in mono before the description (falls back to `value`).
 - A string `inputSchema` is shown as TypeScript; anything else as JSON.
 - Vue and Svelte: `AgentTools` takes the Reka / Bits accordion props (`type` defaults to `single`, `collapsible`), and the tool count in the label is derived from its `AgentTool` children.

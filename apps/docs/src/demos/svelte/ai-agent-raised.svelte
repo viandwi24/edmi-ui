@@ -4,33 +4,24 @@
 		AgentContent,
 		AgentHeader,
 		AgentInstructions,
-		AgentOutput,
-		AgentTool,
-		AgentTools,
 	} from "@edmi-svelte/ai/agent";
 
-	const getPrices = { description: "Quotes for tokens", inputSchema: "{ symbols: string[] }" };
-	const rebalance = {
-		description: "Send one rebalance tx",
-		inputSchema: `{ "index": string, "maxSlippage"?: number }`,
-	};
-	const postFeed = { description: "Write a feed post", inputSchema: "{ text: string }" };
-	const outputSchema = `{ status: "ok" | "skipped"; tx?: string }`;
+	const levels = [{ value: "sunken", label: "Sunken (-1)" }, { value: "flat", label: "Flat (0)" }, { value: "raised", label: "Raised (+1)" }, { value: "floating", label: "Floating (+2)" }] as const;
 </script>
 
-<Agent class="max-w-lg" raised>
-	<AgentHeader name="Keeper agent" model="claude-opus" />
-	<AgentContent>
-		<AgentInstructions>
-			Keep every index within its drift limit. Never trade without approval when the order is above <b
-				>$500</b
-			>.
-		</AgentInstructions>
-		<AgentTools value="rebalance">
-			<AgentTool name="get_prices" tool={getPrices} value="get_prices" />
-			<AgentTool name="rebalance" tool={rebalance} value="rebalance" />
-			<AgentTool name="post_feed" tool={postFeed} value="post_feed" />
-		</AgentTools>
-		<AgentOutput schema={outputSchema} />
-	</AgentContent>
-</Agent>
+<div class="flex w-full max-w-2xl flex-col gap-5">
+	{#each levels as level (level.value)}
+		<div class="flex flex-col gap-2">
+			<p class="text-xs font-medium text-muted-foreground">{level.label}</p>
+			<Agent elevation={level.value} class="max-w-lg">
+				<AgentHeader name="Keeper agent" model="claude-opus" />
+				<AgentContent>
+					<AgentInstructions>
+						Keep every index within its drift limit. Never trade without approval
+						when the order is above <b>$500</b>.
+					</AgentInstructions>
+				</AgentContent>
+			</Agent>
+		</div>
+	{/each}
+</div>

@@ -9,7 +9,7 @@ export const items: Item[] = [
 		description:
 			"Agent configuration card: model, instructions, tools and output schema.",
 		category: C.code,
-		deps: ["accordion", "badge", "card", "ai-code-block"],
+		deps: ["accordion", "badge", "card", "ai-code-block", "elevation"],
 		react: aiReact("agent", ["cn"]),
 	}),
 	aiItem({
@@ -18,7 +18,7 @@ export const items: Item[] = [
 		description:
 			"Container for generated output with a header, actions and scrollable content.",
 		category: C.code,
-		deps: ["button", "card", "tooltip"],
+		deps: ["button", "card", "tooltip", "elevation"],
 		react: aiReact("artifact", ["cn"]),
 	}),
 	aiItem({

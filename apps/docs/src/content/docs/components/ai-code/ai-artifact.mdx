@@ -23,22 +23,22 @@ Built on `card`, `button` and `tooltip`.
 
 <ComponentSource name="ai-artifact" />
 
-## Raised ✦
+## Elevation ✦
 
-Flat by default. `raised` gives the one-step 3D look.
+The container are flat by default and take the surface level in layered mode (raised). `sunken` (-1) is a soft inset, `raised` (+1) a bevel and `floating` (+2) a bevel with a soft drop.
 
 <ComponentDemo name="ai-artifact" demo="ai-artifact-raised" />
 
 ## API
 | Part | Prop | Type | Default |
 | --- | --- | --- | --- |
-| Artifact | `raised` | `boolean` | `false` |
+| Artifact | `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 | ArtifactAction | `tooltip`, `label`, `icon` | `string`, `string`, `ReactNode` | |
 | ArtifactClose | `Button` props | | `variant="ghost"` |
 | ArtifactContent | `className` | `string` | no padding |
 
 ## ✦ Edmi additions
-- `raised`: the container gets the one-step 3D look.
+- `elevation`: depth of the container (forwarded to the Card).
 - `ArtifactContent` has no padding by default so code blocks and images run edge to edge; add `p-4` for prose.
 - `ArtifactAction` takes the icon as a node (`icon={<IconPlaceholder … />}`) instead of a component.
 - Vue and Svelte: the action icon goes in the default slot / children instead of an `icon` prop.
