@@ -54,8 +54,8 @@ const repoRoot = resolve(here, "../..");
 
 genIslands(here);
 
-// Examples list (src/examples/index.ts) drives the Examples sidebar section.
-const { EXAMPLES } = await import("./src/examples/index.ts");
+// Component/AI category labels (src/config.ts) drive the Components sidebar section.
+const { COMPONENT_GROUPS, AI_GROUPS } = await import("./src/config.ts");
 
 const darkSync = `(function(){var d=document.documentElement;function s(){d.classList.toggle('dark',d.dataset.theme==='dark')}s();new MutationObserver(s).observe(d,{attributes:true,attributeFilter:['data-theme']})})();`;
 
@@ -70,6 +70,14 @@ export default defineConfig({
 	site: "https://viandwi24.github.io",
 	base: "/edmi-ui",
 	output: "static",
+	// Moved routes (docs information architecture): old URLs keep working.
+	redirects: {
+		"/getting-started/react": "/getting-started/installation/react",
+		"/getting-started/vue": "/getting-started/installation/vue",
+		"/getting-started/svelte": "/getting-started/installation/svelte",
+		"/theming": "/getting-started/theming",
+		"/rules": "/getting-started/rules",
+	},
 	integrations: [
 		starlight({
 			title: "Edmi UI",
@@ -106,7 +114,10 @@ export default defineConfig({
 				{ tag: "script", content: fwSync },
 				{ tag: "script", content: pmSync },
 			],
-			sidebar: buildSidebar(resolve(here, "src/content/docs"), EXAMPLES),
+			sidebar: buildSidebar(resolve(here, "src/content/docs"), {
+				componentGroups: COMPONENT_GROUPS,
+				aiGroups: AI_GROUPS,
+			}),
 		}),
 		// Scope React (and its Fast Refresh) to React files; the default filter matches every .ts/.tsx.
 		// Vue SFCs still receive `$RefreshSig$` through plugin-vue, see vueNoReactRefresh below.
@@ -115,6 +126,8 @@ export default defineConfig({
 				"**/packages/react/**",
 				"**/src/demos/react/**",
 				"**/src/components/landing/**",
+				"**/src/components/themes/**",
+				"**/src/components/overrides/**",
 				"**/src/components/thumbs/**",
 				"**/src/components/islands/react/**",
 				"**/src/examples/**/*.tsx",

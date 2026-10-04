@@ -166,16 +166,19 @@ body > .page > .header,
 	gap: 0.125rem;
 	min-width: 0;
 }
-/* phones: only the two entry points, the rest lives in the sidebar menu */
+/* below 62rem the five section links collapse into an Edmi dropdown (MobileNav) */
+.edmi-nav-mobile {
+	display: none;
+}
 @media (max-width: 61.99rem) {
-	.edmi-nav a:nth-child(n + 3) {
+	.edmi-nav {
 		display: none;
+	}
+	.edmi-nav-mobile {
+		display: block;
 	}
 }
 @media (max-width: 39.99rem) {
-	.edmi-nav a {
-		padding-inline: 0.5rem;
-	}
 	.edmi-header {
 		gap: 0.5rem;
 	}
@@ -280,7 +283,7 @@ body > .page > .header,
 
 /* search trigger = Edmi input */
 .edmi-search {
-	width: min(15rem, 100%);
+	width: min(12.5rem, 100%);
 	min-width: 0;
 }
 site-search button[data-open-modal] {
@@ -455,6 +458,52 @@ site-search dialog::backdrop {
 	color: var(--foreground);
 	background: transparent;
 	border-color: transparent;
+}
+/* section groups (UI / AI / Installation) and their category subheadings */
+.sidebar-content .edmi-side-group + .edmi-side-group,
+.sidebar-content .edmi-side-list > li + .edmi-side-group {
+	margin-top: 1.25rem;
+}
+.sidebar-content .edmi-side-list > li > a {
+	margin-bottom: 0.125rem;
+}
+.sidebar-content .edmi-side-cat {
+	margin-top: 0.125rem;
+}
+.sidebar-content .edmi-side-sub {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5rem;
+	padding: 0.28rem 0.625rem;
+	border-radius: 6px;
+	font-size: 0.8125rem;
+	font-weight: 500;
+	color: var(--foreground);
+	cursor: pointer;
+	list-style: none;
+	user-select: none;
+}
+.sidebar-content .edmi-side-sub::-webkit-details-marker {
+	display: none;
+}
+.sidebar-content .edmi-side-sub:hover {
+	background: var(--accent);
+}
+.sidebar-content .edmi-side-sub:focus-visible {
+	outline: 2px solid var(--ring);
+	outline-offset: -2px;
+}
+.sidebar-content .edmi-side-chev {
+	flex: none;
+	color: var(--muted-foreground);
+	transition: transform 0.15s;
+}
+.sidebar-content details[open] > summary .edmi-side-chev {
+	transform: rotate(90deg);
+}
+.sidebar-content .edmi-side-det > ul {
+	margin-top: 0.125rem;
 }
 /* flat link lists: no nesting rail */
 .sidebar-content .edmi-side ul li {
@@ -882,4 +931,36 @@ html[data-pm="bun"] .edmi-pm-tabs [data-pm-set="bun"] {
 	background: var(--tab-active);
 	border-color: var(--border);
 	color: var(--foreground);
+}
+
+/* ---------------------------------------- full-width pages (splash: no docs sidebar) ---------------------------------------- */
+/* Themes, Examples and Changelog use Starlight's splash template and widen the content column. */
+html:root:has(.edmi-wide) {
+	--sl-content-width: 96rem;
+	--sl-content-pad-x: 1.5rem;
+}
+html:root:has(.edmi-changelog) {
+	--sl-content-width: 46rem;
+}
+.edmi-wide {
+	padding-block: 0 3rem;
+}
+.edmi-wide > * {
+	margin-top: 0 !important;
+}
+.edmi-page-h {
+	margin: 0;
+	font-size: clamp(2rem, 4vw, 2.625rem);
+	font-weight: 500;
+	letter-spacing: -0.035em;
+	line-height: 1.08;
+	color: var(--ink-soft);
+}
+@media (max-width: 39.99rem) {
+	html:root:has(.edmi-wide) {
+		--sl-content-pad-x: 1rem;
+	}
+}
+.sidebar-content .edmi-side-det > ul > li > a {
+	padding-inline-start: 1.125rem;
 }

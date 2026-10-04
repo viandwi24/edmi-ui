@@ -32,7 +32,7 @@ const manual = FRAMEWORKS.filter((fw) => has.includes(fw)).map((fw) => {
 					<div data-install-panel="cli">
 						<PmCommand fw={fw} args={`add ${registryRef(fw, name)}`} />
 						<p class="edmi-install-note">
-							Pick your package manager above; the choice is remembered. Add the <code>@edmi-ui</code> registry first, see <a href={`${BASE}/getting-started/${fw}/`}>Getting started</a>.
+							Pick your package manager above; the choice is remembered. Add the <code>@edmi-ui</code> registry first, see <a href={`${BASE}/getting-started/installation/${fw}/`}>Getting started</a>.
 						</p>
 					</div>
 					<div data-install-panel="manual" hidden>

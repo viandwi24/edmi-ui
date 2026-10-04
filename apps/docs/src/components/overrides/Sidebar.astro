@@ -1,65 +1,52 @@
 ---
-// Flat shadcn-style sidebar: section headings (some link to an index) over always-visible link lists.
-// Replaces Starlight's collapsible <details> groups; keeps its scroll persistence and mobile footer.
+// Section-isolated sidebar: only the section the current URL belongs to is rendered (Getting Started or
+// Components), always expanded (no accordions). Pages outside those sections (landing, themes, examples,
+// changelog) use the splash template and have no sidebar. Keeps Starlight's scroll persistence and mobile footer.
 import MobileMenuFooter from "@astrojs/starlight/components/MobileMenuFooter.astro";
 import SidebarPersister from "@astrojs/starlight/components/SidebarPersister.astro";
+import SidebarEntries from "./SidebarEntries.astro";
 
 const { sidebar } = Astro.locals.starlightRoute;
-const pathname = Astro.url.pathname;
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
-/** Section heading -> index page it links to. */
-const HEADING_LINK: Record<string, string> = {
-	Components: `${base}/components/`,
-	AI: `${base}/components/#group-ai-chat`,
-	Examples: `${base}/examples/`,
+const path = Astro.url.pathname.slice(base.length);
+const SECTIONS: Record<string, string> = {
+	"/getting-started": "Getting Started",
+	"/components": "Components",
 };
-const norm = (p: string) => p.replace(/\/$/, "");
+const label = Object.entries(SECTIONS).find(([prefix]) => path.startsWith(prefix))?.[1];
+const section = sidebar.find((e) => e.type === "group" && e.label === label);
+const entries = section && section.type === "group" ? section.entries : [];
 ---
 
 <SidebarPersister>
-	<ul class="top-level edmi-side">
-		{
-			sidebar.map((entry) =>
-				entry.type === "group" ? (
-					<li>
-						{HEADING_LINK[entry.label] ? (
-							<a
-								class="edmi-side-h"
-								href={HEADING_LINK[entry.label]}
-								aria-current={norm(HEADING_LINK[entry.label].split("#")[0]) === norm(pathname) && !HEADING_LINK[entry.label].includes("#") ? "page" : undefined}
-							>
-								{entry.label}
-							</a>
-						) : (
-							<span class="edmi-side-h">{entry.label}</span>
-						)}
-						<ul>
-							{entry.entries.map((e) =>
-								e.type === "link" ? (
-									<li>
-										<a href={e.href} aria-current={e.isCurrent ? "page" : undefined} {...e.attrs}>
-											<span>{e.label}</span>
-										</a>
-									</li>
-								) : null,
-							)}
-						</ul>
-					</li>
-				) : (
-					<li>
-						<a href={entry.href} aria-current={entry.isCurrent ? "page" : undefined}>
-							<span>{entry.label}</span>
-						</a>
-					</li>
-				),
-			)
-		}
-	</ul>
+	<div class="edmi-side">
+		<SidebarEntries entries={entries} />
+	</div>
 </SidebarPersister>
 
 <div class="md:sl-hidden">
 	<MobileMenuFooter />
 </div>
+
+<script is:inline>
+	// Collapsible categories: restore the user's open/closed choices (the one with the current page stays open).
+	(function () {
+		var K = "edmi-side", saved = {};
+		try { saved = JSON.parse(localStorage.getItem(K) || "{}") || {}; } catch (e) {}
+		var dets = document.querySelectorAll(".edmi-side details[data-key]");
+		dets.forEach(function (d) {
+			var k = d.getAttribute("data-key");
+			if (!d.querySelector("a[aria-current='page']") && k in saved) d.open = !!saved[k];
+			d.addEventListener("toggle", function () {
+				try {
+					var m = JSON.parse(localStorage.getItem(K) || "{}") || {};
+					m[k] = d.open;
+					localStorage.setItem(K, JSON.stringify(m));
+				} catch (e) {}
+			});
+		});
+	})();
+</script>
 
 <script>
 	// Keep the current page visible inside the sidebar on load (nearest scrollable ancestor only).

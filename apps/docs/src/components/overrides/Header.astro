@@ -1,6 +1,7 @@
 ---
 import Search from "@astrojs/starlight/components/Search.astro";
 import { BASE } from "../../config";
+import MobileNav from "./MobileNav";
 import FrameworkSelect from "./FrameworkSelect.astro";
 import SocialIcons from "./SocialIcons.astro";
 import ThemeSelect from "./ThemeSelect.astro";
@@ -8,16 +9,12 @@ import ThemeSelect from "./ThemeSelect.astro";
 const path = Astro.url.pathname;
 const p = (s: string) => `${BASE}${s}`;
 const nav = [
-	{ label: "Docs", href: p("/getting-started/react/"), match: "/getting-started" },
-	{ label: "Components", href: p("/components/"), match: "/components/", not: "/components/patterns" },
-	{ label: "Patterns", href: p("/components/patterns/stat-tile/"), match: "/components/patterns" },
+	{ label: "Getting Started", href: p("/getting-started/"), match: "/getting-started" },
+	{ label: "Components", href: p("/components/"), match: "/components" },
 	{ label: "Examples", href: p("/examples/"), match: "/examples" },
-	{ label: "Theming", href: p("/theming/"), match: "/theming" },
-	{ label: "Rules", href: p("/rules/"), match: "/rules" },
+	{ label: "Themes", href: p("/themes/"), match: "/themes" },
 	{ label: "Changelog", href: p("/changelog/"), match: "/changelog" },
-];
-const isActive = (n: (typeof nav)[number]) =>
-	path.startsWith(p(n.match)) && !(n.not && path.startsWith(p(n.not)));
+].map((n) => ({ ...n, active: path.startsWith(p(n.match)) }));
 ---
 
 <div class="edmi-header">
@@ -28,8 +25,9 @@ const isActive = (n: (typeof nav)[number]) =>
 		<span class="edmi-wordmark font-brand">edmi-ui</span>
 	</a>
 	<nav class="edmi-nav" aria-label="Main">
-		{nav.map((n) => <a href={n.href} aria-current={isActive(n) ? "page" : undefined}>{n.label}</a>)}
+		{nav.map((n) => <a href={n.href} aria-current={n.active ? "page" : undefined}>{n.label}</a>)}
 	</nav>
+	<div class="edmi-nav-mobile"><MobileNav client:load items={nav} /></div>
 	<div class="edmi-header-end">
 		<div class="edmi-search"><Search /></div>
 		<FrameworkSelect />

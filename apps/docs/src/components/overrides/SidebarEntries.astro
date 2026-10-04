@@ -1,0 +1,51 @@
+---
+// Recursive sidebar list. Groups that contain other groups (UI / AI) are static section headings (mono caps);
+// groups that only contain links (Actions, Chat, Installation, ...) are collapsible <details> rows.
+// The one holding the current page renders open; the rest start closed and the choices persist via an
+// inline script in Sidebar.astro (localStorage). Links carry aria-current for the active page.
+import type { StarlightRouteData } from "@astrojs/starlight/route-data";
+
+type SidebarEntry = StarlightRouteData["sidebar"][number];
+
+interface Props {
+	entries: SidebarEntry[];
+	depth?: number;
+	path?: string;
+}
+const { entries, depth = 0, path = "" } = Astro.props;
+const hasCurrent = (e: SidebarEntry): boolean =>
+	e.type === "group" ? e.entries.some(hasCurrent) : e.isCurrent;
+---
+
+<ul class:list={["edmi-side-list", depth > 0 && "edmi-side-sub-list"]}>
+	{
+		entries.map((e) => {
+			if (e.type === "link")
+				return (
+					<li>
+						<a href={e.href} aria-current={e.isCurrent ? "page" : undefined} {...e.attrs}>
+							<span>{e.label}</span>
+						</a>
+					</li>
+				);
+			const key = `${path}/${e.label}`;
+			const leaf = e.entries.every((x) => x.type === "link");
+			return leaf ? (
+				<li class="edmi-side-cat">
+					<details class="edmi-side-det" data-key={key} open={hasCurrent(e)}>
+						<summary class="edmi-side-sub">
+							<span>{e.label}</span>
+							<svg class="edmi-side-chev" viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 4 4 4-4 4" /></svg>
+						</summary>
+						<Astro.self entries={e.entries} depth={depth + 1} path={key} />
+					</details>
+				</li>
+			) : (
+				<li class="edmi-side-group">
+					<span class="edmi-side-h">{e.label}</span>
+					<Astro.self entries={e.entries} depth={depth + 1} path={key} />
+				</li>
+			);
+		})
+	}
+</ul>
