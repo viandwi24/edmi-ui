@@ -33,6 +33,7 @@ bun run release             # CI publish step (release.yml publish-script): gen:
 bun run verify:matrix       # item x framework matrix (manifest + built JSON + docs page + demo + <name>-raised demos); exit 1 on gaps; --markdown prints the README table; `scripts/ai-pending.json` must stay empty
 bun run scripts/ai-fetch-stock.ts [dir]   # AI pack: download the stock AI Elements sources (react/vue/svelte) into .ai-src/ (gitignored) for porting
 bun run scripts/ai-icon.ts ArrowUpIcon size-4   # AI pack: print the 5-prop <IconPlaceholder /> snippet for a lucide icon name
+bun run scripts/gen-skill.ts   # consumer agent skill: rewrite the generated blocks in skills/edmi-ui/references (--check to verify); bun test covers it
 bun run typecheck           # root tsc + every workspace's typecheck (astro check, vue-tsc wrapper, svelte-check)
 bun run lint                # biome check .   (bun run format = biome check --write .)
 bun test                    # generator + tokens tests
@@ -59,7 +60,8 @@ registry.manifest/        single source of truth for items:
                             <group>.svelte.ts     Svelte overlay                                          patterns, patterns-2, meta)
                             index.ts merges all; types.ts; meta.ts = theme / all / edmi / fonts
                           ai-chat|ai-agent|ai-code|ai-runtime|ai-voice|ai-workflow|ai-patterns|ai-utilities (.ts + .vue.ts + .svelte.ts) = Edmi AI pack; ai-shared.ts = aiItem/aiReact/aiVue/aiSvelte helpers
-scripts/                  gen-registry.ts (+ lib/registry.ts, tested), build-registry.ts, pack-registries.ts, verify-matrix.ts, ai-pending.json (AI items not ported yet), ai-fetch-stock.ts, ai-icon.ts, smoke/*
+skills/edmi-ui            consumer agent skill (SKILL.md + references/*.md), installed with `npx skills add viandwi24/edmi-ui`; see 7.7
+scripts/                  gen-skill.ts + skill.test.ts (skill catalog), gen-registry.ts (+ lib/registry.ts, tested), build-registry.ts, pack-registries.ts, verify-matrix.ts, ai-pending.json (AI items not ported yet), ai-fetch-stock.ts, ai-icon.ts, smoke/*
 NOTICE, licenses/         third-party attribution (AI Elements Apache-2.0, AI Elements Vue Apache-2.0, Svelte AI Elements MIT)
 apps/docs                 Astro + Starlight site: src/demos/<fw>/<name>[-raised].*, src/content/docs/components/<group>/<name>.mdx (AI: components/ai-<cat>/ai-<name>.mdx), plugins/, templates/component.mdx + ai-component.mdx
 examples/react|vue|svelte Stockbreak Markets app per framework + examples/install.sh
@@ -175,7 +177,8 @@ Common: same item names/anatomy/props/`data-slot`/exports as the stock port; res
    Per-framework `type`, `registryDependencies`, `cssVars`, `css`, `config`, `skip` overrides are allowed. A new group/file must be merged in `registry.manifest/index.ts`. Add the item name to `REQUIRED` in `scripts/verify-matrix.ts` (and to its raised list if applicable).
 6. Docs: demos `apps/docs/src/demos/{react/x.tsx,vue/x.vue,svelte/x.svelte}` (+ `x-raised.*` for raised components), page `apps/docs/src/content/docs/components/<group>/x.mdx` from `apps/docs/templates/component.mdx`. **Quote the frontmatter description** (an unquoted colon breaks the YAML). Sections: `<ComponentDemo name="x" />`, API table (include `raised | boolean | false`), `## Raised ✦` with `<ComponentDemo name="x" demo="x-raised" />`, `## ✦ Edmi additions`. Demos must import registry code via `@edmi-react/ui/x`, `@edmi-vue/ui/x`, `@edmi-svelte/ui/x`; avoid importing icon or third-party packages the docs app does not depend on. Restart `astro dev` after adding a brand-new demo file (islands are generated at config load).
 7. Preview page: add the demo to `packages/<fw>/src/preview/<group>.*` and compare against the board.
-8. `bunx changeset` (see 9). Run the gates (8). Commit one component per commit, `feat(<fw or all>/<group>): <name>`.
+8. Skill: add a `USE_WHEN` line for the item in `scripts/gen-skill.ts`, then `bun run scripts/gen-skill.ts` (the test fails otherwise); new props/variants/✦ additions go into `skills/edmi-ui/references/components.md` (and `raised.md` if it takes `raised`; add it to the RAISED lists of `verify-matrix.ts`).
+9. `bunx changeset` (see 9). Run the gates (8). Commit one component per commit, `feat(<fw or all>/<group>): <name>`.
 
 ### 7.2 Modify an existing component
 Change React, then mirror the identical change in Vue and Svelte (diff class strings after normalising selectors). Update demos/mdx if the API changed. Never leave the ports out of sync; if a port truly cannot, say so in the PR and a decision line (10). Changeset: patch for style fixes, minor for new props/variants, major for removals.
@@ -203,6 +206,13 @@ Copy `packages/tokens/src/base/slate.css` (or `themes/ocean.css`) to `base/<name
 ### 7.5 Examples (`examples/<fw>`)
 Stockbreak Markets page + app shell (dashboard and navbar layouts, cookie layout picker, theme toggle). They install Edmi **only through the CLI** via `examples/install.sh <fw>` (default `EDMI_URL=http://localhost:4321/edmi-ui`, i.e. the docs dev server must serve `/r/<fw>`), and **never import `packages/*`**. Example pages "opt into raised" (CTA, ticker strip, cards, header pills, watchlist, layout picker). Biome ignores installed files (`src/components/ui`, installed blocks, `lib/utils.ts`, hooks). After a re-install restore `components.json` registry URLs to the GitHub Pages URL. Smoke: `bash scripts/smoke/example-<fw>.sh`. `bash scripts/reinstall-examples.sh [fw…]` rebuilds the registry locally, runs `install.sh` against the real `examples/<fw>` and restores the `components.json` registry URLs; afterwards `git checkout -- bun.lock` if bun touched it and run `bunx biome check --write` on the example CSS (the CLI writes unformatted CSS). Positive values on example pages use `success` (`text-success-text`, `bg-success`), not `brand`.
 `examples/layerbeat-<fw>` is a second example per port: the Layerbeat "Create a BeatVPS" page (DESIGN §7), theme Slate · Ocean installed with `@edmi-ui/theme-slate-ocean` after `@edmi-ui/theme` (Svelte: URL form), an always-dark navy sidebar made with a scoped `class="dark"` on the sidebar subtree, mock data in `src/data/layerbeat.ts`. Install with `EXAMPLE_DIR=examples/layerbeat-<fw> examples/install.sh <fw>` plus the theme item; smoke: `bash scripts/smoke/example-layerbeat-<fw>.sh` (picked up by `all.sh`). Pages: React `src/pages/create-beatvps.tsx`, Vue `src/pages/CreateBeatVps.vue`, Svelte `src/lib/pages/create-beatvps.svelte`. Vue installs with `examples/install.sh vue` + `shadcn-vue add @edmi-ui/theme-slate-ocean --overwrite`; Svelte with `examples/install.sh svelte` + `shadcn-svelte add <EDMI_URL>/r/svelte/theme-slate-ocean.json --overwrite`. Biome ignores installed CLI paths with `examples/*` globs (no nested biome.json). `install.sh` also installs the Stockbreak pattern blocks; delete the unused ones from the Layerbeat example afterwards.
+
+### 7.7 Consumer agent skill (`skills/edmi-ui`)
+An installable Agent Skill for people who USE Edmi (`npx skills add viandwi24/edmi-ui`, the `skills` CLI discovers `skills/<name>/SKILL.md`; also `--list`, `--skill edmi-ui`, `-a <agent>`, `-g`). Format: `SKILL.md` (frontmatter `name: edmi-ui` = folder name, `description` <= 1024 chars with trigger words; body < 500 lines) plus `references/*.md` loaded on demand, one level deep and each linked from SKILL.md.
+- Files: `install.md`, `upgrading.md`, `theming.md`, `raised.md` (when to use raised: keep it aligned with section 5 and the example pages), `components.md`, `ai.md`, `rules.md`, `frameworks.md`.
+- Generated blocks: `components.md` catalog (`<!-- BEGIN GENERATED: catalog -->`) and `raised.md` list are rewritten by `bun run scripts/gen-skill.ts` from `registry.manifest/index.ts`; the "use when" text is the `USE_WHEN` map in the script; the raised list is parsed from the `RAISED`/`AI_RAISED` arrays of `verify-matrix.ts`. `scripts/skill.test.ts` (in `bun test`) fails when an item has no entry, a block is stale, frontmatter is invalid, a reference is unlinked, or content mentions `refs/`, `@/registry/edmi`, `packages/*` or the upstream AI library name.
+- Content rules: consumer paths only (`@/components/ui/button`), verified against the registry source, package-manager agnostic (npx default), English, imperative, concise. Never mention the upstream AI component library.
+- When you change install flows, theming, tokens, `raised` rules or the docs getting-started pages, update the skill and the docs pages `getting-started/skills.mdx` and `getting-started/upgrading.mdx` in the same change. Cannot be tested end to end before the repo is pushed (`skills add` reads GitHub); locally use `bunx skills add ./ --list` with a temporary `HOME`.
 
 ## 7b. Edmi AI pack (`ai-*` items)
 
@@ -345,6 +355,10 @@ AI pack (v3, decided with the user)
 Docs examples
 - Examples render in an **iframe to a bare route** (real viewport for Sidebar/media queries, own `<html>` so portals follow the knobs), not a scoped container. Knobs travel by query + `postMessage`; framework switch swaps the route. Why: robustness; EXAMPLES.md allowed either.
 - Every example is live in all three frameworks (user decision), shares one `data.ts`, and imports registry aliases only. Known gap: the Svelte `IconPlaceholder` shim (docs dev runtime) draws a circle, so Svelte example icons are placeholders until a docs-side Phosphor shim exists.
+
+Agent skill
+- The consumer skill lives in `skills/edmi-ui` (the path the `skills` CLI discovers), not under `.claude/`, so every agent product can install it; catalog and raised list are generated, the guidance is hand-written (7.7). Docs pages: Agent skills and Upgrading under Getting Started. Why: user decision; consumers should get correct installs, themes and `raised` restraint from their own coding agent.
+- Upgrading guidance: components are copied by the shadcn CLIs, so upgrade = changelog, optional preview (`add --dry-run`/`--diff` exist in the React CLI only), `add ... --overwrite`, review `git diff`; pinned jsDelivr URLs change version.
 
 Superseded and intentionally dropped: lucide as default icon set; raised-by-default look and `h-[38px]` controls (v1 spec); plan-era parallel-worker ownership rules and `plans/requests`; `registry:font` for Vue/Svelte; the "utils item for all ports" idea; `data-raised` as a styling hook (the base rule stays harmless).
 
