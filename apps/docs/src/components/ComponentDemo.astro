@@ -95,9 +95,6 @@ const missing = FRAMEWORKS.filter((fw) => !has.includes(fw));
 							</div>
 						</div>
 					))}
-					<p class="edmi-icon-note">
-						Icons are rewritten to your <code>iconLibrary</code> on install (Edmi default: Phosphor).
-					</p>
 				</div>
 				<div data-view="code" hidden>
 					{panels.map((p) => (
@@ -145,8 +142,6 @@ const missing = FRAMEWORKS.filter((fw) => !has.includes(fw));
 		overflow: auto; background-color: var(--stage);
 		background-image: radial-gradient(color-mix(in oklab, var(--foreground) 16%, transparent) 1px, transparent 1.2px); background-size: 16px 16px;
 	}
-	.edmi-icon-note { margin: 0; padding: .5rem .875rem; font-size: .75rem; color: var(--muted-foreground); border-top: 1px solid var(--border); background: var(--card); }
-	.edmi-icon-note code { font-size: .7rem; }
 
 	.edmi-demo-card .expressive-code { margin: 0; }
 	.edmi-demo-card .expressive-code .frame { border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
@@ -159,7 +154,6 @@ const missing = FRAMEWORKS.filter((fw) => !has.includes(fw));
 	.edmi-demo-tools .edmi-fw-select-sm svg { right: .45rem; }
 	.edmi-fw-note { display: none; margin: 0; padding: 2.5rem 1.5rem; text-align: center; font-size: .8125rem; color: var(--muted-foreground); background: var(--stage); }
 	.edmi-fw-note button { all: unset; cursor: pointer; font-weight: 500; color: var(--foreground); text-decoration: underline; text-underline-offset: 2px; }
-	.edmi-demo[data-has] [data-view] .edmi-icon-note { display: block; }
 </style>
 
 <script>
