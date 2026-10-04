@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { ElevationProvider } from "@edmi-svelte/ui/elevation";
 	import { Badge } from "@edmi-svelte/ui/badge";
 	import { Button } from "@edmi-svelte/ui/button";
 	import { Card } from "@edmi-svelte/ui/card";
@@ -15,6 +16,8 @@
 	const navIcons: Record<string, Record<string, string>> = {dashboard: { lucide: "LayoutDashboardIcon", tabler: "IconLayoutDashboard", hugeicons: "DashboardSquare01Icon", phosphor: "SquaresFourIcon", remixicon: "RiDashboardLine" }, explore: { lucide: "GlobeIcon", tabler: "IconWorld", hugeicons: "Globe02Icon", phosphor: "GlobeIcon", remixicon: "RiGlobalLine" }, feed: { lucide: "ListIcon", tabler: "IconList", hugeicons: "ListViewIcon", phosphor: "ListIcon", remixicon: "RiListUnordered" }, leaderboard: { lucide: "StarIcon", tabler: "IconStar", hugeicons: "StarIcon", phosphor: "StarIcon", remixicon: "RiStarLine" }, agents: { lucide: "SparklesIcon", tabler: "IconSparkles", hugeicons: "SparklesIcon", phosphor: "SparkleIcon", remixicon: "RiSparklingLine" }, create: { lucide: "PlusIcon", tabler: "IconPlus", hugeicons: "PlusSignIcon", phosphor: "PlusIcon", remixicon: "RiAddLine" }, portfolio: { lucide: "WalletIcon", tabler: "IconWallet", hugeicons: "Wallet01Icon", phosphor: "WalletIcon", remixicon: "RiWalletLine" }, settings: { lucide: "SettingsIcon", tabler: "IconSettings", hugeicons: "Settings01Icon", phosphor: "GearIcon", remixicon: "RiSettingsLine" }};
 </script>
 
+<ElevationProvider mode="layered">
+
 {#snippet cardTop(title: string, action?: string)}
 	<div class="flex items-baseline justify-between">
 		<h2 class="text-xl font-normal tracking-[-0.3px]">{title}</h2>
@@ -25,7 +28,7 @@
 {/snippet}
 
 {#snippet mini(m: { label: string; value: string; note: string })}
-	<div class="rounded-xl border border-border-2 bg-muted p-[18px] shadow-sunk">
+	<div class="rounded-xl border border-sk-bd bg-sk-bg p-[18px] shadow-sunken">
 		<div class="text-[13px] text-muted-foreground">{m.label}</div>
 		<div class="my-2 text-[34px] leading-none font-light tracking-[-0.5px] text-success-text">{m.value}</div>
 		<div class="text-[13px] text-muted-foreground">{m.note}</div>
@@ -37,7 +40,7 @@
 		<Sidebar.Header class="gap-3 px-3 pt-4">
 			<div class="flex items-center justify-between">
 				<a href="#/" class="flex items-center gap-2 font-brand text-xl font-semibold tracking-[-0.4px]">
-					<span class="inline-flex size-7 items-center justify-center rounded-lg border border-primary-edge border-b-primary-lip bg-linear-to-b from-primary-hi to-primary text-primary-foreground shadow-btn-primary [background-origin:border-box]">
+					<span class="inline-flex size-7 items-center justify-center rounded-lg border border-transparent bg-primary text-primary-foreground [background-image:var(--r1-p-face)] shadow-btn-raised-primary [background-origin:border-box]">
 						<IconPlaceholder
 							lucide="ChartLineIcon"
 							tabler="IconChartLine"
@@ -79,7 +82,7 @@
 				<Sidebar.GroupLabel class="text-[11.5px] tracking-[0.6px] uppercase">My watchlist</Sidebar.GroupLabel>
 				<Sidebar.GroupContent class="flex flex-col gap-0.5">
 					{#each watchlist as w, i (w.symbol)}
-						<WatchlistItem raised href="#/" active={i === 0} {...w} />
+						<WatchlistItem  href="#/" active={i === 0} {...w} />
 					{/each}
 				</Sidebar.GroupContent>
 			</Sidebar.Group>
@@ -101,7 +104,7 @@
 			</div>
 			<div class="flex items-center gap-2">
 				<Button elevation="raised" variant="outline" class="max-sm:hidden">Devnet</Button>
-				<Button elevation="raised">
+				<Button>
 					Create index
 					<IconPlaceholder
 						lucide="PlusIcon"
@@ -126,9 +129,9 @@
 		</div>
 	</div>
 
-	<TickerStrip raised items={tickers} />
+	<TickerStrip  items={tickers} />
 
-	<Card elevation="raised" class="gap-4 px-6">
+	<Card class="gap-4 px-6">
 		{@render cardTop("Top indexes", "View all")}
 		<Table>
 			<TableHeader>
@@ -143,7 +146,7 @@
 	</Card>
 
 	<div class="grid items-start gap-6 lg:grid-cols-3">
-		<Card elevation="raised" class="@container gap-4 px-6">
+		<Card class="@container gap-4 px-6">
 			{@render cardTop("Human vs AI")}
 			<div class="grid gap-3 @[400px]:grid-cols-2">
 				{@render mini(humanVsAi.human)}
@@ -151,7 +154,7 @@
 			</div>
 		</Card>
 
-		<Card elevation="raised" class="gap-3 px-6">
+		<Card class="gap-3 px-6">
 			{@render cardTop("Top creators", "See all")}
 			<ul>
 				{#each creators as c (c.address)}
@@ -174,7 +177,7 @@
 			</ul>
 		</Card>
 
-		<Card elevation="raised" class="gap-3 px-6">
+		<Card class="gap-3 px-6">
 			{@render cardTop("Latest activity")}
 			<ul>
 				{#each activity as a, i (i)}
@@ -191,3 +194,4 @@
 </div>
 	</Sidebar.Inset>
 </Sidebar.Provider>
+</ElevationProvider>

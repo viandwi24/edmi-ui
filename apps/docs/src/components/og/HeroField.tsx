@@ -174,7 +174,7 @@ export default function HeroField() {
 					</Tabs>
 					<div className="grid gap-1.5">
 						<WatchlistItem
-							raised
+							elevation="raised"
 							href="#a"
 							symbol="MAG4"
 							price="1.0000"
@@ -183,7 +183,7 @@ export default function HeroField() {
 							active
 						/>
 						<WatchlistItem
-							raised
+							elevation="raised"
 							href="#b"
 							symbol="AIFR"
 							price="1.0104"
@@ -191,7 +191,7 @@ export default function HeroField() {
 							color="var(--chart-4)"
 						/>
 						<WatchlistItem
-							raised
+							elevation="raised"
 							href="#c"
 							symbol="ATLS"
 							price="0.9893"

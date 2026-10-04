@@ -269,7 +269,7 @@ export default function DataPreview() {
 			</div>
 			<RaisedSection>
 				<DataTable
-					raised
+					elevation="raised"
 					columns={columns}
 					data={rows}
 					filterColumn="index"

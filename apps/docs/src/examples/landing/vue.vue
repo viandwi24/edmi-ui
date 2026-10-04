@@ -31,7 +31,7 @@ import {
 	<div class="min-h-svh overflow-x-clip bg-background text-foreground">
 		<div class="border-b border-border">
 			<div class="mx-auto max-w-[1328px] px-4 md:px-10">
-				<SiteHeader raised class="border-0 bg-transparent px-0 shadow-none" :links="nav">
+				<SiteHeader elevation="raised" class="border-0 bg-transparent px-0 shadow-none" :links="nav">
 					<template #action>
 						<div class="flex items-center gap-3">
 							<Badge variant="outline" class="max-sm:hidden">Devnet</Badge>
@@ -128,7 +128,7 @@ import {
 						<AllocationBar :segments="index.segments" />
 					</Card>
 					<JoinPanel
-						raised
+						elevation="raised"
 						default-amount="1,000"
 						:rows="joinRows"
 						class="mt-4 w-full lg:absolute lg:right-0 lg:bottom-0 lg:mt-0 lg:w-80"
@@ -137,7 +137,7 @@ import {
 			</section>
 
 			<section class="flex flex-col gap-3">
-				<StatStrip raised>
+				<StatStrip elevation="raised">
 					<StatStripItem v-for="s in stats" :key="s.label" :value="s.value" :label="s.label" />
 				</StatStrip>
 				<p class="text-xs text-muted-foreground-2">{{ statsNote }}</p>
@@ -164,7 +164,7 @@ import {
 					<StepCard
 						v-for="s in steps"
 						:key="s.index"
-						raised
+						elevation="raised"
 						:index="s.index"
 						:title="s.title"
 						:description="s.description"
@@ -180,7 +180,7 @@ import {
 					<PricingPlan
 						v-for="p in pricing"
 						:key="p.name"
-						raised
+						elevation="raised"
 						:name="p.name"
 						:tagline="p.tagline"
 						:price="p.price"
@@ -207,14 +207,14 @@ import {
 			</Card>
 
 			<SiteFooter
-				raised
+				elevation="raised"
 				:description="footer.description"
 				:columns="footer.columns"
 				:legal="footer.legal"
 				:note="footer.note"
 			>
 				<template #brand>
-					<SiteHeaderBrand raised />
+					<SiteHeaderBrand elevation="raised" />
 				</template>
 			</SiteFooter>
 		</main>

@@ -29,7 +29,7 @@ import {
 		<div class="border-b border-border">
 			<div class="mx-auto max-w-[1328px] px-4 md:px-10">
 				<SiteHeader
-					raised
+					elevation="raised"
 					class="border-0 bg-transparent px-0 shadow-none"
 					:lead="header.lead"
 					:steps="header.steps"
@@ -127,7 +127,7 @@ import {
 						</h2>
 						<p class="text-[15px] leading-relaxed text-muted-foreground">{{ launch.body }}</p>
 						<div class="flex flex-col gap-2">
-							<FeatureRow v-for="r in launch.rows" :key="r.index" raised :index="r.index" :title="r.title">{{ r.body }}</FeatureRow>
+							<FeatureRow v-for="r in launch.rows" :key="r.index" elevation="raised" :index="r.index" :title="r.title">{{ r.body }}</FeatureRow>
 						</div>
 					</div>
 				<Card elevation="raised" class="gap-0 p-0 md:flex-row">
@@ -157,7 +157,7 @@ import {
 						</h2>
 						<p class="text-[15px] leading-relaxed text-muted-foreground">{{ operate.body }}</p>
 						<div class="flex flex-col gap-2">
-							<FeatureRow v-for="r in operate.rows" :key="r.index" raised :index="r.index" :title="r.title">{{ r.body }}</FeatureRow>
+							<FeatureRow v-for="r in operate.rows" :key="r.index" elevation="raised" :index="r.index" :title="r.title">{{ r.body }}</FeatureRow>
 						</div>
 					</div>
 				<div class="relative flex flex-col gap-4 lg:pb-32">
@@ -234,7 +234,7 @@ import {
 					<p class="text-[15px]">{{ footer.card.text }}</p>
 					<Button elevation="raised" size="sm" variant="outline" class="w-fit">{{ footer.card.cta }}</Button>
 				</Card>
-				<SiteFooter raised :columns="footer.columns" :legal="footer.legal" :note="footer.note" />
+				<SiteFooter elevation="raised" :columns="footer.columns" :legal="footer.legal" :note="footer.note" />
 			</section>
 		</main>
 	</div>

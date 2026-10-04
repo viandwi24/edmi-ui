@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { ElevationProvider } from "@edmi-svelte/ui/elevation";
 	import { AppHeader } from "@edmi-svelte/ui/app-header";
 	import { Avatar, AvatarFallback, AvatarGroup } from "@edmi-svelte/ui/avatar";
 	import { Button } from "@edmi-svelte/ui/button";
@@ -13,11 +14,13 @@
 	let draft = $state("");
 </script>
 
+<ElevationProvider mode="layered">
+
 <div class="min-h-svh bg-background text-foreground">
 	<div class="border-b border-border">
 		<div class="mx-auto flex max-w-[1328px] items-center gap-2 px-4 py-3 md:px-10">
 			<AppHeader
-				raised
+				
 				class="flex-1 border-0 bg-transparent px-0 py-0 shadow-none"
 				items={nav}
 				active="#feed"
@@ -45,7 +48,7 @@
 			</ToggleGroup.Root>
 		</div>
 
-		<Card elevation="raised" class="gap-0 p-0">
+		<Card class="gap-0 p-0">
 			<Textarea
 				bind:value={draft}
 				maxlength={maxChars}
@@ -56,13 +59,13 @@
 			<div class="mx-6 flex flex-wrap items-center gap-3 border-t border-border-2 py-4">
 				<span class="flex-1 text-[13px] text-muted-foreground">Plain text · up to 2 links · needs on-chain activity</span>
 				<span class="font-mono text-[13px] text-muted-foreground">{draft.length}/{maxChars}</span>
-				<Button elevation="raised" onclick={() => (draft = "")}>Post</Button>
+				<Button onclick={() => (draft = "")}>Post</Button>
 			</div>
 		</Card>
 
 		{#if view === "all"}
 			{#each posts as p (p.id)}
-				<FeedPost.Root raised>
+				<FeedPost.Root >
 					<FeedPost.Header name={p.name} handle={p.handle} time={p.time} initials={p.initials} />
 					<FeedPost.Content>{p.text}</FeedPost.Content>
 					<FeedPost.Index title={p.index.title} description={p.index.description}>
@@ -76,7 +79,7 @@
 							/>
 						{/snippet}
 						{#snippet action()}
-							<Button elevation="raised" size="sm">Join</Button>
+							<Button size="sm">Join</Button>
 						{/snippet}
 					</FeedPost.Index>
 					<FeedPost.Footer>
@@ -105,7 +108,7 @@
 			{/each}
 		{/if}
 
-		<Card elevation="raised" class="gap-0 p-0">
+		<Card class="gap-0 p-0">
 			<ul class="px-6">
 				{#each updates as u (u.id)}
 					<li class="flex items-center gap-3 border-b border-border-2 py-4">
@@ -135,3 +138,4 @@
 		</div>
 	</div>
 </div>
+</ElevationProvider>

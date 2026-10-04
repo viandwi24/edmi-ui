@@ -26,7 +26,7 @@ export default function EditorialDarkExample() {
 	return (
 		<div className="min-h-svh overflow-x-clip bg-background text-foreground">
 			<header className="mx-auto flex max-w-[1328px] items-center justify-between gap-4 px-4 py-4 md:px-10">
-				<SiteHeaderBrand raised />
+				<SiteHeaderBrand elevation="raised" />
 				<NavigationMenu className="max-lg:hidden">
 					<NavigationMenuList>
 						<NavigationMenuItem>
@@ -191,7 +191,7 @@ export default function EditorialDarkExample() {
 
 				<SiteFooter
 					elevation="raised"
-					brand={<SiteHeaderBrand raised />}
+					brand={<SiteHeaderBrand elevation="raised" />}
 					description={footer.description}
 					columns={footer.columns}
 					legal={footer.legal}

@@ -13,7 +13,7 @@
 </script>
 
 {#snippet footerBrand()}
-	<SiteHeaderBrand raised />
+	<SiteHeaderBrand elevation="raised" />
 {/snippet}
 
 {#snippet planAction()}
@@ -22,7 +22,7 @@
 
 <div class="min-h-svh overflow-x-clip bg-background text-foreground">
 	<header class="mx-auto flex max-w-[1328px] items-center justify-between gap-4 px-4 py-4 md:px-10">
-		<SiteHeaderBrand raised />
+		<SiteHeaderBrand elevation="raised" />
 		<NavigationMenu.Root class="max-lg:hidden">
 			<NavigationMenu.List>
 				<NavigationMenu.Item>
@@ -104,7 +104,7 @@
 			<div class="grid w-full gap-5 md:grid-cols-3">
 				{#each plans.items as p (p.name)}
 					<PricingPlan
-						raised
+						elevation="raised"
 						name={p.name}
 						tagline={p.tagline}
 						price={p.price}
@@ -129,7 +129,7 @@
 		</section>
 
 		<SiteFooter
-			raised
+			elevation="raised"
 			brand={footerBrand}
 			description={footer.description}
 			columns={footer.columns}

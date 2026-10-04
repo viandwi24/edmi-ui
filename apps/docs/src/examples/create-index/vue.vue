@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ElevationProvider } from "@edmi-vue/ui/elevation";
 import { SearchIcon } from "@lucide/vue";
 import { computed, ref } from "vue";
 import { AllocationBar } from "@edmi-vue/ui/allocation-bar";
@@ -63,11 +64,12 @@ function go(delta: number) {
 </script>
 
 <template>
+<ElevationProvider mode="layered">
 	<div class="min-h-svh bg-background text-foreground">
 		<div class="border-b border-border">
 			<div class="mx-auto flex max-w-[1328px] items-center gap-2 px-4 py-3 md:px-10">
 				<AppHeader
-					raised
+					
 					class="flex-1 border-0 bg-transparent px-0 py-0 shadow-none"
 					:items="nav"
 					active="#create"
@@ -100,7 +102,7 @@ function go(delta: number) {
 							</InputGroupAddon>
 							<InputGroupInput v-model="query" placeholder="Search assets" aria-label="Search assets" />
 						</InputGroup>
-						<Card elevation="raised" class="gap-0 px-6 py-0">
+						<Card class="gap-0 px-6 py-0">
 							<ul>
 								<li v-for="a in visible" :key="a.symbol" class="border-b border-border-2 last:border-b-0">
 									<label :for="`asset-${a.symbol}`" class="flex cursor-pointer items-center gap-3.5 py-3.5">
@@ -129,7 +131,7 @@ function go(delta: number) {
 						</Card>
 					</template>
 
-					<Card v-if="step === 'weights'" elevation="raised" class="gap-4 px-6">
+					<Card v-if="step === 'weights'" class="gap-4 px-6">
 						<div>
 							<h2 class="text-xl font-normal tracking-[-0.3px]">Weights</h2>
 							<p class="text-[13px] text-muted-foreground">
@@ -151,7 +153,7 @@ function go(delta: number) {
 						</ul>
 					</Card>
 
-					<Card v-if="step === 'strategy'" elevation="raised" class="gap-5 px-6">
+					<Card v-if="step === 'strategy'" class="gap-5 px-6">
 						<h2 class="text-xl font-normal tracking-[-0.3px]">Strategy</h2>
 						<Field>
 							<FieldLabel for="rebalance">Rebalance</FieldLabel>
@@ -183,7 +185,7 @@ function go(delta: number) {
 						</Field>
 					</Card>
 
-					<Card v-if="step === 'fees'" elevation="raised" class="gap-5 px-6">
+					<Card v-if="step === 'fees'" class="gap-5 px-6">
 						<h2 class="text-xl font-normal tracking-[-0.3px]">Fees</h2>
 						<div class="grid gap-5 sm:grid-cols-2">
 							<Field>
@@ -209,7 +211,7 @@ function go(delta: number) {
 						</Field>
 					</Card>
 
-					<Card v-if="step === 'review'" elevation="raised" class="gap-4 px-6">
+					<Card v-if="step === 'review'" class="gap-4 px-6">
 						<h2 class="text-xl font-normal tracking-[-0.3px]">Review</h2>
 						<AllocationBar v-if="selected.length" :segments="segments" />
 						<p v-else class="text-sm text-muted-foreground">No assets picked yet.</p>
@@ -223,13 +225,13 @@ function go(delta: number) {
 
 					<div class="flex items-center justify-between">
 						<Button elevation="raised" variant="outline" size="lg" :disabled="stepIndex === 0" @click="go(-1)">Back</Button>
-						<Button elevation="raised" size="lg" :disabled="step === 'assets' && selected.length === 0" @click="go(1)">
+						<Button size="lg" :disabled="step === 'assets' && selected.length === 0" @click="go(1)">
 							{{ step === "review" ? "Create index" : "Continue" }}
 						</Button>
 					</div>
 				</div>
 
-				<Card elevation="raised" class="gap-5 px-6">
+				<Card class="gap-5 px-6">
 					<div class="flex items-start gap-4">
 						<span class="inline-flex size-[54px] shrink-0 items-center justify-center rounded-xl border border-border bg-muted font-mono text-lg">{{ (symbol || name || "").charAt(0) }}</span>
 						<div class="min-w-0 flex-1">
@@ -250,4 +252,5 @@ function go(delta: number) {
 			</div>
 		</div>
 	</div>
+</ElevationProvider>
 </template>

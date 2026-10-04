@@ -26,7 +26,7 @@ function pickAudience(v: unknown) {
 <template>
 	<div class="min-h-svh overflow-x-clip bg-background text-foreground">
 		<header class="mx-auto flex max-w-[1328px] items-center justify-between gap-4 px-4 py-4 md:px-10">
-			<SiteHeaderBrand raised />
+			<SiteHeaderBrand elevation="raised" />
 			<NavigationMenu class="max-lg:hidden">
 				<NavigationMenuList>
 					<NavigationMenuItem>
@@ -93,7 +93,7 @@ function pickAudience(v: unknown) {
 					<PricingPlan
 						v-for="p in plans.items"
 						:key="p.name"
-						raised
+						elevation="raised"
 						:name="p.name"
 						:tagline="p.tagline"
 						:price="p.price"
@@ -117,9 +117,9 @@ function pickAudience(v: unknown) {
 				</Accordion>
 			</section>
 
-			<SiteFooter raised :description="footer.description" :columns="footer.columns" :legal="footer.legal" :note="footer.note">
+			<SiteFooter elevation="raised" :description="footer.description" :columns="footer.columns" :legal="footer.legal" :note="footer.note">
 				<template #brand>
-					<SiteHeaderBrand raised />
+					<SiteHeaderBrand elevation="raised" />
 				</template>
 			</SiteFooter>
 		</main>

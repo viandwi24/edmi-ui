@@ -56,7 +56,7 @@ export default function LandingExample() {
 			<div className="border-b border-border">
 				<div className="mx-auto max-w-[1328px] px-4 md:px-10">
 					<SiteHeader
-						raised
+						elevation="raised"
 						className="border-0 bg-transparent px-0 shadow-none"
 						links={nav}
 						action={
@@ -188,7 +188,7 @@ export default function LandingExample() {
 							<AllocationBar segments={index.segments} />
 						</Card>
 						<JoinPanel
-							raised
+							elevation="raised"
 							defaultAmount="1,000"
 							rows={joinRows}
 							className="mt-4 w-full lg:absolute lg:right-0 lg:bottom-0 lg:mt-0 lg:w-80"
@@ -284,7 +284,7 @@ export default function LandingExample() {
 
 				<SiteFooter
 					elevation="raised"
-					brand={<SiteHeaderBrand raised />}
+					brand={<SiteHeaderBrand elevation="raised" />}
 					description={footer.description}
 					columns={footer.columns}
 					legal={footer.legal}

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ElevationProvider } from "@edmi-vue/ui/elevation";
 import {
 	ChartLineIcon,
 	GlobeIcon,
@@ -49,12 +50,13 @@ const navIcons: Record<string, unknown> = {
 </script>
 
 <template>
+<ElevationProvider mode="layered">
 	<SidebarProvider style="--sidebar-width: 16rem">
 		<Sidebar variant="inset" collapsible="offcanvas">
 			<SidebarHeader class="gap-3 px-3 pt-4">
 				<div class="flex items-center justify-between">
 					<a href="#/" class="flex items-center gap-2 font-brand text-xl font-semibold tracking-[-0.4px]">
-						<span class="inline-flex size-7 items-center justify-center rounded-lg border border-primary-edge border-b-primary-lip bg-linear-to-b from-primary-hi to-primary text-primary-foreground shadow-btn-primary [background-origin:border-box]">
+						<span class="inline-flex size-7 items-center justify-center rounded-lg border border-transparent bg-primary text-primary-foreground [background-image:var(--r1-p-face)] shadow-btn-raised-primary [background-origin:border-box]">
 							<ChartLineIcon class="size-[15px]" />
 						</span>
 						Stockbreak
@@ -84,7 +86,7 @@ const navIcons: Record<string, unknown> = {
 				<SidebarGroup>
 					<SidebarGroupLabel class="text-[11.5px] tracking-[0.6px] uppercase">My watchlist</SidebarGroupLabel>
 					<SidebarGroupContent class="flex flex-col gap-0.5">
-						<WatchlistItem v-for="(w, i) in watchlist" :key="w.symbol" raised href="#/" :active="i === 0" v-bind="w" />
+						<WatchlistItem v-for="(w, i) in watchlist" :key="w.symbol"  href="#/" :active="i === 0" v-bind="w" />
 					</SidebarGroupContent>
 				</SidebarGroup>
 			</SidebarContent>
@@ -105,7 +107,7 @@ const navIcons: Record<string, unknown> = {
 				</div>
 				<div class="flex items-center gap-2">
 					<Button elevation="raised" variant="outline" class="max-sm:hidden">Devnet</Button>
-					<Button elevation="raised">
+					<Button>
 						Create index
 						<PlusIcon />
 					</Button>
@@ -124,9 +126,9 @@ const navIcons: Record<string, unknown> = {
 			</div>
 		</div>
 
-		<TickerStrip raised :items="tickers" />
+		<TickerStrip  :items="tickers" />
 
-		<Card elevation="raised" class="gap-4 px-6">
+		<Card class="gap-4 px-6">
 			<div class="flex items-baseline justify-between">
 				<h2 class="text-xl font-normal tracking-[-0.3px]">Top indexes</h2>
 				<a href="#all" class="text-[13px] text-muted-foreground hover:text-foreground">View all</a>
@@ -142,12 +144,12 @@ const navIcons: Record<string, unknown> = {
 		</Card>
 
 		<div class="grid items-start gap-6 lg:grid-cols-3">
-			<Card elevation="raised" class="@container gap-4 px-6">
+			<Card class="@container gap-4 px-6">
 				<div class="flex items-baseline justify-between">
 					<h2 class="text-xl font-normal tracking-[-0.3px]">Human vs AI</h2>
 				</div>
 				<div class="grid gap-3 @[400px]:grid-cols-2">
-					<div v-for="m in [humanVsAi.human, humanVsAi.ai]" :key="m.label" class="rounded-xl border border-border-2 bg-muted p-[18px] shadow-sunk">
+					<div v-for="m in [humanVsAi.human, humanVsAi.ai]" :key="m.label" class="rounded-xl border border-sk-bd bg-sk-bg p-[18px] shadow-sunken">
 						<div class="text-[13px] text-muted-foreground">{{ m.label }}</div>
 						<div class="my-2 text-[34px] leading-none font-light tracking-[-0.5px] text-success-text">{{ m.value }}</div>
 						<div class="text-[13px] text-muted-foreground">{{ m.note }}</div>
@@ -155,7 +157,7 @@ const navIcons: Record<string, unknown> = {
 				</div>
 			</Card>
 
-			<Card elevation="raised" class="gap-3 px-6">
+			<Card class="gap-3 px-6">
 				<div class="flex items-baseline justify-between">
 					<h2 class="text-xl font-normal tracking-[-0.3px]">Top creators</h2>
 					<a href="#all" class="text-[13px] text-muted-foreground hover:text-foreground">See all</a>
@@ -175,7 +177,7 @@ const navIcons: Record<string, unknown> = {
 				</ul>
 			</Card>
 
-			<Card elevation="raised" class="gap-3 px-6">
+			<Card class="gap-3 px-6">
 				<div class="flex items-baseline justify-between">
 					<h2 class="text-xl font-normal tracking-[-0.3px]">Latest activity</h2>
 				</div>
@@ -192,4 +194,5 @@ const navIcons: Record<string, unknown> = {
 	</div>
 		</SidebarInset>
 	</SidebarProvider>
+</ElevationProvider>
 </template>

@@ -35,7 +35,7 @@
 {/snippet}
 
 {#snippet footerBrand()}
-	<SiteHeaderBrand raised />
+	<SiteHeaderBrand elevation="raised" />
 {/snippet}
 
 {#snippet planAction()}
@@ -45,7 +45,7 @@
 <div class="min-h-svh overflow-x-clip bg-background text-foreground">
 	<div class="border-b border-border">
 		<div class="mx-auto max-w-[1328px] px-4 md:px-10">
-			<SiteHeader raised class="border-0 bg-transparent px-0 shadow-none" links={nav} {action} />
+			<SiteHeader elevation="raised" class="border-0 bg-transparent px-0 shadow-none" links={nav} {action} />
 		</div>
 	</div>
 
@@ -151,7 +151,7 @@
 					<AllocationBar segments={index.segments} />
 				</Card>
 				<JoinPanel
-					raised
+					elevation="raised"
 					amount="1,000"
 					rows={joinRows}
 					class="mt-4 w-full lg:absolute lg:right-0 lg:bottom-0 lg:mt-0 lg:w-80"
@@ -160,7 +160,7 @@
 		</section>
 
 		<section class="flex flex-col gap-3">
-			<StatStrip raised>
+			<StatStrip elevation="raised">
 				{#each stats as s (s.label)}
 					<StatStripItem value={s.value} label={s.label} />
 				{/each}
@@ -189,7 +189,7 @@
 			</h2>
 			<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
 				{#each steps as s (s.index)}
-					<StepCard raised index={s.index} title={s.title} description={s.description} />
+					<StepCard elevation="raised" index={s.index} title={s.title} description={s.description} />
 				{/each}
 			</div>
 		</section>
@@ -201,7 +201,7 @@
 			<div class="grid gap-4 md:grid-cols-3">
 				{#each pricing as p (p.name)}
 					<PricingPlan
-						raised
+						elevation="raised"
 						name={p.name}
 						tagline={p.tagline}
 						price={p.price}
@@ -226,7 +226,7 @@
 		</Card>
 
 		<SiteFooter
-			raised
+			elevation="raised"
 			brand={footerBrand}
 			description={footer.description}
 			columns={footer.columns}

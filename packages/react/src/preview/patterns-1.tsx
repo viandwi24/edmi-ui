@@ -185,7 +185,7 @@ export default function Patterns1Preview() {
 			<LayoutPicker value={layout} onValueChange={setLayout} />
 			<RaisedSection>
 				<SiteHeader
-					raised
+					elevation="raised"
 					lead="How to"
 					steps={[
 						{ label: "Start", href: "#" },
@@ -195,7 +195,7 @@ export default function Patterns1Preview() {
 					action={<Button elevation="raised">Create an index</Button>}
 				/>
 				<AppHeader
-					raised
+					elevation="raised"
 					items={[
 						{ label: "Explore", href: "#explore" },
 						{ label: "Leaderboard", href: "#lb" },
@@ -211,21 +211,25 @@ export default function Patterns1Preview() {
 						deltaLabel="vs last week"
 					/>
 					<JoinPanel
-						raised
+						elevation="raised"
 						defaultAmount="1,000"
 						rows={[{ label: "Estimated shares", value: "982.09" }]}
 						joinLabel="Join MAG4"
 					/>
 				</div>
 				<LeaderboardPodium
-					raised
+					elevation="raised"
 					entries={[
 						{ rank: 1, name: "dewi", meta: "$49.2K AUM · 412 holders" },
 						{ rank: 2, name: "noah", meta: "$31.7K AUM · 265 holders" },
 						{ rank: 3, name: "sarah", meta: "$18.9K AUM · 140 holders" },
 					]}
 				/>
-				<LayoutPicker raised value={layout} onValueChange={setLayout} />
+				<LayoutPicker
+					elevation="raised"
+					value={layout}
+					onValueChange={setLayout}
+				/>
 			</RaisedSection>
 		</div>
 	);

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ElevationProvider } from "@edmi-vue/ui/elevation";
 import { ChartLineIcon, HeartIcon, MessageSquareIcon } from "@lucide/vue";
 import { ref } from "vue";
 import { AppHeader } from "@edmi-vue/ui/app-header";
@@ -22,11 +23,12 @@ const draft = ref("");
 </script>
 
 <template>
+<ElevationProvider mode="layered">
 	<div class="min-h-svh bg-background text-foreground">
 		<div class="border-b border-border">
 			<div class="mx-auto flex max-w-[1328px] items-center gap-2 px-4 py-3 md:px-10">
 				<AppHeader
-					raised
+					
 					class="flex-1 border-0 bg-transparent px-0 py-0 shadow-none"
 					:items="nav"
 					active="#feed"
@@ -51,7 +53,7 @@ const draft = ref("");
 				</ToggleGroup>
 			</div>
 
-			<Card elevation="raised" class="gap-0 p-0">
+			<Card class="gap-0 p-0">
 				<Textarea
 					v-model="draft"
 					:maxlength="maxChars"
@@ -62,17 +64,17 @@ const draft = ref("");
 				<div class="mx-6 flex flex-wrap items-center gap-3 border-t border-border-2 py-4">
 					<span class="flex-1 text-[13px] text-muted-foreground">Plain text · up to 2 links · needs on-chain activity</span>
 					<span class="font-mono text-[13px] text-muted-foreground">{{ draft.length }}/{{ maxChars }}</span>
-					<Button elevation="raised" @click="draft = ''">Post</Button>
+					<Button @click="draft = ''">Post</Button>
 				</div>
 			</Card>
 
 			<template v-if="view === 'all'">
-				<FeedPost v-for="p in posts" :key="p.id" raised>
+				<FeedPost v-for="p in posts" :key="p.id" >
 					<FeedPostHeader :name="p.name" :handle="p.handle" :time="p.time" :initials="p.initials" />
 					<FeedPostContent>{{ p.text }}</FeedPostContent>
 					<FeedPostIndex :title="p.index.title" :description="p.index.description">
 						<template #icon><ChartLineIcon /></template>
-						<template #action><Button elevation="raised" size="sm">Join</Button></template>
+						<template #action><Button size="sm">Join</Button></template>
 					</FeedPostIndex>
 					<FeedPostFooter>
 						<FeedPostStat><HeartIcon />{{ p.likes }}</FeedPostStat>
@@ -81,7 +83,7 @@ const draft = ref("");
 				</FeedPost>
 			</template>
 
-			<Card elevation="raised" class="gap-0 p-0">
+			<Card class="gap-0 p-0">
 				<ul class="px-6">
 					<li v-for="u in updates" :key="u.id" class="flex items-center gap-3 border-b border-border-2 py-4">
 						<span class="inline-flex size-10 shrink-0 items-center justify-center rounded-full border border-border bg-muted font-mono text-xs">{{ u.initial }}</span>
@@ -107,4 +109,5 @@ const draft = ref("");
 			</div>
 		</div>
 	</div>
+</ElevationProvider>
 </template>

@@ -168,13 +168,13 @@ export default function ConversationPreview() {
 			<RaisedSection>
 				<Bubble variant="secondary" className="mb-3">
 					<BubbleContent>The keeper just rebalanced MAG4.</BubbleContent>
-					<BubbleReactions raised>
+					<BubbleReactions elevation="raised">
 						<BubbleReaction active>👍 4</BubbleReaction>
 						<BubbleReaction>🚀 2</BubbleReaction>
 					</BubbleReactions>
 				</Bubble>
 				<Questionnaire
-					raised
+					elevation="raised"
 					items={[{ name: "q1", choices: [{ value: "a" }, { value: "b" }] }]}
 					shortcuts="letters"
 					className="rounded-2xl border border-border bg-card p-6"

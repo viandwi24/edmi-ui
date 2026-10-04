@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { ElevationProvider } from "@edmi-svelte/ui/elevation";
 	import { AreaChart } from "layerchart";
 	import { AllocationBar } from "@edmi-svelte/ui/allocation-bar";
 	import { AppHeader } from "@edmi-svelte/ui/app-header";
@@ -39,11 +40,13 @@
 	} satisfies Chart.ChartConfig;
 </script>
 
+<ElevationProvider mode="layered">
+
 <div class="min-h-svh bg-background text-foreground">
 	<div class="border-b border-border">
 		<div class="mx-auto flex max-w-[1328px] items-center gap-2 px-4 py-3 md:px-10">
 			<AppHeader
-				raised
+				
 				class="flex-1 border-0 bg-transparent px-0 py-0 shadow-none"
 				items={nav}
 				active="#explore"
@@ -150,7 +153,7 @@
 
 			<div class="grid gap-4 md:grid-cols-3">
 				{#each statGroups as group (group[0]?.label)}
-					<div class="rounded-xl border border-border-2 bg-muted px-[18px] py-3 shadow-sunk">
+					<div class="rounded-xl border border-sk-bd bg-sk-bg px-[18px] py-3 shadow-sunken">
 						{#each group as row (row.label)}
 							<div class="flex items-center justify-between py-1.5 text-[13px]">
 								<span class="text-muted-foreground">{row.label}</span>
@@ -163,7 +166,7 @@
 
 			<div>
 				<h2 class="mb-3 text-lg font-medium">Assets</h2>
-				<Card elevation="raised" class="gap-4 px-6 py-2">
+				<Card class="gap-4 px-6 py-2">
 					<Table.Root>
 						<Table.Header>
 							<Table.Row>
@@ -198,7 +201,7 @@
 
 		<div class="flex flex-col gap-4">
 			<JoinPanel
-				raised
+				
 				class="w-full"
 				tabs={joinTabs}
 				bind:tab={side}
@@ -212,7 +215,7 @@
 				footnote="Self-custodied · Redeem anytime"
 			/>
 
-			<Card elevation="raised" class="gap-3 px-5">
+			<Card class="gap-3 px-5">
 				<h2 class="text-sm font-semibold">Share</h2>
 				<div class="flex flex-wrap gap-2">
 					{#each shareActions as s (s)}
@@ -221,7 +224,7 @@
 				</div>
 			</Card>
 
-			<Card elevation="raised" class="gap-3 px-5">
+			<Card class="gap-3 px-5">
 				<h2 class="text-sm font-semibold">Created by</h2>
 				<div class="flex items-center gap-3">
 					<Avatar class="size-9">
@@ -236,3 +239,4 @@
 		</div>
 	</div>
 </div>
+</ElevationProvider>

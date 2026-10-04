@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { ElevationProvider } from "@edmi-svelte/ui/elevation";
 	import { AllocationBar } from "@edmi-svelte/ui/allocation-bar";
 	import { AppHeader } from "@edmi-svelte/ui/app-header";
 	import { Badge } from "@edmi-svelte/ui/badge";
@@ -61,11 +62,13 @@
 	}
 </script>
 
+<ElevationProvider mode="layered">
+
 <div class="min-h-svh bg-background text-foreground">
 	<div class="border-b border-border">
 		<div class="mx-auto flex max-w-[1328px] items-center gap-2 px-4 py-3 md:px-10">
 			<AppHeader
-				raised
+				
 				class="flex-1 border-0 bg-transparent px-0 py-0 shadow-none"
 				items={nav}
 				active="#create"
@@ -107,7 +110,7 @@
 						</InputGroup.Addon>
 						<InputGroup.Input placeholder="Search assets" aria-label="Search assets" bind:value={query} />
 					</InputGroup.Root>
-					<Card elevation="raised" class="gap-0 px-6 py-0">
+					<Card class="gap-0 px-6 py-0">
 						<ul>
 							{#each visible as a (a.symbol)}
 								<li class="border-b border-border-2 last:border-b-0">
@@ -139,7 +142,7 @@
 				{/if}
 
 				{#if step === "weights"}
-					<Card elevation="raised" class="gap-4 px-6">
+					<Card class="gap-4 px-6">
 						<div>
 							<h2 class="text-xl font-normal tracking-[-0.3px]">Weights</h2>
 							<p class="text-[13px] text-muted-foreground">
@@ -169,7 +172,7 @@
 				{/if}
 
 				{#if step === "strategy"}
-					<Card elevation="raised" class="gap-5 px-6">
+					<Card class="gap-5 px-6">
 						<h2 class="text-xl font-normal tracking-[-0.3px]">Strategy</h2>
 						<Field.Field>
 							<Field.Label for="rebalance">Rebalance</Field.Label>
@@ -206,7 +209,7 @@
 				{/if}
 
 				{#if step === "fees"}
-					<Card elevation="raised" class="gap-5 px-6">
+					<Card class="gap-5 px-6">
 						<h2 class="text-xl font-normal tracking-[-0.3px]">Fees</h2>
 						<div class="grid gap-5 sm:grid-cols-2">
 							<Field.Field>
@@ -234,7 +237,7 @@
 				{/if}
 
 				{#if step === "review"}
-					<Card elevation="raised" class="gap-4 px-6">
+					<Card class="gap-4 px-6">
 						<h2 class="text-xl font-normal tracking-[-0.3px]">Review</h2>
 						{#if selected.length}
 							<AllocationBar {segments} />
@@ -254,13 +257,13 @@
 
 				<div class="flex items-center justify-between">
 					<Button elevation="raised" variant="outline" size="lg" disabled={stepIndex === 0} onclick={() => go(-1)}>Back</Button>
-					<Button elevation="raised" size="lg" disabled={step === "assets" && selected.length === 0} onclick={() => go(1)}>
+					<Button size="lg" disabled={step === "assets" && selected.length === 0} onclick={() => go(1)}>
 						{step === "review" ? "Create index" : "Continue"}
 					</Button>
 				</div>
 			</div>
 
-			<Card elevation="raised" class="gap-5 px-6">
+			<Card class="gap-5 px-6">
 				<div class="flex items-start gap-4">
 					<span class="inline-flex size-[54px] shrink-0 items-center justify-center rounded-xl border border-border bg-muted font-mono text-lg">{(symbol || name || "").charAt(0)}</span>
 					<div class="min-w-0 flex-1">
@@ -286,3 +289,4 @@
 		</div>
 	</div>
 </div>
+</ElevationProvider>

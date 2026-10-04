@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { ElevationProvider } from "@edmi-svelte/ui/elevation";
 	import { AppHeader } from "@edmi-svelte/ui/app-header";
 	import { Badge } from "@edmi-svelte/ui/badge";
 	import { Card } from "@edmi-svelte/ui/card";
@@ -15,11 +16,13 @@
 
 </script>
 
+<ElevationProvider mode="layered">
+
 <div class="min-h-svh bg-background text-foreground">
 	<div class="border-b border-border">
 		<div class="mx-auto flex max-w-[1328px] items-center gap-2 px-4 py-3 md:px-10">
 			<AppHeader
-				raised
+				
 				class="flex-1 border-0 bg-transparent px-0 py-0 shadow-none"
 				items={nav}
 				active="#leaderboard"
@@ -56,9 +59,9 @@
 		</div>
 		<p class="-mt-3 text-sm text-muted-foreground">{benchmark}</p>
 
-		<LeaderboardPodium variant="cards" raised entries={podium} />
+		<LeaderboardPodium variant="cards"  entries={podium} />
 
-		<Card elevation="raised" class="px-6 py-2">
+		<Card class="px-6 py-2">
 			<Table>
 				<TableHeader>
 					<IndexRowHeader rank />
@@ -72,3 +75,4 @@
 		</Card>
 	</div>
 </div>
+</ElevationProvider>

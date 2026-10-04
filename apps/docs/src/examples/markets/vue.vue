@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ElevationProvider } from "@edmi-vue/ui/elevation";
 import { PlusIcon } from "@lucide/vue";
 import { AppHeader } from "@edmi-vue/ui/app-header";
 import { IndexRow, IndexRowHeader } from "@edmi-vue/ui/index-row";
@@ -11,11 +12,12 @@ import { activity, creators, humanVsAi, indexes, nav, tickers } from "./data";
 </script>
 
 <template>
+<ElevationProvider mode="layered">
 	<div class="min-h-svh bg-background text-foreground">
 		<div class="border-b border-border">
 			<div class="mx-auto flex max-w-[1328px] items-center gap-2 px-4 py-3 md:px-10">
 				<AppHeader
-					raised
+					
 					class="flex-1 border-0 bg-transparent px-0 py-0 shadow-none"
 					:items="nav"
 					active="#explore"
@@ -33,15 +35,15 @@ import { activity, creators, humanVsAi, indexes, nav, tickers } from "./data";
 					Tokenized stock indexes. Create one, share it, or join someone else’s.
 				</p>
 			</div>
-			<Button elevation="raised" size="lg">
+			<Button size="lg">
 				Create index
 				<PlusIcon />
 			</Button>
 		</div>
 
-		<TickerStrip raised :items="tickers" />
+		<TickerStrip  :items="tickers" />
 
-		<Card elevation="raised" class="gap-4 px-6">
+		<Card class="gap-4 px-6">
 			<div class="flex items-baseline justify-between">
 				<h2 class="text-xl font-normal tracking-[-0.3px]">Top indexes</h2>
 				<a href="#all" class="text-[13px] text-muted-foreground hover:text-foreground">View all</a>
@@ -57,12 +59,12 @@ import { activity, creators, humanVsAi, indexes, nav, tickers } from "./data";
 		</Card>
 
 		<div class="grid items-start gap-6 lg:grid-cols-3">
-			<Card elevation="raised" class="@container gap-4 px-6">
+			<Card class="@container gap-4 px-6">
 				<div class="flex items-baseline justify-between">
 					<h2 class="text-xl font-normal tracking-[-0.3px]">Human vs AI</h2>
 				</div>
 				<div class="grid gap-3 @[400px]:grid-cols-2">
-					<div v-for="m in [humanVsAi.human, humanVsAi.ai]" :key="m.label" class="rounded-xl border border-border-2 bg-muted p-[18px] shadow-sunk">
+					<div v-for="m in [humanVsAi.human, humanVsAi.ai]" :key="m.label" class="rounded-xl border border-sk-bd bg-sk-bg p-[18px] shadow-sunken">
 						<div class="text-[13px] text-muted-foreground">{{ m.label }}</div>
 						<div class="my-2 text-[34px] leading-none font-light tracking-[-0.5px] text-success-text">{{ m.value }}</div>
 						<div class="text-[13px] text-muted-foreground">{{ m.note }}</div>
@@ -70,7 +72,7 @@ import { activity, creators, humanVsAi, indexes, nav, tickers } from "./data";
 				</div>
 			</Card>
 
-			<Card elevation="raised" class="gap-3 px-6">
+			<Card class="gap-3 px-6">
 				<div class="flex items-baseline justify-between">
 					<h2 class="text-xl font-normal tracking-[-0.3px]">Top creators</h2>
 					<a href="#all" class="text-[13px] text-muted-foreground hover:text-foreground">See all</a>
@@ -90,7 +92,7 @@ import { activity, creators, humanVsAi, indexes, nav, tickers } from "./data";
 				</ul>
 			</Card>
 
-			<Card elevation="raised" class="gap-3 px-6">
+			<Card class="gap-3 px-6">
 				<div class="flex items-baseline justify-between">
 					<h2 class="text-xl font-normal tracking-[-0.3px]">Latest activity</h2>
 				</div>
@@ -106,4 +108,5 @@ import { activity, creators, humanVsAi, indexes, nav, tickers } from "./data";
 		</div>
 	</div>
 	</div>
+</ElevationProvider>
 </template>

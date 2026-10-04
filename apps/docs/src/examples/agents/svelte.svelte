@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { ElevationProvider } from "@edmi-svelte/ui/elevation";
 	import { AgentCard } from "@edmi-svelte/ui/agent-card";
 	import { AppHeader } from "@edmi-svelte/ui/app-header";
 	import { Button } from "@edmi-svelte/ui/button";
@@ -12,6 +13,8 @@
 	const current = $derived(clients.find((c) => c.value === client) ?? clients[0]);
 	const copy = (text: string) => navigator.clipboard?.writeText(text);
 </script>
+
+<ElevationProvider mode="layered">
 
 {#snippet copyIcon()}
 	<IconPlaceholder
@@ -27,7 +30,7 @@
 	<div class="border-b border-border">
 		<div class="mx-auto flex max-w-[1328px] items-center gap-2 px-4 py-3 md:px-10">
 			<AppHeader
-				raised
+				
 				class="flex-1 border-0 bg-transparent px-0 py-0 shadow-none"
 				items={nav}
 				active="#ai"
@@ -62,7 +65,7 @@
 					</h2>
 					<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
 						{#each agents as a (a.name)}
-							<AgentCard raised name={a.name} address={a.address} tag={a.tag} stats={a.stats}>
+							<AgentCard  name={a.name} address={a.address} tag={a.tag} stats={a.stats}>
 								{a.note}
 							</AgentCard>
 						{/each}
@@ -78,7 +81,7 @@
 			</div>
 
 			<div class="flex min-w-0 flex-col gap-6">
-				<Card elevation="raised" class="gap-4 px-6">
+				<Card class="gap-4 px-6">
 					<div>
 						<h2 class="text-xl font-normal tracking-[-0.3px]">Connect an agent</h2>
 						<p class="mt-1 text-[13px] text-muted-foreground">
@@ -106,15 +109,15 @@
 							{@render copyIcon()}
 						</Button>
 					</div>
-					<pre class="overflow-x-auto rounded-lg border border-border-2 bg-muted p-4 font-mono text-[12.5px] leading-relaxed shadow-sunk">{current?.steps.join("\n")}</pre>
+					<pre class="overflow-x-auto rounded-lg border border-sk-bd bg-sk-bg p-4 font-mono text-[12.5px] leading-relaxed shadow-sunken">{current?.steps.join("\n")}</pre>
 					<div class="rounded-xl border border-dashed border-border p-4">
 						<div class="text-sm font-semibold">Let it act as your agent</div>
 						<p class="mt-1.5 text-[12.5px] leading-relaxed text-muted-foreground">{apiKeyNote}</p>
-						<pre class="mt-3 overflow-x-auto rounded-lg border border-border-2 bg-muted p-3.5 font-mono text-[12px] shadow-sunk">{headerSnippet}</pre>
+						<pre class="mt-3 overflow-x-auto rounded-lg border border-sk-bd bg-sk-bg p-3.5 font-mono text-[12px] shadow-sunken">{headerSnippet}</pre>
 					</div>
 				</Card>
 
-				<Card elevation="raised" class="gap-3 px-6">
+				<Card class="gap-3 px-6">
 					<h2 class="text-xl font-normal tracking-[-0.3px]">Bring your own wallet</h2>
 					<p class="text-[13px] leading-relaxed text-muted-foreground">
 						Already run an agent with its own keys? Mark that wallet as an AI so it shows as one and joins the Human vs AI league. One signature, no fee.
@@ -125,3 +128,4 @@
 		</div>
 	</div>
 </div>
+</ElevationProvider>

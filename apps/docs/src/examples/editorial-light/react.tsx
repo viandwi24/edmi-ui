@@ -89,7 +89,7 @@ export default function EditorialLightExample() {
 			<div className="border-b border-border">
 				<div className="mx-auto max-w-[1328px] px-4 md:px-10">
 					<SiteHeader
-						raised
+						elevation="raised"
 						className="border-0 bg-transparent px-0 shadow-none"
 						lead={header.lead}
 						steps={header.steps}

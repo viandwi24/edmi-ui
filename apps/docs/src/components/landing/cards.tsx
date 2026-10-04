@@ -462,8 +462,8 @@ export function QuestionCard() {
 				},
 			]}
 			shortcuts="letters"
-			raised={raised}
-			className={`w-full rounded-xl border border-border bg-card p-5 ${raised ? "border-b-lip shadow-card" : ""}`}
+			elevation={raised ? "raised" : undefined}
+			className="w-full rounded-xl border border-border bg-card p-5"
 			onSubmit={(e) => {
 				e.preventDefault();
 				toast.success("Mandate saved");
@@ -531,14 +531,14 @@ export function MarketCard() {
 					{ symbol: "NVDAx", price: "$227.06", change: "+0.81%" },
 					{ symbol: "TSLAx", price: "$370.21", change: "−0.31%" },
 				]}
-				raised={raised}
+				elevation={raised ? "raised" : undefined}
 			/>
 			<Card elevation={raised ? "raised" : undefined} className="gap-1.5 p-3">
 				<div className="px-2 pt-1 pb-1.5 font-mono text-[10.5px] tracking-wider text-muted-foreground uppercase">
 					Watchlist
 				</div>
 				<WatchlistItem
-					raised={raised}
+					elevation={raised ? "raised" : undefined}
 					href="#"
 					symbol="MAG4"
 					price="1.0000"
@@ -547,7 +547,7 @@ export function MarketCard() {
 					active
 				/>
 				<WatchlistItem
-					raised={raised}
+					elevation={raised ? "raised" : undefined}
 					href="#"
 					symbol="AIFR"
 					price="1.0104"
@@ -555,7 +555,7 @@ export function MarketCard() {
 					color="var(--chart-4)"
 				/>
 				<WatchlistItem
-					raised={raised}
+					elevation={raised ? "raised" : undefined}
 					href="#"
 					symbol="ATLS"
 					price="0.9893"

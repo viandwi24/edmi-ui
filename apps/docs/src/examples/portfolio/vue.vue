@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ElevationProvider } from "@edmi-vue/ui/elevation";
 import { AppHeader } from "@edmi-vue/ui/app-header";
 import { Avatar, AvatarFallback, AvatarGroup } from "@edmi-vue/ui/avatar";
 import { Badge } from "@edmi-vue/ui/badge";
@@ -10,11 +11,12 @@ import { looseAssets, looseNote, nav, positions, totals, yourIndexes } from "./d
 </script>
 
 <template>
+<ElevationProvider mode="layered">
 	<div class="min-h-svh bg-background text-foreground">
 		<div class="border-b border-border">
 			<div class="mx-auto flex max-w-[1328px] items-center gap-2 px-4 py-3 md:px-10">
 				<AppHeader
-					raised
+					
 					class="flex-1 border-0 bg-transparent px-0 py-0 shadow-none"
 					:items="nav"
 					active="#portfolio"
@@ -31,7 +33,7 @@ import { looseAssets, looseNote, nav, positions, totals, yourIndexes } from "./d
 			</div>
 
 			<div class="grid items-stretch gap-6 lg:grid-cols-[1.4fr_1fr_1fr]">
-				<Card elevation="raised" class="gap-1.5 px-7">
+				<Card class="gap-1.5 px-7">
 					<div class="text-[13px] text-muted-foreground">Total value</div>
 					<div class="text-[56px] leading-none font-light tracking-[-2px]">{{ totals.value }}</div>
 					<div class="mt-3 flex items-center gap-3 text-[13px] text-muted-foreground">
@@ -40,14 +42,14 @@ import { looseAssets, looseNote, nav, positions, totals, yourIndexes } from "./d
 					</div>
 					<div class="mt-1 text-[13px] text-muted-foreground">{{ totals.breakdown }}</div>
 				</Card>
-				<Card v-for="(t, i) in [totals.usdc, totals.sol]" :key="t.value" elevation="raised" class="gap-1 px-6">
+				<Card v-for="(t, i) in [totals.usdc, totals.sol]" :key="t.value" class="gap-1 px-6">
 					<div class="text-[13px] text-muted-foreground">{{ i === 0 ? "USDC" : "SOL" }}</div>
 					<div class="font-mono text-[32px] leading-tight">{{ t.value }}</div>
 					<div class="text-[13px] text-muted-foreground">{{ t.note }}</div>
 				</Card>
 			</div>
 
-			<Card elevation="raised" class="gap-4 px-6">
+			<Card class="gap-4 px-6">
 				<div class="flex items-center justify-between gap-3">
 					<h2 class="text-xl font-normal tracking-[-0.3px]">Positions</h2>
 					<Button elevation="raised" variant="outline" size="sm">Redeem all</Button>
@@ -93,7 +95,7 @@ import { looseAssets, looseNote, nav, positions, totals, yourIndexes } from "./d
 			</Card>
 
 			<div class="grid items-start gap-6 lg:grid-cols-2">
-				<Card elevation="raised" class="gap-3 px-6">
+				<Card class="gap-3 px-6">
 					<div class="flex items-center justify-between gap-3">
 						<h2 class="text-xl font-normal tracking-[-0.3px]">Loose assets</h2>
 						<Button elevation="raised" variant="outline" size="sm">Swap all to USDC</Button>
@@ -111,7 +113,7 @@ import { looseAssets, looseNote, nav, positions, totals, yourIndexes } from "./d
 					</ul>
 				</Card>
 
-				<Card elevation="raised" class="gap-3 px-6">
+				<Card class="gap-3 px-6">
 					<div class="flex items-center justify-between gap-3">
 						<h2 class="text-xl font-normal tracking-[-0.3px]">Your indexes</h2>
 						<Button elevation="raised" variant="outline" size="sm">Create index</Button>
@@ -137,4 +139,5 @@ import { looseAssets, looseNote, nav, positions, totals, yourIndexes } from "./d
 			</div>
 		</div>
 	</div>
+</ElevationProvider>
 </template>

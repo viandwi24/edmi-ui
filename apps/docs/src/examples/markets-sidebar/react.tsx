@@ -7,6 +7,7 @@ import { WatchlistItem } from "@edmi-react/blocks/watchlist-item/watchlist-item"
 import { Badge } from "@edmi-react/ui/badge";
 import { Button } from "@edmi-react/ui/button";
 import { Card } from "@edmi-react/ui/card";
+import { ElevationProvider } from "@edmi-react/ui/elevation";
 import { Input } from "@edmi-react/ui/input";
 import { Kbd } from "@edmi-react/ui/kbd";
 import {
@@ -63,7 +64,7 @@ function Mini({
 	note: string;
 }) {
 	return (
-		<div className="rounded-xl border border-border-2 bg-muted p-[18px] shadow-sunk">
+		<div className="rounded-xl border border-sk-bd bg-sk-bg p-[18px] shadow-sunken">
 			<div className="text-[13px] text-muted-foreground">{label}</div>
 			<div className="my-2 text-[34px] leading-none font-light tracking-[-0.5px] text-success-text">
 				{value}
@@ -165,7 +166,7 @@ function AppSidebar() {
 						href="#/"
 						className="flex items-center gap-2 font-brand text-xl font-semibold tracking-[-0.4px]"
 					>
-						<span className="inline-flex size-7 items-center justify-center rounded-lg border border-primary-edge border-b-primary-lip bg-linear-to-b from-primary-hi to-primary text-primary-foreground shadow-btn-primary [background-origin:border-box]">
+						<span className="inline-flex size-7 items-center justify-center rounded-lg border border-transparent bg-primary text-primary-foreground [background-image:var(--r1-p-face)] shadow-btn-raised-primary [background-origin:border-box]">
 							<IconPlaceholder
 								lucide="ChartLineIcon"
 								tabler="IconChartLine"
@@ -214,13 +215,7 @@ function AppSidebar() {
 					</SidebarGroupLabel>
 					<SidebarGroupContent className="flex flex-col gap-0.5">
 						{watchlist.map((w, i) => (
-							<WatchlistItem
-								key={w.symbol}
-								raised
-								href="#/"
-								active={i === 0}
-								{...w}
-							/>
+							<WatchlistItem key={w.symbol} href="#/" active={i === 0} {...w} />
 						))}
 					</SidebarGroupContent>
 				</SidebarGroup>
@@ -239,136 +234,140 @@ function AppSidebar() {
 
 export default function MarketsSidebarExample() {
 	return (
-		<SidebarProvider
-			style={{ "--sidebar-width": "16rem" } as React.CSSProperties}
-		>
-			<AppSidebar />
-			<SidebarInset className="min-w-0 bg-background">
-				<header className="flex h-16 shrink-0 items-center justify-between gap-3 border-b border-border px-4 md:px-7">
-					<div className="flex min-w-0 items-center gap-2 text-[15px]">
-						<SidebarTrigger className="md:hidden" />
-						<span className="text-muted-foreground max-sm:hidden">
-							Dashboard
-						</span>
-						<span className="text-muted-foreground max-sm:hidden">/</span>
-						<span>Markets</span>
-					</div>
-					<div className="flex items-center gap-2">
-						<Button
-							elevation="raised"
-							variant="outline"
-							className="max-sm:hidden"
-						>
-							Devnet
-						</Button>
-						<Button elevation="raised">
-							Create index
-							<IconPlaceholder
-								lucide="PlusIcon"
-								tabler="IconPlus"
-								hugeicons="PlusSignIcon"
-								phosphor="PlusIcon"
-								remixicon="RiAddLine"
-							/>
-						</Button>
-					</div>
-				</header>
-				<div className="flex w-full flex-col gap-6 px-4 py-8 md:px-10">
-					<div className="flex flex-wrap items-end justify-between gap-4">
-						<div>
-							<div className="flex items-center gap-3">
-								<h1 className="text-[44px] leading-tight font-normal tracking-[-1.5px]">
-									Markets
-								</h1>
-								<Badge variant="secondary">Simulated</Badge>
+		<ElevationProvider mode="layered">
+			<SidebarProvider
+				style={{ "--sidebar-width": "16rem" } as React.CSSProperties}
+			>
+				<AppSidebar />
+				<SidebarInset className="min-w-0 bg-background">
+					<header className="flex h-16 shrink-0 items-center justify-between gap-3 border-b border-border px-4 md:px-7">
+						<div className="flex min-w-0 items-center gap-2 text-[15px]">
+							<SidebarTrigger className="md:hidden" />
+							<span className="text-muted-foreground max-sm:hidden">
+								Dashboard
+							</span>
+							<span className="text-muted-foreground max-sm:hidden">/</span>
+							<span>Markets</span>
+						</div>
+						<div className="flex items-center gap-2">
+							<Button
+								elevation="raised"
+								variant="outline"
+								className="max-sm:hidden"
+							>
+								Devnet
+							</Button>
+							<Button>
+								Create index
+								<IconPlaceholder
+									lucide="PlusIcon"
+									tabler="IconPlus"
+									hugeicons="PlusSignIcon"
+									phosphor="PlusIcon"
+									remixicon="RiAddLine"
+								/>
+							</Button>
+						</div>
+					</header>
+					<div className="flex w-full flex-col gap-6 px-4 py-8 md:px-10">
+						<div className="flex flex-wrap items-end justify-between gap-4">
+							<div>
+								<div className="flex items-center gap-3">
+									<h1 className="text-[44px] leading-tight font-normal tracking-[-1.5px]">
+										Markets
+									</h1>
+									<Badge variant="secondary">Simulated</Badge>
+								</div>
+								<p className="mt-1 text-lg text-muted-foreground">
+									Tokenized stock indexes. Create one, share it, or join someone
+									else’s.
+								</p>
 							</div>
-							<p className="mt-1 text-lg text-muted-foreground">
-								Tokenized stock indexes. Create one, share it, or join someone
-								else’s.
-							</p>
+						</div>
+
+						<TickerStrip items={tickers} />
+
+						<Card className="gap-4 px-6">
+							<CardTop title="Top indexes" action="View all" />
+							<Table>
+								<TableHeader>
+									<IndexRowHeader />
+								</TableHeader>
+								<TableBody>
+									{indexes.map((index) => (
+										<IndexRow key={index.symbol} index={index} delta="pill" />
+									))}
+								</TableBody>
+							</Table>
+						</Card>
+
+						<div className="grid items-start gap-6 lg:grid-cols-3">
+							<Card className="@container gap-4 px-6">
+								<CardTop title="Human vs AI" />
+								<div className="grid gap-3 @[400px]:grid-cols-2">
+									<Mini {...humanVsAi.human} />
+									<Mini {...humanVsAi.ai} />
+								</div>
+							</Card>
+
+							<Card className="gap-3 px-6">
+								<CardTop title="Top creators" action="See all" />
+								<ul>
+									{creators.map((c) => (
+										<li
+											key={c.address}
+											className="flex items-center gap-3 border-b border-border-2 py-3 last:border-b-0"
+										>
+											<span className="inline-flex size-9 items-center justify-center rounded-full border border-border bg-muted font-mono text-xs">
+												{c.rank}
+											</span>
+											<div className="min-w-0 flex-1">
+												<div className="font-mono text-[13px] font-semibold">
+													{c.address}
+												</div>
+												<div className="text-xs text-muted-foreground">
+													{c.meta}
+												</div>
+											</div>
+											<div className="text-right">
+												<div className="font-mono text-[13px] font-semibold">
+													{c.aum}
+												</div>
+												<div className="text-xs text-muted-foreground">
+													{c.joiners}
+												</div>
+											</div>
+										</li>
+									))}
+								</ul>
+							</Card>
+
+							<Card className="gap-3 px-6">
+								<CardTop title="Latest activity" />
+								<ul>
+									{activity.map((a) => (
+										<li
+											key={`${a.symbol}-${a.text}`}
+											className="flex items-center gap-2.5 border-b border-border-2 py-3 text-[13px] last:border-b-0"
+										>
+											<span
+												className={`size-1.5 rounded-full ${a.tone === "brand" ? "bg-success" : "bg-warning"}`}
+											/>
+											<span className="font-mono font-semibold">
+												{a.symbol}
+											</span>
+											<span className="min-w-0 flex-1 truncate text-foreground-2">
+												{a.text}
+											</span>
+											<span className="text-muted-foreground">{a.ago}</span>
+										</li>
+									))}
+								</ul>
+							</Card>
 						</div>
 					</div>
-
-					<TickerStrip raised items={tickers} />
-
-					<Card elevation="raised" className="gap-4 px-6">
-						<CardTop title="Top indexes" action="View all" />
-						<Table>
-							<TableHeader>
-								<IndexRowHeader />
-							</TableHeader>
-							<TableBody>
-								{indexes.map((index) => (
-									<IndexRow key={index.symbol} index={index} delta="pill" />
-								))}
-							</TableBody>
-						</Table>
-					</Card>
-
-					<div className="grid items-start gap-6 lg:grid-cols-3">
-						<Card elevation="raised" className="@container gap-4 px-6">
-							<CardTop title="Human vs AI" />
-							<div className="grid gap-3 @[400px]:grid-cols-2">
-								<Mini {...humanVsAi.human} />
-								<Mini {...humanVsAi.ai} />
-							</div>
-						</Card>
-
-						<Card elevation="raised" className="gap-3 px-6">
-							<CardTop title="Top creators" action="See all" />
-							<ul>
-								{creators.map((c) => (
-									<li
-										key={c.address}
-										className="flex items-center gap-3 border-b border-border-2 py-3 last:border-b-0"
-									>
-										<span className="inline-flex size-9 items-center justify-center rounded-full border border-border bg-muted font-mono text-xs">
-											{c.rank}
-										</span>
-										<div className="min-w-0 flex-1">
-											<div className="font-mono text-[13px] font-semibold">
-												{c.address}
-											</div>
-											<div className="text-xs text-muted-foreground">
-												{c.meta}
-											</div>
-										</div>
-										<div className="text-right">
-											<div className="font-mono text-[13px] font-semibold">
-												{c.aum}
-											</div>
-											<div className="text-xs text-muted-foreground">
-												{c.joiners}
-											</div>
-										</div>
-									</li>
-								))}
-							</ul>
-						</Card>
-
-						<Card elevation="raised" className="gap-3 px-6">
-							<CardTop title="Latest activity" />
-							<ul>
-								{activity.map((a) => (
-									<li
-										key={`${a.symbol}-${a.text}`}
-										className="flex items-center gap-2.5 border-b border-border-2 py-3 text-[13px] last:border-b-0"
-									>
-										<span
-											className={`size-1.5 rounded-full ${a.tone === "brand" ? "bg-success" : "bg-warning"}`}
-										/>
-										<span className="font-mono font-semibold">{a.symbol}</span>
-										<span className="min-w-0 flex-1 truncate text-foreground-2">
-											{a.text}
-										</span>
-										<span className="text-muted-foreground">{a.ago}</span>
-									</li>
-								))}
-							</ul>
-						</Card>
-					</div>
-				</div>
-			</SidebarInset>
-		</SidebarProvider>
+				</SidebarInset>
+			</SidebarProvider>
+		</ElevationProvider>
 	);
 }

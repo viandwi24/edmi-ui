@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { ElevationProvider } from "@edmi-svelte/ui/elevation";
 	import { AppHeader } from "@edmi-svelte/ui/app-header";
 	import { Badge } from "@edmi-svelte/ui/badge";
 	import { Button } from "@edmi-svelte/ui/button";
@@ -10,6 +11,8 @@
 	import { activity, creators, humanVsAi, indexes, nav, tickers } from "./data";
 </script>
 
+<ElevationProvider mode="layered">
+
 {#snippet cardTop(title: string, action?: string)}
 	<div class="flex items-baseline justify-between">
 		<h2 class="text-xl font-normal tracking-[-0.3px]">{title}</h2>
@@ -20,7 +23,7 @@
 {/snippet}
 
 {#snippet mini(m: { label: string; value: string; note: string })}
-	<div class="rounded-xl border border-border-2 bg-muted p-[18px] shadow-sunk">
+	<div class="rounded-xl border border-sk-bd bg-sk-bg p-[18px] shadow-sunken">
 		<div class="text-[13px] text-muted-foreground">{m.label}</div>
 		<div class="my-2 text-[34px] leading-none font-light tracking-[-0.5px] text-success-text">{m.value}</div>
 		<div class="text-[13px] text-muted-foreground">{m.note}</div>
@@ -31,7 +34,7 @@
 	<div class="border-b border-border">
 		<div class="mx-auto flex max-w-[1328px] items-center gap-2 px-4 py-3 md:px-10">
 			<AppHeader
-				raised
+				
 				class="flex-1 border-0 bg-transparent px-0 py-0 shadow-none"
 				items={nav}
 				active="#explore"
@@ -50,7 +53,7 @@
 				Tokenized stock indexes. Create one, share it, or join someone else’s.
 			</p>
 		</div>
-		<Button elevation="raised" size="lg">
+		<Button size="lg">
 			Create index
 			<IconPlaceholder
 				lucide="PlusIcon"
@@ -62,9 +65,9 @@
 		</Button>
 	</div>
 
-	<TickerStrip raised items={tickers} />
+	<TickerStrip  items={tickers} />
 
-	<Card elevation="raised" class="gap-4 px-6">
+	<Card class="gap-4 px-6">
 		{@render cardTop("Top indexes", "View all")}
 		<Table>
 			<TableHeader>
@@ -79,7 +82,7 @@
 	</Card>
 
 	<div class="grid items-start gap-6 lg:grid-cols-3">
-		<Card elevation="raised" class="@container gap-4 px-6">
+		<Card class="@container gap-4 px-6">
 			{@render cardTop("Human vs AI")}
 			<div class="grid gap-3 @[400px]:grid-cols-2">
 				{@render mini(humanVsAi.human)}
@@ -87,7 +90,7 @@
 			</div>
 		</Card>
 
-		<Card elevation="raised" class="gap-3 px-6">
+		<Card class="gap-3 px-6">
 			{@render cardTop("Top creators", "See all")}
 			<ul>
 				{#each creators as c (c.address)}
@@ -110,7 +113,7 @@
 			</ul>
 		</Card>
 
-		<Card elevation="raised" class="gap-3 px-6">
+		<Card class="gap-3 px-6">
 			{@render cardTop("Latest activity")}
 			<ul>
 				{#each activity as a, i (i)}
@@ -126,3 +129,4 @@
 	</div>
 </div>
 </div>
+</ElevationProvider>
