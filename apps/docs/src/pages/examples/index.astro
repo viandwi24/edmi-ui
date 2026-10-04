@@ -53,10 +53,11 @@ const tags = EXAMPLE_TAGS.filter((t) => EXAMPLES.some((e) => e.tag === t));
 </StarlightPage>
 
 <style is:global>
-	.edmi-exi .edmi-seg { margin-top: 1.5rem; }
+	/* .edmi-wide zeroes the top margin of its children (global.css), so spacing here is padding. */
+	.edmi-exi > .edmi-page-title { padding-bottom: 1.5rem; }
 	.edmi-exi .edmi-seg button { padding: .32rem .7rem; }
 	.edmi-exi .edmi-seg button[aria-pressed="true"] { background: var(--tab-active); border-color: var(--border); color: var(--foreground); }
-	.edmi-exi-grid { list-style: none; margin: 1.25rem 0 0; padding: 0; display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fill, minmax(21rem, 1fr)); }
+	.edmi-exi-grid { list-style: none; margin: 0; padding: 2rem 0 0; display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fill, minmax(21rem, 1fr)); }
 	.edmi-exi-grid li { margin: 0; }
 	.edmi-exi-grid li[hidden] { display: none; }
 	.edmi-exi-card { display: flex; flex-direction: column; height: 100%; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: var(--card); text-decoration: none; color: inherit; }
