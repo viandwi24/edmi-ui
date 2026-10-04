@@ -105,6 +105,23 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"></rect><path d="M11 18h2"></path></svg>
 					</button>
 				</div>
+				<div class="edmi-seg edmi-seg-sm edmi-ex-zoom" role="group" aria-label="Zoom" data-preview-only>
+					<button type="button" data-zoom="out" aria-label="Zoom out" title="Zoom out (Ctrl/Cmd −)">
+						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path></svg>
+					</button>
+					<output class="edmi-ex-zoom-value" data-zoom-label aria-live="polite" title="Current zoom">100%</output>
+					<button type="button" data-zoom="in" aria-label="Zoom in" title="Zoom in (Ctrl/Cmd +)">
+						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5v14"></path></svg>
+					</button>
+					<button type="button" data-zoom="reset" aria-label="Reset zoom to 100%" title="Reset zoom (Ctrl/Cmd 0)">
+						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>
+					</button>
+				</div>
+				<button type="button" class="edmi-ex-full" data-full aria-pressed="false" aria-label="Full page" title="Full page (Esc to exit)">
+					<svg data-full-on viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"></path></svg>
+					<svg data-full-off viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"></path></svg>
+					<span class="sr-only" data-full-text>Full page</span>
+				</button>
 				<a class="edmi-ex-open" data-open href="#" target="_blank" rel="noopener" title="Open the bare render route in a new tab" data-preview-only>
 					Open ↗
 				</a>
@@ -166,6 +183,27 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 		color: var(--foreground); background: var(--secondary); border: 1px solid var(--input); border-radius: 7px; cursor: pointer;
 	}
 	.edmi-ex-select select:hover { background: var(--accent); }
+	.edmi-ex-zoom { align-items: center; }
+	.edmi-ex .edmi-ex-zoom button[disabled] { opacity: .4; cursor: default; }
+	.edmi-ex-zoom-value { min-width: 3.1em; text-align: center; font: 500 12px/1 var(--sl-font-mono); color: var(--foreground); }
+	.edmi-ex-full {
+		display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; padding: 0; border-radius: 7px; cursor: pointer;
+		color: var(--muted-foreground); background: transparent; border: 1px solid transparent;
+	}
+	.edmi-ex-full:hover { background: var(--accent); color: var(--foreground); }
+	.edmi-ex-full[aria-pressed="true"] { background: var(--tab-active); border-color: var(--border); color: var(--foreground); }
+	.edmi-ex-full svg[data-full-off], .edmi-ex-full[aria-pressed="true"] svg[data-full-on] { display: none; }
+	.edmi-ex-full[aria-pressed="true"] svg[data-full-off] { display: block; }
+	/* Full page: the card becomes a fixed overlay above the Starlight chrome; toolbar on top, stage fills the rest. */
+	.edmi-ex[data-full] .edmi-ex-card {
+		position: fixed; inset: 0; z-index: 10000; display: flex; flex-direction: column; border: 0; border-radius: 0;
+	}
+	.edmi-ex[data-full] .edmi-ex-bar { flex: none; }
+	.edmi-ex[data-full] [data-view="preview"] { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+	.edmi-ex[data-full] .edmi-ex-stage { flex: 1; min-height: 0; }
+	.edmi-ex[data-full] .edmi-ex-frame { height: auto; align-self: stretch; }
+	.edmi-ex[data-full] [data-view="code"] { flex: 1; min-height: 0; overflow: auto; }
+	.edmi-ex[data-full] .edmi-ex-card .expressive-code .frame pre { max-height: none; }
 	.edmi-ex-open {
 		display: inline-flex; align-items: center; height: 28px; padding: 0 .6rem; border-radius: 7px; text-decoration: none;
 		font: 500 12px/1 var(--sl-font); color: var(--muted-foreground); border: 1px solid transparent;
@@ -173,11 +211,13 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 	.edmi-ex-open:hover { background: var(--accent); color: var(--foreground); }
 
 	.edmi-ex-stage {
-		padding: 1rem; display: flex; justify-content: center; overflow: hidden; background-color: var(--stage);
+		padding: 1rem; display: flex; justify-content: flex-start; overflow-x: auto; overflow-y: hidden; background-color: var(--stage);
 		background-image: radial-gradient(color-mix(in oklab, var(--foreground) 16%, transparent) 1px, transparent 1.2px); background-size: 16px 16px;
 	}
-	.edmi-ex-frame { position: relative; max-width: 100%; min-width: 280px; height: max(var(--ex-h), 72vh); border: 1px solid var(--border); border-radius: 10px; background: var(--background); }
-	.edmi-ex-frame iframe { display: block; width: 100%; height: 100%; border: 0; border-radius: 9px; background: var(--background); }
+	.edmi-ex-frame { --z: 1; position: relative; flex: none; margin: 0 auto; max-width: 100%; min-width: 280px; height: max(var(--ex-h), 72vh); border: 1px solid var(--border); border-radius: 10px; background: var(--background); }
+	.edmi-ex-frame { overflow: hidden; }
+	/* Zoom: the iframe keeps its LOGICAL size (visual size / zoom), so media queries see the preset width; the transform scales it back to the frame. */
+	.edmi-ex-frame iframe { position: absolute; top: 0; left: 0; display: block; width: calc(100% / var(--z)); height: calc(100% / var(--z)); transform: scale(var(--z)); transform-origin: 0 0; border: 0; border-radius: 0; background: var(--background); }
 	.edmi-ex-shield { display: none; position: absolute; inset: 0; z-index: 2; }
 	.edmi-ex[data-dragging] .edmi-ex-shield { display: block; }
 	.edmi-ex[data-dragging] { user-select: none; cursor: ew-resize; }
@@ -200,7 +240,7 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 	.edmi-ex-card .expressive-code .frame { border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
 	.edmi-ex-card .expressive-code .frame pre { border: 0 !important; border-radius: 0 !important; max-height: 70vh; }
 	.edmi-ex-card .expressive-code .frame .header { border-radius: 0 !important; }
-	.edmi-ex [data-view][hidden] { display: none; }
+	.edmi-ex [data-view][hidden], .edmi-ex[data-full] [data-view][hidden] { display: none; }
 	.edmi-ex [data-preview-only][hidden] { display: none; }
 	@media (max-width: 40rem) {
 		.edmi-ex-end { margin-left: 0; }
@@ -297,20 +337,68 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 			});
 		paintKnobs();
 
-		// ---- viewport presets + drag handle (frame is centered, so the width changes by 2x the pointer delta)
-		const setWidth = (w: string) => {
-			frame.style.width = /^\d+(\.\d+)?$/.test(w) ? `${w}px` : w;
-		};
+		// ---- viewport presets, zoom and drag handle. The frame's VISUAL width is `preset * zoom` (or 100% / dragged);
+		// the iframe keeps the logical width `visual / zoom` through the CSS var --z, so breakpoints follow the preset.
+		const ZOOMS = [0.5, 0.67, 0.75, 0.9, 1, 1.1, 1.25, 1.5];
+		let zoom = 1;
+		let preset: number | null = null; // null = responsive (100% of the stage) or a dragged width
+		let dragged: number | null = null;
+		const zoomLabel = q("[data-zoom-label]");
+		const zoomBtn = (k: string) => q<HTMLButtonElement>(`[data-zoom="${k}"]`);
 		const readout = () => {
-			const px = Math.round(frame.getBoundingClientRect().width);
-			label.textContent = frame.style.width === "100%" ? `Responsive · ${px}px` : `${px}px`;
+			const logical = preset ?? iframe.offsetWidth;
+			const pct = Math.round(zoom * 100);
+			label.textContent =
+				(preset === null && dragged === null ? `Responsive · ${logical}px` : `${logical}px`) + (zoom === 1 ? "" : ` @ ${pct}%`);
 		};
+		const applyWidth = () => {
+			frame.style.setProperty("--z", String(zoom));
+			if (preset !== null) {
+				frame.style.width = `${Math.round(preset * zoom) + 2}px`; // + the 1px frame border
+				frame.style.maxWidth = "none"; // zoomed presets may scroll the stage instead of changing the logical width
+			} else if (dragged !== null) {
+				frame.style.width = `${dragged}px`;
+				frame.style.maxWidth = "100%";
+			} else {
+				frame.style.width = "100%";
+				frame.style.maxWidth = "100%";
+			}
+			zoomLabel.textContent = `${Math.round(zoom * 100)}%`;
+			zoomBtn("out").disabled = zoom <= ZOOMS[0];
+			zoomBtn("in").disabled = zoom >= ZOOMS[ZOOMS.length - 1];
+			zoomBtn("reset").disabled = zoom === 1;
+			readout();
+		};
+		const setZoom = (z: number) => {
+			zoom = z;
+			applyWidth();
+		};
+		const stepZoom = (dir: 1 | -1) => {
+			const i = ZOOMS.findIndex((v) => Math.abs(v - zoom) < 0.001);
+			const next = ZOOMS[Math.min(ZOOMS.length - 1, Math.max(0, i + dir))];
+			setZoom(next);
+		};
+		zoomBtn("out").addEventListener("click", () => stepZoom(-1));
+		zoomBtn("in").addEventListener("click", () => stepZoom(1));
+		zoomBtn("reset").addEventListener("click", () => setZoom(1));
+		// Ctrl/Cmd + = / - / 0 only while focus is inside this viewer (browser zoom stays untouched elsewhere).
+		root.addEventListener("keydown", (e) => {
+			if (!(e.ctrlKey || e.metaKey) || e.altKey) return;
+			if (e.key === "=" || e.key === "+") stepZoom(1);
+			else if (e.key === "-") stepZoom(-1);
+			else if (e.key === "0") setZoom(1);
+			else return;
+			e.preventDefault();
+		});
+
 		for (const b of root.querySelectorAll<HTMLElement>("[data-viewport]"))
 			b.addEventListener("click", () => {
-				setWidth(b.dataset.viewport!);
+				const v = b.dataset.viewport!;
+				preset = /^\d+(\.\d+)?$/.test(v) ? Number(v) : null;
+				dragged = null;
 				for (const o of root.querySelectorAll<HTMLElement>("[data-viewport]"))
 					o.setAttribute("aria-pressed", String(o === b));
-				readout();
+				applyWidth();
 			});
 		root.querySelector("[data-viewport='100%']")?.setAttribute("aria-pressed", "true");
 		const handle = q("[data-handle]");
@@ -323,9 +411,9 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 			root.dataset.dragging = "";
 			for (const o of root.querySelectorAll<HTMLElement>("[data-viewport]")) o.removeAttribute("aria-pressed");
 			const move = (ev: PointerEvent) => {
-				const w = Math.max(280, Math.min(max, startW + (ev.clientX - startX) * 2));
-				frame.style.width = `${Math.round(w)}px`;
-				readout();
+				preset = null;
+				dragged = Math.round(Math.max(280, Math.min(max, startW + (ev.clientX - startX) * 2)));
+				applyWidth();
 			};
 			const up = () => {
 				delete root.dataset.dragging;
@@ -338,7 +426,36 @@ const renderBase = `${BASE}/examples/${example.slug}/render`;
 			handle.addEventListener("pointercancel", up);
 		});
 		new ResizeObserver(readout).observe(frame);
-		readout();
+		applyWidth();
+
+		// ---- full page: fixed overlay above the docs chrome (not persisted), Esc or the same button exits
+		const fullBtn = q<HTMLButtonElement>("[data-full]");
+		const setFull = (on: boolean) => {
+			if (on) root.dataset.full = "";
+			else delete root.dataset.full;
+			document.documentElement.style.overflow = on ? "hidden" : "";
+			// Starlight's `.main-pane` is `isolation: isolate` (its own stacking context below the fixed header): lift it while open.
+			const pane = root.closest<HTMLElement>(".main-pane");
+			if (pane) pane.style.isolation = on ? "auto" : "";
+			fullBtn.setAttribute("aria-pressed", String(on));
+			fullBtn.setAttribute("aria-label", on ? "Exit full page" : "Full page");
+			q("[data-full-text]").textContent = on ? "Exit full page" : "Full page";
+			if (dragged !== null) dragged = null;
+			applyWidth();
+		};
+		fullBtn.addEventListener("click", () => setFull(!("full" in root.dataset)));
+		document.addEventListener("keydown", (e) => {
+			if (e.key === "Escape" && "full" in root.dataset) {
+				e.preventDefault();
+				setFull(false);
+				fullBtn.focus();
+			}
+		});
+		window.addEventListener("pagehide", () => {
+			document.documentElement.style.overflow = "";
+			const pane = root.closest<HTMLElement>(".main-pane");
+			if (pane) pane.style.isolation = "";
+		});
 
 		load();
 	}
