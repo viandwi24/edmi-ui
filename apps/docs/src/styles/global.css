@@ -639,6 +639,7 @@ details#starlight__mobile-toc summary {
 	border-collapse: separate;
 	border-spacing: 0;
 	width: 100%;
+	max-width: 100%;
 	display: table;
 	border: 1px solid var(--border);
 	border-radius: 10px;
@@ -662,6 +663,19 @@ details#starlight__mobile-toc summary {
 	letter-spacing: 0.06em;
 	text-transform: uppercase;
 	color: var(--muted-foreground);
+}
+/* Tables fill their frame; on wide screens a too-wide table wraps inside it, on phones it scrolls inside its frame. */
+@media (min-width: 40rem) {
+	.sl-markdown-content :is(td, th, td code, th code):not(.edmi-preview *) {
+		overflow-wrap: anywhere;
+	}
+}
+@media (max-width: 39.999rem) {
+	.sl-markdown-content table:not(.edmi-preview *) {
+		display: block;
+		width: fit-content;
+		overflow-x: auto;
+	}
 }
 .sl-markdown-content td:not(.edmi-preview *) code {
 	font-size: 0.75rem;
@@ -946,13 +960,6 @@ html[data-pm="bun"] .edmi-pm-tabs [data-pm-set="bun"] {
 }
 .edmi-pm .expressive-code {
 	margin: 0;
-}
-
-/* API tables scroll inside the content column instead of widening the page on phones */
-.sl-markdown-content table:not(.edmi-preview *) {
-	display: block;
-	max-width: 100%;
-	overflow-x: auto;
 }
 
 /* Examples pages: segmented track (same look as ComponentDemo's `.edmi-seg`, whose styles load only with demos) */
