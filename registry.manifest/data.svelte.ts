@@ -19,6 +19,7 @@ export const entries: Record<string, FrameworkEntry> = {
 	chart: {
 		files: [
 			{ path: "src/lib/registry/ui/chart/chart-container.svelte" },
+			{ path: "src/lib/registry/ui/chart/chart-stat-well.svelte" },
 			{ path: "src/lib/registry/ui/chart/chart-style.svelte" },
 			{ path: "src/lib/registry/ui/chart/chart-tooltip.svelte" },
 			{ path: "src/lib/registry/ui/chart/chart-utils.ts" },

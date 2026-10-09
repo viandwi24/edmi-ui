@@ -33,20 +33,32 @@ const config = {
 
 export default function Demo() {
 	return (
-		<Card className="w-full max-w-md">
-			<CardHeader>
-				<CardTitle>Joins vs exits</CardTitle>
-				<CardDescription>This week</CardDescription>
+		<Card className="w-full max-w-md gap-0 py-0">
+			<CardHeader className="gap-1 px-6 pt-5.5 pb-0">
+				<CardTitle className="font-semibold text-base tracking-[-0.2px]">
+					Joins vs exits
+				</CardTitle>
+				<CardDescription className="text-[13.5px]">This week</CardDescription>
 			</CardHeader>
-			<CardContent>
+			<CardContent className="items-center px-5 pt-2.5 pb-0">
 				<ChartContainer config={config} className="aspect-auto h-48 w-full">
 					<BarChart data={data}>
 						<CartesianGrid vertical={false} />
 						<XAxis dataKey="day" tickLine={false} axisLine={false} />
 						<ChartTooltip content={<ChartTooltipContent indicator="line" />} />
 						<ChartLegend content={<ChartLegendContent />} />
-						<Bar dataKey="joins" fill="var(--color-joins)" radius={4} />
-						<Bar dataKey="exits" fill="var(--color-exits)" radius={4} />
+						<Bar
+							dataKey="joins"
+							fill="var(--color-joins)"
+							radius={[4, 4, 0, 0]}
+							maxBarSize={24}
+						/>
+						<Bar
+							dataKey="exits"
+							fill="var(--color-exits)"
+							radius={[4, 4, 0, 0]}
+							maxBarSize={24}
+						/>
 					</BarChart>
 				</ChartContainer>
 			</CardContent>

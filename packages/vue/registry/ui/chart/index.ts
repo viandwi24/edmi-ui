@@ -3,6 +3,7 @@ import type { Component, Ref } from "vue";
 
 export { default as ChartContainer } from "./ChartContainer.vue";
 export { default as ChartLegendContent } from "./ChartLegendContent.vue";
+export { default as ChartStatWell } from "./ChartStatWell.vue";
 export { default as ChartTooltipContent } from "./ChartTooltipContent.vue";
 export { componentToString } from "./utils";
 

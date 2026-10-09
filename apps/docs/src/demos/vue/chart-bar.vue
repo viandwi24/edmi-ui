@@ -45,12 +45,12 @@ const template = componentToString(config, ChartTooltipContent, {
 </script>
 
 <template>
-  <Card class="w-full max-w-md">
-    <CardHeader>
-      <CardTitle>Joins vs exits</CardTitle>
-      <CardDescription>This week</CardDescription>
+  <Card class="w-full max-w-md gap-0 py-0">
+    <CardHeader class="gap-1 px-6 pt-5.5 pb-0">
+      <CardTitle class="font-semibold text-base tracking-[-0.2px]">Joins vs exits</CardTitle>
+      <CardDescription class="text-[13.5px]">This week</CardDescription>
     </CardHeader>
-    <CardContent>
+    <CardContent class="items-center px-5 pt-2.5 pb-0">
       <ChartContainer :config="config" class="aspect-auto h-48 w-full">
         <VisXYContainer :data="data" :y-domain="[0, undefined]">
           <VisGroupedBar

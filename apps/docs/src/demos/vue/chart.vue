@@ -4,6 +4,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@edmi-vue/ui/card";
@@ -43,12 +44,12 @@ const template = componentToString(config, ChartTooltipContent, {
 </script>
 
 <template>
-  <Card class="w-full max-w-lg">
-    <CardHeader>
-      <CardTitle>NAV vs benchmark</CardTitle>
-      <CardDescription>Last 30 days</CardDescription>
+  <Card class="w-full max-w-lg gap-0 py-0">
+    <CardHeader class="gap-1 px-6 pt-5.5 pb-0">
+      <CardTitle class="font-semibold text-base tracking-[-0.2px]">NAV vs benchmark</CardTitle>
+      <CardDescription class="text-[13.5px]">Last 30 days</CardDescription>
     </CardHeader>
-    <CardContent>
+    <CardContent class="items-center px-5 pt-2.5 pb-0">
       <ChartContainer :config="config" class="aspect-auto h-52 w-full" cursor>
         <VisXYContainer :data="data" :margin="{ left: 4, right: 4 }" :y-domain="[0, undefined]">
           <VisArea :x="x" :y="(d: Row) => d.spyx" :color="config.spyx.color" :opacity="0.12" />
@@ -73,5 +74,9 @@ const template = componentToString(config, ChartTooltipContent, {
         <ChartLegendContent />
       </ChartContainer>
     </CardContent>
+    <CardFooter class="flex-col items-stretch gap-1 px-6 pt-3.5 pb-5.5 text-[13.5px]">
+      <b class="font-medium">MAG4 outperformed SPYx by 6.1 pts</b>
+      <span class="text-muted-foreground">Sep 1 to Oct 1</span>
+    </CardFooter>
   </Card>
 </template>

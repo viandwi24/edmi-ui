@@ -32,12 +32,16 @@ const config = {
 
 export default function Demo() {
 	return (
-		<Card className="w-full max-w-sm">
-			<CardHeader>
-				<CardTitle>Allocation</CardTitle>
-				<CardDescription>MAG4 weights</CardDescription>
+		<Card className="w-full max-w-sm gap-0 py-0">
+			<CardHeader className="gap-1 px-6 pt-5.5 pb-0">
+				<CardTitle className="font-semibold text-base tracking-[-0.2px]">
+					Allocation
+				</CardTitle>
+				<CardDescription className="text-[13.5px]">
+					MAG4 weights
+				</CardDescription>
 			</CardHeader>
-			<CardContent>
+			<CardContent className="items-center px-5 pt-2.5 pb-0">
 				<ChartContainer config={config} className="aspect-auto h-60 w-full">
 					<PieChart>
 						<ChartTooltip
@@ -54,7 +58,8 @@ export default function Demo() {
 							dataKey="weight"
 							nameKey="token"
 							innerRadius={46}
-							stroke="none"
+							stroke="var(--card)"
+							strokeWidth={2}
 						>
 							{data.map((d) => (
 								<Cell key={d.token} fill={`var(--color-${d.token})`} />

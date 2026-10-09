@@ -116,7 +116,8 @@ export const USE_WHEN: Record<string, string> = {
 	table:
 		"static tabular data. Numbers are mono and right-aligned (`numeric`, `trend` props).",
 	"data-table": "sortable, filterable, selectable, paginated tables.",
-	chart: "charts; series map to `--chart-1…5` so they follow the theme.",
+	chart:
+		"charts; series map to `--chart-1…5` (validated dark set inside the chart); floating tooltip, legend, ✦ `ChartStatWell` to switch series.",
 	// Conversation
 	bubble:
 		"chat bubble: default, secondary, muted, tinted, outline, ghost, destructive; `BubbleReactions`.",

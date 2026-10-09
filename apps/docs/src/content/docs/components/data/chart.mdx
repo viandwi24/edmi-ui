@@ -21,6 +21,46 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="chart" />
 
+## Foundations
+
+Charts live inside a `Card`, take series colour only from `ChartConfig` (`--color-<key>`, defaulting to `--chart-1…5` in config order) and never colour text with a series colour.
+
+### Palette
+| Token | Green · light | Green · dark | Ocean · dark |
+| --- | --- | --- | --- |
+| `--chart-1` | `#5bb26a` | `#3eab5e` | `#5a8ff3` |
+| `--chart-2` | `#3b6fd6` | `#5a8ff3` | `#00aaab` |
+| `--chart-3` | `#e39a3c` | `#c0851f` | `#c0851f` |
+| `--chart-4` | `#8a7fd6` | `#957ee5` | `#957ee5` |
+| `--chart-5` | `#d9674f` | `#e75e6a` | `#e75e6a` |
+
+Chart colours are ordinary theme tokens, like in shadcn/ui: `--chart-1…5` are defined for light (`:root`) and dark (`.dark`), and each accent theme carries its own set. The dark sets keep every hue at the same lightness (about L 0.66) so they pass the palette validator (lightness band, chroma floor, colour-blind separation, normal-vision floor, contrast) on both the Stone and Slate dark surfaces. To recolour one series only, use `color` or `theme: { light, dark }` in `ChartConfig`.
+
+In light mode, contrast against the surface is low on green and amber, so every chart also needs a legend, tooltip values and a table view.
+
+### Rules
+- One y-axis, never dual-axis. A sixth series folds into "Other".
+- Bars are at most 24px wide, with a 4px radius on the data end only.
+- Touching fills (stack segments, adjacent bars, pie slices) keep a 2px surface-coloured gap; no strokes around marks.
+- Legend for two or more series; a pie or donut always has one. Pie and donut hold at most five slices.
+- Grid is a solid 1px hairline (`--border`), horizontal only for cartesian charts. Axis text is 12px `muted-foreground`; values are tabular numerals.
+- The tooltip is always floating (+2). Elevation on a chart card is flat, or raised for a featured chart, never floating.
+- Offer a table view with the same values as an alternative to the chart.
+
+### Chart card
+Compose `Card` with `CardHeader` (title, description, optional action: a range `Select` or `ChartStatWell` buttons), `CardContent` (the chart) and `CardFooter` (trend line, period). Use `className="gap-0 py-0"` on the card, `gap-1 px-6 pt-5.5 pb-0` on the header, `items-center px-5 pt-2.5 pb-0` on the content and `px-6 pt-3.5 pb-5.5 text-[13.5px]` on the footer, as the demos above do.
+
+## Chart types
+
+Every variant from the Edmi Chart Kit, live in React, Vue and Svelte:
+[Area](/edmi-ui/components/charts/area-chart/) ·
+[Bar](/edmi-ui/components/charts/bar-chart/) ·
+[Line](/edmi-ui/components/charts/line-chart/) ·
+[Pie & donut](/edmi-ui/components/charts/pie-chart/) ·
+[Radar](/edmi-ui/components/charts/radar-chart/) ·
+[Radial](/edmi-ui/components/charts/radial-chart/) ·
+[Tooltips](/edmi-ui/components/charts/chart-tooltip/).
+
 ## Bar
 <ComponentDemo name="chart" demo="chart-bar" />
 
@@ -31,14 +71,27 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 | Prop | Type | Default |
 | --- | --- | --- |
 | `ChartContainer config` | `{ [key]: { label?, icon?, color? \| theme? } }` | required |
-| `ChartTooltipContent indicator` | `dot \| line \| dashed` | `dot` |
+| `ChartTooltipContent indicator` | `dot \| line \| dashed \| none` | `dot` |
 | `ChartTooltipContent hideLabel / hideIndicator` | `boolean` | `false` |
 | `ChartTooltipContent nameKey / labelKey` | `string` | none |
+| `ChartTooltipContent labelFormatter / formatter` | `function` | none |
 | `ChartLegendContent hideIcon / nameKey` | `boolean / string` | `false` |
+| `ChartLegendContent swatch` ✦ (React, Vue) | `square \| line` | `square` |
+| `ChartStatWell active` ✦ | `boolean` | `false` |
 
-Series colour resolves to `var(--color-<key>)`. Install needs the `recharts` package.
+Series colour resolves to `var(--color-<key>)`. The React port needs the `recharts` package, Vue `@unovis/vue`, Svelte `layerchart`. Vue's `ChartTooltipContent` takes `formatter(value, key, itemConfig)`; the Svelte `Tooltip` takes a `formatter` snippet.
 
 ## ✦ Edmi additions
 - Series without `color`/`theme` fall back to `--chart-1…5` by order.
-- Tooltip is a solid `--popover` panel (flat, no shadow); values are mono.
-- Grid lines are dashed, axis ticks use the mono face.
+- Tooltip is a solid `--popover` panel, always floating (+2): label, then rows with an indicator, a muted name and a semibold tabular value. `indicator="none"` hides the marker.
+- Legend uses an 8px rounded swatch (14x2 with `swatch="line"`), `foreground-2` text, centered.
+- Grid is solid, axis text is 12px in the UI face.
+- Validated dark chart palette as global tokens for the Green and Ocean themes (see Foundations).
+- `ChartStatWell`: a button that switches the series of an interactive chart. Put the label in a text node and the value in a `<b>` (26px semibold); the active well is sunken and exposes `aria-pressed`.
+
+```tsx
+<ChartStatWell active={series === "joins"} onClick={() => setSeries("joins")}>
+  Joins
+  <b>1,284</b>
+</ChartStatWell>
+```

@@ -97,7 +97,7 @@ Choose by "use when". If two items fit, prefer the more specific one (`field` ov
 
 ### Data
 
-- `chart`: charts; series map to `--chart-1…5` so they follow the theme.
+- `chart`: charts; series map to `--chart-1…5` (validated dark set inside the chart); floating tooltip, legend, ✦ `ChartStatWell` to switch series.
 - `data-table` [elevation]: sortable, filterable, selectable, paginated tables.
 - `table`: static tabular data. Numbers are mono and right-aligned (`numeric`, `trend` props).
 
@@ -224,6 +224,7 @@ Choose by "use when". If two items fit, prefer the more specific one (`field` ov
 - Carousel: `CarouselDots`.
 - Inset Panel: its own item (header and footer on a muted shell, card body edge to edge).
 - Date Picker: `DateRangePicker` with optional presets.
+- Chart: floating tooltip (`indicator="dot|line|dashed|none"`), legend (`swatch="line"` in React/Vue), `ChartStatWell active` buttons to switch the series of an interactive chart; compose charts in a `Card`; dark mode swaps in a validated chart palette (the Ocean accent keeps its own).
 - Table: `numeric` and `trend` helpers for mono right-aligned numbers.
 - Conversation group (`bubble`, `message`, `marker`, `message-scroller`, `questionnaire`) is Edmi-only anatomy for chat UIs.
 - AI: `ai-suggestion` `variant="chip|card"`, `ai-conversation` home state, the `ai-patterns` set (artifact card/stack/viewer, session panel, agent avatar, agent composer, chat composer, chat header).

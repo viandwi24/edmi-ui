@@ -22,12 +22,12 @@
 	}));
 </script>
 
-<Card.Root class="w-full max-w-sm">
-	<Card.Header>
-		<Card.Title>Allocation</Card.Title>
-		<Card.Description>MAG4 weights</Card.Description>
+<Card.Root class="w-full max-w-sm gap-0 py-0">
+	<Card.Header class="gap-1 px-6 pt-5.5 pb-0">
+		<Card.Title class="font-semibold text-base tracking-[-0.2px]">Allocation</Card.Title>
+		<Card.Description class="text-[13.5px]">MAG4 weights</Card.Description>
 	</Card.Header>
-	<Card.Content>
+	<Card.Content class="items-center px-5 pt-2.5 pb-0">
 		<Chart.Container {config} class="aspect-auto h-60 w-full">
 			<PieChart
 				{data}

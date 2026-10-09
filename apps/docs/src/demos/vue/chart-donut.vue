@@ -44,12 +44,12 @@ const triggers = { [Donut.selectors.segment]: template };
 </script>
 
 <template>
-  <Card class="w-full max-w-sm">
-    <CardHeader>
-      <CardTitle>Allocation</CardTitle>
-      <CardDescription>MAG4 weights</CardDescription>
+  <Card class="w-full max-w-sm gap-0 py-0">
+    <CardHeader class="gap-1 px-6 pt-5.5 pb-0">
+      <CardTitle class="font-semibold text-base tracking-[-0.2px]">Allocation</CardTitle>
+      <CardDescription class="text-[13.5px]">MAG4 weights</CardDescription>
     </CardHeader>
-    <CardContent>
+    <CardContent class="items-center px-5 pt-2.5 pb-0">
       <ChartContainer :config="config" class="aspect-auto h-60 w-full">
         <VisSingleContainer :data="data" :margin="{ top: 8, bottom: 8 }">
           <VisDonut :value="value" :color="color" :arc-width="26" :pad-angle="0.02" />

@@ -8,10 +8,12 @@ import { cn } from "@/registry/edmi/lib/utils"
 const props = withDefaults(defineProps<{
   hideLabel?: boolean
   hideIndicator?: boolean
-  indicator?: "line" | "dot" | "dashed"
+  indicator?: "line" | "dot" | "dashed" | "none"
   nameKey?: string
   labelKey?: string
   labelFormatter?: (d: number | Date) => string
+  /** Custom row text: receives the series value, key and config. */
+  formatter?: (value: unknown, key: string, itemConfig: ChartConfig[string] | undefined) => string
   payload?: Record<string, any>
   config?: ChartConfig
   class?: HTMLAttributes["class"]
@@ -36,7 +38,7 @@ const payload = computed(() => {
   }).filter(i => i.itemConfig)
 })
 
-const nestLabel = computed(() => Object.keys(props.payload).length === 1 && props.indicator !== "dot")
+const showIndicator = computed(() => !props.hideIndicator && props.indicator !== "none")
 const tooltipLabel = computed(() => {
   if (props.hideLabel)
     return null
@@ -49,56 +51,44 @@ const tooltipLabel = computed(() => {
 
 <template>
   <div
+    data-slot="chart-tooltip"
     :class="cn(
-      'grid min-w-32 items-start gap-1.5 rounded-xl border border-border bg-popover px-2.5 py-2 text-xs text-popover-foreground',
+      'grid min-w-36 gap-1.5 rounded-lg border border-border bg-popover px-3 py-2 text-xs text-popover-foreground shadow-floating',
       props.class,
     )"
   >
     <slot>
-      <div v-if="!nestLabel && tooltipLabel" class="font-semibold">
+      <div v-if="tooltipLabel" class="font-medium text-foreground">
         {{ tooltipLabel }}
       </div>
       <div class="grid gap-1.5">
         <div
           v-for="{ value, itemConfig, indicatorColor, key } in payload"
           :key="key"
-          :class="
-            cn('[&>svg]:text-muted-foreground flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5',
-               indicator === 'dot' && 'items-center')"
+          class="[&>svg]:text-muted-foreground flex w-full items-center gap-2 [&>svg]:size-3"
         >
           <component :is="itemConfig.icon" v-if="itemConfig?.icon" />
-          <template v-else-if="!hideIndicator">
+          <template v-else-if="showIndicator">
             <div
-              :class="cn(
-                'shrink-0 rounded-[2px] border-(--color-border) bg-(--color-bg)',
-                {
-                  'h-2 w-2': indicator === 'dot',
-                  'w-[3px]': indicator === 'line',
-                  'w-0 border-2 border-dashed bg-transparent':
-                    indicator === 'dashed',
-                  'my-0.5': nestLabel && indicator === 'dashed',
-                },
-              )"
-              :style="{
-                '--color-bg': indicatorColor,
-                '--color-border': indicatorColor,
-              }"
+              :class="cn('shrink-0', {
+                'size-2 rounded-[2px] bg-(--color-bg)': indicator === 'dot',
+                'min-h-3.5 w-1 self-stretch rounded-[2px] bg-(--color-bg)': indicator === 'line',
+                'min-h-3.5 w-0 self-stretch border-l-2 border-dashed border-(--color-bg)': indicator === 'dashed',
+              })"
+              :style="{ '--color-bg': indicatorColor }"
             />
           </template>
-
-          <div :class="cn('flex flex-1 justify-between leading-none', nestLabel ? 'items-end' : 'items-center')">
-            <div class="grid gap-1.5">
-              <div v-if="nestLabel" class="font-semibold">
-                {{ tooltipLabel }}
-              </div>
-              <span class="text-muted-foreground">
-                {{ itemConfig?.label || value }}
-              </span>
-            </div>
-            <span v-if="value" class="text-foreground font-mono font-medium tabular-nums">
+          <template v-if="formatter">
+            <span class="flex-1 text-muted-foreground">{{ formatter(value, key, itemConfig) }}</span>
+          </template>
+          <template v-else>
+            <span class="flex-1 text-muted-foreground">
+              {{ itemConfig?.label || value }}
+            </span>
+            <span v-if="value" class="ml-3 whitespace-nowrap font-semibold text-foreground tabular-nums">
               {{ value.toLocaleString() }}
             </span>
-          </div>
+          </template>
         </div>
       </div>
     </slot>

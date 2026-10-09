@@ -20,12 +20,12 @@
 	} satisfies Chart.ChartConfig;
 </script>
 
-<Card.Root class="w-full max-w-lg">
-	<Card.Header>
-		<Card.Title>NAV vs benchmark</Card.Title>
-		<Card.Description>Last 30 days</Card.Description>
+<Card.Root class="w-full max-w-lg gap-0 py-0">
+	<Card.Header class="gap-1 px-6 pt-5.5 pb-0">
+		<Card.Title class="font-semibold text-base tracking-[-0.2px]">NAV vs benchmark</Card.Title>
+		<Card.Description class="text-[13.5px]">Last 30 days</Card.Description>
 	</Card.Header>
-	<Card.Content>
+	<Card.Content class="items-center px-5 pt-2.5 pb-0">
 		<Chart.Container {config} class="aspect-auto h-52 w-full">
 			<AreaChart
 				{data}
@@ -47,4 +47,8 @@
 			</AreaChart>
 		</Chart.Container>
 	</Card.Content>
+	<Card.Footer class="flex-col items-stretch gap-1 px-6 pt-3.5 pb-5.5 text-[13.5px]">
+		<b class="font-medium">MAG4 outperformed SPYx by 6.1 pts</b>
+		<span class="text-muted-foreground">Sep 1 to Oct 1</span>
+	</Card.Footer>
 </Card.Root>

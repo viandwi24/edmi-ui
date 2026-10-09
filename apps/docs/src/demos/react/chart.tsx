@@ -2,6 +2,7 @@ import {
 	Card,
 	CardContent,
 	CardDescription,
+	CardFooter,
 	CardHeader,
 	CardTitle,
 } from "@edmi-react/ui/card";
@@ -32,12 +33,16 @@ const config = {
 
 export default function Demo() {
 	return (
-		<Card className="w-full max-w-lg">
-			<CardHeader>
-				<CardTitle>NAV vs benchmark</CardTitle>
-				<CardDescription>Last 30 days</CardDescription>
+		<Card className="w-full max-w-lg gap-0 py-0">
+			<CardHeader className="gap-1 px-6 pt-5.5 pb-0">
+				<CardTitle className="font-semibold text-base tracking-[-0.2px]">
+					NAV vs benchmark
+				</CardTitle>
+				<CardDescription className="text-[13.5px]">
+					Last 30 days
+				</CardDescription>
 			</CardHeader>
-			<CardContent>
+			<CardContent className="items-center px-5 pt-2.5 pb-0">
 				<ChartContainer config={config} className="aspect-auto h-52 w-full">
 					<AreaChart data={data} margin={{ left: 4, right: 4 }}>
 						<CartesianGrid vertical={false} />
@@ -54,6 +59,7 @@ export default function Demo() {
 							type="monotone"
 							stroke="var(--color-spyx)"
 							strokeDasharray="5 4"
+							strokeWidth={2}
 							fill="var(--color-spyx)"
 							fillOpacity={0.12}
 						/>
@@ -61,12 +67,17 @@ export default function Demo() {
 							dataKey="mag4"
 							type="monotone"
 							stroke="var(--color-mag4)"
+							strokeWidth={2}
 							fill="var(--color-mag4)"
 							fillOpacity={0.2}
 						/>
 					</AreaChart>
 				</ChartContainer>
 			</CardContent>
+			<CardFooter className="flex-col items-stretch gap-1 px-6 pt-3.5 pb-5.5 text-[13.5px]">
+				<b className="font-medium">MAG4 outperformed SPYx by 6.1 pts</b>
+				<span className="text-muted-foreground">Sep 1 to Oct 1</span>
+			</CardFooter>
 		</Card>
 	);
 }

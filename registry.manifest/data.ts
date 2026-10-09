@@ -20,7 +20,7 @@ export const items: Item[] = [
 		name: "chart",
 		title: "Chart",
 		description:
-			"Recharts wrapped in ChartContainer that maps series to --chart-1…5, with Edmi tooltip (dot, line, dashed) and legend.",
+			"Recharts wrapped in ChartContainer that maps series to --chart-1…5, with the floating Edmi tooltip (dot, line, dashed, none), legend, scoped validated dark palette and ✦ ChartStatWell.",
 		type: "registry:ui",
 		categories: ["Data"],
 		docs: "Replaces the stock chart: `shadcn add @edmi-ui/chart --overwrite`.",

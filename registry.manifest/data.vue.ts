@@ -21,6 +21,7 @@ export const entries: Record<string, FrameworkEntry> = {
 		files: [
 			{ path: "registry/ui/chart/ChartContainer.vue" },
 			{ path: "registry/ui/chart/ChartLegendContent.vue" },
+			{ path: "registry/ui/chart/ChartStatWell.vue" },
 			{ path: "registry/ui/chart/ChartStyle.vue" },
 			{ path: "registry/ui/chart/ChartTooltipContent.vue" },
 			{ path: "registry/ui/chart/index.ts" },

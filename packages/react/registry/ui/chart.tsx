@@ -62,7 +62,7 @@ function ChartContainer({
 				data-slot="chart"
 				data-chart={chartId}
 				className={cn(
-					"flex aspect-video justify-center text-xs [&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-axis-tick_text]:font-mono [&_.recharts-cartesian-axis-tick_text]:text-[10.5px] [&_.recharts-cartesian-grid_line]:[stroke-dasharray:3_4] [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border [&_.recharts-curve.recharts-tooltip-cursor]:stroke-muted-foreground [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-hidden [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border [&_.recharts-sector]:outline-hidden [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-surface]:outline-hidden",
+					"flex aspect-video justify-center font-sans text-xs tabular-nums [&_.recharts-cartesian-axis-tick-value]:fill-muted-foreground [&_.recharts-cartesian-axis-tick-value]:text-xs [&_.recharts-cartesian-grid_line]:[stroke-dasharray:none] [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-hidden [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border [&_.recharts-sector]:outline-hidden [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-surface]:outline-hidden",
 					className,
 				)}
 				{...props}
@@ -139,7 +139,7 @@ function ChartTooltipContent({
 	React.ComponentProps<"div"> & {
 		hideLabel?: boolean;
 		hideIndicator?: boolean;
-		indicator?: "line" | "dot" | "dashed";
+		indicator?: "line" | "dot" | "dashed" | "none";
 		nameKey?: string;
 		labelKey?: string;
 	} & Omit<
@@ -166,7 +166,7 @@ function ChartTooltipContent({
 
 		if (labelFormatter) {
 			return (
-				<div className={cn("font-semibold", labelClassName)}>
+				<div className={cn("font-medium text-foreground", labelClassName)}>
 					{labelFormatter(value, payload)}
 				</div>
 			);
@@ -176,7 +176,11 @@ function ChartTooltipContent({
 			return null;
 		}
 
-		return <div className={cn("font-semibold", labelClassName)}>{value}</div>;
+		return (
+			<div className={cn("font-medium text-foreground", labelClassName)}>
+				{value}
+			</div>
+		);
 	}, [
 		label,
 		labelFormatter,
@@ -191,16 +195,17 @@ function ChartTooltipContent({
 		return null;
 	}
 
-	const nestLabel = payload.length === 1 && indicator !== "dot";
+	const showIndicator = !hideIndicator && indicator !== "none";
 
 	return (
 		<div
+			data-slot="chart-tooltip"
 			className={cn(
-				"grid min-w-32 items-start gap-1.5 rounded-xl border border-border bg-popover px-2.5 py-2 text-xs text-popover-foreground",
+				"grid min-w-36 gap-1.5 rounded-lg border border-border bg-popover px-3 py-2 text-popover-foreground text-xs shadow-floating",
 				className,
 			)}
 		>
-			{!nestLabel ? tooltipLabel : null}
+			{tooltipLabel}
 			<div className="grid gap-1.5">
 				{payload
 					.filter((item) => item.type !== "none")
@@ -213,10 +218,7 @@ function ChartTooltipContent({
 							<div
 								// biome-ignore lint/suspicious/noArrayIndexKey: recharts payload entries have no stable id
 								key={index}
-								className={cn(
-									"flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-muted-foreground",
-									indicator === "dot" && "items-center",
-								)}
+								className="flex w-full items-center gap-2 [&>svg]:size-3 [&>svg]:text-muted-foreground"
 							>
 								{formatter && item?.value !== undefined && item.name ? (
 									formatter(item.value, item.name, item, index, item.payload)
@@ -225,47 +227,34 @@ function ChartTooltipContent({
 										{itemConfig?.icon ? (
 											<itemConfig.icon />
 										) : (
-											!hideIndicator && (
+											showIndicator && (
 												<div
-													className={cn(
-														"shrink-0 rounded-[2px] border-(--color-border) bg-(--color-bg)",
-														{
-															"h-2 w-2": indicator === "dot",
-															"w-[3px]": indicator === "line",
-															"w-0 border-2 border-dashed bg-transparent":
-																indicator === "dashed",
-															"my-0.5": nestLabel && indicator === "dashed",
-														},
-													)}
+													className={cn("shrink-0", {
+														"size-2 rounded-[2px] bg-(--color-bg)":
+															indicator === "dot",
+														"min-h-3.5 w-1 self-stretch rounded-[2px] bg-(--color-bg)":
+															indicator === "line",
+														"min-h-3.5 w-0 self-stretch border-l-2 border-dashed border-(--color-bg)":
+															indicator === "dashed",
+													})}
 													style={
 														{
 															"--color-bg": indicatorColor,
-															"--color-border": indicatorColor,
 														} as React.CSSProperties
 													}
 												/>
 											)
 										)}
-										<div
-											className={cn(
-												"flex flex-1 justify-between leading-none",
-												nestLabel ? "items-end" : "items-center",
-											)}
-										>
-											<div className="grid gap-1.5">
-												{nestLabel ? tooltipLabel : null}
-												<span className="text-muted-foreground">
-													{itemConfig?.label ?? item.name}
-												</span>
-											</div>
-											{item.value != null && (
-												<span className="font-mono font-medium text-foreground tabular-nums">
-													{typeof item.value === "number"
-														? item.value.toLocaleString()
-														: String(item.value)}
-												</span>
-											)}
-										</div>
+										<span className="flex-1 text-muted-foreground">
+											{itemConfig?.label ?? item.name}
+										</span>
+										{item.value != null && (
+											<span className="ml-3 whitespace-nowrap font-semibold text-foreground tabular-nums">
+												{typeof item.value === "number"
+													? item.value.toLocaleString()
+													: String(item.value)}
+											</span>
+										)}
 									</>
 								)}
 							</div>
@@ -284,9 +273,12 @@ function ChartLegendContent({
 	payload,
 	verticalAlign = "bottom",
 	nameKey,
+	swatch = "square",
 }: React.ComponentProps<"div"> & {
 	hideIcon?: boolean;
 	nameKey?: string;
+	/** ✦ `line` draws the 14x2 swatch used by line charts. */
+	swatch?: "square" | "line";
 } & RechartsPrimitive.DefaultLegendContentProps) {
 	const { config } = useChart();
 
@@ -296,9 +288,10 @@ function ChartLegendContent({
 
 	return (
 		<div
+			data-slot="chart-legend"
 			className={cn(
-				"flex items-center justify-center gap-4 text-[12.5px]",
-				verticalAlign === "top" ? "pb-3" : "pt-3",
+				"flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-[12.5px] text-foreground-2",
+				verticalAlign === "top" ? "pb-2.5" : "pt-2.5",
 				className,
 			)}
 		>
@@ -312,15 +305,18 @@ function ChartLegendContent({
 						<div
 							// biome-ignore lint/suspicious/noArrayIndexKey: recharts payload entries have no stable id
 							key={index}
-							className={cn(
-								"flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground",
-							)}
+							className="flex items-center gap-1.5 [&>svg]:size-3 [&>svg]:text-muted-foreground"
 						>
 							{itemConfig?.icon && !hideIcon ? (
 								<itemConfig.icon />
 							) : (
 								<div
-									className="size-2.5 shrink-0 rounded-[3px]"
+									className={cn(
+										"shrink-0",
+										swatch === "line"
+											? "h-0.5 w-3.5 rounded-[1px]"
+											: "size-2 rounded-[2px]",
+									)}
 									style={{
 										backgroundColor: item.color,
 									}}
@@ -331,6 +327,28 @@ function ChartLegendContent({
 					);
 				})}
 		</div>
+	);
+}
+
+/** ✦ Stat well: switches the series of an interactive chart. `active` sinks it (sunken, -1). */
+function ChartStatWell({
+	className,
+	active = false,
+	...props
+}: React.ComponentProps<"button"> & { active?: boolean }) {
+	return (
+		<button
+			type="button"
+			data-slot="chart-stat-well"
+			data-active={active ? "" : undefined}
+			aria-pressed={active}
+			className={cn(
+				"flex min-w-36 flex-col justify-center gap-0.5 border-border border-l px-6 py-4 text-left text-muted-foreground text-xs outline-none first:border-l-0 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring [&_b]:font-semibold [&_b]:text-[26px] [&_b]:text-foreground [&_b]:leading-[1.1] [&_b]:tracking-[-0.6px]",
+				active && "bg-sk-bg shadow-sunken",
+				className,
+			)}
+			{...props}
+		/>
 	);
 }
 
@@ -374,6 +392,7 @@ export {
 	ChartContainer,
 	ChartLegend,
 	ChartLegendContent,
+	ChartStatWell,
 	ChartStyle,
 	ChartTooltip,
 	ChartTooltipContent,
