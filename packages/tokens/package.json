@@ -13,6 +13,7 @@
 		"./fonts.css": "./src/fonts.css",
 		"./kit.css": "./src/kit.css",
 		"./ai.css": "./src/ai.css",
+		"./chart.css": "./src/chart.css",
 		"./base/slate.css": "./src/base/slate.css",
 		"./base/stone.css": "./src/base/stone.css",
 		"./themes/ocean.css": "./src/themes/ocean.css",

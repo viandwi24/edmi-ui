@@ -244,6 +244,15 @@ export const input =
   "flex h-9 w-full items-center gap-2 rounded-md border border-input bg-card px-3 text-sm placeholder:text-muted-foreground " +
   "focus-visible:border-ring focus-visible:shadow-ring outline-none aria-invalid:border-destructive aria-invalid:shadow-ring-error disabled:opacity-50 disabled:bg-muted";
 export const textarea = input.replace("h-9", "min-h-24 py-2.5 leading-relaxed");
+/* ✦ Field elevation (v6): fields also take raised (+1) and floating (+2) when set explicitly — a bevel face (--bv-face-b), no border colour,
+   focus swaps the bevel for the ring. Use on Input · Textarea · Input Group root · Input OTP group. OTP: one plate, slots become
+   transparent with 1px left separators, the active slot gets the ring. Errors keep the destructive border + ring at every level. */
+export const fieldElevation = {
+  sunken: fieldSunken,
+  flat: "",
+  raised: "border-transparent bg-[image:linear-gradient(var(--bv-face-b),var(--bv-face-b))] shadow-raised focus-visible:border-ring focus-visible:shadow-ring",
+  floating: "border-transparent bg-[image:linear-gradient(var(--bv-face-b),var(--bv-face-b))] shadow-floating focus-visible:border-ring focus-visible:shadow-ring",
+};
 export const selectTrigger = cva("flex h-9 items-center justify-between gap-2 rounded-md border border-input bg-card pl-3 pr-2.5 text-sm data-[state=open]:border-ring data-[state=open]:shadow-ring", {
   variants: { elevation: { ...surfaceElevation, sunken: fieldSunken } }, // ✦ sunken (layered default) · raised · floating
   defaultVariants: { elevation: "flat" },
@@ -357,3 +366,18 @@ export type ButtonProps = VariantProps<typeof button>;
 export type BadgeProps = VariantProps<typeof badge>;
 export type CardProps = VariantProps<typeof card>;
 export type ToggleProps = VariantProps<typeof toggle>;
+
+
+/* Chart (v6) — see CHART_KIT.md. Series colour is always var(--chart-N) via ChartConfig → --color-<key>. */
+export const chartCard = {
+  root: "flex min-w-0 flex-col",                        // Card + elevation (flat default; raised for a featured chart)
+  header: "flex flex-col gap-1 px-6 pt-5.5",            // title 16/600 · description 13.5 muted
+  content: "flex flex-col items-center px-5 pt-2.5",    // ChartContainer, aspect-video or fixed height
+  footer: "flex flex-col gap-1 px-6 pb-5.5 pt-3.5 text-[13.5px]", // trend line (font-medium) + period (muted)
+};
+export const chartLegend = "flex flex-wrap justify-center gap-x-4 gap-y-1.5 pt-2.5 text-[12.5px] text-foreground-2 [&_i]:mr-1.5 [&_i]:inline-block [&_i]:size-2 [&_i]:rounded-[2px]";
+export const chartTooltip = "grid min-w-36 gap-1.5 rounded-lg border border-border bg-popover px-3 py-2 text-xs shadow-floating"; // always floating +2
+export const chartStatWell = cva("flex flex-col gap-1 border-l border-border px-6 py-4 text-left", {
+  variants: { active: { true: "bg-sk-bg shadow-sunken", false: "" } }, // active well sinks (−1)
+  defaultVariants: { active: false },
+});

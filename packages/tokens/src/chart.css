@@ -1,0 +1,38 @@
+/* Edmi Chart (@edmi/chart) — plain-CSS reference for the chart pack. Load after tokens.css + kit.css.
+   Charts are SVG inside a Card; series colour = var(--chart-N). Port into your ChartContainer / ChartTooltipContent / ChartLegendContent. */
+
+.cc{display:flex;flex-direction:column;min-width:0}
+.cc .card-h{padding:22px 24px 0;flex-direction:column;gap:0}
+.cc .card-t{font-size:16px;font-weight:600;letter-spacing:-.2px}
+.cc .card-d{font-size:13.5px;margin-top:4px}
+.cc-b{padding:10px 20px 0;display:flex;flex-direction:column;align-items:center}
+.cc-f{padding:14px 24px 22px;display:flex;flex-direction:column;gap:4px;font-size:13.5px}
+.cc-f b{font-weight:500;display:flex;align-items:center;gap:7px}.cc-f span{color:var(--muted-foreground)}
+.cc.mid .card-h,.cc.mid .cc-f{align-items:center;text-align:center}
+.ch-svg{display:block;overflow:visible}
+.ch-svg text{font-family:'Instrument Sans',system-ui,sans-serif;fill:var(--muted-foreground);font-size:12px}
+.ch-svg text.v{fill:var(--foreground);font-variant-numeric:tabular-nums}
+.ch-svg text.in{fill:#fff;font-weight:500}
+.ch-lg{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:center;font-size:12.5px;color:var(--foreground-2);padding:10px 0 4px}
+.ch-lg i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:0}
+.ch-lg.ln i{width:14px;height:2px;border-radius:1px;vertical-align:3px}
+.ch-tt{position:absolute;pointer-events:none;min-width:130px;padding:8px 10px;border-radius:8px;background:var(--popover);color:var(--popover-foreground);border:1px solid var(--border);font-size:12px;line-height:1.4;box-shadow:inset 0 1px 0 var(--bv-top),0 0 1.5px var(--bv-out),var(--bv-float);display:flex;flex-direction:column;gap:6px}
+.ch-tt .tl{font-weight:500;color:var(--foreground)}
+.ch-tt .tr{display:flex;align-items:center;gap:8px}
+.ch-tt .tr .k{flex:none;width:8px;height:8px;border-radius:2px}
+.ch-tt .tr .k.line{width:4px;height:16px;border-radius:2px;align-self:stretch;height:auto;min-height:14px}
+.ch-tt .tr .k.dashed{width:0;height:auto;min-height:14px;border-left:2px dashed;border-radius:0;align-self:stretch}
+.ch-tt .tr .n{color:var(--muted-foreground);flex:1}
+.ch-tt .tr .xv{font-weight:600;color:var(--foreground);font-variant-numeric:tabular-nums;margin-left:12px;white-space:nowrap}
+.ch-rel{position:relative}
+.ch-well{display:flex;flex-direction:column;justify-content:center;gap:2px;padding:14px 26px;min-width:150px;border-left:1px solid var(--border);font-size:12px;color:var(--muted-foreground);text-align:left;background:transparent}
+.ch-well b{font-size:26px;line-height:1.1;font-weight:600;letter-spacing:-.6px;color:var(--foreground);font-variant-numeric:normal}
+.ch-well.on{background:var(--sk-bg);box-shadow:var(--sk-sh)}
+.cc-hd{display:flex;align-items:stretch;justify-content:space-between}
+.cc-hd .l{padding:22px 24px 18px}
+.cc-hd .l .card-d{margin-top:4px}
+.cc-sc{border-bottom:1px solid var(--border)}
+.ch-sw{display:inline-block;width:34px;height:34px;border-radius:8px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+
+/* Dark palette: the validated dark --chart-1..5 are global tokens (tokens.css .dark; themes/ocean.css has its own validated set),
+   like shadcn/ui defines --chart-N in :root and .dark. No chart-scoped override (decision 2026-10-10, REVISIONS-v6 open decision closed). */

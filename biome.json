@@ -25,6 +25,7 @@
 			"!packages/tokens/src/recipes.ts",
 			"!packages/tokens/src/kit.css",
 			"!packages/tokens/src/ai.css",
+			"!packages/tokens/src/chart.css",
 			"!packages/tokens/src/base/slate.css",
 			"!packages/tokens/src/base/stone.css",
 			"!packages/tokens/src/themes/ocean.css",

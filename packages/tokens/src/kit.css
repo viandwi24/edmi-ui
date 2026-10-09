@@ -342,7 +342,15 @@
 .ai-pi.el-float{border-color:transparent;box-shadow:inset 0 1px 0 var(--bv-top),0 0 1.5px var(--bv-out),var(--bv-float)}
 .layered .ai-pi:not(.el-flat){border-color:transparent;box-shadow:inset 0 1px 0 var(--bv-top),0 0 1.5px var(--bv-out),var(--bv-float)}
 .el-sunk,.sunk{background:var(--sk-bg);border:1px solid var(--sk-bd);box-shadow:var(--sk-sh)}
-.layered .input:not(.el-flat),.layered .sel:not(.el-flat),.layered .otp-s:not(.el-flat){background:var(--sk-bg);border:1px solid var(--sk-bd);box-shadow:var(--sk-sh)}
+.ig.el-raised .ig-text,.ig.el-float .ig-text,.ig.el-sunk .ig-text{background:transparent}
+.input.el-raised,.ig.el-raised,.ta.el-raised,.otp-g.el-raised{background:var(--bv-face-b);border-color:transparent;box-shadow:inset 0 1px 0 var(--bv-top),0 0 1.5px var(--bv-out)}
+.input.el-float,.ig.el-float,.ta.el-float,.otp-g.el-float{background:var(--bv-face-b);border-color:transparent;box-shadow:inset 0 1px 0 var(--bv-top),0 0 1.5px var(--bv-out),var(--bv-float)}
+.otp-g.el-raised,.otp-g.el-float,.otp-g.el-sunk{border-radius:8px;display:inline-flex}
+.otp-g.el-raised .otp-s,.otp-g.el-float .otp-s,.otp-g.el-sunk .otp-s{background:transparent;border-width:0 0 0 1px;border-color:var(--border);border-radius:0;margin-left:0}
+.otp-g.el-raised .otp-s:first-child,.otp-g.el-float .otp-s:first-child,.otp-g.el-sunk .otp-s:first-child{border-left-width:0}
+.otp-g.el-raised .otp-s.act,.otp-g.el-float .otp-s.act,.otp-g.el-sunk .otp-s.act{border-radius:6px;box-shadow:0 0 0 3px var(--ring-soft),inset 0 0 0 1px var(--ring);border-color:transparent}
+.input.el-raised.focus,.ig.el-raised.focus,.ta.el-raised.focus,.input.el-float.focus,.ig.el-float.focus,.ta.el-float.focus{border-color:var(--ring);box-shadow:0 0 0 3px var(--ring-soft)}
+.layered .input:not(.el-flat),.layered .sel:not(.el-flat),.layered .otp-s:not(.el-flat),.layered .ta:not(.el-flat){background:var(--sk-bg);border:1px solid var(--sk-bd);box-shadow:var(--sk-sh)}
 .badge.el-sunk{box-shadow:inset 0 1px 2px rgba(0,0,0,.22)}
 .badge-default.el-sunk{background:var(--primary);border-color:transparent}
 .badge-brand.el-sunk{background:var(--brand-soft);border-color:color-mix(in srgb,var(--brand) 30%,var(--popover))}
