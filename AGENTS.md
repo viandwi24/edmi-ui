@@ -66,7 +66,7 @@ NOTICE, licenses/         third-party attribution (AI Elements Apache-2.0, AI El
 apps/docs                 Astro + Starlight site: src/demos/<fw>/<name>[-elevation].*, src/content/docs/components/<group>/<name>.mdx (AI: components/ai-<cat>/ai-<name>.mdx), plugins/, templates/component.mdx + ai-component.mdx
 examples/react|vue|svelte Stockbreak Markets app per framework + examples/install.sh
 .changeset/               changesets (fixed version group)
-refs/edmi-ui              BINDING design spec v2.1 = v2 + REVISIONS.md (DESIGN.md, tokens incl. base/slate.css + themes/ocean.css, recipes, kit.css, reference boards, screens/ incl. layerbeat-example)
+refs/edmi-ui              BINDING design spec (v6 = v4 + handoffs, REVISIONS*.md; DESIGN.md, CHART_KIT.md, css/{kit,ai,chart}.css, tokens incl. base/slate.css + themes/ocean.css, recipes, kit.css, reference boards, screens/ incl. layerbeat-example)
 refs/stockbreak-design    spec v1, history only; do not follow
 ```
 
@@ -88,7 +88,7 @@ Generated, gitignored, never hand-edited: every `registry.json`, `apps/docs/publ
 
 **Design changes need a handoff document (maintainer rule).** Agents (and the maintainer, from this repo) never design or restyle components here: no new looks, elevation schemes, tokens, variants or visual tweaks on their own initiative. Design is done in the design app; the maintainer exports a handoff document into `refs/*`, and only then do agents implement that revision, so the code always stays in sync with the design app. Allowed without a handoff: bug fixes that restore the documented spec (wrong state, broken layout, port mismatch, docs-site CSS leaks), docs-site/tooling work, and behaviour fixes. If a request would change the look and there is no handoff, stop and ask for one.
 
-Binding spec (v4, `refs/edmi-ui` incl. `REVISIONS.md` v1 → v3 and `REVISIONS-v4.md` #1-#21; the handoff `refs/edmi-ui-update-4/design/` is mirrored into `refs/edmi-ui`): `refs/edmi-ui/DESIGN.md` (§1 stack, §3 theming, §4 rules, §5 components). **Read §4 before touching any component.** Classes come from `packages/tokens/src/recipes.ts` (inline the strings into each component; registry files cannot import `@edmi-ui/tokens`). Compare with the boards in `refs/edmi-ui/screens/edmi-ui-kit/<NN-board>-{light,dark}.png` (each board has a "Raised ✦" row) and `refs/edmi-ui/reference/*.dc.html` for exact values. Do not "improve" §4.
+Binding spec (v6, `refs/edmi-ui` incl. `REVISIONS.md` v1 → v3, `REVISIONS-v4.md` #1-#21 and `REVISIONS-v6.md` #1-#4; the handoffs `refs/edmi-ui-update-4/design/` and `refs/edmi-ui-update-6/design/` are mirrored into `refs/edmi-ui`, removed files deleted; charts: `CHART_KIT.md` + §5c): `refs/edmi-ui/DESIGN.md` (§1 stack, §3 theming, §4 rules, §5 components). **Read §4 before touching any component.** Classes come from `packages/tokens/src/recipes.ts` (inline the strings into each component; registry files cannot import `@edmi-ui/tokens`). Compare with the boards in `refs/edmi-ui/screens/edmi-ui-kit/<NN-board>-{light,dark}.png` (each board has a "Raised ✦" row) and `refs/edmi-ui/reference/*.dc.html` for exact values. Do not "improve" §4.
 
 Theming (spec §3, v2.1): four knobs on `<html>`: mode `class="dark"`, `data-base` (stone default, slate), `data-theme` (green default, ocean), `--radius`. Load order tokens → base → themes. `@edmi-ui/tokens` ships `base/slate.css` and `themes/ocean.css` (exports `./base/slate.css`, `./themes/ocean.css`); distribution/customizer wiring is a separate task. Components use tokens only, never a theme name.
 
@@ -137,7 +137,7 @@ Replaces the old boolean `raised` (removed everywhere, no alias; user decision 2
 | ButtonGroup | button-filled | F R X | R = each item; X = the whole group as one plate (`buttonGroupFloating`), items stay R |
 | Badge | control (F) | S F R X | edge only; fill and tint stay |
 | Kbd | handle (R) | F R X | the key (on Kbd, not KbdGroup) |
-| Input, Textarea, Input Group, InputOTP, Select trigger, Native Select | field (S) | S F R X | the field; sunken swaps the edge for the ring on focus |
+| Input, Textarea, Input Group, InputOTP, Select trigger, Native Select | field (S) | S F R X | the field; sunken swaps the edge for the ring on focus; raised/floating (v6, explicit only) = bevel face `--bv-face-b` + transparent border, focus swaps the bevel for the ring, invalid keeps the destructive ring; InputOTP at S/R/X = one plate with 1px slot separators and a ringed active slot |
 | Checkbox | control (F) | F R | the checked box only |
 | Radio | control (F) | F | -- |
 | Switch | handle (R) | F R | thumb |
@@ -160,7 +160,7 @@ Replaces the old boolean `raised` (removed everywhere, no alias; user decision 2
 
 **Patterns (v4).** Pattern items (headers, tiles, strips, panels, cards, `layout-picker`, `kanban-column`, `watchlist-item`, `data-table`) take `elevation` and forward it to the Card/Button/Input they render; none hard-codes depth. A pattern whose own plate is a surface (`app-header`, `site-header`, `layout-picker` toast) resolves it with `useElevation(elevation, "surface" | "overlay")`; its inner controls follow an explicit level (`raised`/`floating` raise them, `flat`/`sunken` keep them flat, `auto` leaves them to their roles). Wells (kanban column, layout wireframe) use `border-sk-bd bg-sk-bg shadow-sunken`. `DataTable` keeps the table container flat and forwards `elevation` to toolbar and pagination controls. Svelte `SiteHeader`'s `action` snippet receives `{ elevation }`. The Stockbreak docs examples (markets, markets-sidebar, index-detail, create-index, explore, feed, leaderboard, portfolio, profile, faucet, agents) wrap their root in `<ElevationProvider mode="layered">` and rely on role defaults; marketing and Layerbeat pages keep explicit levels.
 
-Flat-only (do not add `elevation`): Sheet, Drawer, HoverCard, Tooltip, Alert, NavigationMenu/Command popups, Sidebar, Accordion, Table/DataTable (container flat; toolbar follows Button/Input), Chart, Bubble, Combobox, Attachment. Components not in the table follow the nearest role.
+Flat-only (do not add `elevation`): Sheet, Drawer, HoverCard, Tooltip, Alert, NavigationMenu/Command popups, Sidebar, Accordion, Table/DataTable (container flat; toolbar follows Button/Input), Chart (the chart itself; a chart Card takes Card elevation, flat default, raised for a featured chart, never floating; the tooltip is always floating; active `ChartStatWell` is sunken), Bubble, Combobox, Attachment. Components not in the table follow the nearest role.
 
 **Button / ButtonGroup context.** A `ButtonGroup` with an explicit `elevation` provides it to the buttons it contains (React `ButtonElevationContext` exported from `button.tsx`, Vue `BUTTON_ELEVATION_KEY` from the button barrel, Svelte `BUTTON_ELEVATION_CONTEXT` from the button module); a floating group hands `raised` to its items and takes `shadow-group-float` itself. A button resolves its level as own prop, then the group, then the scope (`useElevation`).
 
@@ -393,7 +393,14 @@ AI pack (v3, decided with the user)
   - Previews: Vue and Svelte previews load groups lazily and accept `?group=<name>` (`?group=a,b` in Vue; Svelte route `/preview?group=`); both add Tailwind `@source` for `apps/docs/src/demos/<fw>`, so never add hidden "class list" spans to make demo utilities exist.
 - Docs `.edmi-preview` default `border-color` moved into `@layer components` so utilities (`border-transparent`, `border-sk-bd`) win in previews (it was unlayered and overrode them; visible as a frame around ghost bubbles).
 
+Charts (v6, handoff `refs/edmi-ui-update-6`)
+- `chart` keeps each port's stock API and library (React Recharts, Vue Unovis, Svelte LayerChart) restyled per `CHART_KIT.md`; ✦ `ChartStatWell` (active = sunken) for interactive charts; `ChartLegendContent` ✦ `swatch="line"`. No ChartCard component: chart cards compose `Card` with the `chartCard` classes. Why: the handoff says keep the shadcn chart API.
+- Dark chart palette is GLOBAL (decision 2026-10-10, maintainer: "do what shadcn/the community does"): the validated dark `--chart-1..5` live in `tokens.css`/`themes/green.css` `.dark`, Ocean dark has its own validated set (`themes/ocean.css`, cyan re-derived at L 0.66 hue 195). No chart-scoped override in `ChartContainer` or `chart.css`. Why: shadcn defines chart tokens in `:root` + `.dark` per theme; a scoped override broke registry-installed Ocean themes (no `data-theme` attribute). New dark chart sets must pass the dataviz `validate_palette.js` on stone and slate dark surfaces.
+- Chart variants live as docs pages `components/charts/<type>-chart.mdx` + `chart-tooltip.mdx` (group "Charts" in `src/config.ts`), demos `<page>[-<variant>].*` in all three ports; Vue/Svelte substitutes where the library lacks a chart type (e.g. Unovis radar/radial = inline SVG in `ChartContainer`). `verify:matrix` checks every page demo exists in all ports.
+- `@edmi-ui/tokens` exports `./chart.css` (verbatim copy of `css/chart.css`, biome-ignored).
+
 Docs examples
+- `editorial-light` is the Cofounder long DARK landing page (`CfLong`, v6); the slug stays for stable links, `defaultMode: "dark"`. Its pixel-art scenes use a fixed night palette in `data.ts` (decorative SVG only).
 - Examples render in an **iframe to a bare route** (real viewport for Sidebar/media queries, own `<html>` so portals follow the knobs), not a scoped container. Knobs travel by query + `postMessage`; framework switch swaps the route. Why: robustness; EXAMPLES.md allowed either.
 - Every example is live in all three frameworks (user decision), shares one `data.ts`, and imports registry aliases only.
 
