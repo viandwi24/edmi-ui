@@ -12,8 +12,10 @@ const fieldElevation = {
 	sunken:
 		"border-sk-bd bg-sk-bg shadow-sunken data-[popup-open]:bg-card focus-visible:bg-card",
 	flat: "",
-	raised: "border-transparent shadow-raised",
-	floating: "border-transparent shadow-floating",
+	raised:
+		"border-transparent bg-[image:linear-gradient(var(--bv-face-b),var(--bv-face-b))] shadow-raised focus-visible:border-ring focus-visible:shadow-ring",
+	floating:
+		"border-transparent bg-[image:linear-gradient(var(--bv-face-b),var(--bv-face-b))] shadow-floating focus-visible:border-ring focus-visible:shadow-ring",
 };
 
 // ✦ depth (v4): overlay role for the menu popup. Natural level is floating in layered mode; flat otherwise.

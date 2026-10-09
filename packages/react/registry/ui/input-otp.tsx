@@ -9,10 +9,13 @@ import { type Elevation, useElevation } from "@/registry/edmi/ui/elevation";
 
 // ✦ depth (v4): fields sink (-1) in layered mode; focus swaps the edge for the ring
 const fieldElevation = {
-	sunken: "border-sk-bd bg-sk-bg shadow-sunken data-[active=true]:bg-card",
+	sunken:
+		"rounded-none border-0 border-l border-border bg-transparent shadow-none first:border-l-0 data-[active=true]:rounded-md data-[active=true]:border-transparent data-[active=true]:shadow-[0_0_0_3px_var(--ring-soft),inset_0_0_0_1px_var(--ring)]",
 	flat: "",
-	raised: "border-transparent shadow-raised",
-	floating: "border-transparent shadow-floating",
+	raised:
+		"rounded-none border-0 border-l border-border bg-transparent shadow-none first:border-l-0 data-[active=true]:rounded-md data-[active=true]:border-transparent data-[active=true]:shadow-[0_0_0_3px_var(--ring-soft),inset_0_0_0_1px_var(--ring)]",
+	floating:
+		"rounded-none border-0 border-l border-border bg-transparent shadow-none first:border-l-0 data-[active=true]:rounded-md data-[active=true]:border-transparent data-[active=true]:shadow-[0_0_0_3px_var(--ring-soft),inset_0_0_0_1px_var(--ring)]",
 };
 
 const InputOTPElevationContext = React.createContext<Elevation | undefined>(
@@ -45,11 +48,28 @@ function InputOTP({
 	);
 }
 
+// ✦ depth (v6): at sunken/raised/floating the group is one plate; slots turn transparent with 1px separators
+const groupElevation = {
+	sunken: "rounded-lg border border-sk-bd bg-sk-bg shadow-sunken",
+	flat: "",
+	raised:
+		"rounded-lg border border-transparent bg-[image:linear-gradient(var(--bv-face-b),var(--bv-face-b))] shadow-raised",
+	floating:
+		"rounded-lg border border-transparent bg-[image:linear-gradient(var(--bv-face-b),var(--bv-face-b))] shadow-floating",
+};
+
 function InputOTPGroup({ className, ...props }: React.ComponentProps<"div">) {
+	const group = React.useContext(InputOTPElevationContext);
+	const level = useElevation(group, "field");
 	return (
 		<div
 			data-slot="input-otp-group"
-			className={cn("flex items-center gap-1.5", className)}
+			className={cn(
+				"flex items-center gap-1.5",
+				level !== "flat" && "inline-flex gap-0",
+				groupElevation[level],
+				className,
+			)}
 			{...props}
 		/>
 	);

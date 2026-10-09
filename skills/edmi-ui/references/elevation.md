@@ -28,7 +28,7 @@ Edmi is flat by default. Depth is **elevation**: one prop, `elevation?: "auto" |
 | --- | --- | --- |
 | filled action | Button default, secondary, destructive, brand | raised (+1) |
 | quiet action | Button outline, ghost, link | flat |
-| field | Input, Textarea, Select trigger, Input OTP, Input Group, Native Select | sunken (-1) |
+| field | Input, Textarea, Select trigger, Input OTP, Input Group, Native Select | sunken (-1); also `raised` / `floating` when set explicitly (bevel face, focus swaps it for the ring) |
 | control | Checkbox, Radio, Tabs, Toggle group, Pagination, Badge | flat; the active part rises when `raised` |
 | handle | Switch thumb, Slider thumb, calendar selected day, Kbd, Empty media | raised (+1) |
 | surface | Card, Inset panel body, AI cards and nodes | raised (+1) |

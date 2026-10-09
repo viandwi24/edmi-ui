@@ -20,8 +20,8 @@
 	const fieldElevation = {
 		sunken: "border-sk-bd bg-sk-bg shadow-sunken data-[state=open]:bg-card focus-visible:bg-card",
 		flat: "",
-		raised: "border-transparent shadow-raised",
-		floating: "border-transparent shadow-floating",
+		raised: "border-transparent bg-[image:linear-gradient(var(--bv-face-b),var(--bv-face-b))] shadow-raised focus-visible:border-ring focus-visible:shadow-ring data-[state=open]:border-ring data-[state=open]:shadow-ring",
+		floating: "border-transparent bg-[image:linear-gradient(var(--bv-face-b),var(--bv-face-b))] shadow-floating focus-visible:border-ring focus-visible:shadow-ring data-[state=open]:border-ring data-[state=open]:shadow-ring",
 	};
 
 	const level = useElevation(() => elevation, "field");
