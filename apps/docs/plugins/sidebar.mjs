@@ -1,7 +1,7 @@
 // Section sidebars (Getting Started, Components), generated from the content folders and always expanded.
 // Only the section matching the current URL is rendered (see components/overrides/Sidebar.astro).
 // New components appear without config edits: drop an mdx under src/content/docs/components/<dir>/.
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 /** Directories whose items are Edmi-only (marked with a small star in the sidebar). */
@@ -16,6 +16,7 @@ function title(file) {
 function collect(docsDir, dir) {
 	const root = resolve(docsDir, "components", dir);
 	const out = [];
+	if (!existsSync(root)) return out;
 	for (const f of readdirSync(root)) {
 		if (!f.endsWith(".mdx")) continue;
 		const name = f.slice(0, -4);

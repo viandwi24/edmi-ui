@@ -108,6 +108,7 @@ export const COMPONENT_GROUPS: { dir: string; label: string }[] = [
 	{ dir: "navigation", label: "Navigation" },
 	{ dir: "layout", label: "Layout" },
 	{ dir: "data", label: "Data" },
+	{ dir: "charts", label: "Charts" },
 	{ dir: "conversation", label: "Conversation" },
 	{ dir: "patterns", label: "Patterns" },
 ];

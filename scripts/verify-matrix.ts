@@ -356,6 +356,33 @@ for (const name of [...ELEVATION, ...AI_ELEVATION.map((n) => `ai-${n}`)])
 		}
 	}
 
+// Chart example pages (apps/docs/src/content/docs/components/charts/*.mdx): every `demo="..."` they reference
+// (area, bar, line, pie, radar, radial, tooltip pages) needs a demo file in all three frameworks.
+const chartPagesDir = resolve(
+	ROOT,
+	"apps/docs/src/content/docs/components/charts",
+);
+let chartDemoCount = 0;
+if (existsSync(chartPagesDir))
+	for (const f of readdirSync(chartPagesDir).filter((n) =>
+		n.endsWith(".mdx"),
+	)) {
+		const src = readFileSync(resolve(chartPagesDir, f), "utf8");
+		const demos = [...src.matchAll(/demo="([^"]+)"/g)].map((m) => m[1]);
+		for (const demo of demos)
+			for (const fw of FWS) {
+				chartDemoCount++;
+				if (
+					!existsSync(
+						resolve(ROOT, `apps/docs/src/demos/${fw}/${demo}.${EXT[fw]}`),
+					)
+				) {
+					problems.push(`charts/${f} [${fw}]: demo "${demo}" missing`);
+					failures++;
+				}
+			}
+	}
+
 // Theme items: every base x accent (auto-discovered from packages/tokens/src/{base,themes}) ships as a
 // registry:theme item for each framework, built to apps/docs/public/r/<fw>/.
 const themeNames: string[] = [];
@@ -417,5 +444,5 @@ if (pend.length)
 		`  pending: ${pend.length} AI item x framework cells still listed in scripts/ai-pending.json`,
 	);
 console.log(
-	`\nAll ${rows.length} items are present (AI items listed in scripts/ai-pending.json excepted) in all frameworks; ${ELEVATION.length} elevation demos x 3 frameworks present; ${themeNames.length} theme items (${themeNames.join(", ")}) x 3 frameworks present.`,
+	`\nAll ${rows.length} items are present (AI items listed in scripts/ai-pending.json excepted) in all frameworks; ${ELEVATION.length} elevation demos x 3 frameworks present; ${chartDemoCount} chart page demo files present; ${themeNames.length} theme items (${themeNames.join(", ")}) x 3 frameworks present.`,
 );

@@ -1,0 +1,78 @@
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@edmi-react/ui/card";
+import {
+	type ChartConfig,
+	ChartContainer,
+	ChartLegend,
+	ChartLegendContent,
+	ChartTooltip,
+	ChartTooltipContent,
+} from "@edmi-react/ui/chart";
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+
+const data = [
+	{ month: "January", desktop: 186, mobile: 80 },
+	{ month: "February", desktop: 305, mobile: 200 },
+	{ month: "March", desktop: 237, mobile: 120 },
+	{ month: "April", desktop: 73, mobile: 190 },
+	{ month: "May", desktop: 209, mobile: 130 },
+	{ month: "June", desktop: 214, mobile: 140 },
+];
+const config = {
+	desktop: { label: "Desktop", color: "var(--chart-1)" },
+	mobile: { label: "Mobile", color: "var(--chart-2)" },
+} satisfies ChartConfig;
+
+export default function Demo() {
+	return (
+		<Card className="w-full max-w-sm gap-0 py-0">
+			<CardHeader className="gap-1 px-6 pt-5.5 pb-0">
+				<CardTitle className="font-semibold text-base tracking-[-0.2px]">
+					Bar Chart - Stacked + Legend
+				</CardTitle>
+				<CardDescription className="text-[13.5px]">
+					January - June 2024
+				</CardDescription>
+			</CardHeader>
+			<CardContent className="items-center px-5 pt-2.5 pb-0">
+				<ChartContainer config={config} className="aspect-auto h-52 w-full">
+					<BarChart data={data}>
+						<CartesianGrid vertical={false} />
+						<XAxis
+							dataKey="month"
+							tickLine={false}
+							tickMargin={10}
+							axisLine={false}
+							tickFormatter={(value) => value.slice(0, 3)}
+						/>
+						<ChartTooltip content={<ChartTooltipContent hideLabel={false} />} />
+						<ChartLegend content={<ChartLegendContent />} />
+						<Bar
+							dataKey="desktop"
+							stackId="a"
+							fill="var(--color-desktop)"
+							stroke="var(--card)"
+							strokeWidth={2}
+							radius={0}
+							maxBarSize={24}
+						/>
+						<Bar
+							dataKey="mobile"
+							stackId="a"
+							fill="var(--color-mobile)"
+							stroke="var(--card)"
+							strokeWidth={2}
+							radius={[4, 4, 0, 0]}
+							maxBarSize={24}
+						/>
+					</BarChart>
+				</ChartContainer>
+			</CardContent>
+		</Card>
+	);
+}
