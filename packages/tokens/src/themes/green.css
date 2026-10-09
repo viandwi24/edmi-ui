@@ -22,11 +22,11 @@
 
 .dark[data-theme="green"] {
   --ring: oklch(0.762 0.154 159.4);
-  --chart-1: oklch(0.762 0.154 159.4);
-  --chart-2: oklch(0.662 0.179 264.6);
-  --chart-3: oklch(0.772 0.132 72.4);
-  --chart-4: oklch(0.726 0.151 288.1);
-  --chart-5: oklch(0.669 0.182 15.1);
+  --chart-1: oklch(0.660 0.150 149.9);
+  --chart-2: oklch(0.661 0.160 261.9);
+  --chart-3: oklch(0.660 0.130 75.0);
+  --chart-4: oklch(0.659 0.150 292.0);
+  --chart-5: oklch(0.659 0.170 17.8);
   --sidebar-ring: oklch(0.762 0.154 159.4);
   --brand: oklch(0.762 0.154 159.4);
   --brand-foreground: oklch(0.201 0.026 159.5);

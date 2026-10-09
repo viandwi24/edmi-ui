@@ -46,9 +46,9 @@
   --brand-lip: oklch(0.413 0.147 259.4);
   --brand-soft: oklch(0.320 0.074 259.9);
   --brand-text: oklch(0.759 0.124 258.4);
-  --chart-1: oklch(0.648 0.189 258.5);
-  --chart-2: oklch(0.766 0.131 216.1);
-  --chart-3: oklch(0.812 0.144 77.2);
-  --chart-4: oklch(0.690 0.174 288.9);
-  --chart-5: oklch(0.669 0.182 15.1);
+  --chart-1: oklch(0.661 0.160 261.9);
+  --chart-2: oklch(0.660 0.130 195.0);
+  --chart-3: oklch(0.660 0.130 75.0);
+  --chart-4: oklch(0.659 0.150 292.0);
+  --chart-5: oklch(0.659 0.170 17.8);
 }
