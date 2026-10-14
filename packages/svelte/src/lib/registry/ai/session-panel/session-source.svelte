@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { cn } from "$lib/utils.js";
+	import { cn, type WithElementRef } from "$lib/utils.js";
 	import type { Snippet } from "svelte";
 	import type { HTMLAttributes } from "svelte/elements";
 	import type { SessionSourceFavicon } from "./types.js";
 
 	let {
+		ref = $bindable(null),
 		icon,
 		label,
 		favicons,
@@ -12,9 +13,9 @@
 		class: className,
 		children,
 		...restProps
-	}: Omit<HTMLAttributes<HTMLDivElement>, "children"> & {
+	}: WithElementRef<Omit<HTMLAttributes<HTMLDivElement>, "children">, HTMLDivElement> & {
 		icon: Snippet;
-		label: string;
+		label: string | Snippet;
 		favicons?: SessionSourceFavicon[];
 		/** Count after the favicons (`+4`). */
 		more?: number;
@@ -25,12 +26,13 @@
 
 <!-- One row of "Used in this session": web search, memory, tools. -->
 <div
+	bind:this={ref}
 	data-slot="ai-session-source"
 	class={cn("flex items-center gap-2.5 py-[7px] text-sm", className)}
 	{...restProps}
 >
 	<span class="text-muted-foreground [&_svg]:size-4">{@render icon()}</span>
-	<span class={cn(!children && "flex-1")}>{label}</span>
+	<span class={cn(!children && "flex-1")}>{#if typeof label === "string"}{label}{:else}{@render label()}{/if}</span>
 	{#if children}
 		<span class="min-w-0 flex-1 truncate text-[12.5px] text-muted-foreground">
 			{@render children()}

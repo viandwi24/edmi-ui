@@ -22,23 +22,28 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 <ComponentSource name="index-row" />
 
 ## API
-| Prop | Type | Default |
-| --- | --- | --- |
-| `IndexRow index` | `{ name, symbol, tokens, tags?, creator, price, change, aum, holders, spark?, href? }` | required |
-| `IndexRow rank` ✦ | `number \| string` | none (no rank column) |
-| `IndexRow delta` ✦ | `"text" \| "pill"` | `"text"` |
-| `IndexRowHeader` | `TableRow` props | |
-| `IndexRowHeader rank` ✦ | `boolean` | `false` |
-| `Sparkline data` | `number[]` | required |
-| `Sparkline tone` | `"up" \| "down"` | last vs first |
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| `IndexRow` | `index` | `{ name, symbol, avatars, tags?, owner, price, change, value, count, spark?, href? }` | required |
+| | `rank` ✦ | `number \| string` | none (no rank column) |
+| | `delta` ✦ | `"text" \| "pill"` | `"text"` |
+| `IndexRowHeader` | `labels` | `{ name?, owner?, price?, change?, value?, count?, trend? }` column labels (Svelte values may be snippets) | `Name`, `Owner`, `Price`, `Change`, `Value`, `Count`, `Trend` |
+| | `rank` ✦ | `boolean` | `false` |
+| `Sparkline` | `data` | `number[]` | required |
+| | `tone` | `"up" \| "down"` | last vs first |
+| | `width` / `height` | `number` | `88` / `28` |
 
 Place `IndexRowHeader` in `TableHeader` and `IndexRow` in `TableBody`; numeric columns are mono and right-aligned (§4.10).
 
 ## Ranked, pill delta ✦
 
-Leaderboard style: a leading mono rank column and the 7d delta as a soft tinted pill.
+Leaderboard style: a leading mono rank column and the change as a soft tinted pill.
 
 <ComponentDemo name="index-row" demo="index-row-ranked" />
+
+## Elevation ✦
+
+Flat only: a table row has no depth. Put the table in a `Card` (flat, or raised for a featured table) to give it a surface.
 
 ## ✦ Edmi additions
 - `Sparkline` is exported on its own.

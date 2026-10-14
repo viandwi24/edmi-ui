@@ -65,11 +65,12 @@ export const entries: Record<string, FrameworkEntry> = {
 			{ path: "src/lib/registry/ui/code-block/index.ts" },
 		],
 	},
-	footer: {
+	"site-footer": {
 		type: "registry:ui",
 		files: [
-			{ path: "src/lib/registry/ui/footer/index.ts" },
-			{ path: "src/lib/registry/ui/footer/site-footer.svelte" },
+			{ path: "src/lib/registry/ui/site-footer/index.ts" },
+			{ path: "src/lib/registry/ui/site-footer/site-footer.svelte" },
 		],
 	},
+	footer: { type: "registry:ui", files: [] },
 };

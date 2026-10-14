@@ -5,6 +5,7 @@ import type { Elevation } from "@edmi-react/ui/elevation";
 function Sample({ elevation }: { elevation: Elevation }) {
 	return (
 		<SiteHeader
+			name="Stockbreak"
 			elevation={elevation}
 			lead="How to"
 			steps={[

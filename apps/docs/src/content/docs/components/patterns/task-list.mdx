@@ -1,5 +1,5 @@
 ---
-title: Task list
+title: Task List
 description: "Agent tasks grouped by status badge (ready to review, running, completed)."
 ---
 import ComponentDemo from "../../../../components/ComponentDemo.astro";
@@ -30,10 +30,13 @@ Flat by default. `elevation` is forwarded to the card: `sunken` (-1) a soft inse
 <ComponentDemo name="task-list" demo="task-list-elevation" />
 
 ## API
-| Part | Props | Notes |
-| --- | --- | --- |
-| `TaskList` | `tasks: {title, agent?, status}[], labels?` | Groups by `status` (`review` warning, `running` info, `completed` success) in first-appearance order; `labels` overrides badge text. |
-| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
+
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| `TaskList` | `tasks` | `{ id?, title, agent?, status }[]`; `status` is `review` (warning), `running` (info) or `completed` (success), grouped in first-appearance order | required |
+|  | `Task.title, Task.agent` | React `ReactNode`; Vue `string` with scoped slots `title` / `agent` (`{ task }`); Svelte `string \| Snippet` | none |
+|  | `labels` | `Partial<Record<status, string>>`; overrides badge text | none |
+|  | `elevation` ✦ | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 ## ✦ Edmi additions
 - Whole block is an Edmi addition (DESIGN §5 Patterns, board 12). Composed from: card, badge, separator.

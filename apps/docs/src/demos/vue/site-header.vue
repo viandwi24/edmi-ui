@@ -15,7 +15,7 @@ const links = [
 </script>
 
 <template>
-	<SiteHeader lead="How to" :steps="steps" :links="links">
+	<SiteHeader name="Stockbreak" lead="How to" :steps="steps" :links="links">
 		<template #action>
 			<Button>Create an index</Button>
 		</template>

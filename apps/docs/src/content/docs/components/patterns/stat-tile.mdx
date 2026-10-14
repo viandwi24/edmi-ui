@@ -30,18 +30,19 @@ Flat by default. `elevation` is forwarded to the card: `sunken` (-1) a soft inse
 <ComponentDemo name="stat-tile" demo="stat-tile-elevation" />
 
 ## API
-| Prop | Type | Default |
-| --- | --- | --- |
-| `StatTile label` / `value` | `ReactNode` | required |
-| `StatTile delta` | `string` (sign sets success/destructive badge) | none |
-| `StatTile deltaLabel` | `ReactNode` | none |
-| `StatTile trend` | `"up" \| "down"` (overrides the sign) | auto |
-| `StatTile meter` | `StatMeter` props | none |
-| `StatMeter value` | `number` 0..1 | required |
-| `StatMeter steps` | `number` | `30` |
-| `StatMeter zones` | `{ upTo: number; color: string }[]` | green / amber / red |
-| `StatStripItem value` / `label` | `ReactNode` | required |
-| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| `StatTile` | `label` / `value` | `ReactNode` (Vue slots `label` / `value`, Svelte `string \| Snippet`) | required |
+| | `delta` | `string` (sign sets success/destructive badge) | none |
+| | `deltaLabel` | `ReactNode` (Vue `delta-label` slot, Svelte `string \| Snippet`) | none |
+| | `trend` | `"up" \| "down"` (overrides the sign) | auto |
+| | `meter` | `StatMeter` props | none |
+| | `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
+| `StatStrip` | `elevation` | forwarded to the card | `"auto"` |
+| `StatStripItem` | `label` / `value` | `ReactNode` (Vue slots `label` / `value`, Svelte `string \| number \| Snippet`) | required |
+| `StatMeter` | `value` | `number` 0..1 | required |
+| | `steps` | `number` | `30` |
+| | `zones` | `{ upTo: number; color: string }[]` | green / amber / red |
 
 ## ✦ Edmi additions
 - `StatMeter` and `StatStrip` / `StatStripItem` are separate exports of the same block.

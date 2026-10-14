@@ -5,6 +5,7 @@ import { inject } from 'vue'
 import { Card } from '@/registry/edmi/ui/card'
 import { cn } from '@/registry/edmi/lib/utils'
 import type { Elevation } from '@/registry/edmi/ui/elevation'
+import { KANBAN_COLUMN_KEY } from './context'
 
 const props = withDefaults(defineProps<{
   /** ✦ depth of this card; defaults to the column's `elevation` */
@@ -16,7 +17,7 @@ const props = withDefaults(defineProps<{
   disabled?: boolean
 }>(), { elevation: undefined })
 
-const column = inject<{ elevation?: Elevation } | null>('kanbanColumn', null)
+const column = inject(KANBAN_COLUMN_KEY, null)
 // Slots: `icon` (leading), `action` (trailing; defaults to an arrow up-right).
 </script>
 

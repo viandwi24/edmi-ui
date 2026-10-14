@@ -1,5 +1,5 @@
 ---
-title: Feature row
+title: Feature Row
 description: "Numbered feature row on a card with a trailing icon; expands when given content."
 ---
 import ComponentDemo from "../../../../components/ComponentDemo.astro";
@@ -30,10 +30,14 @@ Flat by default. `elevation` is forwarded to the card: `sunken` (-1) a soft inse
 <ComponentDemo name="feature-row" demo="feature-row-elevation" />
 
 ## API
-| Part | Props | Notes |
-| --- | --- | --- |
-| `FeatureRow` | `index, title, icon?, children?` | 56px row. With `children` it becomes a Collapsible and the plus rotates to a cross. |
-| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
+
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| `FeatureRow` | `index` | `ReactNode` (Vue/Svelte: `string \| number`) | required |
+|  | `title` | `ReactNode` (Vue/Svelte: `string`) | required |
+|  | `icon` | React `ReactNode`; Vue slot `icon`; Svelte `icon` snippet | plus |
+|  | `children` | Expandable content (Vue default slot, Svelte `children`). With content the 56px row becomes a Collapsible and the plus rotates to a cross | none |
+|  | `elevation` ✦ | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 ## ✦ Edmi additions
 - Whole block is an Edmi addition (DESIGN §5 Patterns, board 12). Composed from: card, collapsible.

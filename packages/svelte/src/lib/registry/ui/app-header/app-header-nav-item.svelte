@@ -27,7 +27,7 @@
 	data-active={active ? "" : undefined}
 	aria-current={active ? "page" : undefined}
 	class={cn(
-		"inline-flex h-8 items-center rounded-[7px] border border-transparent px-[11px] text-[13.5px] font-medium whitespace-nowrap text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+		"inline-flex h-8 items-center rounded-[7px] border border-transparent px-3 text-[13.5px] font-medium whitespace-nowrap text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
 		"data-[active]:border-border data-[active]:bg-tab-active data-[active]:text-foreground",
 		raised &&
 			"data-[active]:border-transparent data-[active]:[background-image:var(--r1-s-face)] data-[active]:shadow-btn-raised-neutral data-[active]:[background-origin:border-box]",

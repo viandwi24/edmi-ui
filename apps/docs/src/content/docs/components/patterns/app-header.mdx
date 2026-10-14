@@ -30,19 +30,18 @@ Flat by default. `elevation` sets the depth of the bar; `raised` (+1) and `float
 <ComponentDemo name="app-header" demo="app-header-elevation" />
 
 ## API
-| Prop | Type | Default |
-| --- | --- | --- |
-| `items` | `{ label, href }[]` | `[]` |
-| `active` | `string` (`href` of the active pill) | none |
-| `search` | `boolean` | `true` |
-| `searchPlaceholder` / `shortcut` | `string` | `"Search"` / `"⌘K"` |
-| `network` | `string` (empty hides it) | `"Devnet"` |
-| `connectLabel` | `ReactNode` | `"Connect"` |
-| `onConnect` / `onNetworkClick` | `() => void` | none |
-| `logo` / `name` / `href` | as `SiteHeader` | |
-| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
-
-`AppHeaderNavItem` (`active`) is exported for custom navs.
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| `AppHeader` | `logo` / `name` / `href` | as `SiteHeader` (`name` is not rendered when empty) | none / none / `"/"` |
+| | `items` | `{ label, href }[]` | `[]` |
+| | `active` | `string` (`href` of the active pill) | none |
+| | `search` | `boolean` | `true` |
+| | `searchPlaceholder` / `shortcut` | `string` | `"Search"` / `"⌘K"` |
+| | `network` | secondary button label, e.g. a network or workspace (React `string`, Vue `string` or `network` slot, Svelte `string \| Snippet`); empty hides it | none |
+| | `connectLabel` | `ReactNode` (Vue `connect-label` slot, Svelte `string \| Snippet`) | `"Connect"` |
+| | `onConnect` / `onNetworkClick` | `() => void` (Vue emits `connect` / `network-click`) | none |
+| | `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
+| `AppHeaderNavItem` | `active`, `elevation` | exported for custom navs | |
 
 ## ✦ Edmi additions
 - Nav pills stand alone (no track), active pill is `--tab-active` + 1px border (the `pills` look); with `elevation="raised"` it becomes a raised secondary button.

@@ -5,7 +5,7 @@
 	import type { HTMLAttributes } from "svelte/elements";
 	import { getLayoutCookie, setLayoutCookie, type Layout } from "./layout.js";
 	import LayoutPicker from "./layout-picker.svelte";
-	import { type Elevation, useElevation } from "$lib/registry/ui/elevation/index.js";
+	import { controlLevel, type Elevation, surfaceElevation, useElevation } from "$lib/registry/ui/elevation/index.js";
 
 	let {
 		ref = $bindable(null),
@@ -13,6 +13,7 @@
 		title = "Choose your layout",
 		description = "You can switch any time.",
 		defaultOpen,
+		value = $bindable(),
 		defaultValue = "dashboard",
 		onValueChange,
 		onClose,
@@ -23,6 +24,8 @@
 		description?: string;
 		/** Skip the cookie check and show immediately (docs/previews). */
 		defaultOpen?: boolean;
+		/** Two-way bindable selected layout (`bind:value`). */
+		value?: Layout;
 		/** Initially selected layout. */
 		defaultValue?: Layout;
 		onValueChange?: (value: Layout) => void;
@@ -32,25 +35,14 @@
 	} = $props();
 
 	const level = useElevation(() => elevation, "overlay");
-	const pickerElevation = $derived<Elevation>(
-		elevation !== "auto"
-			? level.current === "raised" || level.current === "floating"
-				? "raised"
-				: "flat"
-			: "auto"
-	);
-	const toastElevation = {
-		sunken: "border-sk-bd bg-sk-bg shadow-sunken",
-		flat: "",
-		raised: "border-transparent shadow-raised",
-		floating: "border-transparent shadow-floating",
-	};
+	const pickerElevation = $derived<Elevation>(controlLevel(elevation) ?? "auto");
 
 	// First-visit corner toast. Renders nothing once a layout cookie exists. Choosing saves the cookie;
 	// closing without choosing saves the default (`dashboard`) so it does not return.
 	let open = $state(false);
 	// svelte-ignore state_referenced_locally
-	let value = $state<Layout>(defaultValue);
+	let inner = $state<Layout>(defaultValue);
+	const current = $derived(value ?? inner);
 
 	$effect(() => {
 		open = defaultOpen ?? getLayoutCookie() === undefined;
@@ -65,7 +57,7 @@
 		aria-label="Choose layout"
 		class={cn(
 			"fixed right-4 bottom-4 z-50 w-[min(92vw,500px)] rounded-xl border border-border bg-popover p-4 text-popover-foreground",
-			toastElevation[level.current],
+			surfaceElevation[level.current],
 			className
 		)}
 		{...restProps}
@@ -80,7 +72,7 @@
 				size="icon-xs"
 				aria-label="Close"
 				onclick={() => {
-					if (getLayoutCookie() === undefined) setLayoutCookie(value);
+					if (getLayoutCookie() === undefined) setLayoutCookie(current);
 					open = false;
 					onClose?.();
 				}}
@@ -97,8 +89,10 @@
 		<LayoutPicker
 			class="mt-3 flex-nowrap"
 			elevation={pickerElevation}
-			bind:value
+			value={current}
 			onValueChange={(v) => {
+				inner = v;
+				value = v;
 				setLayoutCookie(v);
 				onValueChange?.(v);
 			}}

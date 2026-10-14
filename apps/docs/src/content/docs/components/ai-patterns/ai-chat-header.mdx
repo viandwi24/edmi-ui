@@ -28,10 +28,14 @@ Edmi ✦ addition. Built on `button` and `dropdown-menu`.
 | --- | --- | --- | --- |
 | ChatHeader | `header` props | | |
 | ChatHeaderTitle | | title row | |
-| ChatHeaderProject | `status`, `icon` | `connected \| idle`, `ReactNode` | `connected` |
+| ChatHeaderProject | `status`, `icon` | `connected \| idle`, `ReactNode` (Vue: default slot, Svelte: children snippet) | `connected` |
 | ChatHeaderMenu | DropdownMenuContent props | chevron with the `DropdownMenuItem`s as children | |
 | ChatHeaderActions | | right side | |
 | ChatHeaderShare | Button props | | `Share` |
+
+## Elevation ✦
+
+Flat only. The header is a bar with a border; no `elevation` prop.
 
 ## ✦ Edmi additions
 - Title with a project indicator (dot = connected), a menu chevron, and actions on the right.

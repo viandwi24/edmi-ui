@@ -14,7 +14,7 @@
 	];
 </script>
 
-<SiteHeader lead="How to" {steps} {links}>
+<SiteHeader name="Stockbreak" lead="How to" {steps} {links}>
 	{#snippet action()}
 		<Button>Create an index</Button>
 	{/snippet}

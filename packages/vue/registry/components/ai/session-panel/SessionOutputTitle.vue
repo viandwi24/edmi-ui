@@ -4,7 +4,7 @@ import { cn } from "@/registry/edmi/lib/utils"
 
 const props = defineProps<{
   class?: HTMLAttributes["class"]
-  /** Small line under the title (`Artifact`). */
+  /** Small line under the title (`Artifact`); the `meta` slot overrides it. */
   meta?: string
 }>()
 </script>
@@ -14,8 +14,10 @@ const props = defineProps<{
     <div class="text-sm">
       <slot />
     </div>
-    <div v-if="meta" class="font-mono text-[12.5px] text-muted-foreground">
-      {{ meta }}
+    <div v-if="meta || $slots.meta" class="font-mono text-[12.5px] text-muted-foreground">
+      <slot name="meta">
+        {{ meta }}
+      </slot>
     </div>
   </div>
 </template>

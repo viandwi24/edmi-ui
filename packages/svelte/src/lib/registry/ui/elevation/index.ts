@@ -1,6 +1,7 @@
 import ElevationProvider from "./elevation-provider.svelte";
 
 export {
+	controlLevel,
 	type Elevation,
 	type ElevationLevel,
 	type ElevationMode,
@@ -10,6 +11,7 @@ export {
 	resolveElevation,
 	setElevationScope,
 	setSurface,
+	surfaceElevation,
 	useElevation,
 } from "./context.js";
 export { ElevationProvider };

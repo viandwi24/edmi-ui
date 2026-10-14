@@ -75,6 +75,7 @@ Svelte (`$lib/components/ui/elevation`):
 - `level="raised"` (or `sunken`, `flat`, `floating`) forces one level for the subtree and wins over `mode`.
 - The provider is layout-neutral (`display: contents`) unless given a class, and renders `data-elevation`. Scopes nest.
 - `useElevation(prop, role)` is for custom components: React returns the level, Vue a computed, Svelte `{ current }`.
+- `surfaceElevation[level]` gives the plate classes (sunken well, flat, bevel, bevel plus drop) and `controlLevel(elevation)` the depth a container hands to the controls it renders (`raised` for explicit raised/floating, `flat` for explicit flat/sunken, `undefined` for auto); both are exported from the `elevation` item for custom surfaces.
 
 ## Nesting and the active-part rule
 
@@ -135,9 +136,9 @@ Sheet, Drawer, HoverCard, Tooltip, Alert, NavigationMenu and Command popups, Sid
 ## Components that accept `elevation` (generated from the source)
 
 <!-- BEGIN GENERATED: elevation-list -->
-UI and patterns (50): `agent-card`, `alert-dialog`, `app-header`, `badge`, `bubble`, `button`, `button-group`, `calendar`, `card`, `checkbox`, `code-block`, `context-menu`, `data-table`, `date-picker`, `dialog`, `dropdown-menu`, `empty`, `feature-row`, `feed-post`, `footer`, `input`, `input-group`, `input-otp`, `inset-panel`, `join-panel`, `kanban-column`, `kbd`, `layout-picker`, `leaderboard-podium`, `menubar`, `native-select`, `pagination`, `popover`, `pricing-plan`, `questionnaire`, `radio-group`, `select`, `site-header`, `slider`, `sonner`, `stat-tile`, `step-card`, `switch`, `tabs`, `task-list`, `textarea`, `ticker-strip`, `toggle`, `toggle-group`, `watchlist-item`
+UI and patterns (50): `agent-card`, `alert-dialog`, `app-header`, `badge`, `bubble`, `button`, `button-group`, `calendar`, `card`, `checkbox`, `code-block`, `context-menu`, `data-table`, `date-picker`, `dialog`, `dropdown-menu`, `empty`, `feature-row`, `feed-post`, `input`, `input-group`, `input-otp`, `inset-panel`, `join-panel`, `kanban-column`, `kbd`, `layout-picker`, `leaderboard-podium`, `menubar`, `native-select`, `pagination`, `popover`, `pricing-plan`, `questionnaire`, `radio-group`, `select`, `site-footer`, `site-header`, `slider`, `sonner`, `stat-tile`, `step-card`, `switch`, `tabs`, `task-list`, `textarea`, `ticker-strip`, `toggle`, `toggle-group`, `watchlist-item`
 
-AI (12): `ai-agent`, `ai-artifact`, `ai-artifact-card`, `ai-chat-composer`, `ai-confirmation`, `ai-node`, `ai-plan`, `ai-prompt-input`, `ai-prompt-input-agent`, `ai-speech-input`, `ai-suggestion`, `ai-tool`
+AI (14): `ai-agent`, `ai-artifact`, `ai-artifact-card`, `ai-artifact-viewer`, `ai-chat-composer`, `ai-confirmation`, `ai-node`, `ai-plan`, `ai-prompt-input`, `ai-prompt-input-agent`, `ai-session-panel`, `ai-speech-input`, `ai-suggestion`, `ai-tool`
 <!-- END GENERATED: elevation-list -->
 
 Syntax is the same in all three frameworks: `<Button elevation="raised">`; compound components take it on the root or the part named in the table (`<Card.Root elevation="raised">`, `<Tabs.List elevation="raised">`, `<Toaster elevation="raised" />`). Each component docs page has an **Elevation ✦** section and demo, and the guide lives at https://viandwi24.github.io/edmi-ui/getting-started/elevation/.

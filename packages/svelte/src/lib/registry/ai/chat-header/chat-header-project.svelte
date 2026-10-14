@@ -1,15 +1,16 @@
 <script lang="ts">
 	import IconPlaceholder from "$lib/components/icon-placeholder/icon-placeholder.svelte";
-	import { cn } from "$lib/utils.js";
+	import { cn, type WithElementRef } from "$lib/utils.js";
 	import type { Snippet } from "svelte";
 	import type { HTMLAttributes } from "svelte/elements";
 
 	let {
+		ref = $bindable(null),
 		status = "connected",
 		class: className,
 		children,
 		...restProps
-	}: Omit<HTMLAttributes<HTMLSpanElement>, "children"> & {
+	}: WithElementRef<Omit<HTMLAttributes<HTMLSpanElement>, "children">, HTMLSpanElement> & {
 		/** `connected` shows the green dot. */
 		status?: "connected" | "idle";
 		/** Replaces the default project icon. */
@@ -19,6 +20,7 @@
 
 <!-- Project icon with a status dot (dot = connected). -->
 <span
+	bind:this={ref}
 	data-slot="ai-chat-header-project"
 	data-status={status}
 	class={cn("relative inline-flex text-muted-foreground", className)}

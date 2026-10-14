@@ -7,7 +7,11 @@
  */
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { resolve } from "node:path";
-import { EXAMPLE_FILE, EXAMPLES } from "../apps/docs/src/examples/index.ts";
+import {
+	EXAMPLE_FILE,
+	EXAMPLES,
+	exampleDir,
+} from "../apps/docs/src/examples/index.ts";
 
 if (process.argv.includes("--markdown")) process.exit(0); // `verify:matrix --markdown` prints the matrix table only
 
@@ -20,7 +24,7 @@ const problems: string[] = [];
 const bad = (m: string) => problems.push(m);
 
 for (const e of EXAMPLES) {
-	const base = resolve(DIR, e.slug);
+	const base = resolve(DIR, exampleDir(e));
 	if (!existsSync(resolve(base, "data.ts"))) bad(`${e.slug}: missing data.ts`);
 	for (const fw of FWS) {
 		if (!e.frameworks.includes(fw))
@@ -64,7 +68,7 @@ for (const e of EXAMPLES) {
 				bad(`${e.slug}: no built render route for ${fw}`);
 	}
 }
-const listed = new Set(EXAMPLES.map((e) => e.slug));
+const listed = new Set(EXAMPLES.map((e) => exampleDir(e)));
 for (const d of readdirSync(DIR)) {
 	if (
 		!d.startsWith("_") &&

@@ -1,17 +1,18 @@
 <script lang="ts">
-	import { cn } from "$lib/utils.js";
+	import { cn, type WithElementRef } from "$lib/utils.js";
 	import type { HTMLAttributes } from "svelte/elements";
 	import { AgentAvatar } from "../agent-avatar/index.js";
 	import type { PromptInputAgentOption } from "./types.js";
 
 	let {
+		ref = $bindable(null),
 		agents,
 		activeIndex = 0,
 		onSelect,
 		label = "Agents",
 		class: className,
 		...restProps
-	}: Omit<HTMLAttributes<HTMLDivElement>, "children" | "onselect"> & {
+	}: WithElementRef<Omit<HTMLAttributes<HTMLDivElement>, "children" | "onselect">, HTMLDivElement> & {
 		agents: PromptInputAgentOption[];
 		activeIndex?: number;
 		onSelect?: (agent: PromptInputAgentOption) => void;
@@ -24,6 +25,7 @@
 	(not inside) `PromptInput`, whose group clips overflow.
 -->
 <div
+	bind:this={ref}
 	data-slot="ai-prompt-input-agent-mentions"
 	role="listbox"
 	aria-label={label}

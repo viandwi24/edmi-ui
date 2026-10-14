@@ -5,7 +5,7 @@ import { computed, ref, useId } from 'vue'
 import { cn } from '@/registry/edmi/lib/utils'
 import { Button } from '@/registry/edmi/ui/button'
 import { Card } from '@/registry/edmi/ui/card'
-import type { Elevation } from '@/registry/edmi/ui/elevation'
+import { controlLevel, type Elevation } from '@/registry/edmi/ui/elevation'
 import {
   InputGroup,
   InputGroupAddon,
@@ -18,7 +18,9 @@ import { Tabs, TabsList, TabsTrigger } from '@/registry/edmi/ui/tabs'
 const props = withDefaults(defineProps<{
   /** ✦ depth of the card; raised +1 / floating +2 also raise the tabs, chips and join Button */
   elevation?: Elevation
+  /** Field label (or use the `label` slot). */
   label?: string
+  /** Unit shown in the label and beside the field (e.g. `USDC`); omit for none. */
   currency?: string
   defaultAmount?: string
   /** Summary rows (estimated shares, fee, …). Values render mono. */
@@ -28,18 +30,18 @@ const props = withDefaults(defineProps<{
   defaultTab?: string
   /** ✦ Chips under the amount field, e.g. `[{ label: '$10', value: '10' }, { label: 'Max' }]`. */
   quickAmounts?: JoinPanelQuickAmount[]
-  /** ✦ Small centred note under the action. */
+  /** ✦ Small centred note under the action (or use the `footnote` slot). */
   footnote?: string
   /** ✦ `lg`: taller field with a 26px mono amount (the IndexDetail board). */
   amountSize?: 'default' | 'lg'
-  /** ✦ Plain muted text in the field (e.g. `Max 1,240`) instead of the Max button and currency. */
+  /** ✦ Plain muted text in the field (e.g. `Max 1,240`; or the `max-label` slot) instead of the Max button and currency. */
   maxLabel?: string
+  /** Action label (or use the `join-label` slot). */
   joinLabel?: string
   disabled?: boolean
   class?: HTMLAttributes['class']
 }>(), {
   label: 'Amount',
-  currency: 'USDC',
   amountSize: 'default',
   defaultAmount: '',
   rows: () => [],
@@ -48,11 +50,7 @@ const props = withDefaults(defineProps<{
 })
 
 // Controls follow an explicit card level: raised/floating raise them, flat/sunken keep them flat; auto leaves them to their own role.
-const control = computed(() =>
-  props.elevation && props.elevation !== 'auto'
-    ? (props.elevation === 'raised' || props.elevation === 'floating' ? 'raised' : 'flat')
-    : undefined,
-)
+const control = computed(() => controlLevel(props.elevation))
 
 const emit = defineEmits<{
   (e: 'max'): void
@@ -100,7 +98,7 @@ function onInput(e: Event) {
       </Tabs>
     </div>
     <label :for="id" class="px-(--card-spacing) text-xs text-muted-foreground">
-      {{ label }} ({{ currency }})
+      <slot name="label">{{ label }}</slot>{{ currency ? ` (${currency})` : '' }}
     </label>
     <div class="px-(--card-spacing)">
       <InputGroup :class="cn('mt-2', amountSize === 'lg' ? 'h-14' : 'h-11')">
@@ -114,14 +112,14 @@ function onInput(e: Event) {
           @update:model-value="(v: string | number) => (amount = sanitize(String(v)))"
         />
         <InputGroupAddon align="inline-end">
-          <InputGroupText v-if="maxLabel" class="bg-transparent text-xs">
-            {{ maxLabel }}
+          <InputGroupText v-if="maxLabel || $slots['max-label']" class="bg-transparent text-xs">
+            <slot name="max-label">{{ maxLabel }}</slot>
           </InputGroupText>
           <template v-else>
             <InputGroupButton variant="secondary" @click="emit('max')">
               Max
             </InputGroupButton>
-            <InputGroupText class="bg-transparent px-1.5 text-xs">
+            <InputGroupText v-if="currency" class="bg-transparent px-1.5 text-xs">
               {{ currency }}
             </InputGroupText>
           </template>
@@ -147,16 +145,16 @@ function onInput(e: Event) {
       :key="i"
       :class="cn('flex items-center justify-between px-(--card-spacing) text-[13px]', i === 0 ? 'mt-3' : 'mt-1.5')"
     >
-      <span class="text-muted-foreground">{{ r.label }}</span>
-      <span class="font-mono">{{ r.value }}</span>
+      <span class="text-muted-foreground"><slot name="row-label" :row="r" :index="i">{{ r.label }}</slot></span>
+      <span class="font-mono"><slot name="row-value" :row="r" :index="i">{{ r.value }}</slot></span>
     </div>
     <div class="mt-3.5 px-(--card-spacing)">
       <Button size="lg" class="w-full" :elevation="control" :disabled="disabled" @click="emit('join')">
-        {{ joinLabel }}
+        <slot name="join-label">{{ joinLabel }}</slot>
       </Button>
     </div>
-    <div v-if="footnote" class="mt-3 px-(--card-spacing) text-center text-xs text-muted-foreground-2">
-      {{ footnote }}
+    <div v-if="footnote || $slots.footnote" class="mt-3 px-(--card-spacing) text-center text-xs text-muted-foreground-2">
+      <slot name="footnote">{{ footnote }}</slot>
     </div>
   </Card>
 </template>

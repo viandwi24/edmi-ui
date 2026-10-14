@@ -25,30 +25,30 @@ import { Card } from "@/registry/edmi/ui/card";
 import { Table, TableBody, TableHeader } from "@/registry/edmi/ui/table";
 import { ElevationSection } from "./_elevation";
 
-const tokens = [{ label: "A" }, { label: "N" }, { label: "T" }];
+const avatars = [{ label: "A" }, { label: "N" }, { label: "T" }];
 const rows: IndexRowData[] = [
 	{
 		name: "Mag Four Tilt",
 		symbol: "MAGT",
-		tokens,
+		avatars,
 		tags: ["Pre-IPO", "Clone"],
-		creator: "GbFK…ZUWS",
+		owner: "GbFK…ZUWS",
 		price: "$1.00",
 		change: "+1.12%",
-		aum: "$120.1K",
-		holders: 2,
+		value: "$120.1K",
+		count: 2,
 		spark: [4, 5, 4.6, 6, 6.4, 6.1, 7.2, 8, 8.4, 9.1],
 	},
 	{
 		name: "Defense & Space",
 		symbol: "DFSP",
-		tokens,
+		avatars,
 		tags: ["Pre-IPO"],
-		creator: "7Ge1…kXSq",
+		owner: "7Ge1…kXSq",
 		price: "$0.9791",
 		change: "−2.09%",
-		aum: "$29K",
-		holders: 1,
+		value: "$29K",
+		count: 1,
 		spark: [9, 8.6, 8.9, 7.8, 7.5, 7.9, 6.8, 6.4, 6.6, 5.9],
 	},
 ];
@@ -58,6 +58,7 @@ export default function Patterns1Preview() {
 	return (
 		<div className="flex flex-col gap-8">
 			<SiteHeader
+				name="Stockbreak"
 				lead="How to"
 				steps={[
 					{ label: "Start", href: "#" },
@@ -72,6 +73,8 @@ export default function Patterns1Preview() {
 				action={<Button>Create an index</Button>}
 			/>
 			<AppHeader
+				name="Stockbreak"
+				network="Devnet"
 				items={[
 					{ label: "Explore", href: "#explore" },
 					{ label: "Feed", href: "#feed" },
@@ -167,6 +170,7 @@ export default function Patterns1Preview() {
 					]}
 				/>
 				<JoinPanel
+					currency="USDC"
 					defaultAmount="1,000"
 					rows={[
 						{ label: "Estimated shares", value: "982.09" },
@@ -177,14 +181,15 @@ export default function Patterns1Preview() {
 			</div>
 			<LeaderboardPodium
 				entries={[
-					{ rank: 1, name: "dewi", meta: "$49.2K AUM · 412 holders" },
-					{ rank: 2, name: "noah", meta: "$31.7K AUM · 265 holders" },
-					{ rank: 3, name: "sarah", meta: "$18.9K AUM · 140 holders" },
+					{ rank: 1, name: "dewi", meta: "$49.2K · 412 members" },
+					{ rank: 2, name: "noah", meta: "$31.7K · 265 members" },
+					{ rank: 3, name: "sarah", meta: "$18.9K · 140 members" },
 				]}
 			/>
 			<LayoutPicker value={layout} onValueChange={setLayout} />
 			<ElevationSection>
 				<SiteHeader
+					name="Stockbreak"
 					elevation="raised"
 					lead="How to"
 					steps={[
@@ -195,6 +200,8 @@ export default function Patterns1Preview() {
 					action={<Button elevation="raised">Create an index</Button>}
 				/>
 				<AppHeader
+					name="Stockbreak"
+					network="Devnet"
 					elevation="raised"
 					items={[
 						{ label: "Explore", href: "#explore" },
@@ -211,6 +218,7 @@ export default function Patterns1Preview() {
 						deltaLabel="vs last week"
 					/>
 					<JoinPanel
+						currency="USDC"
 						elevation="raised"
 						defaultAmount="1,000"
 						rows={[{ label: "Estimated shares", value: "982.09" }]}
@@ -220,9 +228,9 @@ export default function Patterns1Preview() {
 				<LeaderboardPodium
 					elevation="raised"
 					entries={[
-						{ rank: 1, name: "dewi", meta: "$49.2K AUM · 412 holders" },
-						{ rank: 2, name: "noah", meta: "$31.7K AUM · 265 holders" },
-						{ rank: 3, name: "sarah", meta: "$18.9K AUM · 140 holders" },
+						{ rank: 1, name: "dewi", meta: "$49.2K · 412 members" },
+						{ rank: 2, name: "noah", meta: "$31.7K · 265 members" },
+						{ rank: 3, name: "sarah", meta: "$18.9K · 140 members" },
 					]}
 				/>
 				<LayoutPicker

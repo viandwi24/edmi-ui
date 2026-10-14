@@ -8,8 +8,8 @@ Real pages built only from registry items, live in React, Vue and Svelte, shown 
 
 ```
 src/examples/
-  index.ts                  list of examples (slug, title, tag, board, thumb, uses): drives index, routes, sidebar, verify
-  <slug>/
+  index.ts                  list of examples (slug, title, tag, board, thumb, uses, dir?, props?): drives index, routes, sidebar, verify
+  <dir>/                    source folder (defaults to the slug; several examples may share one)
     data.ts                 ONE shared sample-data file, imported by all three ports as "./data"
     react.tsx               default export = the page   (aliases: @edmi-react/…)
     vue.vue                 <script setup lang="ts">    (aliases: @edmi-vue/…)
@@ -48,14 +48,14 @@ iframe, floating header with the toolbar, Code drawer, Info popover), `/examples
    docs build, then compare `/examples/<slug>/render/<fw>/?mode=…&base=…&theme=…` against the board in light
    and dark, stone·green and slate·ocean, all three frameworks.
 
-## Layout variants (Stockbreak)
+## Apps, not single pages; shared sources
 
-Stockbreak has two app layouts. The ten page examples (`markets`, `explore`, ...) render the **navbar** layout
-(`AppHeader`); `markets-sidebar` is the same Markets page in the **sidebar** app shell (inset `Sidebar` with
-search, nav, watchlist and the faucet card, breadcrumb header). A layout variant is a separate example folder
-(own `data.ts` copy, since examples may not import from each other) with the layout in the title
-("Markets · navbar layout" / "Markets · sidebar layout"). Add more `<page>-sidebar` examples the same way
-(copy the folder, swap the header for the shell).
+Examples are small apps with internal view state (no router): `claude-chat` switches home / thread / artifact viewer /
+library, `stockbreak` holds every Stockbreak page behind working navigation. Several examples may share ONE source folder:
+set `dir` (folder under `src/examples/`) and `props` (passed to the root component) in `index.ts`. `stockbreak-navbar` and
+`stockbreak-sidebar` both use `dir: "stockbreak"` with `props: { layout: "navbar" | "sidebar" }`; islands are generated per
+folder, the render route forwards the props, and the Code drawer, `verify-examples` and `example-thumbs` follow `dir`.
+Page or shell components go in the port helper folders (`react/`, `vue/`, `svelte/`), which may import `../data`.
 
 ## Thumbnails
 

@@ -13,6 +13,7 @@ import {
 	DropdownMenuContent,
 	DropdownMenuTrigger,
 } from "@/registry/edmi/ui/dropdown-menu";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
 
 export type ArtifactKind =
 	| "archive"
@@ -27,7 +28,12 @@ const ArtifactCardContext = createContext<ArtifactCardContextValue>({
 	state: "ready",
 });
 
-export type ArtifactCardProps = ComponentProps<typeof Card> & {
+export type ArtifactCardProps = Omit<
+	ComponentProps<typeof Card>,
+	"elevation"
+> & {
+	/** ✦ depth: sunken -1, flat 0, raised +1, floating +2. */
+	elevation?: Elevation;
 	/** `generating`: the title shimmers and the actions are hidden. */
 	state?: "ready" | "generating";
 };
@@ -35,6 +41,7 @@ export type ArtifactCardProps = ComponentProps<typeof Card> & {
 export const ArtifactCard = ({
 	className,
 	state = "ready",
+	elevation,
 	children,
 	...props
 }: ArtifactCardProps) => (
@@ -42,6 +49,7 @@ export const ArtifactCard = ({
 		<Card
 			data-slot="ai-artifact-card"
 			data-state={state}
+			elevation={elevation}
 			className={cn(
 				"w-full flex-row items-center gap-3.5 px-3.5 py-3 text-card-foreground",
 				className,

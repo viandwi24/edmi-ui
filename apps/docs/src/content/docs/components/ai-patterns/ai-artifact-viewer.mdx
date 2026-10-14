@@ -23,15 +23,25 @@ Edmi ✦ addition. Built on `card`, `button` and `tooltip`.
 
 <ComponentSource name="ai-artifact-viewer" />
 
+## Elevation ✦
+
+See the [Elevation guide](/edmi-ui/getting-started/elevation/) for the levels, roles and layered mode.
+
+Flat by default and a surface in layered mode. `sunken` (-1) is a soft inset, `raised` (+1) a bevel and `floating` (+2) a bevel with a soft drop. The paper inside never changes.
+
+<ComponentDemo name="ai-artifact-viewer" demo="ai-artifact-viewer-elevation" />
+
 ## API
 | Part | Prop | Type | Default |
 | --- | --- | --- | --- |
-| ArtifactViewer | Card props | | |
+| ArtifactViewer | `elevation`, Card props | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 | ArtifactViewerTitle | `format` | `ReactNode` (shown after the title in mono) | |
 | ArtifactViewerAction | `label` | `string` (tooltip and accessible name) | |
 | ArtifactViewerOpenIn / Download / Expand / Close | `label`, Button props | `string` | |
 | ArtifactViewerContent | | scroll area on `--muted` | |
 | ArtifactViewerPaper | | white page, same in every mode | |
 
+In Vue `ReactNode` props are slots of the same name (the string prop stays as a fallback); in Svelte they accept `string | Snippet`.
+
 ## ✦ Edmi additions
-- Documents render as paper (white page) on the muted body in light and dark mode (DESIGN 5b rule 5).
+- Documents render as paper (white page) on the muted body in light and dark mode (DESIGN 5b rule 5). The paper colours are fixed by design (a document renders as paper in every mode), so they are literal colours and not tokens.

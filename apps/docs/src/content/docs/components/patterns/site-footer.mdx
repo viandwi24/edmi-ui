@@ -1,0 +1,50 @@
+---
+title: Site Footer
+description: "Site footer: brand, link columns, social slot and legal line."
+---
+import ComponentDemo from "../../../../components/ComponentDemo.astro";
+import ComponentInstall from "../../../../components/ComponentInstall.astro";
+import ComponentUsage from "../../../../components/ComponentUsage.astro";
+import ComponentSource from "../../../../components/ComponentSource.astro";
+
+<ComponentDemo name="site-footer" />
+
+## Installation
+
+<ComponentInstall name="site-footer" />
+
+## Usage
+
+<ComponentUsage name="site-footer" />
+
+## Component source
+
+<ComponentSource name="site-footer" />
+
+## Elevation ✦
+
+See the [Elevation guide](/edmi-ui/getting-started/elevation/) for the levels, roles and layered mode.
+
+Flat by default. `elevation` is forwarded to the card: `sunken` (-1) a soft inset well, `raised` (+1) the bevel, `floating` (+2) the bevel plus one soft drop. In a layered `ElevationProvider` the card resolves to its role default (raised).
+
+<ComponentDemo name="site-footer" demo="site-footer-elevation" />
+
+## API
+
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| `SiteFooter` | `brand` | React `ReactNode`; Vue slot `brand`; Svelte `brand` snippet | none |
+|  | `description` | `ReactNode` (Vue/Svelte: `string`) | none |
+|  | `socials` | React `ReactNode`; Vue slot `socials`; Svelte `socials` snippet | none |
+|  | `columns` | `{ title, links: { label, href }[] }[]` | none |
+|  | `legal` | React `ReactNode`; Vue `string` or slot `legal`; Svelte `string \| Snippet` | none |
+|  | `note` | same as `legal` | none |
+|  | `elevation` ✦ | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
+
+## Migrating from `footer`
+
+This item was called `footer` before. `shadcn add @edmi-ui/footer` still works for one version as a deprecated alias that installs `site-footer`; the component (`SiteFooter`) and its `data-slot` are unchanged. Update imports to the new path (`site-footer`).
+
+## ✦ Edmi additions
+- Whole block is an Edmi addition (DESIGN §5 Patterns, board 12). Composed from: card, separator.
+- Install: `shadcn add @edmi-ui/site-footer`.

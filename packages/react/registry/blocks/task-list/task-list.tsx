@@ -2,6 +2,7 @@ import { cn } from "cn";
 import * as React from "react";
 import { Badge } from "@/registry/edmi/ui/badge";
 import { Card } from "@/registry/edmi/ui/card";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
 import { Separator } from "@/registry/edmi/ui/separator";
 
 type TaskStatus = "review" | "running" | "completed";
@@ -27,10 +28,18 @@ type TaskListProps = React.ComponentProps<typeof Card> & {
 	tasks: Task[];
 	/** Override the status badge labels. */
 	labels?: Partial<Record<TaskStatus, string>>;
+	/** ✦ depth of the card: sunken -1, flat 0, raised +1, floating +2. */
+	elevation?: Elevation;
 };
 
 /** Tasks grouped by status (first-appearance order), one badge per group. */
-function TaskList({ className, tasks, labels, ...props }: TaskListProps) {
+function TaskList({
+	className,
+	tasks,
+	labels,
+	elevation,
+	...props
+}: TaskListProps) {
 	const groups: { status: TaskStatus; items: Task[] }[] = [];
 	for (const t of tasks) {
 		const g = groups.find((x) => x.status === t.status);
@@ -40,6 +49,7 @@ function TaskList({ className, tasks, labels, ...props }: TaskListProps) {
 	return (
 		<Card
 			data-slot="task-list"
+			elevation={elevation}
 			className={cn("gap-0 px-[18px] py-4", className)}
 			{...props}
 		>

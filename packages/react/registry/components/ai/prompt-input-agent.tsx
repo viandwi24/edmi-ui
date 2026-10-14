@@ -5,6 +5,7 @@ import type { ComponentProps, KeyboardEvent } from "react";
 import { useEffect, useMemo, useState } from "react";
 import { AgentAvatar } from "@/registry/edmi/components/ai/agent-avatar";
 import { Button } from "@/registry/edmi/ui/button";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
 
 export type PromptInputAgentOption = {
 	id: string;
@@ -17,14 +18,17 @@ export type PromptInputAgentOption = {
 
 export type PromptInputAgentProps = Omit<
 	ComponentProps<typeof Button>,
-	"children"
+	"children" | "elevation"
 > & {
 	agent: PromptInputAgentOption;
+	/** ✦ depth of the chip: sunken -1, flat 0, raised +1, floating +2. */
+	elevation?: Elevation;
 };
 
 /** Chip in the composer header: who you are talking to. */
 export const PromptInputAgent = ({
 	agent,
+	elevation,
 	className,
 	...props
 }: PromptInputAgentProps) => (
@@ -32,6 +36,7 @@ export const PromptInputAgent = ({
 		data-slot="ai-prompt-input-agent"
 		variant="outline"
 		size="sm"
+		elevation={elevation}
 		type="button"
 		className={cn("gap-[7px] bg-card", className)}
 		{...props}

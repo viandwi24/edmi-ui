@@ -10,12 +10,12 @@ import {
 	FeedPostIndex,
 	FeedPostStat,
 } from "@/registry/edmi/blocks/feed-post/feed-post";
-import { SiteFooter } from "@/registry/edmi/blocks/footer/footer";
 import {
 	KanbanColumn,
 	KanbanItem,
 } from "@/registry/edmi/blocks/kanban-column/kanban-column";
 import { PricingPlan } from "@/registry/edmi/blocks/pricing-plan/pricing-plan";
+import { SiteFooter } from "@/registry/edmi/blocks/site-footer/site-footer";
 import { StepCard } from "@/registry/edmi/blocks/step-card/step-card";
 import { TaskList } from "@/registry/edmi/blocks/task-list/task-list";
 import { Button } from "@/registry/edmi/ui/button";
@@ -93,7 +93,7 @@ function DemoAgentCard({ raised }: { raised?: boolean }) {
 			className="w-[380px] max-w-full"
 			name="XSD"
 			tag="AI"
-			autopilot
+			status="Autopilot"
 			address="dG6r…4mSr"
 			stats={[
 				{ label: "Indexes", value: "3" },

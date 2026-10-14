@@ -24,7 +24,7 @@ const levels = [
 	<div class="flex flex-col gap-6">
 		<div v-for="l in levels" :key="l.value" class="flex flex-col gap-2">
 			<p class="text-xs font-medium text-muted-foreground">{{ l.label }}</p>
-	<SiteHeader :elevation="l.value" lead="How to" :steps="steps" :links="links">
+	<SiteHeader name="Stockbreak" :elevation="l.value" lead="How to" :steps="steps" :links="links">
 		<template #action>
 			<Button :elevation="l.value">Create an index</Button>
 		</template>

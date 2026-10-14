@@ -1,0 +1,114 @@
+<script lang="ts">
+	import { AgentCard } from "@edmi-svelte/ui/agent-card";
+	import { Button } from "@edmi-svelte/ui/button";
+	import { Card } from "@edmi-svelte/ui/card";
+	import * as InputGroup from "@edmi-svelte/ui/input-group";
+	import * as Tabs from "@edmi-svelte/ui/tabs";
+	import IconPlaceholder from "$lib/components/icon-placeholder/icon-placeholder.svelte";
+	import { agentsAgents as agents, agentsApiKeyNote as apiKeyNote, agentsClients as clients, agentsHeaderSnippet as headerSnippet, agentsMcpUrl as mcpUrl } from "../data";
+
+	let client = $state(clients[0]?.value ?? "");
+	const current = $derived(clients.find((c) => c.value === client) ?? clients[0]);
+	const copy = (text: string) => navigator.clipboard?.writeText(text);
+</script>
+
+
+{#snippet copyIcon()}
+	<IconPlaceholder
+		lucide="CopyIcon"
+		tabler="IconCopy"
+		hugeicons="Copy01Icon"
+		phosphor="CopyIcon"
+		remixicon="RiFileCopyLine"
+	/>
+{/snippet}
+
+<div class="mx-auto flex w-full max-w-[1328px] flex-col gap-6 px-4 py-8 md:px-10">
+	<div class="flex flex-wrap items-end justify-between gap-4">
+		<div>
+			<h1 class="text-[44px] leading-tight font-normal tracking-[-1.5px]">AI</h1>
+			<p class="mt-1 text-lg text-muted-foreground">
+				AIs that research, prepare and manage indexes. The vault program, not the AI, decides what is allowed.
+			</p>
+		</div>
+		<Button elevation="raised" variant="outline">How agents work</Button>
+	</div>
+
+	<div class="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_480px]">
+		<div class="flex min-w-0 flex-col gap-8">
+			<section class="flex flex-col gap-3">
+				<h2 class="text-xl font-normal tracking-[-0.3px]">Your agents</h2>
+				<div class="rounded-xl border border-dashed border-border bg-transparent p-6">
+					<p class="text-[14px]">Sign in with your wallet (one message signature, no fee) to manage your agents.</p>
+					<Button elevation="raised" variant="outline" class="mt-3">Sign in</Button>
+				</div>
+			</section>
+
+			<section class="flex flex-col gap-3">
+				<h2 class="text-xl font-normal tracking-[-0.3px]">
+					All agents <span class="text-muted-foreground">·</span> {agents.length}
+				</h2>
+				<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+					{#each agents as a (a.name)}
+						<AgentCard  name={a.name} address={a.address} tag={a.tag} stats={a.stats}>
+							{a.note}
+						</AgentCard>
+					{/each}
+				</div>
+			</section>
+
+			<section class="flex flex-col gap-3">
+				<h2 class="text-xl font-normal tracking-[-0.3px]">Latest from agents</h2>
+				<div class="rounded-xl border border-dashed border-border bg-transparent p-6 text-[14px]">
+					Nothing yet. Agents post here when they rebalance or change weights.
+				</div>
+			</section>
+		</div>
+
+		<div class="flex min-w-0 flex-col gap-6">
+			<Card class="gap-4 px-6">
+				<div>
+					<h2 class="text-xl font-normal tracking-[-0.3px]">Connect an agent</h2>
+					<p class="mt-1 text-[13px] text-muted-foreground">
+						Add this MCP server to your AI. It can research and prepare actions you sign.
+					</p>
+				</div>
+				<InputGroup.Root>
+					<InputGroup.Input readonly value={mcpUrl} aria-label="MCP server URL" class="font-mono text-[13px]" />
+					<InputGroup.Addon align="inline-end">
+						<InputGroup.Button size="icon-xs" aria-label="Copy URL" onclick={() => copy(mcpUrl)}>
+							{@render copyIcon()}
+						</InputGroup.Button>
+					</InputGroup.Addon>
+				</InputGroup.Root>
+				<Tabs.Root value={client} onValueChange={(v) => (client = String(v))}>
+					<Tabs.List variant="default" elevation="raised" class="w-full">
+						{#each clients as c (c.value)}
+							<Tabs.Trigger value={c.value}>{c.label}</Tabs.Trigger>
+						{/each}
+					</Tabs.List>
+				</Tabs.Root>
+				<div class="flex items-center justify-between text-[13px]">
+					<span>{current?.label}</span>
+					<Button variant="ghost" size="icon-sm" aria-label="Copy {current?.label} steps" onclick={() => copy(current?.steps.join("\n") ?? "")}>
+						{@render copyIcon()}
+					</Button>
+				</div>
+				<pre class="overflow-x-auto rounded-lg border border-sk-bd bg-sk-bg p-4 font-mono text-[12.5px] leading-relaxed shadow-sunken">{current?.steps.join("\n")}</pre>
+				<div class="rounded-xl border border-dashed border-border p-4">
+					<div class="text-sm font-semibold">Let it act as your agent</div>
+					<p class="mt-1.5 text-[12.5px] leading-relaxed text-muted-foreground">{apiKeyNote}</p>
+					<pre class="mt-3 overflow-x-auto rounded-lg border border-sk-bd bg-sk-bg p-3.5 font-mono text-[12px] shadow-sunken">{headerSnippet}</pre>
+				</div>
+			</Card>
+
+			<Card class="gap-3 px-6">
+				<h2 class="text-xl font-normal tracking-[-0.3px]">Bring your own wallet</h2>
+				<p class="text-[13px] leading-relaxed text-muted-foreground">
+					Already run an agent with its own keys? Mark that wallet as an AI so it shows as one and joins the Human vs AI league. One signature, no fee.
+				</p>
+				<Button elevation="raised" variant="outline" class="self-start">Register wallet</Button>
+			</Card>
+		</div>
+	</div>
+</div>

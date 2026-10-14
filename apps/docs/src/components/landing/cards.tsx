@@ -1,7 +1,7 @@
 // Landing showcase: every card is built from the real Edmi React registry components.
 
 import { DatePicker } from "@edmi-react/blocks/date-picker/date-picker";
-import { SiteFooter } from "@edmi-react/blocks/footer/footer";
+import { SiteFooter } from "@edmi-react/blocks/site-footer/site-footer";
 import {
 	SiteHeaderBrand,
 	SiteHeaderMark,

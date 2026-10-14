@@ -1,13 +1,14 @@
 <script lang="ts">
-	import { cn } from "$lib/utils.js";
+	import { cn, type WithElementRef } from "$lib/utils.js";
 	import type { HTMLAttributes } from "svelte/elements";
 
 	let {
+		ref = $bindable(null),
 		variant = "paper",
 		class: className,
 		children,
 		...restProps
-	}: HTMLAttributes<HTMLSpanElement> & {
+	}: WithElementRef<HTMLAttributes<HTMLSpanElement>, HTMLSpanElement> & {
 		/** `paper`: cropped top of page 1 (always light). `slide`: dark slide. */
 		variant?: "paper" | "slide";
 	} = $props();
@@ -17,6 +18,7 @@
 </script>
 
 <span
+	bind:this={ref}
 	data-slot="ai-artifact-card-thumbnail"
 	data-variant={variant}
 	class={cn(

@@ -13,6 +13,8 @@ export default function Demo() {
 	const [connected, setConnected] = useState(false);
 	return (
 		<AppHeader
+			name="Stockbreak"
+			network="Devnet"
 			items={items}
 			active="#leaderboard"
 			connectLabel={connected ? "dG6r…4mSr" : "Connect"}

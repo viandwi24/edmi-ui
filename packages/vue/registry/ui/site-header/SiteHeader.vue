@@ -3,10 +3,11 @@ import type { HTMLAttributes } from 'vue'
 import type { SiteHeaderLink } from '.'
 import { computed } from 'vue'
 import { cn } from '@/registry/edmi/lib/utils'
-import { type Elevation, useElevation } from '@/registry/edmi/ui/elevation'
+import { controlLevel, type Elevation, surfaceElevation, useElevation } from '@/registry/edmi/ui/elevation'
 import SiteHeaderBrand from './SiteHeaderBrand.vue'
 
 const props = withDefaults(defineProps<{
+  /** Brand text (or use the `name` slot). */
   name?: string
   href?: string
   /** Muted lead-in before the stepped list, e.g. "How to" (or use the `lead` slot). */
@@ -23,18 +24,7 @@ const props = withDefaults(defineProps<{
 })
 
 const level = useElevation(() => props.elevation, 'surface')
-const mark = computed(() =>
-  props.elevation && props.elevation !== 'auto'
-    ? (level.value === 'raised' || level.value === 'floating' ? 'raised' : 'flat')
-    : undefined,
-)
-
-const surfaceElevation = {
-  sunken: 'border-sk-bd bg-sk-bg shadow-sunken',
-  flat: '',
-  raised: 'border-transparent shadow-raised',
-  floating: 'border-transparent shadow-floating',
-}
+const mark = computed(() => controlLevel(props.elevation))
 </script>
 
 <template>
@@ -50,6 +40,9 @@ const surfaceElevation = {
     <SiteHeaderBrand :name="name" :href="href" :elevation="mark">
       <template v-if="$slots.logo" #logo>
         <slot name="logo" />
+      </template>
+      <template v-if="$slots.name" #name>
+        <slot name="name" />
       </template>
     </SiteHeaderBrand>
     <nav class="flex items-center gap-1 whitespace-nowrap max-md:hidden" aria-label="Main">

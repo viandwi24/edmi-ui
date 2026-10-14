@@ -14,15 +14,27 @@ import {
 	CollapsibleContent,
 	CollapsibleTrigger,
 } from "@/registry/edmi/ui/collapsible";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
 import { Progress } from "@/registry/edmi/ui/progress";
 import { Separator } from "@/registry/edmi/ui/separator";
 
-export type SessionPanelProps = ComponentProps<typeof Card>;
+export type SessionPanelProps = Omit<
+	ComponentProps<typeof Card>,
+	"elevation"
+> & {
+	/** ✦ depth: sunken -1, flat 0, raised +1, floating +2. */
+	elevation?: Elevation;
+};
 
 /** Chat side panel: Progress, Outputs and what was used in this session. */
-export const SessionPanel = ({ className, ...props }: SessionPanelProps) => (
+export const SessionPanel = ({
+	className,
+	elevation,
+	...props
+}: SessionPanelProps) => (
 	<Card
 		data-slot="ai-session-panel"
+		elevation={elevation}
 		className={cn("w-full max-w-[380px] gap-0 px-4 py-3.5", className)}
 		{...props}
 	/>
@@ -158,7 +170,10 @@ export const SessionOutputTitle = ({
 	</div>
 );
 
-export type SessionFileProps = Omit<ComponentProps<"button">, "children"> & {
+export type SessionFileProps = Omit<
+	ComponentProps<"button">,
+	"children" | "name"
+> & {
 	name: ReactNode;
 	/** Format badge on the right (`PDF`, `MD`). */
 	format?: ReactNode;

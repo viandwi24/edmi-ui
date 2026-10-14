@@ -7,6 +7,7 @@
 	import { getKanbanColumnCtx } from "./kanban-column.svelte";
 
 	let {
+		ref = $bindable(null),
 		class: className,
 		title,
 		description,
@@ -32,6 +33,7 @@
 </script>
 
 <Card
+	bind:ref
 	data-slot="kanban-item"
 	elevation={elevation !== "auto" ? elevation : ctx?.elevation}
 	data-disabled={disabled ? "" : undefined}

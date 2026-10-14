@@ -5,12 +5,13 @@ import { ChartLineIcon, Search, WalletIcon } from '@lucide/vue'
 import { computed } from 'vue'
 import { cn } from '@/registry/edmi/lib/utils'
 import { Button } from '@/registry/edmi/ui/button'
-import { type Elevation, useElevation } from '@/registry/edmi/ui/elevation'
+import { controlLevel, type Elevation, surfaceElevation, useElevation } from '@/registry/edmi/ui/elevation'
 import { InputGroup, InputGroupAddon, InputGroupInput } from '@/registry/edmi/ui/input-group'
 import { Kbd } from '@/registry/edmi/ui/kbd'
 import AppHeaderNavItem from './AppHeaderNavItem.vue'
 
 const props = withDefaults(defineProps<{
+  /** Brand text (or use the `name` slot). */
   name?: string
   href?: string
   items?: AppHeaderItem[]
@@ -20,39 +21,28 @@ const props = withDefaults(defineProps<{
   search?: boolean
   searchPlaceholder?: string
   shortcut?: string
-  /** Network label; empty string hides the button. */
+  /** Secondary button label (e.g. a network or workspace; or use the `network` slot); omit to hide it. */
   network?: string
+  /** Primary button label (or use the `connect-label` slot). */
   connectLabel?: string
   /** ✦ depth of the bar; raised +1 / floating +2 also raise the mark, active pill and buttons */
   elevation?: Elevation
   class?: HTMLAttributes['class']
 }>(), {
-  name: 'Stockbreak',
   href: '/',
   items: () => [],
   search: true,
   searchPlaceholder: 'Search',
   shortcut: '⌘K',
-  network: 'Devnet',
   connectLabel: 'Connect',
   elevation: undefined,
 })
 
 const level = useElevation(() => props.elevation, 'surface')
-const raised = computed(() => level.value === 'raised' || level.value === 'floating')
 // Controls follow an explicit bar level: raised/floating raise them, flat/sunken keep them flat; auto leaves them to their own role.
-const control = computed(() =>
-  props.elevation && props.elevation !== 'auto' ? (raised.value ? 'raised' : 'flat') : undefined,
-)
+const control = computed(() => controlLevel(props.elevation))
 const markLevel = useElevation(() => control.value, 'handle')
 const markRaised = computed(() => markLevel.value === 'raised' || markLevel.value === 'floating')
-
-const surfaceElevation = {
-  sunken: 'border-sk-bd bg-sk-bg shadow-sunken',
-  flat: '',
-  raised: 'border-transparent shadow-raised',
-  floating: 'border-transparent shadow-floating',
-}
 
 const emit = defineEmits<{
   (e: 'connect'): void
@@ -77,7 +67,7 @@ const emit = defineEmits<{
             <ChartLineIcon class="size-[15px]" />
           </span>
         </slot>
-        <span class="font-brand text-xl font-semibold tracking-[-0.4px]">{{ name }}</span>
+        <span v-if="name || $slots.name" class="font-brand text-xl font-semibold tracking-[-0.4px]"><slot name="name">{{ name }}</slot></span>
       </a>
       <nav class="flex items-center gap-0.5 max-lg:hidden" aria-label="App">
         <AppHeaderNavItem
@@ -92,7 +82,7 @@ const emit = defineEmits<{
       </nav>
     </div>
     <div class="flex items-center gap-2">
-      <InputGroup v-if="search" class="h-9 w-[180px] @max-[960px]/app-header:hidden">
+      <InputGroup v-if="search" class="w-[180px] @max-[960px]/app-header:hidden">
         <InputGroupAddon>
           <Search />
         </InputGroupAddon>
@@ -105,12 +95,12 @@ const emit = defineEmits<{
           <Kbd :elevation="control">{{ shortcut }}</Kbd>
         </InputGroupAddon>
       </InputGroup>
-      <Button v-if="network" variant="secondary" :elevation="control" @click="emit('network-click')">
-        {{ network }}
+      <Button v-if="network || $slots.network" variant="secondary" :elevation="control" @click="emit('network-click')">
+        <slot name="network">{{ network }}</slot>
       </Button>
       <Button :elevation="control" @click="emit('connect')">
         <WalletIcon />
-        {{ connectLabel }}
+        <slot name="connect-label">{{ connectLabel }}</slot>
       </Button>
     </div>
   </header>

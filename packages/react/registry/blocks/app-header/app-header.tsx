@@ -1,10 +1,14 @@
+"use client";
+
 import { cn } from "cn";
 import type * as React from "react";
 import { IconPlaceholder } from "@/edmi/icon-placeholder";
 import { Button } from "@/registry/edmi/ui/button";
 import {
+	controlLevel,
 	type Elevation,
 	type ElevationLevel,
+	surfaceElevation,
 	useElevation,
 } from "@/registry/edmi/ui/elevation";
 import {
@@ -15,13 +19,6 @@ import {
 import { Kbd } from "@/registry/edmi/ui/kbd";
 
 type AppHeaderItem = { label: string; href: string };
-
-const surfaceElevation = {
-	sunken: "border-sk-bd bg-sk-bg shadow-sunken",
-	flat: "",
-	raised: "border-transparent shadow-raised",
-	floating: "border-transparent shadow-floating",
-};
 
 // A header that rises hands the same depth to the controls it renders; `flat` and `sunken` keep them flat.
 const rises = (level: ElevationLevel) =>
@@ -82,14 +79,14 @@ function AppHeaderNavItem({
 function AppHeader({
 	className,
 	logo,
-	name = "Stockbreak",
+	name,
 	href = "/",
 	items = [],
 	active,
 	search = true,
 	searchPlaceholder = "Search",
 	shortcut = "⌘K",
-	network = "Devnet",
+	network,
 	connectLabel = "Connect",
 	onConnect,
 	onNetworkClick,
@@ -106,7 +103,7 @@ function AppHeader({
 	search?: boolean;
 	searchPlaceholder?: string;
 	shortcut?: string;
-	/** Network label; empty string hides the button. */
+	/** Secondary button label (e.g. a network or workspace); omit or pass an empty string to hide it. */
 	network?: string;
 	connectLabel?: React.ReactNode;
 	onConnect?: () => void;
@@ -115,13 +112,7 @@ function AppHeader({
 	elevation?: Elevation;
 }) {
 	const level = useElevation(elevation, "surface");
-	const raised = rises(level);
-	const control =
-		elevation && elevation !== "auto"
-			? raised
-				? "raised"
-				: "flat"
-			: undefined;
+	const control = controlLevel(elevation);
 	return (
 		<header
 			data-slot="app-header"
@@ -135,9 +126,11 @@ function AppHeader({
 			<div className="flex items-center gap-[18px]">
 				<a href={href} className="flex items-center gap-2.5 whitespace-nowrap">
 					{logo ?? <AppHeaderMark elevation={control} />}
-					<span className="font-brand text-xl font-semibold tracking-[-0.4px]">
-						{name}
-					</span>
+					{name != null ? (
+						<span className="font-brand text-xl font-semibold tracking-[-0.4px]">
+							{name}
+						</span>
+					) : null}
 				</a>
 				<nav
 					className="flex items-center gap-0.5 max-lg:hidden"

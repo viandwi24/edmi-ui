@@ -13,7 +13,7 @@ const connected = ref(false);
 </script>
 
 <template>
-	<AppHeader
+	<AppHeader name="Stockbreak" network="Devnet"
 		:items="items"
 		active="#leaderboard"
 		:connect-label="connected ? 'dG6r…4mSr' : 'Connect'"

@@ -4,6 +4,7 @@ import { IconPlaceholder } from "@/edmi/icon-placeholder";
 import { Avatar, AvatarFallback, AvatarImage } from "@/registry/edmi/ui/avatar";
 import { Button } from "@/registry/edmi/ui/button";
 import { Card } from "@/registry/edmi/ui/card";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
 import {
 	Item,
 	ItemActions,
@@ -13,10 +14,16 @@ import {
 	ItemTitle,
 } from "@/registry/edmi/ui/item";
 
-function FeedPost({ className, ...props }: React.ComponentProps<typeof Card>) {
+type FeedPostProps = React.ComponentProps<typeof Card> & {
+	/** ✦ depth of the card: sunken -1, flat 0, raised +1, floating +2. */
+	elevation?: Elevation;
+};
+
+function FeedPost({ className, elevation, ...props }: FeedPostProps) {
 	return (
 		<Card
 			data-slot="feed-post"
+			elevation={elevation}
 			className={cn("gap-0 px-[18px] py-[18px]", className)}
 			{...props}
 		/>

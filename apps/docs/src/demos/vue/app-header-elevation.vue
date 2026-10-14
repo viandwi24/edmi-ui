@@ -22,7 +22,7 @@ const levels = [
 	<div class="flex flex-col gap-6">
 		<div v-for="l in levels" :key="l.value" class="flex flex-col gap-2">
 			<p class="text-xs font-medium text-muted-foreground">{{ l.label }}</p>
-	<AppHeader :elevation="l.value"
+	<AppHeader name="Stockbreak" network="Devnet" :elevation="l.value"
 		:items="items"
 		active="#leaderboard"
 		:connect-label="connected ? 'dG6r…4mSr' : 'Connect'"

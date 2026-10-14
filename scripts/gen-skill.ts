@@ -153,7 +153,8 @@ export const USE_WHEN: Record<string, string> = {
 	"kanban-column": "a kanban stage column with cards.",
 	"code-block":
 		"a static code card with copy button for docs and marketing (chat code uses `ai-code-block`).",
-	footer: "site footer: brand, link columns, legal line.",
+	"site-footer": "site footer: brand, link columns, legal line.",
+	footer: "deprecated alias of `site-footer`; use `site-footer`.",
 	// AI · Chat
 	"ai-conversation":
 		"the chat viewport: stick-to-bottom, empty and home states, scroll button, transcript download.",

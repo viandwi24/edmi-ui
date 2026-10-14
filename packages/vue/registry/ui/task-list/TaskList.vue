@@ -22,6 +22,7 @@ const props = defineProps<{
   /** Override the status badge labels. */
   labels?: Partial<Record<TaskStatus, string>>
 }>()
+// ✦ Scoped slots `title` and `agent` ({ task }) = rich content for a task row (default: the text).
 
 // Tasks grouped by status (first-appearance order), one badge per group.
 const groups = computed(() => {
@@ -49,9 +50,9 @@ const groups = computed(() => {
           data-slot="task-item"
           class="mt-2 flex items-center justify-between gap-2.5 text-[13px]"
         >
-          <span>{{ t.title }}</span>
-          <span v-if="t.agent" class="text-[10px] whitespace-nowrap text-muted-foreground uppercase">
-            {{ t.agent }}
+          <span><slot name="title" :task="t">{{ t.title }}</slot></span>
+          <span v-if="t.agent || $slots.agent" class="text-[10px] whitespace-nowrap text-muted-foreground uppercase">
+            <slot name="agent" :task="t">{{ t.agent }}</slot>
           </span>
         </div>
       </div>

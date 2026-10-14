@@ -48,8 +48,10 @@ buttons and fields ignore nesting. An explicit `elevation` prop always wins.
 | `useElevation(prop, role)` | Resolves the level for a component (React returns the level, Vue a `ComputedRef`, Svelte `{ current }`) |
 | `SurfaceProvider level` | React. Surfaces wrap their children with their resolved level so nested surfaces drop to flat (Vue `provideSurface`, Svelte `setSurface`) |
 | `resolveElevation(prop, scope, role)` | Pure resolver |
+| `surfaceElevation` | Surface class map keyed by level (`sunken`, `flat`, `raised`, `floating`); patterns use it for their plate instead of a local copy |
+| `controlLevel(elevation)` | Depth a container hands to the controls it renders: explicit `raised`/`floating` gives `"raised"`, explicit `flat`/`sunken` gives `"flat"`, `auto` or unset gives `undefined` |
 | `ROLE_LEVEL` | Role to layered level: `button-filled`, `button-quiet`, `field`, `control`, `handle`, `surface`, `container`, `overlay` |
-| types | `Elevation`, `ElevationLevel`, `ElevationMode` |
+| types | `Elevation`, `ElevationLevel`, `ElevationMode`, `ElevationRole` |
 
 ## ✦ Edmi additions
 The whole item is an Edmi addition; there is no stock counterpart. It is installed automatically as a dependency of every component that takes `elevation`.

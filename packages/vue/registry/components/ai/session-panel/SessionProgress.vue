@@ -9,6 +9,7 @@ import { Progress } from "@/registry/edmi/ui/progress"
 
 const props = withDefaults(defineProps<{
   class?: HTMLAttributes["class"]
+  /** Heading text; the `title` slot overrides it. */
   title?: string
   /** 0 to 100: shows a progress bar above the content. */
   value?: number
@@ -31,7 +32,9 @@ const hasClose = !!getCurrentInstance()?.vnode.props?.onClose
   <Collapsible data-slot="ai-session-progress" :default-open="defaultOpen" :class="cn('w-full', props.class)">
     <div class="flex items-center justify-between">
       <CollapsibleTrigger class="group/trigger flex items-center gap-1 text-sm outline-none focus-visible:underline">
-        {{ title }}
+        <slot name="title">
+          {{ title }}
+        </slot>
         <ChevronRight class="size-3.5 text-muted-foreground transition-transform group-data-[state=open]/trigger:rotate-90" />
       </CollapsibleTrigger>
       <Button v-if="hasClose" aria-label="Close" size="icon-xs" type="button" variant="ghost" @click="emit('close')">

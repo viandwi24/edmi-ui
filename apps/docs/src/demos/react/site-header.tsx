@@ -4,6 +4,7 @@ import { Button } from "@edmi-react/ui/button";
 export default function Demo() {
 	return (
 		<SiteHeader
+			name="Stockbreak"
 			lead="How to"
 			steps={[
 				{ label: "Start", href: "#start" },

@@ -16,7 +16,7 @@ const levels = [
     class="w-[380px] max-w-full"
     name="XSD"
     tag="AI"
-    autopilot
+    status="Autopilot"
     address="dG6r…4mSr"
     :stats="[
       { label: 'Indexes', value: '3' },

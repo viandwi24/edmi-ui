@@ -1,5 +1,5 @@
 ---
-title: Step card
+title: Step Card
 description: "Numbered step card with a corner icon, title and description."
 ---
 import ComponentDemo from "../../../../components/ComponentDemo.astro";
@@ -30,10 +30,14 @@ Flat by default. `elevation` is forwarded to the card: `sunken` (-1) a soft inse
 <ComponentDemo name="step-card" demo="step-card-elevation" />
 
 ## API
-| Part | Props | Notes |
-| --- | --- | --- |
-| `StepCard` | `index, title, description?, icon?` | Mono index, arrow icon (default up-right), title, muted description. |
-| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
+
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| `StepCard` | `index` | `ReactNode` (Vue/Svelte: `string \| number`) | required |
+|  | `title` | `ReactNode` (Vue/Svelte: `string`) | required |
+|  | `description` | same as `title` | none |
+|  | `icon` | React `ReactNode`; Vue slot `icon`; Svelte `icon` snippet | arrow up-right |
+|  | `elevation` ✦ | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 ## ✦ Edmi additions
 - Whole block is an Edmi addition (DESIGN §5 Patterns, board 12). Composed from: card.

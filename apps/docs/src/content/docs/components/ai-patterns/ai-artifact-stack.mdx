@@ -27,7 +27,11 @@ Edmi ✦ addition. Built on `button` and `ai-artifact-card`.
 | Part | Prop | Type | Default |
 | --- | --- | --- | --- |
 | ArtifactStack | | `div` props | |
-| ArtifactStackDownloadAll | `children`, Button props | `ReactNode` | `Download all` |
+| ArtifactStackDownloadAll | `children`, Button props | `ReactNode` (Vue: default slot, Svelte: children snippet) | `Download all` |
+
+## Elevation ✦
+
+Flat only. The stack is a layout wrapper; each `ArtifactCard` inside takes its own `elevation`.
 
 ## ✦ Edmi additions
 - Documents show a paper thumbnail and other files an icon tile; the meta line reads kind · format.

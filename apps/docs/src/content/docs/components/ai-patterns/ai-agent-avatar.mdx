@@ -24,13 +24,17 @@ Edmi ✦ addition. Built on plain SVG; no other Edmi items.
 <ComponentSource name="ai-agent-avatar" />
 
 ## API
-| Prop | Type | Default |
-| --- | --- | --- |
-| `seed` | `string` (agent id: same seed, same mark) | |
-| `color` | `chart-1` to `chart-5` or any CSS color | picked from the seed |
-| `size` | `number` (px) | `40` |
-| `tile` | `boolean` (muted rounded square behind the mark) | `true` |
-| `label` | `string` (accessible name; decorative when omitted) | |
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| AgentAvatar | `seed` | `string` (agent id: same seed, same mark) | |
+| AgentAvatar | `color` | `chart-1` to `chart-5` or any CSS color | picked from the seed |
+| AgentAvatar | `size` | `number` (px) | `40` |
+| AgentAvatar | `tile` | `boolean` (muted rounded square behind the mark) | `true` |
+| AgentAvatar | `label` | `string` (accessible name; decorative when omitted) | |
+
+## Elevation ✦
+
+Flat only. It is a decorative mark with no depth. It is not the same component as the identicon of `agent-card`; each keeps its own look.
 
 ## ✦ Edmi additions
 - The mark is a 3 by 5 grid mirrored to 5 by 5, so it stays recognisable at 20px. Use it only where several agents appear.

@@ -2,6 +2,7 @@ import { cn } from "cn";
 import type * as React from "react";
 import { IconPlaceholder } from "@/edmi/icon-placeholder";
 import { Card } from "@/registry/edmi/ui/card";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
 import { Separator } from "@/registry/edmi/ui/separator";
 
 type PricingPlanProps = Omit<React.ComponentProps<typeof Card>, "title"> & {
@@ -16,6 +17,8 @@ type PricingPlanProps = Omit<React.ComponentProps<typeof Card>, "title"> & {
 	features?: React.ReactNode[];
 	/** ✦ Lead row above the features, e.g. "Included:" or "Everything in Holder, plus:". */
 	featuresLead?: React.ReactNode;
+	/** ✦ depth of the card: sunken -1, flat 0, raised +1, floating +2. */
+	elevation?: Elevation;
 };
 
 function PricingPlan({
@@ -27,11 +30,13 @@ function PricingPlan({
 	action,
 	features,
 	featuresLead,
+	elevation,
 	...props
 }: PricingPlanProps) {
 	return (
 		<Card
 			data-slot="pricing-plan"
+			elevation={elevation}
 			className={cn("gap-0 p-6", className)}
 			{...props}
 		>

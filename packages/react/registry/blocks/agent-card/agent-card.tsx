@@ -2,6 +2,7 @@ import { cn } from "cn";
 import type * as React from "react";
 import { Badge } from "@/registry/edmi/ui/badge";
 import { Card } from "@/registry/edmi/ui/card";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
 
 // Four tones of the board identicon: columns repeat muted-2 / muted / foreground-2 / empty.
 const TONES = [
@@ -67,11 +68,13 @@ type AgentCardProps = React.ComponentProps<typeof Card> & {
 	address?: string;
 	/** Secondary badge next to the name (e.g. "AI"). */
 	tag?: string;
-	/** Shows the brand "Autopilot" badge. */
-	autopilot?: boolean;
+	/** Brand badge with a status dot (e.g. "Live"); omit to hide it. */
+	status?: React.ReactNode;
 	stats?: AgentCardStat[];
 	/** Identicon seed; defaults to `name`. */
 	seed?: string;
+	/** ✦ depth of the card (forwarded to Card). */
+	elevation?: Elevation;
 	// ✦ `children` render in a footer under the stats (a note, an action row).
 };
 
@@ -80,15 +83,17 @@ function AgentCard({
 	name,
 	address,
 	tag,
-	autopilot,
+	status,
 	stats,
 	seed,
+	elevation,
 	children,
 	...props
 }: AgentCardProps) {
 	return (
 		<Card
 			data-slot="agent-card"
+			elevation={elevation}
 			className={cn("gap-0 p-5", className)}
 			{...props}
 		>
@@ -98,10 +103,10 @@ function AgentCard({
 					<div className="flex flex-wrap items-center gap-2">
 						<span className="text-base font-semibold">{name}</span>
 						{tag ? <Badge variant="secondary">{tag}</Badge> : null}
-						{autopilot ? (
+						{status ? (
 							<Badge variant="brand">
 								<span className="size-1.5 rounded-full bg-current" />
-								Autopilot
+								{status}
 							</Badge>
 						) : null}
 					</div>

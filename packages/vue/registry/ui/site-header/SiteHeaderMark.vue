@@ -16,7 +16,7 @@ const raised = computed(() => level.value === 'raised' || level.value === 'float
 </script>
 
 <template>
-  <!-- Dark tile with a chart glyph: the Stockbreak mark. Use the `logo` slot of the brand/header to replace it. -->
+  <!-- Dark tile with a chart glyph: Use the `logo` slot of the brand/header to replace it. -->
   <span
     data-slot="site-header-mark"
     :class="cn(

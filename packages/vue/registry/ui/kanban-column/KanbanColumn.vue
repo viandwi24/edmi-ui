@@ -3,6 +3,7 @@ import type { HTMLAttributes } from 'vue'
 import { provide } from 'vue'
 import { cn } from '@/registry/edmi/lib/utils'
 import type { Elevation } from '@/registry/edmi/ui/elevation'
+import { KANBAN_COLUMN_KEY } from './context'
 
 const props = defineProps<{
   /** ✦ depth of every `KanbanItem` (items may override) */
@@ -13,7 +14,7 @@ const props = defineProps<{
   meta?: string
 }>()
 
-provide('kanbanColumn', {
+provide(KANBAN_COLUMN_KEY, {
   get elevation() { return props.elevation },
 })
 </script>

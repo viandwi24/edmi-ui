@@ -107,7 +107,7 @@ const REQUIRED: Record<string, string[]> = {
 		"kanban-column",
 		"layout-picker",
 		"code-block",
-		"footer",
+		"site-footer",
 	],
 };
 
@@ -193,6 +193,8 @@ const AI_ELEVATION = [
 	"prompt-input",
 	"suggestion",
 	"artifact-card",
+	"artifact-viewer",
+	"session-panel",
 	"prompt-input-agent",
 	"node",
 	"speech-input",
@@ -255,7 +257,7 @@ const ELEVATION = [
 	"kanban-column",
 	"layout-picker",
 	"code-block",
-	"footer",
+	"site-footer",
 ];
 
 const docsPages = new Set<string>();

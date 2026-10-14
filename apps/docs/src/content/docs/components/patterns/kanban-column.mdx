@@ -1,5 +1,5 @@
 ---
-title: Kanban column
+title: Kanban Column
 description: "Sunken stage column with a mono header and Card items."
 ---
 import ComponentDemo from "../../../../components/ComponentDemo.astro";
@@ -30,11 +30,19 @@ Flat by default. The column is a sunken well. `elevation` on the column flows to
 <ComponentDemo name="kanban-column" demo="kanban-column-elevation" />
 
 ## API
-| Part | Props | Notes |
-| --- | --- | --- |
-| `KanbanColumn` | `title, meta?` | Sunk container, 282px wide. |
-| `KanbanItem` | `title, description?, icon?, action?, disabled?` | Card row; `disabled` dims to 60%. |
-| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
+
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| `KanbanColumn` | `title` | `ReactNode` (Vue/Svelte: `string`) | required |
+|  | `meta` | same as `title`; right header meta, e.g. `1/3` | none |
+|  | `elevation` ✦ | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
+|  | `…props` | `div` props, sunken container 282px wide |  |
+| `KanbanItem` | `title` | `ReactNode` (Vue/Svelte: `string`) | required |
+|  | `description` | same as `title` | none |
+|  | `icon` | React `ReactNode`; Vue slot `icon`; Svelte `icon` snippet | none |
+|  | `action` | React `ReactNode`; Vue slot `action`; Svelte `action` snippet | arrow up-right |
+|  | `disabled` | `boolean`; dims to 60% | `false` |
+|  | `elevation` ✦ | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 ## ✦ Edmi additions
 - Whole block is an Edmi addition (DESIGN §5 Patterns, board 12). Composed from: card.

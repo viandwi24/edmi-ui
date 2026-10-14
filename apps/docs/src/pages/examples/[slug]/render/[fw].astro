@@ -3,17 +3,17 @@
 // real viewport (Sidebar / fixed layouts / media queries) and its own <html> (.dark, data-base, data-theme,
 // --radius). Knobs arrive as query params and, afterwards, as postMessage({ type: "edmi-example", state }).
 import "../../../../styles/example-render.css";
-import { EXAMPLES } from "../../../../examples";
+import { EXAMPLES, exampleDir } from "../../../../examples";
 
 export function getStaticPaths() {
 	return EXAMPLES.flatMap((e) =>
-		e.frameworks.map((fw) => ({ params: { slug: e.slug, fw }, props: { title: e.title } })),
+		e.frameworks.map((fw) => ({ params: { slug: e.slug, fw }, props: { title: e.title, dir: exampleDir(e), exProps: e.props ?? {} } })),
 	);
 }
-const { slug, fw } = Astro.params as { slug: string; fw: string };
-const { title } = Astro.props;
+const { fw } = Astro.params as { slug: string; fw: string };
+const { title, dir, exProps } = Astro.props;
 const loaders = import.meta.glob("../../../../components/islands/examples/*/*.astro");
-const key = `../../../../components/islands/examples/${slug}/${fw}.astro`;
+const key = `../../../../components/islands/examples/${dir}/${fw}.astro`;
 const Example = ((await loaders[key]()) as { default: any }).default;
 ---
 
@@ -60,7 +60,7 @@ const Example = ((await loaders[key]()) as { default: any }).default;
 	</head>
 	<body>
 		<div id="example-root" class="min-h-svh">
-			<Example />
+			<Example {...exProps} />
 		</div>
 	</body>
 </html>

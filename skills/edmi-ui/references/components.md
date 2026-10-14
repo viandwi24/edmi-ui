@@ -15,6 +15,7 @@ Choose by "use when". If two items fit, prefer the more specific one (`field` ov
 - `font-instrument-sans`: React only: Instrument Sans (UI text). Vue and Svelte get fonts through `theme`. (React only)
 - `font-jetbrains-mono`: React only: JetBrains Mono (every number). Vue and Svelte get fonts through `theme`. (React only)
 - `font-sora`: React only: Sora 600, exposed as `--font-brand`, for wordmarks only. (React only)
+- `footer`: deprecated alias of `site-footer`; use `site-footer`.
 - `patterns`: every ✦ pattern block (headers, stat tiles, tickers, feeds, pricing, kanban, footer). Not part of `all`.
 - `theme`: always first: tokens, Tailwind v4 theme map, fonts and the base layer. Install it before any component.
 - `utils`: React only: the `cn` helper at `@/lib/utils`. Pulled in by `edmi`. (React only)
@@ -117,13 +118,13 @@ Choose by "use when". If two items fit, prefer the more specific one (`field` ov
 - `code-block` [elevation]: a static code card with copy button for docs and marketing (chat code uses `ai-code-block`).
 - `feature-row` [elevation]: numbered feature list row (landing pages).
 - `feed-post` [elevation]: a social post card with an attached item and stats.
-- `footer` [elevation]: site footer: brand, link columns, legal line.
 - `index-row`: a market-table row: avatars, tags, mono price, delta, sparkline.
 - `join-panel` [elevation]: amount input with Max, summary rows and a primary action.
 - `kanban-column` [elevation]: a kanban stage column with cards.
 - `layout-picker` [elevation]: dashboard or navbar choice cards that persist the choice in a cookie.
 - `leaderboard-podium` [elevation]: top-three podium cards.
 - `pricing-plan` [elevation]: a pricing plan card.
+- `site-footer` [elevation]: site footer: brand, link columns, legal line.
 - `site-header` [elevation]: marketing top bar: brand, links, one call to action.
 - `stat-tile` [elevation]: a KPI with mono value and delta; `StatStrip` groups several.
 - `step-card` [elevation]: numbered step card (how it works).
@@ -202,11 +203,11 @@ Choose by "use when". If two items fit, prefer the more specific one (`field` ov
 - `ai-agent-avatar`: ✦ 5x5 pixel identicon generated from an agent id.
 - `ai-artifact-card` [elevation]: ✦ a file card for generated output (paper thumbnail, Download, generating state).
 - `ai-artifact-stack`: ✦ a group of artifact cards with Download all.
-- `ai-artifact-viewer`: ✦ side panel that shows one artifact; documents render as paper.
+- `ai-artifact-viewer` [elevation]: ✦ side panel that shows one artifact; documents render as paper.
 - `ai-chat-composer` [elevation]: ✦ ready-made composer: attach, speech, disclaimer, model + effort, mode. Start here for a chat app.
 - `ai-chat-header`: ✦ conversation header: title, project/model, share, more.
 - `ai-prompt-input-agent` [elevation]: ✦ agent composer with agent chip, @ mentions and a floating plate.
-- `ai-session-panel`: ✦ chat side panel: Progress, Outputs, used in this session.
+- `ai-session-panel` [elevation]: ✦ chat side panel: Progress, Outputs, used in this session.
 
 ### AI · Utilities
 

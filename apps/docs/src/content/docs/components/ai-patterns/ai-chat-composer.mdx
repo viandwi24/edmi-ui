@@ -32,16 +32,16 @@ The composer plate is an overlay surface: flat by default, floating in layered m
 <ComponentDemo name="ai-chat-composer" demo="ai-chat-composer-elevation" />
 
 ## API
-| Prop | Type | Default |
-| --- | --- | --- |
-| `onSubmit` | `(message, event) => void` | required |
-| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
-| `placeholder`, `status`, `onStop` | `string`, `ChatStatus`, `() => void` | `Reply` |
-| `onAttach`, `onSpeech` | `() => void` (button hidden when omitted) | |
-| `disclaimer` | `ReactNode` | |
-| `models`, `model`, `defaultModel`, `onModelChange` | `{ id, label }[]`, ids | first option |
-| `efforts`, `effort`, `defaultEffort`, `onEffortChange` | same shape | first option |
-| `modes`, `mode`, `defaultMode`, `onModeChange` | same shape | first option |
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| ChatComposer | `onSubmit` | `(message, event) => void` | required |
+| ChatComposer | `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
+| ChatComposer | `placeholder`, `status`, `onStop` | `string`, `ChatStatus`, `() => void` | `Reply` |
+| ChatComposer | `onAttach`, `onSpeech` | `() => void` (button hidden when omitted) | |
+| ChatComposer | `disclaimer` | `ReactNode` (Vue: `disclaimer` slot, Svelte: `string \| Snippet`) | |
+| ChatComposer | `models`, `model`, `defaultModel`, `onModelChange` | `{ id, label }[]`, ids (Vue: `v-model:model`, Svelte: `bind:model` plus `onModelChange`) | first option |
+| ChatComposer | `efforts`, `effort`, `defaultEffort`, `onEffortChange` | same shape (`v-model:effort`, `bind:effort`) | first option |
+| ChatComposer | `modes`, `mode`, `defaultMode`, `onModeChange` | same shape (`v-model:mode`, `bind:mode`) | first option |
 
 ## ✦ Edmi additions
 - A one-line field with an enter hint, and a quiet footer row below it (not inside the field): attach, speech, disclaimer, model with effort, mode.

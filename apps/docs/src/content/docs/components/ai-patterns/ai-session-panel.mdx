@@ -23,15 +23,26 @@ Edmi ✦ addition. Built on `card`, `collapsible`, `progress`, `separator`, `but
 
 <ComponentSource name="ai-session-panel" />
 
+## Elevation ✦
+
+See the [Elevation guide](/edmi-ui/getting-started/elevation/) for the levels, roles and layered mode.
+
+Flat by default and a surface in layered mode. `sunken` (-1) is a soft inset, `raised` (+1) a bevel and `floating` (+2) a bevel with a soft drop.
+
+<ComponentDemo name="ai-session-panel" demo="ai-session-panel-elevation" />
+
 ## API
 | Part | Prop | Type | Default |
 | --- | --- | --- | --- |
+| SessionPanel | `elevation`, Card props | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 | SessionProgress | `title`, `value`, `onClose`, Collapsible props | `ReactNode`, `0-100`, `() => void` | `Progress` |
 | SessionSection | `title` | `ReactNode` | |
 | SessionOutputPreview | | box for the large preview | |
 | SessionOutputTitle | `meta` | `ReactNode` | |
 | SessionFile | `name`, `format`, `kind` | `ReactNode`, `ReactNode`, `ArtifactKind` | `document` |
 | SessionSource | `icon`, `label`, `favicons`, `more`, `children` | web search, memory, tools row | |
+
+In Vue `ReactNode` props are slots of the same name (the string prop stays as a fallback); in Svelte they accept `string | Snippet`.
 
 ## ✦ Edmi additions
 - `SessionSource` favicons stack with a count after them (`+4`); the detail line (`Read · Career, Tech`) goes in `children`.

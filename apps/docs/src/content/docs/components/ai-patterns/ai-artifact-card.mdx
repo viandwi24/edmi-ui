@@ -39,11 +39,13 @@ The card are flat by default and take the surface level in layered mode (raised)
 | ArtifactCardIcon | `kind` | `archive \| document \| code \| image \| slides \| file` | `document` |
 | ArtifactCardThumbnail | `variant` | `paper \| slide` | `paper` |
 | ArtifactCardTitle / Meta / Body | | `div` props | |
-| ArtifactCardActions | `label`, `onDownload` | `ReactNode`, `() => void` | `Download` |
+| ArtifactCardActions | `label`, `onDownload` | `ReactNode`, `() => void` (Vue: `label` slot and `download` event) | `Download` |
 | ArtifactCardActions | `children` | `DropdownMenuItem`s of the chevron half; no chevron without them | |
 | ArtifactKindIcon | `kind`, `className` | helper, also used by Session Panel | |
+
+In Vue `ReactNode` props are slots of the same name (the string prop stays as a fallback); in Svelte they accept `string | Snippet`.
 
 ## ✦ Edmi additions
 - Split Download button; the chevron opens copy link, open and similar actions.
 - `state="generating"`: the title shimmers and the actions are hidden.
-- `ArtifactCardThumbnail`: the top of page 1 as paper (always light, also in dark mode); `variant="slide"` is dark. It is an inset tile the size of the icon tile, clipped to its radius.
+- `ArtifactCardThumbnail`: the top of page 1 as paper (always light, also in dark mode); `variant="slide"` is dark. It is an inset tile the size of the icon tile, clipped to its radius. Paper and slide colours are fixed by design (documents render as paper in every mode), so the thumbnail uses literal colours.

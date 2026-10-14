@@ -1,5 +1,5 @@
 ---
-title: Agent card
+title: Agent Card
 description: "AI agent card with a deterministic 5x5 identicon, badges and a stat row."
 ---
 import ComponentDemo from "../../../../components/ComponentDemo.astro";
@@ -30,12 +30,19 @@ Flat by default. `elevation` is forwarded to the card: `sunken` (-1) a soft inse
 <ComponentDemo name="agent-card" demo="agent-card-elevation" />
 
 ## API
-| Part | Props | Notes |
-| --- | --- | --- |
-| `AgentCard` | `name, address?, tag?, autopilot?, stats?, seed?` | Card with identicon, secondary tag badge, brand Autopilot badge and stats. |
-| `AgentIdenticon` | `seed, size=44` | Token-colored 5x5 grid, deterministic per seed. |
-| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
-| `children` ✦ | React children, Vue default slot, Svelte `children` snippet | footer under the stats |
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| `AgentCard` | `name` | `string` | required |
+| | `address` | `string` (mono sub line) | none |
+| | `tag` | `string` (secondary badge) | none |
+| | `status` | brand badge with a dot, e.g. `Live` (React `ReactNode`, Vue `status` slot, Svelte `string \| Snippet`) | none |
+| | `stats` | `{ label, value }[]` (value: React `ReactNode`, Vue `stat-value` scoped slot, Svelte `string \| number \| Snippet`) | none |
+| | `seed` | `string` identicon seed | `name` |
+| | `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
+| | `children` ✦ | React children, Vue default slot, Svelte `children` snippet: footer under the stats | none |
+| `AgentIdenticon` | `seed`, `size` | token-coloured 5x5 grid, deterministic per seed | `size` 44 |
+
+`AgentIdenticon` is intentionally not merged with the AI pack's Agent Avatar: both are seeded 5x5 identicons, but the identicon here is a full grid painted in neutral token tones (`--muted-foreground-2`, `--muted-foreground`, `--foreground-2`) on a muted tile for list cards, while Agent Avatar is a mirrored 3x5 mark tinted with a chart color. Each keeps its own look.
 
 ## Footer ✦
 

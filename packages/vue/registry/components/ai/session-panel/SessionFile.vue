@@ -6,8 +6,9 @@ import { cn } from "@/registry/edmi/lib/utils"
 
 const props = withDefaults(defineProps<{
   class?: HTMLAttributes["class"]
-  name: string
-  /** Format badge on the right (`PDF`, `MD`). */
+  /** File name; the `name` slot overrides it. */
+  name?: string
+  /** Format badge on the right (`PDF`, `MD`); the `format` slot overrides it. */
   format?: string
   kind?: ArtifactKind
 }>(), {
@@ -24,7 +25,7 @@ const props = withDefaults(defineProps<{
     <span class="text-muted-foreground">
       <ArtifactKindIcon :kind="kind" class="size-4" />
     </span>
-    <span class="min-w-0 flex-1 truncate">{{ name }}</span>
-    <span v-if="format" class="font-mono text-[11.5px] text-muted-foreground">{{ format }}</span>
+    <span class="min-w-0 flex-1 truncate"><slot name="name">{{ name }}</slot></span>
+    <span v-if="format || $slots.format" class="font-mono text-[11.5px] text-muted-foreground"><slot name="format">{{ format }}</slot></span>
   </button>
 </template>

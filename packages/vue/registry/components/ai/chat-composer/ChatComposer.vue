@@ -30,7 +30,7 @@ const props = withDefaults(defineProps<{
   class?: HTMLAttributes["class"]
   placeholder?: string
   status?: ChatStatus
-  /** Small print centered in the footer. */
+  /** Small print centered in the footer (or use the `disclaimer` slot). */
   disclaimer?: string
   /** Same as PromptInput. */
   accept?: string
@@ -111,7 +111,7 @@ const ready = computed(() => props.status === undefined || props.status === "rea
         <AudioLinesIcon class="size-4" />
         <ChevronDown class="size-3" />
       </Button>
-      <span class="min-w-0 flex-1 truncate text-center text-muted-foreground">{{ disclaimer }}</span>
+      <span class="min-w-0 flex-1 truncate text-center text-muted-foreground"><slot name="disclaimer">{{ disclaimer }}</slot></span>
       <DropdownMenu v-if="models && models.length > 0">
         <DropdownMenuTrigger as-child>
           <Button size="xs" type="button" variant="ghost" class="gap-[5px] font-medium">

@@ -9,6 +9,7 @@ import {
 	CollapsibleContent,
 	CollapsibleTrigger,
 } from "@/registry/edmi/ui/collapsible";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
 
 type FeatureRowProps = Omit<React.ComponentProps<typeof Card>, "title"> & {
 	/** Mono number, e.g. "1.1". */
@@ -18,6 +19,8 @@ type FeatureRowProps = Omit<React.ComponentProps<typeof Card>, "title"> & {
 	icon?: React.ReactNode;
 	/** When set the row expands to show this content. */
 	children?: React.ReactNode;
+	/** ✦ depth of the card: sunken -1, flat 0, raised +1, floating +2. */
+	elevation?: Elevation;
 };
 
 const plus = (
@@ -37,6 +40,7 @@ function FeatureRow({
 	title,
 	icon = plus,
 	children,
+	elevation,
 	...props
 }: FeatureRowProps) {
 	const head = (
@@ -52,6 +56,7 @@ function FeatureRow({
 		return (
 			<Card
 				data-slot="feature-row"
+				elevation={elevation}
 				className={cn("h-14 flex-row items-center gap-4 px-5 py-0", className)}
 				{...props}
 			>
@@ -62,6 +67,7 @@ function FeatureRow({
 	return (
 		<Card
 			data-slot="feature-row"
+			elevation={elevation}
 			className={cn("gap-0 py-0", className)}
 			{...props}
 		>

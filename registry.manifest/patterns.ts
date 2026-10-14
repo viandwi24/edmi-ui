@@ -142,7 +142,14 @@ export const items: Item[] = [
 			"Top-three podium cards with rank badges and avatars; first place stands taller in the middle.",
 		type: "registry:block",
 		categories: ["Patterns"],
-		registryDependencies: ["card", "avatar", "badge", "elevation"],
+		registryDependencies: [
+			"card",
+			"avatar",
+			"badge",
+			"allocation-bar",
+			"index-row",
+			"elevation",
+		],
 		docs: "Edmi pattern block: `shadcn add @edmi-ui/leaderboard-podium`.",
 		frameworks: {
 			react: {

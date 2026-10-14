@@ -1,5 +1,5 @@
 ---
-title: Code block
+title: Code Block
 description: "Card with mono code, optional line highlight and a copy button."
 ---
 import ComponentDemo from "../../../../components/ComponentDemo.astro";
@@ -30,10 +30,21 @@ Flat by default. `elevation` is forwarded to the card: `sunken` (-1) a soft inse
 <ComponentDemo name="code-block" demo="code-block-elevation" />
 
 ## API
-| Part | Props | Notes |
-| --- | --- | --- |
-| `CodeBlock` | `code, title?, highlightLines?, copyable=true, onCopy?` | Plain mono `pre` (no syntax highlighting, no extra dependency). Copy button shows a check for 1.5s. |
-| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
+
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| `CodeBlock` | `code` | `string` | required |
+|  | `title` | React `ReactNode`; Vue `string` or slot `title`; Svelte `string \| Snippet` | none |
+|  | `highlightLines` | `number[]` (1-based) | none |
+|  | `copyable` | `boolean` | `true` |
+|  | `onCopy` | React `onCopy(code)`; Vue `@copy`; Svelte `onCopy(code)`. Called after a successful copy | none |
+|  | `elevation` ✦ | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
+
+Plain mono `pre` (no syntax highlighting, no extra dependency). The copy button shows a check for 1.5s.
+
+## Code block vs AI code block
+
+`code-block` is a small pattern: a card with plain mono text, a line highlight and a copy button, no dependencies. It suits docs and landing snippets. [`ai-code-block`](/edmi-ui/components/ai-code/ai-code-block/) is the full AI pack component (Shiki syntax highlighting tied to the chart tokens, language selector, composable parts). The two are separate on purpose; pick `ai-code-block` when you need real highlighting.
 
 ## ✦ Edmi additions
 - Whole block is an Edmi addition (DESIGN §5 Patterns, board 12). Composed from: button, card.

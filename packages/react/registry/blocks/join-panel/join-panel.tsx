@@ -1,8 +1,10 @@
+"use client";
+
 import { cn } from "cn";
 import * as React from "react";
 import { Button } from "@/registry/edmi/ui/button";
 import { Card } from "@/registry/edmi/ui/card";
-import type { Elevation } from "@/registry/edmi/ui/elevation";
+import { controlLevel, type Elevation } from "@/registry/edmi/ui/elevation";
 import {
 	InputGroup,
 	InputGroupAddon,
@@ -22,7 +24,7 @@ type JoinPanelTab = { value: string; label: React.ReactNode };
 function JoinPanel({
 	className,
 	label = "Amount",
-	currency = "USDC",
+	currency,
 	amount,
 	defaultAmount = "",
 	onAmountChange,
@@ -43,6 +45,7 @@ function JoinPanel({
 	...props
 }: Omit<React.ComponentProps<typeof Card>, "children" | "size" | "onSubmit"> & {
 	label?: React.ReactNode;
+	/** Unit shown in the label and beside the field (e.g. `USDC`); omit for none. */
 	currency?: string;
 	/** Controlled value. */
 	amount?: string;
@@ -71,12 +74,7 @@ function JoinPanel({
 	/** ✦ depth of the card; raised +1 / floating +2 also raise the tabs, chips and join Button. */
 	elevation?: Elevation;
 }) {
-	const control =
-		elevation && elevation !== "auto"
-			? elevation === "raised" || elevation === "floating"
-				? "raised"
-				: "flat"
-			: undefined;
+	const control = controlLevel(elevation);
 	const id = React.useId();
 	const [inner, setInner] = React.useState(defaultAmount);
 	const value = amount ?? inner;
@@ -120,7 +118,8 @@ function JoinPanel({
 				htmlFor={id}
 				className="px-(--card-spacing) text-xs text-muted-foreground"
 			>
-				{label} ({currency})
+				{label}
+				{currency ? ` (${currency})` : null}
 			</label>
 			<div className="px-(--card-spacing)">
 				<InputGroup
@@ -147,9 +146,11 @@ function JoinPanel({
 								<InputGroupButton variant="secondary" onClick={onMax}>
 									Max
 								</InputGroupButton>
-								<InputGroupText className="bg-transparent px-1.5 text-xs">
-									{currency}
-								</InputGroupText>
+								{currency ? (
+									<InputGroupText className="bg-transparent px-1.5 text-xs">
+										{currency}
+									</InputGroupText>
+								) : null}
 							</>
 						)}
 					</InputGroupAddon>

@@ -1,18 +1,18 @@
+"use client";
+
 import { cn } from "cn";
 import type * as React from "react";
 import { IconPlaceholder } from "@/edmi/icon-placeholder";
-import { type Elevation, useElevation } from "@/registry/edmi/ui/elevation";
+import {
+	controlLevel,
+	type Elevation,
+	surfaceElevation,
+	useElevation,
+} from "@/registry/edmi/ui/elevation";
 
 type SiteHeaderLink = { label: string; href: string };
 
-const surfaceElevation = {
-	sunken: "border-sk-bd bg-sk-bg shadow-sunken",
-	flat: "",
-	raised: "border-transparent shadow-raised",
-	floating: "border-transparent shadow-floating",
-};
-
-// Dark tile with a chart glyph: the Stockbreak mark (`raised` adds the raised face). Pass `logo` to replace it.
+// Dark tile with a chart glyph (`raised` adds the raised face). Pass `logo` to replace it.
 function SiteHeaderMark({
 	className,
 	elevation,
@@ -46,7 +46,7 @@ function SiteHeaderMark({
 function SiteHeaderBrand({
 	className,
 	logo,
-	name = "Stockbreak",
+	name,
 	href = "/",
 	elevation,
 	...props
@@ -64,9 +64,11 @@ function SiteHeaderBrand({
 			{...props}
 		>
 			{logo ?? <SiteHeaderMark elevation={elevation} />}
-			<span className="font-brand text-xl font-semibold tracking-[-0.4px]">
-				{name}
-			</span>
+			{name != null ? (
+				<span className="font-brand text-xl font-semibold tracking-[-0.4px]">
+					{name}
+				</span>
+			) : null}
 		</a>
 	);
 }
@@ -97,7 +99,6 @@ function SiteHeader({
 	elevation?: Elevation;
 }) {
 	const level = useElevation(elevation, "surface");
-	const raised = level === "raised" || level === "floating";
 	return (
 		<header
 			data-slot="site-header"
@@ -112,13 +113,7 @@ function SiteHeader({
 				logo={logo}
 				name={name}
 				href={href}
-				elevation={
-					elevation && elevation !== "auto"
-						? raised
-							? "raised"
-							: "flat"
-						: undefined
-				}
+				elevation={controlLevel(elevation)}
 			/>
 			<nav
 				className="flex items-center gap-1 whitespace-nowrap max-md:hidden"

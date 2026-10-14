@@ -5,7 +5,8 @@ import { cn } from "@/registry/edmi/lib/utils"
 
 const props = defineProps<{
   class?: HTMLAttributes["class"]
-  label: string
+  /** Row label; the `label` slot overrides it. */
+  label?: string
   favicons?: SessionSourceFavicon[]
   /** Count after the favicons (`+4`). */
   more?: number
@@ -18,7 +19,7 @@ const props = defineProps<{
     <span class="text-muted-foreground [&_svg]:size-4">
       <slot name="icon" />
     </span>
-    <span :class="cn(!$slots.default && 'flex-1')">{{ label }}</span>
+    <span :class="cn(!$slots.default && 'flex-1')"><slot name="label">{{ label }}</slot></span>
     <span v-if="$slots.default" class="min-w-0 flex-1 truncate text-[12.5px] text-muted-foreground">
       <slot />
     </span>

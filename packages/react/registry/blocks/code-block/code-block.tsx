@@ -5,6 +5,7 @@ import * as React from "react";
 import { IconPlaceholder } from "@/edmi/icon-placeholder";
 import { Button } from "@/registry/edmi/ui/button";
 import { Card } from "@/registry/edmi/ui/card";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
 
 type CodeBlockProps = Omit<React.ComponentProps<typeof Card>, "title"> & {
 	/** Source text. */
@@ -17,6 +18,8 @@ type CodeBlockProps = Omit<React.ComponentProps<typeof Card>, "title"> & {
 	copyable?: boolean;
 	/** Called after a successful copy. */
 	onCopy?: (code: string) => void;
+	/** ✦ depth of the card: sunken -1, flat 0, raised +1, floating +2. */
+	elevation?: Elevation;
 };
 
 function CodeBlock({
@@ -26,6 +29,7 @@ function CodeBlock({
 	highlightLines,
 	copyable = true,
 	onCopy,
+	elevation,
 	...props
 }: CodeBlockProps) {
 	const [copied, setCopied] = React.useState(false);
@@ -50,6 +54,7 @@ function CodeBlock({
 	return (
 		<Card
 			data-slot="code-block"
+			elevation={elevation}
 			className={cn("gap-0 overflow-hidden p-0", className)}
 			{...props}
 		>

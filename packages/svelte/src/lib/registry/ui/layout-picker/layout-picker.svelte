@@ -2,7 +2,7 @@
 	import { cn, type WithElementRef } from "$lib/utils.js";
 	import type { HTMLAttributes } from "svelte/elements";
 	import type { Layout } from "./layout.js";
-	import { type Elevation, useElevation } from "$lib/registry/ui/elevation/index.js";
+	import { type Elevation, surfaceElevation, useElevation } from "$lib/registry/ui/elevation/index.js";
 	import LayoutPickerWireframe from "./layout-picker-wireframe.svelte";
 
 	let {
@@ -23,13 +23,6 @@
 	} = $props();
 
 	const level = useElevation(() => elevation, "control");
-	// ✦ choice-card depth (v4); the checked card keeps its ring.
-	const choiceElevation = {
-		sunken: "border-sk-bd bg-sk-bg shadow-sunken",
-		flat: "",
-		raised: "border-transparent shadow-raised",
-		floating: "border-transparent shadow-floating",
-	};
 
 	const options: { value: Layout; label: string }[] = [
 		{ value: "dashboard", label: "Dashboard" },
@@ -51,7 +44,7 @@
 		<label
 			class={cn(
 				"group/lp flex w-[220px] cursor-pointer flex-col gap-2.5 rounded-xl border border-border bg-card p-3.5 has-[:checked]:border-ring has-[:checked]:bg-[color-mix(in_srgb,var(--brand)_5%,var(--card))] has-[:checked]:shadow-[0_0_0_1px_var(--ring)] has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ring",
-				choiceElevation[level.current]
+				surfaceElevation[level.current]
 			)}
 		>
 			<input

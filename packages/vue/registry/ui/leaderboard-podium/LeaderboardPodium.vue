@@ -3,24 +3,31 @@ import type { HTMLAttributes } from 'vue'
 import type { PodiumEntry } from '.'
 import { computed } from 'vue'
 import { cn } from '@/registry/edmi/lib/utils'
+import { AllocationBar } from '@/registry/edmi/ui/allocation-bar'
 import { Avatar, AvatarFallback, AvatarImage } from '@/registry/edmi/ui/avatar'
 import { Badge } from '@/registry/edmi/ui/badge'
 import { Card } from '@/registry/edmi/ui/card'
 import type { Elevation } from '@/registry/edmi/ui/elevation'
+import { Sparkline } from '@/registry/edmi/ui/index-row'
 
 const props = withDefaults(defineProps<{
   /** ✦ depth of the cards, forwarded to each Card */
   elevation?: Elevation
   /** ✦ `podium` (default) or `cards` */
   variant?: 'podium' | 'cards'
+  /** ✦ `cards`: label of the footer `value` stat */
+  valueLabel?: string
+  /** ✦ `cards`: label of the footer `count` stat */
+  countLabel?: string
   entries: PodiumEntry[]
   class?: HTMLAttributes['class']
 }>(), {
   variant: 'podium',
+  valueLabel: 'Value',
+  countLabel: 'Count',
 })
 
 const isDown = (s: string) => /^[-−–]/.test(s.trim())
-const color = (c: string | undefined, i: number) => c ?? `var(--chart-${(i % 5) + 1})`
 
 // `podium` (default): #1 raised in the middle (warning badge), #2 left and #3 right sit lower.
 // `cards` ✦: three equal stat cards in rank order (leaderboard board).
@@ -29,19 +36,6 @@ const ordered = computed(() => {
   const order = props.variant === 'cards' ? [1, 2, 3] : [2, 1, 3]
   return order.map(by).filter((e): e is PodiumEntry => !!e)
 })
-
-function sparkPoints(data: number[], width = 150, height = 34) {
-  const min = Math.min(...data)
-  const span = Math.max(...data) - min || 1
-  const pad = 2
-  return data
-    .map((v, i) => {
-      const x = pad + (i / (data.length - 1)) * (width - pad * 2)
-      const y = pad + (1 - (v - min) / span) * (height - pad * 2)
-      return `${x.toFixed(1)},${y.toFixed(1)}`
-    })
-    .join(' ')
-}
 </script>
 
 <template>
@@ -55,7 +49,7 @@ function sparkPoints(data: number[], width = 150, height = 34) {
       <Card :elevation="elevation" class="h-full gap-0 p-6">
         <div class="flex items-center justify-between text-[13px]">
           <span class="font-medium">No. {{ e.rank }}</span>
-          <span v-if="e.creator" class="font-mono text-xs text-muted-foreground">{{ e.creator }}</span>
+          <span v-if="e.owner" class="font-mono text-xs text-muted-foreground">{{ e.owner }}</span>
         </div>
         <div class="mt-3 flex items-center gap-3">
           <Avatar class="size-11 rounded-xl after:rounded-xl">
@@ -78,47 +72,22 @@ function sparkPoints(data: number[], width = 150, height = 34) {
           <span :class="cn('text-[30px] leading-none tracking-[-0.8px]', isDown(e.change) ? 'text-destructive-text' : 'text-brand-text')">
             {{ e.change }}
           </span>
-          <svg
-            v-if="e.spark && e.spark.length > 1"
-            width="150"
-            height="34"
-            viewBox="0 0 150 34"
-            fill="none"
-            aria-hidden="true"
-            :class="cn('max-w-[45%]', isDown(e.change) ? 'text-destructive-text' : 'text-success-text')"
-          >
-            <polyline
-              :points="sparkPoints(e.spark)"
-              stroke="currentColor"
-              stroke-width="1.6"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
+          <Sparkline
+            v-if="e.spark"
+            :data="e.spark"
+            :tone="isDown(e.change) ? 'down' : 'up'"
+            :width="150"
+            :height="34"
+            class="max-w-[45%]"
+          />
         </div>
-        <div v-if="e.allocation?.length" class="mt-4">
-          <div class="flex h-2 gap-[3px]" role="img" :aria-label="e.allocation.map(s => `${s.label} ${s.value}%`).join(', ')">
-            <span
-              v-for="(s, i) in e.allocation"
-              :key="s.label"
-              class="rounded-[3px]"
-              :style="{ flex: s.value, background: color(s.color, i) }"
-            />
-          </div>
-          <ul class="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-foreground-2">
-            <li v-for="(s, i) in e.allocation" :key="s.label" class="flex items-center gap-1.5">
-              <span class="size-2 rounded-[2px]" :style="{ background: color(s.color, i) }" />
-              <span class="font-mono">{{ s.label }}</span>
-              <b class="font-semibold text-foreground">{{ s.value }}%</b>
-            </li>
-          </ul>
-        </div>
+        <AllocationBar v-if="e.allocation?.length" :segments="e.allocation" size="sm" class="mt-4" />
         <div
-          v-if="e.aum !== undefined || e.holders !== undefined"
+          v-if="e.value !== undefined || e.count !== undefined"
           class="mt-4 flex items-center gap-4 border-t border-border-2 pt-3.5 text-[13px] text-muted-foreground"
         >
-          <span v-if="e.aum !== undefined">AUM <b class="font-mono font-medium text-foreground">{{ e.aum }}</b></span>
-          <span v-if="e.holders !== undefined">Holders <b class="font-mono font-medium text-foreground">{{ e.holders }}</b></span>
+          <span v-if="e.value !== undefined">{{ valueLabel }} <b class="font-mono font-medium text-foreground">{{ e.value }}</b></span>
+          <span v-if="e.count !== undefined">{{ countLabel }} <b class="font-mono font-medium text-foreground">{{ e.count }}</b></span>
         </div>
       </Card>
     </li>

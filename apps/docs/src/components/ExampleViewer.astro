@@ -12,7 +12,7 @@ import {
 	FRAMEWORKS,
 	type Framework,
 } from "../config";
-import { EXAMPLE_FILE, type ExampleMeta } from "../examples";
+import { EXAMPLE_FILE, exampleDir, type ExampleMeta } from "../examples";
 import { rewriteImports } from "../lib/demo";
 
 interface Props {
@@ -25,7 +25,7 @@ const THEMES = ["green", "ocean"];
 const RADII = ["0", "0.3", "0.5", "0.625", "0.75", "1"];
 
 // Sources per framework: main file, then helper files in `<fw>/`, then the shared data.ts.
-const dir = resolve(process.cwd(), "src/examples", example.slug);
+const dir = resolve(process.cwd(), "src/examples", exampleDir(example));
 type SourceFile = { name: string; code: string };
 const sources = {} as Record<Framework, SourceFile[]>;
 for (const fw of example.frameworks) {

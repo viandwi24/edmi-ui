@@ -3,21 +3,30 @@ import type { ComponentProps, ReactNode } from "react";
 import { IconPlaceholder } from "@/edmi/icon-placeholder";
 import { Button } from "@/registry/edmi/ui/button";
 import { Card } from "@/registry/edmi/ui/card";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipTrigger,
 } from "@/registry/edmi/ui/tooltip";
 
-export type ArtifactViewerProps = ComponentProps<typeof Card>;
+export type ArtifactViewerProps = Omit<
+	ComponentProps<typeof Card>,
+	"elevation"
+> & {
+	/** ✦ depth: sunken -1, flat 0, raised +1, floating +2. */
+	elevation?: Elevation;
+};
 
 /** Side panel that shows one artifact. */
 export const ArtifactViewer = ({
 	className,
+	elevation,
 	...props
 }: ArtifactViewerProps) => (
 	<Card
 		data-slot="ai-artifact-viewer"
+		elevation={elevation}
 		className={cn("gap-0 py-0 text-card-foreground", className)}
 		{...props}
 	/>

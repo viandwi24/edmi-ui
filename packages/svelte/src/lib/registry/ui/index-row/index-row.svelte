@@ -2,16 +2,19 @@
 	export type IndexRowData = {
 		name: string;
 		symbol: string;
-		/** One avatar per constituent token: image URL or a short label. */
-		tokens: { label: string; image?: string }[];
+		/** One avatar per member (e.g. a constituent): image URL or a short label. */
+		avatars: { label: string; image?: string }[];
 		tags?: string[];
-		creator: string;
+		/** Text of the owner column. */
+		owner: string;
 		price: string;
 		/** Signed percentage, e.g. `+1.12%`. */
 		change: string;
-		aum: string;
-		holders: string | number;
-		/** Series for the 30d sparkline. */
+		/** Text of the value column (mono, right-aligned). */
+		value: string;
+		/** Text of the count column (mono, right-aligned). */
+		count: string | number;
+		/** Series for the trend sparkline. */
 		spark?: number[];
 		href?: string;
 	};
@@ -36,7 +39,7 @@
 		index: IndexRowData;
 		/** ✦ Leading mono rank column (pair with `<IndexRowHeader rank />`). */
 		rank?: number | string;
-		/** ✦ `text` (default) or `pill`: soft tinted pill for the 7d delta. */
+		/** ✦ `text` (default) or `pill`: soft tinted pill for the change. */
 		delta?: "text" | "pill";
 	} = $props();
 
@@ -51,7 +54,7 @@
 	<TableCell>
 		<div class="flex items-center gap-3">
 			<AvatarGroup>
-				{#each index.tokens as t (t.label)}
+				{#each index.avatars as t (t.label)}
 					<Avatar class="size-7">
 						{#if t.image}<AvatarImage src={t.image} alt="" />{/if}
 						<AvatarFallback class="text-[10px]">{t.label}</AvatarFallback>
@@ -77,7 +80,7 @@
 			</div>
 		</div>
 	</TableCell>
-	<TableCell class="font-mono text-xs text-muted-foreground">{index.creator}</TableCell>
+	<TableCell class="font-mono text-xs text-muted-foreground">{index.owner}</TableCell>
 	<TableCell class="text-right font-mono text-[12.5px] font-semibold">{index.price}</TableCell>
 	<TableCell
 		class={cn("text-right font-mono text-[12.5px]", delta === "text" && (down ? "text-destructive-text" : "text-success-text"))}
@@ -93,8 +96,8 @@
 			{index.change}
 		{/if}
 	</TableCell>
-	<TableCell class="text-right font-mono text-[12.5px]">{index.aum}</TableCell>
-	<TableCell class="text-right font-mono text-[12.5px]">{index.holders}</TableCell>
+	<TableCell class="text-right font-mono text-[12.5px]">{index.value}</TableCell>
+	<TableCell class="text-right font-mono text-[12.5px]">{index.count}</TableCell>
 	<TableCell class="text-right">
 		{#if index.spark}<Sparkline data={index.spark} tone={down ? "down" : "up"} />{/if}
 	</TableCell>

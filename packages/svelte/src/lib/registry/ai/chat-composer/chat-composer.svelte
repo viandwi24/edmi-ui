@@ -4,7 +4,7 @@
 	import * as DropdownMenu from "$lib/registry/ui/dropdown-menu/index.js";
 	import { cn } from "$lib/utils.js";
 	import type { ChatStatus } from "ai";
-	import type { ComponentProps } from "svelte";
+	import type { ComponentProps, Snippet } from "svelte";
 	import {
 		PromptInput,
 		PromptInputBody,
@@ -14,6 +14,7 @@
 	import type { ChatComposerOption } from "./types.js";
 
 	let {
+		ref = $bindable(null),
 		class: className,
 		placeholder = "Reply",
 		status,
@@ -24,14 +25,18 @@
 		models,
 		model = $bindable(),
 		defaultModel,
+		onModelChange,
 		efforts,
 		effort = $bindable(),
 		defaultEffort,
+		onEffortChange,
 		modes,
 		mode = $bindable(),
 		defaultMode,
+		onModeChange,
 		...restProps
 	}: Omit<ComponentProps<typeof PromptInput>, "children"> & {
+		ref?: HTMLDivElement | null;
 		placeholder?: string;
 		status?: ChatStatus;
 		onStop?: () => void;
@@ -40,17 +45,20 @@
 		/** Mic button in the footer (speech input); omit to hide it. */
 		onSpeech?: () => void;
 		/** Small print centered in the footer. */
-		disclaimer?: string;
+		disclaimer?: string | Snippet;
 		models?: ChatComposerOption[];
 		/** `bind:model`; use `defaultModel` for uncontrolled. */
 		model?: string;
 		defaultModel?: string;
+		onModelChange?: (id: string) => void;
 		efforts?: ChatComposerOption[];
 		effort?: string;
 		defaultEffort?: string;
+		onEffortChange?: (id: string) => void;
 		modes?: ChatComposerOption[];
 		mode?: string;
 		defaultMode?: string;
+		onModeChange?: (id: string) => void;
 	} = $props();
 
 	// Uncontrolled values start from the defaults (or the first option).
@@ -66,7 +74,7 @@
 </script>
 
 <!-- Prompt input with the quiet footer outside the field: attach, speech, disclaimer, model + effort, mode. -->
-<div data-slot="ai-chat-composer" class={cn("flex w-full flex-col", className)}>
+<div bind:this={ref} data-slot="ai-chat-composer" class={cn("flex w-full flex-col", className)}>
 	<PromptInput {...restProps}>
 		<PromptInputBody>
 			<div class="flex w-full items-center pr-2">
@@ -127,7 +135,7 @@
 				/>
 			</Button>
 		{/if}
-		<span class="min-w-0 flex-1 truncate text-center text-muted-foreground">{disclaimer}</span>
+		<span class="min-w-0 flex-1 truncate text-center text-muted-foreground">{#if typeof disclaimer === "string"}{disclaimer}{:else if disclaimer}{@render disclaimer()}{/if}</span>
 		{#if models && models.length > 0}
 			<DropdownMenu.Root>
 				<DropdownMenu.Trigger>
@@ -143,7 +151,12 @@
 				<DropdownMenu.Content align="end" side="top">
 					<DropdownMenu.Group>
 						<DropdownMenu.Label>Model</DropdownMenu.Label>
-						<DropdownMenu.RadioGroup bind:value={model}>
+						<DropdownMenu.RadioGroup value={model}
+							onValueChange={(v) => {
+								model = v;
+								onModelChange?.(v);
+							}}
+						>
 							{#each models as m (m.id)}
 								<DropdownMenu.RadioItem value={m.id}>{m.label}</DropdownMenu.RadioItem>
 							{/each}
@@ -153,7 +166,12 @@
 						<DropdownMenu.Separator />
 						<DropdownMenu.Group>
 							<DropdownMenu.Label>Effort</DropdownMenu.Label>
-							<DropdownMenu.RadioGroup bind:value={effort}>
+							<DropdownMenu.RadioGroup value={effort}
+								onValueChange={(v) => {
+									effort = v;
+									onEffortChange?.(v);
+								}}
+							>
 								{#each efforts as e (e.id)}
 									<DropdownMenu.RadioItem value={e.id}>{e.label}</DropdownMenu.RadioItem>
 								{/each}
@@ -175,7 +193,12 @@
 				<DropdownMenu.Content align="end" side="top">
 					<DropdownMenu.Group>
 						<DropdownMenu.Label>Mode</DropdownMenu.Label>
-						<DropdownMenu.RadioGroup bind:value={mode}>
+						<DropdownMenu.RadioGroup value={mode}
+							onValueChange={(v) => {
+								mode = v;
+								onModeChange?.(v);
+							}}
+						>
 							{#each modes as m (m.id)}
 								<DropdownMenu.RadioItem value={m.id}>{m.label}</DropdownMenu.RadioItem>
 							{/each}

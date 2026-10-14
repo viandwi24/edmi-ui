@@ -24,7 +24,7 @@
 	{#each levels as l (l.value)}
 		<div class="flex flex-col gap-2">
 			<p class="text-xs font-medium text-muted-foreground">{l.label}</p>
-<SiteHeader elevation={l.value} lead="How to" {steps} {links}>
+<SiteHeader name="Stockbreak" elevation={l.value} lead="How to" {steps} {links}>
 	{#snippet action({ elevation })}
 		<Button {elevation}>Create an index</Button>
 	{/snippet}

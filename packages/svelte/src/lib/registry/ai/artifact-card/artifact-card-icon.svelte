@@ -1,18 +1,20 @@
 <script lang="ts">
-	import { cn } from "$lib/utils.js";
+	import { cn, type WithElementRef } from "$lib/utils.js";
 	import type { HTMLAttributes } from "svelte/elements";
 	import ArtifactKindIcon from "./artifact-kind-icon.svelte";
 	import type { ArtifactKind } from "./use-artifact-card.svelte.js";
 
 	let {
+		ref = $bindable(null),
 		kind = "document",
 		class: className,
 		children,
 		...restProps
-	}: HTMLAttributes<HTMLSpanElement> & { kind?: ArtifactKind } = $props();
+	}: WithElementRef<HTMLAttributes<HTMLSpanElement>, HTMLSpanElement> & { kind?: ArtifactKind } = $props();
 </script>
 
 <span
+	bind:this={ref}
 	data-slot="ai-artifact-card-icon"
 	class={cn(
 		"inline-flex h-14 w-[52px] shrink-0 items-center justify-center rounded-[calc(var(--radius)*0.9)] border border-border bg-muted text-muted-foreground",

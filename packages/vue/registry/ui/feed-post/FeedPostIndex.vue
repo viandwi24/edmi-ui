@@ -12,7 +12,8 @@ import { cn } from '@/registry/edmi/lib/utils'
 
 const props = defineProps<{
   class?: HTMLAttributes['class']
-  title: string
+  /** Title text, or use slot `title` for rich content. */
+  title?: string
   description?: string
 }>()
 </script>
@@ -24,7 +25,7 @@ const props = defineProps<{
       <slot name="icon" />
     </ItemMedia>
     <ItemContent>
-      <ItemTitle>{{ title }}</ItemTitle>
+      <ItemTitle><slot name="title">{{ title }}</slot></ItemTitle>
       <ItemDescription v-if="description" class="font-mono text-[11.5px]">
         {{ description }}
       </ItemDescription>

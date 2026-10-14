@@ -2,6 +2,7 @@ import { cn } from "cn";
 import type * as React from "react";
 import { Badge } from "@/registry/edmi/ui/badge";
 import { Card } from "@/registry/edmi/ui/card";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
 
 const isDown = (s: string) => /^[-−–]/.test(s.trim());
 
@@ -66,6 +67,7 @@ function StatTile({
 	deltaLabel,
 	trend,
 	meter,
+	elevation,
 	children,
 	...props
 }: Omit<React.ComponentProps<typeof Card>, "children" | "size"> & {
@@ -77,12 +79,15 @@ function StatTile({
 	trend?: "up" | "down";
 	/** Segmented meter under the value. */
 	meter?: React.ComponentProps<typeof StatMeter>;
+	/** ✦ depth of the tile (forwarded to Card). */
+	elevation?: Elevation;
 	children?: React.ReactNode;
 }) {
 	const down = trend ? trend === "down" : delta ? isDown(delta) : false;
 	return (
 		<Card
 			data-slot="stat-tile"
+			elevation={elevation}
 			className={cn("w-60 gap-0 px-5 py-[18px]", className)}
 			{...props}
 		>
@@ -113,10 +118,18 @@ function StatTile({
 }
 
 // Row of numbers in one card; cells are divided by 1px borders.
-function StatStrip({ className, ...props }: React.ComponentProps<typeof Card>) {
+function StatStrip({
+	className,
+	elevation,
+	...props
+}: React.ComponentProps<typeof Card> & {
+	/** ✦ depth of the strip (forwarded to Card). */
+	elevation?: Elevation;
+}) {
 	return (
 		<Card
 			data-slot="stat-strip"
+			elevation={elevation}
 			className={cn("flex-row gap-0 overflow-x-auto p-0", className)}
 			{...props}
 		/>

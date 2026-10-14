@@ -4,6 +4,7 @@
 	import { agentAvatarCells } from "./identicon.js";
 
 	let {
+		ref = $bindable(null),
 		seed,
 		color,
 		size = 40,
@@ -12,6 +13,7 @@
 		class: className,
 		...restProps
 	}: Omit<SVGAttributes<SVGSVGElement>, "color"> & {
+		ref?: SVGSVGElement | null;
 		/** Agent id: the same seed always draws the same mark. */
 		seed: string;
 		/** `chart-1` to `chart-5`, or any CSS color. Defaults to a chart token picked from the seed. */
@@ -39,6 +41,7 @@
 </script>
 
 <svg
+	bind:this={ref}
 	data-slot="ai-agent-avatar"
 	width={size}
 	height={size}

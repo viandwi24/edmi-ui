@@ -30,14 +30,17 @@ Flat by default. `elevation` sets the depth of the option cards: `sunken` (-1) w
 <ComponentDemo name="layout-picker" demo="layout-picker-elevation" />
 
 ## API
-| Prop | Type | Default |
-| --- | --- | --- |
-| `LayoutPicker value` / `defaultValue` | `"dashboard" \| "navbar"` | `"dashboard"` |
-| `LayoutPicker onValueChange` | `(layout) => void` | none |
-| `LayoutPickerToast defaultOpen` | `boolean` (skip the cookie check) | cookie unset |
-| `LayoutPickerToast onValueChange` / `onClose` | callbacks | none |
-| `getLayoutCookie(cookie?)` / `setLayoutCookie(layout)` | helpers, cookie `edmi-layout` | |
-| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| `LayoutPicker` | `value` / `defaultValue` | `"dashboard" \| "navbar"` (Vue `v-model`, Svelte `bind:value`) | `"dashboard"` |
+| | `onValueChange` | `(layout) => void` | none |
+| | `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
+| `LayoutPickerToast` | `defaultOpen` | `boolean` (skip the cookie check) | cookie unset |
+| | `value` / `defaultValue` | selected layout (Vue `v-model`, Svelte `bind:value`) | `"dashboard"` |
+| | `onValueChange` / `onClose` | callbacks (Vue emits `update:modelValue` / `close`) | none |
+| | `title` / `description` | `ReactNode` | `"Choose your layout"` / `"You can switch any time."` |
+| | `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
+| helpers | `getLayoutCookie(cookie?)` / `setLayoutCookie(layout)` | cookie `edmi-layout` | |
 
 The toast renders nothing once the cookie exists. Picking a card saves it; closing without picking saves the default (`dashboard`) so the toast does not return. Read the cookie on the server (`getLayoutCookie(request.headers.get("cookie") ?? "")`) to render the right shell without a flash (DESIGN §3, §6).
 

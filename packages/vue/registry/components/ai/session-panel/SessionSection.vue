@@ -4,14 +4,17 @@ import { cn } from "@/registry/edmi/lib/utils"
 
 const props = defineProps<{
   class?: HTMLAttributes["class"]
-  title: string
+  /** Heading text; the `title` slot overrides it. */
+  title?: string
 }>()
 </script>
 
 <template>
   <section data-slot="ai-session-section" :class="cn('flex flex-col', props.class)">
     <h3 class="mb-2.5 text-sm font-normal">
-      {{ title }}
+      <slot name="title">
+        {{ title }}
+      </slot>
     </h3>
     <slot />
   </section>

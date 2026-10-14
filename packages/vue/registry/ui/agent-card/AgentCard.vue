@@ -16,8 +16,8 @@ const props = defineProps<{
   address?: string
   /** Secondary badge next to the name (e.g. "AI"). */
   tag?: string
-  /** Shows the brand "Autopilot" badge. */
-  autopilot?: boolean
+  /** Brand badge with a status dot (e.g. "Live"; or use the `status` slot); omit to hide it. */
+  status?: string
   stats?: AgentCardStat[]
   /** Identicon seed; defaults to `name`. */
   seed?: string
@@ -32,9 +32,9 @@ const props = defineProps<{
         <div class="flex flex-wrap items-center gap-2">
           <span class="text-base font-semibold">{{ name }}</span>
           <Badge v-if="tag" variant="secondary">{{ tag }}</Badge>
-          <Badge v-if="autopilot" variant="brand">
+          <Badge v-if="status || $slots.status" variant="brand">
             <span class="size-1.5 rounded-full bg-current" />
-            Autopilot
+            <slot name="status">{{ status }}</slot>
           </Badge>
         </div>
         <div v-if="address" class="mt-1 font-mono text-xs text-muted-foreground">
@@ -45,7 +45,9 @@ const props = defineProps<{
     <div v-if="stats?.length" class="mt-4 flex justify-between border-t border-border pt-3.5">
       <div v-for="s in stats" :key="s.label">
         <div class="text-xs text-muted-foreground">{{ s.label }}</div>
-        <div class="mt-1 font-mono text-[19px]">{{ s.value }}</div>
+        <div class="mt-1 font-mono text-[19px]">
+          <slot name="stat-value" :stat="s">{{ s.value }}</slot>
+        </div>
       </div>
     </div>
     <!-- ✦ default slot: footer under the stats (a note, an action row) -->

@@ -7,6 +7,7 @@
 	import type { Snippet } from "svelte";
 
 	let {
+		ref = $bindable(null),
 		title = "Progress",
 		value,
 		onClose,
@@ -15,7 +16,8 @@
 		class: className,
 		children,
 	}: {
-		title?: string;
+		title?: string | Snippet;
+		ref?: HTMLDivElement | null;
 		/** 0 to 100: shows a progress bar above the content. */
 		value?: number;
 		/** Shows the close button. */
@@ -28,12 +30,12 @@
 </script>
 
 <!-- Collapsible "Progress" section with the panel close button. -->
-<Collapsible.Root data-slot="ai-session-progress" bind:open class={cn("w-full", className)}>
+<Collapsible.Root bind:ref data-slot="ai-session-progress" bind:open class={cn("w-full", className)}>
 	<div class="flex items-center justify-between">
 		<Collapsible.Trigger
 			class="group/trigger flex items-center gap-1 text-sm outline-none focus-visible:underline"
 		>
-			{title}
+			{#if typeof title === "string"}{title}{:else}{@render title()}{/if}
 			<IconPlaceholder
 				lucide="ChevronRightIcon"
 				tabler="IconChevronRight"

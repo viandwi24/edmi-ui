@@ -22,13 +22,16 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/registry/edmi/ui/dropdown-menu";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
 
 export type ChatComposerOption = { id: string; label: string };
 
 export type ChatComposerProps = Omit<
 	ComponentProps<typeof PromptInput>,
-	"children"
+	"children" | "elevation"
 > & {
+	/** ✦ depth of the composer plate (overlay role: floating in layered mode). */
+	elevation?: Elevation;
 	placeholder?: string;
 	status?: ChatStatus;
 	onStop?: () => void;
@@ -78,6 +81,7 @@ export const ChatComposer = ({
 	mode,
 	defaultMode,
 	onModeChange,
+	elevation,
 	className,
 	...props
 }: ChatComposerProps) => {
@@ -94,7 +98,7 @@ export const ChatComposer = ({
 			data-slot="ai-chat-composer"
 			className={cn("flex w-full flex-col", className)}
 		>
-			<PromptInput {...props}>
+			<PromptInput elevation={elevation} {...props}>
 				<PromptInputBody>
 					<div className="flex w-full items-center pr-2">
 						<PromptInputTextarea

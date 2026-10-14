@@ -2,10 +2,11 @@
 	import IconPlaceholder from "$lib/components/icon-placeholder/icon-placeholder.svelte";
 	import { Button, type ButtonProps } from "$lib/registry/ui/button/index.js";
 
-	let { class: className, children, ...restProps }: Omit<ButtonProps, "href"> = $props();
+	let { ref = $bindable(null), class: className, children, ...restProps }: Omit<ButtonProps, "href"> = $props();
 </script>
 
 <Button
+		bind:ref
 	data-slot="ai-artifact-stack-download-all"
 	variant="secondary"
 	size="sm"

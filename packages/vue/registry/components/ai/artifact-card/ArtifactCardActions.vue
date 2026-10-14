@@ -13,7 +13,7 @@ import { useArtifactCardState } from "./context"
 
 const props = withDefaults(defineProps<{
   class?: HTMLAttributes["class"]
-  /** Label of the primary half of the split button. */
+  /** Label of the primary half of the split button; the `label` slot overrides it. */
   label?: string
 }>(), {
   label: "Download",
@@ -34,7 +34,9 @@ const state = useArtifactCardState()
     :class="cn('shrink-0', props.class)"
   >
     <Button variant="secondary" size="sm" type="button" @click="emit('download')">
-      {{ label }}
+      <slot name="label">
+        {{ label }}
+      </slot>
     </Button>
     <DropdownMenu v-if="$slots.default">
       <DropdownMenuTrigger as-child>

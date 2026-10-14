@@ -3,20 +3,21 @@
 	import { Button } from "$lib/registry/ui/button/index.js";
 	import { ButtonGroup } from "$lib/registry/ui/button-group/index.js";
 	import * as DropdownMenu from "$lib/registry/ui/dropdown-menu/index.js";
-	import { cn } from "$lib/utils.js";
+	import { cn, type WithElementRef } from "$lib/utils.js";
 	import type { Snippet } from "svelte";
 	import type { HTMLAttributes } from "svelte/elements";
 	import { getArtifactCardState } from "./use-artifact-card.svelte.js";
 
 	let {
+		ref = $bindable(null),
 		label = "Download",
 		onDownload,
 		class: className,
 		children,
 		...restProps
-	}: HTMLAttributes<HTMLDivElement> & {
+	}: WithElementRef<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
 		/** Label of the primary half of the split button. */
-		label?: string;
+		label?: string | Snippet;
 		onDownload?: () => void;
 		/** `DropdownMenu.Item`s for the chevron half (copy link, open, ...). No chevron without them. */
 		children?: Snippet;
@@ -27,9 +28,9 @@
 
 <!-- Split Download button; hidden while the card is generating. -->
 {#if card.state !== "generating"}
-	<ButtonGroup data-slot="ai-artifact-card-actions" class={cn("shrink-0", className)} {...restProps}>
+	<ButtonGroup bind:ref data-slot="ai-artifact-card-actions" class={cn("shrink-0", className)} {...restProps}>
 		<Button variant="secondary" size="sm" type="button" onclick={() => onDownload?.()}>
-			{label}
+			{#if typeof label === "string"}{label}{:else}{@render label()}{/if}
 		</Button>
 		{#if children}
 			<DropdownMenu.Root>

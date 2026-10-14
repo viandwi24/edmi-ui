@@ -1,15 +1,18 @@
 <script lang="ts">
 	import { cn } from "$lib/utils.js";
 	import { Card } from "$lib/registry/ui/card/index.js";
+	import type { Elevation } from "$lib/registry/ui/elevation/index.js";
 	import IconPlaceholder from "$lib/components/icon-placeholder/icon-placeholder.svelte";
 	import type { ComponentProps, Snippet } from "svelte";
 
 	let {
+		ref = $bindable(null),
 		class: className,
 		index,
 		title,
 		description,
 		icon,
+		elevation = "auto",
 		...restProps
 	}: Omit<ComponentProps<typeof Card>, "title" | "children"> & {
 		/** Mono step number, e.g. "01". */
@@ -18,10 +21,12 @@
 		description?: string;
 		/** Corner icon; defaults to an arrow up-right. */
 		icon?: Snippet;
+		/** ✦ depth of the card: sunken -1, flat 0, raised +1, floating +2. */
+		elevation?: Elevation;
 	} = $props();
 </script>
 
-<Card data-slot="step-card" class={cn("gap-0 p-[18px]", className)} {...restProps}>
+<Card bind:ref {elevation} data-slot="step-card" class={cn("gap-0 p-[18px]", className)} {...restProps}>
 	<div class="flex items-center justify-between">
 		<span class="font-mono text-xs text-muted-foreground">{index}</span>
 		<span class="text-muted-foreground">

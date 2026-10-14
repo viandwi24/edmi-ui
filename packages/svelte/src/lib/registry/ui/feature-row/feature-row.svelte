@@ -1,16 +1,19 @@
 <script lang="ts">
 	import { cn } from "$lib/utils.js";
 	import { Card } from "$lib/registry/ui/card/index.js";
+	import type { Elevation } from "$lib/registry/ui/elevation/index.js";
 	import * as Collapsible from "$lib/registry/ui/collapsible/index.js";
 	import IconPlaceholder from "$lib/components/icon-placeholder/icon-placeholder.svelte";
 	import type { ComponentProps, Snippet } from "svelte";
 
 	let {
+		ref = $bindable(null),
 		class: className,
 		index,
 		title,
 		icon,
 		children,
+		elevation = "auto",
 		...restProps
 	}: Omit<ComponentProps<typeof Card>, "title" | "children"> & {
 		/** Mono number, e.g. "1.1". */
@@ -20,6 +23,8 @@
 		icon?: Snippet;
 		/** When set the row expands to show this content. */
 		children?: Snippet;
+		/** ✦ depth of the card: sunken -1, flat 0, raised +1, floating +2. */
+		elevation?: Elevation;
 	} = $props();
 </script>
 
@@ -35,13 +40,13 @@
 {/snippet}
 
 {#if !children}
-	<Card data-slot="feature-row" class={cn("h-14 flex-row items-center gap-4 px-5 py-0", className)} {...restProps}>
+	<Card bind:ref {elevation} data-slot="feature-row" class={cn("h-14 flex-row items-center gap-4 px-5 py-0", className)} {...restProps}>
 		<span class="font-mono text-xs text-muted-foreground">{index}</span>
 		<span class="flex-1 text-left text-base font-medium">{title}</span>
 		<span class="text-muted-foreground">{@render (icon ?? plus)()}</span>
 	</Card>
 {:else}
-	<Card data-slot="feature-row" class={cn("gap-0 py-0", className)} {...restProps}>
+	<Card bind:ref {elevation} data-slot="feature-row" class={cn("gap-0 py-0", className)} {...restProps}>
 		<Collapsible.Root class="group/feature-row">
 			<Collapsible.Trigger
 				class="flex h-14 w-full cursor-pointer items-center gap-4 px-5 outline-none focus-visible:bg-accent"

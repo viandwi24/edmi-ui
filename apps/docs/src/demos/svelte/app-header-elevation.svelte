@@ -21,7 +21,7 @@
 	{#each levels as l (l.value)}
 		<div class="flex flex-col gap-2">
 			<p class="text-xs font-medium text-muted-foreground">{l.label}</p>
-<AppHeader
+<AppHeader name="Stockbreak" network="Devnet"
 	elevation={l.value}
 	{items}
 	active="#leaderboard"

@@ -1,5 +1,5 @@
 ---
-title: Pricing plan
+title: Pricing Plan
 description: "Plan card with title, price, call to action and a check list."
 ---
 import ComponentDemo from "../../../../components/ComponentDemo.astro";
@@ -30,12 +30,16 @@ Flat by default. `elevation` is forwarded to the card: `sunken` (-1) a soft inse
 <ComponentDemo name="pricing-plan" demo="pricing-plan-elevation" />
 
 ## API
-| Part | Props | Notes |
-| --- | --- | --- |
-| `PricingPlan` | `name, tagline?, price?, priceNote?, action?, features?` | `action` is usually a `Button`; buttons placed there stretch full width. |
-| `featuresLead` ✦ | lead row above the features (`Included:`, `Everything in Holder, plus:`) | none |
-| `features` rich rows | React `ReactNode[]`; Vue scoped slot `feature` (`{ feature, index }`); Svelte `feature` snippet `(text, index)` | plain text |
-| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
+
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| `PricingPlan` | `name` | `ReactNode` (Vue/Svelte: `string`) | required |
+|  | `tagline, price, priceNote` | same as `name` | none |
+|  | `action` | React `ReactNode`; Vue slot `action`; Svelte `action` snippet. Usually a `Button`; buttons there stretch full width | none |
+|  | `features` | React `ReactNode[]`; Vue/Svelte `string[]` (rich rows: see `feature` below) | none |
+|  | `feature ✦` | Vue scoped slot `feature` (`{ feature, index }`); Svelte snippet `feature(text, index)`. React renders any node directly from `features` | the text |
+|  | `featuresLead ✦` | Lead row above the features. React `ReactNode`; Vue `string` or slot `features-lead`; Svelte `string \| Snippet` | none |
+|  | `elevation` ✦ | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 
 ## Lead row and rich features ✦
 

@@ -2,6 +2,7 @@ import { cn } from "cn";
 import type * as React from "react";
 import { IconPlaceholder } from "@/edmi/icon-placeholder";
 import { Card } from "@/registry/edmi/ui/card";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
 
 type StepCardProps = Omit<React.ComponentProps<typeof Card>, "title"> & {
 	/** Mono step number, e.g. "01". */
@@ -10,6 +11,8 @@ type StepCardProps = Omit<React.ComponentProps<typeof Card>, "title"> & {
 	description?: React.ReactNode;
 	/** Corner icon element; defaults to an arrow up-right. */
 	icon?: React.ReactNode;
+	/** ✦ depth of the card: sunken -1, flat 0, raised +1, floating +2. */
+	elevation?: Elevation;
 };
 
 const arrow = (
@@ -29,11 +32,13 @@ function StepCard({
 	title,
 	description,
 	icon = arrow,
+	elevation,
 	...props
 }: StepCardProps) {
 	return (
 		<Card
 			data-slot="step-card"
+			elevation={elevation}
 			className={cn("gap-0 p-[18px]", className)}
 			{...props}
 		>

@@ -21,11 +21,16 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 <ComponentSource name="allocation-bar" />
 
+## Elevation ✦
+
+Flat only: the bar and legend render no surface, so there is no `elevation` prop and no elevation demo. See the [Elevation guide](/edmi-ui/getting-started/elevation/).
+
 ## API
-| Prop | Type | Default |
-| --- | --- | --- |
-| `segments` | `{ label, value, color? }[]` | required |
-| `showLegend` | `boolean` | `true` |
+
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| `AllocationBar` | `segments` | `{ label, value, color? }[]` | required |
+|  | `showLegend` | `boolean` | `true` |
 
 Colors default to `--chart-1…5` in order.
 

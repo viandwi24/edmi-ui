@@ -14,6 +14,8 @@ function Sample({ elevation }: { elevation: Elevation }) {
 	const [connected, setConnected] = useState(false);
 	return (
 		<AppHeader
+			name="Stockbreak"
+			network="Devnet"
 			elevation={elevation}
 			items={items}
 			active="#leaderboard"

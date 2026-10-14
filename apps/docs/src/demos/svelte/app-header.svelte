@@ -11,7 +11,7 @@
 	let connected = $state(false);
 </script>
 
-<AppHeader
+<AppHeader name="Stockbreak" network="Devnet"
 	{items}
 	active="#leaderboard"
 	connectLabel={connected ? "dG6r…4mSr" : "Connect"}

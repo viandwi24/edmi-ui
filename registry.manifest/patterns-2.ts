@@ -13,12 +13,7 @@ export const items: Item[] = [
 		docs: "Composition block: `shadcn add @edmi-ui/feed-post`.",
 		frameworks: {
 			react: {
-				files: [
-					{
-						path: "registry/blocks/feed-post/feed-post.tsx",
-						type: "registry:component",
-					},
-				],
+				files: [{ path: "registry/blocks/feed-post/feed-post.tsx" }],
 				dependencies: ["cn"],
 			},
 		},
@@ -34,12 +29,7 @@ export const items: Item[] = [
 		docs: "Composition block: `shadcn add @edmi-ui/agent-card`.",
 		frameworks: {
 			react: {
-				files: [
-					{
-						path: "registry/blocks/agent-card/agent-card.tsx",
-						type: "registry:component",
-					},
-				],
+				files: [{ path: "registry/blocks/agent-card/agent-card.tsx" }],
 				dependencies: ["cn"],
 			},
 		},
@@ -55,12 +45,7 @@ export const items: Item[] = [
 		docs: "Composition block: `shadcn add @edmi-ui/feature-row`.",
 		frameworks: {
 			react: {
-				files: [
-					{
-						path: "registry/blocks/feature-row/feature-row.tsx",
-						type: "registry:component",
-					},
-				],
+				files: [{ path: "registry/blocks/feature-row/feature-row.tsx" }],
 				dependencies: ["cn"],
 			},
 		},
@@ -76,12 +61,7 @@ export const items: Item[] = [
 		docs: "Composition block: `shadcn add @edmi-ui/step-card`.",
 		frameworks: {
 			react: {
-				files: [
-					{
-						path: "registry/blocks/step-card/step-card.tsx",
-						type: "registry:component",
-					},
-				],
+				files: [{ path: "registry/blocks/step-card/step-card.tsx" }],
 				dependencies: ["cn"],
 			},
 		},
@@ -97,12 +77,7 @@ export const items: Item[] = [
 		docs: "Composition block: `shadcn add @edmi-ui/pricing-plan`.",
 		frameworks: {
 			react: {
-				files: [
-					{
-						path: "registry/blocks/pricing-plan/pricing-plan.tsx",
-						type: "registry:component",
-					},
-				],
+				files: [{ path: "registry/blocks/pricing-plan/pricing-plan.tsx" }],
 				dependencies: ["cn"],
 			},
 		},
@@ -118,12 +93,7 @@ export const items: Item[] = [
 		docs: "Composition block: `shadcn add @edmi-ui/task-list`.",
 		frameworks: {
 			react: {
-				files: [
-					{
-						path: "registry/blocks/task-list/task-list.tsx",
-						type: "registry:component",
-					},
-				],
+				files: [{ path: "registry/blocks/task-list/task-list.tsx" }],
 				dependencies: ["cn"],
 			},
 		},
@@ -138,12 +108,7 @@ export const items: Item[] = [
 		docs: "Composition block: `shadcn add @edmi-ui/kanban-column`.",
 		frameworks: {
 			react: {
-				files: [
-					{
-						path: "registry/blocks/kanban-column/kanban-column.tsx",
-						type: "registry:component",
-					},
-				],
+				files: [{ path: "registry/blocks/kanban-column/kanban-column.tsx" }],
 				dependencies: ["cn"],
 			},
 		},
@@ -159,12 +124,23 @@ export const items: Item[] = [
 		docs: "Composition block: `shadcn add @edmi-ui/code-block`.",
 		frameworks: {
 			react: {
-				files: [
-					{
-						path: "registry/blocks/code-block/code-block.tsx",
-						type: "registry:component",
-					},
-				],
+				files: [{ path: "registry/blocks/code-block/code-block.tsx" }],
+				dependencies: ["cn"],
+			},
+		},
+	},
+	{
+		name: "site-footer",
+		title: "Site Footer",
+		description:
+			"Site footer: brand, link columns, social slot and legal line.",
+		type: "registry:block",
+		categories: ["Patterns"],
+		registryDependencies: ["card", "separator", "elevation"],
+		docs: "Composition block: `shadcn add @edmi-ui/site-footer`.",
+		frameworks: {
+			react: {
+				files: [{ path: "registry/blocks/site-footer/site-footer.tsx" }],
 				dependencies: ["cn"],
 			},
 		},
@@ -172,22 +148,13 @@ export const items: Item[] = [
 	{
 		name: "footer",
 		title: "Footer",
-		description:
-			"Site footer: brand, link columns, social slot and legal line.",
+		description: "Deprecated: use site-footer",
 		type: "registry:block",
-		categories: ["Patterns"],
-		registryDependencies: ["card", "separator", "elevation"],
-		docs: "Composition block: `shadcn add @edmi-ui/footer`.",
+		categories: [],
+		registryDependencies: ["site-footer"],
+		docs: "Deprecated alias of `site-footer`; it installs the same files. Use `shadcn add @edmi-ui/site-footer`.",
 		frameworks: {
-			react: {
-				files: [
-					{
-						path: "registry/blocks/footer/footer.tsx",
-						type: "registry:component",
-					},
-				],
-				dependencies: ["cn"],
-			},
+			react: { files: [] },
 		},
 	},
 ];

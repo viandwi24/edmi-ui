@@ -27,7 +27,7 @@ Edmi ✦ addition. Built on `ai-prompt-input`, `ai-agent-avatar` and `button`.
 
 See the [Elevation guide](/edmi-ui/getting-started/elevation/) for the levels, roles and layered mode.
 
-The composer plate is an overlay surface: flat by default, floating in layered mode; `sunken` (-1), `raised` (+1) and `floating` (+2) can be set on `PromptInput`.
+The chip (`PromptInputAgent`) is an outline Button: `raised` and `floating` raise it, `flat` and `sunken` keep it flat, `auto` follows the scope. The composer plate is an overlay surface: pass `elevation` to `PromptInput` for it.
 
 <ComponentDemo name="ai-prompt-input-agent" demo="ai-prompt-input-agent-elevation" />
 
@@ -35,7 +35,8 @@ The composer plate is an overlay surface: flat by default, floating in layered m
 | Part | Prop | Type | Default |
 | --- | --- | --- | --- |
 | PromptInputAgent | `agent` | `{ id, name, scope?, color? }` | |
-| PromptInputAgentMentions | `agents`, `activeIndex`, `onSelect`, `label` | list that opens above the nearest `relative` ancestor | |
+| PromptInputAgent | `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
+| PromptInputAgentMentions | `agents`, `activeIndex`, `onSelect`, `label` (Vue: `select` event) | list that opens above the nearest `relative` ancestor | |
 | useAgentMention | `agents`, `value`, `onValueChange`, `onAgentSelect` | returns `{ open, onKeyDown, mentions }` | |
 
 ## ✦ Edmi additions

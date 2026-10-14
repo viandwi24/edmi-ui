@@ -3,7 +3,7 @@ import type { HTMLAttributes } from 'vue'
 import type { Layout } from './layout'
 import { computed, ref, useId } from 'vue'
 import { cn } from '@/registry/edmi/lib/utils'
-import { type Elevation, useElevation } from '@/registry/edmi/ui/elevation'
+import { type Elevation, surfaceElevation, useElevation } from '@/registry/edmi/ui/elevation'
 import LayoutPickerWireframe from './LayoutPickerWireframe.vue'
 
 const props = withDefaults(defineProps<{
@@ -19,13 +19,6 @@ const props = withDefaults(defineProps<{
 })
 
 const level = useElevation(() => props.elevation, 'control')
-// ✦ choice-card depth (v4); the checked card keeps its ring.
-const choiceElevation = {
-  sunken: 'border-sk-bd bg-sk-bg shadow-sunken',
-  flat: '',
-  raised: 'border-transparent shadow-raised',
-  floating: 'border-transparent shadow-floating',
-}
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: Layout): void
@@ -54,7 +47,7 @@ function choose(v: Layout) {
       :key="o.value"
       :class="cn(
         'group/lp flex w-[220px] cursor-pointer flex-col gap-2.5 rounded-xl border border-border bg-card p-3.5 has-[:checked]:border-ring has-[:checked]:bg-[color-mix(in_srgb,var(--brand)_5%,var(--card))] has-[:checked]:shadow-[0_0_0_1px_var(--ring)] has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ring',
-        choiceElevation[level],
+        surfaceElevation[level],
       )"
     >
       <input

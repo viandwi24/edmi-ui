@@ -25,8 +25,7 @@ const levels = [
 			v-if="toast"
 			:elevation="l.value"
 			default-open
-			:default-value="layout"
-			@value-change="layout = $event"
+			v-model="layout"
 			@close="toast = false"
 		/>
 	</div>

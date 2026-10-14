@@ -36,7 +36,7 @@ export const items: Item[] = [
 		description:
 			"Side panel that shows one artifact: title and format, open-in, download, expand and close; documents render as paper.",
 		category: C.patterns,
-		deps: ["button", "card", "tooltip"],
+		deps: ["button", "card", "tooltip", "elevation"],
 		react: aiReact("artifact-viewer", ["cn"]),
 	}),
 	aiItem({
@@ -52,6 +52,7 @@ export const items: Item[] = [
 			"progress",
 			"separator",
 			"ai-artifact-card",
+			"elevation",
 		],
 		react: aiReact("session-panel", ["cn"]),
 	}),
@@ -69,7 +70,7 @@ export const items: Item[] = [
 		title: "Prompt Input Agent",
 		description: "Agent composer: agent chip, @ mention list and send button.",
 		category: C.patterns,
-		deps: ["ai-agent-avatar", "button"],
+		deps: ["ai-agent-avatar", "button", "elevation"],
 		react: aiReact("prompt-input-agent", ["cn"]),
 	}),
 	aiItem({

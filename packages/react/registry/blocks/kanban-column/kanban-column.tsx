@@ -1,12 +1,22 @@
+"use client";
+
 import { cn } from "cn";
-import type * as React from "react";
+import * as React from "react";
 import { IconPlaceholder } from "@/edmi/icon-placeholder";
 import { Card } from "@/registry/edmi/ui/card";
+import type { Elevation } from "@/registry/edmi/ui/elevation";
+
+type KanbanColumnContextValue = { elevation?: Elevation };
+
+/** Depth handed from a column to its items (an item's own `elevation` wins). */
+const KanbanColumnContext = React.createContext<KanbanColumnContextValue>({});
 
 type KanbanColumnProps = Omit<React.ComponentProps<"div">, "title"> & {
 	title: React.ReactNode;
 	/** Right header meta, e.g. "1/3". */
 	meta?: React.ReactNode;
+	/** ✦ depth of every `KanbanItem` (items may override). */
+	elevation?: Elevation;
 };
 
 /** Sunken stage column holding `KanbanItem` cards. */
@@ -14,9 +24,11 @@ function KanbanColumn({
 	className,
 	title,
 	meta,
+	elevation,
 	children,
 	...props
 }: KanbanColumnProps) {
+	const ctx = React.useMemo(() => ({ elevation }), [elevation]);
 	return (
 		<div
 			data-slot="kanban-column"
@@ -30,7 +42,9 @@ function KanbanColumn({
 				<span>{title}</span>
 				{meta ? <span>{meta}</span> : null}
 			</div>
-			{children}
+			<KanbanColumnContext.Provider value={ctx}>
+				{children}
+			</KanbanColumnContext.Provider>
 		</div>
 	);
 }
@@ -53,11 +67,14 @@ function KanbanItem({
 	icon,
 	action,
 	disabled,
+	elevation,
 	...props
 }: KanbanItemProps) {
+	const column = React.useContext(KanbanColumnContext);
 	return (
 		<Card
 			data-slot="kanban-item"
+			elevation={elevation ?? column.elevation}
 			data-disabled={disabled ? "" : undefined}
 			className={cn(
 				"flex-row items-center gap-2.5 px-3 py-2.5 data-[disabled]:opacity-60",

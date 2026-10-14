@@ -3,6 +3,7 @@
 	import * as Tooltip from "$lib/registry/ui/tooltip/index.js";
 
 	let {
+		ref = $bindable(null),
 		label,
 		children,
 		...restProps
@@ -17,6 +18,7 @@
 		<Tooltip.Trigger>
 			{#snippet child({ props })}
 				<Button
+		bind:ref
 					{...props}
 					{...restProps}
 					aria-label={label}

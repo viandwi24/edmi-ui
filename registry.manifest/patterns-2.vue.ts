@@ -53,6 +53,7 @@ export const entries: Record<string, FrameworkEntry> = {
 	"kanban-column": {
 		files: [
 			{ path: "registry/ui/kanban-column/KanbanColumn.vue" },
+			{ path: "registry/ui/kanban-column/context.ts" },
 			{ path: "registry/ui/kanban-column/KanbanItem.vue" },
 			{ path: "registry/ui/kanban-column/index.ts" },
 		],
@@ -65,11 +66,12 @@ export const entries: Record<string, FrameworkEntry> = {
 		],
 		dependencies: ["@lucide/vue"],
 	},
-	footer: {
+	"site-footer": {
 		files: [
-			{ path: "registry/ui/footer/SiteFooter.vue" },
-			{ path: "registry/ui/footer/index.ts" },
-			{ path: "registry/ui/footer/types.ts" },
+			{ path: "registry/ui/site-footer/SiteFooter.vue" },
+			{ path: "registry/ui/site-footer/index.ts" },
+			{ path: "registry/ui/site-footer/types.ts" },
 		],
 	},
+	footer: { files: [] },
 };

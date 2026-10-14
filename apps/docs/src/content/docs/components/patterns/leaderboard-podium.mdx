@@ -30,18 +30,19 @@ Flat by default. `elevation` is forwarded to every card: `sunken` (-1) a soft in
 <ComponentDemo name="leaderboard-podium" demo="leaderboard-podium-elevation" />
 
 ## API
-| Prop | Type | Default |
-| --- | --- | --- |
-| `entries` | `{ rank: 1 \| 2 \| 3, name, meta, image?, initials?, href? }[]` | required |
-| `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
-| `variant` ✦ | `"podium" \| "cards"` | `"podium"` |
-| `entries[].symbol, creator, change, spark, allocation, aum, holders` ✦ | `cards` variant fields | |
+| Part | Prop | Type | Default |
+| --- | --- | --- | --- |
+| `LeaderboardPodium` | `entries` | `{ rank: 1 \| 2 \| 3, name, meta?, image?, initials?, href? }[]` | required |
+| | `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
+| | `variant` ✦ | `"podium" \| "cards"` | `"podium"` |
+| | `valueLabel` / `countLabel` ✦ | label of the `cards` footer stats (Svelte `string \| Snippet`) | `"Value"` / `"Count"` |
+| `entries[]` (`cards`) ✦ | `symbol`, `owner`, `change`, `spark`, `allocation`, `value`, `count` | `cards` variant fields; `spark` renders the `Sparkline` of Index Row and `allocation` the Allocation Bar (`size="sm"`) | |
 
 Order is fixed visually (2, 1, 3) whatever the array order.
 
 ## Cards ✦
 
-`variant="cards"` is the Stockbreak leaderboard top three: three equal cards in rank order with creator, name and ticker, headline change with sparkline, an allocation bar and AUM / holders. `meta` is not needed there.
+`variant="cards"` is the leaderboard top three: three equal cards in rank order with owner, name and ticker, headline change with sparkline, an allocation bar and two footer stats (`value`, `count`, labelled by `valueLabel` / `countLabel`). `meta` is not needed there.
 
 <ComponentDemo name="leaderboard-podium" demo="leaderboard-podium-cards" />
 

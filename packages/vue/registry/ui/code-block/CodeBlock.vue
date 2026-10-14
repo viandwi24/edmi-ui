@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<{
   class?: HTMLAttributes['class']
   /** Source text. */
   code: string
-  /** Header label (file name or tool). */
+  /** Header label (file name or tool); slot `title` for rich content. */
   title?: string
   /** 1-based line numbers to highlight. */
   highlightLines?: number[]
@@ -45,10 +45,10 @@ const lines = computed(() => props.code.split('\n'))
 <template>
   <Card :elevation="elevation" data-slot="code-block" :class="cn('gap-0 overflow-hidden p-0', props.class)">
     <div
-      v-if="title || copyable"
+      v-if="title || $slots.title || copyable"
       class="flex items-center justify-between border-b border-border bg-muted py-2 pr-2 pl-3.5"
     >
-      <span class="font-mono text-[11.5px] text-muted-foreground">{{ title }}</span>
+      <span class="font-mono text-[11.5px] text-muted-foreground"><slot name="title">{{ title }}</slot></span>
       <Button
         v-if="copyable"
         variant="ghost"

@@ -11,7 +11,6 @@ const props = withDefaults(defineProps<{
   elevation?: Elevation
   class?: HTMLAttributes['class']
 }>(), {
-  name: 'Stockbreak',
   href: '/',
   elevation: undefined,
 })
@@ -26,7 +25,7 @@ const props = withDefaults(defineProps<{
     <slot name="logo">
       <SiteHeaderMark :elevation="elevation" />
     </slot>
-    <span class="font-brand text-xl font-semibold tracking-[-0.4px]">
+    <span v-if="name || $slots.name" class="font-brand text-xl font-semibold tracking-[-0.4px]">
       <slot name="name">{{ name }}</slot>
     </span>
   </a>

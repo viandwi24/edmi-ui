@@ -14,6 +14,7 @@ const props = defineProps<{
   label?: string
   value?: string | number
   delta?: string
+  /** Muted text next to the delta badge (or use the `delta-label` slot). */
   deltaLabel?: string
   /** Overrides the sign-based direction of `delta`. */
   trend?: 'up' | 'down'
@@ -45,7 +46,7 @@ const down = computed(() =>
       <Badge :variant="down ? 'destructive' : 'success'" shape="number" class="px-[7px]">
         {{ delta }}
       </Badge>
-      <span v-if="deltaLabel" class="text-xs text-muted-foreground">{{ deltaLabel }}</span>
+      <span v-if="deltaLabel || $slots['delta-label']" class="text-xs text-muted-foreground"><slot name="delta-label">{{ deltaLabel }}</slot></span>
     </div>
     <slot />
   </Card>

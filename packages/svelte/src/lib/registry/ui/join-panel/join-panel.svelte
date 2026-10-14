@@ -1,17 +1,17 @@
 <script lang="ts" module>
 	import type { Snippet } from "svelte";
 
-	export type JoinPanelRow = { label: string; value: string | number };
+	export type JoinPanelRow = { label: string | Snippet; value: string | number | Snippet };
 	/** ✦ Quick-amount chip: sets the amount to `value`; without `value` it calls `onMax`. */
-	export type JoinPanelQuickAmount = { label: string; value?: string };
+	export type JoinPanelQuickAmount = { label: string | Snippet; value?: string };
 	/** ✦ Mode tab, e.g. Join / Redeem. */
-	export type JoinPanelTab = { value: string; label: string };
+	export type JoinPanelTab = { value: string; label: string | Snippet };
 </script>
 
 <script lang="ts">
 	import { Button } from "$lib/registry/ui/button/index.js";
 	import { Card } from "$lib/registry/ui/card/index.js";
-	import type { Elevation } from "$lib/registry/ui/elevation/index.js";
+	import { controlLevel, type Elevation } from "$lib/registry/ui/elevation/index.js";
 	import {
 		InputGroup,
 		InputGroupAddon,
@@ -27,7 +27,7 @@
 		ref = $bindable(null),
 		class: className,
 		label = "Amount",
-		currency = "USDC",
+		currency,
 		amount = $bindable(""),
 		onAmountChange,
 		onMax,
@@ -45,7 +45,8 @@
 		elevation = "auto",
 		...restProps
 	}: Omit<ComponentProps<typeof Card>, "children" | "size"> & {
-		label?: string;
+		label?: string | Snippet;
+		/** Unit shown in the label and beside the field (e.g. `USDC`); omit for none. */
 		currency?: string;
 		/** Two-way bindable (`bind:amount`). */
 		amount?: string;
@@ -65,7 +66,7 @@
 		/** ✦ `lg`: taller field with a 26px mono amount (the IndexDetail board). */
 		amountSize?: "default" | "lg";
 		/** ✦ Plain muted text in the field (e.g. `Max 1,240`) instead of the Max button and currency. */
-		maxLabel?: string;
+		maxLabel?: string | Snippet;
 		joinLabel?: string | Snippet;
 		onJoin?: () => void;
 		disabled?: boolean;
@@ -74,9 +75,7 @@
 	} = $props();
 
 	// Controls follow an explicit card level (flat/sunken keep them flat); auto leaves them to their own role.
-	const control = $derived<Elevation>(
-		elevation !== "auto" ? (elevation === "raised" || elevation === "floating" ? "raised" : "flat") : "auto"
-	);
+	const control = $derived<Elevation>(controlLevel(elevation) ?? "auto");
 
 	const id = $props.id();
 
@@ -95,14 +94,16 @@
 			>
 				<TabsList elevation={control} class="w-full">
 					{#each tabs as t (t.value)}
-						<TabsTrigger value={t.value}>{t.label}</TabsTrigger>
+						<TabsTrigger value={t.value}>
+							{#if typeof t.label === "function"}{@render t.label()}{:else}{t.label}{/if}
+						</TabsTrigger>
 					{/each}
 				</TabsList>
 			</Tabs>
 		</div>
 	{/if}
 	<label for={id} class="px-(--card-spacing) text-xs text-muted-foreground">
-		{label} ({currency})
+		{#if typeof label === "function"}{@render label()}{:else}{label}{/if}{currency ? ` (${currency})` : ""}
 	</label>
 	<div class="px-(--card-spacing)">
 		<InputGroup class={cn("mt-2", amountSize === "lg" ? "h-14" : "h-11")}>
@@ -120,10 +121,12 @@
 			/>
 			<InputGroupAddon align="inline-end">
 				{#if maxLabel}
-					<InputGroupText class="bg-transparent text-xs">{maxLabel}</InputGroupText>
+					<InputGroupText class="bg-transparent text-xs">
+						{#if typeof maxLabel === "function"}{@render maxLabel()}{:else}{maxLabel}{/if}
+					</InputGroupText>
 				{:else}
 					<InputGroupButton variant="secondary" onclick={onMax}>Max</InputGroupButton>
-					<InputGroupText class="bg-transparent px-1.5 text-xs">{currency}</InputGroupText>
+					{#if currency}<InputGroupText class="bg-transparent px-1.5 text-xs">{currency}</InputGroupText>{/if}
 				{/if}
 			</InputGroupAddon>
 		</InputGroup>
@@ -144,15 +147,19 @@
 						} else onMax?.();
 					}}
 				>
-					{q.label}
+					{#if typeof q.label === "function"}{@render q.label()}{:else}{q.label}{/if}
 				</Button>
 			{/each}
 		</div>
 	{/if}
 	{#each rows as r, i (i)}
 		<div class={cn("flex items-center justify-between px-(--card-spacing) text-[13px]", i === 0 ? "mt-3" : "mt-1.5")}>
-			<span class="text-muted-foreground">{r.label}</span>
-			<span class="font-mono">{r.value}</span>
+			<span class="text-muted-foreground">
+				{#if typeof r.label === "function"}{@render r.label()}{:else}{r.label}{/if}
+			</span>
+			<span class="font-mono">
+				{#if typeof r.value === "function"}{@render r.value()}{:else}{r.value}{/if}
+			</span>
 		</div>
 	{/each}
 	<div class="mt-3.5 px-(--card-spacing)">
