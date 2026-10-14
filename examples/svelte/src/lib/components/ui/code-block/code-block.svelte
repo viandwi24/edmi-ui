@@ -2,29 +2,34 @@
 	import { cn } from "#lib/utils.js";
 	import { Button } from "#lib/components/ui/button/index.js";
 	import { Card } from "#lib/components/ui/card/index.js";
+	import type { Elevation } from "#lib/components/ui/elevation/index.js";
 	import CheckIcon from 'phosphor-svelte/lib/Check';
 	import CopyIcon from 'phosphor-svelte/lib/Copy';
-	import type { ComponentProps } from "svelte";
+	import type { ComponentProps, Snippet } from "svelte";
 
 	let {
+		ref = $bindable(null),
 		class: className,
 		code,
 		title,
 		highlightLines,
 		copyable = true,
 		onCopy,
+		elevation = "auto",
 		...restProps
 	}: Omit<ComponentProps<typeof Card>, "title" | "children"> & {
 		/** Source text. */
 		code: string;
-		/** Header label (file name or tool). */
-		title?: string;
+		/** Header label (file name or tool), or a snippet for rich content. */
+		title?: string | Snippet;
 		/** 1-based line numbers to highlight. */
 		highlightLines?: number[];
 		/** Show the copy button (default true). */
 		copyable?: boolean;
 		/** Called after a successful copy. */
 		onCopy?: (code: string) => void;
+		/** ✦ depth of the card: sunken -1, flat 0, raised +1, floating +2. */
+		elevation?: Elevation;
 	} = $props();
 
 	let copied = $state(false);
@@ -46,10 +51,10 @@
 	const lines = $derived(code.split("\n"));
 </script>
 
-<Card data-slot="code-block" class={cn("gap-0 overflow-hidden p-0", className)} {...restProps}>
+<Card bind:ref {elevation} data-slot="code-block" class={cn("gap-0 overflow-hidden p-0", className)} {...restProps}>
 	{#if title || copyable}
 		<div class="flex items-center justify-between border-b border-border bg-muted py-2 pr-2 pl-3.5">
-			<span class="font-mono text-[11.5px] text-muted-foreground">{title}</span>
+			<span class="font-mono text-[11.5px] text-muted-foreground">{#if typeof title === "function"}{@render title()}{:else}{title}{/if}</span>
 			{#if copyable}
 				<Button variant="ghost" size="icon-xs" aria-label={copied ? "Copied" : "Copy code"} onclick={copy}>
 					{#if copied}

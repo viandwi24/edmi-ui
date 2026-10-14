@@ -3,16 +3,13 @@
 import { cn } from "cn";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
-import { type Elevation, useElevation } from "@/components/ui/elevation";
+import {
+	controlLevel,
+	type Elevation,
+	surfaceElevation,
+	useElevation,
+} from "@/components/ui/elevation";
 import { XIcon } from "@phosphor-icons/react";
-
-// ✦ choice-card depth (v4); the checked card keeps its ring.
-const choiceElevation = {
-	sunken: "border-sk-bd bg-sk-bg shadow-sunken",
-	flat: "",
-	raised: "border-transparent shadow-raised",
-	floating: "border-transparent shadow-floating",
-};
 
 type Layout = "dashboard" | "navbar";
 
@@ -67,13 +64,6 @@ function Wireframe({ layout }: { layout: Layout }) {
 	);
 }
 
-const toastElevation = {
-	sunken: "border-sk-bd bg-sk-bg shadow-sunken",
-	flat: "",
-	raised: "border-transparent shadow-raised",
-	floating: "border-transparent shadow-floating",
-};
-
 const options: { value: Layout; label: string }[] = [
 	{ value: "dashboard", label: "Dashboard" },
 	{ value: "navbar", label: "Navbar" },
@@ -115,7 +105,7 @@ function LayoutPicker({
 					key={o.value}
 					className={cn(
 						"group/lp flex w-[220px] cursor-pointer flex-col gap-2.5 rounded-xl border border-border bg-card p-3.5 has-[:checked]:border-ring has-[:checked]:bg-[color-mix(in_srgb,var(--brand)_5%,var(--card))] has-[:checked]:shadow-[0_0_0_1px_var(--ring)] has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ring",
-						choiceElevation[level],
+						surfaceElevation[level],
 					)}
 				>
 					<input
@@ -178,7 +168,7 @@ function LayoutPickerToast({
 			aria-label="Choose layout"
 			className={cn(
 				"fixed right-4 bottom-4 z-50 w-[min(92vw,500px)] rounded-xl border border-border bg-popover p-4 text-popover-foreground",
-				toastElevation[level],
+				surfaceElevation[level],
 				className,
 			)}
 			{...props}
@@ -204,13 +194,7 @@ function LayoutPickerToast({
 			</div>
 			<LayoutPicker
 				className="mt-3 flex-nowrap"
-				elevation={
-					elevation && elevation !== "auto"
-						? level === "raised" || level === "floating"
-							? "raised"
-							: "flat"
-						: undefined
-				}
+				elevation={controlLevel(elevation)}
 				value={value}
 				onValueChange={(v) => {
 					setValue(v);

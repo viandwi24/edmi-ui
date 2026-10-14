@@ -2,6 +2,7 @@ import { cn } from "cn";
 import type * as React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
+import type { Elevation } from "@/components/ui/elevation";
 
 type TickerItem = {
 	symbol: string;
@@ -61,13 +62,17 @@ function TickerCell({ item }: { item: TickerItem }) {
 function TickerStrip({
 	className,
 	items,
+	elevation,
 	...props
 }: Omit<React.ComponentProps<typeof Card>, "children"> & {
 	items: TickerItem[];
+	/** ✦ depth of the strip (forwarded to Card). */
+	elevation?: Elevation;
 }) {
 	return (
 		<Card
 			data-slot="ticker-strip"
+			elevation={elevation}
 			className={cn("flex-row gap-0 overflow-x-auto p-0", className)}
 			{...props}
 		>

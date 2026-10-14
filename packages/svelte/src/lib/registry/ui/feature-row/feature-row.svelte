@@ -17,8 +17,8 @@
 		...restProps
 	}: Omit<ComponentProps<typeof Card>, "title" | "children"> & {
 		/** Mono number, e.g. "1.1". */
-		index: string | number;
-		title: string;
+		index: string | number | Snippet;
+		title: string | Snippet;
 		/** Trailing icon; defaults to a plus. */
 		icon?: Snippet;
 		/** When set the row expands to show this content. */
@@ -41,8 +41,8 @@
 
 {#if !children}
 	<Card bind:ref {elevation} data-slot="feature-row" class={cn("h-14 flex-row items-center gap-4 px-5 py-0", className)} {...restProps}>
-		<span class="font-mono text-xs text-muted-foreground">{index}</span>
-		<span class="flex-1 text-left text-base font-medium">{title}</span>
+		<span class="font-mono text-xs text-muted-foreground">{#if typeof index === "function"}{@render index()}{:else}{index}{/if}</span>
+		<span class="flex-1 text-left text-base font-medium">{#if typeof title === "function"}{@render title()}{:else}{title}{/if}</span>
 		<span class="text-muted-foreground">{@render (icon ?? plus)()}</span>
 	</Card>
 {:else}
@@ -51,8 +51,8 @@
 			<Collapsible.Trigger
 				class="flex h-14 w-full cursor-pointer items-center gap-4 px-5 outline-none focus-visible:bg-accent"
 			>
-				<span class="font-mono text-xs text-muted-foreground">{index}</span>
-				<span class="flex-1 text-left text-base font-medium">{title}</span>
+				<span class="font-mono text-xs text-muted-foreground">{#if typeof index === "function"}{@render index()}{:else}{index}{/if}</span>
+				<span class="flex-1 text-left text-base font-medium">{#if typeof title === "function"}{@render title()}{:else}{title}{/if}</span>
 				<span class="text-muted-foreground transition-transform group-data-[state=open]/feature-row:rotate-45">
 					{@render (icon ?? plus)()}
 				</span>

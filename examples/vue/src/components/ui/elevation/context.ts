@@ -32,6 +32,23 @@ export function resolveElevation(
     return scope === "layered" ? ROLE_LEVEL[role] : "flat";
 }
 
+/** Surface class map shared by patterns and plates (sunken well / flat / bevel / bevel + drop). */
+export const surfaceElevation: Record<ElevationLevel, string> = {
+    sunken: "border-sk-bd bg-sk-bg shadow-sunken",
+    flat: "",
+    raised: "border-transparent shadow-raised",
+    floating: "border-transparent shadow-floating",
+};
+
+/** Depth a container hands to the controls it renders: explicit raised/floating -> "raised",
+ *  explicit flat/sunken -> "flat", auto/undefined -> undefined (controls follow their own roles). */
+export function controlLevel(
+    elevation: Elevation | undefined,
+): "raised" | "flat" | undefined {
+    if (!elevation || elevation === "auto") return undefined;
+    return elevation === "raised" || elevation === "floating" ? "raised" : "flat";
+}
+
 const SCOPE_KEY = Symbol("EDMI_ELEVATION_SCOPE");
 const SURFACE_KEY = Symbol("EDMI_ELEVATION_SURFACE");
 

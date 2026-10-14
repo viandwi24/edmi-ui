@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { cn } from "#lib/utils.js";
 	import { Card } from "#lib/components/ui/card/index.js";
+	import type { Elevation } from "#lib/components/ui/elevation/index.js";
 	import { Separator } from "#lib/components/ui/separator/index.js";
 	import CheckIcon from 'phosphor-svelte/lib/Check';
 	import type { ComponentProps, Snippet } from "svelte";
 
 	let {
+		ref = $bindable(null),
 		class: className,
 		name,
 		tagline,
@@ -15,6 +17,7 @@
 		features,
 		featuresLead,
 		feature,
+		elevation = "auto",
 		...restProps
 	}: Omit<ComponentProps<typeof Card>, "title" | "children"> & {
 		name: string;
@@ -30,10 +33,12 @@
 		featuresLead?: string | Snippet;
 		/** ✦ Rich content for a feature row (default: the text). */
 		feature?: Snippet<[string, number]>;
+		/** ✦ depth of the card: sunken -1, flat 0, raised +1, floating +2. */
+		elevation?: Elevation;
 	} = $props();
 </script>
 
-<Card data-slot="pricing-plan" class={cn("gap-0 p-6", className)} {...restProps}>
+<Card bind:ref {elevation} data-slot="pricing-plan" class={cn("gap-0 p-6", className)} {...restProps}>
 	<div class="text-[22px] font-semibold">{name}</div>
 	{#if tagline}<div class="mt-1 text-[13.5px] text-muted-foreground">{tagline}</div>{/if}
 	{#if price}<div class="mt-[22px] text-[22px] font-semibold">{price}</div>{/if}

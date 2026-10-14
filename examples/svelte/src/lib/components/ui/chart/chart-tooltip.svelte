@@ -27,7 +27,7 @@
 	}: WithoutChildren<WithElementRef<HTMLAttributes<HTMLDivElement>>> & {
 		hideLabel?: boolean;
 		label?: string;
-		indicator?: "line" | "dot" | "dashed";
+		indicator?: "line" | "dot" | "dashed" | "none";
 		nameKey?: string;
 		labelKey?: string;
 		hideIndicator?: boolean;
@@ -87,12 +87,12 @@
 		return labelFormatter(value, visibleSeries);
 	});
 
-	const nestLabel = $derived(visibleSeries.length === 1 && indicator !== "dot");
+	const showIndicator = $derived(!hideIndicator && indicator !== "none");
 </script>
 
 {#snippet TooltipLabel()}
 	{#if formattedLabel}
-		<div class={cn("font-semibold", labelClassName)}>
+		<div class={cn("font-medium text-foreground", labelClassName)}>
 			{#if typeof formattedLabel === "function"}
 				{@render formattedLabel()}
 			{:else}
@@ -106,14 +106,12 @@
 	<div
 		bind:this={ref}
 		class={cn(
-			"grid min-w-32 items-start gap-1.5 rounded-xl border border-border bg-popover px-2.5 py-2 text-xs text-popover-foreground",
+			"grid min-w-36 gap-1.5 rounded-lg border border-border bg-popover px-3 py-2 text-xs text-popover-foreground shadow-floating",
 			className
 		)}
 		{...restProps}
 	>
-		{#if !nestLabel}
-			{@render TooltipLabel()}
-		{/if}
+		{@render TooltipLabel()}
 		<div class="grid gap-1.5">
 			{#each visibleSeries as item, i (item.key + i)}
 				{@const key = `${nameKey || item.key || item.label || "value"}`}
@@ -126,8 +124,7 @@
 				{@const indicatorColor = color || item.config?.color || item.color || chartColor(chart.config, item.key)}
 				<div
 					class={cn(
-						"flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-muted-foreground",
-						indicator === "dot" && "items-center"
+						"flex w-full items-center gap-2 [&>svg]:size-3 [&>svg]:text-muted-foreground"
 					)}
 				>
 					{#if formatter && item.value !== undefined && item.label}
@@ -141,37 +138,24 @@
 					{:else}
 						{#if itemConfig?.icon}
 							<itemConfig.icon />
-						{:else if !hideIndicator}
+						{:else if showIndicator}
 							<div
-								style="--color-bg: {indicatorColor}; --color-border: {indicatorColor};"
-								class={cn("shrink-0 rounded-[2px] border-(--color-border) bg-(--color-bg)", {
-									"h-2 w-2": indicator === "dot",
-									"h-full w-[3px]": indicator === "line",
-									"w-0 border-2 border-dashed bg-transparent": indicator === "dashed",
-									"my-0.5": nestLabel && indicator === "dashed",
+								style="--color-bg: {indicatorColor};"
+								class={cn("shrink-0", {
+									"size-2 rounded-[2px] bg-(--color-bg)": indicator === "dot",
+									"min-h-3.5 w-1 self-stretch rounded-[2px] bg-(--color-bg)": indicator === "line",
+									"min-h-3.5 w-0 self-stretch border-l-2 border-dashed border-(--color-bg)": indicator === "dashed",
 								})}
 							></div>
 						{/if}
-						<div
-							class={cn(
-								"flex flex-1 shrink-0 justify-between leading-none",
-								nestLabel ? "items-end" : "items-center"
-							)}
-						>
-							<div class="grid gap-1.5">
-								{#if nestLabel}
-									{@render TooltipLabel()}
-								{/if}
-								<span class="text-muted-foreground">
-									{itemConfig?.label || item.label}
-								</span>
-							</div>
-							{#if item.value !== undefined}
-								<span class="font-mono font-medium text-foreground tabular-nums">
-									{item.value.toLocaleString()}
-								</span>
-							{/if}
-						</div>
+						<span class="flex-1 text-muted-foreground">
+							{itemConfig?.label || item.label}
+						</span>
+						{#if item.value !== undefined}
+							<span class="ml-3 font-semibold whitespace-nowrap text-foreground tabular-nums">
+								{item.value.toLocaleString()}
+							</span>
+						{/if}
 					{/if}
 				</div>
 			{/each}

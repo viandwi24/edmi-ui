@@ -2,6 +2,7 @@
 	import { Badge } from "#lib/components/ui/badge/index.js";
 	import { Card } from "#lib/components/ui/card/index.js";
 	import { cn } from "#lib/utils.js";
+	import type { Elevation } from "#lib/components/ui/elevation/index.js";
 	import type { ComponentProps, Snippet } from "svelte";
 	import StatMeter from "./stat-meter.svelte";
 
@@ -14,17 +15,20 @@
 		deltaLabel,
 		trend,
 		meter,
+		elevation = "auto",
 		children,
 		...restProps
 	}: Omit<ComponentProps<typeof Card>, "children" | "size"> & {
 		label: Snippet | string;
 		value: Snippet | string | number;
 		delta?: string;
-		deltaLabel?: string;
+		deltaLabel?: string | Snippet;
 		/** Overrides the sign-based direction of `delta`. */
 		trend?: "up" | "down";
 		/** Segmented meter under the value. */
 		meter?: ComponentProps<typeof StatMeter>;
+		/** ✦ depth of the tile (forwarded to Card). */
+		elevation?: Elevation;
 		children?: Snippet;
 	} = $props();
 
@@ -32,7 +36,7 @@
 </script>
 
 <!-- KPI tile: label, mono value, delta badge (+ optional meter). Delta direction comes from its sign. -->
-<Card bind:ref data-slot="stat-tile" class={cn("w-60 gap-0 px-5 py-[18px]", className)} {...restProps}>
+<Card bind:ref data-slot="stat-tile" {elevation} class={cn("w-60 gap-0 px-5 py-[18px]", className)} {...restProps}>
 	<div class="text-[13px] text-muted-foreground">
 		{#if typeof label === "function"}{@render label()}{:else}{label}{/if}
 	</div>
@@ -45,7 +49,11 @@
 	{#if delta}
 		<div class="mt-2.5 flex items-center gap-2">
 			<Badge variant={down ? "destructive" : "success"} shape="number" class="px-[7px]">{delta}</Badge>
-			{#if deltaLabel}<span class="text-xs text-muted-foreground">{deltaLabel}</span>{/if}
+			{#if deltaLabel}
+				<span class="text-xs text-muted-foreground">
+					{#if typeof deltaLabel === "function"}{@render deltaLabel()}{:else}{deltaLabel}{/if}
+				</span>
+			{/if}
 		</div>
 	{/if}
 	{@render children?.()}

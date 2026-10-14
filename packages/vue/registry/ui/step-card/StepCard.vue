@@ -10,22 +10,22 @@ const props = defineProps<{
   elevation?: Elevation
   class?: HTMLAttributes['class']
   /** Mono step number, e.g. "01". */
-  index: string | number
-  title: string
+  index?: string | number
+  title?: string
   description?: string
 }>()
-// Slot `icon` = corner icon (defaults to an arrow up-right).
+// Slots `index`, `title`, `description` (string props are the fallback); slot `icon` = corner icon (defaults to an arrow up-right).
 </script>
 
 <template>
   <Card :elevation="elevation" data-slot="step-card" :class="cn('gap-0 p-[18px]', props.class)">
     <div class="flex items-center justify-between">
-      <span class="font-mono text-xs text-muted-foreground">{{ index }}</span>
+      <span class="font-mono text-xs text-muted-foreground"><slot name="index">{{ index }}</slot></span>
       <span class="text-muted-foreground">
         <slot name="icon"><ArrowUpRightIcon class="size-3.5" /></slot>
       </span>
     </div>
-    <div class="mt-[18px] text-base font-semibold">{{ title }}</div>
-    <div v-if="description" class="mt-1.5 text-[13px] text-muted-foreground">{{ description }}</div>
+    <div class="mt-[18px] text-base font-semibold"><slot name="title">{{ title }}</slot></div>
+    <div v-if="description || $slots.description" class="mt-1.5 text-[13px] text-muted-foreground"><slot name="description">{{ description }}</slot></div>
   </Card>
 </template>

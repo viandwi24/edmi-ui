@@ -10,6 +10,7 @@ import {
 	creators,
 	humanVsAi,
 	indexes,
+	indexRowLabels,
 	tickers,
 } from "@/data/markets";
 
@@ -78,7 +79,7 @@ export function MarketsPage() {
 				<CardTop title="Top indexes" action="View all" />
 				<Table>
 					<TableHeader>
-						<IndexRowHeader />
+						<IndexRowHeader labels={indexRowLabels} />
 					</TableHeader>
 					<TableBody>
 						{indexes.map((index) => (

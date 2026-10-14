@@ -8,10 +8,13 @@ const props = withDefaults(defineProps<{
   hideIcon?: boolean
   nameKey?: string
   verticalAlign?: "bottom" | "top"
+  /** ✦ `line` draws the 14x2 swatch used by line charts. */
+  swatch?: "square" | "line"
   // payload?: any[]
   class?: HTMLAttributes["class"]
 }>(), {
   verticalAlign: "bottom",
+  swatch: "square",
 })
 
 const { id, config } = useChart()
@@ -33,9 +36,10 @@ onMounted(() => {
 <template>
   <div
     v-if="containerSelector"
+    data-slot="chart-legend"
     :class="cn(
-      'flex items-center justify-center gap-4 text-[12.5px]',
-      verticalAlign === 'top' ? 'pb-3' : 'pt-3',
+      'flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-[12.5px] text-foreground-2',
+      verticalAlign === 'top' ? 'pb-2.5' : 'pt-2.5',
       props.class,
     )"
   >
@@ -43,13 +47,13 @@ onMounted(() => {
       v-for="{ key, itemConfig, color } in payload"
       :key="key"
       :class="cn(
-        '[&>svg]:text-muted-foreground flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3',
+        '[&>svg]:text-muted-foreground flex items-center gap-1.5 [&>svg]:size-3',
       )"
     >
       <component :is="itemConfig.icon" v-if="itemConfig.icon" />
       <div
         v-else
-        class="size-2.5 shrink-0 rounded-[3px]"
+        :class="cn('shrink-0', swatch === 'line' ? 'h-0.5 w-3.5 rounded-[1px]' : 'size-2 rounded-[2px]')"
         :style="{
           backgroundColor: color,
         }"

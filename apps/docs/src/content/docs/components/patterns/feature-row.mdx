@@ -33,8 +33,8 @@ Flat by default. `elevation` is forwarded to the card: `sunken` (-1) a soft inse
 
 | Part | Prop | Type | Default |
 | --- | --- | --- | --- |
-| `FeatureRow` | `index` | `ReactNode` (Vue/Svelte: `string \| number`) | required |
-|  | `title` | `ReactNode` (Vue/Svelte: `string`) | required |
+| `FeatureRow` | `index` | React `ReactNode`; Vue slot `index` (prop `string \| number` as fallback); Svelte `string \| number \| Snippet` | required |
+|  | `title` | React `ReactNode`; Vue slot `title` (string prop as fallback); Svelte `string \| Snippet` | required |
 |  | `icon` | React `ReactNode`; Vue slot `icon`; Svelte `icon` snippet | plus |
 |  | `children` | Expandable content (Vue default slot, Svelte `children`). With content the 56px row becomes a Collapsible and the plus rotates to a cross | none |
 |  | `elevation` ✦ | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |

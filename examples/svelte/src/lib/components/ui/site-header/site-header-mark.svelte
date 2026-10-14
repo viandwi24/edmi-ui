@@ -18,12 +18,12 @@
 	const raised = $derived(level.current === "raised" || level.current === "floating");
 </script>
 
-<!-- Dark tile with a chart glyph: the Stockbreak mark. Pass a `logo` snippet to the brand/header to replace it. -->
+<!-- Dark tile with a chart glyph: Pass a `logo` snippet to the brand/header to replace it. -->
 <span
 	bind:this={ref}
 	data-slot="site-header-mark"
 	class={cn(
-		"inline-flex size-7 items-center justify-center rounded-lg border border-primary bg-primary text-primary-foreground",
+		"inline-flex size-7 items-center justify-center rounded-lg border border-transparent bg-primary text-primary-foreground",
 		raised && "[background-image:var(--r1-p-face)] shadow-btn-raised-primary [background-origin:border-box]",
 		className
 	)}

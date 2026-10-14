@@ -25,10 +25,10 @@ const level = useElevation(() => props.elevation ?? group?.value, 'field')
 
 // ✦ depth (v4): slots sink (-1) in layered mode; the active slot swaps the edge for the ring
 const fieldElevation = {
-  sunken: 'border-sk-bd bg-sk-bg shadow-sunken data-[active=true]:bg-card',
+  sunken: 'rounded-none border-0 border-l border-border bg-transparent shadow-none first:border-l-0 data-[active=true]:rounded-md data-[active=true]:border-transparent data-[active=true]:shadow-[0_0_0_3px_var(--ring-soft),inset_0_0_0_1px_var(--ring)]',
   flat: '',
-  raised: 'border-transparent shadow-raised',
-  floating: 'border-transparent shadow-floating',
+  raised: 'rounded-none border-0 border-l border-border bg-transparent shadow-none first:border-l-0 data-[active=true]:rounded-md data-[active=true]:border-transparent data-[active=true]:shadow-[0_0_0_3px_var(--ring-soft),inset_0_0_0_1px_var(--ring)]',
+  floating: 'rounded-none border-0 border-l border-border bg-transparent shadow-none first:border-l-0 data-[active=true]:rounded-md data-[active=true]:border-transparent data-[active=true]:shadow-[0_0_0_3px_var(--ring-soft),inset_0_0_0_1px_var(--ring)]',
 }
 
 const slot = computed(() => context?.value.slots[props.index])

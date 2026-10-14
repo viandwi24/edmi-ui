@@ -14,14 +14,20 @@
 	import { Avatar, AvatarFallback, AvatarImage } from "#lib/components/ui/avatar/index.js";
 	import { Card } from "#lib/components/ui/card/index.js";
 	import { cn } from "#lib/utils.js";
+	import type { Elevation } from "#lib/components/ui/elevation/index.js";
 	import type { ComponentProps } from "svelte";
 
 	let {
 		ref = $bindable(null),
 		class: className,
 		items,
+		elevation = "auto",
 		...restProps
-	}: Omit<ComponentProps<typeof Card>, "children" | "size"> & { items: TickerItem[] } = $props();
+	}: Omit<ComponentProps<typeof Card>, "children" | "size"> & {
+		items: TickerItem[];
+		/** ✦ depth of the strip (forwarded to Card). */
+		elevation?: Elevation;
+	} = $props();
 
 	const isDown = (s: string) => /^[-−–]/.test(s.trim());
 	const cell = "block min-w-[150px] flex-1 px-[18px] py-3.5 not-first:border-l not-first:border-border";
@@ -42,7 +48,7 @@
 {/snippet}
 
 <!-- Horizontal row of price cells (avatar + symbol, mono price, up/down change). -->
-<Card bind:ref data-slot="ticker-strip" class={cn("flex-row gap-0 overflow-x-auto p-0", className)} {...restProps}>
+<Card bind:ref data-slot="ticker-strip" {elevation} class={cn("flex-row gap-0 overflow-x-auto p-0", className)} {...restProps}>
 	{#each items as item (item.symbol)}
 		{#if item.href}
 			<a href={item.href} class={cn(cell, "hover:bg-[color-mix(in_srgb,var(--accent)_50%,var(--background))]")}>{@render content(item)}</a>

@@ -6,7 +6,7 @@
 	import { cn, type WithElementRef } from "#lib/utils.js";
 	import type { HTMLAttributes } from "svelte/elements";
 	import type { Snippet } from "svelte";
-	import { type Elevation, useElevation } from "#lib/components/ui/elevation/index.js";
+	import { controlLevel, type Elevation, surfaceElevation, useElevation } from "#lib/components/ui/elevation/index.js";
 	import SiteHeaderBrand from "./site-header-brand.svelte";
 
 	let {
@@ -23,10 +23,11 @@
 		...restProps
 	}: WithElementRef<Omit<HTMLAttributes<HTMLElement>, "children">> & {
 		logo?: Snippet;
-		name?: string;
+		/** Brand text or a snippet. */
+		name?: string | Snippet;
 		href?: string;
 		/** Muted lead-in before the stepped list, e.g. "How to". */
-		lead?: string;
+		lead?: string | Snippet;
 		steps?: SiteHeaderLink[];
 		links?: SiteHeaderLink[];
 		/** Trailing slot, usually a `<Button>`; receives `{ elevation }` to forward to the CTA. */
@@ -36,19 +37,7 @@
 	} = $props();
 
 	const level = useElevation(() => elevation, "surface");
-	const control = $derived<Elevation | undefined>(
-		elevation !== "auto"
-			? level.current === "raised" || level.current === "floating"
-				? "raised"
-				: "flat"
-			: undefined
-	);
-	const surfaceElevation = {
-		sunken: "border-sk-bd bg-sk-bg shadow-sunken",
-		flat: "",
-		raised: "border-transparent shadow-raised",
-		floating: "border-transparent shadow-floating",
-	};
+	const control = $derived<Elevation | undefined>(controlLevel(elevation));
 </script>
 
 <!-- Marketing top bar (navbar layout): brand, a muted lead-in with a stepped list, plain links, one CTA. -->
@@ -64,7 +53,11 @@
 >
 	<SiteHeaderBrand {logo} {name} {href} elevation={control ?? "auto"} />
 	<nav class="flex items-center gap-1 whitespace-nowrap max-md:hidden" aria-label="Main">
-		{#if lead}<span class="text-muted-foreground-2">{lead}</span>{/if}
+		{#if lead}
+			<span class="text-muted-foreground-2">
+				{#if typeof lead === "string"}{lead}{:else}{@render lead()}{/if}
+			</span>
+		{/if}
 		{#each steps as s (s.href)}
 			<span class="flex items-center">
 				<span class="mx-2.5 h-3 w-px bg-border" aria-hidden="true"></span>

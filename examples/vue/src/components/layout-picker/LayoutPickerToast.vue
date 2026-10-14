@@ -5,7 +5,7 @@ import { PhX } from '@phosphor-icons/vue'
 import { computed, onMounted, ref } from 'vue'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
-import { type Elevation, useElevation } from '@/components/ui/elevation'
+import { controlLevel, type Elevation, surfaceElevation, useElevation } from '@/components/ui/elevation'
 import { getLayoutCookie, setLayoutCookie } from './layout'
 import LayoutPicker from './LayoutPicker.vue'
 
@@ -14,6 +14,8 @@ const props = withDefaults(defineProps<{
   description?: string
   /** Skip the cookie check and show immediately (docs/previews). */
   defaultOpen?: boolean
+  /** Controlled layout (`v-model`). */
+  modelValue?: Layout
   /** Initially selected layout. */
   defaultValue?: Layout
   /** ✦ depth of the toast (floating is its natural level); raised +1 / floating +2 also raise the option cards */
@@ -29,36 +31,27 @@ const props = withDefaults(defineProps<{
 })
 
 const level = useElevation(() => props.elevation, 'overlay')
-const pickerElevation = computed(() =>
-  props.elevation && props.elevation !== 'auto'
-    ? (level.value === 'raised' || level.value === 'floating' ? 'raised' : 'flat')
-    : undefined,
-)
-const toastElevation = {
-  sunken: 'border-sk-bd bg-sk-bg shadow-sunken',
-  flat: '',
-  raised: 'border-transparent shadow-raised',
-  floating: 'border-transparent shadow-floating',
-}
+const pickerElevation = computed(() => controlLevel(props.elevation))
 
 const emit = defineEmits<{
-  (e: 'value-change', value: Layout): void
+  (e: 'update:modelValue', value: Layout): void
   (e: 'close'): void
 }>()
 
 // First-visit corner toast. Renders nothing once a layout cookie exists. Choosing saves the cookie;
 // closing without choosing saves the default (`dashboard`) so it does not return.
 const open = ref(false)
-const value = ref<Layout>(props.defaultValue)
+const inner = ref<Layout>(props.defaultValue)
+const value = computed(() => props.modelValue ?? inner.value)
 
 onMounted(() => {
   open.value = props.defaultOpen ?? getLayoutCookie() === undefined
 })
 
 function onChange(v: Layout) {
-  value.value = v
+  inner.value = v
   setLayoutCookie(v)
-  emit('value-change', v)
+  emit('update:modelValue', v)
 }
 
 function close() {
@@ -77,7 +70,7 @@ function close() {
     aria-label="Choose layout"
     :class="cn(
       'fixed right-4 bottom-4 z-50 w-[min(92vw,500px)] rounded-xl border border-border bg-popover p-4 text-popover-foreground',
-      toastElevation[level],
+      surfaceElevation[level],
       props.class,
     )"
   >

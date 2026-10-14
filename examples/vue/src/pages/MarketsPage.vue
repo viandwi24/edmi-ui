@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableHeader } from "@/components/ui/table";
-import { activity, creators, humanVsAi, indexes, tickers } from "@/data/markets";
+import { activity, creators, humanVsAi, indexes, indexRowLabels, tickers } from "@/data/markets";
 </script>
 
 <template>
@@ -37,7 +37,7 @@ import { activity, creators, humanVsAi, indexes, tickers } from "@/data/markets"
 			</div>
 			<Table>
 				<TableHeader>
-					<IndexRowHeader />
+					<IndexRowHeader :labels="indexRowLabels" />
 				</TableHeader>
 				<TableBody>
 					<IndexRow v-for="index in indexes" :key="index.symbol" :index="index" />

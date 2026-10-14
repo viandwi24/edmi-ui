@@ -10,7 +10,7 @@ const props = defineProps<{
   /** ✦ depth of the card: sunken -1, flat 0, raised +1, floating +2 */
   elevation?: Elevation
   class?: HTMLAttributes['class']
-  name: string
+  name?: string
   tagline?: string
   /** Headline price, e.g. "1% fee to you". */
   price?: string
@@ -20,6 +20,7 @@ const props = defineProps<{
   /** ✦ Lead row above the features, e.g. "Included:" or "Everything in Holder, plus:". */
   featuresLead?: string
 }>()
+// Slots `name`, `tagline`, `price`, `price-note` (string props are the fallback).
 // Slot `action` = call to action, usually a full-width `Button`.
 // ✦ Slot `features-lead` = rich lead row (overrides `featuresLead`).
 // ✦ Scoped slot `feature` ({ feature, index }) = rich content for a feature row (default: the text).
@@ -27,10 +28,10 @@ const props = defineProps<{
 
 <template>
   <Card :elevation="elevation" data-slot="pricing-plan" :class="cn('gap-0 p-6', props.class)">
-    <div class="text-[22px] font-semibold">{{ name }}</div>
-    <div v-if="tagline" class="mt-1 text-[13.5px] text-muted-foreground">{{ tagline }}</div>
-    <div v-if="price" class="mt-[22px] text-[22px] font-semibold">{{ price }}</div>
-    <div v-if="priceNote" class="mt-1 text-[12.5px] text-muted-foreground">{{ priceNote }}</div>
+    <div class="text-[22px] font-semibold"><slot name="name">{{ name }}</slot></div>
+    <div v-if="tagline || $slots.tagline" class="mt-1 text-[13.5px] text-muted-foreground"><slot name="tagline">{{ tagline }}</slot></div>
+    <div v-if="price || $slots.price" class="mt-[22px] text-[22px] font-semibold"><slot name="price">{{ price }}</slot></div>
+    <div v-if="priceNote || $slots['price-note']" class="mt-1 text-[12.5px] text-muted-foreground"><slot name="price-note">{{ priceNote }}</slot></div>
     <div v-if="$slots.action" class="mt-[18px] [&>[data-slot=button]]:w-full">
       <slot name="action" />
     </div>

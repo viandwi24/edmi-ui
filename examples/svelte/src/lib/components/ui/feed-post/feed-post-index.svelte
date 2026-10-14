@@ -12,7 +12,8 @@
 		action,
 		...restProps
 	}: Omit<HTMLAttributes<HTMLDivElement>, "title" | "children"> & {
-		title: string;
+		/** Title text, or a snippet for rich content. */
+		title: string | Snippet;
 		description?: string;
 		/** Leading icon (an `IconPlaceholder`). */
 		icon?: Snippet;
@@ -27,7 +28,7 @@
 		<Item.Media variant="icon">{@render icon()}</Item.Media>
 	{/if}
 	<Item.Content>
-		<Item.Title>{title}</Item.Title>
+		<Item.Title>{#if typeof title === "function"}{@render title()}{:else}{title}{/if}</Item.Title>
 		{#if description}
 			<Item.Description class="font-mono text-[11.5px]">{description}</Item.Description>
 		{/if}

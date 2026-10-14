@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<{
   index: IndexRowData
   /** ✦ Leading mono rank column (pair with `<IndexRowHeader rank />`). */
   rank?: number | string
-  /** ✦ `text` (default) or `pill`: soft tinted pill for the 7d delta. */
+  /** ✦ `text` (default) or `pill`: soft tinted pill for the change. */
   delta?: 'text' | 'pill'
   class?: HTMLAttributes['class']
 }>(), {
@@ -32,7 +32,7 @@ const down = computed(() => /^[-−–]/.test(props.index.change.trim()))
     <TableCell>
       <div class="flex items-center gap-3">
         <AvatarGroup>
-          <Avatar v-for="t in index.tokens" :key="t.label" class="size-7">
+          <Avatar v-for="t in index.avatars" :key="t.label" class="size-7">
             <AvatarImage v-if="t.image" :src="t.image" alt="" />
             <AvatarFallback class="text-[10px]">
               {{ t.label }}
@@ -54,7 +54,7 @@ const down = computed(() => /^[-−–]/.test(props.index.change.trim()))
       </div>
     </TableCell>
     <TableCell class="font-mono text-xs text-muted-foreground">
-      {{ index.creator }}
+      {{ index.owner }}
     </TableCell>
     <TableCell class="text-right font-mono text-[12.5px] font-semibold">
       {{ index.price }}
@@ -71,10 +71,10 @@ const down = computed(() => /^[-−–]/.test(props.index.change.trim()))
       </template>
     </TableCell>
     <TableCell class="text-right font-mono text-[12.5px]">
-      {{ index.aum }}
+      {{ index.value }}
     </TableCell>
     <TableCell class="text-right font-mono text-[12.5px]">
-      {{ index.holders }}
+      {{ index.count }}
     </TableCell>
     <TableCell class="text-right">
       <Sparkline v-if="index.spark" :data="index.spark" :tone="down ? 'down' : 'up'" />

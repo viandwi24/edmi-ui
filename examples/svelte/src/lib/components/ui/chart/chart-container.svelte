@@ -31,13 +31,13 @@
 	data-chart={chartId}
 	data-slot="chart"
 	class={cn(
-		"flex aspect-video justify-center overflow-visible text-xs",
+		"flex aspect-video justify-center overflow-visible font-sans text-xs tabular-nums",
 		// Overrides
 		//
 		// Stroke around dots/marks when hovering
 		"[&_.lc-highlight-point]:stroke-transparent",
 		// override the default stroke color of lines
-		"[&_.lc-line]:stroke-border/50 [&_.lc-grid-x-rule]:[stroke-dasharray:3_4] [&_.lc-grid-y-rule]:[stroke-dasharray:3_4]",
+		"[&_.lc-line]:stroke-border [&_.lc-grid-x-rule]:[stroke-dasharray:none] [&_.lc-grid-y-rule]:[stroke-dasharray:none]",
 
 		// by default, layerchart shows a line intersecting the point when hovering, this hides that
 		"[&_.lc-highlight-line]:stroke-0",
@@ -67,7 +67,7 @@
 		"[&_.lc-labels-text:not([fill])]:fill-foreground [&_text]:stroke-transparent",
 
 		// Tick labels on th x/y axes
-		"[&_.lc-axis-tick-label]:fill-muted-foreground [&_.lc-axis-tick-label]:font-mono [&_.lc-axis-tick-label]:text-[10.5px] [&_.lc-axis-tick-label]:font-normal",
+		"[&_.lc-axis-tick-label]:fill-muted-foreground [&_.lc-axis-tick-label]:font-sans [&_.lc-axis-tick-label]:text-xs [&_.lc-axis-tick-label]:font-normal",
 		"[&_.lc-tooltip-rects-g]:fill-transparent",
 		"[&_.lc-layout-svg-g]:fill-transparent",
 		"[&_.lc-root-container]:w-full",

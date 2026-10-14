@@ -10,7 +10,7 @@
 	export type PodiumEntry = {
 		rank: 1 | 2 | 3;
 		name: string;
-		/** Mono caption under the name, e.g. `$49.2K AUM · 412 holders`. */
+		/** Mono caption under the name, e.g. `$49.2K · 412 members`. */
 		meta?: string;
 		image?: string;
 		/** Avatar initials; defaults to the first two letters of `name`. */
@@ -18,27 +18,31 @@
 		href?: string;
 		/** ✦ `variant="cards"`: mono ticker under the name. */
 		symbol?: string;
-		/** ✦ `variant="cards"`: mono creator, top right of the card. */
-		creator?: string;
+		/** ✦ `variant="cards"`: mono owner, top right of the card. */
+		owner?: string;
 		/** ✦ `variant="cards"`: signed headline percentage, e.g. `+1.12%`. */
 		change?: string;
 		/** ✦ `variant="cards"`: series for the sparkline. */
 		spark?: number[];
 		/** ✦ `variant="cards"`: weights bar with legend. */
 		allocation?: PodiumAllocation[];
-		/** ✦ `variant="cards"`: footer stats. */
-		aum?: string;
-		holders?: string | number;
+		/** ✦ `variant="cards"`: footer stat, labelled by `valueLabel`. */
+		value?: string;
+		/** ✦ `variant="cards"`: footer stat, labelled by `countLabel`. */
+		count?: string | number;
 	};
 </script>
 
 <script lang="ts">
+	import { AllocationBar } from "#lib/components/ui/allocation-bar/index.js";
 	import { Avatar, AvatarFallback, AvatarImage } from "#lib/components/ui/avatar/index.js";
 	import { Badge } from "#lib/components/ui/badge/index.js";
 	import { Card } from "#lib/components/ui/card/index.js";
+	import { Sparkline } from "#lib/components/ui/index-row/index.js";
 	import { cn, type WithElementRef } from "#lib/utils.js";
 	import type { HTMLOlAttributes } from "svelte/elements";
 	import type { Elevation } from "#lib/components/ui/elevation/index.js";
+	import type { Snippet } from "svelte";
 
 	let {
 		ref = $bindable(null),
@@ -46,6 +50,8 @@
 		entries,
 		elevation = "auto",
 		variant = "podium",
+		valueLabel = "Value",
+		countLabel = "Count",
 		...restProps
 	}: WithElementRef<Omit<HTMLOlAttributes, "children">, HTMLOListElement> & {
 		entries: PodiumEntry[];
@@ -53,10 +59,13 @@
 		elevation?: Elevation;
 		/** ✦ `podium` (default) or `cards`. */
 		variant?: "podium" | "cards";
+		/** ✦ `cards`: label of the footer `value` stat. */
+		valueLabel?: string | Snippet;
+		/** ✦ `cards`: label of the footer `count` stat. */
+		countLabel?: string | Snippet;
 	} = $props();
 
 	const isDown = (s: string) => /^[-−–]/.test(s.trim());
-	const color = (c: string | undefined, i: number) => c ?? `var(--chart-${(i % 5) + 1})`;
 
 	// `podium` (default): #1 raised in the middle (warning badge), #2 left and #3 right sit lower.
 	// `cards` ✦: three equal stat cards in rank order (leaderboard board).
@@ -65,20 +74,11 @@
 			.map((r) => entries.find((e) => e.rank === r))
 			.filter((e): e is PodiumEntry => !!e)
 	);
-
-	function sparkPoints(data: number[], width = 150, height = 34) {
-		const min = Math.min(...data);
-		const span = Math.max(...data) - min || 1;
-		const pad = 2;
-		return data
-			.map((v, i) => {
-				const x = pad + (i / (data.length - 1)) * (width - pad * 2);
-				const y = pad + (1 - (v - min) / span) * (height - pad * 2);
-				return `${x.toFixed(1)},${y.toFixed(1)}`;
-			})
-			.join(" ");
-	}
 </script>
+
+{#snippet text(v: string | Snippet)}
+	{#if typeof v === "function"}{@render v()}{:else}{v}{/if}
+{/snippet}
 
 {#if variant === "cards"}
 	<ol
@@ -94,7 +94,7 @@
 				<Card {elevation} class="h-full gap-0 p-6">
 					<div class="flex items-center justify-between text-[13px]">
 						<span class="font-medium">No. {e.rank}</span>
-						{#if e.creator}<span class="font-mono text-xs text-muted-foreground">{e.creator}</span>{/if}
+						{#if e.owner}<span class="font-mono text-xs text-muted-foreground">{e.owner}</span>{/if}
 					</div>
 					<div class="mt-3 flex items-center gap-3">
 						<Avatar class="size-11 rounded-xl after:rounded-xl">
@@ -117,48 +117,18 @@
 							<span class={cn("text-[30px] leading-none tracking-[-0.8px]", down ? "text-destructive-text" : "text-brand-text")}>
 								{e.change}
 							</span>
-							{#if e.spark && e.spark.length > 1}
-								<svg
-									width="150"
-									height="34"
-									viewBox="0 0 150 34"
-									fill="none"
-									aria-hidden="true"
-									class={cn("max-w-[45%]", down ? "text-destructive-text" : "text-success-text")}
-								>
-									<polyline
-										points={sparkPoints(e.spark)}
-										stroke="currentColor"
-										stroke-width="1.6"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									/>
-								</svg>
+							{#if e.spark}
+								<Sparkline data={e.spark} tone={down ? "down" : "up"} width={150} height={34} class="max-w-[45%]" />
 							{/if}
 						</div>
 					{/if}
 					{#if e.allocation?.length}
-						<div class="mt-4">
-							<div class="flex h-2 gap-[3px]" role="img" aria-label={e.allocation.map((s) => `${s.label} ${s.value}%`).join(", ")}>
-								{#each e.allocation as s, i (s.label)}
-									<span class="rounded-[3px]" style="flex: {s.value}; background: {color(s.color, i)}"></span>
-								{/each}
-							</div>
-							<ul class="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-foreground-2">
-								{#each e.allocation as s, i (s.label)}
-									<li class="flex items-center gap-1.5">
-										<span class="size-2 rounded-[2px]" style="background: {color(s.color, i)}"></span>
-										<span class="font-mono">{s.label}</span>
-										<b class="font-semibold text-foreground">{s.value}%</b>
-									</li>
-								{/each}
-							</ul>
-						</div>
+						<AllocationBar segments={e.allocation} size="sm" class="mt-4" />
 					{/if}
-					{#if e.aum !== undefined || e.holders !== undefined}
+					{#if e.value !== undefined || e.count !== undefined}
 						<div class="mt-4 flex items-center gap-4 border-t border-border-2 pt-3.5 text-[13px] text-muted-foreground">
-							{#if e.aum !== undefined}<span>AUM <b class="font-mono font-medium text-foreground">{e.aum}</b></span>{/if}
-							{#if e.holders !== undefined}<span>Holders <b class="font-mono font-medium text-foreground">{e.holders}</b></span>{/if}
+							{#if e.value !== undefined}<span>{@render text(valueLabel)} <b class="font-mono font-medium text-foreground">{e.value}</b></span>{/if}
+							{#if e.count !== undefined}<span>{@render text(countLabel)} <b class="font-mono font-medium text-foreground">{e.count}</b></span>{/if}
 						</div>
 					{/if}
 				</Card>

@@ -6,10 +6,12 @@
 <script lang="ts">
 	import { cn } from "#lib/utils.js";
 	import { Card } from "#lib/components/ui/card/index.js";
+	import type { Elevation } from "#lib/components/ui/elevation/index.js";
 	import { Separator } from "#lib/components/ui/separator/index.js";
 	import type { ComponentProps, Snippet } from "svelte";
 
 	let {
+		ref = $bindable(null),
 		class: className,
 		brand,
 		description,
@@ -17,6 +19,7 @@
 		columns,
 		legal,
 		note,
+		elevation = "auto",
 		...restProps
 	}: Omit<ComponentProps<typeof Card>, "title" | "children"> & {
 		/** Brand lockup (logo + wordmark). */
@@ -29,6 +32,8 @@
 		legal?: string | Snippet;
 		/** Bottom-right note. */
 		note?: string | Snippet;
+		/** ✦ depth of the card: sunken -1, flat 0, raised +1, floating +2. */
+		elevation?: Elevation;
 	} = $props();
 </script>
 
@@ -36,7 +41,7 @@
 	{#if typeof v === "function"}{@render v()}{:else}{v}{/if}
 {/snippet}
 
-<Card data-slot="site-footer" class={cn("gap-0 px-8 py-7", className)} {...restProps}>
+<Card bind:ref {elevation} data-slot="site-footer" class={cn("gap-0 px-8 py-7", className)} {...restProps}>
 	<div class="flex flex-wrap justify-between gap-8">
 		<div class="flex flex-col gap-3">
 			{@render brand?.()}

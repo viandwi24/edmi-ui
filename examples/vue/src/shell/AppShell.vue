@@ -21,6 +21,6 @@ const shell = computed(() =>
 		<component :is="shell">
 			<slot />
 		</component>
-		<LayoutPickerToast @value-change="(v: Layout) => (layout = v)" />
+		<LayoutPickerToast :model-value="layout" @update:model-value="(v: Layout) => (layout = v)" />
 	</ElevationProvider>
 </template>

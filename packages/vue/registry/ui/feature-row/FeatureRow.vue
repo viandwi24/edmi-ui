@@ -11,10 +11,10 @@ const props = defineProps<{
   elevation?: Elevation
   class?: HTMLAttributes['class']
   /** Mono number, e.g. "1.1". */
-  index: string | number
-  title: string
+  index?: string | number
+  title?: string
 }>()
-// Default slot = expandable content; slot `icon` = trailing icon (defaults to a plus).
+// Slots `index` and `title` (string props are the fallback). Default slot = expandable content; slot `icon` = trailing icon (defaults to a plus).
 </script>
 
 <template>
@@ -23,8 +23,8 @@ const props = defineProps<{
     data-slot="feature-row"
     :class="cn('h-14 flex-row items-center gap-4 px-5 py-0', props.class)"
   >
-    <span class="font-mono text-xs text-muted-foreground">{{ index }}</span>
-    <span class="flex-1 text-left text-base font-medium">{{ title }}</span>
+    <span class="font-mono text-xs text-muted-foreground"><slot name="index">{{ index }}</slot></span>
+    <span class="flex-1 text-left text-base font-medium"><slot name="title">{{ title }}</slot></span>
     <span class="text-muted-foreground">
       <slot name="icon"><Plus class="size-4" /></slot>
     </span>
@@ -34,8 +34,8 @@ const props = defineProps<{
       <CollapsibleTrigger
         class="flex h-14 w-full cursor-pointer items-center gap-4 px-5 outline-none focus-visible:bg-accent"
       >
-        <span class="font-mono text-xs text-muted-foreground">{{ index }}</span>
-        <span class="flex-1 text-left text-base font-medium">{{ title }}</span>
+        <span class="font-mono text-xs text-muted-foreground"><slot name="index">{{ index }}</slot></span>
+        <span class="flex-1 text-left text-base font-medium"><slot name="title">{{ title }}</slot></span>
         <span class="text-muted-foreground transition-transform group-data-[state=open]/feature-row:rotate-45">
           <slot name="icon"><Plus class="size-4" /></slot>
         </span>

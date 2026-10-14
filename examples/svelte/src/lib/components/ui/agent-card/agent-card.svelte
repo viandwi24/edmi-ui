@@ -1,5 +1,7 @@
 <script lang="ts" module>
-	export type AgentCardStat = { label: string; value: string | number };
+	import type { Snippet } from "svelte";
+
+	export type AgentCardStat = { label: string; value: string | number | Snippet };
 </script>
 
 <script lang="ts">
@@ -7,16 +9,19 @@
 	import { Badge } from "#lib/components/ui/badge/index.js";
 	import { Card } from "#lib/components/ui/card/index.js";
 	import AgentIdenticon from "./agent-identicon.svelte";
-	import type { ComponentProps, Snippet } from "svelte";
+	import type { Elevation } from "#lib/components/ui/elevation/index.js";
+	import type { ComponentProps } from "svelte";
 
 	let {
+		ref = $bindable(null),
 		class: className,
 		name,
 		address,
 		tag,
-		autopilot,
+		status,
 		stats,
 		seed,
+		elevation = "auto",
 		children,
 		...restProps
 	}: Omit<ComponentProps<typeof Card>, "children"> & {
@@ -27,25 +32,27 @@
 		address?: string;
 		/** Secondary badge next to the name (e.g. "AI"). */
 		tag?: string;
-		/** Shows the brand "Autopilot" badge. */
-		autopilot?: boolean;
+		/** Brand badge with a status dot (e.g. "Live"); omit to hide it. */
+		status?: string | Snippet;
 		stats?: AgentCardStat[];
 		/** Identicon seed; defaults to `name`. */
 		seed?: string;
+		/** ✦ depth of the card (forwarded to Card). */
+		elevation?: Elevation;
 	} = $props();
 </script>
 
-<Card data-slot="agent-card" class={cn("gap-0 p-5", className)} {...restProps}>
+<Card bind:ref data-slot="agent-card" {elevation} class={cn("gap-0 p-5", className)} {...restProps}>
 	<div class="flex items-center gap-3.5">
 		<AgentIdenticon seed={seed ?? name} />
 		<div class="min-w-0">
 			<div class="flex flex-wrap items-center gap-2">
 				<span class="text-base font-semibold">{name}</span>
 				{#if tag}<Badge variant="secondary">{tag}</Badge>{/if}
-				{#if autopilot}
+				{#if status}
 					<Badge variant="brand">
 						<span class="size-1.5 rounded-full bg-current"></span>
-						Autopilot
+						{#if typeof status === "function"}{@render status()}{:else}{status}{/if}
 					</Badge>
 				{/if}
 			</div>
@@ -59,7 +66,9 @@
 			{#each stats as s (s.label)}
 				<div>
 					<div class="text-xs text-muted-foreground">{s.label}</div>
-					<div class="mt-1 font-mono text-[19px]">{s.value}</div>
+					<div class="mt-1 font-mono text-[19px]">
+						{#if typeof s.value === "function"}{@render s.value()}{:else}{s.value}{/if}
+					</div>
 				</div>
 			{/each}
 		</div>

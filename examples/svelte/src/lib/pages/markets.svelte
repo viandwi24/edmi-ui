@@ -6,7 +6,7 @@
 	import { IndexRow, IndexRowHeader } from "#lib/components/ui/index-row/index.js";
 	import { Table, TableBody, TableHeader } from "#lib/components/ui/table/index.js";
 	import { TickerStrip } from "#lib/components/ui/ticker-strip/index.js";
-	import { activity, creators, humanVsAi, indexes, tickers } from "#lib/data/markets.js";
+	import { activity, creators, humanVsAi, indexes, indexRowLabels, tickers } from "#lib/data/markets.js";
 </script>
 
 {#snippet cardTop(title: string, action?: string)}
@@ -50,7 +50,7 @@
 		{@render cardTop("Top indexes", "View all")}
 		<Table>
 			<TableHeader>
-				<IndexRowHeader />
+				<IndexRowHeader labels={indexRowLabels} />
 			</TableHeader>
 			<TableBody>
 				{#each indexes as index (index.symbol)}

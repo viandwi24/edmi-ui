@@ -20,29 +20,29 @@
 		elevation = "auto",
 		...restProps
 	}: Omit<ComponentProps<typeof Card>, "title" | "children"> & {
-		name: string;
-		tagline?: string;
+		name: string | Snippet;
+		tagline?: string | Snippet;
 		/** Headline price, e.g. "1% fee to you". */
-		price?: string;
+		price?: string | Snippet;
 		/** Small note under the price. */
-		priceNote?: string;
+		priceNote?: string | Snippet;
 		/** Call to action, usually a full-width `Button`. */
 		action?: Snippet;
-		features?: string[];
+		features?: (string | Snippet)[];
 		/** ✦ Lead row above the features, e.g. "Included:" or "Everything in Holder, plus:". */
 		featuresLead?: string | Snippet;
 		/** ✦ Rich content for a feature row (default: the text). */
-		feature?: Snippet<[string, number]>;
+		feature?: Snippet<[string | Snippet, number]>;
 		/** ✦ depth of the card: sunken -1, flat 0, raised +1, floating +2. */
 		elevation?: Elevation;
 	} = $props();
 </script>
 
 <Card bind:ref {elevation} data-slot="pricing-plan" class={cn("gap-0 p-6", className)} {...restProps}>
-	<div class="text-[22px] font-semibold">{name}</div>
-	{#if tagline}<div class="mt-1 text-[13.5px] text-muted-foreground">{tagline}</div>{/if}
-	{#if price}<div class="mt-[22px] text-[22px] font-semibold">{price}</div>{/if}
-	{#if priceNote}<div class="mt-1 text-[12.5px] text-muted-foreground">{priceNote}</div>{/if}
+	<div class="text-[22px] font-semibold">{#if typeof name === "function"}{@render name()}{:else}{name}{/if}</div>
+	{#if tagline}<div class="mt-1 text-[13.5px] text-muted-foreground">{#if typeof tagline === "function"}{@render tagline()}{:else}{tagline}{/if}</div>{/if}
+	{#if price}<div class="mt-[22px] text-[22px] font-semibold">{#if typeof price === "function"}{@render price()}{:else}{price}{/if}</div>{/if}
+	{#if priceNote}<div class="mt-1 text-[12.5px] text-muted-foreground">{#if typeof priceNote === "function"}{@render priceNote()}{:else}{priceNote}{/if}</div>{/if}
 	{#if action}
 		<div class="mt-[18px] [&>[data-slot=button]]:w-full">{@render action()}</div>
 	{/if}
@@ -64,7 +64,7 @@
 						remixicon="RiCheckLine"
 						class="size-3.5 text-muted-foreground"
 					/>
-					{#if feature}{@render feature(f, i)}{:else}{f}{/if}
+					{#if feature}{@render feature(f, i)}{:else if typeof f === "function"}{@render f()}{:else}{f}{/if}
 				</li>
 			{/each}
 		</ul>

@@ -9,14 +9,15 @@
 		ref = $bindable(null),
 		class: className,
 		logo,
-		name = "Stockbreak",
+		name,
 		href = "/",
 		elevation = "auto",
 		...restProps
 	}: WithElementRef<Omit<HTMLAnchorAttributes, "children">, HTMLAnchorElement> & {
 		/** Replaces the default mark. */
 		logo?: Snippet;
-		name?: string;
+		/** Brand text or a snippet. */
+		name?: string | Snippet;
 		/** ✦ depth of the default mark. */
 		elevation?: Elevation;
 	} = $props();
@@ -30,5 +31,9 @@
 	{...restProps}
 >
 	{#if logo}{@render logo()}{:else}<SiteHeaderMark {elevation} />{/if}
-	<span class="font-brand text-xl font-semibold tracking-[-0.4px]">{name}</span>
+	{#if name}
+		<span class="font-brand text-xl font-semibold tracking-[-0.4px]">
+			{#if typeof name === "string"}{name}{:else}{@render name()}{/if}
+		</span>
+	{/if}
 </a>

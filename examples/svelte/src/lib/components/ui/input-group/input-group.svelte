@@ -16,10 +16,10 @@
 
 	// ✦ depth (v4): the group is the field; focus-within swaps the edge for the ring
 	const groupElevation = {
-		sunken: "border-sk-bd bg-sk-bg shadow-sunken has-[[data-slot=input-group-control]:focus-visible]:bg-card",
+		sunken: "border-sk-bd bg-sk-bg shadow-sunken has-[[data-slot=input-group-control]:focus-visible]:bg-card [&_[data-slot=input-group-addon]]:bg-transparent! [&_[data-slot=input-group-text]]:bg-transparent!",
 		flat: "",
-		raised: "border-transparent shadow-raised",
-		floating: "border-transparent shadow-floating",
+		raised: "border-transparent bg-[image:linear-gradient(var(--bv-face-b),var(--bv-face-b))] shadow-raised has-[[data-slot=input-group-control]:focus-visible]:border-ring has-[[data-slot=input-group-control]:focus-visible]:shadow-ring [&_[data-slot=input-group-addon]]:bg-transparent! [&_[data-slot=input-group-text]]:bg-transparent!",
+		floating: "border-transparent bg-[image:linear-gradient(var(--bv-face-b),var(--bv-face-b))] shadow-floating has-[[data-slot=input-group-control]:focus-visible]:border-ring has-[[data-slot=input-group-control]:focus-visible]:shadow-ring [&_[data-slot=input-group-addon]]:bg-transparent! [&_[data-slot=input-group-text]]:bg-transparent!",
 	};
 
 	const level = useElevation(() => elevation, "field");

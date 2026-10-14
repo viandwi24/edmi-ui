@@ -67,39 +67,66 @@ function Sparkline({
 type IndexRowData = {
 	name: string;
 	symbol: string;
-	/** One avatar per constituent token: image URL or a short label. */
-	tokens: { label: string; image?: string }[];
+	/** One avatar per member (e.g. a constituent): image URL or a short label. */
+	avatars: { label: string; image?: string }[];
 	tags?: string[];
-	creator: string;
+	/** Text of the owner column. */
+	owner: string;
 	price: string;
 	/** Signed percentage, e.g. `+1.12%`. */
 	change: string;
-	aum: string;
-	holders: string | number;
-	/** Series for the 30d sparkline. */
+	/** Text of the value column (mono, right-aligned). */
+	value: string;
+	/** Text of the count column (mono, right-aligned). */
+	count: string | number;
+	/** Series for the trend sparkline. */
 	spark?: number[];
 	href?: string;
+};
+
+type IndexRowHeaderLabels = {
+	name?: React.ReactNode;
+	owner?: React.ReactNode;
+	price?: React.ReactNode;
+	change?: React.ReactNode;
+	value?: React.ReactNode;
+	count?: React.ReactNode;
+	trend?: React.ReactNode;
+};
+
+const defaultLabels: Required<IndexRowHeaderLabels> = {
+	name: "Name",
+	owner: "Owner",
+	price: "Price",
+	change: "Change",
+	value: "Value",
+	count: "Count",
+	trend: "Trend",
 };
 
 // Header row matching the IndexRow columns. Place it in `<TableHeader>`.
 function IndexRowHeader({
 	className,
 	rank = false,
+	labels,
 	...props
 }: React.ComponentProps<typeof TableRow> & {
 	/** ✦ Leading empty cell for the `rank` column of IndexRow. */
 	rank?: boolean;
+	/** Column labels (each defaults to a neutral English word). */
+	labels?: IndexRowHeaderLabels;
 }) {
+	const l = { ...defaultLabels, ...labels };
 	return (
 		<TableRow className={className} {...props}>
 			{rank ? <TableHead className="w-10" /> : null}
-			<TableHead>Index</TableHead>
-			<TableHead>Creator</TableHead>
-			<TableHead className="text-right">Price</TableHead>
-			<TableHead className="text-right">7d</TableHead>
-			<TableHead className="text-right">AUM</TableHead>
-			<TableHead className="text-right">Holders</TableHead>
-			<TableHead className="text-right">30d</TableHead>
+			<TableHead>{l.name}</TableHead>
+			<TableHead>{l.owner}</TableHead>
+			<TableHead className="text-right">{l.price}</TableHead>
+			<TableHead className="text-right">{l.change}</TableHead>
+			<TableHead className="text-right">{l.value}</TableHead>
+			<TableHead className="text-right">{l.count}</TableHead>
+			<TableHead className="text-right">{l.trend}</TableHead>
 		</TableRow>
 	);
 }
@@ -129,7 +156,7 @@ function IndexRow({
 			<TableCell>
 				<div className="flex items-center gap-3">
 					<AvatarGroup>
-						{index.tokens.map((t) => (
+						{index.avatars.map((t) => (
 							<Avatar key={t.label} className="size-7">
 								{t.image ? <AvatarImage src={t.image} alt="" /> : null}
 								<AvatarFallback className="text-[10px]">
@@ -168,7 +195,7 @@ function IndexRow({
 				</div>
 			</TableCell>
 			<TableCell className="font-mono text-xs text-muted-foreground">
-				{index.creator}
+				{index.owner}
 			</TableCell>
 			<TableCell className="text-right font-mono text-[12.5px] font-semibold">
 				{index.price}
@@ -196,10 +223,10 @@ function IndexRow({
 				)}
 			</TableCell>
 			<TableCell className="text-right font-mono text-[12.5px]">
-				{index.aum}
+				{index.value}
 			</TableCell>
 			<TableCell className="text-right font-mono text-[12.5px]">
-				{index.holders}
+				{index.count}
 			</TableCell>
 			<TableCell className="text-right">
 				{index.spark ? (
@@ -210,5 +237,5 @@ function IndexRow({
 	);
 }
 
-export type { IndexRowData };
+export type { IndexRowData, IndexRowHeaderLabels };
 export { IndexRow, IndexRowHeader, Sparkline };
