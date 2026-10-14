@@ -1,5 +1,41 @@
 # @edmi-ui/registry-vue
 
+## 0.6.0
+
+### Minor Changes
+
+- c956769: AI patterns consistency pass (`ai-artifact-card`, `ai-artifact-stack`, `ai-artifact-viewer`, `ai-session-panel`, `ai-agent-avatar`, `ai-prompt-input-agent`, `ai-chat-composer`, `ai-chat-header`).
+  
+  - `ArtifactViewer` and `SessionPanel` declare `elevation` in their own props in all ports (they were Card pass-through; Vue ignored it). `PromptInputAgent` declares `elevation` for the chip in all ports. New `-elevation` demos for both panels.
+  - Prop parity: text props that React types as `ReactNode` are now slots in Vue (`ChatComposer` `disclaimer`, `ArtifactViewerTitle` `format`, `SessionProgress` / `SessionSection` `title`, `SessionOutputTitle` `meta`, `SessionFile` `name` / `format`, `SessionSource` `label`, `ArtifactCardActions` `label`; the string prop stays as the fallback, so `name`, `title` and `label` are now optional) and `string | Snippet` in Svelte.
+  - Svelte: `ChatComposer` gets `onModelChange`, `onEffortChange` and `onModeChange` next to `bind:model|effort|mode`; every part that renders an element exposes `ref = $bindable(null)`.
+  - Documents render as paper in every mode, so the paper and thumbnail colours stay fixed literals by design (now noted in the docs).
+  
+  Migration: no breaking changes; Vue code that passed `elevation` to `ArtifactViewer` / `SessionPanel` as a fall-through attribute keeps working and now behaves like the other ports.
+- c956769: UI patterns brand-neutral pass (`site-header`, `app-header`, `join-panel`, `index-row`, `leaderboard-podium`, `agent-card`, `stat-tile`, `ticker-strip`, `watchlist-item`, `layout-picker`) plus shared elevation helpers.
+  
+  - `elevation` item: new exports `surfaceElevation` (surface class map by level) and `controlLevel(elevation)` (depth a container hands to its controls). Additive; patterns no longer carry local copies.
+  - Stockbreak defaults removed from the registry sources: `SiteHeader` / `SiteHeaderBrand` / `AppHeader` have no default `name` (the brand text is not rendered when empty), `AppHeader` has no default `network`, `JoinPanel` has no default `currency` (the unit is shown only when set), `AgentCard` `autopilot` is replaced by `status`.
+  - Neutral data names: `IndexRowData` `tokens` -> `avatars`, `creator` -> `owner`, `aum` -> `value`, `holders` -> `count`; `PodiumEntry` `creator` -> `owner`, `aum` -> `value`, `holders` -> `count`. `IndexRowHeader` takes a `labels` prop (`name`, `owner`, `price`, `change`, `value`, `count`, `trend`; defaults `Name`, `Owner`, `Price`, `Change`, `Value`, `Count`, `Trend`, replacing the hard-coded `Index`, `Creator`, `7d`, `AUM`, `Holders`, `30d`). `LeaderboardPodium` takes `valueLabel` / `countLabel` for the cards footer (defaults `Value` / `Count`, replacing `AUM` / `Holders`).
+  - `LeaderboardPodium` now renders the `Sparkline` of `index-row` and the `AllocationBar` of `allocation-bar` (new registry dependencies, same look). `AllocationBar` gains an additive `size` prop (`default` | `sm`).
+  - Declared `elevation`: `AgentCard`, `StatTile`, `StatStrip` and `TickerStrip` declare it in their own props in every port and forward it to the card. `index-row` is documented as flat only.
+  - Prop parity: `SiteHeader` / `SiteHeaderBrand` `name` and `lead`, `AppHeader` `name`, `network`, `connectLabel`, `JoinPanel` `label`, `maxLabel`, `joinLabel`, `footnote`, row labels and values, `StatTile` `deltaLabel`, `StatStripItem`, `AgentCard` `status` and stat values are slots in Vue and `string | Snippet` in Svelte (strings still work). `AgentCard` Svelte root exposes `ref`.
+  - Callbacks: Vue `LayoutPickerToast` uses `v-model` (`update:modelValue`) instead of the `value-change` event; Svelte `LayoutPickerToast` gets `bind:value` next to `onValueChange`.
+  - Fixes: `AppHeaderNavItem` padding is `px-3` in every port (Vue and Svelte were 11px); Svelte header marks use a transparent border like React and Vue. `"use client"` added to `site-header`, `app-header`, `join-panel` and `watchlist-item`.
+  
+  Migration:
+  - Pass `name="Your brand"` to `SiteHeader`, `SiteHeaderBrand`, `AppHeader`, `network="..."` to `AppHeader` and `currency="..."` to `JoinPanel` where you relied on the old defaults.
+  - Rename data fields: `tokens` -> `avatars`, `creator` -> `owner`, `aum` -> `value`, `holders` -> `count` (IndexRow data and podium entries) and pass `labels` / `valueLabel` / `countLabel` for the old column names.
+  - Replace `<AgentCard autopilot />` with `<AgentCard status="Autopilot" />`.
+  - Vue: replace `@value-change` on `LayoutPickerToast` with `v-model`.
+- c956769: Patterns standardisation (kanban-column, feed-post, code-block, task-list, pricing-plan, feature-row, step-card, site-footer, allocation-bar).
+  
+  Migration:
+  - `footer` is now `site-footer` (component `SiteFooter` and `data-slot` unchanged). `add @edmi-ui/footer` still works for one version as a deprecated alias that installs `site-footer`. Update imports: React `components/site-footer/site-footer`, Vue/Svelte `site-footer` folder (was `footer`).
+  - React `KanbanColumn` gains `elevation` and hands it to `KanbanItem` through context (item prop, then column, then scope), like Vue and Svelte. Vue's injection key is now the exported symbol `KANBAN_COLUMN_KEY` (new file `kanban-column/context.ts`) instead of the string `'kanbanColumn'`.
+  - Every card-based pattern declares `elevation` in its own props in all ports. React pattern files are `registry:block` files (previously `registry:component` for the second half).
+  - Vue/Svelte parity: `FeedPostIndex` title, `CodeBlock` title and `Task` title/agent accept rich content (Vue slots `title` / `agent`, Svelte `string | Snippet`). Svelte pattern roots expose a bindable `ref`.
+
 ## 0.5.0
 
 ### Minor Changes
