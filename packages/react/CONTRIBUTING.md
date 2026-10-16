@@ -3,7 +3,7 @@
 Source: `registry/{ui,lib,hooks,blocks}/` (physical) imported as `@/registry/edmi/ui/<x>`; `cn` from `"cn"`. Deps are pre-installed: **never touch package.json / bun.lock / components.json / src/index.css** (ask the maintainer; see AGENTS.md section 12).
 
 ## Per-component procedure
-1. Read the shadcn docs page and DESIGN.md §4/§5 + the board `refs/edmi-ui/screens/edmi-ui-kit/<board>-{light,dark}.png`.
+1. Read the shadcn docs page and the design rules (the design references (`refs/`) are maintainer-local; outside contributors follow the docs [Rules page](https://viandwi24.github.io/edmi-ui/getting-started/rules/) and AGENTS.md).
 2. `bunx shadcn@latest add <name> --dry-run` to see which files it would write, then `yes n | bunx shadcn@latest add <name>` (answers "no" to every existing file). It writes to `registry/ui/<name>.tsx` and rewrites imports to `@/registry/edmi/ui/...`. Afterwards `git status`: delete untracked stock deps you do not own, `git checkout --` anything tracked, and revert package.json if touched.
 3. Keep anatomy, props, `data-slot`, exports. Replace classes with `packages/tokens/src/recipes.ts` (inline the strings), swap selectors (table below), add ✦ variants additively. Imports between items: `@/registry/edmi/ui/button` only.
 4. Manifest entry in `registry.manifest/<group>.ts` (template below) -> `bun run gen`.

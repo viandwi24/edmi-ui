@@ -204,6 +204,13 @@ Components use these; do not hard-code shadows. Gradient faces on a bordered con
 The old lip tokens (`--lip`, `--lip-strong`, `--*-lip`, `--*-edge`, `--*-shade`, `--card-hi`, `--outline-*`) are kept
 only for compatibility. Components no longer use them.
 
+### Chart palette
+
+The dark `--chart-1…5` colours are global tokens, like in shadcn/ui: the Green set lives in `tokens.css` (`.dark`) and the
+Ocean set in `themes/ocean.css`. Both are tuned for contrast and colour-blind separation on the Stone and Slate dark
+surfaces, so there is no chart-only override: re-run `add @edmi-ui/theme --overwrite` (and your `theme-<base>-<accent>`
+item after it) to pick up changes.
+
 ### Dark ladder
 
 The stone dark palette uses a clearer ladder so surfaces separate without black blocks: background `#121214`, card

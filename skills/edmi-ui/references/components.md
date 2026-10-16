@@ -54,7 +54,7 @@ Choose by "use when". If two items fit, prefer the more specific one (`field` ov
 - `avatar`: user or entity image with initials fallback; `AvatarGroup` for stacks.
 - `card` [elevation]: the default container for grouped content. `elevation` raises (+1) or floats (+2) a hero or key card; sunken (-1) for wells.
 - `empty` [elevation]: empty states: icon media, title, description, actions.
-- `inset-panel` [elevation]: ✦ a panel with header and footer on a muted shell and a card body edge to edge (tool and chat panels).
+- `inset-panel` [elevation]: ✦ a panel with header and footer on a muted shell and a card body plate inset 2px from the shell (tool and chat panels).
 - `item`: a generic row with media, title, description and actions (lists, settings).
 - `progress`: task progress; `brand` variant, label and value parts.
 - `separator`: a thin divider.
@@ -223,7 +223,7 @@ Choose by "use when". If two items fit, prefer the more specific one (`field` ov
 - Tabs: `TabsList variant="default|line|pills"` and `elevation` on the list (the active trigger rises).
 - Accordion: `variant="card"`.
 - Carousel: `CarouselDots`.
-- Inset Panel: its own item (header and footer on a muted shell, card body edge to edge).
+- Inset Panel: its own item (header and footer on a muted shell, card body plate inset 2px from the shell).
 - Date Picker: `DateRangePicker` with optional presets.
 - Chart: floating tooltip (`indicator="dot|line|dashed|none"`), legend (`swatch="line"` in React/Vue), `ChartStatWell active` buttons to switch the series of an interactive chart; compose charts in a `Card`; dark mode swaps in a validated chart palette (the Ocean accent keeps its own).
 - Table: `numeric` and `trend` helpers for mono right-aligned numbers.

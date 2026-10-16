@@ -64,7 +64,7 @@ export const USE_WHEN: Record<string, string> = {
 	// Display
 	card: "the default container for grouped content. `elevation` raises (+1) or floats (+2) a hero or key card; sunken (-1) for wells.",
 	"inset-panel":
-		"✦ a panel with header and footer on a muted shell and a card body edge to edge (tool and chat panels).",
+		"✦ a panel with header and footer on a muted shell and a card body plate inset 2px from the shell (tool and chat panels).",
 	separator: "a thin divider.",
 	spinner: "inline loading indicator.",
 	skeleton: "placeholder shaped like content that is loading.",

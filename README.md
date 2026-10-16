@@ -18,7 +18,7 @@
 # Edmi UI
 
 **Quiet, editorial interfaces for React, Vue and Svelte.** A minimalist design system built on shadcn/ui:
-warm neutrals, mono numbers and role-based depth, inspired by Claude and Cofounder. **AI-ready out of the box**:
+warm neutrals, mono numbers and role-based depth, inspired by calm, editorial product design. **AI-ready out of the box**:
 chat, agent, code, voice and workflow components ship next to the UI kit, in the same style, for all three frameworks.
 
 ## Features
@@ -33,18 +33,18 @@ chat, agent, code, voice and workflow components ship next to the UI kit, in the
   installable theme items (`theme-<base>-<accent>`).
 - **Icons your way.** Phosphor by default, rewritten to your `iconLibrary` on install.
 - **83 UI components and patterns + 56 AI components**, every one in React, Vue and Svelte, plus
-  [8 live example apps](https://viandwi24.github.io/edmi-ui/examples/) (a chat app, the multi-page Stockbreak dashboard in navbar and sidebar layouts, agent workspaces, a coding IDE, a workflow canvas, marketing) in all three frameworks.
+  [9 live example apps](https://viandwi24.github.io/edmi-ui/examples/) (an AI chat app, the multi-page Stockbreak dashboard in navbar and sidebar layouts, an agent workspace, an agent canvas, a coding agent IDE, an agent workflow, an editorial landing page) in all three frameworks.
 
 ## AI-ready
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="apps/docs/public/examples/claude-chat-dark.png">
-    <img alt="Chat app built with Edmi AI components" src="apps/docs/public/examples/claude-chat-light.png" width="49%">
+    <source media="(prefers-color-scheme: dark)" srcset="apps/docs/public/examples/ai-chat-dark.png">
+    <img alt="Chat app built with Edmi AI components" src="apps/docs/public/examples/ai-chat-light.png" width="49%">
   </picture>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="apps/docs/public/examples/cofounder-agent-workspace-dark.png">
-    <img alt="Agent workspace built with Edmi AI components" src="apps/docs/public/examples/cofounder-agent-workspace-light.png" width="49%">
+    <source media="(prefers-color-scheme: dark)" srcset="apps/docs/public/examples/agent-workspace-dark.png">
+    <img alt="Agent workspace built with Edmi AI components" src="apps/docs/public/examples/agent-workspace-light.png" width="49%">
   </picture>
 </p>
 
@@ -74,8 +74,8 @@ npx shadcn-svelte@latest add https://viandwi24.github.io/edmi-ui/r/svelte/ai-all
 Or pick single items: `npx shadcn@latest add @edmi-ui/ai-conversation @edmi-ui/ai-message @edmi-ui/ai-prompt-input`.
 
 Browse every AI component with live demos under **AI** in the [components docs](https://viandwi24.github.io/edmi-ui/components/), and see them
-composed in the AI examples: [chat app](https://viandwi24.github.io/edmi-ui/examples/claude-chat/) (home, thread, artifact viewer, library),
-[agent workspace](https://viandwi24.github.io/edmi-ui/examples/cofounder-agent-workspace/), [coding agent IDE](https://viandwi24.github.io/edmi-ui/examples/ide/) and [agent workflow](https://viandwi24.github.io/edmi-ui/examples/workflow/).
+composed in the AI examples: [AI chat](https://viandwi24.github.io/edmi-ui/examples/ai-chat/) (home, thread, artifact viewer, library),
+[agent workspace](https://viandwi24.github.io/edmi-ui/examples/agent-workspace/), [agent canvas](https://viandwi24.github.io/edmi-ui/examples/agent-canvas/), [coding agent IDE](https://viandwi24.github.io/edmi-ui/examples/ide/) and [agent workflow](https://viandwi24.github.io/edmi-ui/examples/workflow/).
 
 ## Elevation
 
@@ -93,7 +93,7 @@ and `floating` (+2, the bevel plus one soft drop). There are no hard lips, and n
 ```
 
 Depth expresses role, not decoration. A card inside a raised card drops back to flat, and only the active part of tabs,
-toggle groups, pagination, calendars, switches and sliders rises. 50 UI components and patterns and 12 AI components
+toggle groups, pagination, calendars, switches and sliders rises. 50 UI components and patterns and 14 AI components
 take `elevation`, each with a `<name>-elevation` demo in all three frameworks (checked by the repo's `verify:matrix`
 script). The docs landing page has a Flat / Layered toggle. Read the
 [Elevation guide](https://viandwi24.github.io/edmi-ui/getting-started/elevation/) for the philosophy, the role table and
@@ -107,7 +107,7 @@ come from the old `raised` prop.
 - Example apps (StackBlitz-ready): [`examples/react`](examples/react), [`examples/vue`](examples/vue), [`examples/svelte`](examples/svelte); Layerbeat (Slate · Ocean theme): [`examples/layerbeat-react`](examples/layerbeat-react), [`examples/layerbeat-vue`](examples/layerbeat-vue), [`examples/layerbeat-svelte`](examples/layerbeat-svelte)
 - Changelog: <https://viandwi24.github.io/edmi-ui/changelog/> · Releasing: [RELEASING.md](RELEASING.md) · Contributing: [CONTRIBUTING.md](CONTRIBUTING.md)
 
-The long-term domain is `https://ui.edmi.dev` (the `EDMI_URL` default of the registry generator).
+A custom domain (`https://ui.edmi.dev`) is planned; until then the GitHub Pages URL above is the registry base.
 
 ## Install
 

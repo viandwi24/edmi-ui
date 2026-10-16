@@ -19,7 +19,7 @@ export const items: Item[] = [
 	},
 	{
 		name: "inset-panel",
-		title: "Inset panel",
+		title: "Inset Panel",
 		description:
 			"Header and footer on a muted shell with a card body plate inset 2px from the shell. Optional bottom fade and elevation.",
 		type: "registry:ui",
@@ -95,7 +95,7 @@ export const items: Item[] = [
 	},
 	{
 		name: "aspect-ratio",
-		title: "Aspect ratio",
+		title: "Aspect Ratio",
 		description:
 			"Locks content to a ratio so layouts do not jump while loading.",
 		type: "registry:ui",

@@ -42,7 +42,7 @@ Flat by default. `elevation` sets the depth of the option cards: `sunken` (-1) w
 | | `elevation` | `"auto" \| "sunken" \| "flat" \| "raised" \| "floating"` | `"auto"` |
 | helpers | `getLayoutCookie(cookie?)` / `setLayoutCookie(layout)` | cookie `edmi-layout` | |
 
-The toast renders nothing once the cookie exists. Picking a card saves it; closing without picking saves the default (`dashboard`) so the toast does not return. Read the cookie on the server (`getLayoutCookie(request.headers.get("cookie") ?? "")`) to render the right shell without a flash (DESIGN §3, §6).
+The toast renders nothing once the cookie exists. Picking a card saves it; closing without picking saves the default (`dashboard`) so the toast does not return. Read the cookie on the server (`getLayoutCookie(request.headers.get("cookie") ?? "")`) to render the right shell without a flash.
 
 ## ✦ Edmi additions
 - Choice cards are native radios (arrow keys work).

@@ -16,7 +16,7 @@ const docs = (await getCollection("docs")).filter((d) => d.id.startsWith("compon
 const demos = import.meta.glob("../../demos/react/*.tsx");
 
 /** Edmi additions worth a spotlight (hand-picked; everything else is generated). */
-const NEW = ["questionnaire", "inset-panel", "message-scroller", "kanban-column", "layout-picker", "ticker-strip"];
+const NEW = ["chart", "site-footer", "input-group", "elevation", "kanban-column", "ai-chat-composer"];
 
 type Card = {
 	name: string;

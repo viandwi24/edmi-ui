@@ -27,7 +27,7 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 See the [Elevation guide](/edmi-ui/getting-started/elevation/) for the levels, roles and layered mode.
 
-Flat by default. Set `raised` on `TabsList`: only the ACTIVE trigger rises (bevel); the list or track itself never does. It flows to the triggers (a trigger can override it) and `line` ignores it.
+Flat by default. Set `elevation="raised"` on `TabsList`: only the ACTIVE trigger rises (bevel); the list or track itself never does. It flows to the triggers (a trigger can override it) and `line` ignores it.
 
 <ComponentDemo name="tabs" demo="tabs-elevation" />
 
@@ -43,6 +43,6 @@ Flat by default. Set `raised` on `TabsList`: only the ACTIVE trigger rises (beve
 Parts: `Tabs`, `TabsList`, `TabsTrigger`, `TabsContent`.
 
 ## ✦ Edmi additions
-- Inside a track the active tab is flat: `--tab-active` fill and a 1px border, no gradient, no lip.
+- Inside a track the active tab is flat: `--tab-active` fill and a 1px border, no gradient, no bevel.
 - `pills` variant (no track) is an inline row of pills; active = `--tab-active` + 1px border.
 - `line` variant underlines the active tab with the foreground colour.

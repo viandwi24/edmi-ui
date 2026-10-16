@@ -13,9 +13,9 @@ again and reviewing the diff.
 
 - The Pages registry URL (`https://viandwi24.github.io/edmi-ui/r/<framework>/{name}.json`) always serves the **latest** release.
 - jsDelivr serves **pinned** versions: `https://cdn.jsdelivr.net/npm/@edmi-ui/registry-<framework>@0/r/<name>.json` is the latest 0.x,
-  `@0.3.0` is exactly 0.3.0.
+  `@0.6.0` is exactly 0.6.0.
 - `@edmi-ui/tokens` is a normal npm package: update it with your package manager (`npm update`, `pnpm update`, `yarn up`, `bun update`).
-- Before 1.0 a minor release (0.2 to 0.3) may contain breaking changes. Read the [Changelog](/edmi-ui/changelog/)
+- Before 1.0 a minor release (0.5 to 0.6) may contain breaking changes. Read the [Changelog](/edmi-ui/changelog/)
   (or the GitHub Release `v<version>`) first.
 
 ## Recommended flow
@@ -42,13 +42,13 @@ again and reviewing the diff.
    Only add the entry items you originally installed (`patterns` and `ai-all` are optional). If you use a color theme
    item (`theme-<base>-<accent>`), install it again **after** `theme`.
 5. **Review `git diff`.** Re-apply your local changes to overwritten files, fix call sites for changed or removed
-   props, and run your typecheck and build. Check light and dark mode and every surface that used `raised` (see the 0.2 to 0.3 notes below).
-6. **Pinned CDN users:** change the version in the URL (`@0.2.0` to `@0.3.0`, or use the `@0` range). If you pinned the
+   props, and run your typecheck and build. Check light and dark mode and every surface that used `raised` (see the 0.4 notes below).
+6. **Pinned CDN users:** change the version in the URL (`@0.5.0` to `@0.6.0`, or use the `@0` range). If you pinned the
    registry in `components.json` (`registries` for React and Vue), change it there too.
 
-## From 0.2 to 0.3: `raised` becomes `elevation`
+## From 0.2/0.3 to 0.4: `raised` becomes `elevation`
 
-0.3 replaces the boolean `raised` prop with the [elevation system](/edmi-ui/getting-started/elevation/). It is a breaking
+0.4 replaces the boolean `raised` prop with the [elevation system](/edmi-ui/getting-started/elevation/). It is a breaking
 change and there is no alias: a leftover `raised` prop is a type error (or ends up on the DOM in Vue and Svelte).
 
 **What changed**
@@ -78,19 +78,19 @@ change and there is no alias: a leftover `raised` prop is a type error (or ends 
 <div data-fw-panel="react">
 
 ```tsx
-// 0.2
+// 0.3 and earlier
 <Button raised>Get started</Button>
 <TabsList raised variant="pills">…</TabsList>
 <Card raised>…</Card>
 <Toaster raised />
 
-// 0.3
+// 0.4
 <Button elevation="raised">Get started</Button>
 <TabsList elevation="raised" variant="pills">…</TabsList>
 <Card elevation="raised">…</Card>
 <Toaster elevation="raised" />
 
-// 0.3, layered: no per-component props, roles decide
+// 0.4, layered: no per-component props, roles decide
 <ElevationProvider mode="layered">
   <App />
 </ElevationProvider>
@@ -101,17 +101,17 @@ change and there is no alias: a leftover `raised` prop is a type error (or ends 
 <div data-fw-panel="vue">
 
 ```vue
-<!-- 0.2 -->
+<!-- 0.3 and earlier -->
 <Button raised>Get started</Button>
 <TabsList raised variant="pills">…</TabsList>
 <Card :raised="featured">…</Card>
 
-<!-- 0.3 -->
+<!-- 0.4 -->
 <Button elevation="raised">Get started</Button>
 <TabsList elevation="raised" variant="pills">…</TabsList>
 <Card :elevation="featured ? 'raised' : 'flat'">…</Card>
 
-<!-- 0.3, layered -->
+<!-- 0.4, layered -->
 <ElevationProvider mode="layered">
   <App />
 </ElevationProvider>
@@ -122,17 +122,17 @@ change and there is no alias: a leftover `raised` prop is a type error (or ends 
 <div data-fw-panel="svelte">
 
 ```svelte
-<!-- 0.2 -->
+<!-- 0.3 and earlier -->
 <Button raised>Get started</Button>
 <Tabs.List raised variant="pills">…</Tabs.List>
 <Card.Root raised={featured}>…</Card.Root>
 
-<!-- 0.3 -->
+<!-- 0.4 -->
 <Button elevation="raised">Get started</Button>
 <Tabs.List elevation="raised" variant="pills">…</Tabs.List>
 <Card.Root elevation={featured ? "raised" : "flat"}>…</Card.Root>
 
-<!-- 0.3, layered -->
+<!-- 0.4, layered -->
 <ElevationProvider mode="layered">
   {@render children()}
 </ElevationProvider>
@@ -143,6 +143,35 @@ change and there is no alias: a leftover `raised` prop is a type error (or ends 
 The documentation examples and the example apps in the repository use layered mode for the Stockbreak pages and explicit
 levels for the Layerbeat page; open an example's Code tab to see both styles. With the
 [Agent skills](/edmi-ui/getting-started/skills/) installed your coding agent knows this migration.
+
+## From 0.4 to 0.6: patterns go brand-neutral
+
+0.5 and 0.6 clean up the pattern items. Re-add the patterns you use (and `elevation`, `theme`) with `--overwrite`, then fix
+call sites.
+
+**Pattern API**
+
+- Sample-brand defaults are gone. `SiteHeader`, `SiteHeaderBrand` and `AppHeader` have no default `name` (the brand text is
+  not rendered when empty), `AppHeader` has no default `network`, `JoinPanel` has no default `currency`. Pass them
+  yourself: `name="Your brand"`, `network="..."`, `currency="..."`.
+- `AgentCard` `autopilot` becomes `status="Autopilot"`.
+- Data names: `IndexRowData` `tokens` to `avatars`, `creator` to `owner`, `aum` to `value`, `holders` to `count`;
+  `PodiumEntry` `creator` to `owner`, `aum` to `value`, `holders` to `count`.
+- `IndexRowHeader` takes a `labels` prop (`name`, `owner`, `price`, `change`, `value`, `count`, `trend`) instead of
+  hard-coded column names. `LeaderboardPodium` takes `valueLabel` and `countLabel`.
+- `footer` is now `site-footer`. `add @edmi-ui/footer` still works for one version as an alias that installs `site-footer`.
+  Update imports: React `components/site-footer/site-footer`, Vue and Svelte the `site-footer` folder.
+- Vue `LayoutPickerToast`: replace `@value-change` with `v-model`. Svelte gets `bind:value` next to `onValueChange`.
+- Vue `KanbanColumn` injection key is the exported symbol `KANBAN_COLUMN_KEY` (was the string `'kanbanColumn'`); React
+  `KanbanColumn` gains `elevation` and hands it to its items.
+- Card-based patterns declare `elevation` in their own props in every port.
+
+**Look and tokens**
+
+- The dark chart palette now lives in the global tokens (a Green set and an Ocean set). Re-run `add @edmi-ui/theme --overwrite`
+  (and your `theme-<base>-<accent>` item after it) so the `.dark` chart colours update.
+- Fields (Input, Textarea, Input Group, Select trigger, Native Select, InputOTP) accept an explicit `raised` or `floating`
+  elevation. Defaults are unchanged.
 
 ## Tips
 

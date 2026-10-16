@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // Docs helper (not a demo): Unovis has no radar chart, so the radar is plain SVG inside ChartContainer.
-// Geometry and styling follow refs/edmi-ui/reference/ChartRadar*.dc.html (hairline grid, 2px series polygon,
+// Geometry and styling follow the chart kit (hairline grid, 2px series polygon,
 // 8px dots with a 2px surface ring, labels in muted text, tooltip = ChartTooltipContent look).
 import { computed, ref } from "vue";
 

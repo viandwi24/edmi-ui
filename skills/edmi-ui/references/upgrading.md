@@ -1,8 +1,8 @@
 # Upgrading Edmi UI
 
-Components are copied into the project by the framework's shadcn CLI, so there is no `npm update` for them. The Pages registry URL (`https://viandwi24.github.io/edmi-ui/r/<framework>/{name}.json`) always serves the latest release. Pinned CDN URLs serve a fixed range: `https://cdn.jsdelivr.net/npm/@edmi-ui/registry-<framework>@0/r/<name>.json` is the latest 0.x, `@0.3.0` is exactly 0.3.0. The `@edmi-ui/tokens` npm package updates with the package manager as usual (`npm update @edmi-ui/tokens`, `pnpm update`, `yarn up`, `bun update`).
+Components are copied into the project by the framework's shadcn CLI, so there is no `npm update` for them. The Pages registry URL (`https://viandwi24.github.io/edmi-ui/r/<framework>/{name}.json`) always serves the latest release. Pinned CDN URLs serve a fixed range: `https://cdn.jsdelivr.net/npm/@edmi-ui/registry-<framework>@0/r/<name>.json` is the latest 0.x, `@0.6.0` is exactly 0.6.0. The `@edmi-ui/tokens` npm package updates with the package manager as usual (`npm update @edmi-ui/tokens`, `pnpm update`, `yarn up`, `bun update`).
 
-Before 1.0 a minor bump (0.2 to 0.3) may contain breaking changes. Always read the changelog first: https://viandwi24.github.io/edmi-ui/changelog/ (also GitHub Releases `v<version>`).
+Before 1.0 a minor bump (0.5 to 0.6) may contain breaking changes. Always read the changelog first: https://viandwi24.github.io/edmi-ui/changelog/ (also GitHub Releases `v<version>`).
 
 ## Flow
 
@@ -19,14 +19,14 @@ Before 1.0 a minor bump (0.2 to 0.3) may contain breaking changes. Always read t
    - Svelte (URLs): `npx shadcn-svelte@latest add https://viandwi24.github.io/edmi-ui/r/svelte/theme.json https://viandwi24.github.io/edmi-ui/r/svelte/all.json --overwrite` (`bunx --bun` with bun).
    - Use the project's package manager (`pnpm dlx`, `yarn dlx`, `bunx`).
 5. Review `git diff`: re-apply local customisations to overwritten files, check changelog-listed renamed/removed items and prop changes in call sites.
-6. Run typecheck and build; check light and dark and every surface that used `raised`.
-7. Pinned CDN users: change the version in the URL (`@0.2.0` to `@0.3.0`, or the range `@0`). React and Vue that pinned the namespace in `components.json` `registries` change the URL there too.
+6. Run typecheck and build; check light and dark and every surface that used `raised` (0.4 notes).
+7. Pinned CDN users: change the version in the URL (`@0.5.0` to `@0.6.0`, or the range `@0`). React and Vue that pinned the namespace in `components.json` `registries` change the URL there too.
 
-## 0.2 to 0.3: `raised` becomes `elevation`
+## 0.2/0.3 to 0.4: `raised` becomes `elevation`
 
 Breaking, no alias. Re-add the entry items (`theme`, the new `elevation` item) and every component in use with `--overwrite`, then migrate call sites:
 
-| 0.2 | 0.3 |
+| 0.3 and earlier | 0.4 |
 | --- | --- |
 | `<Button raised>` | `<Button elevation="raised">` |
 | `<TabsList raised>` / `<Tabs.List raised>` | `elevation="raised"` (only the active trigger rises) |
@@ -36,6 +36,19 @@ Breaking, no alias. Re-add the entry items (`theme`, the new `elevation` item) a
 | whole page raised by hand | `<ElevationProvider mode="layered">` once |
 
 Hard lips are gone (a raised element is a bevel, pressed sinks 1px). Delete hand-written lip shadows and `-lip` border colours. New tokens `--bv-*`, `--sk-*`, `--r1-*`, `--fl-*` and a clearer stone dark ladder come with the new `theme`. Search the code for ` raised`, `:raised`, `raised=` and `itemRaised`. See [elevation.md](elevation.md).
+
+## 0.4 to 0.6: patterns go brand-neutral
+
+Re-add the patterns in use (plus `elevation`, `theme`) with `--overwrite`, then fix call sites:
+
+- No default brand text: pass `name` to `SiteHeader`, `SiteHeaderBrand`, `AppHeader`, `network` to `AppHeader`, `currency` to `JoinPanel`.
+- `<AgentCard autopilot />` becomes `<AgentCard status="Autopilot" />`.
+- `IndexRowData` / `PodiumEntry`: `tokens` to `avatars`, `creator` to `owner`, `aum` to `value`, `holders` to `count`. `IndexRowHeader` takes `labels`; `LeaderboardPodium` takes `valueLabel` / `countLabel`.
+- `footer` is now `site-footer` (the `footer` item is a deprecated alias for one version). Update imports: React `components/site-footer/site-footer`, Vue/Svelte the `site-footer` folder.
+- Vue `LayoutPickerToast`: `@value-change` becomes `v-model`; Svelte adds `bind:value`.
+- Vue `KanbanColumn` inject key is the symbol `KANBAN_COLUMN_KEY`; React `KanbanColumn` gains `elevation`.
+- Dark chart palette tokens are global now (Green and Ocean sets): re-run `add @edmi-ui/theme --overwrite`, then the `theme-<base>-<accent>` item.
+- Fields (Input, Textarea, Input Group, Select trigger, Native Select, InputOTP) accept explicit `raised` / `floating`; defaults unchanged.
 
 ## Rules for the agent
 

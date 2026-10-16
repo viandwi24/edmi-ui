@@ -1,6 +1,6 @@
 ---
 title: Chart
-description: Recharts wrapped in a ChartContainer that maps series to --chart-N colors, with a shared tooltip and legend.
+description: A themed ChartContainer that maps series to --chart-N colors, with a shared tooltip and legend.
 ---
 import ComponentDemo from "../../../../components/ComponentDemo.astro";
 import ComponentInstall from "../../../../components/ComponentInstall.astro";
@@ -23,7 +23,7 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 
 ## Foundations
 
-Charts live inside a `Card`, take series colour only from `ChartConfig` (`--color-<key>`, defaulting to `--chart-1…5` in config order) and never colour text with a series colour.
+Charts live inside a `Card`, take series colour only from `ChartConfig` (`--color-<key>`, defaulting to `--chart-1…5` in config order), and text never takes a series colour.
 
 ### Palette
 | Token | Green · light | Green · dark | Ocean · dark |
@@ -34,7 +34,7 @@ Charts live inside a `Card`, take series colour only from `ChartConfig` (`--colo
 | `--chart-4` | `#8a7fd6` | `#957ee5` | `#957ee5` |
 | `--chart-5` | `#d9674f` | `#e75e6a` | `#e75e6a` |
 
-Chart colours are ordinary theme tokens, like in shadcn/ui: `--chart-1…5` are defined for light (`:root`) and dark (`.dark`), and each accent theme carries its own set. The dark sets keep every hue at the same lightness (about L 0.66) so they pass the palette validator (lightness band, chroma floor, colour-blind separation, normal-vision floor, contrast) on both the Stone and Slate dark surfaces. To recolour one series only, use `color` or `theme: { light, dark }` in `ChartConfig`.
+Chart colours are ordinary theme tokens, like in shadcn/ui: `--chart-1…5` are defined for light (`:root`) and dark (`.dark`), and each accent theme carries its own set. The dark sets keep every hue at the same lightness (about L 0.66) so the colours stay tuned for contrast and colour-blind separation on both the Stone and Slate dark surfaces. To recolour one series only, use `color` or `theme: { light, dark }` in `ChartConfig`.
 
 In light mode, contrast against the surface is low on green and amber, so every chart also needs a legend, tooltip values and a table view.
 

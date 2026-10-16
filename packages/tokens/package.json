@@ -5,7 +5,8 @@
 	"license": "MIT",
 	"type": "module",
 	"files": [
-		"src"
+		"src",
+		"!src/**/*.test.ts"
 	],
 	"exports": {
 		"./tokens.css": "./src/tokens.css",

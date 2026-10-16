@@ -33,7 +33,7 @@ import ComponentSource from "../../../../components/ComponentSource.astro";
 Parts: `Drawer`, `DrawerTrigger`, `DrawerContent`, `DrawerHeader`, `DrawerTitle`, `DrawerDescription`, `DrawerFooter`, `DrawerClose`, `DrawerSwipeHandle`. Built on the Base UI Drawer (not vaul).
 
 ## ✦ Edmi additions
-- `DrawerSwipeHandle` grabber and `showHandle`; hard 4px strong lip, no blur.
+- `DrawerSwipeHandle` grabber and `showHandle`; solid popover surface with a 1px border, no blur.
 
 ## Vue / Svelte differences
 - **Svelte** (vaul-svelte) names the edge in `direction` (`top | bottom | left | right`). Edmi also accepts `swipeDirection` for parity with React and Vue and maps it: `up` -> `top`, `down` -> `bottom`, `left` -> `left`, `right` -> `right`. `direction` wins if both are set.

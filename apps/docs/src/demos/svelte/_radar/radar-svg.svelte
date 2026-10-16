@@ -1,6 +1,6 @@
 <script lang="ts">
 	// Docs helper (not a demo): LayerChart radial charts need d3 scales, so the radar is plain SVG inside
-	// Chart.Container. Geometry and styling follow refs/edmi-ui/reference/ChartRadar*.dc.html.
+	// Chart.Container. Geometry and styling follow the chart kit.
 	type Series = { key: string; label: string; color: string; values: number[] };
 
 	let {

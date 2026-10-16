@@ -65,12 +65,14 @@ In a layered scope each component has a role, and each role has a default level.
 | --- | --- | --- |
 | filled action (`button-filled`) | Button default, secondary, destructive, brand | +1 raised |
 | quiet action (`button-quiet`) | Button outline, ghost, link | 0 flat |
-| field | Input, Textarea, Select trigger, Input OTP, Input Group | -1 sunken |
+| field | Input, Textarea, Select trigger, Native Select, Input OTP, Input Group | -1 sunken |
 | control | Checkbox, Radio, Tabs, Segmented, Pagination, Badge | 0 flat (the active part rises when raised) |
 | handle | Switch thumb, Slider thumb, calendar selected day, Kbd, Empty media | +1 raised |
 | surface | Card, node, list-row card, Inset panel body | +1 raised |
 | container | Inset panel shell, nested card, Alert, Toast, Tooltip | 0 flat |
 | overlay | Popover, Dropdown, Select menu, Dialog, chat composer | +2 floating |
+
+Fields accept an explicit `raised` or `floating` level too: a bevel face with a transparent border, and focus swaps the bevel for the ring.
 
 The full list of components that take `elevation`, and what rises on each, is on the component pages under
 **Elevation ✦**.
