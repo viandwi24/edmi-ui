@@ -14,7 +14,7 @@ export interface ExampleMeta {
 	title: string;
 	tag: ExampleTag;
 	description: string;
-	/** Source board (EXAMPLES.md "Source board" column). */
+	/** Short internal label (not shown in the UI). */
 	board: string;
 	/** Thumbnail basename: `public/examples/<thumb>-light.png` and `-dark.png` (~800px wide). */
 	thumb: string;
@@ -40,13 +40,13 @@ export const ALL = ["react", "vue", "svelte"] as const;
 
 export const EXAMPLES: readonly ExampleMeta[] = [
 	{
-		slug: "claude-chat",
-		title: "Claude - Chat",
+		slug: "ai-chat",
+		title: "AI Chat",
 		tag: "AI",
 		description:
 			"A complete chat app: greeting home with suggestions, a full assistant thread with artifact cards and code blocks, the artifact viewer side panel, and the artifact library, switchable from the app sidebar.",
-		board: "AI 03 Home · AI 04 Chat thread, Chat + Artifact Viewer, Library",
-		thumb: "claude-chat",
+		board: "AI chat app",
+		thumb: "ai-chat",
 		frameworks: ALL,
 		height: 860,
 		uses: [
@@ -70,7 +70,7 @@ export const EXAMPLES: readonly ExampleMeta[] = [
 		tag: "App",
 		description:
 			"The Stockbreak app with a top navbar: Markets, Explore, Index detail, Leaderboard, Create index, Feed, AI agents, Portfolio, Profile and Faucet pages with working navigation, plus the marketing landing.",
-		board: "Stockbreak · all pages (navbar layout)",
+		board: "Stockbreak app (navbar)",
 		thumb: "stockbreak-navbar",
 		dir: "stockbreak",
 		props: { layout: "navbar" },
@@ -95,7 +95,7 @@ export const EXAMPLES: readonly ExampleMeta[] = [
 		tag: "App",
 		description:
 			"The same Stockbreak app in the sidebar shell: inset Sidebar with search, navigation, watchlist and the faucet card, breadcrumb header, and every app page behind working navigation.",
-		board: "Stockbreak · all pages (sidebar layout)",
+		board: "Stockbreak app (sidebar)",
 		thumb: "stockbreak-sidebar",
 		dir: "stockbreak",
 		props: { layout: "sidebar" },
@@ -120,7 +120,7 @@ export const EXAMPLES: readonly ExampleMeta[] = [
 		tag: "App",
 		description:
 			"Layerbeat Create a BeatVPS: always-dark navy sidebar scoped inside a light app, step tabs, location and image choice cards, a plan table with radio selection, billing segmented control and a raised summary card.",
-		board: "Layerbeat Example",
+		board: "Layerbeat app",
 		thumb: "layerbeat",
 		defaultBase: "slate",
 		defaultTheme: "ocean",
@@ -141,13 +141,40 @@ export const EXAMPLES: readonly ExampleMeta[] = [
 		],
 	},
 	{
-		slug: "cofounder-landing",
-		title: "Cofounder (Long Page)",
+		slug: "agent-canvas",
+		title: "Agent Canvas",
+		tag: "AI",
+		description:
+			"An agent canvas app: an agent hub on a department ring with elbow connectors and zoom controls, beside a floating panel with Atlas chat, Tasks, Company and Library tabs and a pinned composer.",
+		board: "Agent canvas",
+		thumb: "agent-canvas",
+		defaultMode: "dark",
+		frameworks: ALL,
+		height: 860,
+		uses: [
+			"InsetPanel",
+			"Tabs",
+			"AgentAvatar",
+			"PromptInput",
+			"Suggestion",
+			"Message",
+			"Item",
+			"Card",
+			"Checkbox",
+			"InputGroup",
+			"ToggleGroup",
+			"Avatar",
+			"Button",
+		],
+	},
+	{
+		slug: "editorial-landing",
+		title: "Editorial Landing",
 		tag: "Marketing",
 		description:
-			"Cofounder-style dark landing page from hero to footer: pixel-art sky hero, agent workspace card, launch, grow and operate feature rows with staged boards, campaign report, metrics and live joiners, tools window, guide chapters and a footer scene.",
-		board: "Cofounder Clone · Landing (dark)",
-		thumb: "cofounder-landing",
+			"A dark landing page from hero to footer: pixel-art sky hero, agent workspace card, launch, grow and operate feature rows with staged boards, campaign report, metrics and live joiners, tools window, guide chapters and a footer scene.",
+		board: "Landing page",
+		thumb: "editorial-landing",
 		defaultMode: "dark",
 		frameworks: ALL,
 		height: 900,
@@ -163,13 +190,13 @@ export const EXAMPLES: readonly ExampleMeta[] = [
 		],
 	},
 	{
-		slug: "cofounder-agent-workspace",
-		title: "Cofounder - Agent Workspace",
+		slug: "agent-workspace",
+		title: "Agent Workspace",
 		tag: "AI",
 		description:
 			"A side panel for an agent app: pill tabs on an inset panel, an Agent tab with collapsed reasoning, a named agent with suggestion cards and a raised composer, and an Index tab with grouped settings lists.",
-		board: "AI 04 · Agent workspace",
-		thumb: "cofounder-agent-workspace",
+		board: "Agent workspace",
+		thumb: "agent-workspace",
 		frameworks: ALL,
 		height: 940,
 		uses: [
@@ -191,7 +218,7 @@ export const EXAMPLES: readonly ExampleMeta[] = [
 		tag: "AI",
 		description:
 			"A workflow canvas for an agent: trigger, tool and agent nodes, animated and conditional edges, a node toolbar, legend and run panels, and zoom controls.",
-		board: "AI 08 · Canvas",
+		board: "Workflow canvas",
 		thumb: "workflow",
 		frameworks: ALL,
 		height: 720,
@@ -212,7 +239,7 @@ export const EXAMPLES: readonly ExampleMeta[] = [
 		tag: "AI",
 		description:
 			"A coding workspace: file tree, code editor with header and line numbers, a terminal with a failing run, and the agent pane with a plan, queue and composer.",
-		board: "AI 05/06 · Code authoring + runtime",
+		board: "Coding agent IDE",
 		thumb: "ide",
 		frameworks: ALL,
 		height: 820,

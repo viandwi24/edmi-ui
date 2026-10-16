@@ -709,8 +709,8 @@ export const agentsClients: {
 	steps: string[];
 }[] = [
 	{
-		value: "claude-ai",
-		label: "Claude.ai",
+		value: "chat-app",
+		label: "Chat app",
 		steps: [
 			"Settings → Connectors → Add custom connector",
 			"Name: Stockbreak",
@@ -727,14 +727,14 @@ export const agentsClients: {
 		],
 	},
 	{
-		value: "claude-code",
-		label: "Claude Code",
-		steps: [`claude mcp add --transport http stockbreak ${agentsMcpUrl}`],
+		value: "cli",
+		label: "Command line",
+		steps: [`agent mcp add --transport http stockbreak ${agentsMcpUrl}`],
 	},
 ];
 
 export const agentsApiKeyNote =
-	"Create an agent and an API key under Your agents, then add the key as a header in a client that supports it (Claude Code, Cursor, your own script). Claude.ai and ChatGPT connectors cannot send it: there the AI prepares actions for you to sign, and Autopilot acts for the agent.";
+	"Create an agent and an API key under Your agents, then add the key as a header in a client that supports it (a coding agent, your own script). Chat app and ChatGPT connectors cannot send it: there the AI prepares actions for you to sign, and Autopilot acts for the agent.";
 
 export const agentsHeaderSnippet = '--header "Authorization: Bearer sbk_…"';
 

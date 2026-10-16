@@ -1,6 +1,6 @@
 # Docs examples
 
-Real pages built only from registry items, live in React, Vue and Svelte, shown at `/examples` (spec:
+Small apps built only from registry items, live in React, Vue and Svelte, shown at `/examples` (spec:
 `refs/edmi-ui/EXAMPLES.md`). Conventions are binding for every example; the long form is AGENTS.md section
 "Docs examples".
 
@@ -8,7 +8,7 @@ Real pages built only from registry items, live in React, Vue and Svelte, shown 
 
 ```
 src/examples/
-  index.ts                  list of examples (slug, title, tag, board, thumb, uses, dir?, props?): drives index, routes, sidebar, verify
+  index.ts                  list of examples (slug, title, tag, board label, thumb, uses, dir?, props?): drives index, routes, sidebar, verify
   <dir>/                    source folder (defaults to the slug; several examples may share one)
     data.ts                 ONE shared sample-data file, imported by all three ports as "./data"
     react.tsx               default export = the page   (aliases: @edmi-react/…)
@@ -50,7 +50,7 @@ iframe, floating header with the toolbar, Code drawer, Info popover), `/examples
 
 ## Apps, not single pages; shared sources
 
-Examples are small apps with internal view state (no router): `claude-chat` switches home / thread / artifact viewer /
+Examples are small apps with internal view state (no router): `ai-chat` switches home / thread / artifact viewer /
 library, `stockbreak` holds every Stockbreak page behind working navigation. Several examples may share ONE source folder:
 set `dir` (folder under `src/examples/`) and `props` (passed to the root component) in `index.ts`. `stockbreak-navbar` and
 `stockbreak-sidebar` both use `dir: "stockbreak"` with `props: { layout: "navbar" | "sidebar" }`; islands are generated per
@@ -87,7 +87,7 @@ buttons are icon-only and the framework select moves into Controls.
   while the iframe keeps its logical width (`visual / zoom`), so a preset (390, 820) keeps its breakpoints and
   only the visual size changes; responsive mode behaves like browser zoom. Ctrl/Cmd + `=`, `-`, `0` zoom the preview.
 - **Code**: a drawer over the right side of the preview (framework file tabs). **Info**: popover with description,
-  board, tag and the registry items used (moved out of the page body).
+  tag and the registry items used (moved out of the page body).
 - **Hide bar** (replaces "full page"): hides the floating header; Esc (or the small restore button top right)
   brings it back. Esc first closes an open Controls/Info/Code panel. Nothing is persisted.
 - The drag handle appears only while the frame is narrower than the stage (after choosing Tablet/Mobile).

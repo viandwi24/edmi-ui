@@ -1,4 +1,4 @@
-// Sample data for the Claude chat example (Keeper = the sample agent). Shared by react.tsx, vue.vue and
+// Sample data for the AI chat example (Keeper = the sample agent). Shared by react.tsx, vue.vue and
 // svelte.svelte: one app with a home, a thread, an artifact viewer and a library.
 
 export type Segment = { t: string; b?: boolean; link?: boolean };

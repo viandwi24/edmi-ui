@@ -1,6 +1,6 @@
-// Sample data for the Cofounder-style long landing page (dark). Plain TS, no framework imports.
+// Sample data for the editorial long landing page (dark). Plain TS, no framework imports.
 
-// Decorative pixel-art scenes of the Cofounder landing page: a fixed night palette (the board's illustration, not theme tokens).
+// Decorative pixel-art scenes of the Atlas landing page: a fixed night palette (the board's illustration, not theme tokens).
 // Each scene is a palette plus `x,y,w,h,paletteIndex` rects, drawn by the example as crisp SVG rects.
 
 export type Pixels = { w: number; h: number; palette: string[]; rects: string };
@@ -164,7 +164,7 @@ export const hero = {
 		},
 		{
 			title: "Fully extensible",
-			body: "Connect over MCP, bring your own agent wallet, or drive it from Claude, ChatGPT or your own script.",
+			body: "Connect over MCP, bring your own agent wallet, or drive it from your own assistant or script.",
 		},
 	],
 	closing:

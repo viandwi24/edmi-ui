@@ -9,7 +9,6 @@ import {
   GlobeIcon,
   LayoutGridIcon,
   LockIcon,
-  MapIcon,
   MessageSquareIcon,
   MoreHorizontalIcon,
   PaletteIcon,
@@ -222,7 +221,7 @@ function docById(id: string) {
             <div class="mx-auto flex min-h-full w-full max-w-2xl flex-col gap-4 p-4">
               <ConversationEmptyState variant="home" :title="greeting" description="" class="flex-1 gap-8 p-2">
                 <Badge variant="secondary" class="-mt-5 gap-1.5">
-                  <MapIcon class="size-3" />
+                  <BookOpenIcon class="size-3" />
                   {{ project }}
                 </Badge>
                 <Queue variant="flat" class="w-full text-left">

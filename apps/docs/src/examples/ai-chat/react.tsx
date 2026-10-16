@@ -159,7 +159,7 @@ function TypeIcon({
 	);
 }
 
-export default function ClaudeChatExample() {
+export default function AiChatExample() {
 	const [view, setView] = useState<View>("thread");
 	const [openId, setOpenId] = useState<string | null>(null);
 	const [expanded, setExpanded] = useState(false);
