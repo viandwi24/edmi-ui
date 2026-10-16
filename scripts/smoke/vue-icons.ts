@@ -1,4 +1,4 @@
-// Every `@lucide/vue` import in the Vue registry (and docs demos) must resolve in shadcn-vue's icon map
+// Every `@lucide/vue` import in the Vue registry (and docs demos and examples) must resolve in shadcn-vue's icon map
 // (https://www.shadcn-vue.com/r/icons/index.json), exactly like the CLI's transform-icons does:
 // `map[name] ?? map[name.replace(/Icon$/, "")]`. The entry must map phosphor (Edmi's default) and lucide;
 // other libraries missing a mapping are only warned about. Unresolved names make the CLI leave the lucide
@@ -25,6 +25,7 @@ const warn = new Set<string>();
 for (const dir of [
 	"packages/vue/registry",
 	"apps/docs/src/demos/vue",
+	"apps/docs/src/examples",
 	"packages/vue/src",
 ]) {
 	for await (const f of new Glob("**/*.{vue,ts}").scan({ cwd: ROOT + dir })) {
