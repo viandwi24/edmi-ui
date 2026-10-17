@@ -1,5 +1,11 @@
 # @edmi-ui/tokens
 
+## 0.7.0
+
+### Patch Changes
+
+- 2e40a89: Release polish: every published package now ships a LICENSE file, `@edmi-ui/tokens` has a README listing its exports (and no longer publishes its test file), and the registry titles of Inset Panel and Aspect Ratio use Title Case like every other item.
+
 ## 0.6.0
 
 No changes in this release.
