@@ -1,5 +1,15 @@
 # @edmi-ui/registry-react
 
+## 0.7.0
+
+### Minor Changes
+
+- 5056bf0: Vue/Svelte parity: `StepCard` (`index`, `title`, `description`), `FeatureRow` (`index`, `title`) and `PricingPlan` (`name`, `tagline`, `price`, `priceNote`, `features`) accept rich content (Vue slots of the same name, `price-note` for `priceNote`; Svelte `string | Snippet`). String props keep working.
+
+### Patch Changes
+
+- 2e40a89: Release polish: every published package now ships a LICENSE file, `@edmi-ui/tokens` has a README listing its exports (and no longer publishes its test file), and the registry titles of Inset Panel and Aspect Ratio use Title Case like every other item.
+
 ## 0.6.0
 
 ### Minor Changes
